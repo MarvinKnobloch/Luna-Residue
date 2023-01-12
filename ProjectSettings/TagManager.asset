@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Gegner
+  - "Geb\xE4ude"
+  - Mirror
+  - Puzzlearrow
+  - Statue
+  - Enemythrowable
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Player
+  - Schwertbox
+  - Meleehitbox
+  - "Geb\xE4ude"
+  - IgnoreRaycast
+  - Arrowhitbox
+  - Items
+  - Terrain
+  - Interactiv
+  - Enemyobject
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: vorne
+    uniqueID: 951270309
+    locked: 0

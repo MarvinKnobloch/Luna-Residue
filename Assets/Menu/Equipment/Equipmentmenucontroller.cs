@@ -1,0 +1,45 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
+
+public class Equipmentmenucontroller : MonoBehaviour
+{
+    private SpielerSteu steuerung;
+
+    [SerializeField] private GameObject overview;
+    [SerializeField] private GameObject equipmentmenu;
+    [SerializeField] private GameObject[] itemgrids;
+    [SerializeField] private GameObject swordgrid;
+    [SerializeField] private GameObject swordbutton;
+
+    private void Awake()
+    {
+        steuerung = Keybindinputmanager.inputActions;
+    }
+    private void OnEnable()
+    {
+        foreach (GameObject grids in itemgrids)
+        {
+            grids.SetActive(false);
+        }
+        swordgrid.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(swordbutton);
+    }
+    private void Update()
+    {
+        if (steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame())
+        {
+            overview.SetActive(true);
+            equipmentmenu.SetActive(false);
+        }
+    }
+    public void switchgrid(GameObject selectedgrid)
+    {
+        foreach (GameObject grids in itemgrids)
+        {
+            grids.SetActive(false);
+        }
+        selectedgrid.SetActive(true);
+    }
+}

@@ -1,0 +1,386 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using System;
+
+public class EnemyHP : MonoBehaviour
+{
+    //attackchain erneuern wenn weakpoint getriggert wird
+    //höhe von der bar;
+
+    [SerializeField] Enemyvalues enemyvalues;
+
+    [NonSerialized] public string _enemyname;
+    public float currenthealth;
+    public float maxhealth;
+    [NonSerialized] public int sizeofenemy;
+    public int _enemylvl;
+    [SerializeField] private int addenemylvl = 0;
+
+    private CapsuleCollider capsulecollider;
+    [NonSerialized] public float enemyheight;
+
+    public bool enemyincreasebasicdmg;
+    public bool enemydebuffcd;
+    [NonSerialized] public float debufftimer;
+    [NonSerialized] public float debuffcdtimer;
+    [NonSerialized] public float debufffillamount;
+
+    [NonSerialized] public Enemyhealthbar healthbar;
+    private bool gothealthbar;
+    [NonSerialized] public bool isfocus;
+    [SerializeField] private GameObject enemyfocusbargameobject;
+    [SerializeField] private Image enemyfocusdebuffbar;
+
+    public static bool switchtargetafterdeath;
+    public static bool enemygethit;
+
+    public bool dmgonce;                           // da ich zwei collider hab und dadurch 2mal dmg gemacht wird, wird es momentan mit einem bool gecheckt ( hab noch keine besser lösung gefunden
+
+    public GameObject[] itemdroplist;
+    public int[] itemdropchance;
+
+    public int[] playerhits;
+    private int player1hits = 0;                                  
+    private int player3hits = 0;
+    private int player4hits = 0;
+    public int mosthits;
+
+    private int activeplayers = 3;
+
+    public static event Action infightlistupdate;
+    public static event Action supporttargetdied;
+
+    public static event Action<EnemyHP> addhealthbar;
+    public static event Action<EnemyHP> removehealthbar;
+
+    public static event Action<EnemyHP> setfocustargetui;
+    public static event Action<EnemyHP> deselectfocustargetui;
+
+    public event Action<float> healthpctchanged;
+    public event Action<float, float> focustargetuihptext;
+
+
+    public event Action markcurrenttarget;
+    public event Action unmarkcurrenttarget;
+
+    public void addtocanvas()
+    {
+        gothealthbar = true;
+        addhealthbar(this);     //erstellt eine neu Healthbar mit verbindung zum Enemyhpscript;
+        
+    }
+    public void removefromcanvas()
+    {
+        healthbar = null;
+        gothealthbar = false;
+        removehealthbar(this);
+    }
+    private void Awake()
+    {
+        capsulecollider = GetComponent<CapsuleCollider>();
+        enemyheight = (capsulecollider.height * transform.localScale.y) + 0.4f;
+        _enemyname = enemyvalues.enemyname;
+        maxhealth = enemyvalues.maxhealth;
+        currenthealth = Mathf.Clamp(currenthealth, 0, maxhealth);
+        currenthealth = maxhealth;
+        sizeofenemy = enemyvalues.enemysize;
+        _enemylvl = enemyvalues.enemylvl + addenemylvl;
+        enemyfocusbargameobject = enemyfocusdebuffbar.transform.parent.gameObject;
+    }
+    void Start()
+    {
+        if (LoadCharmanager.Overallthirdchar == null)
+        {
+            activeplayers -= 1;
+        }
+        if(LoadCharmanager.Overallforthchar == null)
+        {
+            activeplayers -= 1;
+        }
+        playerhits = new int[activeplayers];
+
+        playerhits[0] = player1hits;
+        if(LoadCharmanager.Overallthirdchar != null)
+        {
+            playerhits[1] = player3hits;
+        }
+        if(LoadCharmanager.Overallthirdchar !=null && LoadCharmanager.Overallforthchar != null)
+        {
+            playerhits[2] = player4hits;
+        }
+        if (LoadCharmanager.Overallthirdchar == null && LoadCharmanager.Overallforthchar != null)
+        {
+            playerhits[1] = player4hits;
+        }
+    }
+    public void TakeDamage(float damage)                                               // static kann von jedem anderen script aufgerufen werden (classname+voidname)
+    {                                                                                         // sting kann mit texten verbunden werden. Kann z.b einen text umändern
+        currenthealth -= damage;
+
+        if (gameObject.GetComponent<Miniadd>())
+        {
+            if (currenthealth <= 0)
+            {
+                gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            if (currenthealth >= maxhealth)
+            {
+                currenthealth = maxhealth;
+            }
+            if (gothealthbar == true)
+            {
+                float currenthealthpct = currenthealth / maxhealth;
+                healthpctchanged(currenthealthpct);
+            }
+            if (isfocus == true)
+            {
+                focustargetuihptext(currenthealth, maxhealth);
+            }
+            if (!Infightcontroller.infightenemylists.Contains(transform.root.gameObject))
+            {
+                Infightcontroller.infightenemylists.Add(transform.root.gameObject);
+                int enemycount = Infightcontroller.infightenemylists.Count;
+                Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
+                if (Infightcontroller.infightenemylists.Count == 1)
+                {
+                    infightlistupdate?.Invoke();
+                }
+            }
+            if (currenthealth <= 0)
+            {
+                unmarktarget();
+                removefromcanvas();
+                focustargetuiend();
+                gameObject.SetActive(false);
+                Infightcontroller.infightenemylists.Remove(transform.root.gameObject);
+                int enemycount = Infightcontroller.infightenemylists.Count;
+                Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
+                infightlistupdate?.Invoke();
+                supporttargetdied?.Invoke();
+                Movescript.availabletargets.Clear();
+                dropitems();
+                switchtargetafterdeath = true;
+            }
+        }
+    }
+    public void enemyheal(float heal)
+    {
+        currenthealth += heal;
+        if (currenthealth >= maxhealth)
+        {
+            currenthealth = maxhealth;
+        }
+        if (gothealthbar == true)
+        {
+            float currenthealthpct = currenthealth / maxhealth;
+            healthpctchanged(currenthealthpct);
+        }
+        if (isfocus == true)
+        {
+            focustargetuihptext(currenthealth, maxhealth);
+        }
+    }
+    public void enemydebuffstart()
+    {
+        enemyincreasebasicdmg = true;
+        enemydebuffcd = true;
+        StartCoroutine("enemydebuff");
+    }
+    IEnumerator enemydebuff()
+    {
+        debufftimer = Statics.enemydebufftime;
+        if(gothealthbar == true)
+        {
+            healthbar.debuffUI.SetActive(true);
+            healthbar.debuffbar.color = Color.blue;
+        }
+        if (isfocus == true)
+        {
+            enemyfocusbargameobject.SetActive(true);
+        }
+        while (true)
+        {
+            debufftimer -= Time.deltaTime;
+            if (gothealthbar == true)
+            {
+                healthbar.debuffbar.fillAmount = debufftimer / Statics.enemydebufftime;
+            }
+            if (isfocus == true)
+            {
+                enemyfocusdebuffbar.fillAmount = debufftimer / Statics.enemydebufftime;
+                enemyfocusdebuffbar.color = Color.blue;
+            }
+
+            if (debufftimer <= 0)
+            {
+                enemyincreasebasicdmg = false;
+                StopCoroutine("enemydebuff");
+                StartCoroutine("enemydebuffcdstart");
+            }
+            yield return null;
+        }
+    }
+    IEnumerator enemydebuffcdstart()
+    {
+        debuffcdtimer = Statics.enemydebufftime;
+        if (gothealthbar == true)
+        {
+            healthbar.debuffUI.SetActive(true);
+            healthbar.debuffbar.color = Color.yellow;
+        }
+        while (true)
+        {
+            debuffcdtimer -= Time.deltaTime;
+            if (gothealthbar == true)
+            {
+                healthbar.debuffbar.fillAmount = debuffcdtimer / Statics.enemydebufftime;
+            }
+            if (isfocus == true)
+            {
+                enemyfocusdebuffbar.fillAmount = debuffcdtimer / Statics.enemydebufftime;
+                enemyfocusdebuffbar.color = Color.yellow;
+            }
+
+            if (debuffcdtimer <= 0)
+            {
+                enemydebuffcd = false;
+                if (gothealthbar == true)
+                {
+                    healthbar.debuffUI.SetActive(false);
+                }
+                StopCoroutine("enemydebuffcdstart");
+            }
+            yield return null;
+        }
+    }
+    public void marktarget()
+    {
+        markcurrenttarget();
+    }
+    public void unmarktarget()
+    {
+        unmarkcurrenttarget();
+    }
+    public void focustargetuistart()
+    {
+        isfocus = true;
+        setfocustargetui(this);
+        if(enemydebuffcd == true)
+        {
+            enemyfocusbargameobject.SetActive(true);
+        }
+    }
+
+    public void focustargetuiend()
+    {
+        isfocus = false;
+        deselectfocustargetui(this);
+    }
+
+    public void tookdmgfrom(int player, int hitamount)
+    {
+        if(player == 1)
+        {
+            player1hits += hitamount;
+        }
+        if(player == 3)
+        {
+            player3hits += hitamount;
+        }
+        if(player == 4)
+        {
+            player4hits += hitamount;
+        }
+        playerhits[0] = player1hits;
+        if (LoadCharmanager.Overallthirdchar != null)
+        {
+            playerhits[1] = player3hits;
+        }
+        if (LoadCharmanager.Overallthirdchar != null && LoadCharmanager.Overallforthchar != null)
+        {
+            playerhits[2] = player4hits;
+        }
+        if (LoadCharmanager.Overallthirdchar == null && LoadCharmanager.Overallforthchar != null)
+        {
+            playerhits[1] = player4hits;
+        }
+        setnewtarget();
+    }
+    public void enemyhasreset()
+    {
+        mosthits = 0;
+        player1hits = 0; 
+        player3hits = 0;
+        player4hits = 0;
+        playerhits[0] = player1hits;
+        if (LoadCharmanager.Overallthirdchar != null)
+        {
+            playerhits[1] = player3hits;
+        }
+        if (LoadCharmanager.Overallthirdchar != null && LoadCharmanager.Overallforthchar != null)
+        {
+            playerhits[2] = player4hits;
+        }
+        if (LoadCharmanager.Overallthirdchar == null && LoadCharmanager.Overallforthchar != null)
+        {
+            playerhits[1] = player4hits;
+        }
+        setnewtarget();
+    }
+
+    private void dropitems()
+    {
+        int i = 0;
+        foreach (GameObject obj in itemdroplist)
+        {
+            int randomnumber = UnityEngine.Random.Range(0, 100);
+            if (randomnumber <= itemdropchance[i])
+            {
+                GameObject.Instantiate(obj, transform.position, transform.rotation);
+            }
+            i++;
+        }
+    }
+    private void setnewtarget()
+    {
+        for (int i = 0; i < playerhits.Length; i++)
+        {
+            if (playerhits[i] > mosthits)
+            {
+                mosthits = playerhits[i];
+            }
+        }
+        if (mosthits == player1hits)
+        {
+            if (gameObject.GetComponentInParent<Enemymovement>())
+            {
+                GetComponentInParent<Enemymovement>().currenttarget = LoadCharmanager.Overallmainchar;
+            }
+        }
+        if (LoadCharmanager.Overallthirdchar != null)
+        {
+            if (mosthits == player3hits)
+            {
+                if (gameObject.GetComponentInParent<Enemymovement>())
+                {
+                    GetComponentInParent<Enemymovement>().currenttarget = LoadCharmanager.Overallthirdchar;
+                }
+            }
+        }
+        if (LoadCharmanager.Overallforthchar != null)
+        {
+            if (mosthits == player4hits)
+            {
+                if (gameObject.GetComponentInParent<Enemymovement>())
+                {
+                    GetComponentInParent<Enemymovement>().currenttarget = LoadCharmanager.Overallforthchar;
+                }
+            }
+        }
+    }
+}
