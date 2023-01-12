@@ -179,7 +179,7 @@ public class Bowattack : MonoBehaviour
                     if (Vector3.Distance(transform.position, Movescript.lockontarget.position) > 5f)
                     {
                         movementscript.gravitation = 0f;
-                        movementscript.downwardsmomentum = 0f;
+                        movementscript.graviti = 0f;
                         Statics.otheraction = true;
                         movementscript.ChangeAnimationState(starthookstate);
                     }
@@ -317,7 +317,7 @@ public class Bowattack : MonoBehaviour
                 {
                     aimscript.aimend();
                 }
-                movementscript.downwardsmomentum = 0f;
+                movementscript.graviti = 0f;
                 movementscript.gravitation = 0f;
                 Invoke("dash", 0.05f);
             }
@@ -356,7 +356,7 @@ public class Bowattack : MonoBehaviour
         if (root == true)
         {
             Vector3 velocity = animator.deltaPosition;
-            movementscript.controller.Move(velocity);
+            movementscript.charactercontroller.Move(velocity);
         }
     }
     private void dash()
@@ -482,7 +482,7 @@ public class Bowattack : MonoBehaviour
         movementscript.attackonceair = false;
         root = true;
         movementscript.state = Movescript.State.BowAirattack;
-        movementscript.downwardsmomentum = 0f;
+        movementscript.graviti = 0f;
         movementscript.gravitation = 0f;
         movementscript.amBoden = false;
         movementscript.inderluft = true;
@@ -515,7 +515,7 @@ public class Bowattack : MonoBehaviour
         movementscript.state = Movescript.State.BowAirattack;
         movementscript.attackonceair = false;        // wegen attack spam
         movementscript.gravitation = 0f;
-        movementscript.downwardsmomentum = 0f;
+        movementscript.graviti = 0f;
         transform.rotation = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0);
         aimscript.virtualcam = true;
         resetbowairstates();
@@ -600,12 +600,12 @@ public class Bowattack : MonoBehaviour
         root = false;
         air3downintobasic = false;
         movementscript.gravitation = 4f;
-        movementscript.downwardsmomentum = -0.5f;
+        movementscript.graviti = -0.5f;
 
         Ray ray = new Ray(this.transform.position + Vector3.up * 0.3f, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, 0.4f) && input == false)
         {
-            movementscript.controller.stepOffset = 0.2f;
+            movementscript.charactercontroller.stepOffset = 0.2f;
             movementscript.attackonceair = true;
             movementscript.amBoden = true;
             movementscript.inderluft = false;
@@ -662,7 +662,7 @@ public class Bowattack : MonoBehaviour
             movementscript.attackonceair = false;
             movementscript.state = Movescript.State.Bowweaponswitch;
             movementscript.gravitation = 0;
-            movementscript.controller.stepOffset = 0;
+            movementscript.charactercontroller.stepOffset = 0;
             movementscript.amBoden = false;
             movementscript.inderluft = true;
             root = true;
@@ -684,7 +684,7 @@ public class Bowattack : MonoBehaviour
         movementscript.ChangeAnimationState(slowmochargeup);
         Time.timeScale = slowmotionpercentage;
         Time.fixedDeltaTime = Statics.normaltimedelta * slowmotionpercentage;
-        movementscript.downwardsmomentum = 0f;
+        movementscript.graviti = 0f;
         movementscript.gravitation = slowmogravition;
         Invoke("bowweaponswitchattackend", 1.5f);
     }

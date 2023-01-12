@@ -141,7 +141,7 @@ public class EleAbilities : MonoBehaviour
         Statics.otheraction = true;
         Movementscript.state = Movescript.State.Firedashstart;
         Movementscript.ChangeAnimationState(firedashstartstate);
-        Movementscript.downwardsmomentum = 0f;
+        Movementscript.graviti = 0f;
         if (Movescript.lockontarget != null)
         {
             Transform target = Movescript.lockontarget;
@@ -215,7 +215,7 @@ public class EleAbilities : MonoBehaviour
                 Statics.otheraction = true;
                 Movementscript.state = Movescript.State.Waterpushback;
                 Movementscript.ChangeAnimationState(waterpushbackstate);
-                Movementscript.downwardsmomentum = 0f;
+                Movementscript.graviti = 0f;
                 Vector3 lookPos = target.transform.position - transform.position;
                 lookPos.y = 0;
                 transform.rotation = Quaternion.LookRotation(lookPos);
@@ -227,7 +227,7 @@ public class EleAbilities : MonoBehaviour
                 Statics.otheraction = true;
                 Movementscript.state = Movescript.State.Waterintoair;
                 Movementscript.ChangeAnimationState(waterintoairstate);
-                Movementscript.downwardsmomentum = 0f;
+                Movementscript.graviti = 0f;
                 Vector3 lookPos = target.transform.position - transform.position;
                 lookPos.y = 0;
                 transform.rotation = Quaternion.LookRotation(lookPos);
@@ -238,7 +238,7 @@ public class EleAbilities : MonoBehaviour
                 Statics.otheraction = true;
                 Movementscript.state = Movescript.State.Waterkickend;
                 Movementscript.ChangeAnimationState(waterkickstate);
-                Movementscript.downwardsmomentum = 0f;
+                Movementscript.graviti = 0f;
                 Vector3 lookPos = target.transform.position - transform.position;
                 lookPos.y = 0;
                 transform.rotation = Quaternion.LookRotation(lookPos);
@@ -305,7 +305,7 @@ public class EleAbilities : MonoBehaviour
             Statics.otheraction = true;
             Movementscript.state = Movescript.State.Naturethendril;
             Movementscript.ChangeAnimationState(naturethendrilstate);
-            Movementscript.downwardsmomentum = 0f;
+            Movementscript.graviti = 0f;
             Transform target = Movescript.lockontarget;
             Vector3 lookPos = target.transform.position - transform.position;
             lookPos.y = 0;
@@ -378,7 +378,7 @@ public class EleAbilities : MonoBehaviour
             Statics.otheraction = true;
             Movementscript.state = Movescript.State.Icelancestart;
             Movementscript.ChangeAnimationState(icelanceidlestate);
-            Movementscript.downwardsmomentum = 0f;
+            Movementscript.graviti = 0f;
             Transform target = Movescript.lockontarget;
             if (Vector3.Distance(transform.position, target.transform.position) < 2f)
             {
@@ -661,7 +661,7 @@ public class EleAbilities : MonoBehaviour
             Statics.otheraction = true;
             Movementscript.state = Movescript.State.Abilitiesempty;
             Movementscript.ChangeAnimationState(lightbackstabstartstate);
-            Movementscript.downwardsmomentum = 0;
+            Movementscript.graviti = 0;
             Vector3 lookPos = target.transform.position - transform.position;
             lookPos.y = 0;
             transform.rotation = Quaternion.LookRotation(lookPos);
@@ -766,7 +766,7 @@ public class EleAbilities : MonoBehaviour
             Movementscript.lightningthirdtarget = null;
             Movementscript.state = Movescript.State.Stormchainligthning;
             Movementscript.ChangeAnimationState(stormchainlightningstate);
-            Movementscript.downwardsmomentum = 0;
+            Movementscript.graviti = 0;
             transform.rotation = Quaternion.LookRotation(Movescript.lockontarget.transform.position - transform.position, Vector3.up);
             ColorUtility.TryParseHtmlString("#5F138E", out spezialbackgroundcolor);
             spezialbackground.color = spezialbackgroundcolor;
@@ -830,7 +830,7 @@ public class EleAbilities : MonoBehaviour
             Statics.otheraction = true;
             Movementscript.state = Movescript.State.Abilitiesempty;
             Movementscript.ChangeAnimationState(darkportalstate);
-            Movementscript.downwardsmomentum = 0;
+            Movementscript.graviti = 0;
             transform.rotation = Quaternion.LookRotation(Movescript.lockontarget.transform.position - transform.position, Vector3.up);
             ColorUtility.TryParseHtmlString("#1D1414", out spezialbackgroundcolor);
             spezialbackground.color = spezialbackgroundcolor;
@@ -889,7 +889,7 @@ public class EleAbilities : MonoBehaviour
     {
         if (Movescript.lockontarget != null)
         {
-            Movementscript.downwardsmomentum = 0f;
+            Movementscript.graviti = 0f;
             manacontroller.Managemana(-basicmanacosts);
             Statics.otheraction = true;
             Movementscript.state = Movescript.State.Abilitiesempty;

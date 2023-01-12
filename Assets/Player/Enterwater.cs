@@ -9,7 +9,7 @@ public class Enterwater : MonoBehaviour
         if (other.gameObject == LoadCharmanager.Overallmainchar)
         {
             LoadCharmanager.disableattackbuttons = true;
-            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().downwardsmomentum = 0f;
+            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().graviti = 0f;
             LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state = Movescript.State.Swim;
         }
     }

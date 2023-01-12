@@ -145,7 +145,7 @@ public class Swordattack : MonoBehaviour
                 if (Steuerung.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false && Statics.infight == true)
                 {
                     movementscript.state = Movescript.State.Airattack;
-                    movementscript.downwardsmomentum = 0f;
+                    movementscript.graviti = 0f;
                     movementscript.gravitation = 0f;
                     Statics.otheraction = true;
                     movementscript.attackonceair = false;
@@ -238,7 +238,7 @@ public class Swordattack : MonoBehaviour
                 eleAbilities.icelanceiscanceled();
                 input = false;
                 combochain = 0;
-                movementscript.downwardsmomentum = 0;
+                movementscript.graviti = 0;
                 movementscript.gravitation = 0f;
                 Invoke("dash", 0.05f);                                             //damit man beim angreifen noch die Richtung bestimmen kann
             }
@@ -265,7 +265,7 @@ public class Swordattack : MonoBehaviour
         if (root == true)
         {
             Vector3 velocity = animator.deltaPosition;
-            movementscript.controller.Move(velocity);
+            movementscript.charactercontroller.Move(velocity);
         }
     }
     private void dash()
@@ -389,7 +389,7 @@ public class Swordattack : MonoBehaviour
         movementscript.attackonceair = false;
         root = true;
         movementscript.state = Movescript.State.Airattack;
-        movementscript.downwardsmomentum = 0f;
+        movementscript.graviti = 0f;
         movementscript.gravitation = 0f;
         movementscript.amBoden = false;
         movementscript.inderluft = true;
@@ -485,12 +485,12 @@ public class Swordattack : MonoBehaviour
         root = false;
         air3downintobasic = false;
         movementscript.gravitation = 4f;
-        movementscript.downwardsmomentum = -0.5f;
+        movementscript.graviti = -0.5f;
 
         Ray ray = new Ray(this.transform.position + Vector3.up * 0.3f, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, 0.4f) && input == false)
         {
-            movementscript.controller.stepOffset = 0.2f;
+            movementscript.charactercontroller.stepOffset = 0.2f;
             movementscript.attackonceair = true;
             movementscript.amBoden = true;
             movementscript.inderluft = false;
@@ -561,7 +561,7 @@ public class Swordattack : MonoBehaviour
         {
             Statics.otheraction = true;
             movementscript.state = Movescript.State.Groundattack;
-            movementscript.controller.stepOffset = 0;
+            movementscript.charactercontroller.stepOffset = 0;
             movementscript.ChangeAnimationState(swordswitchstate);
         }
     }
