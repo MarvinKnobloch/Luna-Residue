@@ -25,15 +25,18 @@ public class Movescript : MonoBehaviour
     public GameObject dazeimage;
 
     [NonSerialized] public Vector2 move;
-    public float movementspeed;
     [NonSerialized] public Vector3 moveDirection;
-    public float rotationspeed;
     [NonSerialized] public Vector3 velocity;
+    public float movementspeed;
+    public float rotationspeed;
     public float jumpheight;
     public float gravitation;
     private float normalgravition = 3.5f;
     public float graviti;
     private float originalStepOffSet;
+
+    public SphereCollider spherecastcollider;
+    public LayerMask groundchecklayer;
 
     private Vector3 Slidedownwalls;
     private float slowmovement = 6;
@@ -62,6 +65,7 @@ public class Movescript : MonoBehaviour
 
     //StatemachineScripts
     private Playermovement playermovement;
+    private Playerair playerair = new Playerair();
 
     //animationstate
     public string currentstate;
@@ -191,6 +195,9 @@ public class Movescript : MonoBehaviour
 
         playermovement = new Playermovement();
         playermovement.psm = this;
+        playerair.psm = this;
+
+
 
     }
     private void OnEnable()
@@ -215,15 +222,19 @@ public class Movescript : MonoBehaviour
             default:
             case State.Ground:
                 playermovement.movement();
-                playermovement.jump();
                 playermovement.groundcheck();
+                playermovement.jump();
+                playermovement.finalmovement();
                 //Grounded();
                 //Startjump();
                 Charlockon();
                 break;
             case State.Air:
-                InAir();
-                Movement();
+                playerair.airgravity();
+                playermovement.movement();
+                playermovement.finalmovement();
+                //InAir();
+                //Movement();
                 Charlockon();
                 Minhighforairattack();
                 break;
@@ -378,6 +389,12 @@ public class Movescript : MonoBehaviour
                 Charlockon();
                 break;
         }
+    }
+    public void ChangeAnimationState(string newstate)
+    {
+        if (currentstate == newstate) return;
+        animator.CrossFadeInFixedTime(newstate, 0.1f);
+        currentstate = newstate;
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)                // produziert 80B garbage bei jedem call
@@ -1122,12 +1139,7 @@ public class Movescript : MonoBehaviour
             Statics.otheraction = false;
         }
     }
-    public void ChangeAnimationState(string newstate)
-    {
-        if (currentstate == newstate) return;
-        animator.CrossFadeInFixedTime(newstate, 0.1f);
-        currentstate = newstate;
-    }
+
     public void ChangeAnimationStateInstant(string newstate)
     {
         if (currentstate == newstate) return;

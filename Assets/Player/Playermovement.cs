@@ -6,6 +6,9 @@ public class Playermovement
 {
     public Movescript psm;
 
+    const string idlestate = "Idle";
+    const string runstate = "Running";
+    const string jumpstate = "Jump";
     public void movement()
     {
         float h = psm.move.x;
@@ -24,7 +27,6 @@ public class Playermovement
         }
         psm.velocity = psm.moveDirection * magnitude;
         psm.velocity.y = psm.graviti;
-        psm.charactercontroller.Move(psm.velocity * Time.deltaTime);
     }
     public void jump()
     {
@@ -32,24 +34,65 @@ public class Playermovement
         {
             psm.graviti = psm.jumpheight;
             psm.state = Movescript.State.Air;
-        }
-    }
-    public void airgravity()
-    {
-        float grav = Physics.gravity.y * psm.gravitation;
-        psm.graviti += grav * Time.deltaTime;
-        if (psm.graviti < -15)
-        {
-            psm.graviti = -15;
-        }
-        if (psm.charactercontroller.isGrounded == true && psm.graviti < 0)
-        {
-            psm.graviti = -0.5f;
-            psm.state = Movescript.State.Ground;
+            psm.ChangeAnimationState(jumpstate);
         }
     }
     public void groundcheck()
     {
+        if (Physics.SphereCast(psm.spherecastcollider.bounds.center, psm.spherecastcollider.radius, Vector3.down, out RaycastHit groundhit, 1.1f, psm.groundchecklayer))
+        {
+            float angle = Vector3.Angle(Vector3.up, groundhit.normal);
+            if (angle > psm.charactercontroller.slopeLimit + 1)
+            {
+                Statics.otheraction = false;
+                psm.Charrig.enabled = false;
+                psm.aimscript.virtualcam = false;
+                psm.aimscript.aimend();
+                psm.graviti = -2;
+                psm.state = Movescript.State.Slidedownwall;
+            }
+            else
+            {
+                psm.velocity = checkgroundangle(psm.velocity);
+                psm.velocity.y = psm.graviti;
 
+                if (Statics.otheraction == false)
+                {
+                    //jumpcdafterland += Time.deltaTime;
+                    //velocity.y = -0.5f;
+                    if(psm.moveDirection != Vector3.zero)
+                    {
+                        psm.ChangeAnimationState(runstate);
+                    }
+                    else
+                    {
+                        psm.ChangeAnimationState(idlestate);
+                    }
+                }
+            }
+        }
+        else
+        {
+            psm.state = Movescript.State.Air;
+            Debug.Log("cant hit");
+        }
+    }
+    private Vector3 checkgroundangle(Vector3 velocity)
+    {
+        Ray groundray = new Ray(psm.transform.position + Vector3.up * 0.3f, Vector3.down);
+        if (Physics.Raycast(groundray, out RaycastHit groundrayinfo, 1f))
+        {
+            Quaternion groundangle = Quaternion.FromToRotation(Vector3.up, groundrayinfo.normal);
+            Vector3 velocityangle = groundangle * velocity;
+            if (velocityangle.y < 0)
+            {
+                return velocityangle;
+            }
+        }
+        return velocity;
+    }
+    public void finalmovement()
+    {
+        psm.charactercontroller.Move(psm.velocity * Time.deltaTime);
     }
 }
