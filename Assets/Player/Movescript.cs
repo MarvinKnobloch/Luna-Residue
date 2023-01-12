@@ -25,7 +25,7 @@ public class Movescript : MonoBehaviour
     public float movementspeed;
     private float slowmovement = 6;
     [SerializeField]
-    private float sprunghohe = 13;
+    private float jumpheight = 13;
 
     public Transform Kamerarichtung;
     public CinemachineFreeLook Cam1;
@@ -34,12 +34,12 @@ public class Movescript : MonoBehaviour
     //attack abfragen
     public float movementspeedattack;
     public float gravitation;
-    public float runter;
+    public float downwardsmomentum;
     private float normalgravition = (float)3.5;
 
     [NonSerialized] public bool amBoden;
     [NonSerialized] public bool inderluft;
-    [NonSerialized] public bool attackabstandboden;
+    [NonSerialized] public bool airattackminheight;
     [NonSerialized] public bool attackonceair;
     [NonSerialized] public bool bowair3intoground;                                 // für lockon
     private float jumpcdafterland;
@@ -87,8 +87,8 @@ public class Movescript : MonoBehaviour
 
     public bool activaterig;
 
-    private SpielerSteu Steuerung;
-    private Vector2 laufen;
+    private SpielerSteu controlls;
+    private Vector2 move;
     private float originalStepOffSet;
     private Animator animator;
     [SerializeField] private GameObject head;
@@ -180,8 +180,8 @@ public class Movescript : MonoBehaviour
         Charrig.enabled = false;
         aimscript.enabled = false;
         lockoncheck = false;
-        Steuerung = Keybindinputmanager.inputActions;
-        Steuerung.Spielerboden.Laufen.performed += Context => laufen = Context.ReadValue<Vector2>();
+        controlls = Keybindinputmanager.inputActions;
+        controlls.Player.Movement.performed += Context => move = Context.ReadValue<Vector2>();
         controller = GetComponent<CharacterController>();
         originalStepOffSet = controller.stepOffset;
         animator = GetComponent<Animator>();
@@ -195,8 +195,8 @@ public class Movescript : MonoBehaviour
     private void OnEnable()
     {
         Cam2.gameObject.SetActive(false);
-        Steuerung.Enable();
-        runter = -0.5f;
+        controlls.Enable();
+        downwardsmomentum = -0.5f;
         gravitation = normalgravition;
         cancellockon = false;
         Charprefabarrow.SetActive(false);
@@ -383,8 +383,8 @@ public class Movescript : MonoBehaviour
     }
     private void Movement()
     {
-        float h = laufen.x;                                                                         // Move Script
-        float v = laufen.y;
+        float h = move.x;                                                                         // Move Script
+        float v = move.y;
 
         moveDirection = new Vector3(h, 0, v);
         float magnitude = Mathf.Clamp01(moveDirection.magnitude) * movementspeed;
@@ -402,7 +402,7 @@ public class Movescript : MonoBehaviour
         {
             velocity = VelocityUneben(velocity);
         }
-        velocity.y += runter;
+        velocity.y += downwardsmomentum;
 
         if (controller.isGrounded && Statics.otheraction == false)
         {
@@ -423,7 +423,7 @@ public class Movescript : MonoBehaviour
         {
             if (amBoden == true)
             {
-                if (Steuerung.Spielerboden.Heal.IsPressed() && Statics.otheraction == false)
+                if (controlls.Player.Heal.IsPressed() && Statics.otheraction == false)
                 {
                     state = State.Heal;
                     healingscript.strgpressed();
@@ -437,15 +437,15 @@ public class Movescript : MonoBehaviour
         if (controller.isGrounded)
         {
             //jumpcdafterland += Time.deltaTime;
-            runter = -0.5f;
+            downwardsmomentum = -0.5f;
         }
         else
         {
             float gravity = Physics.gravity.y * gravitation;
-            runter += gravity * Time.deltaTime;
+            downwardsmomentum += gravity * Time.deltaTime;
         }
         Ray ray = new Ray(this.transform.position + Vector3.up * 0.3f, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, 0.5f) == false && runter < -5f)
+        if (Physics.Raycast(ray, out RaycastHit hit, 0.5f) == false && downwardsmomentum < -5f)
         {
             state = State.Actionintoair;
         }
@@ -455,14 +455,14 @@ public class Movescript : MonoBehaviour
         jumpcdafterland += Time.deltaTime;
         if (LoadCharmanager.disableattackbuttons == false || LoadCharmanager.gameispaused == false)
         {
-            if (Steuerung.Spielerboden.Sprung.WasPressedThisFrame() && jumpcdafterland > jumpcd)
+            if (controlls.Player.Jump.WasPressedThisFrame() && jumpcdafterland > jumpcd)
             {
                 state = State.Jump;
                 amBoden = false;
                 ChangeAnimationState(jumpstate);
                 float gravity = Physics.gravity.y * gravitation;
-                runter = Mathf.Sqrt(sprunghohe * -3 * gravity);
-                runter = sprunghohe;
+                downwardsmomentum = Mathf.Sqrt(jumpheight * -3 * gravity);
+                downwardsmomentum = jumpheight;
             }
         }
     }
@@ -472,23 +472,23 @@ public class Movescript : MonoBehaviour
         amBoden = false;
         ChangeAnimationState(jumpstate);
         float gravity = Physics.gravity.y * gravitation;
-        runter = Mathf.Sqrt(jumpheight * -3 * gravity);
-        runter = jumpheight;
+        downwardsmomentum = Mathf.Sqrt(jumpheight * -3 * gravity);
+        downwardsmomentum = jumpheight;
     }
     private void starthealjump()
     {
         jumpcdafterland += Time.deltaTime;
         if (LoadCharmanager.disableattackbuttons == false || LoadCharmanager.gameispaused == false)
         {
-            if (Steuerung.Spielerboden.Sprung.WasPressedThisFrame() && jumpcdafterland > jumpcd)
+            if (controlls.Player.Jump.WasPressedThisFrame() && jumpcdafterland > jumpcd)
             {
                 GetComponent<Healingscript>().jumpwhileheal();
                 state = State.Jump;
                 amBoden = false;
                 ChangeAnimationState(jumpstate);
                 float gravity = Physics.gravity.y * gravitation;
-                runter = Mathf.Sqrt(sprunghohe * -3 * gravity);
-                runter = sprunghohe;
+                downwardsmomentum = Mathf.Sqrt(jumpheight * -3 * gravity);
+                downwardsmomentum = jumpheight;
             }
         }
     }
@@ -496,8 +496,8 @@ public class Movescript : MonoBehaviour
     private void Jumpmovement()
     {
 
-        float h = laufen.x;
-        float v = laufen.y;
+        float h = move.x;
+        float v = move.y;
 
         moveDirection = new Vector3(h, 0, v);
         float magnitude = Mathf.Clamp01(moveDirection.magnitude) * movementspeed;
@@ -506,10 +506,10 @@ public class Movescript : MonoBehaviour
         moveDirection = Quaternion.AngleAxis(Kamerarichtung.rotation.eulerAngles.y, Vector3.up) * moveDirection;
 
         float gravity = Physics.gravity.y * gravitation;
-        runter += gravity * Time.deltaTime;
+        downwardsmomentum += gravity * Time.deltaTime;
 
         velocity = moveDirection * magnitude;
-        velocity.y += runter;
+        velocity.y += downwardsmomentum;
 
         controller.Move(velocity * Time.deltaTime);
 
@@ -526,8 +526,8 @@ public class Movescript : MonoBehaviour
     private void swim()
     {
         {
-            float h = laufen.x;                                                                        
-            float v = laufen.y;
+            float h = move.x;                                                                        
+            float v = move.y;
 
             moveDirection = new Vector3(h, 0, v);
             float magnitude = Mathf.Clamp01(moveDirection.magnitude) * movementspeed;
@@ -582,15 +582,15 @@ public class Movescript : MonoBehaviour
         gravitation = normalgravition;
         if (controller.isGrounded)
         {
-            runter = -0.5f;
+            downwardsmomentum = -0.5f;
         }
         else
         {
             float gravity = Physics.gravity.y * gravitation;
-            runter += gravity * Time.deltaTime;
+            downwardsmomentum += gravity * Time.deltaTime;
         }
         velocity = new Vector3(0, 0, 0);
-        velocity.y += runter;
+        velocity.y += downwardsmomentum;
         controller.Move(velocity * Time.deltaTime);
     }
     private void dazetoslow()
@@ -601,8 +601,8 @@ public class Movescript : MonoBehaviour
     private void slow()
     {
         {
-            float h = laufen.x;                                                                         // Move Script
-            float v = laufen.y;
+            float h = move.x;                                                                         // Move Script
+            float v = move.y;
 
             moveDirection = new Vector3(h, 0, v);
             float magnitude = Mathf.Clamp01(moveDirection.magnitude) * slowmovement;
@@ -622,11 +622,11 @@ public class Movescript : MonoBehaviour
             {
                 velocity = VelocityUneben(velocity);
             }
-            velocity.y += runter;
+            velocity.y += downwardsmomentum;
             if (controller.isGrounded)
             {
                 //jumpcdafterland += Time.deltaTime;
-                runter = -0.5f;
+                downwardsmomentum = -0.5f;
                 if (moveDirection != Vector3.zero)
                 {
                     ChangeAnimationState(runstate);
@@ -649,22 +649,22 @@ public class Movescript : MonoBehaviour
         jumpcdafterland += Time.deltaTime;
         if (LoadCharmanager.disableattackbuttons == false || LoadCharmanager.gameispaused == false)
         {
-            if (Steuerung.Spielerboden.Sprung.WasPressedThisFrame() && jumpcdafterland > jumpcd)
+            if (controlls.Player.Jump.WasPressedThisFrame() && jumpcdafterland > jumpcd)
             {
                 amBoden = false;
                 state = State.Slowjump;
                 ChangeAnimationState(jumpstate);
                 float gravity = Physics.gravity.y * gravitation;
-                runter = Mathf.Sqrt(sprunghohe * -3 * gravity);
-                runter = sprunghohe;
+                downwardsmomentum = Mathf.Sqrt(jumpheight * -3 * gravity);
+                downwardsmomentum = jumpheight;
             }
         }
     }
     private void slowjumpmovement()
     {
 
-        float h = laufen.x;
-        float v = laufen.y;
+        float h = move.x;
+        float v = move.y;
 
         moveDirection = new Vector3(h, 0, v);
         float magnitude = Mathf.Clamp01(moveDirection.magnitude) * slowmovement;
@@ -674,10 +674,10 @@ public class Movescript : MonoBehaviour
 
         gravitation = normalgravition;
         float gravity = Physics.gravity.y * gravitation;
-        runter += gravity * Time.deltaTime;
+        downwardsmomentum += gravity * Time.deltaTime;
 
         velocity = moveDirection * magnitude;
-        velocity.y += runter;
+        velocity.y += downwardsmomentum;
 
         controller.Move(velocity * Time.deltaTime);
 
@@ -686,7 +686,7 @@ public class Movescript : MonoBehaviour
             Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationgesch * Time.deltaTime);
         }
-        if (runter < -2)
+        if (downwardsmomentum < -2)
         {
             ChangeAnimationState(fallstate);
             if (controller.isGrounded == true)
@@ -697,8 +697,8 @@ public class Movescript : MonoBehaviour
     }
     private void beforedashmovement()
     {
-        float h = laufen.x;                                                                         // Move Script
-        float v = laufen.y;
+        float h = move.x;                                                                         // Move Script
+        float v = move.y;
 
         moveDirection = new Vector3(h, 0, v);
         //float magnitude = Mathf.Clamp01(moveDirection.magnitude) * slowmovement;
@@ -721,18 +721,18 @@ public class Movescript : MonoBehaviour
         gravitation = normalgravition;
         if (controller.isGrounded)
         {
-            runter = -0.5f;
+            downwardsmomentum = -0.5f;
         }
         else
         {
             float gravity = Physics.gravity.y * gravitation;
-            runter += gravity * Time.deltaTime;
+            downwardsmomentum += gravity * Time.deltaTime;
         }
         velocity = new Vector3(0, 0, 0);
-        velocity.y += runter;
+        velocity.y += downwardsmomentum;
         controller.Move(velocity * Time.deltaTime);
 
-        if (Steuerung.Spielerboden.Attack3.WasPerformedThisFrame())
+        if (controlls.Player.Attack3.WasPerformedThisFrame())
         {
             Statics.dazecounter += 1;
         }
@@ -750,15 +750,15 @@ public class Movescript : MonoBehaviour
         gravitation = normalgravition;
         if (controller.isGrounded)
         {
-            runter = -0.5f;
+            downwardsmomentum = -0.5f;
         }
         else
         {
             float gravity = Physics.gravity.y * gravitation;
-            runter += gravity * Time.deltaTime;
+            downwardsmomentum += gravity * Time.deltaTime;
         }
         velocity = new Vector3(0, 0, 0);
-        velocity.y += runter;
+        velocity.y += downwardsmomentum;
         controller.Move(velocity * Time.deltaTime);
     }
     private void OnDrawGizmos()
@@ -822,7 +822,7 @@ public class Movescript : MonoBehaviour
             state = State.Air;
         }
         float gravity = Physics.gravity.y * gravitation;
-        runter += gravity * Time.deltaTime;
+        downwardsmomentum += gravity * Time.deltaTime;
         float angle = Vector3.Angle(Vector3.up, hitnormal);
         //Debug.Log(angle);
         float math = 90 - angle;                         // wie weit der spieler von der wand weggedrückt wird, um so größer der winkel um so weniger muss der spieler von der wand gegedrückt werden
@@ -857,18 +857,18 @@ public class Movescript : MonoBehaviour
     {
         if (controller.isGrounded)
         {
-            runter = -0.5f;
+            downwardsmomentum = -0.5f;
         }
         else
         {
             float gravity = Physics.gravity.y * gravitation;
-            runter += gravity * Time.deltaTime;
+            downwardsmomentum += gravity * Time.deltaTime;
         }
     }
     private void Attackmovement()
     {
-        float h = laufen.x;                                                                         // Move Script
-        float v = laufen.y;
+        float h = move.x;                                                                         // Move Script
+        float v = move.y;
 
         moveDirection = new Vector3(h, 0, v);
         float magnitude = Mathf.Clamp01(moveDirection.magnitude) * movementspeed;
@@ -881,7 +881,7 @@ public class Movescript : MonoBehaviour
         {
             velocity = VelocityUneben(velocity);
         }*/
-        velocity.y += runter;
+        velocity.y += downwardsmomentum;
 
         controller.Move(velocity / movementspeedattack * Time.deltaTime);
 
@@ -893,8 +893,8 @@ public class Movescript : MonoBehaviour
     }
     private void Bowgroundmovement()
     {
-        float h = laufen.x;                                                                         // Move Script
-        float v = laufen.y;
+        float h = move.x;                                                                         // Move Script
+        float v = move.y;
 
         moveDirection = new Vector3(h, 0, v);
         float magnitude = Mathf.Clamp01(moveDirection.magnitude) * movementspeed;
@@ -907,7 +907,7 @@ public class Movescript : MonoBehaviour
         {
             velocity = VelocityUneben(velocity);
         }
-        velocity.y += runter;
+        velocity.y += downwardsmomentum;
 
         controller.Move(velocity / movementspeedattack * Time.deltaTime);
 
@@ -915,8 +915,8 @@ public class Movescript : MonoBehaviour
     private void InAir()
     {
         float gravity = Physics.gravity.y * gravitation;
-        runter += gravity * Time.deltaTime;
-        if (runter < -3f)
+        downwardsmomentum += gravity * Time.deltaTime;
+        if (downwardsmomentum < -3f)
         {
             ChangeAnimationState(fallstate);
         }
@@ -930,19 +930,19 @@ public class Movescript : MonoBehaviour
         Ray ray = new Ray(this.transform.position + Vector3.up * 0.3f, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, 0.8f))
         {
-            attackabstandboden = false;
+            airattackminheight = false;
         }
         else
         {
-            attackabstandboden = true;
+            airattackminheight = true;
         }
     }
     private void bowswitch()
     {
         float gravity = Physics.gravity.y * gravitation;
-        runter += gravity * Time.deltaTime;
-        float h = laufen.x;                                                                         // Move Script
-        float v = laufen.y;
+        downwardsmomentum += gravity * Time.deltaTime;
+        float h = move.x;                                                                         // Move Script
+        float v = move.y;
 
         moveDirection = new Vector3(h, 0, v);
         float magnitude = Mathf.Clamp01(moveDirection.magnitude) * movementspeed;
@@ -955,7 +955,7 @@ public class Movescript : MonoBehaviour
         {
             velocity = VelocityUneben(velocity);
         }
-        velocity.y += runter;
+        velocity.y += downwardsmomentum;
 
         controller.Move(velocity / movementspeedattack * Time.deltaTime);
     }
@@ -980,7 +980,7 @@ public class Movescript : MonoBehaviour
     }
     private void chargearrow()
     {
-        if (Steuerung.Spielerboden.Attack4.IsPressed())
+        if (controlls.Player.Attack4.IsPressed())
         {
             if(activaterig == true)
             {
@@ -1006,8 +1006,8 @@ public class Movescript : MonoBehaviour
             ChangeAnimationState(aimholdstate);
             state = State.Bowischarged;
         }
-        float h = laufen.x;                                                                         // Move Script
-        float v = laufen.y;
+        float h = move.x;                                                                         // Move Script
+        float v = move.y;
 
         moveDirection = new Vector3(h, 0, v);
         float magnitude = Mathf.Clamp01(moveDirection.magnitude) * movementspeed;
@@ -1016,8 +1016,8 @@ public class Movescript : MonoBehaviour
         moveDirection = Quaternion.AngleAxis(Kamerarichtung.rotation.eulerAngles.y, Vector3.up) * moveDirection;                     //Kamera dreht sich mit dem Char
         velocity = moveDirection * magnitude;
 
-        animator.SetFloat("AimX", laufen.x, 0.05f, Time.deltaTime);
-        animator.SetFloat("AimZ", laufen.y, 0.05f, Time.deltaTime);
+        animator.SetFloat("AimX", move.x, 0.05f, Time.deltaTime);
+        animator.SetFloat("AimZ", move.y, 0.05f, Time.deltaTime);
         if (controller.isGrounded)
         {
             velocity = VelocityUneben(velocity);
@@ -1027,7 +1027,7 @@ public class Movescript : MonoBehaviour
         }
         velocity.x = velocity.x / movementspeedattack;
         velocity.z = velocity.z / movementspeedattack;
-        velocity.y += runter;
+        velocity.y += downwardsmomentum;
         controller.Move(velocity * Time.deltaTime);
     }
     private void charrigenable()
@@ -1036,7 +1036,7 @@ public class Movescript : MonoBehaviour
     }
     private void Aimmovement()
     {
-        if (Steuerung.Spielerboden.Attack4.IsPressed())
+        if (controlls.Player.Attack4.IsPressed())
         {          
         }
         else
@@ -1045,8 +1045,8 @@ public class Movescript : MonoBehaviour
             ChangeAnimationState(releasearrowstate);
             state = State.Abilitiesempty;
         }
-        float h = laufen.x;                                                                         // Move Script
-        float v = laufen.y;
+        float h = move.x;                                                                         // Move Script
+        float v = move.y;
 
         moveDirection = new Vector3(h, 0, v);
         float magnitude = Mathf.Clamp01(moveDirection.magnitude) * movementspeed;
@@ -1055,8 +1055,8 @@ public class Movescript : MonoBehaviour
         moveDirection = Quaternion.AngleAxis(Kamerarichtung.rotation.eulerAngles.y, Vector3.up) * moveDirection;                     //Kamera dreht sich mit dem Char
         velocity = moveDirection * magnitude;
 
-        animator.SetFloat("AimX", laufen.x, 0.05f, Time.deltaTime);
-        animator.SetFloat("AimZ", laufen.y, 0.05f, Time.deltaTime);
+        animator.SetFloat("AimX", move.x, 0.05f, Time.deltaTime);
+        animator.SetFloat("AimZ", move.y, 0.05f, Time.deltaTime);
         if (controller.isGrounded)
         {
             velocity = VelocityUneben(velocity);
@@ -1071,7 +1071,7 @@ public class Movescript : MonoBehaviour
         }
         velocity.x = velocity.x / movementspeedattack;
         velocity.z = velocity.z / movementspeedattack;
-        velocity.y += runter;
+        velocity.y += downwardsmomentum;
         controller.Move(velocity * Time.deltaTime);
     }
     private void arrowfullcharge()
@@ -1080,7 +1080,7 @@ public class Movescript : MonoBehaviour
     }
     private void arrowreleased()
     {
-        if (Steuerung.Spielerboden.Attack4.IsPressed())
+        if (controlls.Player.Attack4.IsPressed())
         {
             state = State.Bowcharge;
             ChangeAnimationState(chargestate);
@@ -1104,7 +1104,7 @@ public class Movescript : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(lockontarget.transform.position - transform.position, Vector3.up);
             if (Vector3.Distance(transform.position, lockontarget.position) < 2f)
             {
-                runter = 0.5f;
+                downwardsmomentum = 0.5f;
                 gravitation = normalgravition;
                 state = State.Air;
                 ChangeAnimationState(fallstate);
@@ -1113,7 +1113,7 @@ public class Movescript : MonoBehaviour
         }
         else
         {
-            runter = 0.5f;
+            downwardsmomentum = 0.5f;
             gravitation = normalgravition;
             state = State.Air;
             Statics.otheraction = false;
@@ -1135,7 +1135,7 @@ public class Movescript : MonoBehaviour
     {
         if (LoadCharmanager.disableattackbuttons == false || LoadCharmanager.gameispaused == false)
         {
-            if (Steuerung.Spielerboden.Lockon.WasPerformedThisFrame() && lockoncheck == false || EnemyHP.switchtargetafterdeath == true && lockoncheck == true || bowair3intoground == true)
+            if (controlls.Player.Lockon.WasPerformedThisFrame() && lockoncheck == false || EnemyHP.switchtargetafterdeath == true && lockoncheck == true || bowair3intoground == true)
             {
                 EnemyHP.switchtargetafterdeath = false;
                 bowair3intoground = false;
@@ -1183,7 +1183,7 @@ public class Movescript : MonoBehaviour
                     lockontarget = null;
                 }
             }
-            if (Steuerung.Spielerboden.Lockonchange.WasPerformedThisFrame() && lockoncheck == true)          //target wechsel per button
+            if (controlls.Player.Lockonchange.WasPerformedThisFrame() && lockoncheck == true)          //target wechsel per button
             {
                 Checkforenemy = Physics.CheckSphere(transform.position, lockonrange, Lockonlayer);
                 if (Checkforenemy == true)
@@ -1239,7 +1239,7 @@ public class Movescript : MonoBehaviour
                     lockontarget = null;
                 }
             }
-            if (Steuerung.Spielerboden.Lockon.WasPerformedThisFrame() && cancellockon == true)            //beendet lockon durch buttonpress
+            if (controlls.Player.Lockon.WasPerformedThisFrame() && cancellockon == true)            //beendet lockon durch buttonpress
             {
                 if (lockontarget != null)
                 {
@@ -1334,8 +1334,8 @@ public class Movescript : MonoBehaviour
     }
     private void firedashstartmovement()
     {
-        float h = laufen.x;                                                                         
-        float v = laufen.y;
+        float h = move.x;                                                                         
+        float v = move.y;
 
         moveDirection = new Vector3(h, 0, v);
         float magnitude = Mathf.Clamp01(moveDirection.magnitude) * movementspeed;
@@ -1382,7 +1382,7 @@ public class Movescript : MonoBehaviour
     {
         if (lockontarget != null)
         {
-            float h = laufen.x;                                                                         
+            float h = this.move.x;                                                                         
 
             moveDirection = new Vector3(h, 0, 0);
             float magnitude = Mathf.Clamp01(moveDirection.magnitude) * 10;
@@ -1390,7 +1390,7 @@ public class Movescript : MonoBehaviour
             moveDirection = Quaternion.AngleAxis(Kamerarichtung.rotation.eulerAngles.y, Vector3.up) * moveDirection;                     
 
             velocity = moveDirection * magnitude;
-            velocity.y += runter;
+            velocity.y += downwardsmomentum;
             controller.Move(velocity * Time.deltaTime);
 
             Transform target = lockontarget;
@@ -1552,7 +1552,7 @@ public class Movescript : MonoBehaviour
     {
         if (lockontarget != null)
         {
-            runter = 0f;
+            downwardsmomentum = 0f;
             transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.up, 1 * Time.deltaTime);
         }
         else
@@ -1776,7 +1776,7 @@ public class Movescript : MonoBehaviour
         {
             transform.position = lockontarget.position + new Vector3(0, 10, 0) + (transform.forward * -2);
             ChangeAnimationState(darkportalendstate);
-            attackabstandboden = true;
+            airattackminheight = true;
         }
         else
         {
@@ -1787,17 +1787,17 @@ public class Movescript : MonoBehaviour
     public void darkportalending()
     {
         state = State.Darkportalend;
-        runter = -17;
+        downwardsmomentum = -17;
         velocity = new Vector3(0, 0, 0);
-        velocity.y += runter;
+        velocity.y += downwardsmomentum;
         controller.Move(velocity * Time.deltaTime);
 
         Ray ray = new Ray(this.transform.position + Vector3.up * 0.3f, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, 0.4f))
         {
-            attackabstandboden = false;
+            airattackminheight = false;
         }
-        if (attackabstandboden == false)
+        if (airattackminheight == false)
         {
             state = State.Airintoground;
             Statics.otheraction = false;
@@ -2056,7 +2056,7 @@ private void waterkickend()
             {
                 lockontarget = availabletargets[t].lockontransform;
                 shortestDistance = distancefromtarget;
-                if (Steuerung.Spielerboden.Lockon.WasPressedThisFrame() && lockoncheck == false)
+                if (Steuerung.Player.Lockon.WasPressedThisFrame() && lockoncheck == false)
                 {
                     LockonUI.SetActive(true);
                     shortestDistance = distancefromtarget;
@@ -2064,7 +2064,7 @@ private void waterkickend()
                     lockoncheck = true;
                     Invoke("changelockoncancel", 0.1f);
                 }
-                if (Steuerung.Spielerboden.Lockonchange.WasReleasedThisFrame() && lockoncheck == true || EnemyHP.switchtargetafterdeath == true && lockoncheck == true || bowair3intoground == true)
+                if (Steuerung.Player.Lockonchange.WasReleasedThisFrame() && lockoncheck == true || EnemyHP.switchtargetafterdeath == true && lockoncheck == true || bowair3intoground == true)
                 {
                     LockonUI.SetActive(true);
                     EnemyHP.switchtargetafterdeath = false;

@@ -53,7 +53,7 @@ public class AimScript : MonoBehaviour
                 float Kamerarotationoffset = Kamerarichtung.eulerAngles.y + 10f;
                 Quaternion kamerarotation = Quaternion.Euler(0, Kamerarotationoffset, 0);
                 transform.rotation = Quaternion.Lerp(transform.rotation, kamerarotation, aimrotationgesch * Time.deltaTime);
-                aimrotation(Steuerung.Spielerboden.Maus.ReadValue<Vector2>());
+                aimrotation(Steuerung.Player.Mouse.ReadValue<Vector2>());
             }
         }
     }

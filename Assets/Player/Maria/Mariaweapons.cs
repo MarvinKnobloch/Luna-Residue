@@ -36,7 +36,7 @@ public class Mariaweapons : MonoBehaviour
     {
         if (LoadCharmanager.disableattackbuttons == false)
         {
-            if (Steuerung.Spielerboden.Weaponchange.WasPerformedThisFrame() && Statics.otheraction == false && Statics.weapsonswitchbool == false)
+            if (Steuerung.Player.Weaponchange.WasPerformedThisFrame() && Statics.otheraction == false && Statics.weapsonswitchbool == false)
             {
                 Statics.otheraction = true;
                 if (switchweaponbool == true)

@@ -38,7 +38,7 @@ public class Expmanager : MonoBehaviour
 
     void Update()
     {
-        if (Steuerung.Spielerboden.GButton.WasPerformedThisFrame())
+        if (Steuerung.Player.GButton.WasPerformedThisFrame())
         {
             gainexp(200);
         }

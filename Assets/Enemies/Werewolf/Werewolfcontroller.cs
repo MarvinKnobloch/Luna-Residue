@@ -21,7 +21,7 @@ public class Werewolfcontroller : MonoBehaviour
     private void Awake()
     {
         Steuerung = Keybindinputmanager.inputActions;
-        action = Steuerung.Spielerboden.Attack3;
+        action = Steuerung.Player.Attack3;
         werewolfsphere.GetComponent<Werewolfsphere>().basedmg = spheredmg;
         werewolfsphere.GetComponent<Werewolfsphere>().explodetime = timetopressbuttons;
 

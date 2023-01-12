@@ -114,7 +114,7 @@ public class Bowattack : MonoBehaviour
         {
             if (movementscript.amBoden == true)
             {
-                if (Steuerung.Spielerboden.Attack1.WasPressedThisFrame() && basicattackcd > 0.7f && aimscript.Charotation == false && Statics.otheraction == false)
+                if (Steuerung.Player.Attack1.WasPressedThisFrame() && basicattackcd > 0.7f && aimscript.Charotation == false && Statics.otheraction == false)
                 {
                     movementscript.state = Movescript.State.BowGroundattack;
                     Statics.otheraction = true;
@@ -123,18 +123,18 @@ public class Bowattack : MonoBehaviour
                     attackend = false;
                     resetbowani();
                 }
-                if (Steuerung.Spielerboden.Attack1.WasPressedThisFrame() && basicchain == true && combochain <= 1)               //Groundchain Ground3 into Ground1
+                if (Steuerung.Player.Attack1.WasPressedThisFrame() && basicchain == true && combochain <= 1)               //Groundchain Ground3 into Ground1
                 {
                     input = false;
                     basicchain = false;
                 }
-                if (basic == true && Steuerung.Spielerboden.Attack2.WasPressedThisFrame())
+                if (basic == true && Steuerung.Player.Attack2.WasPressedThisFrame())
                 {
                     input = false;
                     basic = false;
                 }
 
-                if (attackend == true && Steuerung.Spielerboden.Attack1.WasPerformedThisFrame())
+                if (attackend == true && Steuerung.Player.Attack1.WasPerformedThisFrame())
                 {
                     input = false;
                     attackend = false;
@@ -143,7 +143,7 @@ public class Bowattack : MonoBehaviour
                     mid = false;
                     up = false;
                 }
-                if (attackend == true && Steuerung.Spielerboden.Attack2.WasPerformedThisFrame())
+                if (attackend == true && Steuerung.Player.Attack2.WasPerformedThisFrame())
                 {
                     input = false;
                     attackend = false;
@@ -152,7 +152,7 @@ public class Bowattack : MonoBehaviour
                     mid = true;
                     up = false;
                 }
-                if (attackend == true && Steuerung.Spielerboden.Attack3.WasPerformedThisFrame())
+                if (attackend == true && Steuerung.Player.Attack3.WasPerformedThisFrame())
                 {
                     input = false;
                     attackend = false;
@@ -161,7 +161,7 @@ public class Bowattack : MonoBehaviour
                     mid = false;
                     up = true;
                 }
-                if (Steuerung.Spielerboden.Attack4.WasPressedThisFrame() && Statics.otheraction == false && Statics.infight == false)
+                if (Steuerung.Player.Attack4.WasPressedThisFrame() && Statics.otheraction == false && Statics.infight == false)
                 {
                     movementscript.activaterig = false;
                     movementscript.fullcharge = false;
@@ -172,21 +172,21 @@ public class Bowattack : MonoBehaviour
                     movementscript.ChangeAnimationState(chargestate);
                 }
             }
-            if (Steuerung.Spielerboden.Attack4.WasPressedThisFrame() && Statics.otheraction == false && Statics.infight == true)           // bowhookshot
+            if (Steuerung.Player.Attack4.WasPressedThisFrame() && Statics.otheraction == false && Statics.infight == true)           // bowhookshot
             {
                 if (Movescript.lockontarget != null)
                 {
                     if (Vector3.Distance(transform.position, Movescript.lockontarget.position) > 5f)
                     {
                         movementscript.gravitation = 0f;
-                        movementscript.runter = 0f;
+                        movementscript.downwardsmomentum = 0f;
                         Statics.otheraction = true;
                         movementscript.ChangeAnimationState(starthookstate);
                     }
                 }
             }
 
-            if (Steuerung.Spielerboden.Attack1.WasPressedThisFrame() && air3downintobasic == true && combochain <= 1)          //Air3down into ground
+            if (Steuerung.Player.Attack1.WasPressedThisFrame() && air3downintobasic == true && combochain <= 1)          //Air3down into ground
             {
                 movementscript.state = Movescript.State.Airattack;
                 air3downintobasic = false;
@@ -195,13 +195,13 @@ public class Bowattack : MonoBehaviour
 
             if (movementscript.inderluft == true)
             {
-                if (weaponswitchattack == true && Steuerung.Spielerboden.Attack1.WasPerformedThisFrame())                //attack bei weaponswitch
+                if (weaponswitchattack == true && Steuerung.Player.Attack1.WasPerformedThisFrame())                //attack bei weaponswitch
                 {
                     slowattack2();
                     weaponswitchattack = false;
                 }
 
-                if (movementscript.attack3intoair == true && Steuerung.Spielerboden.Attack1.WasPressedThisFrame())                 //Attackchain von Atttack3down into Air1
+                if (movementscript.attack3intoair == true && Steuerung.Player.Attack1.WasPressedThisFrame())                 //Attackchain von Atttack3down into Air1
                 {
                     movementscript.state = Movescript.State.Airattack;
                     movementscript.amBoden = false;
@@ -209,13 +209,13 @@ public class Bowattack : MonoBehaviour
                     input = false;
                 }
 
-                if (Steuerung.Spielerboden.Attack1.WasPressedThisFrame() && movementscript.attackabstandboden == true && movementscript.attackonceair == true && Statics.otheraction == false && Statics.infight == true)
+                if (Steuerung.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false && Statics.infight == true)
                 {
                     Statics.otheraction = true;
                     bowairfirstattack();
                 }
 
-                if (basicairattack == true && Steuerung.Spielerboden.Attack1.WasPerformedThisFrame())                             //Attackchain von Air3 into Air1
+                if (basicairattack == true && Steuerung.Player.Attack1.WasPerformedThisFrame())                             //Attackchain von Air3 into Air1
                 {
                     CancelInvoke();
                     basicairattack = false;
@@ -225,7 +225,7 @@ public class Bowattack : MonoBehaviour
                     shotairbasicarrow();
                     checkairchainstate = true;
                 }
-                if (secondairattack == true && Steuerung.Spielerboden.Attack2.WasPerformedThisFrame())
+                if (secondairattack == true && Steuerung.Player.Attack2.WasPerformedThisFrame())
                 {
                     CancelInvoke();
                     animator.SetBool("airhold", false);
@@ -235,7 +235,7 @@ public class Bowattack : MonoBehaviour
                     checkairchainstate = false;
                     air3state = true;
                 }
-                if (thirdairattack == true && Steuerung.Spielerboden.Attack1.WasPerformedThisFrame())
+                if (thirdairattack == true && Steuerung.Player.Attack1.WasPerformedThisFrame())
                 {
                     thirdairattack = false;
                     CancelInvoke();                                                 // wegen airattackchainfail
@@ -244,7 +244,7 @@ public class Bowattack : MonoBehaviour
                     combochain++;
                     startbowair3intoground();
                 }
-                if (thirdairattack == true && Steuerung.Spielerboden.Attack2.WasPerformedThisFrame())
+                if (thirdairattack == true && Steuerung.Player.Attack2.WasPerformedThisFrame())
                 {
                     thirdairattack = false;
                     CancelInvoke();                                                 // wegen airattackchainfail
@@ -253,7 +253,7 @@ public class Bowattack : MonoBehaviour
                     combochain++;
                     shotairmidarrow();
                 }
-                if (thirdairattack == true && Steuerung.Spielerboden.Attack3.WasPerformedThisFrame())
+                if (thirdairattack == true && Steuerung.Player.Attack3.WasPerformedThisFrame())
                 {
                     thirdairattack = false;
                     CancelInvoke();                                               // wegen airattackchainfail
@@ -292,7 +292,7 @@ public class Bowattack : MonoBehaviour
                 }
             }
 
-            if (Steuerung.Spielerboden.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false)
+            if (Steuerung.Player.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false)
             {
                 movementscript.state = Movescript.State.Beforedash;
                 Statics.otheraction = true;
@@ -317,11 +317,11 @@ public class Bowattack : MonoBehaviour
                 {
                     aimscript.aimend();
                 }
-                movementscript.runter = 0f;
+                movementscript.downwardsmomentum = 0f;
                 movementscript.gravitation = 0f;
                 Invoke("dash", 0.05f);
             }
-            /*if (Steuerung.Spielerboden.Kick.WasPerformedThisFrame() && Statics.kickcdbool == false && Statics.dash == false)
+            /*if (Steuerung.Player.Kick.WasPerformedThisFrame() && Statics.kickcdbool == false && Statics.dash == false)
             {
                 Movementscript.state = Movescript.State.DashKick;
                 Statics.otheraction = true;
@@ -482,7 +482,7 @@ public class Bowattack : MonoBehaviour
         movementscript.attackonceair = false;
         root = true;
         movementscript.state = Movescript.State.BowAirattack;
-        movementscript.runter = 0f;
+        movementscript.downwardsmomentum = 0f;
         movementscript.gravitation = 0f;
         movementscript.amBoden = false;
         movementscript.inderluft = true;
@@ -515,7 +515,7 @@ public class Bowattack : MonoBehaviour
         movementscript.state = Movescript.State.BowAirattack;
         movementscript.attackonceair = false;        // wegen attack spam
         movementscript.gravitation = 0f;
-        movementscript.runter = 0f;
+        movementscript.downwardsmomentum = 0f;
         transform.rotation = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0);
         aimscript.virtualcam = true;
         resetbowairstates();
@@ -600,7 +600,7 @@ public class Bowattack : MonoBehaviour
         root = false;
         air3downintobasic = false;
         movementscript.gravitation = 4f;
-        movementscript.runter = -0.5f;
+        movementscript.downwardsmomentum = -0.5f;
 
         Ray ray = new Ray(this.transform.position + Vector3.up * 0.3f, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, 0.4f) && input == false)
@@ -609,7 +609,7 @@ public class Bowattack : MonoBehaviour
             movementscript.attackonceair = true;
             movementscript.amBoden = true;
             movementscript.inderluft = false;
-            movementscript.attackabstandboden = false;
+            movementscript.airattackminheight = false;
             movementscript.currentstate = null;                                        //airchain, Aircharge muss resetet werden
             animator.SetBool("attack1", true);
             movementscript.state = Movescript.State.BowGroundattack;
@@ -684,7 +684,7 @@ public class Bowattack : MonoBehaviour
         movementscript.ChangeAnimationState(slowmochargeup);
         Time.timeScale = slowmotionpercentage;
         Time.fixedDeltaTime = Statics.normaltimedelta * slowmotionpercentage;
-        movementscript.runter = 0f;
+        movementscript.downwardsmomentum = 0f;
         movementscript.gravitation = slowmogravition;
         Invoke("bowweaponswitchattackend", 1.5f);
     }

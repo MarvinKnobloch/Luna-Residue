@@ -26,16 +26,16 @@ public class Uiactionscontroller : MonoBehaviour
     {
         Steuerung = Keybindinputmanager.inputActions;
 
-        dashtext.text = Steuerung.Spielerboden.Dash.GetBindingDisplayString();
-        healtext.text = Steuerung.Spielerboden.Heal.GetBindingDisplayString();
-        charswitchtext.text = Steuerung.Spielerboden.Charchange.GetBindingDisplayString();
-        spezialspelltext.text = Steuerung.Spielerboden.Spezial.GetBindingDisplayString();
-        weaponswitchtext.text = Steuerung.Spielerboden.Weaponchange.GetBindingDisplayString();
+        dashtext.text = Steuerung.Player.Dash.GetBindingDisplayString();
+        healtext.text = Steuerung.Player.Heal.GetBindingDisplayString();
+        charswitchtext.text = Steuerung.Player.Charchange.GetBindingDisplayString();
+        spezialspelltext.text = Steuerung.Player.Spezial.GetBindingDisplayString();
+        weaponswitchtext.text = Steuerung.Player.Weaponchange.GetBindingDisplayString();
 
-        spell1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Steuerung.Spielerboden.Ability1.GetBindingDisplayString();
-        spell2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Steuerung.Spielerboden.Ability2.GetBindingDisplayString();
-        spell3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Steuerung.Spielerboden.Ability3.GetBindingDisplayString();
-        spell4.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Steuerung.Spielerboden.Ability4.GetBindingDisplayString();
+        spell1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Steuerung.Player.Ability1.GetBindingDisplayString();
+        spell2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Steuerung.Player.Ability2.GetBindingDisplayString();
+        spell3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Steuerung.Player.Ability3.GetBindingDisplayString();
+        spell4.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Steuerung.Player.Ability4.GetBindingDisplayString();
 
         if (Statics.currentactiveplayer == 0)
         {

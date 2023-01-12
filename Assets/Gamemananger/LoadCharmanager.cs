@@ -96,7 +96,7 @@ public class LoadCharmanager : MonoBehaviour
                 }
             }
         }
-        if (Steuerung.Spielerboden.Test.WasPerformedThisFrame())
+        if (Steuerung.Player.Test.WasPerformedThisFrame())
         {
             SceneManager.LoadScene(1);
         }
@@ -501,7 +501,7 @@ public class LoadCharmanager : MonoBehaviour
                 openmenu();
             }
         }
-        if (Steuerung.Spielerboden.Openelemenu.WasPerformedThisFrame())                                 // Pausemenu aktivieren ist momentan im Loadcharmanager
+        if (Steuerung.Player.Openelemenu.WasPerformedThisFrame())                                 // Pausemenu aktivieren ist momentan im Loadcharmanager
         {
             if (gameispaused == false)
             {
@@ -550,7 +550,7 @@ public class LoadCharmanager : MonoBehaviour
                 Time.timeScale = 1f;
             }
         }
-        if (Steuerung.Spielerboden.Openequipentmenu.WasPerformedThisFrame())
+        if (Steuerung.Player.Openequipentmenu.WasPerformedThisFrame())
         {
             if (disableattackbuttons == false)
             {

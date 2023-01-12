@@ -2,11 +2,11 @@
     "name": "SpielerSteu",
     "maps": [
         {
-            "name": "Spielerboden",
+            "name": "Player",
             "id": "c8d105a7-0a3b-4882-8fd0-2c0465bb4484",
             "actions": [
                 {
-                    "name": "Maus",
+                    "name": "Mouse",
                     "type": "PassThrough",
                     "id": "bdc1915e-b44f-4b58-a054-1cdebaec71f1",
                     "expectedControlType": "",
@@ -15,7 +15,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Laufen",
+                    "name": "Movement",
                     "type": "PassThrough",
                     "id": "298c2287-193f-409c-a83a-4ec2c210966a",
                     "expectedControlType": "Vector2",
@@ -24,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Sprung",
+                    "name": "Jump",
                     "type": "Button",
                     "id": "6315485d-9686-423b-b30d-56966a79c78e",
                     "expectedControlType": "Button",
@@ -239,7 +239,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Maus",
+                    "action": "Mouse",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -250,7 +250,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Laufen",
+                    "action": "Movement",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -261,7 +261,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Laufen",
+                    "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -272,7 +272,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Laufen",
+                    "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -283,7 +283,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Laufen",
+                    "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -294,7 +294,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Laufen",
+                    "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -305,7 +305,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Sprung",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

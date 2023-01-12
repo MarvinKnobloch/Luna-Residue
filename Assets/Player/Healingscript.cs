@@ -143,7 +143,7 @@ public class Healingscript : MonoBehaviour
                         }
                     }
                 }
-                if (Steuerung.Spielerboden.Heal.WasReleasedThisFrame() && strgwaspressed == true) //&& animator.GetCurrentAnimatorStateInfo(0).IsName("Healend") == false)
+                if (Steuerung.Player.Heal.WasReleasedThisFrame() && strgwaspressed == true) //&& animator.GetCurrentAnimatorStateInfo(0).IsName("Healend") == false)
                 {
                     releasestrg();
                 }

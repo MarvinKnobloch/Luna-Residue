@@ -78,7 +78,7 @@ public class Swordattack : MonoBehaviour
         {
             if (movementscript.amBoden == true)
             {
-                if (Steuerung.Spielerboden.Attack1.WasPressedThisFrame() && basicattackcd > 1f && Statics.otheraction == false)
+                if (Steuerung.Player.Attack1.WasPressedThisFrame() && basicattackcd > 1f && Statics.otheraction == false)
                 {
                     movementscript.state = Movescript.State.Groundattack;
                     Statics.otheraction = true;
@@ -87,18 +87,18 @@ public class Swordattack : MonoBehaviour
                     attackend = false;
                     resetschwertani();
                 }
-                if (Steuerung.Spielerboden.Attack1.WasPressedThisFrame() && basicchain == true && combochain <= 1)
+                if (Steuerung.Player.Attack1.WasPressedThisFrame() && basicchain == true && combochain <= 1)
                 {
                     input = false;
                     basicchain = false;
                 }
 
-                if (basic == true && Steuerung.Spielerboden.Attack2.WasPressedThisFrame())
+                if (basic == true && Steuerung.Player.Attack2.WasPressedThisFrame())
                 {
                     input = false;
                     basic = false;
                 }
-                if (attackend == true && Steuerung.Spielerboden.Attack1.WasPerformedThisFrame())
+                if (attackend == true && Steuerung.Player.Attack1.WasPerformedThisFrame())
                 {
                     input = false;
                     attackend = false;
@@ -107,7 +107,7 @@ public class Swordattack : MonoBehaviour
                     mid = false;
                     up = false;
                 }
-                if (attackend == true && Steuerung.Spielerboden.Attack2.WasPerformedThisFrame())
+                if (attackend == true && Steuerung.Player.Attack2.WasPerformedThisFrame())
                 {
                     input = false;
                     attackend = false;
@@ -116,7 +116,7 @@ public class Swordattack : MonoBehaviour
                     mid = true;
                     up = false;
                 }
-                if (attackend == true && Steuerung.Spielerboden.Attack3.WasPerformedThisFrame())
+                if (attackend == true && Steuerung.Player.Attack3.WasPerformedThisFrame())
                 {
                     input = false;
                     attackend = false;
@@ -129,23 +129,23 @@ public class Swordattack : MonoBehaviour
             if (movementscript.inderluft == true)
             {
 
-                if (movementscript.attack3intoair == true && Steuerung.Spielerboden.Attack1.WasPressedThisFrame())
+                if (movementscript.attack3intoair == true && Steuerung.Player.Attack1.WasPressedThisFrame())
                 {
                     movementscript.state = Movescript.State.Airattack;
                     movementscript.amBoden = false;
                     movementscript.attack3intoair = false;
                     input = false;
                 }
-                if (Steuerung.Spielerboden.Attack1.WasPressedThisFrame() && air3downintobasic == true && combochain <= 1)
+                if (Steuerung.Player.Attack1.WasPressedThisFrame() && air3downintobasic == true && combochain <= 1)
                 {
                     air3downintobasic = false;
                     input = false;
                 }
 
-                if (Steuerung.Spielerboden.Attack1.WasPressedThisFrame() && movementscript.attackabstandboden == true && movementscript.attackonceair == true && Statics.otheraction == false && Statics.infight == true)
+                if (Steuerung.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false && Statics.infight == true)
                 {
                     movementscript.state = Movescript.State.Airattack;
-                    movementscript.runter = 0f;
+                    movementscript.downwardsmomentum = 0f;
                     movementscript.gravitation = 0f;
                     Statics.otheraction = true;
                     movementscript.attackonceair = false;
@@ -155,20 +155,20 @@ public class Swordattack : MonoBehaviour
                     movementscript.ChangeAnimationState(basicair1state);
                     resetschwertani();
                 }
-                if (Steuerung.Spielerboden.Attack1.WasPressedThisFrame() && movementscript.attackabstandboden == true && basicairchain == true && combochain <= 1)
+                if (Steuerung.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && basicairchain == true && combochain <= 1)
                 {
                     basicairchain = false;
                     input = false;
                 }
                 if (movementscript.amBoden == false)  //(Movementscript.airchain == true && Movementscript.amBoden == false)
                 {
-                    if (basicairattack == true && Steuerung.Spielerboden.Attack2.WasPressedThisFrame())
+                    if (basicairattack == true && Steuerung.Player.Attack2.WasPressedThisFrame())
                     {
-                        movementscript.attackabstandboden = true;                        //wegen weaponchain von boden into air
+                        movementscript.airattackminheight = true;                        //wegen weaponchain von boden into air
                         basicairattack = false;
                         input = false;
                     }
-                    if (stayairattack == true && Steuerung.Spielerboden.Attack1.WasPressedThisFrame())
+                    if (stayairattack == true && Steuerung.Player.Attack1.WasPressedThisFrame())
                     {
                         stayairattack = false;
                         combochain++;
@@ -177,7 +177,7 @@ public class Swordattack : MonoBehaviour
                         mid = false;
                         up = false;
                     }
-                    if (stayairattack == true && Steuerung.Spielerboden.Attack2.WasPressedThisFrame())
+                    if (stayairattack == true && Steuerung.Player.Attack2.WasPressedThisFrame())
                     {
                         stayairattack = false;
                         combochain++;
@@ -186,7 +186,7 @@ public class Swordattack : MonoBehaviour
                         mid = true;
                         up = false;
                     }
-                    if (stayairattack == true && Steuerung.Spielerboden.Attack3.WasPressedThisFrame())
+                    if (stayairattack == true && Steuerung.Player.Attack3.WasPressedThisFrame())
                     {
                         stayairattack = false;
                         combochain++;
@@ -222,7 +222,7 @@ public class Swordattack : MonoBehaviour
                 movementscript.bowair3intoground = false;
             }
 
-            if (Steuerung.Spielerboden.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false) 
+            if (Steuerung.Player.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false) 
             {
                 movementscript.state = Movescript.State.Beforedash;                  //damit man beim angreifen noch die Richtung bestimmen kann
                 Statics.dash = true;
@@ -238,11 +238,11 @@ public class Swordattack : MonoBehaviour
                 eleAbilities.icelanceiscanceled();
                 input = false;
                 combochain = 0;
-                movementscript.runter = 0;
+                movementscript.downwardsmomentum = 0;
                 movementscript.gravitation = 0f;
                 Invoke("dash", 0.05f);                                             //damit man beim angreifen noch die Richtung bestimmen kann
             }
-            /*if (Steuerung.Spielerboden.Kick.WasPerformedThisFrame() && Statics.kickcdbool == false && Statics.dash == false)
+            /*if (Steuerung.Player.Kick.WasPerformedThisFrame() && Statics.kickcdbool == false && Statics.dash == false)
             {
                 Movementscript.state = Movescript.State.DashKick;
                 Statics.otheraction = true;
@@ -389,7 +389,7 @@ public class Swordattack : MonoBehaviour
         movementscript.attackonceair = false;
         root = true;
         movementscript.state = Movescript.State.Airattack;
-        movementscript.runter = 0f;
+        movementscript.downwardsmomentum = 0f;
         movementscript.gravitation = 0f;
         movementscript.amBoden = false;
         movementscript.inderluft = true;
@@ -485,7 +485,7 @@ public class Swordattack : MonoBehaviour
         root = false;
         air3downintobasic = false;
         movementscript.gravitation = 4f;
-        movementscript.runter = -0.5f;
+        movementscript.downwardsmomentum = -0.5f;
 
         Ray ray = new Ray(this.transform.position + Vector3.up * 0.3f, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, 0.4f) && input == false)
@@ -494,7 +494,7 @@ public class Swordattack : MonoBehaviour
             movementscript.attackonceair = true;
             movementscript.amBoden = true;
             movementscript.inderluft = false;
-            movementscript.attackabstandboden = false;
+            movementscript.airattackminheight = false;
             animator.SetBool("attack1", true);
             movementscript.state = Movescript.State.Groundattack;
         }
