@@ -45,8 +45,8 @@ public class Movescript : MonoBehaviour
     public LayerMask groundchecklayer;
 
     //attack abfragen
-    public float movementspeedattack;
-    private float attackrotationspeed = 100f;
+    [NonSerialized] public float attackmovementspeed = 1;
+    [NonSerialized] public float attackrotationspeed = 100;
 
     [NonSerialized] public bool amBoden;
     [NonSerialized] public bool inderluft;
@@ -74,6 +74,8 @@ public class Movescript : MonoBehaviour
     private Playerslidewalls playerslidewalls = new Playerslidewalls();
     private Playerswim playerswim = new Playerswim();
     private Playerstun playerstun = new Playerstun();
+    private Playerattack playerattack = new Playerattack();
+    private Playerlockon playerlockon = new Playerlockon();
 
     //animationstate
     public string currentstate;
@@ -110,7 +112,7 @@ public class Movescript : MonoBehaviour
 
     //Lockon
     public LayerMask Lockonlayer;
-    private float lockonrange;
+    public float lockonrange;
     public static bool lockoncheck;
     [NonSerialized] public bool Checkforenemy;
     public static Transform lockontarget;
@@ -118,7 +120,7 @@ public class Movescript : MonoBehaviour
     [NonSerialized] public Enemylockon Enemylistcollider;
     public static List<Enemylockon> availabletargets = new List<Enemylockon>();
     public bool cancellockon;
-    private Transform targetbeforeswap;
+    [NonSerialized] public Transform targetbeforeswap;
 
     //Spells
     public Healingscript healingscript;
@@ -157,7 +159,7 @@ public class Movescript : MonoBehaviour
         Bowweaponswitch,
         Bowhookshot,
         Beforedash,
-        DashKick,
+        Dash,
         Firedashstart,
         Firedash,
         Waterpushback,
@@ -203,6 +205,8 @@ public class Movescript : MonoBehaviour
         playerslidewalls.psm = this;
         playerswim.psm = this;
         playerstun.psm = this;
+        playerattack.psm = this;
+        playerlockon.psm = this;
     }
     private void OnEnable()
     {
@@ -217,6 +221,7 @@ public class Movescript : MonoBehaviour
 
     private void Update()
     {
+        playerlockon.charlockon();
         switch (state)
         {
             default:
@@ -226,17 +231,15 @@ public class Movescript : MonoBehaviour
                 playermovement.groundanimations();
                 playermovement.jump();
                 playerheal.starthealing();
-                Charlockon();
+
                 break;
             case State.Air:
                 playermovement.movement();
                 playerair.airgravity();
                 playerair.minheightforairattack();
-                Charlockon();
                 break;
             case State.Slidedownwall:
                 playerslidewalls.slidewalls();
-                Charlockon();
                 break;
             case State.Heal:
                 healingscript.heal();
@@ -245,7 +248,6 @@ public class Movescript : MonoBehaviour
                 playermovement.movement();
                 playerswim.swim();
                 playermovement.jump();
-                Charlockon();
                 break;
             case State.Stun:
                 playerstun.stun();
@@ -253,6 +255,19 @@ public class Movescript : MonoBehaviour
             case State.Buttonmashstun:
                 playerstun.stun();
                 playerstun.breakstunwithbuttonmash();
+                break;
+            case State.Dash:
+                break;
+            case State.Groundattack:
+                playerattack.attackmovement();
+                playermovement.groundcheck();
+                playerlockon.attacklockonrotation();
+                //meleelockonrotation();
+                //Groundedattack();
+                break;
+            case State.Airattack:
+                playerattack.attackmovement();
+                playerlockon.attacklockonrotation();
                 break;
             case State.Bowcharge:
                 chargearrow();
@@ -267,107 +282,72 @@ public class Movescript : MonoBehaviour
             case State.Actionintoair:
                 intoair();
                 break;
-            case State.Groundattack:
-                Attackmovement();
-                Charlockon();
-                meleelockonrotation();
-                Groundedattack();
-                break;
-            case State.Airattack:
-                Attackmovement();
-                Charlockon();
-                meleelockonrotation();
-                break;
             case State.BowGroundattack:
                 Bowgroundmovement();
-                Charlockon();
                 lockonbowrotation();
                 Groundedattack();
                 break;
             case State.BowAirattack:
-                Charlockon();
                 Bowgroundmovement();
                 break;
             case State.Bowweaponswitch:
-                Charlockon();
                 bowswitch();
                 break;
             case State.Bowhookshot:
-                Charlockon();
                 Bowhookshot();
                 //Minhighforairattack();
                 break;
             case State.Beforedash:           //damit man beim angreifen noch die Richtung bestimmen kann
                 beforedashmovement();
                 break;
-            case State.DashKick:
-                Attackmovement();  // wegen Kick nicht wegen dash
-                break;
             case State.Firedashstart:
-                Charlockon();
                 firedashstartmovement();
                 break;
             case State.Firedash:
-                Charlockon();
                 firedash();
                 break;
             case State.Waterpushback:
-                Charlockon();
                 waterpushback();
                 break;
             case State.Waterintoair:
-                Charlockon();
                 waterintoair();
                 break;
             case State.Waterkickend:
-                Charlockon();
                 waterkickend();
                 break;
             case State.Naturethendril:
-                Charlockon();
                 naturethendrilstart();
                 break;
             case State.Naturethendrilgettotarget:
-                Charlockon();
                 naturethendrilgettotarget();
                 break;
             case State.Icelancestart:
-                Charlockon();
                 icelanceplayermovement();
                 break;
             case State.Icelancefly:
-                Charlockon();
                 icelanceplayertotarget();
                 break;
             case State.Icelanceend:
-                Charlockon();
                 break;
             case State.Stormchainligthning:
-                Charlockon();
                 stormchainligthning();
                 break;
             case State.Secondlightning:
-                Charlockon();
                 stormchainlightningsecondtarget();
                 break;
             case State.Thirdlightning:
-                Charlockon();
                 stormchainlightningthirdtarget();
                 break;
             case State.Endlightning:
-                Charlockon();
                 stormlightningbacktomain();
                 break;
             case State.Darkportalend:
-                Charlockon();
                 darkportalending();
                 break;
             case State.Earthslide:
-                Charlockon();
                 earthslidestart();
                 break;
             case State.Abilitiesempty:
-                Charlockon();
                 break;
         }
     }
@@ -377,10 +357,22 @@ public class Movescript : MonoBehaviour
         animator.CrossFadeInFixedTime(newstate, 0.1f);
         currentstate = newstate;
     }
+    public void ChangeAnimationStateInstant(string newstate)
+    {
+        if (currentstate == newstate) return;
+        animator.Play(newstate);
+        currentstate = newstate;
+    }
     public void switchtogroundstate()
     {
+        amBoden = true;
         graviti = -0.5f;
         state = State.Ground;
+    }
+    public void switchtoairstate()
+    {
+        amBoden = false;
+        state = State.Air;
     }
     public void slowplayer(float slowmovementspeed)
     {
@@ -404,57 +396,6 @@ public class Movescript : MonoBehaviour
         Statics.dazecounter = 0;
         Statics.dazekicksneeded = buttonmashcount;
         Statics.dash = true;
-    }
-    private void Movement()
-    {
-        float h = move.x;                                                                         // Move Script
-        float v = move.y;
-
-        moveDirection = new Vector3(h, 0, v);
-        float magnitude = Mathf.Clamp01(moveDirection.magnitude) * movementspeed;
-        moveDirection.Normalize();
-
-        moveDirection = Quaternion.AngleAxis(CamTransform.rotation.eulerAngles.y, Vector3.up) * moveDirection;                     //Kamera dreht sich mit dem Char
-
-        if (moveDirection != Vector3.zero)
-        {
-            Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);                                              //Char dreht sich
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationspeed * Time.deltaTime);
-        }
-        velocity = moveDirection * magnitude;
-        if (charactercontroller.isGrounded)
-        {
-            //velocity = VelocityUneben(velocity);
-        }
-        velocity.y += graviti;
-
-        if (charactercontroller.isGrounded && Statics.otheraction == false)
-        {
-            //jumpcdafterland += Time.deltaTime;
-            velocity.y = -0.5f;
-            if (moveDirection != Vector3.zero)
-            {
-                ChangeAnimationState(runstate);
-            }
-            else
-            {
-                ChangeAnimationState(idlestate);
-            }
-        }
-        charactercontroller.Move(velocity * Time.deltaTime);
-
-        if (Statics.healcdbool == false && LoadCharmanager.disableattackbuttons == false)
-        {
-            if (amBoden == true)
-            {
-                if (controlls.Player.Heal.IsPressed() && Statics.otheraction == false)
-                {
-                    state = State.Heal;
-                    healingscript.strgpressed();
-                    ChangeAnimationStateInstant(healstart);
-                }
-            }
-        }
     }
     private void Grounded()
     {
@@ -503,60 +444,6 @@ public class Movescript : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 5000 * Time.deltaTime);
         }
     }
-    private void daze()
-    {
-        // die ganzen parameter werden im attackscript zurückgesetzt
-        ChangeAnimationState(dazestate);
-        gravitation = normalgravition;
-        if (charactercontroller.isGrounded)
-        {
-            graviti = -0.5f;
-        }
-        else
-        {
-            float gravity = Physics.gravity.y * gravitation;
-            graviti += gravity * Time.deltaTime;
-        }
-        velocity = new Vector3(0, 0, 0);
-        velocity.y += graviti;
-        charactercontroller.Move(velocity * Time.deltaTime);
-
-        if (controlls.Player.Attack3.WasPerformedThisFrame())
-        {
-            Statics.dazecounter += 1;
-        }
-        if (Statics.dazecounter >= Statics.dazekicksneeded)
-        {
-            dazeimage.SetActive(false);
-            Statics.dash = false;
-            Statics.otheraction = false;
-            state = State.Airintoground;
-        }
-    }
-    private void stun()
-    {
-        ChangeAnimationStateInstant(dazestate);
-        gravitation = normalgravition;
-        if (charactercontroller.isGrounded)
-        {
-            graviti = -0.5f;
-        }
-        else
-        {
-            float gravity = Physics.gravity.y * gravitation;
-            graviti += gravity * Time.deltaTime;
-        }
-        velocity = new Vector3(0, 0, 0);
-        velocity.y = graviti;
-        charactercontroller.Move(velocity * Time.deltaTime);
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        //Gizmos.DrawRay(transform.position + Vector3.up * 0.3f, transform.forward * 1f + Vector3.down * 1f);
-        //Gizmos.DrawSphere(transform.position - Vector3.down * 0.2f, 0.4f);
-        //Gizmos.DrawRay(head.transform.position, Vector3.down);
-    }
 
     private void Groundedattack()
     {
@@ -568,32 +455,6 @@ public class Movescript : MonoBehaviour
         {
             float gravity = Physics.gravity.y * gravitation;
             graviti += gravity * Time.deltaTime;
-        }
-    }
-    private void Attackmovement()
-    {
-        float h = move.x;                                                                         // Move Script
-        float v = move.y;
-
-        moveDirection = new Vector3(h, 0, v);
-        float magnitude = Mathf.Clamp01(moveDirection.magnitude) * movementspeed;
-        moveDirection.Normalize();
-
-        moveDirection = Quaternion.AngleAxis(CamTransform.rotation.eulerAngles.y, Vector3.up) * moveDirection;                     //Kamera dreht sich mit dem Char
-
-        velocity = moveDirection * magnitude;
-        /*if (controller.isGrounded)
-        {
-            velocity = VelocityUneben(velocity);
-        }*/
-        velocity.y += graviti;
-
-        charactercontroller.Move(velocity / movementspeedattack * Time.deltaTime);
-
-        if (moveDirection != Vector3.zero)
-        {
-            Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, attackrotationspeed * Time.deltaTime);
         }
     }
     private void Bowgroundmovement()
@@ -614,7 +475,7 @@ public class Movescript : MonoBehaviour
         }
         velocity.y += graviti;
 
-        charactercontroller.Move(velocity / movementspeedattack * Time.deltaTime);
+        charactercontroller.Move(velocity / attackmovementspeed * Time.deltaTime);
 
     }
 
@@ -638,7 +499,7 @@ public class Movescript : MonoBehaviour
         }
         velocity.y += graviti;
 
-        charactercontroller.Move(velocity / movementspeedattack * Time.deltaTime);
+        charactercontroller.Move(velocity / attackmovementspeed * Time.deltaTime);
     }
     private void airintoground()
     {
@@ -706,8 +567,8 @@ public class Movescript : MonoBehaviour
         else
         {
         }
-        velocity.x = velocity.x / movementspeedattack;
-        velocity.z = velocity.z / movementspeedattack;
+        velocity.x = velocity.x / attackmovementspeed;
+        velocity.z = velocity.z / attackmovementspeed;
         velocity.y += graviti;
         charactercontroller.Move(velocity * Time.deltaTime);
     }
@@ -750,8 +611,8 @@ public class Movescript : MonoBehaviour
             Statics.otheraction = false;
             state = State.Air;*/
         }
-        velocity.x = velocity.x / movementspeedattack;
-        velocity.z = velocity.z / movementspeedattack;
+        velocity.x = velocity.x / attackmovementspeed;
+        velocity.z = velocity.z / attackmovementspeed;
         velocity.y += graviti;
         charactercontroller.Move(velocity * Time.deltaTime);
     }
@@ -801,199 +662,6 @@ public class Movescript : MonoBehaviour
         }
     }
 
-    public void ChangeAnimationStateInstant(string newstate)
-    {
-        if (currentstate == newstate) return;
-        animator.Play(newstate);
-        currentstate = newstate;
-    }
-    public void Charlockon()
-    {
-        if (LoadCharmanager.disableattackbuttons == false || LoadCharmanager.gameispaused == false)
-        {
-            if (controlls.Player.Lockon.WasPerformedThisFrame() && lockoncheck == false || EnemyHP.switchtargetafterdeath == true && lockoncheck == true || bowair3intoground == true)
-            {
-                EnemyHP.switchtargetafterdeath = false;
-                bowair3intoground = false;
-                Checkforenemy = Physics.CheckSphere(transform.position, lockonrange, Lockonlayer);
-                if (Checkforenemy == true)
-                {
-                    if (lockontarget != null)
-                    {
-                        lockontarget.GetComponent<EnemyHP>().focustargetuiend();
-                        lockontarget.GetComponent<EnemyHP>().unmarktarget();
-                    }
-                    float shortestDistance = 100f;                                                          
-                    Collider[] colliders = Physics.OverlapSphere(transform.position, lockonrange);
-
-                    for (int i = 0; i < colliders.Length; i++)
-                    {
-                        Enemylistcollider = colliders[i].GetComponent<Enemylockon>();
-                        if (Enemylistcollider != null)
-                        {
-                            if (!availabletargets.Contains(Enemylistcollider))
-                            {
-                                availabletargets.Add(Enemylistcollider);
-                            }
-                        }
-                    }
-                    for (int t = 0; t < availabletargets.Count; t++)
-                    {
-                        float distancefromtarget = Vector3.Distance(transform.position, availabletargets[t].transform.position);
-                        if (distancefromtarget < shortestDistance)
-                        {
-                            lockontarget = availabletargets[t].lockontransform;
-                            shortestDistance = distancefromtarget;
-                        }
-                    }
-                    lockontarget.GetComponent<EnemyHP>().focustargetuistart();
-                    lockontarget.GetComponent<EnemyHP>().marktarget();
-                    //LockonUI.SetActive(true);
-                    lockoncheck = true;
-                    Invoke("changelockoncancel", 0.1f);
-                }
-                else
-                {
-                    lockoncheck = false;
-                    cancellockon = false;
-                    lockontarget = null;
-                }
-            }
-            if (controlls.Player.Lockonchange.WasPerformedThisFrame() && lockoncheck == true)          //target wechsel per button
-            {
-                Checkforenemy = Physics.CheckSphere(transform.position, lockonrange, Lockonlayer);
-                if (Checkforenemy == true)
-                {
-                    float shortestDistance = 100f;                                                          
-                    Collider[] colliders = Physics.OverlapSphere(transform.position, lockonrange);
-
-                    for (int i = 0; i < colliders.Length; i++)
-                    {
-                        Enemylistcollider = colliders[i].GetComponent<Enemylockon>();
-                        if (Enemylistcollider != null)
-                        {
-                            if (!availabletargets.Contains(Enemylistcollider))
-                            {
-                                availabletargets.Add(Enemylistcollider);
-                            }
-                        }
-                    }
-                    if (lockontarget != null)
-                    {
-                        targetbeforeswap = lockontarget;
-                        lockontarget.GetComponent<EnemyHP>().unmarktarget();
-                        lockontarget.GetComponent<EnemyHP>().focustargetuiend();
-                    }
-                    for (int t = 0; t < availabletargets.Count; t++)
-                    {
-                        float distancefromtarget = Vector3.Distance(transform.position, availabletargets[t].transform.position);
-                        if (distancefromtarget < shortestDistance)
-                        {
-                            if (targetbeforeswap == availabletargets[t].lockontransform)
-                            {
-
-                            }
-                            else
-                            {
-                                lockontarget = availabletargets[t].lockontransform;
-                                shortestDistance = distancefromtarget;
-                            }
-                        }
-                    }
-                    lockontarget.GetComponent<EnemyHP>().focustargetuistart();
-                    lockontarget.GetComponent<EnemyHP>().marktarget();
-                    //LockonUI.SetActive(true);
-                    EnemyHP.switchtargetafterdeath = false;
-                    Invoke("changelockoncancel", 0.1f);
-                }
-                else
-                {
-                    //LockonUI.SetActive(false);
-                    lockoncheck = false;
-                    availabletargets.Clear();
-                    cancellockon = false;
-                    lockontarget = null;
-                }
-            }
-            if (controlls.Player.Lockon.WasPerformedThisFrame() && cancellockon == true)            //beendet lockon durch buttonpress
-            {
-                if (lockontarget != null)
-                {
-                    lockontarget.GetComponent<EnemyHP>().focustargetuiend();
-                    lockontarget.GetComponent<EnemyHP>().unmarktarget();
-                }
-                //LockonUI.SetActive(false);
-                lockoncheck = false;
-                availabletargets.Clear();
-                cancellockon = false;
-                lockontarget = null;
-            }
-            if (lockontarget != null && cancellockon == true)                                                                     //sucht neues target wenn momentanes target außer lockonrange ist
-            {
-                if (Vector3.Distance(transform.position, lockontarget.transform.position) > lockonrange)
-                {
-                    
-                    lockontarget.GetComponent<EnemyHP>().focustargetuiend();
-                    lockontarget.GetComponent<EnemyHP>().unmarktarget();
-                    availabletargets.Clear();
-
-                    float shortestDistance = 100f;
-                    Collider[] colliders = Physics.OverlapSphere(transform.position, lockonrange);
-                    for (int i = 0; i < colliders.Length; i++)
-                    {
-                        Enemylistcollider = colliders[i].GetComponent<Enemylockon>();
-                        if (Enemylistcollider != null)
-                        {
-                            if (!availabletargets.Contains(Enemylistcollider))
-                            {
-                                availabletargets.Add(Enemylistcollider);
-                            }
-                        }
-                    }
-                    if (availabletargets.Count > 1)
-                    {
-                        for (int t = 0; t < availabletargets.Count; t++)
-                        {
-                            float distancefromtarget = Vector3.Distance(transform.position, availabletargets[t].transform.position);
-                            if (distancefromtarget < shortestDistance)
-                            {
-                                lockontarget = availabletargets[t].lockontransform;
-                                shortestDistance = distancefromtarget;
-                            }
-                        }
-                        lockontarget.GetComponent<EnemyHP>().focustargetuistart();
-                        lockontarget.GetComponent<EnemyHP>().marktarget();
-                        //LockonUI.SetActive(true);
-                        lockoncheck = true;
-                        Invoke("changelockoncancel", 0.1f);
-                    }
-                    else
-                    {
-                        lockoncheck = false;
-                        availabletargets.Clear();
-                        cancellockon = false;
-                        lockontarget = null;
-                    }
-                }
-            }
-        }
-    }
-    private void changelockoncancel()
-    {
-        cancellockon = true;
-    }
-    private void meleelockonrotation()
-    {
-
-        if (lockontarget != null && lockoncheck == true)
-        {
-            Vector3 lookPos = lockontarget.transform.position - transform.position;
-            lookPos.y = 0;
-            Quaternion rotation = Quaternion.LookRotation(lookPos);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 100);
-        }
-
-    }
     private void lockonbowrotation()
     {
         if (lockontarget != null && lockoncheck == true)
@@ -1526,230 +1194,5 @@ public class Movescript : MonoBehaviour
             }
     }
 }
-
-
-/*
-private void waterpushback()
-{
-    if (lockontarget != null)
-    {
-        Transform target = lockontarget;
-        Vector3 newtransformposi = transform.position;
-        newtransformposi.y = transform.position.y;
-        Vector3 newlockonposi = target.position;
-        newlockonposi.y = transform.position.y;
-        Vector3 endposi = newlockonposi + (transform.forward * -15);
-        Vector3 distancetomove = endposi - newtransformposi;
-        Vector3 move = distancetomove.normalized * 17 * Time.deltaTime;
-        controller.Move(move);
-        //transform.position = Vector3.MoveTowards(newtransformposi, newlockonposi, -17 * Time.deltaTime);
-        if (Vector3.Distance(transform.position, target.position) > 12f)
-        {
-            ChangeAnimationState(waterintoairstate);
-            state = State.Waterintoair;
-        }
-    }
-    else
-    {
-        Abilitiesend();
-    }
-
-}
-private void waterpushbackdmg()
-{
-    if (lockontarget != null)
-    {
-        Collider[] cols = Physics.OverlapSphere(lockontarget.position, 2f, Dmglayer);
-        foreach (Collider Enemyhit in cols)
-
-            if (Enemyhit.gameObject.GetComponent<Checkforhitbox>())
-            {
-                int dmgdealed = 7;
-                Enemyhit.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed);
-                var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
-                showtext.GetComponent<TextMeshPro>().color = Color.red;
-            }
-    }
-}
-
-/*private void waterintoair()
-{
-    if (lockontarget != null)
-    {
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.up, 15 * Time.deltaTime);
-    }
-    else
-    {
-        Abilitiesend();
-    }
-}
-private void waterintoairdmg()
-{
-    Collider[] cols = Physics.OverlapSphere(transform.position, 4f, Dmglayer);
-    foreach (Collider Enemyhit in cols)
-
-        if (Enemyhit.gameObject.GetComponent<Checkforhitbox>())
-        {
-            int dmgdealed = 7;
-            Enemyhit.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed);
-            var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-            showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
-            showtext.GetComponent<TextMeshPro>().color = Color.red;
-        }
-}
-private void startwaterkick()
-{
-    ChangeAnimationState(waterkickstate);
-    state = State.Waterkickend;
-}
-private void waterkickend()
-{
-    if (lockontarget != null)
-    {
-        Vector3 distancetomove = lockontarget.position - transform.position;
-        Vector3 move = distancetomove.normalized * 25 * Time.deltaTime;
-        controller.Move(move);
-        //transform.position = Vector3.MoveTowards(transform.position, lockontarget.position, 25 * Time.deltaTime);
-        transform.rotation = Quaternion.LookRotation(lockontarget.transform.position - transform.position, Vector3.up);
-        if (Vector3.Distance(transform.position, lockontarget.position) < 3f)
-        {
-            Collider[] cols = Physics.OverlapSphere(transform.position, 4f, Dmglayer);
-            foreach (Collider Enemyhit in cols)
-
-                if (Enemyhit.gameObject.GetComponent<Checkforhitbox>())
-                {
-                    int dmgdealed = 10;
-                    Enemyhit.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed);
-                    var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                    showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
-                    showtext.GetComponent<TextMeshPro>().color = Color.red;
-                }
-            Vector3 lookPos = lockontarget.transform.position - transform.position;
-            lookPos.y = 0;
-            transform.rotation = Quaternion.LookRotation(lookPos);
-            Abilitiesend();
-        }
-    }
-    else Abilitiesend();
-}*/
-
-/*private Vector3 VelocityUneben(Vector3 velocity)                     // alte slidewallfunktion
-{
-    Ray nachunten = new Ray(transform.position + Vector3.up * 0.3f, Vector3.down);          // sonst geht der ray durch den boden
-    if (Physics.Raycast(nachunten, out RaycastHit nachunteninfo, 1.3f))
-    {
-        Slidedownwalls = nachunteninfo.normal;
-        if (Vector3.Angle(Slidedownwalls, Vector3.up) > controller.slopeLimit + 5 && Vector3.Angle(Slidedownwalls, Vector3.up) < 89.9f)                 // wenn ich jump kann ich noch auf bis zu 45winkel stehen
-        {
-            ChangeAnimationState(idlestate);
-            state = State.Slidedownwall;
-        }
-    }
-    else
-    {
-        Ray ray = new Ray(this.transform.position + Vector3.up * 0.3f, transform.forward + Vector3.down);          // sonst geht der ray durch den boden
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, 1f))
-        {
-            Slidedownwalls = hitInfo.normal;
-            if (Vector3.Angle(Slidedownwalls, Vector3.up) > controller.slopeLimit + 5 && Vector3.Angle(Slidedownwalls, Vector3.up) < 89.9f)                 // wenn ich jump kann ich noch auf bis zu 45winkel stehen
-            {
-                ChangeAnimationState(idlestate);
-                state = State.Slidedownwall;
-            }
-        }
-    }
-    Ray uneben = new Ray(this.transform.position + Vector3.up * 0.3f, Vector3.down);
-    if (Physics.Raycast(uneben, out RaycastHit unebeninfo, 1f))
-    {
-        Quaternion bodensteigung = Quaternion.FromToRotation(Vector3.up, unebeninfo.normal);
-        Vector3 Velocitysteigung = bodensteigung * velocity;
-        if (Velocitysteigung.y < 0)
-        {
-            return Velocitysteigung;
-        }
-
-    }
-    return velocity;
-}
-    /*private void slidedownwalls()
-    {
-        ChangeAnimationState(idlestate);
-        //Ray nachunten = new Ray(transform.position, Vector3.down);
-        //if (Physics.Raycast(nachunten, out RaycastHit hitInfo, 0.2f))
-        Ray ray = new Ray(this.transform.position + Vector3.up * 0.3f, transform.forward + Vector3.down);          // sonst geht der ray durch den boden
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, 0.8f))
-        {
-            float angle = Vector3.Angle(Slidedownwalls, Vector3.up);
-            float math = 90 - angle;
-            if (angle > 70)
-            {
-                Slidedownwalls = hitInfo.normal;
-           
-                moveDirection = new Vector3(Slidedownwalls.x * (1.5f / angle * math), -Slidedownwalls.y * angle, Slidedownwalls.z * (1.5f / angle * math)) * 15;
-            }
-            else if (angle > controller.slopeLimit)
-            {
-                Slidedownwalls = hitInfo.normal;
-
-                moveDirection = new Vector3(Slidedownwalls.x * (1.5f / angle * math), -Slidedownwalls.y * angle, Slidedownwalls.z * (1.5f / angle * math)) * 10;
-            }
-            else
-            {
-                state = State.Ground;
-            }
-        }
-        else
-        {
-            state = State.Ground;
-        }
-        controller.Move(moveDirection * Time.deltaTime);
-    }*/
-
-/*if (LoadCharmanager.disableattackbuttons == false || LoadCharmanager.gameispaused == false)
-{
-        Checkforenemy = Physics.CheckSphere(transform.position, lockonrange, Lockonlayer);
-    if (Checkforenemy == true)
-    {
-        float shortestDistance = 100f;                                                          // Value um später if (distancefromtarget) für einen frame zu resten, der wert muss immer höher sein als distanceformtarget, deswegen infinity
-        Collider[] colliders = Physics.OverlapSphere(transform.position, lockonrange);
-
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            Enemylistcollider = colliders[i].GetComponent<Enemylockon>();
-            if (Enemylistcollider != null)
-            {
-                if (!availabletargets.Contains(Enemylistcollider))
-                {
-                    availabletargets.Add(Enemylistcollider);
-                }
-            }
-        }
-        for (int t = 0; t < availabletargets.Count; t++)
-        {
-            float distancefromtarget = Vector3.Distance(transform.position, availabletargets[t].transform.position);
-            if (distancefromtarget < shortestDistance)
-            {
-                lockontarget = availabletargets[t].lockontransform;
-                shortestDistance = distancefromtarget;
-                if (Steuerung.Player.Lockon.WasPressedThisFrame() && lockoncheck == false)
-                {
-                    LockonUI.SetActive(true);
-                    shortestDistance = distancefromtarget;
-                    lockontarget = availabletargets[t].lockontransform;
-                    lockoncheck = true;
-                    Invoke("changelockoncancel", 0.1f);
-                }
-                if (Steuerung.Player.Lockonchange.WasReleasedThisFrame() && lockoncheck == true || EnemyHP.switchtargetafterdeath == true && lockoncheck == true || bowair3intoground == true)
-                {
-                    LockonUI.SetActive(true);
-                    EnemyHP.switchtargetafterdeath = false;
-                    shortestDistance = distancefromtarget;
-                    lockontarget = availabletargets[t].lockontransform;
-                    Invoke("changelockoncancel", 0.1f);
-                }
-            }
-        }
-    }*/
 
 

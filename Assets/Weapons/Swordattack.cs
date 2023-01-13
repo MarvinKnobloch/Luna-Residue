@@ -270,7 +270,7 @@ public class Swordattack : MonoBehaviour
     }
     private void dash()
     {
-        movementscript.state = Movescript.State.DashKick;
+        movementscript.state = Movescript.State.Dash;
         movementscript.ChangeAnimationStateInstant(dashstate);
     }
     private void sworddashend()

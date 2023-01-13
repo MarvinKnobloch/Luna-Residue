@@ -22,7 +22,7 @@ public class Playerslidewalls
             float angle = Vector3.Angle(Vector3.up, groundhit.normal);
             if (angle > 89.9)
             {
-                psm.state = Movescript.State.Air;
+                psm.switchtoairstate();
             }
             else if (angle > psm.charactercontroller.slopeLimit)
             {
@@ -30,15 +30,14 @@ public class Playerslidewalls
             }
             else
             {
-                psm.graviti = -0.5f;
-                psm.state = Movescript.State.Ground;
+                psm.switchtogroundstate();
             }
             psm.charactercontroller.Move(psm.moveDirection * Time.deltaTime);
         }
         else
         {
             psm.charactercontroller.Move(Vector3.zero);
-            psm.state = Movescript.State.Air;
+            psm.switchtoairstate();
             Debug.Log("cant hit");
         }
     }

@@ -34,7 +34,7 @@ public class Playermovement
             if (psm.controlls.Player.Jump.WasPressedThisFrame())
             {
                 psm.graviti = psm.jumpheight;
-                psm.state = Movescript.State.Air;
+                psm.switchtoairstate();
                 psm.ChangeAnimationState(jumpstate);
             }
         }
@@ -43,6 +43,7 @@ public class Playermovement
     {
         if (Physics.SphereCast(psm.spherecastcollider.bounds.center, psm.spherecastcollider.radius, Vector3.down, out RaycastHit groundhit, 1.1f, psm.groundchecklayer))
         {
+            psm.amBoden = true;
             float angle = Vector3.Angle(Vector3.up, groundhit.normal);
             if(angle > psm.charactercontroller.slopeLimit +6)          // +3 sonst die ganze zeit state wechsel wenn man gegen ein schräge läuft
             {
@@ -62,7 +63,7 @@ public class Playermovement
         }
         else
         {
-            psm.state = Movescript.State.Air;
+            psm.switchtoairstate();
             Debug.Log("cant hit");
         }
     }
