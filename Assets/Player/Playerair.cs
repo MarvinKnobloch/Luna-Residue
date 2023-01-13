@@ -19,6 +19,8 @@ public class Playerair
                 psm.graviti = psm.maxgravity;
             }
         }
+        psm.velocity.y = psm.graviti;
+        psm.charactercontroller.Move(psm.velocity * Time.deltaTime);
         if (psm.charactercontroller.isGrounded == true && psm.graviti < 0)
         {
             psm.graviti = -0.5f;

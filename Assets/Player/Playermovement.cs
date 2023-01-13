@@ -26,7 +26,6 @@ public class Playermovement
             psm.transform.rotation = Quaternion.RotateTowards(psm.transform.rotation, toRotation, psm.rotationspeed * Time.deltaTime);
         }
         psm.velocity = psm.moveDirection * magnitude;
-        psm.velocity.y = psm.graviti;
     }
     public void jump()
     {
@@ -45,7 +44,7 @@ public class Playermovement
         if (Physics.SphereCast(psm.spherecastcollider.bounds.center, psm.spherecastcollider.radius, Vector3.down, out RaycastHit groundhit, 1.1f, psm.groundchecklayer))
         {
             float angle = Vector3.Angle(Vector3.up, groundhit.normal);
-            if (angle > psm.charactercontroller.slopeLimit + 1)
+            if(angle > psm.charactercontroller.slopeLimit +6)          // +3 sonst die ganze zeit state wechsel wenn man gegen ein schräge läuft
             {
                 Statics.otheraction = false;
                 psm.Charrig.enabled = false;
@@ -57,20 +56,18 @@ public class Playermovement
             else
             {
                 psm.velocity = checkgroundangle(psm.velocity);
-                psm.velocity.y = psm.graviti;
-
-                if (Statics.otheraction == false)
+                psm.velocity.y += psm.graviti;
+                psm.charactercontroller.Move(psm.velocity * Time.deltaTime);
+            }
+            if(Statics.otheraction == false)
+            {
+                if(psm.moveDirection != Vector3.zero)
                 {
-                    //jumpcdafterland += Time.deltaTime;
-                    //velocity.y = -0.5f;
-                    if(psm.moveDirection != Vector3.zero)
-                    {
-                        psm.ChangeAnimationState(runstate);
-                    }
-                    else
-                    {
-                        psm.ChangeAnimationState(idlestate);
-                    }
+                    psm.ChangeAnimationState(runstate);
+                }
+                else
+                {
+                    psm.ChangeAnimationState(idlestate);
                 }
             }
         }
@@ -93,9 +90,5 @@ public class Playermovement
             }
         }
         return velocity;
-    }
-    public void finalmovement()
-    {
-        psm.charactercontroller.Move(psm.velocity * Time.deltaTime);
     }
 }

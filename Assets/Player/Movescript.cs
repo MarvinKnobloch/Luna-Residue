@@ -59,16 +59,20 @@ public class Movescript : MonoBehaviour
 
     private Vector3 hitnormal;
 
+    //swim
+    public GameObject spine;
+    public LayerMask swimlayer;
+
     //Characterrig
     public MonoBehaviour Charrig;
     public bool activaterig;
-    [SerializeField] private GameObject head;
 
     //StatemachineScripts
     public Playermovement playermovement = new Playermovement();
     private Playerair playerair = new Playerair();
     private Playerheal playerheal = new Playerheal();
     private Playerslidewalls playerslidewalls = new Playerslidewalls();
+    private Playerswim playerswim = new Playerswim();
 
     //animationstate
     public string currentstate;
@@ -77,8 +81,6 @@ public class Movescript : MonoBehaviour
     const string runstate = "Running";
     const string fallstate = "Fall";
     const string healstart = "Healstart";
-    const string swimstate = "Swim";
-    const string swimidlestate = "Swimidle";
     const string dazestate = "Daze";
     const string hookshotstate = "Hookshot";
     const string chargestate = "Chargearrow";
@@ -199,6 +201,7 @@ public class Movescript : MonoBehaviour
         playerair.psm = this;
         playerheal.psm = this;
         playerslidewalls.psm = this;
+        playerswim.psm = this;
     }
     private void OnEnable()
     {
@@ -225,15 +228,13 @@ public class Movescript : MonoBehaviour
                 playermovement.groundcheck();
                 playermovement.jump();
                 playerheal.starthealing();
-                playermovement.finalmovement();
                 //Grounded();
                 //Startjump();
                 Charlockon();
                 break;
             case State.Air:
-                playerair.airgravity();
                 playermovement.movement();
-                playermovement.finalmovement();
+                playerair.airgravity();
                 playerair.minheightforairattack();
                 //InAir();
                 //Movement();
@@ -251,9 +252,9 @@ public class Movescript : MonoBehaviour
                 //starthealjump();
                 break;
             case State.Swim:
-                swim();
+                playermovement.movement();
+                playerswim.swim();
                 playermovement.jump();
-                //Startjump();
                 Charlockon();
                 break;
             case State.Addgravity:
@@ -480,60 +481,6 @@ public class Movescript : MonoBehaviour
         float gravity = Physics.gravity.y * gravitation;
         graviti = Mathf.Sqrt(jumpheight * -3 * gravity);
         graviti = jumpheight;
-    }
-    private void swim()
-    {
-        {
-            float h = move.x;                                                                        
-            float v = move.y;
-
-            moveDirection = new Vector3(h, 0, v);
-            float magnitude = Mathf.Clamp01(moveDirection.magnitude) * movementspeed;
-            moveDirection.Normalize();
-
-            moveDirection = Quaternion.AngleAxis(CamTransform.rotation.eulerAngles.y, Vector3.up) * moveDirection;                     //Kamera dreht sich mit dem Char
-
-            charactercontroller.Move(velocity * Time.deltaTime);
-
-            if (moveDirection != Vector3.zero)
-            {
-                Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);                                              //Char dreht sich
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationspeed * Time.deltaTime);
-            }
-            velocity = moveDirection * magnitude;
-            velocity.y = 0;
-            //jumpcdafterland += Time.deltaTime;
-
-            if (moveDirection.x != 0 && moveDirection.z != 0)
-            {
-                ChangeAnimationState(swimstate);
-            }
-            else
-            {
-                ChangeAnimationState(swimidlestate);
-                {
-                    RaycastHit hit;
-                    Ray nachunten = new Ray(head.transform.position, Vector3.down);
-                    if (Physics.Raycast(nachunten, out hit))
-                    {
-                        float distance = hit.distance;
-                        if (distance > 0.86)
-                        {
-                            velocity.y -= 0.5f;
-                        }
-                        else if (distance < 0.82)
-                        {
-                            velocity.y += 0.5f;
-                        }
-                        else
-                        {
-                            velocity.y = 0;
-                        }
-                    }
-                }
-            }
-
-        }
     }
     private void gravity()
     {
