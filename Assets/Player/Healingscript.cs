@@ -7,7 +7,7 @@ using UnityEngine.InputSystem.Utilities;
 
 public class Healingscript : MonoBehaviour
 {
-    private SpielerSteu Steuerung;
+    private SpielerSteu controlls;
     private Animator animator;
     private Attributecontroller attributecontroller;
 
@@ -52,25 +52,25 @@ public class Healingscript : MonoBehaviour
     private void Awake()
     {
         movementscript = GetComponent<Movescript>();
-        Steuerung = Keybindinputmanager.inputActions;
+        controlls = Keybindinputmanager.inputActions;
         animator = GetComponent<Animator>();
         attributecontroller = GetComponent<Attributecontroller>();
     }
 
     private void Start()
     {
-        WASD[0].text = Steuerung.SpielerHeal.Randomhotkey1.GetBindingDisplayString();
-        WASD[1].text = Steuerung.SpielerHeal.Randomhotkey2.GetBindingDisplayString();
-        WASD[2].text = Steuerung.SpielerHeal.Randomhotkey3.GetBindingDisplayString();
-        WASD[3].text = Steuerung.SpielerHeal.Randomhotkey4.GetBindingDisplayString();
-        hotkeys[0] = Steuerung.SpielerHeal.Randomhotkey1;
-        hotkeys[1] = Steuerung.SpielerHeal.Randomhotkey2;
-        hotkeys[2] = Steuerung.SpielerHeal.Randomhotkey3;
-        hotkeys[3] = Steuerung.SpielerHeal.Randomhotkey4;
+        WASD[0].text = controlls.SpielerHeal.Randomhotkey1.GetBindingDisplayString();
+        WASD[1].text = controlls.SpielerHeal.Randomhotkey2.GetBindingDisplayString();
+        WASD[2].text = controlls.SpielerHeal.Randomhotkey3.GetBindingDisplayString();
+        WASD[3].text = controlls.SpielerHeal.Randomhotkey4.GetBindingDisplayString();
+        hotkeys[0] = controlls.SpielerHeal.Randomhotkey1;
+        hotkeys[1] = controlls.SpielerHeal.Randomhotkey2;
+        hotkeys[2] = controlls.SpielerHeal.Randomhotkey3;
+        hotkeys[3] = controlls.SpielerHeal.Randomhotkey4;
     }
     private void OnEnable()
     {
-        Steuerung.Enable();
+        controlls.Enable();
         failinputbool = false;
         {
             if (healanzeige.activeSelf == true)
@@ -83,92 +83,87 @@ public class Healingscript : MonoBehaviour
     {
         if (Statics.healcdbool == false && LoadCharmanager.disableattackbuttons == false)
         {
-            if (movementscript.amBoden == true)
+            //if (movementscript.amBoden == true)
+            if (readinputs == true)
             {
-                if (readinputs == true)
+                if (Input.anyKeyDown && failinputbool == false)
                 {
-                    if (Input.anyKeyDown && failinputbool == false)
+                    if (hotkeys[currentinput].WasPressedThisFrame())
                     {
-                        if (hotkeys[currentinput].WasPressedThisFrame())
-                        {
-                            correcthotkey();
-                        }
-                        else
-                        {
-                            failinputbool = true;
-                            StartCoroutine("wrongcd");
-                        }
+                        correcthotkey();
                     }
-                    if (singlehealcast == true && resurrectioncast == false)
+                    else
                     {
-                        if (Steuerung.SpielerHeal.Target1.WasPerformedThisFrame())
-                        {
-                            healtarget = 1;
-                            movementscript.ChangeAnimationState(singlehealend);
-                        }
-                        if (Steuerung.SpielerHeal.Target2.WasPerformedThisFrame() && LoadCharmanager.Overallthirdchar !=null)
-                        {
-                            healtarget = 2;
-                            movementscript.ChangeAnimationState(singlehealend);
-                        }
-                        if (Steuerung.SpielerHeal.Target3.WasPerformedThisFrame() && LoadCharmanager.Overallforthchar !=null)
-                        {
-                            healtarget = 3;
-                            movementscript.ChangeAnimationState(singlehealend);
-                        }
-                    }
-                    if (grouphealcast == true)
-                    {
-                        if (Steuerung.SpielerHeal.Groupheal.WasPerformedThisFrame())
-                        {
-                            movementscript.ChangeAnimationState(grouphealend);
-                        }
-                    }
-                    if (resurrectioncast == true)
-                    {
-                        if (Steuerung.SpielerHeal.Target1.WasPerformedThisFrame())
-                        {
-                            healtarget = 1;
-                            Debug.Log("res1");
-                        }
-                        if (Steuerung.SpielerHeal.Target2.WasPerformedThisFrame() && LoadCharmanager.Overallthirdchar != null)
-                        {
-                            healtarget = 2;
-                            Debug.Log("res2");
-                        }
-                        if (Steuerung.SpielerHeal.Target3.WasPerformedThisFrame() && LoadCharmanager.Overallforthchar != null)
-                        {
-                            healtarget = 3;
-                            Debug.Log("res3");
-                        }
+                        failinputbool = true;
+                        StartCoroutine("wrongcd");
                     }
                 }
-                if (Steuerung.Player.Heal.WasReleasedThisFrame() && strgwaspressed == true) //&& animator.GetCurrentAnimatorStateInfo(0).IsName("Healend") == false)
+                if (singlehealcast == true && resurrectioncast == false)
                 {
-                    releasestrg();
+                    if (controlls.SpielerHeal.Target1.WasPerformedThisFrame())
+                    {
+                        healtarget = 1;
+                        movementscript.ChangeAnimationState(singlehealend);
+                    }
+                    if (controlls.SpielerHeal.Target2.WasPerformedThisFrame() && LoadCharmanager.Overallthirdchar != null)
+                    {
+                        healtarget = 2;
+                        movementscript.ChangeAnimationState(singlehealend);
+                    }
+                    if (controlls.SpielerHeal.Target3.WasPerformedThisFrame() && LoadCharmanager.Overallforthchar != null)
+                    {
+                        healtarget = 3;
+                        movementscript.ChangeAnimationState(singlehealend);
+                    }
                 }
+                if (grouphealcast == true)
+                {
+                    if (controlls.SpielerHeal.Groupheal.WasPerformedThisFrame())
+                    {
+                        movementscript.ChangeAnimationState(grouphealend);
+                    }
+                }
+                if (resurrectioncast == true)
+                {
+                    if (controlls.SpielerHeal.Target1.WasPerformedThisFrame())
+                    {
+                        healtarget = 1;
+                        Debug.Log("res1");
+                    }
+                    if (controlls.SpielerHeal.Target2.WasPerformedThisFrame() && LoadCharmanager.Overallthirdchar != null)
+                    {
+                        healtarget = 2;
+                        Debug.Log("res2");
+                    }
+                    if (controlls.SpielerHeal.Target3.WasPerformedThisFrame() && LoadCharmanager.Overallforthchar != null)
+                    {
+                        healtarget = 3;
+                        Debug.Log("res3");
+                    }
+                }
+            }
+            if (controlls.Player.Heal.WasReleasedThisFrame() && strgwaspressed == true) //&& animator.GetCurrentAnimatorStateInfo(0).IsName("Healend") == false)
+            {
+                Debug.Log("heal");
+                cancelhealing();
+                movementscript.state = Movescript.State.Ground;
+            }
+            if (controlls.Player.Jump.WasPerformedThisFrame())
+            {
+                Debug.Log("jump");
+                cancelhealing();
+                movementscript.playermovement.jump();
             }
         }
     }
 
-    private void releasestrg()
+    private void cancelhealing()
     {
         if (healanzeige.activeSelf == true)
         {
             Statics.otheraction = false;
         }
         resethealvalues();
-        movementscript.state = Movescript.State.Airintoground;
-    }
-    public void jumpwhileheal()
-    {
-
-        if (healanzeige.activeSelf == true)
-        {
-            Statics.otheraction = false;
-        }
-        resethealvalues();
-
     }
     public void resethealvalues()
     {
@@ -188,7 +183,7 @@ public class Healingscript : MonoBehaviour
         readinputs = true;
         healanzeige.SetActive(true);
         healcanceled = false;
-        movementscript.ChangeAnimationState(healstart);
+        //movementscript.ChangeAnimationState(healstart);
         Statics.otheraction = true;
         buttons[0].color = Color.white;
         buttons[1].color = Color.white;
@@ -308,7 +303,7 @@ public class Healingscript : MonoBehaviour
         }
         healtarget = 0;
         GlobalCD.starthealingcd();
-        movementscript.state = Movescript.State.Airintoground;
+        movementscript.state = Movescript.State.Ground;
     }
 
     private void castgroupheal()
@@ -332,7 +327,7 @@ public class Healingscript : MonoBehaviour
             LoadCharmanager.Overallforthchar.GetComponent<SpielerHP>().castheal(healamount);
         }
         GlobalCD.starthealingcd();
-        movementscript.state = Movescript.State.Airintoground;
+        movementscript.state = Movescript.State.Ground;
     }
     IEnumerator wrongcd()
     {

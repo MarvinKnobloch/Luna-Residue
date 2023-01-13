@@ -64,8 +64,9 @@ public class Movescript : MonoBehaviour
     [SerializeField] private GameObject head;
 
     //StatemachineScripts
-    private Playermovement playermovement;
+    public Playermovement playermovement;
     private Playerair playerair = new Playerair();
+    private Playerheal playerheal = new Playerheal();
 
     //animationstate
     public string currentstate;
@@ -115,7 +116,7 @@ public class Movescript : MonoBehaviour
     private Transform targetbeforeswap;
 
     //Spells
-    private Healingscript healingscript;
+    public Healingscript healingscript;
     public LayerMask spellsdmglayer;
     public GameObject damagetext;
     private bool chainligthningenemys;
@@ -135,7 +136,6 @@ public class Movescript : MonoBehaviour
     {
         Ground,
         Air,
-        Jump,
         Slidedownwall,
         Swim,
         Heal,
@@ -196,6 +196,7 @@ public class Movescript : MonoBehaviour
         playermovement = new Playermovement();
         playermovement.psm = this;
         playerair.psm = this;
+        playerheal.psm = this;
 
 
 
@@ -224,6 +225,7 @@ public class Movescript : MonoBehaviour
                 playermovement.movement();
                 playermovement.groundcheck();
                 playermovement.jump();
+                playerheal.starthealing();
                 playermovement.finalmovement();
                 //Grounded();
                 //Startjump();
@@ -233,17 +235,16 @@ public class Movescript : MonoBehaviour
                 playerair.airgravity();
                 playermovement.movement();
                 playermovement.finalmovement();
+                playerair.minheightforairattack();
                 //InAir();
                 //Movement();
                 Charlockon();
-                Minhighforairattack();
-                break;
-            case State.Jump:                 //kurzer übergang von ground to air
-                Jumpmovement();
+                //Minhighforairattack();
                 break;
             case State.Heal:
                 healingscript.heal();
-                starthealjump();
+                //playermovement.jump();
+                //starthealjump();
                 break;
             case State.Slidedownwall:
                 slidewalls();
@@ -251,7 +252,8 @@ public class Movescript : MonoBehaviour
                 break;
             case State.Swim:
                 swim();
-                Startjump();
+                playermovement.jump();
+                //Startjump();
                 Charlockon();
                 break;
             case State.Addgravity:
@@ -314,7 +316,7 @@ public class Movescript : MonoBehaviour
             case State.Bowhookshot:
                 Charlockon();
                 Bowhookshot();
-                Minhighforairattack();
+                //Minhighforairattack();
                 break;
             case State.Beforedash:           //damit man beim angreifen noch die Richtung bestimmen kann
                 beforedashmovement();
@@ -470,78 +472,14 @@ public class Movescript : MonoBehaviour
             state = State.Actionintoair;
         }
     }
-    private void Startjump()
-    {
-        jumpcdafterland += Time.deltaTime;
-        if (LoadCharmanager.disableattackbuttons == false || LoadCharmanager.gameispaused == false)
-        {
-            if (controlls.Player.Jump.WasPressedThisFrame() && jumpcdafterland > jumpcd)
-            {
-                state = State.Jump;
-                amBoden = false;
-                ChangeAnimationState(jumpstate);
-                float gravity = Physics.gravity.y * gravitation;
-                graviti = Mathf.Sqrt(jumpheight * -3 * gravity);
-                graviti = jumpheight;
-            }
-        }
-    }
     public void jumppad(float jumpheight)
     {
-        state = State.Jump;
+        //state = State.Jump;
         amBoden = false;
         ChangeAnimationState(jumpstate);
         float gravity = Physics.gravity.y * gravitation;
         graviti = Mathf.Sqrt(jumpheight * -3 * gravity);
         graviti = jumpheight;
-    }
-    private void starthealjump()
-    {
-        jumpcdafterland += Time.deltaTime;
-        if (LoadCharmanager.disableattackbuttons == false || LoadCharmanager.gameispaused == false)
-        {
-            if (controlls.Player.Jump.WasPressedThisFrame() && jumpcdafterland > jumpcd)
-            {
-                GetComponent<Healingscript>().jumpwhileheal();
-                state = State.Jump;
-                amBoden = false;
-                ChangeAnimationState(jumpstate);
-                float gravity = Physics.gravity.y * gravitation;
-                graviti = Mathf.Sqrt(jumpheight * -3 * gravity);
-                graviti = jumpheight;
-            }
-        }
-    }
-
-    private void Jumpmovement()
-    {
-
-        float h = move.x;
-        float v = move.y;
-
-        moveDirection = new Vector3(h, 0, v);
-        float magnitude = Mathf.Clamp01(moveDirection.magnitude) * movementspeed;
-        moveDirection.Normalize();
-
-        moveDirection = Quaternion.AngleAxis(CamTransform.rotation.eulerAngles.y, Vector3.up) * moveDirection;
-
-        float gravity = Physics.gravity.y * gravitation;
-        graviti += gravity * Time.deltaTime;
-
-        velocity = moveDirection * magnitude;
-        velocity.y += graviti;
-
-        charactercontroller.Move(velocity * Time.deltaTime);
-
-        if (moveDirection != Vector3.zero)
-        {
-            Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationspeed * Time.deltaTime);
-        }
-        if (charactercontroller.isGrounded == false)
-        {
-            state = State.Actionintoair;
-        }
     }
     private void swim()
     {
@@ -945,7 +883,7 @@ public class Movescript : MonoBehaviour
             state = State.Airintoground;
         }
     }
-    private void Minhighforairattack()
+    /*private void Minhighforairattack()
     {
         Ray ray = new Ray(this.transform.position + Vector3.up * 0.3f, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, 0.8f))
@@ -956,7 +894,7 @@ public class Movescript : MonoBehaviour
         {
             airattackminheight = true;
         }
-    }
+    }*/
     private void bowswitch()
     {
         float gravity = Physics.gravity.y * gravitation;

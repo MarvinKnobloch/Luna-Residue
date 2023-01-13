@@ -30,11 +30,14 @@ public class Playermovement
     }
     public void jump()
     {
-        if (psm.controlls.Player.Jump.WasPressedThisFrame())
+        if (LoadCharmanager.disableattackbuttons == false || LoadCharmanager.gameispaused == false)
         {
-            psm.graviti = psm.jumpheight;
-            psm.state = Movescript.State.Air;
-            psm.ChangeAnimationState(jumpstate);
+            if (psm.controlls.Player.Jump.WasPressedThisFrame())
+            {
+                psm.graviti = psm.jumpheight;
+                psm.state = Movescript.State.Air;
+                psm.ChangeAnimationState(jumpstate);
+            }
         }
     }
     public void groundcheck()

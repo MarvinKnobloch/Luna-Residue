@@ -25,4 +25,16 @@ public class Playerair
             psm.state = Movescript.State.Ground;
         }
     }
+    public void minheightforairattack()
+    {
+        Ray ray = new Ray(psm.transform.position + Vector3.up * 0.3f, Vector3.down);
+        if (Physics.Raycast(ray, out RaycastHit hit, 0.8f))
+        {
+            psm.airattackminheight = false;
+        }
+        else
+        {
+            psm.airattackminheight = true;
+        }
+    }
 }
