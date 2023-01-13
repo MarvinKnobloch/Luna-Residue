@@ -78,7 +78,7 @@ public class Fistattack : MonoBehaviour
         {
             if (movementscript.amBoden == true)
             {
-                if (Steuerung.Spielerboden.Attack1.WasPressedThisFrame() && basicattackcd > 1f && Statics.otheraction == false)
+                if (Steuerung.Player.Attack1.WasPressedThisFrame() && basicattackcd > 1f && Statics.otheraction == false)
                 {
                     movementscript.state = Movescript.State.Groundattack;
                     Statics.otheraction = true;
@@ -87,23 +87,23 @@ public class Fistattack : MonoBehaviour
                     attackend = false;
                     resetfaustani();
                 }
-                if (Steuerung.Spielerboden.Attack1.WasPressedThisFrame() && basicchain == true && combochain <= 1)
+                if (Steuerung.Player.Attack1.WasPressedThisFrame() && basicchain == true && combochain <= 1)
                 {
                     input = false;
                     basicchain = false;
                 }
 
-                if (basic == true && Steuerung.Spielerboden.Attack2.WasPressedThisFrame())
+                if (basic == true && Steuerung.Player.Attack2.WasPressedThisFrame())
                 {
                     input = false;
                     basic = false;
                 }
-                if (basic2 == true && Steuerung.Spielerboden.Attack2.WasPressedThisFrame())
+                if (basic2 == true && Steuerung.Player.Attack2.WasPressedThisFrame())
                 {
                     input = false;
                     basic2 = false;
                 }
-                if (attackend == true && Steuerung.Spielerboden.Attack1.WasPerformedThisFrame())
+                if (attackend == true && Steuerung.Player.Attack1.WasPerformedThisFrame())
                 {
                     input = false;
                     attackend = false;
@@ -112,7 +112,7 @@ public class Fistattack : MonoBehaviour
                     mid = false;
                     up = false;
                 }
-                if (attackend == true && Steuerung.Spielerboden.Attack2.WasPerformedThisFrame())
+                if (attackend == true && Steuerung.Player.Attack2.WasPerformedThisFrame())
                 {
                     input = false;
                     attackend = false;
@@ -121,7 +121,7 @@ public class Fistattack : MonoBehaviour
                     mid = true;
                     up = false;
                 }
-                if (attackend == true && Steuerung.Spielerboden.Attack3.WasPerformedThisFrame())
+                if (attackend == true && Steuerung.Player.Attack3.WasPerformedThisFrame())
                 {
                     input = false;
                     attackend = false;
@@ -134,23 +134,23 @@ public class Fistattack : MonoBehaviour
 
             if (movementscript.inderluft == true)
             {
-                if (movementscript.attack3intoair == true && Steuerung.Spielerboden.Attack1.WasPressedThisFrame())
+                if (movementscript.attack3intoair == true && Steuerung.Player.Attack1.WasPressedThisFrame())
                 {
                     movementscript.state = Movescript.State.Airattack;
                     movementscript.amBoden = false;
                     movementscript.attack3intoair = false;
                     input = false;
                 }
-                if (Steuerung.Spielerboden.Attack1.WasPressedThisFrame() && air3downintobasic == true && combochain <= 1)
+                if (Steuerung.Player.Attack1.WasPressedThisFrame() && air3downintobasic == true && combochain <= 1)
                 {
                     air3downintobasic = false;
                     input = false;
                 }
 
-                if (Steuerung.Spielerboden.Attack1.WasPressedThisFrame() && movementscript.attackabstandboden == true && movementscript.attackonceair == true && Statics.otheraction == false && Statics.infight == true)
+                if (Steuerung.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false && Statics.infight == true)
                 {
                     movementscript.state = Movescript.State.Airattack;
-                    movementscript.runter = 0f;
+                    movementscript.graviti = 0f;
                     movementscript.gravitation = 0f;
                     Statics.otheraction = true;
                     movementscript.attackonceair = false;
@@ -160,7 +160,7 @@ public class Fistattack : MonoBehaviour
                     movementscript.ChangeAnimationState(basicair1state);
                     resetfaustani();
                 }
-                if (Steuerung.Spielerboden.Attack1.WasPressedThisFrame() && movementscript.attackabstandboden == true && basicairchain == true && combochain <= 1)
+                if (Steuerung.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && basicairchain == true && combochain <= 1)
                 {
                     basicairchain = false;
                     input = false;
@@ -168,13 +168,13 @@ public class Fistattack : MonoBehaviour
 
                 if (movementscript.amBoden == false)
                 {
-                    if (basicairattack == true && Steuerung.Spielerboden.Attack2.WasPressedThisFrame())
+                    if (basicairattack == true && Steuerung.Player.Attack2.WasPressedThisFrame())
                     {
-                        movementscript.attackabstandboden = true;
+                        movementscript.airattackminheight = true;
                         basicairattack = false;
                         input = false;
                     }
-                    if (stayairattack == true && Steuerung.Spielerboden.Attack1.WasPressedThisFrame())
+                    if (stayairattack == true && Steuerung.Player.Attack1.WasPressedThisFrame())
                     {
                         stayairattack = false;
                         combochain++;
@@ -183,7 +183,7 @@ public class Fistattack : MonoBehaviour
                         mid = false;
                         up = false;
                     }
-                    if (stayairattack == true && Steuerung.Spielerboden.Attack2.WasPressedThisFrame())
+                    if (stayairattack == true && Steuerung.Player.Attack2.WasPressedThisFrame())
                     {
                         stayairattack = false;
                         combochain++;
@@ -192,7 +192,7 @@ public class Fistattack : MonoBehaviour
                         mid = true;
                         up = false;
                     }
-                    if (stayairattack == true && Steuerung.Spielerboden.Attack3.WasPressedThisFrame())
+                    if (stayairattack == true && Steuerung.Player.Attack3.WasPressedThisFrame())
                     {
                         stayairattack = false;
                         combochain++;
@@ -226,7 +226,7 @@ public class Fistattack : MonoBehaviour
                 movementscript.bowair3intoground = false;
             }
 
-            if (Steuerung.Spielerboden.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false)
+            if (Steuerung.Player.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false)
             {
                 movementscript.state = Movescript.State.Beforedash;
                 Statics.otheraction = true;
@@ -241,11 +241,11 @@ public class Fistattack : MonoBehaviour
                 eleAbilities.icelanceiscanceled();
                 input = false;
                 combochain = 0;
-                movementscript.runter = 0;
+                movementscript.graviti = 0;
                 movementscript.gravitation = 0f;
                 Invoke("dash", 0.05f);
             }
-            /*if (Steuerung.Spielerboden.Kick.WasPerformedThisFrame() && Statics.kickcdbool == false && Statics.dash == false)
+            /*if (Steuerung.Player.Kick.WasPerformedThisFrame() && Statics.kickcdbool == false && Statics.dash == false)
             {
                 Movementscript.state = Movescript.State.DashKick;
                 Statics.otheraction = true;
@@ -268,7 +268,7 @@ public class Fistattack : MonoBehaviour
         if (root == true)
         {
             Vector3 velocity = animator.deltaPosition;
-            movementscript.controller.Move(velocity);
+            movementscript.charactercontroller.Move(velocity);
         }
     }
     private void dash()
@@ -412,7 +412,7 @@ public class Fistattack : MonoBehaviour
         movementscript.attackonceair = false;
         root = true;
         movementscript.state = Movescript.State.Airattack;
-        movementscript.runter = 0f;
+        movementscript.graviti = 0f;
         movementscript.gravitation = 0f;
         movementscript.amBoden = false;
         movementscript.inderluft = true;
@@ -507,16 +507,16 @@ public class Fistattack : MonoBehaviour
         root = false;
         air3downintobasic = false;
         movementscript.gravitation = 4f;
-        movementscript.runter = -0.5f;
+        movementscript.graviti = -0.5f;
 
         Ray ray = new Ray(this.transform.position + Vector3.up * 0.3f, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, 0.4f) && input == false)
         {
-            movementscript.controller.stepOffset = 0.2f;
+            movementscript.charactercontroller.stepOffset = 0.2f;
             movementscript.attackonceair = true;
             movementscript.amBoden = true;
             movementscript.inderluft = false;
-            movementscript.attackabstandboden = false;
+            movementscript.airattackminheight = false;
             animator.SetBool("attack1", true);
             movementscript.state = Movescript.State.Groundattack;
         }
@@ -583,7 +583,7 @@ public class Fistattack : MonoBehaviour
         {
             Statics.otheraction = true;
             movementscript.state = Movescript.State.Groundattack;
-            movementscript.controller.stepOffset = 0;
+            movementscript.charactercontroller.stepOffset = 0;
             movementscript.ChangeAnimationState(fistswitchstate);
         }
     }

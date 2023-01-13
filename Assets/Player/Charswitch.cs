@@ -30,7 +30,7 @@ public class Charswitch : MonoBehaviour
     {
         if (LoadCharmanager.disableattackbuttons == false)
         {
-            if (Steuerung.Spielerboden.Charchange.WasPerformedThisFrame() && Statics.otheraction == false && Statics.charswitchbool == false)
+            if (Steuerung.Player.Charchange.WasPerformedThisFrame() && Statics.otheraction == false && Statics.charswitchbool == false)
             {
                 if (Statics.currentactiveplayer == 0)
                 {

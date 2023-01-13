@@ -73,7 +73,7 @@ public class EleAbilities : MonoBehaviour
         {
             if (Manamanager.mana >= basicmanacosts)
             {
-                if (Steuerung.Spielerboden.Ability1.WasPerformedThisFrame())
+                if (Steuerung.Player.Ability1.WasPerformedThisFrame())
                 {
                     if (Statics.currentactiveplayer == 0 && Statics.spellnumbers[0] < 24)                // 24 = anzahl der vorhanden Spells
                     {
@@ -84,7 +84,7 @@ public class EleAbilities : MonoBehaviour
                         choosespell(Statics.spellnumbers[2]);
                     }
                 }
-                if (Steuerung.Spielerboden.Ability2.WasPerformedThisFrame())
+                if (Steuerung.Player.Ability2.WasPerformedThisFrame())
                 {
                     if (Statics.currentactiveplayer == 0 && Statics.spellnumbers[1] < 24)
                     {
@@ -95,19 +95,19 @@ public class EleAbilities : MonoBehaviour
                         choosespell(Statics.spellnumbers[3]);
                     }
                 }
-                if (Steuerung.Spielerboden.Ability3.WasPerformedThisFrame() && Statics.spellnumbers[4] < 24)
+                if (Steuerung.Player.Ability3.WasPerformedThisFrame() && Statics.spellnumbers[4] < 24)
                 {
                     choosespell(Statics.spellnumbers[4]);
                 }
 
-                if (Steuerung.Spielerboden.Ability4.WasPerformedThisFrame() && Statics.spellnumbers[5] < 24)
+                if (Steuerung.Player.Ability4.WasPerformedThisFrame() && Statics.spellnumbers[5] < 24)
                 {
                     choosespell(Statics.spellnumbers[5]);
                 }
 
-                if (Steuerung.Spielerboden.Ability56.WasPerformedThisFrame())
+                if (Steuerung.Player.Ability56.WasPerformedThisFrame())
                 {
-                    float z = Steuerung.Spielerboden.Ability56.ReadValue<float>();
+                    float z = Steuerung.Player.Ability56.ReadValue<float>();
                     if (z > 1 && Statics.spellnumbers[6] < 24)
                     {
                         choosespell(Statics.spellnumbers[6]);
@@ -117,7 +117,7 @@ public class EleAbilities : MonoBehaviour
                         choosespell(Statics.spellnumbers[7]);
                     }
                 }
-                if (Steuerung.Spielerboden.Spezial.WasPerformedThisFrame())
+                if (Steuerung.Player.Spezial.WasPerformedThisFrame())
                 {
                     choosecombospell(combospell);
                     manacontroller.Managemana(-3);
@@ -141,7 +141,7 @@ public class EleAbilities : MonoBehaviour
         Statics.otheraction = true;
         Movementscript.state = Movescript.State.Firedashstart;
         Movementscript.ChangeAnimationState(firedashstartstate);
-        Movementscript.runter = 0f;
+        Movementscript.graviti = 0f;
         if (Movescript.lockontarget != null)
         {
             Transform target = Movescript.lockontarget;
@@ -215,7 +215,7 @@ public class EleAbilities : MonoBehaviour
                 Statics.otheraction = true;
                 Movementscript.state = Movescript.State.Waterpushback;
                 Movementscript.ChangeAnimationState(waterpushbackstate);
-                Movementscript.runter = 0f;
+                Movementscript.graviti = 0f;
                 Vector3 lookPos = target.transform.position - transform.position;
                 lookPos.y = 0;
                 transform.rotation = Quaternion.LookRotation(lookPos);
@@ -227,7 +227,7 @@ public class EleAbilities : MonoBehaviour
                 Statics.otheraction = true;
                 Movementscript.state = Movescript.State.Waterintoair;
                 Movementscript.ChangeAnimationState(waterintoairstate);
-                Movementscript.runter = 0f;
+                Movementscript.graviti = 0f;
                 Vector3 lookPos = target.transform.position - transform.position;
                 lookPos.y = 0;
                 transform.rotation = Quaternion.LookRotation(lookPos);
@@ -238,7 +238,7 @@ public class EleAbilities : MonoBehaviour
                 Statics.otheraction = true;
                 Movementscript.state = Movescript.State.Waterkickend;
                 Movementscript.ChangeAnimationState(waterkickstate);
-                Movementscript.runter = 0f;
+                Movementscript.graviti = 0f;
                 Vector3 lookPos = target.transform.position - transform.position;
                 lookPos.y = 0;
                 transform.rotation = Quaternion.LookRotation(lookPos);
@@ -305,7 +305,7 @@ public class EleAbilities : MonoBehaviour
             Statics.otheraction = true;
             Movementscript.state = Movescript.State.Naturethendril;
             Movementscript.ChangeAnimationState(naturethendrilstate);
-            Movementscript.runter = 0f;
+            Movementscript.graviti = 0f;
             Transform target = Movescript.lockontarget;
             Vector3 lookPos = target.transform.position - transform.position;
             lookPos.y = 0;
@@ -378,7 +378,7 @@ public class EleAbilities : MonoBehaviour
             Statics.otheraction = true;
             Movementscript.state = Movescript.State.Icelancestart;
             Movementscript.ChangeAnimationState(icelanceidlestate);
-            Movementscript.runter = 0f;
+            Movementscript.graviti = 0f;
             Transform target = Movescript.lockontarget;
             if (Vector3.Distance(transform.position, target.transform.position) < 2f)
             {
@@ -661,7 +661,7 @@ public class EleAbilities : MonoBehaviour
             Statics.otheraction = true;
             Movementscript.state = Movescript.State.Abilitiesempty;
             Movementscript.ChangeAnimationState(lightbackstabstartstate);
-            Movementscript.runter = 0;
+            Movementscript.graviti = 0;
             Vector3 lookPos = target.transform.position - transform.position;
             lookPos.y = 0;
             transform.rotation = Quaternion.LookRotation(lookPos);
@@ -766,7 +766,7 @@ public class EleAbilities : MonoBehaviour
             Movementscript.lightningthirdtarget = null;
             Movementscript.state = Movescript.State.Stormchainligthning;
             Movementscript.ChangeAnimationState(stormchainlightningstate);
-            Movementscript.runter = 0;
+            Movementscript.graviti = 0;
             transform.rotation = Quaternion.LookRotation(Movescript.lockontarget.transform.position - transform.position, Vector3.up);
             ColorUtility.TryParseHtmlString("#5F138E", out spezialbackgroundcolor);
             spezialbackground.color = spezialbackgroundcolor;
@@ -830,7 +830,7 @@ public class EleAbilities : MonoBehaviour
             Statics.otheraction = true;
             Movementscript.state = Movescript.State.Abilitiesempty;
             Movementscript.ChangeAnimationState(darkportalstate);
-            Movementscript.runter = 0;
+            Movementscript.graviti = 0;
             transform.rotation = Quaternion.LookRotation(Movescript.lockontarget.transform.position - transform.position, Vector3.up);
             ColorUtility.TryParseHtmlString("#1D1414", out spezialbackgroundcolor);
             spezialbackground.color = spezialbackgroundcolor;
@@ -889,7 +889,7 @@ public class EleAbilities : MonoBehaviour
     {
         if (Movescript.lockontarget != null)
         {
-            Movementscript.runter = 0f;
+            Movementscript.graviti = 0f;
             manacontroller.Managemana(-basicmanacosts);
             Statics.otheraction = true;
             Movementscript.state = Movescript.State.Abilitiesempty;
@@ -1300,13 +1300,13 @@ public class EleAbilities : MonoBehaviour
     }
 }
 
-/*if (Steuerung.Spielerboden.Ability3.WasPerformedThisFrame())
+/*if (Steuerung.Player.Ability3.WasPerformedThisFrame())
 {
     choosespell(Statics.thirdability1);
     manacontroller.Managemana(-3);
 }
 
-if (Steuerung.Spielerboden.Ability4.WasPerformedThisFrame())
+if (Steuerung.Player.Ability4.WasPerformedThisFrame())
 {
     choosespell(Statics.thirdability2);
     manacontroller.Managemana(-3);

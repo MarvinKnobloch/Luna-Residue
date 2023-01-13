@@ -51,7 +51,7 @@ public class Itemtextcontroller : MonoBehaviour
 
     private void Update()
     {
-        if (Steuerung.Spielerboden.Attack3.WasPressedThisFrame())                //stats zurücksetzt, damit ich es nicht von hand machen muss
+        if (Steuerung.Player.Attack3.WasPressedThisFrame())                //stats zurücksetzt, damit ich es nicht von hand machen muss
         {
             itemvalues.upgradelvl = 0;
             int currentstat = 0;
