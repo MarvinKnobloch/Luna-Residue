@@ -33,6 +33,7 @@ public class Movescript : MonoBehaviour
     public float gravitation;
     private float normalgravition = 3.5f;
     public float graviti;
+    [NonSerialized] public float maxgravity = -15;
     private float originalStepOffSet;
 
     public SphereCollider spherecastcollider;
@@ -64,9 +65,10 @@ public class Movescript : MonoBehaviour
     [SerializeField] private GameObject head;
 
     //StatemachineScripts
-    public Playermovement playermovement;
+    public Playermovement playermovement = new Playermovement();
     private Playerair playerair = new Playerair();
     private Playerheal playerheal = new Playerheal();
+    private Playerslidewalls playerslidewalls = new Playerslidewalls();
 
     //animationstate
     public string currentstate;
@@ -193,13 +195,10 @@ public class Movescript : MonoBehaviour
         Statics.normalgamespeed = 1;
         Statics.normaltimedelta = Time.fixedDeltaTime;
 
-        playermovement = new Playermovement();
         playermovement.psm = this;
         playerair.psm = this;
         playerheal.psm = this;
-
-
-
+        playerslidewalls.psm = this;
     }
     private void OnEnable()
     {
@@ -241,14 +240,15 @@ public class Movescript : MonoBehaviour
                 Charlockon();
                 //Minhighforairattack();
                 break;
+            case State.Slidedownwall:
+                playerslidewalls.slidewalls();
+                //slidewalls();
+                Charlockon();
+                break;
             case State.Heal:
                 healingscript.heal();
                 //playermovement.jump();
                 //starthealjump();
-                break;
-            case State.Slidedownwall:
-                slidewalls();
-                Charlockon();
                 break;
             case State.Swim:
                 swim();

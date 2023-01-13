@@ -14,9 +14,9 @@ public class Playerair
         if(psm.graviti < -3)
         {
             psm.ChangeAnimationState(fallstate);
-            if (psm.graviti < -15)
+            if (psm.graviti < psm.maxgravity)
             {
-                psm.graviti = -15;
+                psm.graviti = psm.maxgravity;
             }
         }
         if (psm.charactercontroller.isGrounded == true && psm.graviti < 0)

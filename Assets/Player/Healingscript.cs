@@ -144,13 +144,12 @@ public class Healingscript : MonoBehaviour
             }
             if (controlls.Player.Heal.WasReleasedThisFrame() && strgwaspressed == true) //&& animator.GetCurrentAnimatorStateInfo(0).IsName("Healend") == false)
             {
-                Debug.Log("heal");
                 cancelhealing();
+                movementscript.graviti = -0.5f;
                 movementscript.state = Movescript.State.Ground;
             }
             if (controlls.Player.Jump.WasPerformedThisFrame())
             {
-                Debug.Log("jump");
                 cancelhealing();
                 movementscript.playermovement.jump();
             }
@@ -183,7 +182,6 @@ public class Healingscript : MonoBehaviour
         readinputs = true;
         healanzeige.SetActive(true);
         healcanceled = false;
-        //movementscript.ChangeAnimationState(healstart);
         Statics.otheraction = true;
         buttons[0].color = Color.white;
         buttons[1].color = Color.white;
@@ -264,12 +262,6 @@ public class Healingscript : MonoBehaviour
             }
         }
     }
-    /*public void ChangeAnimationState(string newstate)
-    {
-        if (currentstate == newstate) return;
-        animator.CrossFadeInFixedTime(newstate, 0.1f);
-        currentstate = newstate;
-    }*/
     public void healidle()   //heal animation
     {
         if (healcanceled == false && Statics.dash == false)            //animationwechsel die von der animation getriggert werden, und keine requirement haben, können den dash buggen
