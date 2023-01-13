@@ -20,7 +20,7 @@ public class Doozycontroller : MonoBehaviour
     [SerializeField] private float basedmg;
     private int dmgcount;
 
-    const string dazestate = "Daze";
+    //const string dazestate = "Daze";
 
     private void OnEnable()
     {
@@ -55,10 +55,7 @@ public class Doozycontroller : MonoBehaviour
     }
     private void turnonsecondgrid()
     {
-        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().ChangeAnimationStateInstant(dazestate);
-        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state = Movescript.State.Stun;
-        Statics.dash = true;
-        Statics.dazestunstart = true;
+        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtostun();
         Statics.enemyspezialtimescale = true;
         Time.timeScale = 0.5f;
         Time.fixedDeltaTime = Statics.normaltimedelta * 0.5f;
@@ -81,7 +78,7 @@ public class Doozycontroller : MonoBehaviour
         Time.fixedDeltaTime = Statics.normaltimedelta;
         maincam.m_YAxis.m_MaxSpeed = 0.008f;
         maincam.m_XAxis.m_MaxSpeed = 0.6f;
-        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state = Movescript.State.Airintoground;
+        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
         dmgcount = 5 - memoryclicknumber;
         LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().TakeDamage(dmgcount * basedmg);
         secondgrid.SetActive(false);
@@ -101,7 +98,7 @@ public class Doozycontroller : MonoBehaviour
         Time.fixedDeltaTime = Statics.normaltimedelta;
         maincam.m_YAxis.m_MaxSpeed = 0.008f;
         maincam.m_XAxis.m_MaxSpeed = 0.6f;
-        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state = Movescript.State.Airintoground;
+        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
         CancelInvoke();
         secondgrid.SetActive(false);
         gameObject.SetActive(false);

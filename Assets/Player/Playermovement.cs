@@ -59,22 +59,22 @@ public class Playermovement
                 psm.velocity.y += psm.graviti;
                 psm.charactercontroller.Move(psm.velocity * Time.deltaTime);
             }
-            if(Statics.otheraction == false)
-            {
-                if(psm.moveDirection != Vector3.zero)
-                {
-                    psm.ChangeAnimationState(runstate);
-                }
-                else
-                {
-                    psm.ChangeAnimationState(idlestate);
-                }
-            }
         }
         else
         {
             psm.state = Movescript.State.Air;
             Debug.Log("cant hit");
+        }
+    }
+    public void groundanimations()
+    {
+        if (psm.moveDirection != Vector3.zero)
+        {
+            psm.ChangeAnimationState(runstate);
+        }
+        else
+        {
+            psm.ChangeAnimationState(idlestate);
         }
     }
     private Vector3 checkgroundangle(Vector3 velocity)

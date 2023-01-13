@@ -23,8 +23,7 @@ public class Playerair
         psm.charactercontroller.Move(psm.velocity * Time.deltaTime);
         if (psm.charactercontroller.isGrounded == true && psm.graviti < 0)
         {
-            psm.graviti = -0.5f;
-            psm.state = Movescript.State.Ground;
+            psm.switchtogroundstate();
         }
     }
     public void minheightforairattack()

@@ -49,7 +49,7 @@ public class Mathcommit : MonoBehaviour
             if (answer == mathmancontroller.GetComponent<Mathmancontroller>().rightanswer)
             {
                 solutionUI.color = Color.green;
-                LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state = Movescript.State.Airintoground;
+                LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
                 Statics.otheraction = false;
                 Statics.dash = false;
                 Time.timeScale = Statics.normalgamespeed;
@@ -61,7 +61,7 @@ public class Mathcommit : MonoBehaviour
             {
                 LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1)));
                 solutionUI.color = Color.red;
-                LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state = Movescript.State.Airintoground;
+                LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
                 Statics.otheraction = false;
                 Statics.dash = false;
                 Time.timeScale = Statics.normalgamespeed;
@@ -76,7 +76,7 @@ public class Mathcommit : MonoBehaviour
         {
             LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1)));
             solutionUI.color = Color.red;
-            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state = Movescript.State.Airintoground;
+            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
             Statics.otheraction = false;
             Statics.dash = false;
             Time.timeScale = Statics.normalgamespeed;
@@ -100,7 +100,7 @@ public class Mathcommit : MonoBehaviour
             yield return new WaitForSeconds(2.5f);
             LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1)));
             solution.text = "";
-            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state = Movescript.State.Airintoground;
+            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
             Statics.otheraction = false;
             Statics.dash = false;
             Time.timeScale = Statics.normalgamespeed;

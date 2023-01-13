@@ -4,6 +4,8 @@ using Cinemachine;
 using System.Collections.Generic;
 using TMPro;
 using System;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Movescript : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class Movescript : MonoBehaviour
 
     [NonSerialized] public CharacterController charactercontroller;
     [NonSerialized] public SpielerSteu controlls;
+    private InputAction buttonmashhotkey;
+
     private Animator animator;
 
     public Transform CamTransform;
@@ -28,19 +32,17 @@ public class Movescript : MonoBehaviour
     [NonSerialized] public Vector3 moveDirection;
     [NonSerialized] public Vector3 velocity;
     public float movementspeed;
+    [NonSerialized] public float normalmovementspeed;
     public float rotationspeed;
     public float jumpheight;
     public float gravitation;
-    private float normalgravition = 3.5f;
+    public float normalgravition = 3.5f;
     public float graviti;
     [NonSerialized] public float maxgravity = -15;
     private float originalStepOffSet;
 
     public SphereCollider spherecastcollider;
     public LayerMask groundchecklayer;
-
-    private Vector3 Slidedownwalls;
-    private float slowmovement = 6;
 
     //attack abfragen
     public float movementspeedattack;
@@ -51,13 +53,11 @@ public class Movescript : MonoBehaviour
     [NonSerialized] public bool airattackminheight;
     [NonSerialized] public bool attackonceair;
     [NonSerialized] public bool bowair3intoground;                                 // für lockon
-    private float jumpcdafterland;
-    private float jumpcd = 0.2f;
+    //private float jumpcdafterland;
+    //private float jumpcd = 0.2f;
     [NonSerialized] public bool hook;
     [NonSerialized] public bool attack3intoair;
     [NonSerialized] public bool fullcharge;
-
-    private Vector3 hitnormal;
 
     //swim
     public GameObject spine;
@@ -73,6 +73,7 @@ public class Movescript : MonoBehaviour
     private Playerheal playerheal = new Playerheal();
     private Playerslidewalls playerslidewalls = new Playerslidewalls();
     private Playerswim playerswim = new Playerswim();
+    private Playerstun playerstun = new Playerstun();
 
     //animationstate
     public string currentstate;
@@ -143,11 +144,8 @@ public class Movescript : MonoBehaviour
         Slidedownwall,
         Swim,
         Heal,
-        Slow,
-        Slowjump,
-        Addgravity,
-        Daze,
         Stun,
+        Buttonmashstun,
         Bowcharge,
         Bowischarged,
         Airintoground,
@@ -188,6 +186,7 @@ public class Movescript : MonoBehaviour
         lockoncheck = false;
         controlls = Keybindinputmanager.inputActions;
         controlls.Player.Movement.performed += Context => move = Context.ReadValue<Vector2>();
+        buttonmashhotkey = controlls.Player.Attack3;
         charactercontroller = GetComponent<CharacterController>();
         originalStepOffSet = charactercontroller.stepOffset;
         animator = GetComponent<Animator>();
@@ -196,12 +195,14 @@ public class Movescript : MonoBehaviour
         starttime = Time.time;
         Statics.normalgamespeed = 1;
         Statics.normaltimedelta = Time.fixedDeltaTime;
+        normalmovementspeed = movementspeed;
 
         playermovement.psm = this;
         playerair.psm = this;
         playerheal.psm = this;
         playerslidewalls.psm = this;
         playerswim.psm = this;
+        playerstun.psm = this;
     }
     private void OnEnable()
     {
@@ -214,10 +215,6 @@ public class Movescript : MonoBehaviour
         currentstate = null;
     }
 
-    private void OnDisable()
-    {
-        //Steuerung.Disable();
-    }
     private void Update()
     {
         switch (state)
@@ -226,30 +223,23 @@ public class Movescript : MonoBehaviour
             case State.Ground:
                 playermovement.movement();
                 playermovement.groundcheck();
+                playermovement.groundanimations();
                 playermovement.jump();
                 playerheal.starthealing();
-                //Grounded();
-                //Startjump();
                 Charlockon();
                 break;
             case State.Air:
                 playermovement.movement();
                 playerair.airgravity();
                 playerair.minheightforairattack();
-                //InAir();
-                //Movement();
                 Charlockon();
-                //Minhighforairattack();
                 break;
             case State.Slidedownwall:
                 playerslidewalls.slidewalls();
-                //slidewalls();
                 Charlockon();
                 break;
             case State.Heal:
                 healingscript.heal();
-                //playermovement.jump();
-                //starthealjump();
                 break;
             case State.Swim:
                 playermovement.movement();
@@ -257,24 +247,12 @@ public class Movescript : MonoBehaviour
                 playermovement.jump();
                 Charlockon();
                 break;
-            case State.Addgravity:
-                gravity();
-                Charlockon();
-                break;
-            case State.Slow:
-                slow();
-                Startslowjump();
-                Charlockon();
-                break;
-            case State.Slowjump:
-                slowjumpmovement();
-                Charlockon();
-                break;
-            case State.Daze:
-                daze();
-                break;
             case State.Stun:
-                stun();
+                playerstun.stun();
+                break;
+            case State.Buttonmashstun:
+                playerstun.stun();
+                playerstun.breakstunwithbuttonmash();
                 break;
             case State.Bowcharge:
                 chargearrow();
@@ -399,10 +377,33 @@ public class Movescript : MonoBehaviour
         animator.CrossFadeInFixedTime(newstate, 0.1f);
         currentstate = newstate;
     }
-
-    private void OnControllerColliderHit(ControllerColliderHit hit)                // produziert 80B garbage bei jedem call
+    public void switchtogroundstate()
     {
-        hitnormal = hit.normal;
+        graviti = -0.5f;
+        state = State.Ground;
+    }
+    public void slowplayer(float slowmovementspeed)
+    {
+        movementspeed = slowmovementspeed;
+        state = State.Ground;
+    }
+    public void switchtostun()
+    {
+        ChangeAnimationStateInstant(dazestate);
+        state = State.Stun;
+        Statics.dash = true;
+        Statics.dazestunstart = true;
+    }
+    public void switchtobuttonmashstun(int buttonmashcount)
+    {
+        ChangeAnimationStateInstant(dazestate);
+        state = State.Buttonmashstun;
+        dazeimage.SetActive(true);
+        dazeimage.GetComponentInChildren<Text>().text = "Spam " + buttonmashhotkey.GetBindingDisplayString();
+        Statics.dazestunstart = true;
+        Statics.dazecounter = 0;
+        Statics.dazekicksneeded = buttonmashcount;
+        Statics.dash = true;
     }
     private void Movement()
     {
@@ -423,13 +424,13 @@ public class Movescript : MonoBehaviour
         velocity = moveDirection * magnitude;
         if (charactercontroller.isGrounded)
         {
-            velocity = VelocityUneben(velocity);
+            //velocity = VelocityUneben(velocity);
         }
         velocity.y += graviti;
 
         if (charactercontroller.isGrounded && Statics.otheraction == false)
         {
-            jumpcdafterland += Time.deltaTime;
+            //jumpcdafterland += Time.deltaTime;
             velocity.y = -0.5f;
             if (moveDirection != Vector3.zero)
             {
@@ -482,124 +483,7 @@ public class Movescript : MonoBehaviour
         graviti = Mathf.Sqrt(jumpheight * -3 * gravity);
         graviti = jumpheight;
     }
-    private void gravity()
-    {
-        gravitation = normalgravition;
-        if (charactercontroller.isGrounded)
-        {
-            graviti = -0.5f;
-        }
-        else
-        {
-            float gravity = Physics.gravity.y * gravitation;
-            graviti += gravity * Time.deltaTime;
-        }
-        velocity = new Vector3(0, 0, 0);
-        velocity.y += graviti;
-        charactercontroller.Move(velocity * Time.deltaTime);
-    }
-    private void dazetoslow()
-    {
-        state = State.Slowjump;
-    }
     
-    private void slow()
-    {
-        {
-            float h = move.x;                                                                         // Move Script
-            float v = move.y;
-
-            moveDirection = new Vector3(h, 0, v);
-            float magnitude = Mathf.Clamp01(moveDirection.magnitude) * slowmovement;
-            moveDirection.Normalize();
-
-            moveDirection = Quaternion.AngleAxis(CamTransform.rotation.eulerAngles.y, Vector3.up) * moveDirection;                     //Kamera dreht sich mit dem Char
-
-            charactercontroller.Move(velocity * Time.deltaTime);
-
-            if (moveDirection != Vector3.zero)
-            {
-                Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);                                              //Char dreht sich
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationspeed * Time.deltaTime);
-            }
-            velocity = moveDirection * magnitude;
-            if (charactercontroller.isGrounded)
-            {
-                velocity = VelocityUneben(velocity);
-            }
-            velocity.y += graviti;
-            if (charactercontroller.isGrounded)
-            {
-                //jumpcdafterland += Time.deltaTime;
-                graviti = -0.5f;
-                if (moveDirection != Vector3.zero)
-                {
-                    ChangeAnimationState(runstate);
-                }
-                else
-                {
-                    ChangeAnimationState(idlestate);
-                }
-            }
-            if (Statics.slow == false)
-            {
-                Statics.otheraction = false;
-                Statics.dash = false;
-                state = State.Airintoground;
-            }
-        }
-    }
-    private void Startslowjump()
-    {
-        jumpcdafterland += Time.deltaTime;
-        if (LoadCharmanager.disableattackbuttons == false || LoadCharmanager.gameispaused == false)
-        {
-            if (controlls.Player.Jump.WasPressedThisFrame() && jumpcdafterland > jumpcd)
-            {
-                amBoden = false;
-                state = State.Slowjump;
-                ChangeAnimationState(jumpstate);
-                float gravity = Physics.gravity.y * gravitation;
-                graviti = Mathf.Sqrt(jumpheight * -3 * gravity);
-                graviti = jumpheight;
-            }
-        }
-    }
-    private void slowjumpmovement()
-    {
-
-        float h = move.x;
-        float v = move.y;
-
-        moveDirection = new Vector3(h, 0, v);
-        float magnitude = Mathf.Clamp01(moveDirection.magnitude) * slowmovement;
-        moveDirection.Normalize();
-
-        moveDirection = Quaternion.AngleAxis(CamTransform.rotation.eulerAngles.y, Vector3.up) * moveDirection;
-
-        gravitation = normalgravition;
-        float gravity = Physics.gravity.y * gravitation;
-        graviti += gravity * Time.deltaTime;
-
-        velocity = moveDirection * magnitude;
-        velocity.y += graviti;
-
-        charactercontroller.Move(velocity * Time.deltaTime);
-
-        if (moveDirection != Vector3.zero)
-        {
-            Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationspeed * Time.deltaTime);
-        }
-        if (graviti < -2)
-        {
-            ChangeAnimationState(fallstate);
-            if (charactercontroller.isGrounded == true)
-            {
-                state = State.Slow;
-            }
-        }
-    }
     private void beforedashmovement()
     {
         float h = move.x;                                                                         // Move Script
@@ -663,7 +547,7 @@ public class Movescript : MonoBehaviour
             graviti += gravity * Time.deltaTime;
         }
         velocity = new Vector3(0, 0, 0);
-        velocity.y += graviti;
+        velocity.y = graviti;
         charactercontroller.Move(velocity * Time.deltaTime);
     }
     private void OnDrawGizmos()
@@ -672,90 +556,6 @@ public class Movescript : MonoBehaviour
         //Gizmos.DrawRay(transform.position + Vector3.up * 0.3f, transform.forward * 1f + Vector3.down * 1f);
         //Gizmos.DrawSphere(transform.position - Vector3.down * 0.2f, 0.4f);
         //Gizmos.DrawRay(head.transform.position, Vector3.down);
-    }
-
-    private Vector3 VelocityUneben(Vector3 velocity)
-    {
-        Ray nachunten = new Ray(transform.position + Vector3.up * 0.3f, Vector3.down);          // sonst geht der ray durch den boden
-        if (Physics.Raycast(nachunten, out RaycastHit nachunteninfo, 0.8f))
-        {
-            Slidedownwalls = nachunteninfo.normal;
-            if (Vector3.Angle(Slidedownwalls, Vector3.up) > charactercontroller.slopeLimit + 2 && Vector3.Angle(Slidedownwalls, Vector3.up) < 89f)                 // wenn ich jump kann ich noch auf bis zu 45winkel stehen
-            {
-                Charrig.enabled = false;
-                aimscript.virtualcam = false;
-                aimscript.aimend();
-                Statics.otheraction = false;
-                ChangeAnimationState(idlestate);
-                state = State.Slidedownwall;
-            }
-        }
-        else
-        {
-            if (charactercontroller.isGrounded)
-            {
-                bool isGrounded = Vector3.Angle(Vector3.up, hitnormal) <= 55 && Vector3.Angle(Vector3.up, hitnormal) < 89f;
-                if (isGrounded == false)
-                {
-                    Charrig.enabled = false;
-                    aimscript.virtualcam = false;
-                    aimscript.aimend();
-                    Statics.otheraction = false;
-                    ChangeAnimationState(idlestate);
-                    state = State.Slidedownwall;
-                }
-            }
-        }
-        Ray uneben = new Ray(this.transform.position + Vector3.up * 0.3f, Vector3.down);
-        if (Physics.Raycast(uneben, out RaycastHit unebeninfo, 1f))
-        {
-            Quaternion bodensteigung = Quaternion.FromToRotation(Vector3.up, unebeninfo.normal);
-            Vector3 Velocitysteigung = bodensteigung * velocity;
-            if (Velocitysteigung.y < 0)
-            {
-                return Velocitysteigung;
-            }
-        }
-        return velocity;
-    }
-    private void slidewalls()
-    {
-        bool checkforobject = Physics.CheckSphere(transform.position - Vector3.down * 0.2f, 0.4f);
-        if (checkforobject == false)
-        {
-            charactercontroller.Move(Vector3.zero);
-            state = State.Air;
-        }
-        float gravity = Physics.gravity.y * gravitation;
-        graviti += gravity * Time.deltaTime;
-        float angle = Vector3.Angle(Vector3.up, hitnormal);
-        //Debug.Log(angle);
-        float math = 90 - angle;                         // wie weit der spieler von der wand weggedrückt wird, um so größer der winkel um so weniger muss der spieler von der wand gegedrückt werden
-        if (angle > 89.9)
-        {
-            Debug.Log("angletohigh");
-            state = State.Air;
-        }
-        else if (angle > 80)
-        {
-            ChangeAnimationState(fallstate);
-            moveDirection = new Vector3(hitnormal.x * (1.5f / angle * math), -hitnormal.y * (angle / math), hitnormal.z * (1.5f / angle * math)) * 20;
-        }
-        else if (angle > 70)
-        {
-            ChangeAnimationState(fallstate);
-            moveDirection = new Vector3(hitnormal.x * (1.5f / angle * math), -hitnormal.y * 10, hitnormal.z * (1.5f / angle * math)) * 10;
-        }
-        else if (angle > charactercontroller.slopeLimit)
-        {
-            ChangeAnimationState(fallstate);
-            moveDirection = new Vector3(hitnormal.x * (1.5f / angle * math), -hitnormal.y * 5, hitnormal.z * (1.5f / angle * math)) * 9;
-        }
-        else
-        {
-            state = State.Ground;
-        }
-        charactercontroller.Move(moveDirection * Time.deltaTime);
     }
 
     private void Groundedattack()
@@ -810,38 +610,14 @@ public class Movescript : MonoBehaviour
         velocity = moveDirection * magnitude;
         if (charactercontroller.isGrounded)
         {
-            velocity = VelocityUneben(velocity);
+            //velocity = VelocityUneben(velocity);
         }
         velocity.y += graviti;
 
         charactercontroller.Move(velocity / movementspeedattack * Time.deltaTime);
 
     }
-    private void InAir()
-    {
-        float gravity = Physics.gravity.y * gravitation;
-        graviti += gravity * Time.deltaTime;
-        if (graviti < -3f)
-        {
-            ChangeAnimationState(fallstate);
-        }
-        if (charactercontroller.isGrounded == true)
-        {
-            state = State.Airintoground;
-        }
-    }
-    /*private void Minhighforairattack()
-    {
-        Ray ray = new Ray(this.transform.position + Vector3.up * 0.3f, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, 0.8f))
-        {
-            airattackminheight = false;
-        }
-        else
-        {
-            airattackminheight = true;
-        }
-    }*/
+
     private void bowswitch()
     {
         float gravity = Physics.gravity.y * gravitation;
@@ -858,7 +634,7 @@ public class Movescript : MonoBehaviour
         velocity = moveDirection * magnitude;
         if (charactercontroller.isGrounded)
         {
-            velocity = VelocityUneben(velocity);
+            //velocity = VelocityUneben(velocity);
         }
         velocity.y += graviti;
 
@@ -871,7 +647,7 @@ public class Movescript : MonoBehaviour
         inderluft = false;
         attack3intoair = false;
         attackonceair = true;
-        jumpcdafterland = 0f;
+        //jumpcdafterland = 0f;
         state = State.Ground;
     }
     private void intoair()
@@ -925,7 +701,7 @@ public class Movescript : MonoBehaviour
         animator.SetFloat("AimZ", move.y, 0.05f, Time.deltaTime);
         if (charactercontroller.isGrounded)
         {
-            velocity = VelocityUneben(velocity);
+            //velocity = VelocityUneben(velocity);
         }
         else
         {
@@ -964,7 +740,7 @@ public class Movescript : MonoBehaviour
         animator.SetFloat("AimZ", move.y, 0.05f, Time.deltaTime);
         if (charactercontroller.isGrounded)
         {
-            velocity = VelocityUneben(velocity);
+            //velocity = VelocityUneben(velocity);
         }
         else
         {
