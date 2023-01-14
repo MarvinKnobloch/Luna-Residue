@@ -760,6 +760,8 @@ public class EleAbilities : MonoBehaviour
             Movementscript.lightningfirsttarget = null;
             Movementscript.ligthningsecondtarget = null;
             Movementscript.lightningthirdtarget = null;
+            Movementscript.lightningfirsttarget = target;
+            Movementscript.currentlightningtraget = target;
             Movementscript.state = Movescript.State.Stormchainligthning;
             Movementscript.ChangeAnimationState(stormchainlightningstate);
             Movementscript.graviti = 0;

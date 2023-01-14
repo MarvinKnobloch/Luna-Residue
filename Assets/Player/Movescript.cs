@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class Movescript : MonoBehaviour
 {
     //Bugs:
+    //bei jeglichen spells, wenn das target stirbt, ist das target dann nicht gleich null, weil eine neues traget gesucht wird, wenn eins vorhanden ist
     //Stormlightning flug animation hat sich am ende nicht verändert (zu der Zeit war der Char Toggle Active State = true)
     [SerializeField] internal Swordattack Weaponslot1script;
     [SerializeField] internal Bowattack Weaponslot2script;
@@ -79,6 +80,7 @@ public class Movescript : MonoBehaviour
     private Playerwater playerwater = new Playerwater();
     private Playernature playernature = new Playernature();
     private Playerice playerice = new Playerice();
+    private Playerlightning playerlightning = new Playerlightning();
 
     //animationstate
     public string currentstate;
@@ -136,10 +138,10 @@ public class Movescript : MonoBehaviour
     [NonSerialized] public float nature1traveltime = 1;
     [NonSerialized] public float icelancespeed = 30;
     [NonSerialized] public float lightningspeed = 30;
+    [NonSerialized] public Transform currentlightningtraget;
     [NonSerialized] public Transform lightningfirsttarget;
     [NonSerialized] public Transform ligthningsecondtarget;
     [NonSerialized] public Transform lightningthirdtarget;
-    [NonSerialized] public LayerMask lightninglayer;
     [NonSerialized] public float earthslidespeed = 20;
 
     public State state;
@@ -185,7 +187,7 @@ public class Movescript : MonoBehaviour
 
     void Awake()
     {
-        Statics.spellnumbers[0] = 9;
+        Statics.spellnumbers[0] = 15;
         lockonrange = Statics.playerlockonrange;
         Charrig.enabled = false;
         aimscript.enabled = false;
@@ -214,6 +216,7 @@ public class Movescript : MonoBehaviour
         playerwater.psm = this;
         playernature.psm = this;
         playerice.psm = this;
+        playerlightning.psm = this;
     }
     private void OnEnable()
     {
@@ -335,16 +338,16 @@ public class Movescript : MonoBehaviour
                 playerice.icelanceplayertotarget();
                 break;
             case State.Stormchainligthning:
-                stormchainligthning();
+                playerlightning.stormchainligthning();
                 break;
-            case State.Secondlightning:
-                stormchainlightningsecondtarget();
+            /*case State.Secondlightning:
+                playerlightning.stormchainlightningsecondtarget();
                 break;
             case State.Thirdlightning:
-                stormchainlightningthirdtarget();
-                break;
+                playerlightning.stormchainlightningthirdtarget();
+                break;*/
             case State.Endlightning:
-                stormlightningbacktomain();
+                playerlightning.stormlightningbacktomain();
                 break;
             case State.Darkportalend:
                 darkportalending();
@@ -696,192 +699,7 @@ public class Movescript : MonoBehaviour
         Physics.IgnoreLayerCollision(9, 6, false);
         Physics.IgnoreLayerCollision(11, 6, false);
     }
-    private void stormchainligthning()
-    {
-        if (lightningfirsttarget == null)
-        {
-            lightningfirsttarget = lockontarget;
-        }
-        if (lockontarget != null && lockontarget == lightningfirsttarget)
-        { 
-            Vector3 distancetomove = lightningfirsttarget.position - transform.position;
-            Vector3 move = distancetomove.normalized * lightningspeed * Time.deltaTime;
-            charactercontroller.Move(move);
-            //transform.position = Vector3.MoveTowards(transform.position, lockontarget.position, lightningspeed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, lightningfirsttarget.position) < 2f)
-            {
-                Collider[] cols = Physics.OverlapSphere(transform.position, 2f, spellsdmglayer);
-                foreach (Collider Enemyhit in cols)
-
-                    if (Enemyhit.gameObject.GetComponent<Checkforhitbox>())
-                    {
-                        int dmgdealed = 7;
-                        Enemyhit.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed);
-                        var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                        showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
-                        showtext.GetComponent<TextMeshPro>().color = Color.red;
-                    }
-                chainligthningenemys = Physics.CheckSphere(transform.position, 10f, lightninglayer);
-                if (chainligthningenemys == true)
-                {
-                    Collider[] colliders = Physics.OverlapSphere(transform.position, 10, lightninglayer);
-
-                    for (int i = 0; i < colliders.Length; i++)
-                    {
-                        Collider hitCollider = colliders[i];
-                        if (hitCollider.gameObject != lightningfirsttarget.gameObject)
-                        {
-                            ligthningsecondtarget = hitCollider.transform;
-                            state = State.Secondlightning;
-                        }
-                        if (i == colliders.Length - 1 && ligthningsecondtarget == null)
-                        {
-                            Abilitiesend();
-                        }
-                    }
-                }
-                else
-                {
-                    Abilitiesend();
-                }
-            }
-        }
-        else
-        {
-            Abilitiesend();
-        }
-    }
-    private void stormchainlightningsecondtarget()
-    {
-        if (lockontarget != null)
-        {
-            Vector3 distancetomove = ligthningsecondtarget.position - transform.position;
-            Vector3 move = distancetomove.normalized * lightningspeed * Time.deltaTime;
-            charactercontroller.Move(move);
-            //transform.position = Vector3.MoveTowards(transform.position, ligthningsecondtarget.position, lightningspeed * Time.deltaTime);
-            transform.rotation = Quaternion.LookRotation(ligthningsecondtarget.transform.position - transform.position, Vector3.up);
-            if (Vector3.Distance(transform.position, ligthningsecondtarget.position) < 2f)
-            {
-                Collider[] cols = Physics.OverlapSphere(transform.position, 2f, spellsdmglayer);
-                foreach (Collider Enemyhit in cols)
-
-                    if (Enemyhit.gameObject.GetComponent<Checkforhitbox>())
-                    {
-                        int dmgdealed = 7;
-                        Enemyhit.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed);
-                        var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                        showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
-                        showtext.GetComponent<TextMeshPro>().color = Color.red;
-                    }
-
-                chainligthningenemys = Physics.CheckSphere(transform.position, 10f, lightninglayer);
-                if (chainligthningenemys == true)
-                {
-                    Collider[] colliders = Physics.OverlapSphere(transform.position, 10, lightninglayer);
-
-                    for (int i = 0; i < colliders.Length; i++)
-                    {
-                        Collider hitCollider = colliders[i];
-                        if (lightningfirsttarget != null)
-                        {
-                            if (hitCollider.gameObject != lightningfirsttarget.gameObject && hitCollider.gameObject != ligthningsecondtarget.gameObject)
-                            {
-                                lightningthirdtarget = hitCollider.transform;
-                                state = State.Thirdlightning;
-                            }
-
-                            if (i == colliders.Length - 1 && lightningthirdtarget == null)
-                            {
-                                state = State.Endlightning;
-                            }
-                        }
-                        else
-                        {
-                            if (hitCollider.gameObject != ligthningsecondtarget.gameObject)
-                            {
-                                lightningthirdtarget = hitCollider.transform;
-                                state = State.Thirdlightning;
-                            }
-
-                            if (i == colliders.Length - 1 && lightningthirdtarget == null)
-                            {
-                                state = State.Endlightning;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    state = State.Endlightning;
-                }
-            }   
-        }
-        else
-        {
-            Abilitiesend();
-        }
-    }
-
-    private void stormchainlightningthirdtarget()
-    {
-        if (lockontarget != null)
-        {
-            Vector3 distancetomove = lightningthirdtarget.position - transform.position;
-            Vector3 move = distancetomove.normalized * lightningspeed * Time.deltaTime;
-            charactercontroller.Move(move);
-            //transform.position = Vector3.MoveTowards(transform.position, lightningthirdtarget.position, lightningspeed * Time.deltaTime);
-            transform.rotation = Quaternion.LookRotation(lightningthirdtarget.transform.position - transform.position, Vector3.up);
-            if (Vector3.Distance(transform.position, lightningthirdtarget.position) < 1f)
-            {
-                Collider[] cols = Physics.OverlapSphere(transform.position, 2f, spellsdmglayer);
-                foreach (Collider Enemyhit in cols)
-
-                    if (Enemyhit.gameObject.GetComponent<Checkforhitbox>())
-                    {
-                        int dmgdealed = 7;
-                        Enemyhit.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed);
-                        var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                        showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
-                        showtext.GetComponent<TextMeshPro>().color = Color.red;
-                    }
-                state = State.Endlightning;
-            }
-        }
-        else
-        {
-            Abilitiesend();
-        }
-    }
-    private void stormlightningbacktomain()
-    {
-        if (lockontarget != null && lockontarget == lightningfirsttarget)
-        {
-            Vector3 distancetomove = lockontarget.position - transform.position;
-            Vector3 move = distancetomove.normalized * lightningspeed * Time.deltaTime;
-            charactercontroller.Move(move);
-            //transform.position = Vector3.MoveTowards(transform.position, lockontarget.position, lightningspeed * Time.deltaTime);
-            transform.rotation = Quaternion.LookRotation(lockontarget.transform.position - transform.position, Vector3.up);
-            if (Vector3.Distance(transform.position, lockontarget.position) < 1f)
-            {
-                Collider[] cols = Physics.OverlapSphere(transform.position, 2f, spellsdmglayer);
-                foreach (Collider Enemyhit in cols)
-
-                    if (Enemyhit.gameObject.GetComponent<Checkforhitbox>())
-                    {
-                        int dmgdealed = 7;
-                        Enemyhit.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed);
-                        var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                        showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
-                        showtext.GetComponent<TextMeshPro>().color = Color.red;
-                    }
-                Abilitiesend();
-            }
-        }
-        else
-        {
-            Abilitiesend();
-        }
-    }
+    
     private void usedarkportal()
     {
         if (lockontarget != null)
