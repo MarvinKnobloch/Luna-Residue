@@ -127,6 +127,7 @@ public class EleAbilities : MonoBehaviour
     }
     private void endabilities()
     {
+        StopAllCoroutines();
         Movementscript.state = Movescript.State.Air;
         Statics.otheraction = false;
     }
@@ -220,7 +221,6 @@ public class EleAbilities : MonoBehaviour
                 lookPos.y = 0;
                 transform.rotation = Quaternion.LookRotation(lookPos);
             }
-
             else if (Physics.Raycast(ray, out RaycastHit hit, 4f))
             {
                 manacontroller.Managemana(-watermovementmanacost);
@@ -451,20 +451,10 @@ public class EleAbilities : MonoBehaviour
                 {
                     if (target != null)
                     {
-                        icelance1.transform.position = Vector3.MoveTowards(icelance1.transform.position, target.position, icelancespeed * Time.deltaTime);
+                        icelance1.transform.position = Vector3.MoveTowards(icelance1.transform.position, target.position, Movementscript.icelancespeed * Time.deltaTime);
                         if (Vector3.Distance(icelance1.transform.position, target.position) < 0.1f)
                         {
-                            Collider[] cols = Physics.OverlapSphere(target.position, 2f, Layerhitbox);
-                            foreach (Collider Enemyhit in cols)
-
-                                if (Enemyhit.gameObject.GetComponent<Checkforhitbox>())
-                                {
-                                    int dmgdealed = 10;
-                                    Enemyhit.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed);
-                                    var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                                    showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
-                                    showtext.GetComponent<TextMeshPro>().color = Color.red;
-                                }
+                            icelancedmg();
                             icelance1.SetActive(false);
                             StopCoroutine("shootfirsticelance");
                         }
@@ -503,20 +493,10 @@ public class EleAbilities : MonoBehaviour
                 {
                     if (target != null)
                     {                   
-                        icelance2.transform.position = Vector3.MoveTowards(icelance2.transform.position, target.position, icelancespeed * Time.deltaTime);
+                        icelance2.transform.position = Vector3.MoveTowards(icelance2.transform.position, target.position, Movementscript.icelancespeed * Time.deltaTime);
                         if (Vector3.Distance(icelance2.transform.position, target.position) < 0.1f)
                         {
-                            Collider[] cols = Physics.OverlapSphere(target.position, 2f, Layerhitbox);
-                            foreach (Collider Enemyhit in cols)
-
-                                if (Enemyhit.gameObject.GetComponent<Checkforhitbox>())
-                                {
-                                    int dmgdealed = 10;
-                                    Enemyhit.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed);
-                                    var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                                    showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
-                                    showtext.GetComponent<TextMeshPro>().color = Color.red;
-                                }
+                            icelancedmg();
                             icelance2.SetActive(false);
                             StopCoroutine("shootsecondicelance");
                         }
@@ -558,20 +538,10 @@ public class EleAbilities : MonoBehaviour
                 {
                     if (target != null)
                     {
-                        icelance3.transform.position = Vector3.MoveTowards(icelance3.transform.position, target.position, icelancespeed * Time.deltaTime);
+                        icelance3.transform.position = Vector3.MoveTowards(icelance3.transform.position, target.position, Movementscript.icelancespeed * Time.deltaTime);
                         if (Vector3.Distance(icelance3.transform.position, target.position) < 0.1f)
                         {
-                            Collider[] cols = Physics.OverlapSphere(target.position, 2f, Layerhitbox);
-                            foreach (Collider Enemyhit in cols)
-
-                                if (Enemyhit.gameObject.GetComponent<Checkforhitbox>())
-                                {
-                                    int dmgdealed = 10;
-                                    Enemyhit.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed);
-                                    var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                                    showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
-                                    showtext.GetComponent<TextMeshPro>().color = Color.red;
-                                }
+                            icelancedmg();
                             icelance3.SetActive(false);
                             StopCoroutine("shootthirdicelance");
                         }
@@ -593,6 +563,32 @@ public class EleAbilities : MonoBehaviour
         {
             icelance3.SetActive(false);
             StopCoroutine("shootthirdicelance");
+        }
+    }
+    private void icelancedmg()
+    {
+        Collider[] cols = Physics.OverlapSphere(Movescript.lockontarget.position, 2f, Layerhitbox);
+        foreach (Collider Enemyhit in cols)
+        {
+            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
+            {
+                enemyscript.dmgonce = false;
+            }
+        }
+        foreach (Collider Enemyhit in cols)
+        {
+            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
+            {
+                if (enemyscript.dmgonce == false)
+                {
+                    float dmg = 10;
+                    enemyscript.dmgonce = true;
+                    enemyscript.TakeDamage(dmg);
+                    var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
+                    showtext.GetComponent<TextMeshPro>().text = dmg.ToString();
+                    showtext.GetComponent<TextMeshPro>().color = Color.red;
+                }
+            }
         }
     }
     public void icelanceiscanceled()
@@ -659,7 +655,7 @@ public class EleAbilities : MonoBehaviour
         {
             manacontroller.Managemana(-basicmanacosts);
             Statics.otheraction = true;
-            Movementscript.state = Movescript.State.Abilitiesempty;
+            Movementscript.state = Movescript.State.Empty;
             Movementscript.ChangeAnimationState(lightbackstabstartstate);
             Movementscript.graviti = 0;
             Vector3 lookPos = target.transform.position - transform.position;
@@ -828,7 +824,7 @@ public class EleAbilities : MonoBehaviour
         {
             manacontroller.Managemana(-basicmanacosts);
             Statics.otheraction = true;
-            Movementscript.state = Movescript.State.Abilitiesempty;
+            Movementscript.state = Movescript.State.Empty;
             Movementscript.ChangeAnimationState(darkportalstate);
             Movementscript.graviti = 0;
             transform.rotation = Quaternion.LookRotation(Movescript.lockontarget.transform.position - transform.position, Vector3.up);
@@ -892,7 +888,7 @@ public class EleAbilities : MonoBehaviour
             Movementscript.graviti = 0f;
             manacontroller.Managemana(-basicmanacosts);
             Statics.otheraction = true;
-            Movementscript.state = Movescript.State.Abilitiesempty;
+            Movementscript.state = Movescript.State.Empty;
             Movementscript.ChangeAnimationState(earthslidechargestate);
             Transform target = Movescript.lockontarget;
             Vector3 lookPos = target.transform.position - transform.position;

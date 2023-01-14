@@ -6,23 +6,21 @@ using System;
 public class Fishmancolliderdmg : MonoBehaviour
 {
     [SerializeField] private GameObject redline;
-    private bool timerstart;
+
+    private bool dealdmgonce;
 
     [NonSerialized] public float basedmg;
+
     private void OnEnable()
     {
-        timerstart = false;
+        StartCoroutine("turnoff");
+        dealdmgonce = false;
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(timerstart == false)
+        if (other.gameObject == LoadCharmanager.Overallmainchar && dealdmgonce == false)
         {
-            timerstart = true;
-            StartCoroutine("turnoff");
-        }
-        if (other.gameObject == LoadCharmanager.Overallmainchar)
-        {
-            Debug.Log("dealdmg");
+            dealdmgonce = true;
             LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().TakeDamage(basedmg);
         }
     }

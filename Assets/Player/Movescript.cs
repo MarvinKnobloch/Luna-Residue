@@ -32,7 +32,6 @@ public class Movescript : MonoBehaviour
     [NonSerialized] public Vector3 moveDirection;
     [NonSerialized] public Vector3 velocity;
     public float movementspeed;
-    [NonSerialized] public float normalmovementspeed;
     public float rotationspeed;
     public float jumpheight;
     public float gravitation;
@@ -78,6 +77,8 @@ public class Movescript : MonoBehaviour
     private Playerlockon playerlockon = new Playerlockon();
     private Playerfire playerfire = new Playerfire();
     private Playerwater playerwater = new Playerwater();
+    private Playernature playernature = new Playernature();
+    private Playerice playerice = new Playerice();
 
     //animationstate
     public string currentstate;
@@ -129,16 +130,17 @@ public class Movescript : MonoBehaviour
     public LayerMask spellsdmglayer;
     public GameObject damagetext;
     private bool chainligthningenemys;
-    private Vector3 startpos;
-    private float starttime;
-    private float naturespeed = 2;
-    private float naturetraveltime = 1;
-    private float lightningspeed = 30;
+    [NonSerialized] public Vector3 startpos;
+    [NonSerialized] public float starttime;
+    [NonSerialized] public float nature1speed = 2;
+    [NonSerialized] public float nature1traveltime = 1;
+    [NonSerialized] public float icelancespeed = 30;
+    [NonSerialized] public float lightningspeed = 30;
     [NonSerialized] public Transform lightningfirsttarget;
     [NonSerialized] public Transform ligthningsecondtarget;
     [NonSerialized] public Transform lightningthirdtarget;
-    public LayerMask lightninglayer;
-    private float earthslidespeed = 20;
+    [NonSerialized] public LayerMask lightninglayer;
+    [NonSerialized] public float earthslidespeed = 20;
 
     public State state;
     public enum State
@@ -171,19 +173,19 @@ public class Movescript : MonoBehaviour
         Naturethendrilgettotarget,
         Icelancestart,
         Icelancefly,
-        Icelanceend,
         Stormchainligthning,
         Secondlightning,
         Thirdlightning,
         Endlightning,
         Darkportalend,
         Earthslide,
-        Abilitiesempty,
+        Empty,
     }
 
 
     void Awake()
     {
+        Statics.spellnumbers[0] = 9;
         lockonrange = Statics.playerlockonrange;
         Charrig.enabled = false;
         aimscript.enabled = false;
@@ -199,7 +201,6 @@ public class Movescript : MonoBehaviour
         starttime = Time.time;
         Statics.normalgamespeed = 1;
         Statics.normaltimedelta = Time.fixedDeltaTime;
-        normalmovementspeed = movementspeed;
 
         playermovement.psm = this;
         playerair.psm = this;
@@ -211,6 +212,8 @@ public class Movescript : MonoBehaviour
         playerlockon.psm = this;
         playerfire.psm = this;
         playerwater.psm = this;
+        playernature.psm = this;
+        playerice.psm = this;
     }
     private void OnEnable()
     {
@@ -320,18 +323,16 @@ public class Movescript : MonoBehaviour
                 playerwater.waterkickend();
                 break;
             case State.Naturethendril:
-                naturethendrilstart();
+                playernature.naturethendrilstart();
                 break;
             case State.Naturethendrilgettotarget:
-                naturethendrilgettotarget();
+                playernature.naturethendrilgettotarget();
                 break;
             case State.Icelancestart:
-                icelanceplayermovement();
+                playerice.icelanceplayermovement();
                 break;
             case State.Icelancefly:
-                icelanceplayertotarget();
-                break;
-            case State.Icelanceend:
+                playerice.icelanceplayertotarget();
                 break;
             case State.Stormchainligthning:
                 stormchainligthning();
@@ -351,7 +352,7 @@ public class Movescript : MonoBehaviour
             case State.Earthslide:
                 earthslidestart();
                 break;
-            case State.Abilitiesempty:
+            case State.Empty:
                 break;
         }
     }
@@ -410,6 +411,10 @@ public class Movescript : MonoBehaviour
 
     public void elefiredashstart() => playerfire.firedashstart();
     public void elefiredashdmg() => playerfire.firedashdmg();
+    public void elewaterpushbackdmg() => playerwater.waterpushbackdmg();
+    public void elewaterintoairdmg() => playerwater.waterintoairdmg();
+    public void elestarticelancefly() => playerice.starticelancefly();
+
 
     private void Grounded()
     {
@@ -599,7 +604,7 @@ public class Movescript : MonoBehaviour
         {
             Charrig.enabled = false;
             ChangeAnimationState(releasearrowstate);
-            state = State.Abilitiesempty;
+            state = State.Empty;
         }
         float h = move.x;                                                                         // Move Script
         float v = move.y;
@@ -690,100 +695,6 @@ public class Movescript : MonoBehaviour
         Statics.otheraction = false;
         Physics.IgnoreLayerCollision(9, 6, false);
         Physics.IgnoreLayerCollision(11, 6, false);
-    }
-
-    private void naturethendrilstart()
-    {
-        if (lockontarget != null)
-        {      
-            Vector3 endposi = lockontarget.transform.position + (transform.right * -8 + transform.up * 2);
-            Vector3 test = endposi - transform.position;
-            Vector3 move = test.normalized * 15 * Time.deltaTime;
-            charactercontroller.Move(move);
-            //transform.position = Vector3.MoveTowards(transform.position, endposi, 25 * Time.deltaTime);
-
-            if (Vector3.Distance(transform.position, endposi) < 1)
-            {
-                startpos = transform.position;
-                state = State.Naturethendrilgettotarget;
-                starttime = Time.time;
-            }
-        }
-        else
-        {
-            Abilitiesend();
-        }
-    }
-    private void naturethendrilgettotarget()
-    {
-        Vector3 endposi = lockontarget.transform.position + (transform.forward * 3 + transform.right * 1);
-        Vector3 center = (startpos + lockontarget.position) * 0.5f;
-
-        center -= new Vector3(1, 0, 0);
-
-        Vector3 startRelcenter = startpos - center;
-        Vector3 endRelcenter = endposi - center;
-
-        float fracComplete = (Time.time - starttime) / naturetraveltime * naturespeed;
-
-        transform.position = Vector3.Slerp(startRelcenter, endRelcenter, fracComplete);
-        transform.position += center;
-
-        if (Vector3.Distance(transform.position, endposi)< 2)
-        {
-            Vector3 lookPos = lockontarget.transform.position - transform.position;
-            lookPos.y = 0;
-            transform.rotation = Quaternion.LookRotation(lookPos);
-            Collider[] cols = Physics.OverlapSphere(lockontarget.position, 3f, spellsdmglayer);
-            foreach (Collider Enemyhit in cols)
-
-                if (Enemyhit.gameObject.GetComponent<Checkforhitbox>())
-                {
-                    int dmgdealed = 10;
-                    Enemyhit.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed);
-                    var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                    showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
-                    showtext.GetComponent<TextMeshPro>().color = Color.red;
-                }
-            Abilitiesend();
-        }
-    }
-
-    public void icelanceplayermovement()
-    {
-        if (lockontarget != null)
-        {
-            graviti = 0f;
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.up, 1 * Time.deltaTime);
-        }
-        else
-        {
-            Abilitiesend();
-        }
-    }
-    public void icelanceplayertotarget()
-    {
-        if (lockontarget != null)
-        {
-            state = State.Icelancefly;
-            if (Vector3.Distance(transform.position, lockontarget.position) > 5f)
-            {
-                ChangeAnimationState(icelancebackflipstate);
-            }
-            if (Vector3.Distance(transform.position, lockontarget.position) > 3f)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, lockontarget.position, 35 * Time.deltaTime);
-            }
-            else
-            {
-                ChangeAnimationState(icelancebackflipstate);
-                state = State.Icelanceend;
-            }
-        }
-        else
-        {
-            Abilitiesend();
-        }
     }
     private void stormchainligthning()
     {
@@ -1047,7 +958,7 @@ public class Movescript : MonoBehaviour
                 var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
                 showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
                 showtext.GetComponent<TextMeshPro>().color = Color.red;
-                state = State.Abilitiesempty;
+                state = State.Empty;
             }
     }
 }
