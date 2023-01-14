@@ -76,6 +76,8 @@ public class Movescript : MonoBehaviour
     private Playerstun playerstun = new Playerstun();
     private Playerattack playerattack = new Playerattack();
     private Playerlockon playerlockon = new Playerlockon();
+    private Playerfire playerfire = new Playerfire();
+    private Playerwater playerwater = new Playerwater();
 
     //animationstate
     public string currentstate;
@@ -207,6 +209,8 @@ public class Movescript : MonoBehaviour
         playerstun.psm = this;
         playerattack.psm = this;
         playerlockon.psm = this;
+        playerfire.psm = this;
+        playerwater.psm = this;
     }
     private void OnEnable()
     {
@@ -301,19 +305,19 @@ public class Movescript : MonoBehaviour
                 beforedashmovement();
                 break;
             case State.Firedashstart:
-                firedashstartmovement();
+                playerfire.firedashstartmovement();
                 break;
             case State.Firedash:
-                firedash();
+                playerfire.firedash();
                 break;
             case State.Waterpushback:
-                waterpushback();
+                playerwater.waterpushback();
                 break;
             case State.Waterintoair:
-                waterintoair();
+                playerwater.waterintoair();
                 break;
             case State.Waterkickend:
-                waterkickend();
+                playerwater.waterkickend();
                 break;
             case State.Naturethendril:
                 naturethendrilstart();
@@ -397,6 +401,16 @@ public class Movescript : MonoBehaviour
         Statics.dazekicksneeded = buttonmashcount;
         Statics.dash = true;
     }
+    public void activatedmgtext(GameObject enemyhit, float dmg)
+    {
+        var showtext = Instantiate(damagetext, enemyhit.transform.position, Quaternion.identity);
+        showtext.GetComponent<TextMeshPro>().text = dmg.ToString();
+        showtext.GetComponent<TextMeshPro>().color = Color.red;
+    }
+
+    public void elefiredashstart() => playerfire.firedashstart();
+    public void elefiredashdmg() => playerfire.firedashdmg();
+
     private void Grounded()
     {
         if (charactercontroller.isGrounded)
@@ -672,169 +686,12 @@ public class Movescript : MonoBehaviour
     public void Abilitiesend()
     {
         state = State.Air;
+        //values müssen noch zurückgesetzt werden?????????
         Statics.otheraction = false;
         Physics.IgnoreLayerCollision(9, 6, false);
         Physics.IgnoreLayerCollision(11, 6, false);
     }
-    private void firedashstartmovement()
-    {
-        float h = move.x;                                                                         
-        float v = move.y;
 
-        moveDirection = new Vector3(h, 0, v);
-        float magnitude = Mathf.Clamp01(moveDirection.magnitude) * movementspeed;
-        moveDirection.Normalize();
-
-        moveDirection = Quaternion.AngleAxis(CamTransform.rotation.eulerAngles.y, Vector3.up) * moveDirection;                     
-
-        if (moveDirection != Vector3.zero)           
-        {
-            Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);                                              
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationspeed * Time.deltaTime);
-        }
-    }
-        private void firedashstart()
-    {
-        ChangeAnimationState(firedashstate);
-        Physics.IgnoreLayerCollision(8, 6);
-        Physics.IgnoreLayerCollision(11, 6);
-        state = State.Firedash;
-    }
-    private void firedash()
-    {
-        Vector3 endposi = transform.position + (transform.forward * 20);
-        Vector3 distancetomove = endposi - transform.position;
-        Vector3 move = distancetomove.normalized * 70 * Time.deltaTime;
-        charactercontroller.Move(move);
-    }
-    private void firedashdmg()
-    {
-        Collider[] cols = Physics.OverlapSphere(transform.position, 2f, spellsdmglayer);
-        foreach (Collider Enemyhit in cols)
-
-            if (Enemyhit.gameObject.GetComponent<Checkforhitbox>())
-            {
-                int dmgdealed = 5;
-                Enemyhit.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed);
-                var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
-                showtext.GetComponent<TextMeshPro>().color = Color.red;
-            }
-    }
-
-    private void waterpushback()
-    {
-        if (lockontarget != null)
-        {
-            float h = this.move.x;                                                                         
-
-            moveDirection = new Vector3(h, 0, 0);
-            float magnitude = Mathf.Clamp01(moveDirection.magnitude) * 10;
-            moveDirection.Normalize();
-            moveDirection = Quaternion.AngleAxis(CamTransform.rotation.eulerAngles.y, Vector3.up) * moveDirection;                     
-
-            velocity = moveDirection * magnitude;
-            velocity.y += graviti;
-            charactercontroller.Move(velocity * Time.deltaTime);
-
-            Transform target = lockontarget;
-            Vector3 newtransformposi = transform.position;
-            newtransformposi.y = transform.position.y;
-            Vector3 newlockonposi = target.position;
-            newlockonposi.y = transform.position.y;
-            Vector3 endposi = newlockonposi + (transform.forward * -15);
-            Vector3 distancetomove = endposi - newtransformposi;
-            Vector3 move = distancetomove.normalized * 17 * Time.deltaTime;
-            charactercontroller.Move(move);
-            //transform.position = Vector3.MoveTowards(newtransformposi, newlockonposi, -17 * Time.deltaTime);
-            if (Vector3.Distance(transform.position, target.position) > 13f)
-            {
-                Abilitiesend();
-            }
-        }
-        else
-        {
-            Abilitiesend();
-        }
-
-    }
-    private void waterpushbackdmg()
-    {
-        if (lockontarget != null)
-        {
-            Collider[] cols = Physics.OverlapSphere(lockontarget.position, 2f, spellsdmglayer);
-            foreach (Collider Enemyhit in cols)
-
-                if (Enemyhit.gameObject.GetComponent<Checkforhitbox>())
-                {
-                    int dmgdealed = 7;
-                    Enemyhit.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed);
-                    var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                    showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
-                    showtext.GetComponent<TextMeshPro>().color = Color.red;
-                }
-        }
-    }
-    private void waterintoair()
-    {
-        if (lockontarget != null)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.up, 15 * Time.deltaTime);
-        }
-        else
-        {
-            Abilitiesend();
-        }
-    }
-    private void waterintoairdmg()
-    {
-        Collider[] cols = Physics.OverlapSphere(transform.position, 4f, spellsdmglayer);
-        foreach (Collider Enemyhit in cols)
-
-            if (Enemyhit.gameObject.GetComponent<Checkforhitbox>())
-            {
-                int dmgdealed = 7;
-                Enemyhit.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed);
-                var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
-                showtext.GetComponent<TextMeshPro>().color = Color.red;
-            }
-    }
-    private void startwaterkick()
-    {
-        ChangeAnimationState(waterkickstate);
-        state = State.Waterkickend;
-    }
-    private void waterkickend()
-    {
-        if (lockontarget != null)
-        {
-            Vector3 distancetomove = lockontarget.position - transform.position;
-            Vector3 move = distancetomove.normalized * 25 * Time.deltaTime;
-            charactercontroller.Move(move);
-            //transform.position = Vector3.MoveTowards(transform.position, lockontarget.position, 25 * Time.deltaTime);
-            transform.rotation = Quaternion.LookRotation(lockontarget.transform.position - transform.position, Vector3.up);
-            if (Vector3.Distance(transform.position, lockontarget.position) < 3f)
-            {
-                Collider[] cols = Physics.OverlapSphere(transform.position, 4f, spellsdmglayer);
-                foreach (Collider Enemyhit in cols)
-
-                    if (Enemyhit.gameObject.GetComponent<Checkforhitbox>())
-                    {
-                        int dmgdealed = 10;
-                        Enemyhit.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed);
-                        var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                        showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
-                        showtext.GetComponent<TextMeshPro>().color = Color.red;
-                    }
-                Vector3 lookPos = lockontarget.transform.position - transform.position;
-                lookPos.y = 0;
-                transform.rotation = Quaternion.LookRotation(lookPos);
-                Abilitiesend();
-            }
-        }
-        else Abilitiesend();
-    }
     private void naturethendrilstart()
     {
         if (lockontarget != null)
