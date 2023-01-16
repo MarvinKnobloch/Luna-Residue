@@ -15,7 +15,8 @@ public class Movescript : MonoBehaviour
     //kamera nach dem lightport in spieler guck richtung?
 
     //Stormlightning flug animation hat sich am ende nicht verändert (zu der Zeit war der Char Toggle Active State = true)
-    [SerializeField] internal Swordattack Weaponslot1script;
+    //[SerializeField] internal Swordattack Weaponslot1script;
+    //private Newswordattack newswordattack;
     [SerializeField] internal Bowattack Weaponslot2script;
     [SerializeField] internal AimScript aimscript;
 
@@ -222,6 +223,7 @@ public class Movescript : MonoBehaviour
         graviti = -0.5f;
         gravitation = normalgravition;
         cancellockon = false;
+        attackonceair = true;
         Charprefabarrow.SetActive(false);
         currentstate = null;
     }
@@ -364,13 +366,13 @@ public class Movescript : MonoBehaviour
     }
     public void switchtogroundstate()
     {
-        onground = true;
+        attackonceair = true;
         graviti = -0.5f;
         state = State.Ground;
     }
     public void switchtoairstate()
     {
-        onground = false;
+        gravitation = normalgravition;
         state = State.Air;
     }
     public void slowplayer(float slowmovementspeed)

@@ -284,13 +284,6 @@ public class Swordattack : MonoBehaviour
         GlobalCD.startresetdash();
         movementscript.state = Movescript.State.Actionintoair;
     }
-
-    private void schwertbasictrue()
-    {
-        input = true;
-        basic = true;
-        animator.SetBool("attack1", false);
-    }
     private void groundattackchainend()
     {
         input = false;
@@ -298,6 +291,12 @@ public class Swordattack : MonoBehaviour
         Statics.otheraction = false;
         combochain = 0;
         basicattackcd = 0.5f;
+    }
+    private void schwertbasictrue()
+    {
+        input = true;
+        basic = true;
+        animator.SetBool("attack1", false);
     }
     private void schwertbasicend()
     {
