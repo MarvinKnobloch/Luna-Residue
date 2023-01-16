@@ -38,15 +38,15 @@ public class Playerlightning
                         }
                         else if(psm.lightningthirdtarget == null)               //sucht das 3. lightning target
                         {
-                            if (colliders[i].gameObject != psm.lightningfirsttarget.gameObject || colliders[i].gameObject != psm.ligthningsecondtarget.gameObject)
+                            if (colliders[i].gameObject == psm.lightningfirsttarget.gameObject || colliders[i].gameObject == psm.ligthningsecondtarget.gameObject)
+                            {
+                                continue;
+                            }
+                            else
                             {
                                 psm.lightningthirdtarget = colliders[i].gameObject.transform;
                                 psm.currentlightningtraget = colliders[i].gameObject.transform;
                                 return;
-                            }
-                            else
-                            {
-                                continue;
                             }
                         }
                     }
@@ -73,58 +73,6 @@ public class Playerlightning
             psm.Abilitiesend();
         }
     }
-    /*public void stormchainlightningsecondtarget()
-    {
-        if (Movescript.lockontarget != null && psm.ligthningsecondtarget != null)
-        {
-            lightningmovement(psm.ligthningsecondtarget);
-            if (Vector3.Distance(psm.transform.position, psm.ligthningsecondtarget.position) < 2f)
-            {
-                lightningdealdmg();
-                if (Physics.CheckSphere(psm.transform.position, 10f, psm.spellsdmglayer) == true)
-                {
-                    Collider[] colliders = Physics.OverlapSphere(psm.transform.position, 10, psm.spellsdmglayer);
-                    for (int i = 0; i < colliders.Length; i++)
-                    {
-                        if (colliders[i].gameObject != psm.lightningfirsttarget.gameObject || colliders[i].gameObject != psm.ligthningsecondtarget.gameObject)
-                        {
-                            psm.lightningthirdtarget = colliders[i].gameObject.transform;
-                            psm.state = Movescript.State.Thirdlightning;
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                    }
-                    if (psm.lightningthirdtarget == null)
-                    {
-                        psm.state = Movescript.State.Endlightning;
-                    }
-                }
-            }
-        }
-        else
-        {
-            psm.Abilitiesend();
-        }
-    }
-
-    public void stormchainlightningthirdtarget()
-    {
-        if (Movescript.lockontarget != null)
-        {
-            lightningmovement(psm.lightningthirdtarget);
-            if (Vector3.Distance(psm.transform.position, psm.lightningthirdtarget.position) < 1f)
-            {
-                lightningdealdmg();
-                psm.state = Movescript.State.Endlightning;
-            }
-        }
-        else
-        {
-            psm.Abilitiesend();
-        }
-    }*/
     public void stormlightningbacktomain()
     {
         if (Movescript.lockontarget != null && Movescript.lockontarget == psm.lightningfirsttarget)
@@ -150,7 +98,7 @@ public class Playerlightning
     }
     private void lightningdealdmg()
     {
-        Collider[] cols = Physics.OverlapSphere(psm.transform.position, 1f, psm.spellsdmglayer);
+        Collider[] cols = Physics.OverlapSphere(psm.transform.position, 2f, psm.spellsdmglayer);
         foreach (Collider Enemyhit in cols)
         {
             if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
@@ -174,3 +122,56 @@ public class Playerlightning
         }
     }
 }
+
+/*public void stormchainlightningsecondtarget()
+{
+    if (Movescript.lockontarget != null && psm.ligthningsecondtarget != null)
+    {
+        lightningmovement(psm.ligthningsecondtarget);
+        if (Vector3.Distance(psm.transform.position, psm.ligthningsecondtarget.position) < 2f)
+        {
+            lightningdealdmg();
+            if (Physics.CheckSphere(psm.transform.position, 10f, psm.spellsdmglayer) == true)
+            {
+                Collider[] colliders = Physics.OverlapSphere(psm.transform.position, 10, psm.spellsdmglayer);
+                for (int i = 0; i < colliders.Length; i++)
+                {
+                    if (colliders[i].gameObject != psm.lightningfirsttarget.gameObject || colliders[i].gameObject != psm.ligthningsecondtarget.gameObject)
+                    {
+                        psm.lightningthirdtarget = colliders[i].gameObject.transform;
+                        psm.state = Movescript.State.Thirdlightning;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+                if (psm.lightningthirdtarget == null)
+                {
+                    psm.state = Movescript.State.Endlightning;
+                }
+            }
+        }
+    }
+    else
+    {
+        psm.Abilitiesend();
+    }
+}
+
+public void stormchainlightningthirdtarget()
+{
+    if (Movescript.lockontarget != null)
+    {
+        lightningmovement(psm.lightningthirdtarget);
+        if (Vector3.Distance(psm.transform.position, psm.lightningthirdtarget.position) < 1f)
+        {
+            lightningdealdmg();
+            psm.state = Movescript.State.Endlightning;
+        }
+    }
+    else
+    {
+        psm.Abilitiesend();
+    }
+}*/

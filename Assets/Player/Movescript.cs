@@ -11,6 +11,9 @@ public class Movescript : MonoBehaviour
 {
     //Bugs:
     //bei jeglichen spells, wenn das target stirbt, ist das target dann nicht gleich null, weil eine neues traget gesucht wird, wenn eins vorhanden ist
+    //playerhits im enemyscript muss upgedatet werden, wenn man support chars angewählt/habgewählt werden        ??? muss playerhit überhaupt abgewählt werden wenn die chars deaktiviert werden
+    //kamera nach dem lightport in spieler guck richtung?
+
     //Stormlightning flug animation hat sich am ende nicht verändert (zu der Zeit war der Char Toggle Active State = true)
     [SerializeField] internal Swordattack Weaponslot1script;
     [SerializeField] internal Bowattack Weaponslot2script;
@@ -81,25 +84,19 @@ public class Movescript : MonoBehaviour
     private Playernature playernature = new Playernature();
     private Playerice playerice = new Playerice();
     private Playerlightning playerlightning = new Playerlightning();
+    private Playerdark playerdark = new Playerdark();
+    private Playerearth playerearth = new Playerearth();
 
     //animationstate
     public string currentstate;
     const string jumpstate = "Jump";
-    const string idlestate = "Idle";
-    const string runstate = "Running";
     const string fallstate = "Fall";
-    const string healstart = "Healstart";
     const string dazestate = "Daze";
     const string hookshotstate = "Hookshot";
     const string chargestate = "Chargearrow";
     const string aimholdstate = "Aimhold";
     const string releasearrowstate = "Releasearrow";
-    const string firedashstate = "Firedash";
-    const string waterintoairstate = "Waterintoair";
-    const string waterkickstate = "Waterkick";
-    const string icelancebackflipstate = "Icelancebackflip";
-    const string darkportalendstate = "Darkportalend";
-    const string earthslidereleasestate = "Earthsliderelease";
+
 
     //Inventory;
     public Inventorycontroller matsinventory;
@@ -131,13 +128,12 @@ public class Movescript : MonoBehaviour
     public Healingscript healingscript;
     public LayerMask spellsdmglayer;
     public GameObject damagetext;
-    private bool chainligthningenemys;
     [NonSerialized] public Vector3 startpos;
     [NonSerialized] public float starttime;
     [NonSerialized] public float nature1speed = 2;
     [NonSerialized] public float nature1traveltime = 1;
     [NonSerialized] public float icelancespeed = 30;
-    [NonSerialized] public float lightningspeed = 30;
+    [NonSerialized] public float lightningspeed = 10;
     [NonSerialized] public Transform currentlightningtraget;
     [NonSerialized] public Transform lightningfirsttarget;
     [NonSerialized] public Transform ligthningsecondtarget;
@@ -184,10 +180,9 @@ public class Movescript : MonoBehaviour
         Empty,
     }
 
-
     void Awake()
     {
-        Statics.spellnumbers[0] = 15;
+        Statics.spellnumbers[0] = 21;
         lockonrange = Statics.playerlockonrange;
         Charrig.enabled = false;
         aimscript.enabled = false;
@@ -217,6 +212,8 @@ public class Movescript : MonoBehaviour
         playernature.psm = this;
         playerice.psm = this;
         playerlightning.psm = this;
+        playerdark.psm = this;
+        playerearth.psm = this;
     }
     private void OnEnable()
     {
@@ -340,20 +337,14 @@ public class Movescript : MonoBehaviour
             case State.Stormchainligthning:
                 playerlightning.stormchainligthning();
                 break;
-            /*case State.Secondlightning:
-                playerlightning.stormchainlightningsecondtarget();
-                break;
-            case State.Thirdlightning:
-                playerlightning.stormchainlightningthirdtarget();
-                break;*/
             case State.Endlightning:
                 playerlightning.stormlightningbacktomain();
                 break;
             case State.Darkportalend:
-                darkportalending();
+                playerdark.darkportalending();
                 break;
             case State.Earthslide:
-                earthslidestart();
+                playerearth.earthslidestart();
                 break;
             case State.Empty:
                 break;
@@ -417,6 +408,10 @@ public class Movescript : MonoBehaviour
     public void elewaterpushbackdmg() => playerwater.waterpushbackdmg();
     public void elewaterintoairdmg() => playerwater.waterintoairdmg();
     public void elestarticelancefly() => playerice.starticelancefly();
+    public void eleusedarkportal() => playerdark.usedarkportal();
+    public void eleearthslidestart() => playerearth.earthslidestart();
+    public void eleearthslidedmg() => playerearth.earthslidedmg();
+
 
 
     private void Grounded()
@@ -698,86 +693,6 @@ public class Movescript : MonoBehaviour
         Statics.otheraction = false;
         Physics.IgnoreLayerCollision(9, 6, false);
         Physics.IgnoreLayerCollision(11, 6, false);
-    }
-    
-    private void usedarkportal()
-    {
-        if (lockontarget != null)
-        {
-            transform.position = lockontarget.position + new Vector3(0, 10, 0) + (transform.forward * -2);
-            ChangeAnimationState(darkportalendstate);
-            airattackminheight = true;
-        }
-        else
-        {
-            Abilitiesend();
-        }
-    }
-
-    public void darkportalending()
-    {
-        state = State.Darkportalend;
-        graviti = -17;
-        velocity = new Vector3(0, 0, 0);
-        velocity.y += graviti;
-        charactercontroller.Move(velocity * Time.deltaTime);
-
-        Ray ray = new Ray(this.transform.position + Vector3.up * 0.3f, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, 0.4f))
-        {
-            airattackminheight = false;
-        }
-        if (airattackminheight == false)
-        {
-            state = State.Airintoground;
-            Statics.otheraction = false;
-            Collider[] cols = Physics.OverlapSphere(transform.position, 2f, spellsdmglayer);
-            foreach (Collider Enemyhit in cols)
-
-                if (Enemyhit.gameObject.GetComponent<Checkforhitbox>())
-                {
-                    int dmgdealed = 10;
-                    Enemyhit.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed);
-                    var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                    showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
-                    showtext.GetComponent<TextMeshPro>().color = Color.red;
-                }
-        }
-    }
-    private void earthslidestart()
-    {
-        if (lockontarget != null)
-        {
-            state = State.Earthslide;
-            if (Vector3.Distance(transform.position, lockontarget.position) > 2f)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, lockontarget.position, earthslidespeed * Time.deltaTime);
-                transform.rotation = Quaternion.LookRotation(lockontarget.transform.position - transform.position, Vector3.up);
-            }          
-            if (Vector3.Distance(transform.position, lockontarget.position) < 9f)
-            {
-                ChangeAnimationState(earthslidereleasestate);
-            }
-        }
-        else
-        {
-            Abilitiesend();
-        }
-    }
-    private void earthslidedmg()
-    {
-        Collider[] cols = Physics.OverlapSphere(transform.position, 2f, spellsdmglayer);
-        foreach (Collider Enemyhit in cols)
-
-            if (Enemyhit.gameObject.GetComponent<Checkforhitbox>())
-            {
-                int dmgdealed = 15;
-                Enemyhit.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed);
-                var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
-                showtext.GetComponent<TextMeshPro>().color = Color.red;
-                state = State.Empty;
-            }
     }
 }
 

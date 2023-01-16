@@ -672,7 +672,7 @@ public class EleAbilities : MonoBehaviour
         if (target != null)
         {
             transform.position = target.transform.position + (transform.forward * 2);
-            transform.position = new Vector3(transform.position.x, target.transform.position.y, transform.position.z);
+            //transform.position = new Vector3(transform.position.x, target.transform.position.y, transform.position.z);
             RaycastHit hit;
             if (Physics.Raycast(transform.position, Vector3.down, out hit, 10f))
             {
@@ -690,17 +690,32 @@ public class EleAbilities : MonoBehaviour
     }
     private void ligthbackstabdmg()
     {
-        Collider[] cols = Physics.OverlapSphere(transform.position, 3f, Layerhitbox);
-        foreach (Collider Enemyhit in cols)
-
-            if (Enemyhit.gameObject.GetComponent<Checkforhitbox>())
+        {
+            Collider[] cols = Physics.OverlapSphere(transform.position, 3f, Layerhitbox);
+            foreach (Collider Enemyhit in cols)
             {
-                int dmgdealed = 10;
-                Enemyhit.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed);
-                var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
-                showtext.GetComponent<TextMeshPro>().color = Color.red;
+                if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
+                {
+                    enemyscript.dmgonce = false;
+                }
             }
+            foreach (Collider Enemyhit in cols)
+            {
+                if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
+                {
+                    if (enemyscript.dmgonce == false)
+                    {
+                        enemyscript.dmgonce = true;
+                        float dmg = 10;
+                        enemyscript.TakeDamage(dmg);
+                        var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
+                        showtext.GetComponent<TextMeshPro>().text = dmg.ToString();
+                        showtext.GetComponent<TextMeshPro>().color = Color.red;
+                    }
+
+                }
+            }
+        }
     }
     private void light2()
     {
