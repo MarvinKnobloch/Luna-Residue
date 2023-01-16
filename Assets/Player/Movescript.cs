@@ -51,8 +51,8 @@ public class Movescript : MonoBehaviour
     [NonSerialized] public float attackmovementspeed = 1;
     [NonSerialized] public float attackrotationspeed = 100;
 
-    [NonSerialized] public bool amBoden;
-    [NonSerialized] public bool inderluft;
+    [NonSerialized] public bool onground;
+    [NonSerialized] public bool inair;
     [NonSerialized] public bool airattackminheight;
     [NonSerialized] public bool attackonceair;
     [NonSerialized] public bool bowair3intoground;                                 // für lockon
@@ -364,13 +364,13 @@ public class Movescript : MonoBehaviour
     }
     public void switchtogroundstate()
     {
-        amBoden = true;
+        onground = true;
         graviti = -0.5f;
         state = State.Ground;
     }
     public void switchtoairstate()
     {
-        amBoden = false;
+        onground = false;
         state = State.Air;
     }
     public void slowplayer(float slowmovementspeed)
@@ -435,7 +435,7 @@ public class Movescript : MonoBehaviour
     public void jumppad(float jumpheight)
     {
         //state = State.Jump;
-        amBoden = false;
+        onground = false;
         ChangeAnimationState(jumpstate);
         float gravity = Physics.gravity.y * gravitation;
         graviti = Mathf.Sqrt(jumpheight * -3 * gravity);
@@ -521,8 +521,8 @@ public class Movescript : MonoBehaviour
     private void airintoground()
     {
         charactercontroller.stepOffset = originalStepOffSet;
-        amBoden = true;
-        inderluft = false;
+        onground = true;
+        inair = false;
         attack3intoair = false;
         attackonceair = true;
         //jumpcdafterland = 0f;
@@ -532,8 +532,8 @@ public class Movescript : MonoBehaviour
     {
         Statics.otheraction = false;
         charactercontroller.stepOffset = 0;
-        amBoden = false;
-        inderluft = true;
+        onground = false;
+        inair = true;
         gravitation = normalgravition;
         state = State.Air;
     }
@@ -656,7 +656,7 @@ public class Movescript : MonoBehaviour
     private void Bowhookshot()
     {
         ChangeAnimationState(hookshotstate);
-        amBoden = false;
+        onground = false;
         if (lockontarget != null)
         {
             transform.position = Vector3.MoveTowards(transform.position, lockontarget.position, 25 * Time.deltaTime);

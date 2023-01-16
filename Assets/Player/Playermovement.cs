@@ -43,7 +43,7 @@ public class Playermovement
     {
         if (Physics.SphereCast(psm.spherecastcollider.bounds.center, psm.spherecastcollider.radius, Vector3.down, out RaycastHit groundhit, 1.1f, psm.groundchecklayer))
         {
-            psm.amBoden = true;
+            psm.onground = true;
             float angle = Vector3.Angle(Vector3.up, groundhit.normal);
             if(angle > psm.charactercontroller.slopeLimit +6)          // +3 sonst die ganze zeit state wechsel wenn man gegen ein schräge läuft
             {

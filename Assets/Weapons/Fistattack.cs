@@ -76,7 +76,7 @@ public class Fistattack : MonoBehaviour
 
         if (LoadCharmanager.disableattackbuttons == false)
         {
-            if (movementscript.amBoden == true)
+            if (movementscript.onground == true)
             {
                 if (Steuerung.Player.Attack1.WasPressedThisFrame() && basicattackcd > 1f && Statics.otheraction == false)
                 {
@@ -132,12 +132,12 @@ public class Fistattack : MonoBehaviour
                 }
             }
 
-            if (movementscript.inderluft == true)
+            if (movementscript.inair == true)
             {
                 if (movementscript.attack3intoair == true && Steuerung.Player.Attack1.WasPressedThisFrame())
                 {
                     movementscript.state = Movescript.State.Airattack;
-                    movementscript.amBoden = false;
+                    movementscript.onground = false;
                     movementscript.attack3intoair = false;
                     input = false;
                 }
@@ -166,7 +166,7 @@ public class Fistattack : MonoBehaviour
                     input = false;
                 }
 
-                if (movementscript.amBoden == false)
+                if (movementscript.onground == false)
                 {
                     if (basicairattack == true && Steuerung.Player.Attack2.WasPressedThisFrame())
                     {
@@ -414,8 +414,8 @@ public class Fistattack : MonoBehaviour
         movementscript.state = Movescript.State.Airattack;
         movementscript.graviti = 0f;
         movementscript.gravitation = 0f;
-        movementscript.amBoden = false;
-        movementscript.inderluft = true;
+        movementscript.onground = false;
+        movementscript.inair = true;
     }
     private void faustuptrue()
     {
@@ -514,8 +514,8 @@ public class Fistattack : MonoBehaviour
         {
             movementscript.charactercontroller.stepOffset = 0.2f;
             movementscript.attackonceair = true;
-            movementscript.amBoden = true;
-            movementscript.inderluft = false;
+            movementscript.onground = true;
+            movementscript.inair = false;
             movementscript.airattackminheight = false;
             animator.SetBool("attack1", true);
             movementscript.state = Movescript.State.Groundattack;

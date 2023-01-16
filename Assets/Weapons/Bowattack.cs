@@ -112,7 +112,7 @@ public class Bowattack : MonoBehaviour
         basicattackcd += Time.deltaTime;
         if (LoadCharmanager.disableattackbuttons == false)
         {
-            if (movementscript.amBoden == true)
+            if (movementscript.onground == true)
             {
                 if (Steuerung.Player.Attack1.WasPressedThisFrame() && basicattackcd > 0.7f && aimscript.Charotation == false && Statics.otheraction == false)
                 {
@@ -193,7 +193,7 @@ public class Bowattack : MonoBehaviour
                 input = false;
             }
 
-            if (movementscript.inderluft == true)
+            if (movementscript.inair == true)
             {
                 if (weaponswitchattack == true && Steuerung.Player.Attack1.WasPerformedThisFrame())                //attack bei weaponswitch
                 {
@@ -204,7 +204,7 @@ public class Bowattack : MonoBehaviour
                 if (movementscript.attack3intoair == true && Steuerung.Player.Attack1.WasPressedThisFrame())                 //Attackchain von Atttack3down into Air1
                 {
                     movementscript.state = Movescript.State.Airattack;
-                    movementscript.amBoden = false;
+                    movementscript.onground = false;
                     movementscript.attack3intoair = false;
                     input = false;
                 }
@@ -484,8 +484,8 @@ public class Bowattack : MonoBehaviour
         movementscript.state = Movescript.State.BowAirattack;
         movementscript.graviti = 0f;
         movementscript.gravitation = 0f;
-        movementscript.amBoden = false;
-        movementscript.inderluft = true;
+        movementscript.onground = false;
+        movementscript.inair = true;
     }
     private void bowuptrue()
     {
@@ -607,8 +607,8 @@ public class Bowattack : MonoBehaviour
         {
             movementscript.charactercontroller.stepOffset = 0.2f;
             movementscript.attackonceair = true;
-            movementscript.amBoden = true;
-            movementscript.inderluft = false;
+            movementscript.onground = true;
+            movementscript.inair = false;
             movementscript.airattackminheight = false;
             movementscript.currentstate = null;                                        //airchain, Aircharge muss resetet werden
             animator.SetBool("attack1", true);
@@ -663,8 +663,8 @@ public class Bowattack : MonoBehaviour
             movementscript.state = Movescript.State.Bowweaponswitch;
             movementscript.gravitation = 0;
             movementscript.charactercontroller.stepOffset = 0;
-            movementscript.amBoden = false;
-            movementscript.inderluft = true;
+            movementscript.onground = false;
+            movementscript.inair = true;
             root = true;
             movementscript.ChangeAnimationState(animationbowswitch);
             resetbowairstates();
