@@ -6,8 +6,7 @@ using UnityEngine.Animations;
 
 public class AimScript : MonoBehaviour
 {
-    private SpielerSteu Steuerung;
-    [SerializeField] internal Movescript Movementscript;
+    /*private SpielerSteu controlls;
     public Transform Kamerarichtung;
 
     //aim
@@ -15,47 +14,38 @@ public class AimScript : MonoBehaviour
     public float aimrotationgesch;
     public CinemachineFreeLook Cam1;
     public CinemachineVirtualCamera Cam2;
-    private bool activatecam;
-    public bool Charotation;
-    public bool aimanimation;
     public bool virtualcam;
-    public GameObject arrow;
 
     public GameObject mousetarget;
     void Awake()
     {
         mousetarget.SetActive(false);
-        arrow.SetActive(false);
-        Steuerung = new SpielerSteu();
+        controlls = new SpielerSteu();
     }
     private void OnEnable()
     {
-        Steuerung.Enable();
+        controlls.Enable();
     }
     void Update()
     {
         if (virtualcam == true)
         {
-            if (activatecam == false)
-            {
-                aimanimation = true;
-                Cam2.gameObject.SetActive(true);
-                CinemachinePOV Cam2pov = Cam2.GetCinemachineComponent<CinemachinePOV>();
-                Cam2pov.m_HorizontalRecentering.m_enabled = true;
-                Cam1.m_RecenterToTargetHeading.m_enabled = true;
-                activatecam = true;
-                Invoke("cam2recenter", 0.2f);
-            }
-            if (Charotation == true)
-            {
-                mousetarget.SetActive(true);
-                Cam2.transform.rotation = transform.rotation;
-                //float Kamerarotationoffset = Kamerarichtung.eulerAngles.y + 10f;
-                //Quaternion kamerarotation = Quaternion.Euler(0, Kamerarotationoffset, 0);
-                //transform.rotation = Quaternion.Lerp(transform.rotation, kamerarotation, aimrotationgesch * Time.deltaTime);
-                aimrotation(Steuerung.Player.Mouse.ReadValue<Vector2>());
-            }
+            Cam2.transform.rotation = transform.rotation;
+            //float Kamerarotationoffset = Kamerarichtung.eulerAngles.y + 10f;
+            //Quaternion kamerarotation = Quaternion.Euler(0, Kamerarotationoffset, 0);
+            //transform.rotation = Quaternion.Lerp(transform.rotation, kamerarotation, aimrotationgesch * Time.deltaTime);
+            aimrotation(controlls.Player.Mouse.ReadValue<Vector2>());
         }
+    }
+    public void activateaimcam()
+    {
+        mousetarget.SetActive(true);
+        Cam2.gameObject.SetActive(true);
+        CinemachinePOV Cam2pov = Cam2.GetCinemachineComponent<CinemachinePOV>();
+        Cam2pov.m_HorizontalRecentering.m_enabled = true;
+        Cam1.m_RecenterToTargetHeading.m_enabled = true;
+        Invoke("cam2recenter", 0.2f);
+        virtualcam = true;
     }
     private void aimrotation(Vector2 input)
     {
@@ -69,19 +59,14 @@ public class AimScript : MonoBehaviour
     public void aimend()
     {
         CancelInvoke();
-        mousetarget.SetActive(false);
         virtualcam = false;
-        Charotation = false;
+        mousetarget.SetActive(false);
         Cam1.m_RecenterToTargetHeading.m_enabled = false;
         Cam2.gameObject.SetActive(false);
-        activatecam = false;
-        arrow.SetActive(false);
-        aimanimation = false;
     }
     private void cam2recenter()
     {
         CinemachinePOV Cam2pov = Cam2.GetCinemachineComponent<CinemachinePOV>();
         Cam2pov.m_HorizontalRecentering.m_enabled = false;
-        Charotation = true;
-    }
+    }*/
 }

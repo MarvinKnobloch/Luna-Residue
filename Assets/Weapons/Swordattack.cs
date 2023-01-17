@@ -138,7 +138,7 @@ public class Swordattack : MonoBehaviour
         }
         else if (movementscript.state == Movescript.State.Air)
         {
-            if (controlls.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false)// && Statics.infight == true)
+            if (controlls.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false && Statics.infight == true)
             {
                 movementscript.state = Movescript.State.Airattack;
                 attackestate = Attackstate.attack1;

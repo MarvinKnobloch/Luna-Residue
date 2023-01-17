@@ -15,8 +15,7 @@ public class Movescript : MonoBehaviour
     //kamera nach dem lightport in spieler guck richtung?
 
     //Stormlightning flug animation hat sich am ende nicht verändert (zu der Zeit war der Char Toggle Active State = true)
-    [SerializeField] internal Bowattack Weaponslot2script;
-    [SerializeField] internal AimScript aimscript;
+    //[SerializeField] internal AimScript aimscript;
 
     [NonSerialized] public CharacterController charactercontroller;
     [NonSerialized] public SpielerSteu controlls;
@@ -66,6 +65,11 @@ public class Movescript : MonoBehaviour
     public GameObject spine;
     public LayerMask swimlayer;
 
+    //playeraim
+    [NonSerialized] public float xrotation = 0f;
+    [NonSerialized] public float aimrotationspeed = 10;
+    public GameObject mousetarget;
+
     //Characterrig
     public MonoBehaviour Charrig;
     public bool activaterig;
@@ -78,6 +82,7 @@ public class Movescript : MonoBehaviour
     private Playerswim playerswim = new Playerswim();
     private Playerstun playerstun = new Playerstun();
     private Playerattack playerattack = new Playerattack();
+    private Playeraim playeraim = new Playeraim();
     public Playerlockon playerlockon = new Playerlockon();
     private Playerfire playerfire = new Playerfire();
     private Playerwater playerwater = new Playerwater();
@@ -156,8 +161,8 @@ public class Movescript : MonoBehaviour
         Actionintoair,
         Groundattack,
         Airattack,
-        BowGroundattack,
-        BowAirattack,
+        Bowgroundattack,
+        Playerweaponaim,
         Bowweaponswitch,
         Bowhookshot,
         Beforedash,
@@ -184,7 +189,6 @@ public class Movescript : MonoBehaviour
         Statics.spellnumbers[0] = 21;
         lockonrange = Statics.playerlockonrange;
         Charrig.enabled = false;
-        aimscript.enabled = false;
         lockoncheck = false;
         controlls = Keybindinputmanager.inputActions;
         controlls.Player.Movement.performed += Context => move = Context.ReadValue<Vector2>();
@@ -213,6 +217,7 @@ public class Movescript : MonoBehaviour
         playerlightning.psm = this;
         playerdark.psm = this;
         playerearth.psm = this;
+        playeraim.psm = this;
     }
     private void OnEnable()
     {
@@ -287,12 +292,13 @@ public class Movescript : MonoBehaviour
             case State.Actionintoair:
                 intoair();
                 break;
-            case State.BowGroundattack:
+            case State.Bowgroundattack:
                 Bowgroundmovement();
                 lockonbowrotation();
                 Groundedattack();
                 break;
-            case State.BowAirattack:
+            case State.Playerweaponaim:
+                playeraim.aimplayerrotation();
                 Bowgroundmovement();
                 break;
             case State.Bowweaponswitch:
@@ -300,7 +306,6 @@ public class Movescript : MonoBehaviour
                 break;
             case State.Bowhookshot:
                 Bowhookshot();
-                //Minhighforairattack();
                 break;
             case State.Beforedash:           //damit man beim angreifen noch die Richtung bestimmen kann
                 playermovement.beforedashmovement();
@@ -371,6 +376,12 @@ public class Movescript : MonoBehaviour
         gravitation = normalgravition;
         state = State.Air;
     }
+    public void switchtoaimstate()
+    {
+        playeraim.activateaimcam();
+        state = State.Playerweaponaim;
+    }
+    public void disableaimcam() => playeraim.aimend();
     public void slowplayer(float slowmovementspeed)
     {
         movementspeed = slowmovementspeed;
@@ -530,8 +541,7 @@ public class Movescript : MonoBehaviour
         {
             activaterig = false;
             Charrig.enabled = false;
-            aimscript.virtualcam = false;
-            aimscript.aimend();
+            playeraim.aimend();
             Statics.otheraction = false;
             Charprefabarrow.SetActive(false);
             state = State.Ground;
@@ -625,8 +635,7 @@ public class Movescript : MonoBehaviour
         }
         else
         {
-            aimscript.virtualcam = false;
-            aimscript.aimend();
+            playeraim.aimend();
             Statics.otheraction = false;
             Charprefabarrow.SetActive(false);
             state = State.Ground;

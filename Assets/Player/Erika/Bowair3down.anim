@@ -48094,7 +48094,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: bowair3downroot
+    functionName: startbowair3intoground
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -48108,14 +48108,14 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.53333336
-    functionName: bowairintogroundtrue
+    functionName: setinputtotrue
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.9
-    functionName: bowair3togroundend
+    functionName: bowairdownend
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using Cinemachine;
 
 public class Bowattack : MonoBehaviour
 {
@@ -10,50 +8,20 @@ public class Bowattack : MonoBehaviour
     private AimScript aimscript;
     private Healingscript healingscript;
     private EleAbilities eleAbilities;
-
-    private SpielerSteu Steuerung;
+    private SpielerSteu controlls;
     private Animator animator;
+
+    public GameObject playerarrow;
+
     private bool root;
-    private bool basic;
-    private bool attackend;
-    private bool basicairattack;
-    private bool secondairattack;
-    private bool thirdairattack;
-    private bool checkairchainstate;
-    private bool air3state;
-    private float slowmogravition = 0.5f;
-
+    private float basicattackcd;
     public int combochain;
-    private bool basicchain;
-    private bool air3downintobasic;
+    private int bowaircount;
 
-    public bool input;
+    private bool readattackinput;
     private bool down;
     private bool mid;
     private bool up;
-
-    private float basicattackcd;
-
-    //weaponswitch
-    private bool checkforweaponswitch;
-    private float checkforenemyonswitch = 3f;
-    public LayerMask weaponswitchlayer;
-    public float slowmotionpercentage;
-    public bool weaponswitchattack;
-    public GameObject prefabarrow;
-
-    //animationstates
-    const string animationbowswitch = "Boweaponchange";
-    const string slowmochargeup = "Slowmocharge";
-    const string slowmoshoot = "Slowmoshoot";
-    const string slowmofastcharge = "Slowmofastcharge";
-    const string attack1state = "Basic";
-    const string basicair1state = "Air1";
-    const string dashstate = "Bowdash";
-    const string kickstate = "Kick";
-    const string fallstate = "Fall";
-    const string starthookstate = "Bowhookcharge";
-    const string chargestate = "Chargearrow";
 
     //castarrow
     public GameObject basicgroundarrow;
@@ -67,290 +35,272 @@ public class Bowattack : MonoBehaviour
     public GameObject hookshotarrow;
     public GameObject puzzlearrow;
     public Transform Arrowlaunchposi;
-    private float maxtravelrangeifnothit = 50;
-    public Transform Kamerarichtung;
+    public Transform Camtransform;
     public LayerMask Arrowraycastlayer;
     public LayerMask Puzzlelayer;
 
-    public GameObject charmanager;
+    //animations
+    const string groundbasic1state = "Bowbasic";
+    const string groundbasic2state = "Bowbasic2";
+    const string grounddownstate = "Bowdownend";
+    const string groundmidstate = "Bowmidend";
+    const string groundupstate = "Bowupend";
+    const string bowairchargestate = "Bowaircharge";
+    const string bowairholdstate = "Bowairhold";
+    const string bowairreleasestate = "Bowairrelease";
+    const string airdownstate = "Bowairdown";
+    const string airmidstate = "Bowairmid";
+    const string airupstate = "Bowairup";
+    const string bowbackflipstate = "Bowweaponswitchbackflip";
+    const string slowmochargeup = "Slowmocharge";
+    const string slowmoshoot = "Slowmoshoot";
+    const string slowmofastcharge = "Slowmofastcharge";
+    const string dashstate = "Bowdash";
+    const string starthookstate = "Bowhookcharge";
+    const string hookshotstate = "Bowhookshot";
+
+    //weaponswitch
+    private float checkforenemyonswitchrange = 3f;
+    public LayerMask weaponswitchlayer;
+    private float slowmopercentage = 0.3f;
+    private float slowmogravition = 0.5f;
 
     void Awake()
     {
-        Steuerung = Keybindinputmanager.inputActions;
+        controlls = Keybindinputmanager.inputActions;
         animator = GetComponent<Animator>();
         movementscript = GetComponent<Movescript>();
         aimscript = GetComponent<AimScript>();
         healingscript = GetComponent<Healingscript>();
         eleAbilities = GetComponent<EleAbilities>();
     }
-
     private void OnEnable()
     {
-        Steuerung.Enable();
-        movementscript.currentstate = null;
-        basic = false;
+        controlls.Enable();
         root = false;
+        movementscript.currentstate = null;
         basicattackcd = 1f;
-        weaponswitchattack = false;
-        prefabarrow.SetActive(false);
         aimscript.enabled = true;
-        StartCoroutine(startweaponswitch());
         combochain = 0;
+        bowaircount = 0;
+        readattackinput = false;
+        attackestate = Attackstate.weaponswitch;
+        StartCoroutine(startweaponswitch());
     }
     private void OnDisable()
     {
         CancelInvoke();
         aimscript.enabled = false;
-        prefabarrow.SetActive(false);
+        playerarrow.SetActive(false);
     }
-    private void Start()
+    private Attackstate attackestate;
+    enum Attackstate
     {
-        aimscript.enabled = true;
+        waitforattack,
+        attack1,
+        attack2,
+        groundattackchain,
+        airattackchain,
+        bowairattack,
+        groundintoair,                                // eine zusätzliche chain bei ground into air
+        weaponswitch,
     }
     void Update()
     {
-        basicattackcd += Time.deltaTime;
         if (LoadCharmanager.disableattackbuttons == false)
         {
-            if (movementscript.onground == true)
+            switch (attackestate)
             {
-                if (Steuerung.Player.Attack1.WasPressedThisFrame() && basicattackcd > 0.7f && aimscript.Charotation == false && Statics.otheraction == false)
-                {
-                    movementscript.state = Movescript.State.BowGroundattack;
-                    Statics.otheraction = true;
-                    movementscript.ChangeAnimationState(attack1state);
-                    basic = false;
-                    attackend = false;
-                    resetbowani();
-                }
-                if (Steuerung.Player.Attack1.WasPressedThisFrame() && basicchain == true && combochain <= 1)               //Groundchain Ground3 into Ground1
-                {
-                    input = false;
-                    basicchain = false;
-                }
-                if (basic == true && Steuerung.Player.Attack2.WasPressedThisFrame())
-                {
-                    input = false;
-                    basic = false;
-                }
-
-                if (attackend == true && Steuerung.Player.Attack1.WasPerformedThisFrame())
-                {
-                    input = false;
-                    attackend = false;
-                    combochain++;
-                    down = true;
-                    mid = false;
-                    up = false;
-                }
-                if (attackend == true && Steuerung.Player.Attack2.WasPerformedThisFrame())
-                {
-                    input = false;
-                    attackend = false;
-                    combochain++;
-                    down = false;
-                    mid = true;
-                    up = false;
-                }
-                if (attackend == true && Steuerung.Player.Attack3.WasPerformedThisFrame())
-                {
-                    input = false;
-                    attackend = false;
-                    combochain++;
-                    down = false;
-                    mid = false;
-                    up = true;
-                }
-                if (Steuerung.Player.Attack4.WasPressedThisFrame() && Statics.otheraction == false && Statics.infight == false)
-                {
-                    movementscript.activaterig = false;
-                    movementscript.fullcharge = false;
-                    Statics.otheraction = true;
-                    movementscript.state = Movescript.State.Bowcharge;
-                    transform.rotation = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0);
-                    aimscript.virtualcam = true;
-                    movementscript.ChangeAnimationState(chargestate);
-                }
+                case Attackstate.waitforattack:
+                    waitforattackinput();
+                    break;
+                case Attackstate.attack1:
+                    attack1input();
+                    break;
+                case Attackstate.attack2:
+                    attack2input();
+                    break;
+                case Attackstate.bowairattack:
+                    bowairbasicinput();
+                    break;
+                case Attackstate.groundattackchain:
+                    groundattackchaininput();
+                    break;
+                case Attackstate.airattackchain:
+                    break;
+                case Attackstate.groundintoair:
+                    groundintoairinput();
+                    break;
+                case Attackstate.weaponswitch:
+                    groundattackchaininput();                                //gleicher input, damit ich nicht noch mehr schreiben muss
+                    break;              
+                default:
+                    break;
             }
-            if (Steuerung.Player.Attack4.WasPressedThisFrame() && Statics.otheraction == false && Statics.infight == true)           // bowhookshot
-            {
-                if (Movescript.lockontarget != null)
-                {
-                    if (Vector3.Distance(transform.position, Movescript.lockontarget.position) > 5f)
-                    {
-                        movementscript.gravitation = 0f;
-                        movementscript.graviti = 0f;
-                        Statics.otheraction = true;
-                        movementscript.ChangeAnimationState(starthookstate);
-                    }
-                }
-            }
-
-            if (Steuerung.Player.Attack1.WasPressedThisFrame() && air3downintobasic == true && combochain <= 1)          //Air3down into ground
-            {
-                movementscript.state = Movescript.State.Airattack;
-                air3downintobasic = false;
-                input = false;
-            }
-
-            if (movementscript.inair == true)
-            {
-                if (weaponswitchattack == true && Steuerung.Player.Attack1.WasPerformedThisFrame())                //attack bei weaponswitch
-                {
-                    slowattack2();
-                    weaponswitchattack = false;
-                }
-
-                if (movementscript.attack3intoair == true && Steuerung.Player.Attack1.WasPressedThisFrame())                 //Attackchain von Atttack3down into Air1
-                {
-                    movementscript.state = Movescript.State.Airattack;
-                    movementscript.onground = false;
-                    movementscript.attack3intoair = false;
-                    input = false;
-                }
-
-                if (Steuerung.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false && Statics.infight == true)
-                {
-                    Statics.otheraction = true;
-                    bowairfirstattack();
-                }
-
-                if (basicairattack == true && Steuerung.Player.Attack1.WasPerformedThisFrame())                             //Attackchain von Air3 into Air1
-                {
-                    CancelInvoke();
-                    basicairattack = false;
-                    air3state = false;
-                    animator.SetBool("airhold", false);
-                    animator.SetBool("airrelease", true);
-                    shotairbasicarrow();
-                    checkairchainstate = true;
-                }
-                if (secondairattack == true && Steuerung.Player.Attack2.WasPerformedThisFrame())
-                {
-                    CancelInvoke();
-                    animator.SetBool("airhold", false);
-                    animator.SetBool("airrelease", true);
-                    shotairbasicarrow();
-                    secondairattack = false;
-                    checkairchainstate = false;
-                    air3state = true;
-                }
-                if (thirdairattack == true && Steuerung.Player.Attack1.WasPerformedThisFrame())
-                {
-                    thirdairattack = false;
-                    CancelInvoke();                                                 // wegen airattackchainfail
-                    animator.SetBool("airhold", false);
-                    animator.SetBool("air3down", true);
-                    combochain++;
-                    startbowair3intoground();
-                }
-                if (thirdairattack == true && Steuerung.Player.Attack2.WasPerformedThisFrame())
-                {
-                    thirdairattack = false;
-                    CancelInvoke();                                                 // wegen airattackchainfail
-                    animator.SetBool("airhold", false);
-                    animator.SetBool("air3mid", true);
-                    combochain++;
-                    shotairmidarrow();
-                }
-                if (thirdairattack == true && Steuerung.Player.Attack3.WasPerformedThisFrame())
-                {
-                    thirdairattack = false;
-                    CancelInvoke();                                               // wegen airattackchainfail
-                    animator.SetBool("airhold", false);
-                    animator.SetBool("air3up", true);
-                    combochain++;
-                    shotairuparrow();
-                }
-            }
-            if (Statics.dazestunstart == true)
+            if (Statics.dazestunstart == true)                                //reset alles values bei stun
             {
                 Statics.dazestunstart = false;
-                Statics.otheraction = true;
-                Statics.dash = false;
-                resetbowairstates();
-                resetbowani();
-                healingscript.resethealvalues();
-                eleAbilities.resetelementalmovementvalues();
-                eleAbilities.icelanceiscanceled();
-                root = false;
-                CancelInvoke();
-                input = false;
-                combochain = 0;
+                Statics.playeriframes = false;
+                resetvalues();
                 movementscript.Charrig.enabled = false;
-                if (Statics.enemyspezialtimescale == false)
-                {
-                    Time.timeScale = Statics.normalgamespeed;
-                    Time.fixedDeltaTime = Statics.normaltimedelta;
-                }
-                movementscript.bowair3intoground = false;
-                prefabarrow.SetActive(false);
-                weaponswitchattack = false;
-                if (aimscript.virtualcam == true)
-                {
-                    aimscript.aimend();
-                }
             }
-
-            if (Steuerung.Player.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false)
+            if (controlls.Player.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false)
             {
-                movementscript.state = Movescript.State.Beforedash;
-                Statics.otheraction = true;
+                movementscript.state = Movescript.State.Beforedash;                  //damit man beim angreifen noch die Richtung bestimmen kann
                 Statics.dash = true;
+                Statics.playeriframes = true;
+                resetvalues();
                 GlobalCD.startdashcd();
-                resetbowairstates();
-                resetbowani();
-                healingscript.resethealvalues();
-                eleAbilities.resetelementalmovementvalues();
-                eleAbilities.icelanceiscanceled();
-                root = true;
-                CancelInvoke();
-                input = false;
-                combochain = 0;
-                Time.timeScale = Statics.normalgamespeed;
-                Time.fixedDeltaTime = Statics.normaltimedelta;
-                movementscript.Charrig.enabled = false;
-                movementscript.bowair3intoground = false;
-                prefabarrow.SetActive(false);
-                weaponswitchattack = false;
-                if (aimscript.virtualcam == true)
-                {
-                    aimscript.aimend();
-                }
-                movementscript.graviti = 0f;
-                movementscript.gravitation = 0f;
-                Invoke("dash", 0.05f);
+                movementscript.graviti = 0;
+                Invoke("dash", 0.05f);                                             //damit man beim angreifen noch die Richtung bestimmen kann
             }
-            /*if (Steuerung.Player.Kick.WasPerformedThisFrame() && Statics.kickcdbool == false && Statics.dash == false)
+            if (Movescript.lockontarget != null && controlls.Player.Attack4.WasPressedThisFrame() && Statics.otheraction == false)           // bowhookshot
             {
-                Movementscript.state = Movescript.State.DashKick;
-                Statics.otheraction = true;
-                Statics.kick = true;
-                GlobalCD.startkickcd();
-                resetbowairstates();
-                resetbowani();
-                prefabarrow.SetActive(false);
-                GetComponent<Healingscript>().healanzeige.SetActive(false);
-                CancelInvoke();
-                root = false;
-                input = false;
-                combochain = 0;
-                Movementscript.Charrig.enabled = false;
-                Time.timeScale = Statics.normalgamespeed;
-                Time.fixedDeltaTime = Statics.normaltimedelta;
-                Movementscript.bowair3intoground = false;
-                weaponswitchattack = false;
-                if (aimscript.virtualcam == true)
+                if (Vector3.Distance(transform.position, Movescript.lockontarget.position) > 5f)
                 {
-                    aimscript.aimend();
+                    attackestate = Attackstate.waitforattack;
+                    movementscript.graviti = 0f;
+                    Statics.otheraction = true;
+                    movementscript.ChangeAnimationState(starthookstate);
                 }
-                Movementscript.runter = 0f;
-                Movementscript.gravitation = 0f;
-                Movementscript.ChangeAnimationStateInstant(kickstate);
-            }*/
+            }
         }
     }
-
+    private void waitforattackinput()
+    {
+        basicattackcd += Time.deltaTime;
+        if (movementscript.state == Movescript.State.Ground)
+        {
+            if (controlls.Player.Attack1.WasPressedThisFrame() && basicattackcd > 0.5f && Statics.otheraction == false)
+            {
+                movementscript.state = Movescript.State.Groundattack;
+                attackestate = Attackstate.attack1;
+                Statics.otheraction = true;
+                movementscript.ChangeAnimationState(groundbasic1state);
+                readattackinput = false;
+                combochain = 0;
+            }
+        }
+        else if (movementscript.state == Movescript.State.Air)
+        {
+            if (controlls.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false)// && Statics.infight == true)
+            {
+                movementscript.switchtoaimstate();
+                attackestate = Attackstate.bowairattack;
+                movementscript.graviti = 0f;       
+                Statics.otheraction = true;
+                bowaircount = 0;
+                movementscript.attackonceair = false;
+                combochain = 0;
+                readattackinput = false;
+                movementscript.ChangeAnimationState(bowairchargestate);
+            }
+        }
+    }
+    private void attack1input()
+    {
+        if (readattackinput == true)
+        {
+            if (controlls.Player.Attack2.WasPressedThisFrame())
+            { 
+                readattackinput = false; 
+            }
+        }
+    }
+    private void bowairbasicinput()
+    {
+        if (readattackinput == true)
+        {
+            if (bowaircount <= 1)
+            {
+                if (controlls.Player.Attack1.WasPressedThisFrame())
+                {
+                    bowaircount++;
+                    movementscript.ChangeAnimationStateInstant(bowairreleasestate);
+                    readattackinput = false;
+                }
+            }
+            else
+            {
+                if (controlls.Player.Attack1.WasPressedThisFrame())
+                {
+                    combochain++;
+                    movementscript.ChangeAnimationState(airdownstate);
+                    readattackinput = false;
+                }
+                else if (controlls.Player.Attack2.WasPressedThisFrame())
+                {
+                    combochain++;
+                    bowaircount = 0;
+                    movementscript.ChangeAnimationState(airmidstate);
+                    readattackinput = false;
+                }
+                else if (controlls.Player.Attack3.WasPressedThisFrame())
+                {
+                    combochain++;
+                    bowaircount = 0;
+                    movementscript.ChangeAnimationState(airupstate);
+                    readattackinput = false;
+                }
+            }
+        }
+    }
+    private void attack2input()
+    {
+        if (readattackinput == true)
+        {
+            if (controlls.Player.Attack1.WasPressedThisFrame())
+            {
+                combochain++;
+                down = true;
+                readattackinput = false;
+            }
+            else if (controlls.Player.Attack2.WasPressedThisFrame())
+            {
+                combochain++;
+                mid = true;
+                readattackinput = false;
+            }
+            else if (controlls.Player.Attack3.WasPressedThisFrame())
+            {
+                combochain++;
+                up = true;
+                readattackinput = false;
+            }
+        }
+    }
+    private void groundintoairinput()
+    {
+        if (readattackinput == true)
+        {
+            if (controlls.Player.Attack1.WasPressedThisFrame())
+            {
+                readattackinput = false;
+            }
+        }
+    }
+    private void groundattackchaininput()
+    {
+        if (readattackinput == true && combochain < 2)
+        {
+            if (controlls.Player.Attack1.WasPressedThisFrame())
+            {
+                readattackinput = false;
+            }
+        }
+    }
+    private void airattackchaininput()
+    {
+        if (readattackinput == true && combochain < 2)
+        {
+            if (controlls.Player.Attack1.WasPressedThisFrame())
+            {
+                attackestate = Attackstate.bowairattack;
+                readattackinput = false;
+                movementscript.ChangeAnimationStateInstant(bowairchargestate);
+            }
+        }
+    }
     private void OnAnimatorMove()
     {
         if (root == true)
@@ -359,294 +309,166 @@ public class Bowattack : MonoBehaviour
             movementscript.charactercontroller.Move(velocity);
         }
     }
+
+    private void resetvalues()
+    {
+        if (Statics.enemyspezialtimescale == false)
+        {
+            Time.timeScale = Statics.normalgamespeed;
+            Time.fixedDeltaTime = Statics.normaltimedelta;
+        }
+        if (movementscript.Cam2.gameObject.activeSelf == true)
+        {
+            movementscript.disableaimcam();
+        }
+        movementscript.gravitation = movementscript.normalgravition;
+        playerarrow.SetActive(false);
+        attackestate = Attackstate.waitforattack;
+        Statics.otheraction = true;
+        root = true;
+        CancelInvoke();
+        healingscript.resethealvalues();
+        eleAbilities.resetelementalmovementvalues();
+        eleAbilities.icelanceiscanceled();
+    }
     private void dash()
     {
         movementscript.state = Movescript.State.Empty;
         movementscript.ChangeAnimationStateInstant(dashstate);
     }
     private void bowdashend()
-    {     
+    {
         root = false;
+        Statics.playeriframes = false;
         Statics.otheraction = false;
         GlobalCD.startresetdash();
-        movementscript.state = Movescript.State.Actionintoair;
+        movementscript.switchtoairstate();
     }
-    private void bowkickhitboxcheck()
+    private void setinputtotrue()
     {
-        Collider[] kickcol = Physics.OverlapSphere(transform.position, 0f, LayerMask.GetMask("Meleehitbox"));                                               // colliderpos, größe(muss nur im programm angegeben werden wenn keine hitbox erstellt worden ist, rotation, layer
-        foreach (Collider kickhit in kickcol)
+        readattackinput = true;
+    }
+    private void groundattackchainend()
+    {
+        playerarrow.SetActive(false);
+        readattackinput = false;
+        movementscript.switchtogroundstate();
+        attackestate = Attackstate.waitforattack;
+        Statics.otheraction = false;
+        combochain = 0;
+        basicattackcd = 0;
+    }
+    private void bowgroundbasicend()
+    {
+        if (readattackinput == true) groundattackchainend();
+        else
         {
-            if (kickhit.gameObject.GetComponent<Checkforhitbox>())
+            down = false;
+            mid = false;
+            up = false;
+            attackestate = Attackstate.attack2;
+            movementscript.ChangeAnimationState(groundbasic2state);
+        }
+    }
+    private void bowgroundbasci2end()
+    {
+        if (readattackinput == true) groundattackchainend();
+        else
+        {
+            if (down == true)
             {
-                kickhit.gameObject.GetComponentInParent<Enemymovement>().hardattackinterrupt();
+                attackestate = Attackstate.groundattackchain;
+                if (down) movementscript.ChangeAnimationState(grounddownstate);
+            }
+            else if (mid == true)
+            {
+                attackestate = Attackstate.groundattackchain;
+                movementscript.ChangeAnimationState(groundmidstate);
+            }
+            else if (up == true)
+            {
+                attackestate = Attackstate.groundintoair;
+                movementscript.ChangeAnimationState(groundupstate);
             }
         }
     }
-    private void bowbasictrue()
+    private void bowstaygroundend()
     {
-        input = true;
-        basic = true;
-        animator.SetBool("attack1", false);
-    }
-    private void bowbasicend()
-    {
-        basic = false;
-        if (input == true)
-        {
-            input = false;
-            movementscript.state = Movescript.State.Ground;
-            Statics.otheraction = false;
-            combochain = 0;
-            basicattackcd = 0.5f;
-        }
+        if (readattackinput == true) groundattackchainend();
         else
         {
-            animator.SetBool("attack2", true);
+            attackestate = Attackstate.attack1;
+            movementscript.ChangeAnimationState(groundbasic1state);
         }
     }
-    private void bowbasic2true()
-    {
-        input = true;
-        attackend = true;
-        animator.SetBool("attack2", false);
-    }
-    private void bowbasic2end()
-    {
-        attackend = false;
-        if (input == true)
-        {
-            input = false;
-            movementscript.state = Movescript.State.Ground;
-            Statics.otheraction = false;
-            combochain = 0;
-            basicattackcd = 0.5f;
-        }
-        if (down)
-        {
-            animator.SetBool("attackdown", true);
-        }
-        if (mid)
-        {
-            animator.SetBool("attackmid", true);
-        }
-        if (up)
-        {
-            animator.SetBool("attackup", true);
-        }
-    }
-    private void hookarrow()
-    {
-        shothookarrow();
-    }
-    private void bowchain()
-    {
-        input = true;
-        basicchain = true;
-        animator.SetBool("attackdown", false);
-        animator.SetBool("attackmid", false);
-    }
-    private void bowdownend()
-    {
-        basicchain = false;
-        if (input == true)
-        {
-            input = false;
-            movementscript.state = Movescript.State.Ground;
-            Statics.otheraction = false;
-            combochain = 0;
-            basicattackcd = 0.5f;
-        }
-        else
-        {
-            animator.SetBool("attack1", true);
-        }
-    }
-    private void bowmidend()
-    {
-        basicchain = false;
-        if (input == true)
-        {
-            input = false;
-            movementscript.state = Movescript.State.Ground;
-            Statics.otheraction = false;
-            combochain = 0;
-            basicattackcd = 0.5f;
-        }
-        else
-        {
-            animator.SetBool("attack1", true);
-        }
-    }
-    private void bowuproot()
+    private void bowgrounduproot()
     {
         movementscript.attackonceair = false;
         root = true;
-        movementscript.state = Movescript.State.BowAirattack;
+        movementscript.switchtoaimstate();
         movementscript.graviti = 0f;
-        movementscript.gravitation = 0f;
-        movementscript.onground = false;
-        movementscript.inair = true;
     }
-    private void bowuptrue()
+    private void bowgroundupend()
     {
-        input = true;
-        movementscript.attack3intoair = true;
-        animator.SetBool("attackup", false);
-    }
-    private void bowupend()
-    {
-        basicchain = false;
-        movementscript.attack3intoair = false;
         root = false;
-        if (input == true)
+        if (readattackinput == true) airattackchainend();
+        else
         {
-            input = false;
-            movementscript.state = Movescript.State.Actionintoair;
-            Statics.otheraction = false;
-            combochain = 0;
+            movementscript.switchtoaimstate();
+            attackestate = Attackstate.bowairattack;
+            movementscript.ChangeAnimationStateInstant(bowairchargestate);
+        }
+    }
+    private void airattackchainend()
+    {
+        readattackinput = false;
+        movementscript.switchtoairstate();
+        attackestate = Attackstate.waitforattack;
+        Statics.otheraction = false;
+        combochain = 0;
+        basicattackcd = 0;
+        movementscript.disableaimcam();
+        playerarrow.SetActive(false);
+    }
+    private void bowaircharge()
+    {
+        if (combochain < 2 == true)
+        {
+            movementscript.ChangeAnimationState(bowairholdstate);
         }
         else
         {
-            bowairfirstattack();
+            airattackchainend();
         }
     }
-    private void bowairfirstattack()
-    {
-        movementscript.state = Movescript.State.BowAirattack;
-        movementscript.attackonceair = false;        // wegen attack spam
-        movementscript.gravitation = 0f;
-        movementscript.graviti = 0f;
-        transform.rotation = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0);
-        aimscript.virtualcam = true;
-        resetbowairstates();
-        movementscript.ChangeAnimationState(basicair1state);
-    }
-    private void bowairchainfirst()
-    {
-        animator.SetBool("air3mid", false);
-        animator.SetBool("air3up", false);
-        if (combochain <= 1)
-        {
-            animator.SetBool("aircharge", true);
-            checkairchainstate = false;
-            air3state = false;
-            resetbowairstates();
-        }
-        else
-        {
-            airattackchainfail();
-        }
-    }
-    /*private void bowair1()
-    {
-        basicairattack = false;
-        checkairchainstate = false;
-        air3state = false;
-        animator.SetBool("aircharge", false);
-        Movementscript.moveattackcheck = true;
-        animator.SetBool("fallafterattack", false);
-    }*/
+
     private void bowairhold()
     {
-        animator.SetBool("airhold", true);
-        animator.SetBool("aircharge", false);
-    }
-    private void bowairinput()
-    {
-        if (checkairchainstate == false && air3state == false)                            // BowAirhold animationSpeed ist auf 0.2, weil sonst die Animation geloopt wird und der Invoke mehrmals called
-        {
-            basicairattack = true;
-        }
-        if (checkairchainstate == true)
-        {
-            secondairattack = true;
-        }
-        if (air3state == true)
-        {
-            thirdairattack = true;
-            air3state = false;
-        }
-        Invoke("airattackchainfail", 0.7f);
-    }
-    private void cancelbowairinput()
-    {
-
+        readattackinput = true;
+        movementscript.ChangeAnimationState(bowairholdstate);
     }
     private void startbowair3intoground()
     {
-        aimscript.virtualcam = false;
-        aimscript.aimend();
-        prefabarrow.SetActive(false);
-        if(Movescript.lockontarget == null)
+        root = true;
+        attackestate = Attackstate.groundattackchain;
+        movementscript.disableaimcam();
+        playerarrow.SetActive(false);
+        if (Movescript.lockontarget == null)
         {
-            Movescript.lockoncheck = true;
-            movementscript.cancellockon = true;
-            movementscript.bowair3intoground = true;                            // für autolockon
+            movementscript.playerlockon.lookfortarget();
         }
     }
-    private void bowair3downroot()
-    {
-        root = true;
-        movementscript.bowair3intoground = false;
-    }
-    private void bowairintogroundtrue()
-    {
-        animator.SetBool("air3down", false);
-        air3downintobasic = true;
-        input = true;
-    }
-    private void bowair3togroundend()
+    private void bowairdownend()
     {
         root = false;
-        air3downintobasic = false;
-        movementscript.gravitation = 4f;
-        movementscript.graviti = -0.5f;
-
-        Ray ray = new Ray(this.transform.position + Vector3.up * 0.3f, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, 0.4f) && input == false)
-        {
-            movementscript.charactercontroller.stepOffset = 0.2f;
-            movementscript.attackonceair = true;
-            movementscript.onground = true;
-            movementscript.inair = false;
-            movementscript.airattackminheight = false;
-            movementscript.currentstate = null;                                        //airchain, Aircharge muss resetet werden
-            animator.SetBool("attack1", true);
-            movementscript.state = Movescript.State.BowGroundattack;
-        }
+        if (readattackinput == true) groundattackchainend();
         else
         {
-            input = true;
+            attackestate = Attackstate.attack1;
+            movementscript.graviti = -0.5f;
+            movementscript.state = Movescript.State.Groundattack;
+            movementscript.ChangeAnimationState(groundbasic1state);
         }
-        if (input == true)
-        {
-            input = false;
-            Statics.otheraction = false;           
-            basicattackcd = 0.5f;
-            combochain = 0;
-            movementscript.state = Movescript.State.Actionintoair;
-        }
-    }
-    private void airattackchainfail()
-    {
-        aimscript.virtualcam = false;
-        aimscript.aimend();
-        animator.SetBool("air3mid", false);
-        animator.SetBool("air3up", false);
-        animator.SetBool("airhold", false);
-        prefabarrow.SetActive(false);
-        basicairattack = false;
-        secondairattack = false;
-        thirdairattack = false;
-        air3state = false;
-        movementscript.state = Movescript.State.Actionintoair;
-        combochain = 0;
-        Statics.otheraction = false;
-    }
-    private void bowcharge()
-    {
-        animator.SetBool("airrelease", false);
-        animator.SetBool("aircharge", true);
     }
     IEnumerator startweaponswitch()
     {
@@ -655,127 +477,85 @@ public class Bowattack : MonoBehaviour
     }
     private void bowweaponswitch()
     {
-        checkforweaponswitch = Physics.CheckSphere(transform.position, checkforenemyonswitch, weaponswitchlayer);
-        if (checkforweaponswitch == true && Statics.otheraction == false)
+        if (Physics.CheckSphere(transform.position, checkforenemyonswitchrange, weaponswitchlayer))
         {
             Statics.otheraction = true;
             movementscript.attackonceair = false;
             movementscript.state = Movescript.State.Bowweaponswitch;
-            movementscript.gravitation = 0;
-            movementscript.charactercontroller.stepOffset = 0;
-            movementscript.onground = false;
-            movementscript.inair = true;
+            attackestate = Attackstate.weaponswitch;
+            //movementscript.charactercontroller.stepOffset = 0;
             root = true;
-            movementscript.ChangeAnimationState(animationbowswitch);
-            resetbowairstates();
-            resetbowani();
+            movementscript.ChangeAnimationState(bowbackflipstate);
         }
         else
         {
-            movementscript.state = Movescript.State.Airintoground;
-            resetbowairstates();
-            resetbowani();
+            attackestate = Attackstate.waitforattack;
         }
     }
     private void bowswitchslowmotion()
     {
-        aimscript.virtualcam = true;
+        movementscript.switchtoaimstate();
         root = false;
         movementscript.ChangeAnimationState(slowmochargeup);
-        Time.timeScale = slowmotionpercentage;
-        Time.fixedDeltaTime = Statics.normaltimedelta * slowmotionpercentage;
+        Time.timeScale = slowmopercentage;
+        Time.fixedDeltaTime = Statics.normaltimedelta * slowmopercentage;
         movementscript.graviti = 0f;
         movementscript.gravitation = slowmogravition;
         Invoke("bowweaponswitchattackend", 1.5f);
     }
-    private void slowattack2()
+    private void bowweaponswitchattackend()
+    {
+        Statics.otheraction = false;
+        movementscript.disableaimcam();
+        playerarrow.SetActive(false);
+        Time.timeScale = Statics.normalgamespeed;
+        Time.fixedDeltaTime = Statics.normaltimedelta;
+        movementscript.switchtoairstate();
+        attackestate = Attackstate.waitforattack;
+    }
+    private void weaponswitchshootarrow()
     {
         shotairbasicarrow();
-        prefabarrow.SetActive(false);
+        playerarrow.SetActive(false);
         movementscript.ChangeAnimationState(slowmoshoot);
     }
     private void slowmofastercharge()
     {
         movementscript.ChangeAnimationState(slowmofastcharge);
     }
-    private void slowmoattacktrue()
-    {
-
-        weaponswitchattack = true;
-    }
-    private void bowweaponswitchattackend()
-    {
-        Statics.otheraction = false;
-        aimscript.virtualcam = false;
-        aimscript.aimend();
-        prefabarrow.SetActive(false);
-        movementscript.attackonceair = false;
-        Time.timeScale = Statics.normalgamespeed;
-        Time.fixedDeltaTime = Statics.normaltimedelta;
-        weaponswitchattack = false;
-        movementscript.state = Movescript.State.Actionintoair;
-        movementscript.ChangeAnimationStateInstant(fallstate);
-    }
     private void hookshotstart()
     {
+        movementscript.ChangeAnimationState(hookshotstate);
         movementscript.state = Movescript.State.Bowhookshot;
     }
-    private void pullarrow()
-    {
-        prefabarrow.SetActive(true);
-    }
-    private void arrowfalse()
-    {
-        prefabarrow.SetActive(false);
-    }
-    private void shotbasicgroundarrow()
+    private void pullarrow() => playerarrow.SetActive(true);
+    private void arrowfalse() => playerarrow.SetActive(false);
+
+    private void shotarrow(GameObject arrowtyp)
     {
         if (Movescript.lockoncheck == true)
         {
             Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
-            GameObject Arrow = GameObject.Instantiate(basicgroundarrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
+            GameObject Arrow = Instantiate(arrowtyp, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
             Singlegroundarrow arrowcontroller = Arrow.GetComponent<Singlegroundarrow>();
             arrowcontroller.Arrowtarget = Movescript.lockontarget.transform;
+            arrowfalse();
         }
     }
-    private void shotgrounddown()
-    {
-        if (Movescript.lockoncheck == true)
-        {
-            Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
-            GameObject Arrow = GameObject.Instantiate(grounddownarrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Grounddownarrow arrowcontroller = Arrow.GetComponent<Grounddownarrow>();
-            //arrowcontroller.arrowziel = Movescript.lockontarget.transform.position;
-            arrowcontroller.Arrowtarget = Movescript.lockontarget.transform;
-        }
-    }
-    private void shotgroundmid()
-    {
-        if (Movescript.lockoncheck == true)
-        {
-            Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
-            GameObject Arrow = GameObject.Instantiate(groundmidarrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Groundmidarrow arrowcontroller = Arrow.GetComponent<Groundmidarrow>();
-            arrowcontroller.Arrowtarget = Movescript.lockontarget.transform;
-        }
-    }
-    private void shotgroundup()
-    {
-        if (Movescript.lockoncheck == true)
-        {
-            Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
-            GameObject Arrow = GameObject.Instantiate(grounduparrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Grounduparrow arrowcontroller = Arrow.GetComponent<Grounduparrow>();
-            arrowcontroller.Arrowtarget = Movescript.lockontarget.transform;
-        }
-    }
-    private void shotairbasicarrow()
+    private void shotbasicgroundarrow() => shotarrow(basicairarrow);
+    private void shotgrounddown() => shotarrow(grounddownarrow);
+    private void shotgroundmid() => shotarrow(groundmidarrow);
+    private void shotgroundup() => shotarrow(grounduparrow);
+    private void shotairdown() => shotarrow(airdownarrow);
+    private void shothookarrow() => shotarrow(hookshotarrow);
+
+    private void shotarrowwhileaim(GameObject arrowtyp)
     {
         RaycastHit hit;
-        if (Physics.Raycast(Kamerarichtung.position, Kamerarichtung.forward, out hit, 500f, Arrowraycastlayer, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(Camtransform.position, Camtransform.forward, out hit, Mathf.Infinity, Arrowraycastlayer, QueryTriggerInteraction.Ignore))
         {
             Vector3 arrowrotation = (hit.point - Arrowlaunchposi.position).normalized;
-            GameObject Arrow = GameObject.Instantiate(basicairarrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
+            GameObject Arrow = Instantiate(arrowtyp, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
             SingleAirarrow arrowcontroller = Arrow.GetComponent<SingleAirarrow>();
             arrowcontroller.arrowziel = hit.point;
             arrowcontroller.Arrowtarget = hit.transform;
@@ -783,113 +563,28 @@ public class Bowattack : MonoBehaviour
         }
         else
         {
-            Vector3 arrowrotation = (Kamerarichtung.forward).normalized;
-            GameObject Arrow = GameObject.Instantiate(basicairarrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
+            Vector3 arrowrotation = (Camtransform.forward).normalized;
+            GameObject Arrow = Instantiate(arrowtyp, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
             SingleAirarrow arrowcontroller = Arrow.GetComponent<SingleAirarrow>();
-            arrowcontroller.arrowziel = Kamerarichtung.position + Kamerarichtung.forward * maxtravelrangeifnothit;
+            arrowcontroller.arrowziel = Camtransform.position + Camtransform.forward;
             arrowcontroller.hit = false;
         }
     }
-    private void shotairdown()
-    {
-        if (Movescript.lockoncheck == true)
-        {
-            Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
-            GameObject Arrow = GameObject.Instantiate(airdownarrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Airdownarrow arrowcontroller = Arrow.GetComponent<Airdownarrow>();
-            arrowcontroller.Arrowtarget = Movescript.lockontarget.transform;
-        }
-    }
-    private void shotairmidarrow()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(Kamerarichtung.position, Kamerarichtung.forward, out hit, 500f, Arrowraycastlayer, QueryTriggerInteraction.Ignore))
-        {
-            Vector3 arrowrotation = (hit.point - Arrowlaunchposi.position).normalized;
-            GameObject Arrow = GameObject.Instantiate(airmidarrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Airmidarrow arrowcontroller = Arrow.GetComponent<Airmidarrow>();
-            arrowcontroller.arrowziel = hit.point;
-            arrowcontroller.Arrowtarget = hit.transform;
-            arrowcontroller.hit = true;
-        }
-        else
-        {
-            Vector3 arrowrotation = (Kamerarichtung.forward).normalized;
-            GameObject Arrow = GameObject.Instantiate(airmidarrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Airmidarrow arrowcontroller = Arrow.GetComponent<Airmidarrow>();
-            arrowcontroller.arrowziel = Kamerarichtung.position + Kamerarichtung.forward * maxtravelrangeifnothit;
-            arrowcontroller.hit = false;
-        }
-    }
-    private void shotairuparrow()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(Kamerarichtung.position, Kamerarichtung.forward, out hit, 500f, Arrowraycastlayer, QueryTriggerInteraction.Ignore))
-        {
-            Vector3 arrowrotation = (hit.point - Arrowlaunchposi.position).normalized;
-            GameObject Arrow = GameObject.Instantiate(airuparrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Airuparrow arrowcontroller = Arrow.GetComponent<Airuparrow>();
-            arrowcontroller.arrowziel = hit.point;
-            arrowcontroller.Arrowtarget = hit.transform;
-            arrowcontroller.hit = true;
-        }
-        else
-        {
-            Vector3 arrowrotation = (Kamerarichtung.forward).normalized;
-            GameObject Arrow = GameObject.Instantiate(airuparrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Airuparrow arrowcontroller = Arrow.GetComponent<Airuparrow>();
-            arrowcontroller.arrowziel = Kamerarichtung.position + Kamerarichtung.forward * maxtravelrangeifnothit;
-            arrowcontroller.hit = false;
-        }
-    }
-    private void shothookarrow()
-    {
-        if (Movescript.lockoncheck == true)
-        {
-            Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
-            GameObject Arrow = GameObject.Instantiate(hookshotarrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Hookshotarrow arrowcontroller = Arrow.GetComponent<Hookshotarrow>();
-            arrowcontroller.Arrowtarget = Movescript.lockontarget.transform;
-        }
-    }
+    private void shotairbasicarrow() => shotarrowwhileaim(basicairarrow);
+    private void shotairmidarrow() => shotarrowwhileaim(airmidarrow);
+    private void shotairuparrow() => shotarrowwhileaim(airuparrow);
+
     private void shotpuzzlearrow()
     {
         RaycastHit hit;
-        if (Physics.Raycast(Kamerarichtung.position, Kamerarichtung.forward, out hit, 500f, Arrowraycastlayer, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(Camtransform.position, Camtransform.forward, out hit, Mathf.Infinity, Arrowraycastlayer, QueryTriggerInteraction.Ignore))
         {
             Vector3 arrowrotation = (hit.point - Arrowlaunchposi.position).normalized;
             GameObject Arrow = GameObject.Instantiate(puzzlearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
             Puzzlearrow arrowcontroller = Arrow.GetComponent<Puzzlearrow>();
             arrowcontroller.arrowziel = hit.point;
-            //arrowcontroller.Arrowtarget = hit.transform;
             arrowcontroller.hit = true;
         }
     }
-    private void resetbowairstates()
-    {
-        basicairattack = false;
-        secondairattack = false;
-        thirdairattack = false;
-        checkairchainstate = false;
-        air3state = false;
-        movementscript.bowair3intoground = false;
-        movementscript.attack3intoair = false;
-    }
-    private void resetbowani()
-    {
-        animator.SetBool("airhold", false);
-        animator.SetBool("aircharge", false);
-        animator.SetBool("airrelease", false);
-        animator.SetBool("attack1", false);
-        animator.SetBool("attack2", false);
-        animator.SetBool("attackdown", false);
-        animator.SetBool("attackmid", false);
-        animator.SetBool("attackup", false);
-        animator.SetBool("air3down", false);
-        animator.SetBool("air3mid", false);
-        animator.SetBool("air3up", false);
-    }
-}
 
-//Ray ray = new Ray(transform.position + Vector3.up, transform.forward);                          //Gizmo aktivieren
-//Debug.DrawRay(ray.origin, ray.direction * 3f, Color.green);
+}

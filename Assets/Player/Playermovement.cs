@@ -49,8 +49,7 @@ public class Playermovement
             {
                 Statics.otheraction = false;
                 psm.Charrig.enabled = false;
-                psm.aimscript.virtualcam = false;
-                psm.aimscript.aimend();
+                psm.disableaimcam();
                 psm.graviti = -2;
                 psm.state = Movescript.State.Slidedownwall;
             }
