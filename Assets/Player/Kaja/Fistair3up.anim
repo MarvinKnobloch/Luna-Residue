@@ -48713,14 +48713,14 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.43333334
-    functionName: fistairchain
+    functionName: setinputtotrue
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.8
-    functionName: fistair3upend
+    functionName: fiststayairend
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

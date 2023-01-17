@@ -158,7 +158,7 @@ public class Playerlockon
             Vector3 lookPos = Movescript.lockontarget.transform.position - psm.transform.position;
             lookPos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(lookPos);
-            psm.transform.rotation = Quaternion.Slerp(psm.transform.rotation, rotation, Time.deltaTime * 100);
+            psm.transform.rotation = Quaternion.Slerp(psm.transform.rotation, rotation, psm.lockonrotationspeed  * Time.deltaTime);
         }
     }
 }

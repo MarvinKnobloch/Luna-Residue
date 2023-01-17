@@ -24,4 +24,9 @@ public class Playerattack
         }
         psm.velocity = psm.moveDirection * magnitude;
     }
+    public void finalairmovement()
+    {
+        psm.velocity.y = psm.graviti;
+        psm.charactercontroller.Move(psm.velocity * Time.deltaTime);
+    }
 }

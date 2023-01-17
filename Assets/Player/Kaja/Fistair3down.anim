@@ -44908,7 +44908,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: fistair3downroot
+    functionName: fistairdownroot
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -44921,15 +44921,15 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.53333336
-    functionName: fistairintoground
+  - time: 0.5
+    functionName: setinputtotrue
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.8666667
-    functionName: fistair3togroundend
+    functionName: fistairdownend
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

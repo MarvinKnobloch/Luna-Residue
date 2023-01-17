@@ -361,7 +361,7 @@ public class Bowattack : MonoBehaviour
     }
     private void dash()
     {
-        movementscript.state = Movescript.State.Dash;
+        movementscript.state = Movescript.State.Empty;
         movementscript.ChangeAnimationStateInstant(dashstate);
     }
     private void bowdashend()

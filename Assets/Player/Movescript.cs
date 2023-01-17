@@ -15,8 +15,6 @@ public class Movescript : MonoBehaviour
     //kamera nach dem lightport in spieler guck richtung?
 
     //Stormlightning flug animation hat sich am ende nicht verändert (zu der Zeit war der Char Toggle Active State = true)
-    //[SerializeField] internal Swordattack Weaponslot1script;
-    //private Newswordattack newswordattack;
     [SerializeField] internal Bowattack Weaponslot2script;
     [SerializeField] internal AimScript aimscript;
 
@@ -49,8 +47,9 @@ public class Movescript : MonoBehaviour
     public LayerMask groundchecklayer;
 
     //attack abfragen
-    [NonSerialized] public float attackmovementspeed = 1;
+    [NonSerialized] public float attackmovementspeed = 2;
     [NonSerialized] public float attackrotationspeed = 100;
+    [NonSerialized] public float lockonrotationspeed = 10;
 
     [NonSerialized] public bool onground;
     [NonSerialized] public bool inair;
@@ -162,7 +161,6 @@ public class Movescript : MonoBehaviour
         Bowweaponswitch,
         Bowhookshot,
         Beforedash,
-        Dash,
         Firedashstart,
         Firedash,
         Waterpushback,
@@ -240,7 +238,6 @@ public class Movescript : MonoBehaviour
                 playermovement.groundanimations();
                 playermovement.jump();
                 playerheal.starthealing();
-
                 break;
             case State.Air:
                 playermovement.movement();
@@ -265,8 +262,6 @@ public class Movescript : MonoBehaviour
                 playerstun.stun();
                 playerstun.breakstunwithbuttonmash();
                 break;
-            case State.Dash:
-                break;
             case State.Groundattack:
                 playerattack.attackmovement();
                 playermovement.groundcheck();
@@ -277,6 +272,7 @@ public class Movescript : MonoBehaviour
             case State.Airattack:
                 playerattack.attackmovement();
                 playerlockon.attacklockonrotation();
+                playerattack.finalairmovement();
                 break;
             case State.Bowcharge:
                 chargearrow();
@@ -307,7 +303,7 @@ public class Movescript : MonoBehaviour
                 //Minhighforairattack();
                 break;
             case State.Beforedash:           //damit man beim angreifen noch die Richtung bestimmen kann
-                beforedashmovement();
+                playermovement.beforedashmovement();
                 break;
             case State.Firedashstart:
                 playerfire.firedashstartmovement();
@@ -444,25 +440,6 @@ public class Movescript : MonoBehaviour
         graviti = jumpheight;
     }
     
-    private void beforedashmovement()
-    {
-        float h = move.x;                                                                         // Move Script
-        float v = move.y;
-
-        moveDirection = new Vector3(h, 0, v);
-        //float magnitude = Mathf.Clamp01(moveDirection.magnitude) * slowmovement;
-        moveDirection.Normalize();
-
-        moveDirection = Quaternion.AngleAxis(CamTransform.rotation.eulerAngles.y, Vector3.up) * moveDirection;                     //Kamera dreht sich mit dem Char
-
-        //controller.Move(velocity * Time.deltaTime);
-
-        if (moveDirection != Vector3.zero)
-        {
-            Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);                                              //Char dreht sich
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 5000 * Time.deltaTime);
-        }
-    }
 
     private void Groundedattack()
     {

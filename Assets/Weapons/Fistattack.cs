@@ -4,263 +4,220 @@ using UnityEngine;
 
 public class Fistattack : MonoBehaviour
 {
+    private SpielerSteu controlls;
+    private Animator animator;
     private Movescript movementscript;
-    private Fistcontroller fistcontroller;
+    private SwordController swordcontroller;
     private Healingscript healingscript;
     private EleAbilities eleAbilities;
 
-    private SpielerSteu Steuerung;
-    private Animator animator;
     private bool root;
-    private bool basic;
-    private bool basic2;
-    private bool attackend;
-    private bool basicairattack;
-    private bool stayairattack;
+    private float basicattackcd;
+    public int combochain;
 
-
-    //animationstate
-    const string attack1state = "Basic";
-    const string basicair1state = "Air1";
-    const string dashstate = "Fistdash";
-    const string kickstate = "Kick";
-    const string fistswitchstate = "Fistweaponswitch";
-
-    public bool input;
+    private bool readattackinput;
     private bool down;
     private bool mid;
     private bool up;
 
-    //Cooldowns
-    private float basicattackcd;
-    public int combochain;
-    private bool basicchain;
-    private bool air3downintobasic;
-    private bool basicairchain;
+    //animations
+    const string groundbasic1state = "Fistbasic";
+    const string groundbasic2state = "Fistbasic2";
+    const string groundbasic3state = "Fistbasic3";
+    const string grounddownstate = "Fistdownend";
+    const string groundmidstate = "Fistmidend";
+    const string groundupstate = "Fistupend";
+    const string airbasic1state = "Fistair1";
+    const string airbasic2state = "Fistair2";
+    const string airdownstate = "Fistair3down";
+    const string airmidstate = "Fistair3mid";
+    const string airupstate = "Fistair3up";
+    const string swordswitchstate = "Fistweaponswitch";
+    const string dashstate = "Fistdash";
 
     //weaponswitch
-    private bool checkforweaponswitch;
     private float checkforenemyonswitchrange = 3f;
     public LayerMask weaponswitchlayer;
 
     void Awake()
     {
-        Steuerung = Keybindinputmanager.inputActions;
-        animator = GetComponent<Animator>();
+        controlls = Keybindinputmanager.inputActions;
         movementscript = GetComponent<Movescript>();
-        fistcontroller = GetComponent<Fistcontroller>();
+        animator = GetComponent<Animator>();
+        swordcontroller = GetComponent<SwordController>();
         healingscript = GetComponent<Healingscript>();
         eleAbilities = GetComponent<EleAbilities>();
     }
-
     private void OnEnable()
     {
-        Steuerung.Enable();
-        basic = false;
+        controlls.Enable();
         root = false;
         movementscript.currentstate = null;
         basicattackcd = 1f;
-        fistcontroller.enabled = true;
+        swordcontroller.enabled = true;
         combochain = 0;
-        input = false;
-        StartCoroutine(startfistweaponswitch());
+        readattackinput = false;
+        attackestate = Attackstate.weaponswitch;
+        StartCoroutine(startweaponswitch());
     }
-    private void OnDisable()
+
+    private Attackstate attackestate;
+    enum Attackstate
     {
-        CancelInvoke();
-        fistcontroller.enabled = false;
+        waitforattack,
+        attack1,
+        attack2,
+        attack3,
+        attackchain,
+        groundintoair,                                // eine zusätzliche chain, bei ground into air
+        weaponswitch,
     }
     void Update()
     {
-        basicattackcd += Time.deltaTime;
-
         if (LoadCharmanager.disableattackbuttons == false)
         {
-            if (movementscript.onground == true)
+            switch (attackestate)
             {
-                if (Steuerung.Player.Attack1.WasPressedThisFrame() && basicattackcd > 1f && Statics.otheraction == false)
-                {
-                    movementscript.state = Movescript.State.Groundattack;
-                    Statics.otheraction = true;
-                    movementscript.ChangeAnimationState(attack1state);
-                    basic = false;
-                    attackend = false;
-                    resetfaustani();
-                }
-                if (Steuerung.Player.Attack1.WasPressedThisFrame() && basicchain == true && combochain <= 1)
-                {
-                    input = false;
-                    basicchain = false;
-                }
-
-                if (basic == true && Steuerung.Player.Attack2.WasPressedThisFrame())
-                {
-                    input = false;
-                    basic = false;
-                }
-                if (basic2 == true && Steuerung.Player.Attack2.WasPressedThisFrame())
-                {
-                    input = false;
-                    basic2 = false;
-                }
-                if (attackend == true && Steuerung.Player.Attack1.WasPerformedThisFrame())
-                {
-                    input = false;
-                    attackend = false;
-                    combochain++;
-                    down = true;
-                    mid = false;
-                    up = false;
-                }
-                if (attackend == true && Steuerung.Player.Attack2.WasPerformedThisFrame())
-                {
-                    input = false;
-                    attackend = false;
-                    combochain++;
-                    down = false;
-                    mid = true;
-                    up = false;
-                }
-                if (attackend == true && Steuerung.Player.Attack3.WasPerformedThisFrame())
-                {
-                    input = false;
-                    attackend = false;
-                    combochain++;
-                    down = false;
-                    mid = false;
-                    up = true;
-                }
+                case Attackstate.waitforattack:
+                    waitforattackinput();
+                    break;
+                case Attackstate.attack1:
+                    attack1input();
+                    break;
+                case Attackstate.attack2:
+                    attack2input();
+                    break;
+                case Attackstate.attack3:
+                    attack3input();
+                    break;
+                case Attackstate.attackchain:
+                    airintogroundinput();
+                    break;
+                case Attackstate.groundintoair:
+                    groundintoairinput();
+                    break;
+                case Attackstate.weaponswitch:
+                    break;
+                default:
+                    break;
             }
-
-            if (movementscript.inair == true)
-            {
-                if (movementscript.attack3intoair == true && Steuerung.Player.Attack1.WasPressedThisFrame())
-                {
-                    movementscript.state = Movescript.State.Airattack;
-                    movementscript.onground = false;
-                    movementscript.attack3intoair = false;
-                    input = false;
-                }
-                if (Steuerung.Player.Attack1.WasPressedThisFrame() && air3downintobasic == true && combochain <= 1)
-                {
-                    air3downintobasic = false;
-                    input = false;
-                }
-
-                if (Steuerung.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false && Statics.infight == true)
-                {
-                    movementscript.state = Movescript.State.Airattack;
-                    movementscript.graviti = 0f;
-                    movementscript.gravitation = 0f;
-                    Statics.otheraction = true;
-                    movementscript.attackonceair = false;
-                    basicairattack = false;
-                    stayairattack = false;
-                    input = false;
-                    movementscript.ChangeAnimationState(basicair1state);
-                    resetfaustani();
-                }
-                if (Steuerung.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && basicairchain == true && combochain <= 1)
-                {
-                    basicairchain = false;
-                    input = false;
-                }
-
-                if (movementscript.onground == false)
-                {
-                    if (basicairattack == true && Steuerung.Player.Attack2.WasPressedThisFrame())
-                    {
-                        movementscript.airattackminheight = true;
-                        basicairattack = false;
-                        input = false;
-                    }
-                    if (stayairattack == true && Steuerung.Player.Attack1.WasPressedThisFrame())
-                    {
-                        stayairattack = false;
-                        combochain++;
-                        input = false;
-                        down = true;
-                        mid = false;
-                        up = false;
-                    }
-                    if (stayairattack == true && Steuerung.Player.Attack2.WasPressedThisFrame())
-                    {
-                        stayairattack = false;
-                        combochain++;
-                        input = false;
-                        down = false;
-                        mid = true;
-                        up = false;
-                    }
-                    if (stayairattack == true && Steuerung.Player.Attack3.WasPressedThisFrame())
-                    {
-                        stayairattack = false;
-                        combochain++;
-                        input = false;
-                        down = false;
-                        mid = false;
-                        up = true;
-                    }
-                }
-            }
-            if (Statics.dazestunstart == true)
+            if (Statics.dazestunstart == true)                                //reset alles values bei stun
             {
                 Statics.dazestunstart = false;
-                Statics.otheraction = true;
-                Statics.dash = false;
-                root = false;
-                CancelInvoke();
-                resetfaustairstates();
-                resetfaustani();
-                healingscript.resethealvalues();
-                eleAbilities.resetelementalmovementvalues();
-                eleAbilities.icelanceiscanceled();
-                input = false;
-                combochain = 0;
+                Statics.playeriframes = false;
+                resetvalues();
                 movementscript.Charrig.enabled = false;
-                if(Statics.enemyspezialtimescale == false)
+                if (Statics.enemyspezialtimescale == false)
                 {
                     Time.timeScale = Statics.normalgamespeed;
                     Time.fixedDeltaTime = Statics.normaltimedelta;
                 }
-                movementscript.bowair3intoground = false;
             }
-
-            if (Steuerung.Player.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false)
+            if (controlls.Player.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false)
             {
-                movementscript.state = Movescript.State.Beforedash;
-                Statics.otheraction = true;
+                movementscript.state = Movescript.State.Beforedash;                  //damit man beim angreifen noch die Richtung bestimmen kann
                 Statics.dash = true;
+                Statics.playeriframes = true;
+                resetvalues();
                 GlobalCD.startdashcd();
-                root = true;
-                CancelInvoke();
-                resetfaustairstates();
-                resetfaustani();
-                healingscript.resethealvalues();
-                eleAbilities.resetelementalmovementvalues();
-                eleAbilities.icelanceiscanceled();
-                input = false;
-                combochain = 0;
                 movementscript.graviti = 0;
-                movementscript.gravitation = 0f;
-                Invoke("dash", 0.05f);
+                Invoke("dash", 0.05f);                                             //damit man beim angreifen noch die Richtung bestimmen kann
             }
-            /*if (Steuerung.Player.Kick.WasPerformedThisFrame() && Statics.kickcdbool == false && Statics.dash == false)
+        }
+    }
+
+    private void waitforattackinput()
+    {
+        basicattackcd += Time.deltaTime;
+        if (movementscript.state == Movescript.State.Ground)
+        {
+            if (controlls.Player.Attack1.WasPressedThisFrame() && basicattackcd > 0.5f && Statics.otheraction == false)
             {
-                Movementscript.state = Movescript.State.DashKick;
+                movementscript.state = Movescript.State.Groundattack;
+                attackestate = Attackstate.attack1;
                 Statics.otheraction = true;
-                Statics.kick = true;
-                GlobalCD.startkickcd();
-                GetComponent<Healingscript>().healanzeige.SetActive(false);
-                resetfaustairstates();
-                resetfaustani();
-                input = false;
+                movementscript.ChangeAnimationState(groundbasic1state);
+                readattackinput = false;
                 combochain = 0;
-                Movementscript.runter = 0;
-                Movementscript.gravitation = 0f;
-                Movementscript.ChangeAnimationStateInstant(kickstate);
-                root = false;
-            }*/
+            }
+        }
+        else if (movementscript.state == Movescript.State.Air)
+        {
+            if (controlls.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false)// && Statics.infight == true)
+            {
+                movementscript.state = Movescript.State.Airattack;
+                attackestate = Attackstate.attack1;
+                movementscript.graviti = 0f;
+                Statics.otheraction = true;
+                movementscript.attackonceair = false;
+                combochain = 0;
+                readattackinput = false;
+                movementscript.ChangeAnimationState(airbasic1state);
+            }
+        }
+    }
+    private void attack1input()
+    {
+        if (readattackinput == true)
+        {
+            if (controlls.Player.Attack2.WasPressedThisFrame())
+            {
+                readattackinput = false;
+            }
+        }
+    }
+    private void attack2input()
+    {
+        if (readattackinput == true)
+        {
+            if (controlls.Player.Attack2.WasPressedThisFrame())
+            {
+                readattackinput = false;
+            }
+        }
+    }
+    private void attack3input()
+    {
+        if (readattackinput == true)
+        {
+            if (controlls.Player.Attack1.WasPressedThisFrame())
+            {
+                combochain++;
+                down = true;
+                readattackinput = false;
+            }
+            else if (controlls.Player.Attack2.WasPressedThisFrame())
+            {
+                combochain++;
+                mid = true;
+                readattackinput = false;
+            }
+            else if (controlls.Player.Attack3.WasPressedThisFrame())
+            {
+                combochain++;
+                up = true;
+                readattackinput = false;
+            }
+        }
+    }
+    private void groundintoairinput()
+    {
+        if (readattackinput == true)
+        {
+            if (controlls.Player.Attack1.WasPressedThisFrame())
+            {
+                readattackinput = false;
+            }
+        }
+    }
+    private void airintogroundinput()
+    {
+        if (readattackinput == true && combochain < 2)
+        {
+            if (controlls.Player.Attack1.WasPressedThisFrame())
+            {
+                readattackinput = false;
+            }
         }
     }
     private void OnAnimatorMove()
@@ -271,350 +228,193 @@ public class Fistattack : MonoBehaviour
             movementscript.charactercontroller.Move(velocity);
         }
     }
+
+    private void resetvalues()
+    {
+        attackestate = Attackstate.waitforattack;
+        Statics.otheraction = true;
+        root = true;
+        CancelInvoke();
+        healingscript.resethealvalues();
+        eleAbilities.resetelementalmovementvalues();
+        eleAbilities.icelanceiscanceled();
+    }
     private void dash()
     {
-        movementscript.state = Movescript.State.Dash;
+        movementscript.state = Movescript.State.Empty;
         movementscript.ChangeAnimationStateInstant(dashstate);
     }
     private void fistdashend()
     {
         root = false;
+        Statics.playeriframes = false;
         Statics.otheraction = false;
         GlobalCD.startresetdash();
-        movementscript.state = Movescript.State.Actionintoair;
+        movementscript.switchtoairstate();
     }
-    private void fistkickhitboxcheck()
+    private void setinputtotrue()
     {
-        Collider[] kickcol = Physics.OverlapSphere(transform.position, 4f, LayerMask.GetMask("Meleehitbox"));                                               // colliderpos, größe(muss nur im programm angegeben werden wenn keine hitbox erstellt worden ist, rotation, layer
-        foreach (Collider kickhit in kickcol)
+        readattackinput = true;
+    }
+    private void fistgroundattackchainend()
+    {
+        readattackinput = false;
+        movementscript.switchtogroundstate();
+        attackestate = Attackstate.waitforattack;
+        Statics.otheraction = false;
+        combochain = 0;
+        basicattackcd = 0;
+    }
+    private void fistgroundbasicend()
+    {
+        if (readattackinput == true) fistgroundattackchainend();
+        else
         {
-            if (kickhit.gameObject.GetComponent<Checkforhitbox>())
+            down = false;
+            mid = false;
+            up = false;
+            attackestate = Attackstate.attack2;
+            movementscript.ChangeAnimationState(groundbasic2state);
+        }
+    }
+    private void fistgroundbasic2end()
+    {
+        if (readattackinput == true) fistgroundattackchainend();
+        else
+        {
+            attackestate = Attackstate.attack3;
+            movementscript.ChangeAnimationState(groundbasic3state);
+        }
+    }
+    private void fistgroundbasic3end()
+    {
+        if (readattackinput == true) fistgroundattackchainend();
+        else
+        {
+            if (down == true)
             {
-                kickhit.gameObject.GetComponentInParent<Enemymovement>().hardattackinterrupt();
+                attackestate = Attackstate.attackchain;
+                if (down) movementscript.ChangeAnimationState(grounddownstate);
+            }
+            else if (mid == true)
+            {
+                attackestate = Attackstate.attackchain;
+                movementscript.ChangeAnimationState(groundmidstate);
+            }
+            else if (up == true)
+            {
+                attackestate = Attackstate.groundintoair;
+                movementscript.ChangeAnimationState(groundupstate);
             }
         }
     }
-    private void faustbasictrue()
+    private void fiststaygroundend()
     {
-        input = true;
-        basic = true;
-        animator.SetBool("attack1", false);
-    }
-    private void faustbasicend()
-    {
-        basic = false;
-        if (input == true)
-        {
-            input = false;
-            movementscript.state = Movescript.State.Ground;
-            Statics.otheraction = false;
-            combochain = 0;
-            basicattackcd = 0.5f;
-        }
+        if (readattackinput == true) fistgroundattackchainend();
         else
         {
-            animator.SetBool("attack2", true);
+            attackestate = Attackstate.attack1;
+            movementscript.ChangeAnimationState(groundbasic1state);
         }
     }
-    private void faustbasic2true()
-    {
-        input = true;
-        basic2 = true;
-        animator.SetBool("attack2", false);
-    }
-    private void faustbasic2end()
-    {
-        basic2 = false;
-        if (input == true)
-        {
-            input = false;
-            movementscript.state = Movescript.State.Ground;
-            Statics.otheraction = false;
-            combochain = 0;
-            basicattackcd = 0.5f;
-        }
-        else
-        {
-            animator.SetBool("attack3", true);
-        }
-    }
-    private void faustbasic3true()
-    {
-        input = true;
-        attackend = true;
-        animator.SetBool("attack3", false);
-    }
-    private void faustbasic3end()
-    {
-        attackend = false;
-        if (input == true)
-        {
-            input = false;
-            movementscript.state = Movescript.State.Ground;
-            Statics.otheraction = false;
-            combochain = 0;
-            basicattackcd = 0.5f;
-        }
-        if (down)
-        {
-            animator.SetBool("attackdown", true);
-        }
-        if (mid)
-        {
-            animator.SetBool("attackmid", true);
-        }
-        if (up)
-        {
-            animator.SetBool("attackup", true);
-        }
-    }
-    private void fistchain()
-    {
-        input = true;
-        basicchain = true;
-        animator.SetBool("attackdown", false);
-        animator.SetBool("attackmid", false);
-    }
-    private void fistdownend()
-    {
-        basicchain = false;
-        if (input == true)
-        {
-            input = false;
-            movementscript.state = Movescript.State.Ground;
-            Statics.otheraction = false;
-            combochain = 0;
-            basicattackcd = 0.5f;
-        }
-        else
-        {
-            animator.SetBool("attack1", true);
-        }
-    }
-    private void fistmidend()
-    {
-        basicchain = false;
-        if (input == true)
-        {
-            input = false;
-            movementscript.state = Movescript.State.Ground;
-            Statics.otheraction = false;
-            combochain = 0;
-            basicattackcd = 0.5f;
-        }
-        else
-        {
-            animator.SetBool("attack1", true);
-        }
-    }
-    private void faustuproot()
+    private void fistgrounduproot()
     {
         movementscript.attackonceair = false;
         root = true;
         movementscript.state = Movescript.State.Airattack;
         movementscript.graviti = 0f;
-        movementscript.gravitation = 0f;
-        movementscript.onground = false;
-        movementscript.inair = true;
     }
-    private void faustuptrue()
+    private void fistgroundupend()
     {
-        input = true;
-        movementscript.attack3intoair = true;
-        animator.SetBool("attackup", false);
-    }
-    private void faustupend()
-    {
-        basicchain = false;
-        movementscript.attack3intoair = false;
         root = false;
-        if (input == true)
-        {
-            input = false;
-            movementscript.state = Movescript.State.Actionintoair;
-            Statics.otheraction = false;
-            combochain = 0;
-        }
+        if (readattackinput == true) fistairattackchainend();
         else
         {
-            animator.SetBool("air1", true);
-            basicairattack = false;
-            stayairattack = false;
+            attackestate = Attackstate.attack1;
+            movementscript.ChangeAnimationState(airbasic1state);
         }
     }
-    private void faustbasicairtrue()
+
+    private void fistairattackchainend()
     {
-        input = true;
-        basicairattack = true;
-        animator.SetBool("air1", false);
+        readattackinput = false;
+        movementscript.switchtoairstate();
+        attackestate = Attackstate.waitforattack;
+        Statics.otheraction = false;
+        combochain = 0;
+        basicattackcd = 0;
     }
-    private void faustbasicairend()
+    private void fistbasicairend()
     {
-        basicairattack = false;
-        if (input == true)
-        {
-            input = false;
-            movementscript.state = Movescript.State.Actionintoair;
-            Statics.otheraction = false;
-            combochain = 0;
-        }
+        if (readattackinput == true) fistairattackchainend();
         else
         {
-            animator.SetBool("air2", true);
+            down = false;
+            mid = false;
+            up = false;
+            attackestate = Attackstate.attack3;
+            movementscript.ChangeAnimationState(airbasic2state);
         }
     }
-    private void fauststayair()
+    private void fistairbasic2end()
     {
-        input = true;
-        stayairattack = true;
-        animator.SetBool("air2", false);
-    }
-    private void fauststayairend()
-    {
-        stayairattack = false;
-        if (input == true)
+        if (readattackinput == true) fistairattackchainend();
+        else
         {
-            input = false;
-            movementscript.state = Movescript.State.Actionintoair;
-            Statics.otheraction = false;
-            combochain = 0;
-        }
-        if (down)
-        {
-            animator.SetBool("air3down", true);
-        }
-        if (mid)
-        {
-            animator.SetBool("air3mid", true);
-        }
-        if (up)
-        {
-            animator.SetBool("air3up", true);
+            attackestate = Attackstate.attackchain;
+            if (down) movementscript.ChangeAnimationState(airdownstate);
+            else if (mid) movementscript.ChangeAnimationState(airmidstate);
+            else if (up) movementscript.ChangeAnimationState(airupstate);
         }
     }
-    private void fistair3downroot()
+    private void fistairdownroot()
     {
         root = true;
     }
-    private void fistairintoground()
-    {
-        animator.SetBool("air3down", false);
-        air3downintobasic = true;
-        input = true;
-    }
-    private void fistair3togroundend()
+    private void fistairdownend()
     {
         root = false;
-        air3downintobasic = false;
-        movementscript.gravitation = 4f;
-        movementscript.graviti = -0.5f;
-
-        Ray ray = new Ray(this.transform.position + Vector3.up * 0.3f, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, 0.4f) && input == false)
+        if (readattackinput == true) fistgroundattackchainend();
+        else
         {
-            movementscript.charactercontroller.stepOffset = 0.2f;
-            movementscript.attackonceair = true;
-            movementscript.onground = true;
-            movementscript.inair = false;
-            movementscript.airattackminheight = false;
-            animator.SetBool("attack1", true);
+            attackestate = Attackstate.attack1;
+            movementscript.graviti = -0.5f;
             movementscript.state = Movescript.State.Groundattack;
+            movementscript.ChangeAnimationState(groundbasic1state);
         }
+    }
+    private void fiststayairend()
+    {
+        if (readattackinput == true) fistairattackchainend();
         else
         {
-            input = true;
-        }
-        if (input == true)
-        {
-            input = false;
-            Statics.otheraction = false;
-            combochain = 0;
-            basicattackcd = 0.5f;
-            movementscript.state = Movescript.State.Actionintoair;
+            attackestate = Attackstate.attack1;
+            movementscript.ChangeAnimationState(airbasic1state);
         }
     }
-    private void fistairchain()
-    {
-        input = true;
-        basicairchain = true;
-        animator.SetBool("air3mid", false);
-        animator.SetBool("air3up", false);
-    }
-    private void fistair3midend()
-    {
-        basicairchain = false;
-        if (input == true)
-        {
-            input = false;
-            movementscript.state = Movescript.State.Actionintoair;
-            Statics.otheraction = false;
-            combochain = 0;
-        }
-        else
-        {
-            animator.SetBool("air1", true);
-        }
-    }
-    private void fistair3upend()
-    {
-        basicairchain = false;
-        if (input == true)
-        {
-            input = false;
-            animator.SetBool("air3up", false);
-            movementscript.state = Movescript.State.Actionintoair;
-            Statics.otheraction = false;
-            combochain = 0;
-        }
-        else
-        {
-            animator.SetBool("air1", true);
-        }
-    }
-    IEnumerator startfistweaponswitch()
+    IEnumerator startweaponswitch()
     {
         yield return null;
         fistweaponswitch();
     }
     private void fistweaponswitch()
     {
-        checkforweaponswitch = Physics.CheckSphere(transform.position, checkforenemyonswitchrange, weaponswitchlayer);
-        if (checkforweaponswitch == true && Statics.otheraction == false)
+        if (Physics.CheckSphere(transform.position, checkforenemyonswitchrange, weaponswitchlayer))
         {
             Statics.otheraction = true;
-            movementscript.state = Movescript.State.Groundattack;
-            movementscript.charactercontroller.stepOffset = 0;
-            movementscript.ChangeAnimationState(fistswitchstate);
+            movementscript.graviti = -5;
+            movementscript.state = Movescript.State.Airattack;
+            movementscript.ChangeAnimationState(swordswitchstate);
+        }
+        else
+        {
+            attackestate = Attackstate.waitforattack;
         }
     }
     private void fistweaponswitchend()
     {
-        movementscript.state = Movescript.State.Air;
+        attackestate = Attackstate.waitforattack;
+        movementscript.switchtogroundstate();
         Statics.otheraction = false;
     }
-    private void resetfaustairstates()
-    {
-        basicairattack = false;
-        stayairattack = false;
-        air3downintobasic = false;
-        basicairchain = false;
-        movementscript.attack3intoair = false;
-    }
-    private void resetfaustani()
-    {
-        animator.SetBool("attack1", false);
-        animator.SetBool("attack2", false);
-        animator.SetBool("attack3", false);
-        animator.SetBool("attackdown", false);
-        animator.SetBool("attackmid", false);
-        animator.SetBool("attackup", false);
-        animator.SetBool("air1", false);
-        animator.SetBool("air2", false);
-        animator.SetBool("air3down", false);
-        animator.SetBool("air3mid", false);
-        animator.SetBool("air3up", false);
-    }
 }
-
-
-

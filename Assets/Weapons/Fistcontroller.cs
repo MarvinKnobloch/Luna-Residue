@@ -37,12 +37,14 @@ public class Fistcontroller : MonoBehaviour
 
     private Manamanager manacontroller;
     private Attributecontroller attributecontroller;
+    private Fistattack fistattack;
     private SpielerHP spielerhp;
 
     private void Awake()
     {
         attributecontroller = GetComponent<Attributecontroller>();
         manacontroller = charmanager.GetComponent<Manamanager>();
+        fistattack = GetComponent<Fistattack>();
         spielerhp = GetComponent<SpielerHP>();
     }
     private void OnEnable()
@@ -72,7 +74,7 @@ public class Fistcontroller : MonoBehaviour
     }
     public void fistrighthandhitbox()
     {
-        Collider[] cols = Physics.OverlapSphere(righthand.transform.position, 1f, Layerhitbox);
+        Collider[] cols = Physics.OverlapSphere(righthand.transform.position, 2f, Layerhitbox);
         foreach (Collider Enemyhit in cols)
         {
             if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
@@ -342,7 +344,7 @@ public class Fistcontroller : MonoBehaviour
         if (resetcombochain == true)
         {
             resetcombochain = false;
-            GetComponent<Fistattack>().combochain--;
+            fistattack.combochain--;
         }
         spielerhp.playerheal(basicendheal);
     }

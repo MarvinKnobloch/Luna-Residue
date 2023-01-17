@@ -31,6 +31,7 @@ public class SwordController : MonoBehaviour
 
     public GameObject charmanager;
     private Manamanager manacontroller;
+    private Swordattack swordattack;
 
     private Attributecontroller attributecontroller;
     private SpielerHP spielerhp;
@@ -39,6 +40,7 @@ public class SwordController : MonoBehaviour
     {
         attributecontroller = GetComponent<Attributecontroller>();
         manacontroller = charmanager.GetComponent<Manamanager>();
+        swordattack = GetComponent<Swordattack>();
         spielerhp = GetComponent<SpielerHP>();
     }
     private void OnEnable()
@@ -257,7 +259,7 @@ public class SwordController : MonoBehaviour
         if (resetcombochain == true)
         {
             resetcombochain = false;
-            GetComponent<Swordattack>().combochain--;
+            swordattack.combochain--;
         }
         spielerhp.playerheal(basicendheal);
     }
@@ -438,222 +440,3 @@ public class SwordController : MonoBehaviour
         }
     }
 }
-
-
-/*foreach (Collider Enemyhit in cols)
-    if (Enemyhit.gameObject.GetComponentInParent<Enemymovement>())
-    {
-        Enemyhit.gameObject.GetComponentInParent<Enemymovement>().gethit = true;
-    }*/
-//Collider[] cols = Physics.OverlapBox(Schwerthitbox.bounds.center, Schwerthitbox.bounds.extents, Schwerthitbox.transform.rotation, LayerMask.GetMask("Enemyhitbox"));               // colliderpos, größe(muss nur im programm angegeben werden wenn keine hitbox erstellt worden ist, rotation, layer
-
-/*public void Checksworddownhitbox()
-{
-    manacontroller.Managemana(endmanarestore);
-    Collider[] cols = Physics.OverlapSphere(midofsword.transform.position, 3f, Layerhitbox);
-    foreach (Collider Enemyhit in cols)
-    {
-        if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-        {
-            enemyscript.dmgonce = false;
-        }
-    }
-    foreach (Collider Enemyhit in cols)
-    {
-        if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-        {
-            if (enemyscript.dmgonce == false)
-            {
-                enemyscript.dmgonce = true;
-                enemyscript.tookdmgfrom(1);
-                float calculatedmg;
-                if (Random.Range(0, 100) < basiccritchance + attributecontroller.critchance + Enemyhit.gameObject.GetComponent<Enemydebuff>().enemycritdebuff)
-                {
-                    crit = true;
-                    calculatedmg = overallenddmg * (attributecontroller.critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100);
-                }
-                else
-                {
-                    crit = false;
-                    calculatedmg = overallenddmg * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100);
-                }
-                if (Enemyhit.gameObject.GetComponent<smallenemy>())
-                {
-                    if (Enemyhit.gameObject.GetComponent<Enemydebuff>().takendmgdebuff == true)
-                    {
-                        enddmg = Mathf.Round(calculatedmg * attributecontroller.basicdmgbuff / 100);
-                        GetComponent<Schwertattack>().combochain--;
-                        enemyscript.TakeDamage(enddmg);
-                    }
-                    else
-                    {
-                        enddmg = Mathf.Round(calculatedmg * 50 / 100);
-                        enemyscript.TakeDamage(enddmg);
-                    }
-                }
-                if (Enemyhit.gameObject.GetComponent<midenemy>())
-                {
-                    if (Enemyhit.gameObject.GetComponent<Enemydebuff>().takendmgdebuffcd == false)
-                    {
-                        Enemyhit.gameObject.GetComponent<Enemydebuff>().starttakendmgdebuff();
-                    }
-                    enddmg = Mathf.Round(calculatedmg * 85 / 100);
-                    enemyscript.TakeDamage(enddmg);
-                }
-                if (Enemyhit.gameObject.GetComponent<bigenemy>())
-                {
-                    enddmg = Mathf.Round(calculatedmg);
-                    enemyscript.TakeDamage(enddmg);
-                }
-
-                var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                showtext.GetComponent<TextMeshPro>().text = enddmg.ToString();
-                if (crit == true)
-                {
-                    showtext.GetComponent<TextMeshPro>().color = Color.red;
-                }
-
-                spielerhp.TakeDamage(-basicendheal);
-            }
-        }
-    }
-}
-public void Checkswordmidhitbox()
-{
-    manacontroller.Managemana(endmanarestore);
-    Collider[] cols = Physics.OverlapSphere(midofsword.transform.position, 3f, Layerhitbox);
-    foreach (Collider Enemyhit in cols)
-    {
-        if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-        {
-            enemyscript.dmgonce = false;
-        }
-    }
-    foreach (Collider Enemyhit in cols)
-    {
-        if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-        {
-            if (enemyscript.dmgonce == false)
-            {
-                enemyscript.dmgonce = true;
-                enemyscript.tookdmgfrom(1);
-                float calculatedmg;
-                if (Random.Range(0, 100) < basiccritchance + attributecontroller.critchance + Enemyhit.gameObject.GetComponent<Enemydebuff>().enemycritdebuff)
-                {
-                    crit = true;
-                    calculatedmg = overallenddmg * (attributecontroller.critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100);
-                }
-                else
-                {
-                    crit = false;
-                    calculatedmg = overallenddmg * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100);
-                }
-                if (Enemyhit.gameObject.GetComponent<smallenemy>())
-                {
-                    enddmg = Mathf.Round(calculatedmg);
-                    enemyscript.TakeDamage(enddmg);
-                }
-                if (Enemyhit.gameObject.GetComponent<midenemy>())
-                {
-                    if (Enemyhit.gameObject.GetComponent<Enemydebuff>().takendmgdebuff == true)
-                    {
-                        enddmg = Mathf.Round(calculatedmg * attributecontroller.basicdmgbuff / 100);
-                        GetComponent<Schwertattack>().combochain--;
-                        enemyscript.TakeDamage(enddmg);
-                    }
-                    else
-                    {
-                        enddmg = Mathf.Round(calculatedmg * 50 / 100);
-                        enemyscript.TakeDamage(enddmg);
-                    }
-                }
-                if (Enemyhit.gameObject.GetComponent<bigenemy>())
-                {
-                    if (Enemyhit.gameObject.GetComponent<Enemydebuff>().takendmgdebuffcd == false)
-                    {
-                        Enemyhit.gameObject.GetComponent<Enemydebuff>().starttakendmgdebuff();
-                    }
-                    enddmg = Mathf.Round(calculatedmg * 85 / 100);
-                    enemyscript.TakeDamage(enddmg);
-                }
-                var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                showtext.GetComponent<TextMeshPro>().text = enddmg.ToString();
-                if (crit == true)
-                {
-                    showtext.GetComponent<TextMeshPro>().color = Color.red;
-                }
-                spielerhp.TakeDamage(-basicendheal);
-            }
-        }
-    }
-}
-public void Checksworduphitbox()
-{
-    manacontroller.Managemana(endmanarestore);
-    Collider[] cols = Physics.OverlapSphere(midofsword.transform.position, 3f, Layerhitbox);
-    foreach (Collider Enemyhit in cols)
-    {
-        if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-        {
-            enemyscript.dmgonce = false;
-        }
-    }
-    foreach (Collider Enemyhit in cols)
-    {
-        if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-        {
-            if (enemyscript.dmgonce == false)
-            {
-                enemyscript.dmgonce = true;
-                enemyscript.tookdmgfrom(1);
-                float calculatedmg;
-                if (Random.Range(0, 100) < basiccritchance + attributecontroller.critchance + Enemyhit.gameObject.GetComponent<Enemydebuff>().enemycritdebuff)
-                {
-                    crit = true;
-                    calculatedmg = overallenddmg * (attributecontroller.critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100);
-                }
-                else
-                {
-                    crit = false;
-                    calculatedmg = overallenddmg * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100);
-                }
-
-                if (Enemyhit.gameObject.GetComponent<smallenemy>())
-                {
-                    if (Enemyhit.gameObject.GetComponent<Enemydebuff>().takendmgdebuffcd == false)
-                    {
-                        Enemyhit.gameObject.GetComponent<Enemydebuff>().starttakendmgdebuff();
-                    }
-                    enddmg = Mathf.Round(calculatedmg * 85 / 100);
-                    enemyscript.TakeDamage(enddmg);
-                }
-                if (Enemyhit.gameObject.GetComponent<midenemy>())
-                {
-                    enddmg = Mathf.Round(calculatedmg);
-                    enemyscript.TakeDamage(enddmg);
-                }
-                if (Enemyhit.gameObject.GetComponent<bigenemy>())
-                {
-                    if (Enemyhit.gameObject.GetComponent<Enemydebuff>().takendmgdebuff == true)
-                    {
-                        enddmg = Mathf.Round(calculatedmg * attributecontroller.basicdmgbuff / 100);
-                        GetComponent<Schwertattack>().combochain--;
-                        enemyscript.TakeDamage(enddmg);
-                    }
-                    else
-                    {
-                        enddmg = Mathf.Round(calculatedmg * 50 / 100);
-                        enemyscript.TakeDamage(enddmg);
-                    }
-                }
-                var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                showtext.GetComponent<TextMeshPro>().text = enddmg.ToString();
-                if (crit == true)
-                {
-                    showtext.GetComponent<TextMeshPro>().color = Color.red;
-                }
-                spielerhp.TakeDamage(-basicendheal);
-            }
-        }
-    }
-}*/

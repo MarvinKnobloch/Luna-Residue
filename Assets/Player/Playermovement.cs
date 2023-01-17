@@ -92,4 +92,17 @@ public class Playermovement
         }
         return velocity;
     }
+    public void beforedashmovement()
+    {
+        float h = psm.move.x;
+        float v = psm.move.y;
+
+        psm.moveDirection = new Vector3(h, 0, v);
+        psm.moveDirection = Quaternion.AngleAxis(psm.CamTransform.rotation.eulerAngles.y, Vector3.up) * psm.moveDirection;
+        if (psm.moveDirection != Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(psm.moveDirection, Vector3.up);
+            psm.transform.rotation = Quaternion.RotateTowards(psm.transform.rotation, toRotation, 5000 * Time.deltaTime);
+        }
+    }
 }
