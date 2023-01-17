@@ -7,7 +7,7 @@ public class Fistattack : MonoBehaviour
     private SpielerSteu controlls;
     private Animator animator;
     private Movescript movementscript;
-    private SwordController swordcontroller;
+    private Fistcontroller fistcontroller;
     private Healingscript healingscript;
     private EleAbilities eleAbilities;
 
@@ -44,7 +44,7 @@ public class Fistattack : MonoBehaviour
         controlls = Keybindinputmanager.inputActions;
         movementscript = GetComponent<Movescript>();
         animator = GetComponent<Animator>();
-        swordcontroller = GetComponent<SwordController>();
+        fistcontroller = GetComponent<Fistcontroller>();
         healingscript = GetComponent<Healingscript>();
         eleAbilities = GetComponent<EleAbilities>();
     }
@@ -54,7 +54,7 @@ public class Fistattack : MonoBehaviour
         root = false;
         movementscript.currentstate = null;
         basicattackcd = 1f;
-        swordcontroller.enabled = true;
+        fistcontroller.enabled = true;
         combochain = 0;
         readattackinput = false;
         attackestate = Attackstate.weaponswitch;

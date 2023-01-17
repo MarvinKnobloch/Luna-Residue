@@ -78,7 +78,7 @@ public class Movescript : MonoBehaviour
     private Playerswim playerswim = new Playerswim();
     private Playerstun playerstun = new Playerstun();
     private Playerattack playerattack = new Playerattack();
-    private Playerlockon playerlockon = new Playerlockon();
+    public Playerlockon playerlockon = new Playerlockon();
     private Playerfire playerfire = new Playerfire();
     private Playerwater playerwater = new Playerwater();
     private Playernature playernature = new Playernature();

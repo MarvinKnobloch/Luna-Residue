@@ -50,9 +50,9 @@ public class AimScript : MonoBehaviour
             {
                 mousetarget.SetActive(true);
                 Cam2.transform.rotation = transform.rotation;
-                float Kamerarotationoffset = Kamerarichtung.eulerAngles.y + 10f;
-                Quaternion kamerarotation = Quaternion.Euler(0, Kamerarotationoffset, 0);
-                transform.rotation = Quaternion.Lerp(transform.rotation, kamerarotation, aimrotationgesch * Time.deltaTime);
+                //float Kamerarotationoffset = Kamerarichtung.eulerAngles.y + 10f;
+                //Quaternion kamerarotation = Quaternion.Euler(0, Kamerarotationoffset, 0);
+                //transform.rotation = Quaternion.Lerp(transform.rotation, kamerarotation, aimrotationgesch * Time.deltaTime);
                 aimrotation(Steuerung.Player.Mouse.ReadValue<Vector2>());
             }
         }
@@ -68,6 +68,7 @@ public class AimScript : MonoBehaviour
     }
     public void aimend()
     {
+        CancelInvoke();
         mousetarget.SetActive(false);
         virtualcam = false;
         Charotation = false;

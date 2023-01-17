@@ -9,7 +9,7 @@ public class Playerlockon
     {
         if (LoadCharmanager.disableattackbuttons == false || LoadCharmanager.gameispaused == false)
         {
-            if (EnemyHP.switchtargetafterdeath == true && Movescript.lockoncheck == true || psm.bowair3intoground == true) lookfortarget();
+            if (EnemyHP.switchtargetafterdeath == true && Movescript.lockoncheck == true) lookfortarget();
             if (psm.controlls.Player.Lockon.WasPerformedThisFrame() && Movescript.lockoncheck == false) lookfortarget();
             else if (psm.controlls.Player.Lockon.WasPerformedThisFrame() && Movescript.lockoncheck == true)         //beendet lockon durch buttonpress
             {
@@ -102,7 +102,7 @@ public class Playerlockon
             }
         }
     }
-    private void lookfortarget()
+    public void lookfortarget()
     {
         EnemyHP.switchtargetafterdeath = false;
         psm.bowair3intoground = false;
