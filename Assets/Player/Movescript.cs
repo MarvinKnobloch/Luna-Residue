@@ -15,13 +15,12 @@ public class Movescript : MonoBehaviour
     //kamera nach dem lightport in spieler guck richtung?
 
     //Stormlightning flug animation hat sich am ende nicht verändert (zu der Zeit war der Char Toggle Active State = true)
-    //[SerializeField] internal AimScript aimscript;
 
     [NonSerialized] public CharacterController charactercontroller;
     [NonSerialized] public SpielerSteu controlls;
     private InputAction buttonmashhotkey;
 
-    private Animator animator;
+    [NonSerialized] public Animator animator;
 
     public Transform CamTransform;
     public CinemachineFreeLook Cam1;
@@ -40,7 +39,6 @@ public class Movescript : MonoBehaviour
     public float normalgravition = 3.5f;
     public float graviti;
     [NonSerialized] public float maxgravity = -15;
-    private float originalStepOffSet;
 
     public SphereCollider spherecastcollider;
     public LayerMask groundchecklayer;
@@ -82,6 +80,7 @@ public class Movescript : MonoBehaviour
     private Playerswim playerswim = new Playerswim();
     private Playerstun playerstun = new Playerstun();
     private Playerattack playerattack = new Playerattack();
+    private Playerbow playerbow = new Playerbow();
     public Playeraim playeraim = new Playeraim();
     public Playerlockon playerlockon = new Playerlockon();
     private Playerfire playerfire = new Playerfire();
@@ -94,14 +93,11 @@ public class Movescript : MonoBehaviour
 
     //animationstate
     public string currentstate;
+    const string idlestate = "Idle";
     const string jumpstate = "Jump";
     const string fallstate = "Fall";
     const string dazestate = "Daze";
     const string hookshotstate = "Hookshot";
-    const string chargestate = "Chargearrow";
-    const string aimholdstate = "Aimhold";
-    const string releasearrowstate = "Releasearrow";
-
 
     //Inventory;
     public Inventorycontroller matsinventory;
@@ -157,9 +153,10 @@ public class Movescript : MonoBehaviour
         Buttonmashstun,
         Bowcharge,
         Bowischarged,
+        Bowwaitfornewcharge,
         Groundattack,
         Airattack,
-        Playerweaponaim,
+        Attackweaponaim,
         Bowweaponswitch,
         Bowhookshot,
         Beforedash,
@@ -191,7 +188,6 @@ public class Movescript : MonoBehaviour
         controlls.Player.Movement.performed += Context => move = Context.ReadValue<Vector2>();
         buttonmashhotkey = controlls.Player.Attack3;
         charactercontroller = GetComponent<CharacterController>();
-        originalStepOffSet = charactercontroller.stepOffset;
         animator = GetComponent<Animator>();
         healingscript = GetComponent<Healingscript>();
         state = State.Air;
@@ -215,6 +211,7 @@ public class Movescript : MonoBehaviour
         playerdark.psm = this;
         playerearth.psm = this;
         playeraim.psm = this;
+        playerbow.psm = this;
     }
     private void OnEnable()
     {
@@ -268,8 +265,6 @@ public class Movescript : MonoBehaviour
                 playerattack.attackmovement();
                 playermovement.groundcheck();
                 playerlockon.attacklockonrotation();
-                //meleelockonrotation();
-                //Groundedattack();
                 break;
             case State.Airattack:
                 playerattack.attackmovement();
@@ -277,22 +272,31 @@ public class Movescript : MonoBehaviour
                 playerattack.finalairmovement();
                 break;
             case State.Bowcharge:
-                chargearrow();
+                playeraim.aimplayerrotation();
+                playerbow.chargearrow();
+                playerbow.bowoutofcombataimmovement();
+                playermovement.groundcheck();
                 break;
             case State.Bowischarged:
-                Aimmovement();
-                Grounded();
+                playeraim.aimplayerrotation();
+                playerbow.shootarrow();
+                playerbow.bowoutofcombataimmovement();
+                playermovement.groundcheck();
                 break;
-            case State.Playerweaponaim:
+            case State.Bowwaitfornewcharge:
+                playerbow.bowoutofcombataimmovement();
+                break;
+            case State.Attackweaponaim:
                 playeraim.aimplayerrotation();
                 playerattack.attackmovement();
                 playerattack.finalairmovement();
                 break;
             case State.Bowweaponswitch:
-                bowswitch();
+                playerattack.attackmovement();
+                playerattack.finalairmovement();
                 break;
             case State.Bowhookshot:
-                Bowhookshot();
+                playerbow.bowhookshot();
                 break;
             case State.Beforedash:           //damit man beim angreifen noch die Richtung bestimmen kann
                 playermovement.beforedashmovement();
@@ -354,6 +358,7 @@ public class Movescript : MonoBehaviour
     }
     public void switchtogroundstate()
     {
+        ChangeAnimationState(idlestate);
         attackonceair = true;
         graviti = -0.5f;
         state = State.Ground;
@@ -363,12 +368,12 @@ public class Movescript : MonoBehaviour
         gravitation = normalgravition;
         state = State.Air;
     }
-    public void switchtoaimstate()
+    public void switchtoattackaimstate()
     {
         CinemachinePOV Cam2pov = Cam2.GetCinemachineComponent<CinemachinePOV>();
         Cam2pov.m_HorizontalRecentering.m_enabled = true;
         playeraim.activateaimcam();
-        state = State.Playerweaponaim;
+        state = State.Attackweaponaim;
         StartCoroutine(cam2recenteringdisable());
     }
     IEnumerator cam2recenteringdisable()                     //damit die cam2 bei aktivierung mit cam1 gleich gesetzt wird. Wenn Recentering aktiviert wird passt sich die 2. Cam sofort der rotation des spielers an.
@@ -379,6 +384,7 @@ public class Movescript : MonoBehaviour
     }
     public void disableaimcam()
     {
+        Charprefabarrow.SetActive(false);
         playeraim.aimend();
         switchtoairstate();
     }
@@ -394,6 +400,17 @@ public class Movescript : MonoBehaviour
         Statics.dash = true;
         Statics.dazestunstart = true;
     }
+    public void switchtooutofcombataim()
+    {
+        CinemachinePOV Cam2pov = Cam2.GetCinemachineComponent<CinemachinePOV>();
+        Cam2pov.m_HorizontalRecentering.m_enabled = true;
+        playeraim.activateaimcam();
+        StartCoroutine(cam2recenteringdisable());
+        Charrig.enabled = true;
+        state = State.Bowcharge;
+    }
+    private void bowoutofcombatfullcharged() => playerbow.arrowfullcharge();
+    private void bowoutofcombatnextarrow() => playerbow.nextarrow();
     public void switchtobuttonmashstun(int buttonmashcount)
     {
         ChangeAnimationStateInstant(dazestate);
@@ -420,204 +437,23 @@ public class Movescript : MonoBehaviour
     public void eleusedarkportal() => playerdark.usedarkportal();
     public void eleearthslidestart() => playerearth.earthslidestart();
     public void eleearthslidedmg() => playerearth.earthslidedmg();
-
+    public void Abilitiesend()
+    {
+        state = State.Air;
+        Statics.otheraction = false;
+        Physics.IgnoreLayerCollision(9, 6, false);
+        Physics.IgnoreLayerCollision(11, 6, false);
+    }
     public void pushplayerup(float amount) => playermovement.pushplayerupwards(amount);
 
-    private void Grounded()
-    {
-        if (charactercontroller.isGrounded)
-        {
-            //jumpcdafterland += Time.deltaTime;
-            graviti = -0.5f;
-        }
-        else
-        {
-            float gravity = Physics.gravity.y * gravitation;
-            graviti += gravity * Time.deltaTime;
-        }
-        Ray ray = new Ray(this.transform.position + Vector3.up * 0.3f, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, 0.5f) == false && graviti < -5f)
-        {
-            //state = State.Actionintoair;
-        }
-    } 
-    private void bowswitch()
-    {
-        float gravity = Physics.gravity.y * gravitation;
-        graviti += gravity * Time.deltaTime;
-        float h = move.x;                                                                         // Move Script
-        float v = move.y;
 
-        moveDirection = new Vector3(h, 0, v);
-        float magnitude = Mathf.Clamp01(moveDirection.magnitude) * movementspeed;
-        moveDirection.Normalize();
-
-        moveDirection = Quaternion.AngleAxis(CamTransform.rotation.eulerAngles.y, Vector3.up) * moveDirection;                     //Kamera dreht sich mit dem Char
-
-        velocity = moveDirection * magnitude;
-        if (charactercontroller.isGrounded)
-        {
-            //velocity = VelocityUneben(velocity);
-        }
-        velocity.y += graviti;
-
-        charactercontroller.Move(velocity / attackmovementspeed * Time.deltaTime);
-    }
-    private void chargearrow()
-    {
-        if (controlls.Player.Attack4.IsPressed())
-        {
-            if(activaterig == true)
-            {
-                Charrig.enabled = true;
-                activaterig = false;
-            }
-        }
-        else
-        {
-            activaterig = false;
-            Charrig.enabled = false;
-            playeraim.aimend();
-            Statics.otheraction = false;
-            Charprefabarrow.SetActive(false);
-            state = State.Ground;
-        }
-        if (fullcharge == true)
-        {
-            activaterig = false;
-            Charrig.enabled = true;
-            fullcharge = false;
-            ChangeAnimationState(aimholdstate);
-            state = State.Bowischarged;
-        }
-        float h = move.x;                                                                         // Move Script
-        float v = move.y;
-
-        moveDirection = new Vector3(h, 0, v);
-        float magnitude = Mathf.Clamp01(moveDirection.magnitude) * movementspeed;
-        moveDirection.Normalize();
-
-        moveDirection = Quaternion.AngleAxis(CamTransform.rotation.eulerAngles.y, Vector3.up) * moveDirection;                     //Kamera dreht sich mit dem Char
-        velocity = moveDirection * magnitude;
-
-        animator.SetFloat("AimX", move.x, 0.05f, Time.deltaTime);
-        animator.SetFloat("AimZ", move.y, 0.05f, Time.deltaTime);
-        if (charactercontroller.isGrounded)
-        {
-            //velocity = VelocityUneben(velocity);
-        }
-        else
-        {
-        }
-        velocity.x = velocity.x / attackmovementspeed;
-        velocity.z = velocity.z / attackmovementspeed;
-        velocity.y += graviti;
-        charactercontroller.Move(velocity * Time.deltaTime);
-    }
-    private void charrigenable()
-    {
-        activaterig = true;
-    }
-    private void Aimmovement()
-    {
-        if (controlls.Player.Attack4.IsPressed())
-        {          
-        }
-        else
-        {
-            Charrig.enabled = false;
-            ChangeAnimationState(releasearrowstate);
-            state = State.Empty;
-        }
-        float h = move.x;                                                                         // Move Script
-        float v = move.y;
-
-        moveDirection = new Vector3(h, 0, v);
-        float magnitude = Mathf.Clamp01(moveDirection.magnitude) * movementspeed;
-        moveDirection.Normalize();
-
-        moveDirection = Quaternion.AngleAxis(CamTransform.rotation.eulerAngles.y, Vector3.up) * moveDirection;                     //Kamera dreht sich mit dem Char
-        velocity = moveDirection * magnitude;
-
-        animator.SetFloat("AimX", move.x, 0.05f, Time.deltaTime);
-        animator.SetFloat("AimZ", move.y, 0.05f, Time.deltaTime);
-        if (charactercontroller.isGrounded)
-        {
-            //velocity = VelocityUneben(velocity);
-        }
-        else
-        {
-            /*Charrig.enabled = false;    //Grounded händelt den wechsel
-            aimscript.virtualcam = false;
-            aimscript.aimend();
-            Statics.otheraction = false;
-            state = State.Air;*/
-        }
-        velocity.x = velocity.x / attackmovementspeed;
-        velocity.z = velocity.z / attackmovementspeed;
-        velocity.y += graviti;
-        charactercontroller.Move(velocity * Time.deltaTime);
-    }
-    private void arrowfullcharge()
-    {
-        fullcharge = true;
-    }
-    private void arrowreleased()
-    {
-        if (controlls.Player.Attack4.IsPressed())
-        {
-            state = State.Bowcharge;
-            ChangeAnimationState(chargestate);
-        }
-        else
-        {
-            playeraim.aimend();
-            Statics.otheraction = false;
-            Charprefabarrow.SetActive(false);
-            state = State.Ground;
-        }
-    }
-    private void Bowhookshot()
-    {
-        ChangeAnimationState(hookshotstate);
-        onground = false;
-        if (lockontarget != null)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, lockontarget.position, 25 * Time.deltaTime);
-            transform.rotation = Quaternion.LookRotation(lockontarget.transform.position - transform.position, Vector3.up);
-            if (Vector3.Distance(transform.position, lockontarget.position) < 2f)
-            {
-                graviti = 0.5f;
-                gravitation = normalgravition;
-                state = State.Air;
-                ChangeAnimationState(fallstate);
-                Statics.otheraction = false;
-            }
-        }
-        else
-        {
-            graviti = 0.5f;
-            gravitation = normalgravition;
-            state = State.Air;
-            Statics.otheraction = false;
-        }
-    }
-
-    private void lockonbowrotation()
+    /*private void lockonbowrotation()
     {
         if (lockontarget != null && lockoncheck == true)
         {
             transform.rotation = Quaternion.LookRotation(lockontarget.transform.position - transform.position, Vector3.up);
         }
-    }
-    public void Abilitiesend()
-    {
-        state = State.Air;
-        //values müssen noch zurückgesetzt werden?????????
-        Statics.otheraction = false;
-        Physics.IgnoreLayerCollision(9, 6, false);
-        Physics.IgnoreLayerCollision(11, 6, false);
-    }
+    }*/
 }
 
 

@@ -58,6 +58,8 @@ public class Bowattack : MonoBehaviour
     const string starthookstate = "Bowhookcharge";
     const string hookshotstate = "Bowhookshot";
 
+    const string chargestate = "Chargearrow";
+
     //weaponswitch
     private float checkforenemyonswitchrange = 3f;
     public LayerMask weaponswitchlayer;
@@ -152,17 +154,28 @@ public class Bowattack : MonoBehaviour
             }
             if (Movescript.lockontarget != null && controlls.Player.Attack4.WasPressedThisFrame() && Statics.otheraction == false)           // bowhookshot
             {
-                if (Vector3.Distance(transform.position, Movescript.lockontarget.position) > 5f)
+                if (Vector3.Distance(transform.position, Movescript.lockontarget.position) > 2f)
                 {
+                    movementscript.state = Movescript.State.Empty;
                     attackestate = Attackstate.waitforattack;
                     movementscript.graviti = 0f;
                     Statics.otheraction = true;
+                    //transform.rotation = Quaternion.Euler(transform.position - Movescript.lockontarget.position);
                     movementscript.ChangeAnimationState(starthookstate);
+                }
+            }
+            if (movementscript.state == Movescript.State.Ground)                               //out of Combat aim
+            {
+                if (Statics.infight == false && controlls.Player.Attack4.WasPressedThisFrame() && Statics.otheraction == false)
+                {
+                    Statics.otheraction = true;
+                    movementscript.ChangeAnimationState(chargestate);
+                    movementscript.switchtooutofcombataim();
                 }
             }
         }
     }
-    private void waitforattackinput()
+    private void waitforattackinput()                   //input für attackchainstart
     {
         basicattackcd += Time.deltaTime;
         if (movementscript.state == Movescript.State.Ground)
@@ -181,7 +194,7 @@ public class Bowattack : MonoBehaviour
         {
             if (controlls.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false)// && Statics.infight == true)
             {
-                movementscript.switchtoaimstate();
+                movementscript.switchtoattackaimstate();
                 attackestate = Attackstate.bowairattack;
                 movementscript.graviti = 0f;       
                 Statics.otheraction = true;
@@ -193,7 +206,7 @@ public class Bowattack : MonoBehaviour
             }
         }
     }
-    private void attack1input()
+    private void attack1input()                                //basic2groundinput
     {
         if (readattackinput == true)
         {
@@ -203,7 +216,7 @@ public class Bowattack : MonoBehaviour
             }
         }
     }
-    private void bowairbasicinput()
+    private void bowairbasicinput()                         //Air aim input
     {
         if (readattackinput == true)
         {
@@ -241,7 +254,7 @@ public class Bowattack : MonoBehaviour
             }
         }
     }
-    private void attack2input()
+    private void attack2input()                   //groundend input
     {
         if (readattackinput == true)
         {
@@ -411,7 +424,7 @@ public class Bowattack : MonoBehaviour
         if (readattackinput == true) airattackchainend();
         else
         {
-            movementscript.switchtoaimstate();
+            movementscript.switchtoattackaimstate();
             attackestate = Attackstate.bowairattack;
             movementscript.ChangeAnimationStateInstant(bowairchargestate);
         }
@@ -486,13 +499,13 @@ public class Bowattack : MonoBehaviour
     }
     private void bowswitchslowmotion()
     {
-        movementscript.switchtoaimstate();
+        movementscript.switchtoattackaimstate();
         root = false;
         movementscript.ChangeAnimationState(slowmochargeup);
         Time.timeScale = slowmopercentage;
         Time.fixedDeltaTime = Statics.normaltimedelta * slowmopercentage;
-        movementscript.graviti = 0f;
-        movementscript.gravitation = slowmogravition;
+        movementscript.graviti = -0.2f;
+        //movementscript.gravitation = slowmogravition;
         Invoke("bowweaponswitchattackend", 1.5f);
     }
     private void bowweaponswitchattackend()
@@ -525,16 +538,17 @@ public class Bowattack : MonoBehaviour
 
     private void shotarrow(GameObject arrowtyp)
     {
-        if (Movescript.lockoncheck == true)
+        if (Movescript.lockontarget != null)
         {
             Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
             GameObject Arrow = Instantiate(arrowtyp, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Singlegroundarrow arrowcontroller = Arrow.GetComponent<Singlegroundarrow>();
-            arrowcontroller.Arrowtarget = Movescript.lockontarget.transform;
+            Arrow.GetComponent<Singlegroundarrow>().Arrowtarget = Movescript.lockontarget.gameObject;
+            //Singlegroundarrow arrowcontroller = Arrow.GetComponent<Singlegroundarrow>();
+            //arrowcontroller.Arrowtarget = null; // Movescript.lockontarget.gameObject;
             arrowfalse();
         }
     }
-    private void shotbasicgroundarrow() => shotarrow(basicairarrow);
+    private void shotbasicgroundarrow() => shotarrow(basicgroundarrow);
     private void shotgrounddown() => shotarrow(grounddownarrow);
     private void shotgroundmid() => shotarrow(groundmidarrow);
     private void shotgroundup() => shotarrow(grounduparrow);

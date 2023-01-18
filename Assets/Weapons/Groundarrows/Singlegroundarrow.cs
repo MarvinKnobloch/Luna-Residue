@@ -10,7 +10,7 @@ public class Singlegroundarrow : MonoBehaviour
     public bool dmgonce;
     public float basicdmg;
     public GameObject damagetext;
-    public Transform Arrowtarget;
+    public GameObject Arrowtarget;
 
     private float overalldmg;
     private float overallcritchance;
@@ -31,8 +31,8 @@ public class Singlegroundarrow : MonoBehaviour
     {
         if (Arrowtarget != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Arrowtarget.position, arrowspeed * Time.deltaTime);
-            if (dmgonce == false && Vector3.Distance(transform.position, Arrowtarget.position) < 0.1f)
+            transform.position = Vector3.MoveTowards(transform.position, Arrowtarget.transform.position, arrowspeed * Time.deltaTime);
+            if (dmgonce == false && Vector3.Distance(transform.position, Arrowtarget.transform.position) < 0.1f)
             {
                 Checkhitboxbasic();
                 dmgonce = true;
