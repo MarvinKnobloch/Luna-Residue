@@ -411,7 +411,7 @@ public class Enemymovement : MonoBehaviour
         healticktimer = 0f;
         gameObject.GetComponent<EnemyHP>().enemyhasreset();
         spezialattack = false;
-        enemyhpscript.TakeDamage(-healinstant);
+        enemyhpscript.TakeDamage(-healinstant, 0, false);
         ChangeAnimationState(runstate);
         state = State.resetheal;
         if (Infightcontroller.infightenemylists.Contains(transform.root.gameObject))

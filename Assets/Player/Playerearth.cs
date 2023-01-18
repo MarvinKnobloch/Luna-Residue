@@ -45,8 +45,8 @@ public class Playerearth
                 {
                     float dmg = 15;
                     enemyscript.dmgonce = true;
-                    enemyscript.TakeDamage(dmg);
-                    psm.activatedmgtext(Enemyhit.gameObject, dmg);
+                    enemyscript.TakeDamage(dmg, 0, false);
+                    //psm.activatedmgtext(Enemyhit.gameObject, dmg);
                 }
 
             }

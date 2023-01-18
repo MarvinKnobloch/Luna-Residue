@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using TMPro;
 
 public class EnemyHP : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class EnemyHP : MonoBehaviour
     //höhe von der bar;
 
     [SerializeField] Enemyvalues enemyvalues;
+    private Enemycalculatedmg enemycalculatedmg = new Enemycalculatedmg();
+    public GameObject damagetext;
 
     [NonSerialized] public string _enemyname;
     public float currenthealth;
@@ -17,6 +20,7 @@ public class EnemyHP : MonoBehaviour
     [NonSerialized] public int sizeofenemy;
     public int _enemylvl;
     [SerializeField] private int addenemylvl = 0;
+    [NonSerialized] public float finaldmg;
 
     private CapsuleCollider capsulecollider;
     [NonSerialized] public float enemyheight;
@@ -88,6 +92,10 @@ public class EnemyHP : MonoBehaviour
         _enemylvl = enemyvalues.enemylvl + addenemylvl;
         enemyfocusbargameobject = enemyfocusdebuffbar.transform.parent.gameObject;
     }
+    private void OnEnable()
+    {
+        enemycalculatedmg.enemyscript = this;
+    }
     void Start()
     {
         if (LoadCharmanager.Overallthirdchar == null)
@@ -114,12 +122,11 @@ public class EnemyHP : MonoBehaviour
             playerhits[1] = player4hits;
         }
     }
-    public void TakeDamage(float damage)                                               // static kann von jedem anderen script aufgerufen werden (classname+voidname)
-    {                                                                                         // sting kann mit texten verbunden werden. Kann z.b einen text umändern
-        currenthealth -= damage;
-
+    public void TakeDamage(float damage, int dmgtype , bool crit)                                               
+    {
         if (gameObject.GetComponent<Miniadd>())
         {
+            currenthealth -= damage;
             if (currenthealth <= 0)
             {
                 gameObject.SetActive(false);
@@ -127,6 +134,15 @@ public class EnemyHP : MonoBehaviour
         }
         else
         {
+            enemycalculatedmg.calculatedmg(damage, dmgtype);
+            currenthealth -= finaldmg;
+            var showtext = Instantiate(damagetext, transform.position, Quaternion.identity);
+            showtext.GetComponent<TextMeshPro>().text = finaldmg.ToString();
+            if (crit == true)
+            {
+                showtext.GetComponent<TextMeshPro>().color = Color.red;
+            }
+
             if (currenthealth >= maxhealth)
             {
                 currenthealth = maxhealth;

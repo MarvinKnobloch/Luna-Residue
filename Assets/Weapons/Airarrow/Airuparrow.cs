@@ -50,7 +50,7 @@ public class Airuparrow : MonoBehaviour
     }
     private void Checkhitbox()
     {
-        if (Arrowtarget != null)
+        /*if (Arrowtarget != null)
         {
             if (Arrowtarget.TryGetComponent(out EnemyHP enemyscript))
             {
@@ -58,7 +58,7 @@ public class Airuparrow : MonoBehaviour
                 float calculatedmg;
                 if (enemyscript.enemydebuffcd == true)
                 {
-                    enemydebuffcrit = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basiccrit;
+                    enemydebuffcrit = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basicattributecritbuff;
                 }
                 else
                 {
@@ -93,7 +93,7 @@ public class Airuparrow : MonoBehaviour
                 {
                     if (enemyscript.enemyincreasebasicdmg == true)
                     {
-                        enddmg = Mathf.Round(calculatedmg * LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basicdmgbuff / 100);
+                        enddmg = Mathf.Round(calculatedmg * LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basicattributedmgbuff / 100);
                         LoadCharmanager.Overallmainchar.GetComponent<Bowattack>().combochain--;
                         enemyscript.TakeDamage(enddmg);
                     }
@@ -115,5 +115,6 @@ public class Airuparrow : MonoBehaviour
             }
 
         }
+    }*/
     }
 }

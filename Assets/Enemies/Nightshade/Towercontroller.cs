@@ -48,6 +48,6 @@ public class Towercontroller : MonoBehaviour
     }
     public void dealdmgtoenemyroot()
     {
-        enemyroot.GetComponent<EnemyHP>().TakeDamage(completiondmg);
+        enemyroot.GetComponent<EnemyHP>().TakeDamage(completiondmg, 0, false);
     }
 }

@@ -13,8 +13,8 @@ public class Attributecontroller : MonoBehaviour
     [NonSerialized] public float critchance;
     [NonSerialized] public float critdmg;
     [NonSerialized] public float charswitchbuff;               //void Awake in GlobalCD
-    [NonSerialized] public float basiccrit;
-    [NonSerialized] public float basicdmgbuff;
+    [NonSerialized] public float basicattributecritbuff;
+    [NonSerialized] public float basicattributedmgbuff;
 
     [NonSerialized] public float swordattack;
     [NonSerialized] public float bowattack;
@@ -46,8 +46,8 @@ public class Attributecontroller : MonoBehaviour
         critchance = Statics.charcritchance[charnumber];
         critdmg = Statics.charcritdmg[charnumber];
         charswitchbuff = Statics.charswitchbuff[charnumber];
-        basiccrit = Statics.charbasiccritbuff[charnumber];
-        basicdmgbuff = Statics.charbasicdmgbuff[charnumber];
+        basicattributecritbuff = Statics.charbasiccritbuff[charnumber];
+        basicattributedmgbuff = Statics.charbasicdmgbuff[charnumber];
 
         swordattack = Statics.charswordattack[charnumber];
         bowattack = Statics.charbowattack[charnumber];
@@ -91,7 +91,7 @@ public class Attributecontroller : MonoBehaviour
 
     public void alliesdmg()
     {
-        dmgfromallies = attack + (critchance - 4) + ((critdmg - 148) / Statics.critdmgperskillpoint) + ((Statics.charweaponbuff[charnumber] - 97) / Statics.weaponswitchbuffperskillpoint) + ((charswitchbuff - 97) / Statics.charswitchbuffperskillpoint) + ((basicdmgbuff - 146) / Statics.basicbuffdmgperskillpoint);
+        dmgfromallies = attack + (critchance - 4) + ((critdmg - 148) / Statics.critdmgperskillpoint) + ((Statics.charweaponbuff[charnumber] - 97) / Statics.weaponswitchbuffperskillpoint) + ((charswitchbuff - 97) / Statics.charswitchbuffperskillpoint) + ((basicattributedmgbuff - 146) / Statics.basicbuffdmgperskillpoint);
         dmgfromallies = dmgfromallies * 0.5f;                  //durch 2 teilen weil es sonst zu viel ist
     }       // durch die minus zahlen ergibt jeder wert bei spielstart 1
 }

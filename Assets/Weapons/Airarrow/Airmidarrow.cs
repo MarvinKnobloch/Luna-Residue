@@ -46,11 +46,12 @@ public class Airmidarrow : MonoBehaviour
         if (dmgonce == false && hit == true && Vector3.Distance(transform.position, arrowziel) < 0.1f)
         {
             //this.transform.parent = Arrowtarget.transform;
-            Checkhitbox();
+            //Checkhitbox();
             dmgonce = true;
         }
     }
-    private void Checkhitbox()
+}
+    /*private void Checkhitbox()
     {
         if (Arrowtarget != null)
         {
@@ -73,7 +74,7 @@ public class Airmidarrow : MonoBehaviour
                         float calculatedmg;
                         if (enemyscript.enemydebuffcd == true)
                         {
-                            enemydebuffcrit = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basiccrit;
+                            enemydebuffcrit = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basicattributecritbuff;
                         }
                         else
                         {
@@ -98,7 +99,7 @@ public class Airmidarrow : MonoBehaviour
                         {
                             if (enemyscript.enemyincreasebasicdmg == true)
                             {
-                                enddmg = Mathf.Round(calculatedmg * LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basicdmgbuff / 100);
+                                enddmg = Mathf.Round(calculatedmg * LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basicattributedmgbuff / 100);
                                 resetcombochain = true;
                                 enemyscript.TakeDamage(enddmg);
                             }
@@ -139,7 +140,7 @@ public class Airmidarrow : MonoBehaviour
             }
         }
     }
-}
+}*/
 
 /*if (Arrowtarget != null)
 {

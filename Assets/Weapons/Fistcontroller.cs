@@ -15,6 +15,7 @@ public class Fistcontroller : MonoBehaviour
     private float weaponswitchdmg = 10f;
     public GameObject damagetext;
     public LayerMask Layerhitbox;
+    private float dmgdealed;
 
     private float overallbasicdmg;
     private float overallenddmg;
@@ -25,8 +26,6 @@ public class Fistcontroller : MonoBehaviour
 
     private bool crit;
     private bool resetcombochain;
-
-    private float enddmg;
 
     private float enemydebuffcrit;
 
@@ -72,222 +71,46 @@ public class Fistcontroller : MonoBehaviour
 
         overallcritchance = Statics.playerbasiccritchance + attributecontroller.critchance;
     }
+
     public void fistrighthandhitbox()
     {
-        Collider[] cols = Physics.OverlapSphere(righthand.transform.position, 2f, Layerhitbox);
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                enemyscript.dmgonce = false;
-            }
-        }
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                if (enemyscript.dmgonce == false)
-                {
-                    enemyscript.dmgonce = true;
-                    enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
-                    basicdmg(enemyscript, Enemyhit.gameObject);
-                }
-            }
-        }
-        if (cols.Length > 0)
-        {
-            manacontroller.Managemana(basicmanarestore);
-        }
-    }    
+        lookfordmgcollision(righthand.transform.position, 2, overallbasicdmg, 0, basicmanarestore);
+    }
     public void fistlefthandhitbox()
     {
-        Collider[] cols = Physics.OverlapSphere(lefthand.transform.position, 2f, Layerhitbox);
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                enemyscript.dmgonce = false;
-            }
-        }
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                if (enemyscript.dmgonce == false)
-                {
-                    enemyscript.dmgonce = true;
-                    enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
-                    basicdmg(enemyscript, Enemyhit.gameObject);
-                }
-            }
-        }
-        if (cols.Length > 0)
-        {
-            manacontroller.Managemana(basicmanarestore);
-        }
+        lookfordmgcollision(lefthand.transform.position, 2, overallbasicdmg, 0, basicmanarestore);
     }
     public void fistfeethitbox()
-    {      
-        Collider[] cols = Physics.OverlapSphere(rightfeet.transform.position, 2f, Layerhitbox);
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                enemyscript.dmgonce = false;
-            }
-        }
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                if (enemyscript.dmgonce == false)
-                {
-                    enemyscript.dmgonce = true;
-                    enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
-                    basicdmg(enemyscript, Enemyhit.gameObject);
-                }
-            }
-        }
-        if (cols.Length > 0)
-        {
-            manacontroller.Managemana(basicmanarestore);
-        }
+    {
+        lookfordmgcollision(rightfeet.transform.position, 2, overallbasicdmg, 0, basicmanarestore);
     }
     public void Checkfistdownfeethitbox()
     {
-        Collider[] cols = Physics.OverlapSphere(rightfeet.transform.position, 2f, Layerhitbox);
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                enemyscript.dmgonce = false;
-            }
-        }
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                if (enemyscript.dmgonce == false)
-                {
-                    enemyscript.dmgonce = true;
-                    enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
-                    downattack(enemyscript, Enemyhit.gameObject);
-                }
-            }
-        }
-        comboresetandheal();
+        lookfordmgcollision(rightfeet.transform.position, 2, overallenddmg, 1, endmanarestore);
     }
     public void Checkfistdownhandhitbox()
     {
-        Collider[] cols = Physics.OverlapSphere(lefthand.transform.position, 2f, Layerhitbox);
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                enemyscript.dmgonce = false;
-            }
-        }
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                if (enemyscript.dmgonce == false)
-                {
-                    enemyscript.dmgonce = true;
-                    enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
-                    downattack(enemyscript, Enemyhit.gameObject);
-                }
-            }
-        }
-        if (cols.Length > 0)
-        {
-            comboresetandheal();
-        }
+        lookfordmgcollision(lefthand.transform.position, 2, overallenddmg, 1, endmanarestore);
     }
     public void Checkfistmidfeethitbox()
     {
-        Collider[] cols = Physics.OverlapSphere(rightfeet.transform.position, 2f, Layerhitbox);
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                enemyscript.dmgonce = false;
-            }
-        }
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                if (enemyscript.dmgonce == false)
-                {
-                    enemyscript.dmgonce = true;
-                    enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
-                    midattack(enemyscript, Enemyhit.gameObject, overallenddmg);
-                }
-            }
-        }
-        if (cols.Length > 0)
-        {
-            comboresetandheal();
-        }
+        lookfordmgcollision(rightfeet.transform.position, 2, overallenddmg, 2, endmanarestore);
     }
     public void Checkfistmidbodyhitbox()
     {
-        Collider[] cols = Physics.OverlapSphere(body.transform.position, 2f, Layerhitbox);
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                enemyscript.dmgonce = false;
-            }
-        }
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                if (enemyscript.dmgonce == false)
-                {
-                    enemyscript.dmgonce = true;
-                    enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
-                    midattack(enemyscript, Enemyhit.gameObject, air3middmg);
-                }
-            }
-        }
-        if (cols.Length > 0)
-        {
-            comboresetandheal();
-        }
+        lookfordmgcollision(body.transform.position, 2, air3middmg, 2, endmanarestore);
     }
     public void Checkfistupfeethitbox()
     {
-        Collider[] cols = Physics.OverlapSphere(rightfeet.transform.position, 2f, Layerhitbox);
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                enemyscript.dmgonce = false;
-            }
-        }
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                if (enemyscript.dmgonce == false)
-                {
-                    enemyscript.dmgonce = true;
-                    enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
-                    upattack(enemyscript, Enemyhit.gameObject);
-                }
-            }
-        }
-        if (cols.Length > 0)
-        {
-            comboresetandheal();
-        }
+        lookfordmgcollision(rightfeet.transform.position, 2, overallenddmg, 3, endmanarestore);
     }
     public void Fistweaponswitchhitbox()
-    {        
-        Collider[] cols = Physics.OverlapSphere(righthand.transform.position, 4f, Layerhitbox);
+    {
+        lookfordmgcollision(righthand.transform.position, 4, basicweaponswitchdmg, 0, endmanarestore);
+    }
+    private void lookfordmgcollision(Vector3 hitposition, float hitrange, float damage, int dmgtype, float manarestore)
+    {
+        Collider[] cols = Physics.OverlapSphere(hitposition, hitrange, Layerhitbox);
         foreach (Collider Enemyhit in cols)
         {
             if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
@@ -303,58 +126,21 @@ public class Fistcontroller : MonoBehaviour
                 {
                     enemyscript.dmgonce = true;
                     enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
-                    float calculatedmg;
-                    if (enemyscript.enemydebuffcd == true)
-                    {
-                        enemydebuffcrit = attributecontroller.basiccrit;
-                    }
-                    else
-                    {
-                        enemydebuffcrit = 0;
-                    }
-                    if (Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
-                    {
-                        crit = true;
-                        calculatedmg = Mathf.Round(basicweaponswitchdmg * (attributecontroller.critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100));
-                    }
-                    else
-                    {
-                        crit = false;
-                        calculatedmg = Mathf.Round(basicweaponswitchdmg * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100));
-                    }
-                    enemyscript.TakeDamage(calculatedmg);
-                    var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                    showtext.GetComponent<TextMeshPro>().text = calculatedmg.ToString();
-                    if (crit == true)
-                    {
-                        showtext.GetComponent<TextMeshPro>().color = Color.red;
-                    }
+                    calculatecritchance(enemyscript, damage);
+                    enemyscript.TakeDamage(dmgdealed, dmgtype, crit);
                 }
             }
         }
         if (cols.Length > 0)
         {
-            manacontroller.Managemana(endmanarestore);
+            comboresetandheal(dmgtype, manarestore);
         }
     }
-
-    private void comboresetandheal()
+    private void calculatecritchance(EnemyHP enemyscript, float dmg)
     {
-        manacontroller.Managemana(endmanarestore);
-        if (resetcombochain == true)
-        {
-            resetcombochain = false;
-            fistattack.combochain--;
-        }
-        spielerhp.playerheal(basicendheal);
-    }
-
-    private void basicdmg(EnemyHP enemyscript, GameObject enemyhit)
-    {
-        float calculatedmg;
         if (enemyscript.enemydebuffcd == true)
         {
-            enemydebuffcrit = attributecontroller.basiccrit;
+            enemydebuffcrit = attributecontroller.basicattributecritbuff;
         }
         else
         {
@@ -363,252 +149,32 @@ public class Fistcontroller : MonoBehaviour
         if (Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
         {
             crit = true;
-            calculatedmg = Mathf.Round(overallbasicdmg * (attributecontroller.critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100f) / 100));
+            dmgdealed = Mathf.Round(dmg * (attributecontroller.critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100f) / 100));
         }
         else
         {
             crit = false;
-            calculatedmg = Mathf.Round(overallbasicdmg * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100));
+            dmgdealed = Mathf.Round(dmg * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100));
         }
-        enemyscript.TakeDamage(calculatedmg);
-        var showtext = Instantiate(damagetext, enemyhit.transform.position, Quaternion.identity);
-        if (crit == true)
-        {
-            showtext.GetComponent<TextMeshPro>().color = Color.red;
-        }
-        showtext.GetComponent<TextMeshPro>().text = calculatedmg.ToString();
     }
-
-
-    private void downattack(EnemyHP enemyscript, GameObject enemyhit)
+    private void comboresetandheal(int type, float manarestore)
     {
-        float calculatedmg;
-        if (enemyscript.enemydebuffcd == true)
+        manacontroller.Managemana(manarestore);
+        if (type == 0)
         {
-            enemydebuffcrit = attributecontroller.basiccrit;
+            return;
         }
         else
         {
-            enemydebuffcrit = 0;
-        }
-        if (Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
-        {
-            crit = true;
-            calculatedmg = overallenddmg * (attributecontroller.critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100);
-        }
-        else
-        {
-            crit = false;
-            calculatedmg = overallenddmg * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100);
-        }
-        if (enemyscript.sizeofenemy == 0)
-        {
-            if (enemyscript.enemyincreasebasicdmg == true)
+            if (resetcombochain == true)
             {
-                enddmg = Mathf.Round(calculatedmg * attributecontroller.basicdmgbuff / 100);
-                resetcombochain = true;
-                enemyscript.TakeDamage(enddmg);
+                resetcombochain = false;
+                LoadCharmanager.Overallmainchar.GetComponent<Movescript>().attackcombochain--;
+                //fistattack.combochain--;
             }
-            else
-            {
-                enddmg = Mathf.Round(calculatedmg * 50 / 100);
-                enemyscript.TakeDamage(enddmg);
-            }
-        }
-        else if (enemyscript.sizeofenemy == 1)
-        {
-            if (enemyscript.enemydebuffcd == false)
-            {
-                enemyscript.enemydebuffstart();
-                resetcombochain = true;
-            }
-            enddmg = Mathf.Round(calculatedmg * 85 / 100);
-            enemyscript.TakeDamage(enddmg);
-        }
-        else if (enemyscript.sizeofenemy == 2)
-        {
-            enddmg = Mathf.Round(calculatedmg);
-            enemyscript.TakeDamage(enddmg);
-        }
-
-        var showtext = Instantiate(damagetext, enemyhit.transform.position, Quaternion.identity);
-        showtext.GetComponent<TextMeshPro>().text = enddmg.ToString();
-        if (crit == true)
-        {
-            showtext.GetComponent<TextMeshPro>().color = Color.red;
+            spielerhp.playerheal(basicendheal);
         }
     }
 
-
-    private void midattack(EnemyHP enemyscript, GameObject enemyhit, float attackdmg)
-    {
-        float calculatedmg;
-        if (enemyscript.enemydebuffcd == true)
-        {
-            enemydebuffcrit = attributecontroller.basiccrit;
-        }
-        else
-        {
-            enemydebuffcrit = 0;
-        }
-        if (Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
-        {
-            crit = true;
-            calculatedmg = attackdmg * (attributecontroller.critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100);
-        }
-        else
-        {
-            crit = false;
-            calculatedmg = attackdmg * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100);
-        }
-        if (enemyscript.sizeofenemy == 0)
-        {
-            enddmg = Mathf.Round(calculatedmg);
-            enemyscript.TakeDamage(enddmg);
-        }
-        else if (enemyscript.sizeofenemy == 1)
-        {
-            if (enemyscript.enemyincreasebasicdmg == true)
-            {
-                enddmg = Mathf.Round(calculatedmg * attributecontroller.basicdmgbuff / 100);
-                resetcombochain = true;
-                enemyscript.TakeDamage(enddmg);
-            }
-            else
-            {
-                enddmg = Mathf.Round(calculatedmg * 50 / 100);
-                enemyscript.TakeDamage(enddmg);
-            }
-        }
-        else if (enemyscript.sizeofenemy == 2)
-        {
-            if (enemyscript.enemydebuffcd == false)
-            {
-                enemyscript.enemydebuffstart();
-                resetcombochain = true;
-            }
-            enddmg = Mathf.Round(calculatedmg * 85 / 100);
-            enemyscript.TakeDamage(enddmg);
-        }
-        var showtext = Instantiate(damagetext, enemyhit.transform.position, Quaternion.identity);
-        showtext.GetComponent<TextMeshPro>().text = enddmg.ToString();
-        if (crit == true)
-        {
-            showtext.GetComponent<TextMeshPro>().color = Color.red;
-        }
-    }
-
-
-    private void upattack(EnemyHP enemyscript, GameObject enemyhit)
-    {
-        float calculatedmg;
-        if (enemyscript.enemydebuffcd == true)
-        {
-            enemydebuffcrit = attributecontroller.basiccrit;
-        }
-        else
-        {
-            enemydebuffcrit = 0;
-        }
-        if (Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
-        {
-            crit = true;
-            calculatedmg = overallenddmg * (attributecontroller.critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100);
-        }
-        else
-        {
-            crit = false;
-            calculatedmg = overallenddmg * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100);
-        }
-
-        if (enemyscript.sizeofenemy == 0)
-        {
-            if (enemyscript.enemydebuffcd == false)
-            {
-                enemyscript.enemydebuffstart();
-                resetcombochain = true;
-            }
-            enddmg = Mathf.Round(calculatedmg * 85 / 100);
-            enemyscript.TakeDamage(enddmg);
-        }
-        else if (enemyscript.sizeofenemy == 1)
-        {
-            enddmg = Mathf.Round(calculatedmg);
-            enemyscript.TakeDamage(enddmg);
-        }
-        else if (enemyscript.sizeofenemy == 2)
-        {
-            if (enemyscript.enemyincreasebasicdmg == true)
-            {
-                enddmg = Mathf.Round(calculatedmg * attributecontroller.basicdmgbuff / 100);
-                resetcombochain = true;
-                enemyscript.TakeDamage(enddmg);
-            }
-            else
-            {
-                enddmg = Mathf.Round(calculatedmg * 50 / 100);
-                enemyscript.TakeDamage(enddmg);
-            }
-        }
-        var showtext = Instantiate(damagetext, enemyhit.transform.position, Quaternion.identity);
-        showtext.GetComponent<TextMeshPro>().text = enddmg.ToString();
-        if (crit == true)
-        {
-            showtext.GetComponent<TextMeshPro>().color = Color.red;
-        }
-    }
 }
-
-/*foreach (Collider Enemyhit in cols)
-    if (Enemyhit.gameObject.GetComponentInParent<Enemymovement>())
-    {
-        Enemyhit.gameObject.GetComponentInParent<Enemymovement>().gethit = true;
-    }*/
-
-/*float calculatedmg;
-if (Random.Range(0, 100) < basiccritchance + attributecontroller.critchance + Enemyhit.gameObject.GetComponent<Enemydebuff>().enemycritdebuff)
-{
-    crit = true;
-    calculatedmg = overallenddmg * (attributecontroller.critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100);
-}
-else
-{
-    crit = false;
-    calculatedmg = overallenddmg * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100);
-}
-if (Enemyhit.gameObject.GetComponent<smallenemy>())
-{
-    enddmg = Mathf.Round(calculatedmg);
-    enemyscript.TakeDamage(enddmg);
-}
-if (Enemyhit.gameObject.GetComponent<midenemy>())
-{
-    if (Enemyhit.gameObject.GetComponent<Enemydebuff>().takendmgdebuff == true)
-    {
-        enddmg = Mathf.Round(calculatedmg * attributecontroller.basicdmgbuff / 100);
-        GetComponent<Schwertattack>().combochain--;
-        enemyscript.TakeDamage(enddmg);
-    }
-    else
-    {
-        enddmg = Mathf.Round(calculatedmg * 50 / 100);
-        enemyscript.TakeDamage(enddmg);
-    }
-}
-if (Enemyhit.gameObject.GetComponent<bigenemy>())
-{
-    if (Enemyhit.gameObject.GetComponent<Enemydebuff>().takendmgdebuffcd == false)
-    {
-        Enemyhit.gameObject.GetComponent<Enemydebuff>().starttakendmgdebuff();
-    }
-    enddmg = Mathf.Round(calculatedmg * 85 / 100);
-    enemyscript.TakeDamage(enddmg);
-}
-var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-showtext.GetComponent<TextMeshPro>().text = enddmg.ToString();
-if (crit == true)
-{
-    showtext.GetComponent<TextMeshPro>().color = Color.red;
-}
-spielerhp.TakeDamage(-basicendheal);*/
 

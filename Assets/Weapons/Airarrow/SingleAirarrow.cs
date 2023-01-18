@@ -5,7 +5,7 @@ using TMPro;
 
 public class SingleAirarrow : MonoBehaviour
 {
-    public float arrowspeed;
+    /*public float arrowspeed;
     public float timetodestroy;
     public Vector3 arrowziel { get; set; }
     public bool hit { get; set; }
@@ -46,10 +46,6 @@ public class SingleAirarrow : MonoBehaviour
             dmgonce = true;
         }
     }
-    /*private void OnDrawGizmos()
-    {
-        Gizmos.DrawCube(arrowhitbox.bounds.center, arrowhitbox.bounds.size); //, arrowhitbox.transform.rotation);
-    }*/
     private void arrowdealdmg()
     {
         if (Arrowtarget != null)
@@ -59,7 +55,7 @@ public class SingleAirarrow : MonoBehaviour
                 enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
                 if (enemyscript.enemydebuffcd == true)
                 {
-                    enemydebuffcrit = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basiccrit;
+                    enemydebuffcrit = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basicattributecritbuff;
                 }
                 else
                 {
@@ -81,5 +77,5 @@ public class SingleAirarrow : MonoBehaviour
                 Manamanager.manamanager.Managemana(Statics.bowbasicmanarestore);
             }
         }
-    }
+    }*/
 }

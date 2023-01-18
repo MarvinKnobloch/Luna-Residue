@@ -312,10 +312,7 @@ public class EleAbilities : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(lookPos);
 
             int dmgdealed = 10;
-            target.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed);
-            var showtext = Instantiate(damagetext, target.transform.position, Quaternion.identity);
-            showtext.GetComponent<TextMeshPro>().text = dmgdealed.ToString();
-            showtext.GetComponent<TextMeshPro>().color = Color.red;
+            target.gameObject.GetComponentInChildren<EnemyHP>().TakeDamage(dmgdealed, 0, false);
 
             ColorUtility.TryParseHtmlString("#1D9028", out spezialbackgroundcolor);
             spezialbackground.color = spezialbackgroundcolor;
@@ -583,10 +580,7 @@ public class EleAbilities : MonoBehaviour
                 {
                     float dmg = 10;
                     enemyscript.dmgonce = true;
-                    enemyscript.TakeDamage(dmg);
-                    var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                    showtext.GetComponent<TextMeshPro>().text = dmg.ToString();
-                    showtext.GetComponent<TextMeshPro>().color = Color.red;
+                    enemyscript.TakeDamage(dmg, 0, false);
                 }
             }
         }
@@ -707,10 +701,7 @@ public class EleAbilities : MonoBehaviour
                     {
                         enemyscript.dmgonce = true;
                         float dmg = 10;
-                        enemyscript.TakeDamage(dmg);
-                        var showtext = Instantiate(damagetext, Enemyhit.transform.position, Quaternion.identity);
-                        showtext.GetComponent<TextMeshPro>().text = dmg.ToString();
-                        showtext.GetComponent<TextMeshPro>().color = Color.red;
+                        enemyscript.TakeDamage(dmg, 0, false);
                     }
 
                 }

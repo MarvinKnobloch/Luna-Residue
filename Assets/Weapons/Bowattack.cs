@@ -23,6 +23,15 @@ public class Bowattack : MonoBehaviour
     private bool up;
 
     //castarrow
+    public GameObject singlearrow;
+    private float basicarrowdmg = 5;
+    private float singleendarrowdmg = 8;
+    private float singledoublearrowdmg = 5;
+
+    public GameObject aoearrow;
+    private float aoearrowdmg = 7;
+
+
     public GameObject basicgroundarrow;
     public GameObject grounddownarrow;
     public GameObject groundmidarrow;
@@ -543,49 +552,76 @@ public class Bowattack : MonoBehaviour
     private void pullarrow() => playerarrow.SetActive(true);
     private void arrowfalse() => playerarrow.SetActive(false);
 
-    private void shotarrow(GameObject arrowtyp)
+    private void shotsinglearrow(float dmg, int type)
     {
         if (Movescript.lockontarget != null)
         {
             Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
-            GameObject Arrow = Instantiate(arrowtyp, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Arrow.GetComponent<Singlegroundarrow>().Arrowtarget = Movescript.lockontarget.gameObject;
+            GameObject Arrow = Instantiate(singlearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
+            Arrow.GetComponent<Singlearrow>().Arrowtarget = Movescript.lockontarget.gameObject;
+            Arrow.GetComponent<Singlearrow>().setarrowvalues(dmg, type);
             //Singlegroundarrow arrowcontroller = Arrow.GetComponent<Singlegroundarrow>();
             //arrowcontroller.Arrowtarget = null; // Movescript.lockontarget.gameObject;
             arrowfalse();
         }
     }
-    private void shotbasicgroundarrow() => shotarrow(basicgroundarrow);
-    private void shotgrounddown() => shotarrow(grounddownarrow);
-    private void shotgroundmid() => shotarrow(groundmidarrow);
-    private void shotgroundup() => shotarrow(grounduparrow);
-    private void shotairdown() => shotarrow(airdownarrow);
-    private void shothookarrow() => shotarrow(hookshotarrow);
+    private void shotbasicgroundarrow() => shotsinglearrow(basicarrowdmg, 0);
+    private void shotgroundmid() => shotsinglearrow(singledoublearrowdmg, 2);
+    private void shotgroundup() => shotsinglearrow(singleendarrowdmg, 3);
+    private void shotairdown() => shotsinglearrow(singleendarrowdmg, 1);
+    private void shothookarrow() => shotsinglearrow(basicarrowdmg, 0);
 
-    private void shotarrowwhileaim(GameObject arrowtyp)
+    private void shotaoearrow(float dmg, int radius, int type)
+    {
+        if (Movescript.lockontarget != null)
+        {
+            Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
+            GameObject Arrow = Instantiate(singlearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
+            Arrow.GetComponent<Singlearrow>().Arrowtarget = Movescript.lockontarget.gameObject;
+            Arrow.GetComponent<Aoearrow>().setarrowvalues(dmg, radius, type);
+            arrowfalse();
+        }
+    }
+    private void shotgrounddown() => shotaoearrow(aoearrowdmg, 3, 1);
+
+    private void shotsinglearrowwhileaim(float dmg, int type)
     {
         RaycastHit hit;
         if (Physics.Raycast(Camtransform.position, Camtransform.forward, out hit, Mathf.Infinity, Arrowraycastlayer, QueryTriggerInteraction.Ignore))
         {
             Vector3 arrowrotation = (hit.point - Arrowlaunchposi.position).normalized;
-            GameObject Arrow = Instantiate(arrowtyp, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            SingleAirarrow arrowcontroller = Arrow.GetComponent<SingleAirarrow>();
-            arrowcontroller.arrowziel = hit.point;
-            arrowcontroller.Arrowtarget = hit.transform;
-            arrowcontroller.hit = true;
+            GameObject Arrow = Instantiate(singlearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
+            Arrow.GetComponent<Singlearrow>().Arrowtarget = hit.transform.gameObject;
+            Arrow.GetComponent<Singlearrow>().setarrowvalues(dmg, type);
+            //SingleAirarrow arrowcontroller = Arrow.GetComponent<SingleAirarrow>();
+            //arrowcontroller.arrowziel = hit.point;
+            //arrowcontroller.Arrowtarget = hit.transform;
+            //arrowcontroller.hit = true;
         }
         else
         {
-            Vector3 arrowrotation = (Camtransform.forward).normalized;
-            GameObject Arrow = Instantiate(arrowtyp, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            SingleAirarrow arrowcontroller = Arrow.GetComponent<SingleAirarrow>();
-            arrowcontroller.arrowziel = Camtransform.position + Camtransform.forward;
-            arrowcontroller.hit = false;
+            Debug.Log("arrow does not hit");
         }
     }
-    private void shotairbasicarrow() => shotarrowwhileaim(basicairarrow);
-    private void shotairmidarrow() => shotarrowwhileaim(airmidarrow);
-    private void shotairuparrow() => shotarrowwhileaim(airuparrow);
+    private void shotairbasicarrow() => shotsinglearrowwhileaim(basicarrowdmg, 0);
+    private void shotairmidarrow() => shotsinglearrowwhileaim(singleendarrowdmg, 2);
+
+    private void shotaoearrowwhileaim(float dmg, float radius, int type)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(Camtransform.position, Camtransform.forward, out hit, Mathf.Infinity, Arrowraycastlayer, QueryTriggerInteraction.Ignore))
+        {
+            Vector3 arrowrotation = (hit.point - Arrowlaunchposi.position).normalized;
+            GameObject Arrow = Instantiate(aoearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
+            Arrow.GetComponent<Aoearrow>().Arrowtarget = hit.transform.gameObject;
+            Arrow.GetComponent<Aoearrow>().setarrowvalues(dmg,radius, type);
+        }
+        else
+        {
+            Debug.Log("arrow does not hit");
+        }
+    }
+    private void shotairuparrow() => shotaoearrowwhileaim(aoearrowdmg, 3 , 3);
 
     private void shotpuzzlearrow()
     {
