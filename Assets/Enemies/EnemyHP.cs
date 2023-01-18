@@ -33,7 +33,6 @@ public class EnemyHP : MonoBehaviour
     [SerializeField] private GameObject enemyfocusbargameobject;
     [SerializeField] private Image enemyfocusdebuffbar;
 
-    public static bool switchtargetafterdeath;
     public static bool enemygethit;
 
     public bool dmgonce;                           // da ich zwei collider hab und dadurch 2mal dmg gemacht wird, wird es momentan mit einem bool gecheckt ( hab noch keine besser lösung gefunden
@@ -153,18 +152,21 @@ public class EnemyHP : MonoBehaviour
             }
             if (currenthealth <= 0)
             {
-                unmarktarget();
                 removefromcanvas();
-                focustargetuiend();
+                if (Movescript.lockoncheck == true)
+                {
+                    unmarktarget();
+                    focustargetuiend();
+                    Movescript.availabletargets.Remove(GetComponent<Enemylockon>());
+                    LoadCharmanager.Overallmainchar.GetComponent<Movescript>().lockontargetswitch();
+                }
                 gameObject.SetActive(false);
                 Infightcontroller.infightenemylists.Remove(transform.root.gameObject);
                 int enemycount = Infightcontroller.infightenemylists.Count;
                 Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
                 infightlistupdate?.Invoke();
                 supporttargetdied?.Invoke();
-                Movescript.availabletargets.Clear();
                 dropitems();
-                switchtargetafterdeath = true;
             }
         }
     }

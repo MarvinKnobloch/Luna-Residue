@@ -9,7 +9,6 @@ public class Playerlockon
     {
         if (LoadCharmanager.disableattackbuttons == false || LoadCharmanager.gameispaused == false)
         {
-            if (EnemyHP.switchtargetafterdeath == true && Movescript.lockoncheck == true) lookfortarget();
             if (psm.controlls.Player.Lockon.WasPerformedThisFrame() && Movescript.lockoncheck == false) lookfortarget();
             else if (psm.controlls.Player.Lockon.WasPerformedThisFrame() && Movescript.lockoncheck == true)         //beendet lockon durch buttonpress
             {
@@ -55,13 +54,10 @@ public class Playerlockon
                     }
                     Movescript.lockontarget.GetComponent<EnemyHP>().focustargetuistart();
                     Movescript.lockontarget.GetComponent<EnemyHP>().marktarget();
-                    //EnemyHP.switchtargetafterdeath = false;
-                    //Invoke("changelockoncancel", 0.1f);
                 }
                 else
                 {
                     Movescript.lockoncheck = false;                   //für autolockon nach death oder bowintogroundattack
-                    //psm.cancellockon = false;
                     Movescript.lockontarget = null;
                 }
             }
@@ -89,13 +85,11 @@ public class Playerlockon
                         Movescript.lockontarget.GetComponent<EnemyHP>().focustargetuistart();
                         Movescript.lockontarget.GetComponent<EnemyHP>().marktarget();
                         Movescript.lockoncheck = true;
-                        //Invoke("changelockoncancel", 0.1f);
                     }
                     else
                     {
                         Movescript.lockoncheck = false;
                         Movescript.availabletargets.Clear();
-                        //cancellockon = false;
                         Movescript.lockontarget = null;
                     }
                 }
@@ -104,8 +98,6 @@ public class Playerlockon
     }
     public void lookfortarget()
     {
-        EnemyHP.switchtargetafterdeath = false;
-        psm.bowair3intoground = false;
         psm.Checkforenemy = Physics.CheckSphere(psm.transform.position, psm.lockonrange, psm.Lockonlayer);
         if (psm.Checkforenemy == true)
         {
@@ -131,6 +123,7 @@ public class Playerlockon
         }
         else
         {
+            Movescript.availabletargets.Clear();
             Movescript.lockoncheck = false;                   //für autolockon nach death oder bowintogroundattack
             Movescript.lockontarget = null;
         }

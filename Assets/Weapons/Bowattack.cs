@@ -57,14 +57,12 @@ public class Bowattack : MonoBehaviour
     const string dashstate = "Bowdash";
     const string starthookstate = "Bowhookcharge";
     const string hookshotstate = "Bowhookshot";
-
     const string chargestate = "Chargearrow";
 
     //weaponswitch
-    private float checkforenemyonswitchrange = 3f;
+    private float checkforenemyonswitchrange = 4f;
     public LayerMask weaponswitchlayer;
     private float slowmopercentage = 0.3f;
-    private float slowmogravition = 0.5f;
 
     void Awake()
     {
@@ -130,7 +128,7 @@ public class Bowattack : MonoBehaviour
                     groundintoairinput();
                     break;
                 case Attackstate.weaponswitch:
-                    groundattackchaininput();                                //gleicher input, damit ich nicht noch mehr schreiben muss
+                    shotweaponswitcharrow();                                //gleicher input, damit ich nicht noch mehr schreiben muss
                     break;              
                 default:
                     break;
@@ -160,7 +158,7 @@ public class Bowattack : MonoBehaviour
                     attackestate = Attackstate.waitforattack;
                     movementscript.graviti = 0f;
                     Statics.otheraction = true;
-                    //transform.rotation = Quaternion.Euler(transform.position - Movescript.lockontarget.position);
+                    transform.rotation = Quaternion.LookRotation(Movescript.lockontarget.transform.position - transform.position, Vector3.up);
                     movementscript.ChangeAnimationState(starthookstate);
                 }
             }
@@ -307,6 +305,17 @@ public class Bowattack : MonoBehaviour
                 attackestate = Attackstate.bowairattack;
                 readattackinput = false;
                 movementscript.ChangeAnimationStateInstant(bowairchargestate);
+            }
+        }
+    }
+    private void shotweaponswitcharrow()
+    {
+        if (readattackinput == true)
+        {
+            if (controlls.Player.Attack1.WasPressedThisFrame())
+            {
+                weaponswitchshootarrow();
+                readattackinput = false;
             }
         }
     }
@@ -488,7 +497,6 @@ public class Bowattack : MonoBehaviour
             movementscript.attackonceair = false;
             movementscript.state = Movescript.State.Bowweaponswitch;
             attackestate = Attackstate.weaponswitch;
-            //movementscript.charactercontroller.stepOffset = 0;
             root = true;
             movementscript.ChangeAnimationState(bowbackflipstate);
         }
@@ -504,8 +512,7 @@ public class Bowattack : MonoBehaviour
         movementscript.ChangeAnimationState(slowmochargeup);
         Time.timeScale = slowmopercentage;
         Time.fixedDeltaTime = Statics.normaltimedelta * slowmopercentage;
-        movementscript.graviti = -0.2f;
-        //movementscript.gravitation = slowmogravition;
+        movementscript.graviti = -1.5f;
         Invoke("bowweaponswitchattackend", 1.5f);
     }
     private void bowweaponswitchattackend()

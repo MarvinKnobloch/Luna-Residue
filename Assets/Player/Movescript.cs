@@ -47,16 +47,9 @@ public class Movescript : MonoBehaviour
     [NonSerialized] public float attackmovementspeed = 2;
     [NonSerialized] public float attackrotationspeed = 100;
     [NonSerialized] public float lockonrotationspeed = 10;
-
-    [NonSerialized] public bool onground;
-    [NonSerialized] public bool inair;
     [NonSerialized] public bool airattackminheight;
     [NonSerialized] public bool attackonceair;
-    [NonSerialized] public bool bowair3intoground;                                 // für lockon
-    //private float jumpcdafterland;
-    //private float jumpcd = 0.2f;
     [NonSerialized] public bool hook;
-    [NonSerialized] public bool attack3intoair;
     [NonSerialized] public bool fullcharge;
 
     //swim
@@ -94,10 +87,7 @@ public class Movescript : MonoBehaviour
     //animationstate
     public string currentstate;
     const string idlestate = "Idle";
-    const string jumpstate = "Jump";
-    const string fallstate = "Fall";
     const string dazestate = "Daze";
-    const string hookshotstate = "Hookshot";
 
     //Inventory;
     public Inventorycontroller matsinventory;
@@ -112,7 +102,6 @@ public class Movescript : MonoBehaviour
     public Inventorycontroller necklessinventory;
     public Inventorycontroller ringinventory;
 
-
     //Lockon
     public LayerMask Lockonlayer;
     public float lockonrange;
@@ -122,7 +111,6 @@ public class Movescript : MonoBehaviour
     [NonSerialized] public GameObject HealUI;
     [NonSerialized] public Enemylockon Enemylistcollider;
     public static List<Enemylockon> availabletargets = new List<Enemylockon>();
-    public bool cancellockon;
     [NonSerialized] public Transform targetbeforeswap;
 
     //Spells
@@ -180,7 +168,6 @@ public class Movescript : MonoBehaviour
 
     void Awake()
     {
-        Statics.spellnumbers[0] = 21;
         lockonrange = Statics.playerlockonrange;
         Charrig.enabled = false;
         lockoncheck = false;
@@ -219,7 +206,6 @@ public class Movescript : MonoBehaviour
         controlls.Enable();
         graviti = -0.5f;
         gravitation = normalgravition;
-        cancellockon = false;
         attackonceair = true;
         Charprefabarrow.SetActive(false);
         currentstate = null;
@@ -356,6 +342,7 @@ public class Movescript : MonoBehaviour
         animator.Play(newstate);
         currentstate = newstate;
     }
+    public void lockontargetswitch() => playerlockon.lookfortarget();
     public void switchtogroundstate()
     {
         ChangeAnimationState(idlestate);
@@ -445,15 +432,6 @@ public class Movescript : MonoBehaviour
         Physics.IgnoreLayerCollision(11, 6, false);
     }
     public void pushplayerup(float amount) => playermovement.pushplayerupwards(amount);
-
-
-    /*private void lockonbowrotation()
-    {
-        if (lockontarget != null && lockoncheck == true)
-        {
-            transform.rotation = Quaternion.LookRotation(lockontarget.transform.position - transform.position, Vector3.up);
-        }
-    }*/
 }
 
 
