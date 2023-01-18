@@ -5,7 +5,6 @@ using UnityEngine;
 public class Bowattack : MonoBehaviour
 {
     private Movescript movementscript;
-    private AimScript aimscript;
     private Healingscript healingscript;
     private EleAbilities eleAbilities;
     private SpielerSteu controlls;
@@ -70,7 +69,6 @@ public class Bowattack : MonoBehaviour
         controlls = Keybindinputmanager.inputActions;
         animator = GetComponent<Animator>();
         movementscript = GetComponent<Movescript>();
-        aimscript = GetComponent<AimScript>();
         healingscript = GetComponent<Healingscript>();
         eleAbilities = GetComponent<EleAbilities>();
     }
@@ -80,7 +78,6 @@ public class Bowattack : MonoBehaviour
         root = false;
         movementscript.currentstate = null;
         basicattackcd = 1f;
-        aimscript.enabled = true;
         combochain = 0;
         bowaircount = 0;
         readattackinput = false;
@@ -90,7 +87,6 @@ public class Bowattack : MonoBehaviour
     private void OnDisable()
     {
         CancelInvoke();
-        aimscript.enabled = false;
         playerarrow.SetActive(false);
     }
     private Attackstate attackestate;
@@ -403,9 +399,10 @@ public class Bowattack : MonoBehaviour
     }
     private void bowgrounduproot()
     {
+        bowaircount = 0;
         movementscript.attackonceair = false;
         root = true;
-        movementscript.switchtoaimstate();
+        movementscript.state = Movescript.State.Empty;
         movementscript.graviti = 0f;
     }
     private void bowgroundupend()
@@ -430,28 +427,23 @@ public class Bowattack : MonoBehaviour
         movementscript.disableaimcam();
         playerarrow.SetActive(false);
     }
-    private void bowaircharge()
-    {
-        if (combochain < 2 == true)
-        {
-            movementscript.ChangeAnimationState(bowairholdstate);
-        }
-        else
-        {
-            airattackchainend();
-        }
-    }
+    private void bowaircharge() => movementscript.ChangeAnimationState(bowairchargestate);
 
     private void bowairhold()
     {
         readattackinput = true;
         movementscript.ChangeAnimationState(bowairholdstate);
     }
+    private void checkforaircombo()
+    {
+        if (combochain >= 2) airattackchainend();
+        else movementscript.ChangeAnimationState(bowairchargestate);
+    }
     private void startbowair3intoground()
     {
         root = true;
         attackestate = Attackstate.groundattackchain;
-        movementscript.disableaimcam();
+        movementscript.playeraim.aimend();
         playerarrow.SetActive(false);
         if (Movescript.lockontarget == null)
         {

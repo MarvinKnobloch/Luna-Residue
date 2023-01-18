@@ -10,8 +10,7 @@ public class Jumppad : MonoBehaviour
     {
         if (other.gameObject == LoadCharmanager.Overallmainchar.gameObject)
         {
-            Debug.Log("hallo");
-            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().jumppad(jumppadlaunchbasevalue + jumppadlaunchheight);
+            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().pushplayerup(jumppadlaunchbasevalue + jumppadlaunchheight);
         }
     }
 }

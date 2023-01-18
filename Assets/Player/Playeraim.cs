@@ -8,10 +8,9 @@ public class Playeraim
     public Movescript psm;
     public void aimplayerrotation()
     {
-        psm.Cam2.transform.rotation = psm.transform.rotation;
-        float Kamerarotationoffset = psm.CamTransform.eulerAngles.y + 10f;
-        Quaternion kamerarotation = Quaternion.Euler(0, Kamerarotationoffset, 0);
-        psm.transform.rotation = Quaternion.Lerp(psm.transform.rotation, kamerarotation, psm.aimrotationspeed * Time.deltaTime);
+        float camerarotationoffset = psm.CamTransform.eulerAngles.y + 10f;
+        Quaternion camerarotation = Quaternion.Euler(0, camerarotationoffset, 0);
+        psm.transform.rotation = Quaternion.Lerp(psm.transform.rotation, camerarotation, psm.aimrotationspeed * Time.deltaTime);
         aimrotation(psm.controlls.Player.Mouse.ReadValue<Vector2>());
     }
     private void aimrotation(Vector2 input)
@@ -27,20 +26,10 @@ public class Playeraim
     {
         psm.mousetarget.SetActive(true);
         psm.Cam2.gameObject.SetActive(true);
-        //CinemachinePOV Cam2pov = psm.Cam2.GetCinemachineComponent<CinemachinePOV>();
-        //Cam2pov.m_HorizontalRecentering.m_enabled = true;
-        //psm.Cam1.m_RecenterToTargetHeading.m_enabled = true;
-        //Invoke("cam2recenter", 0.2f);
     }
     public void aimend()
     {
         psm.mousetarget.SetActive(false);
-        //Cam1.m_RecenterToTargetHeading.m_enabled = false;
         psm.Cam2.gameObject.SetActive(false);
-    }
-    private void cam2recenter()
-    {
-        //CinemachinePOV Cam2pov = psm.Cam2.GetCinemachineComponent<CinemachinePOV>();
-        //Cam2pov.m_HorizontalRecentering.m_enabled = false;
     }
 }

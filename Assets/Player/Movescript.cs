@@ -82,7 +82,7 @@ public class Movescript : MonoBehaviour
     private Playerswim playerswim = new Playerswim();
     private Playerstun playerstun = new Playerstun();
     private Playerattack playerattack = new Playerattack();
-    private Playeraim playeraim = new Playeraim();
+    public Playeraim playeraim = new Playeraim();
     public Playerlockon playerlockon = new Playerlockon();
     private Playerfire playerfire = new Playerfire();
     private Playerwater playerwater = new Playerwater();
@@ -157,11 +157,8 @@ public class Movescript : MonoBehaviour
         Buttonmashstun,
         Bowcharge,
         Bowischarged,
-        Airintoground,
-        Actionintoair,
         Groundattack,
         Airattack,
-        Bowgroundattack,
         Playerweaponaim,
         Bowweaponswitch,
         Bowhookshot,
@@ -286,20 +283,10 @@ public class Movescript : MonoBehaviour
                 Aimmovement();
                 Grounded();
                 break;
-            case State.Airintoground:
-                airintoground();
-                break;
-            case State.Actionintoair:
-                intoair();
-                break;
-            case State.Bowgroundattack:
-                Bowgroundmovement();
-                lockonbowrotation();
-                Groundedattack();
-                break;
             case State.Playerweaponaim:
                 playeraim.aimplayerrotation();
-                Bowgroundmovement();
+                playerattack.attackmovement();
+                playerattack.finalairmovement();
                 break;
             case State.Bowweaponswitch:
                 bowswitch();
@@ -378,10 +365,23 @@ public class Movescript : MonoBehaviour
     }
     public void switchtoaimstate()
     {
+        CinemachinePOV Cam2pov = Cam2.GetCinemachineComponent<CinemachinePOV>();
+        Cam2pov.m_HorizontalRecentering.m_enabled = true;
         playeraim.activateaimcam();
         state = State.Playerweaponaim;
+        StartCoroutine(cam2recenteringdisable());
     }
-    public void disableaimcam() => playeraim.aimend();
+    IEnumerator cam2recenteringdisable()                     //damit die cam2 bei aktivierung mit cam1 gleich gesetzt wird. Wenn Recentering aktiviert wird passt sich die 2. Cam sofort der rotation des spielers an.
+    {                                                        //die rotation des spielers ist beim wechsel der Kamera die richtung des Kamerabrains(der Char dreht sich richtung Kamera)
+        yield return new WaitForSeconds(0.2f);               //wenn Recentering nicht aktviert ist dreht die der Char nach dem wechsel sofort richtung 2. Cam die noch nicht die richtig position hat 
+        CinemachinePOV Cam2pov = Cam2.GetCinemachineComponent<CinemachinePOV>();             //sprich die 2. Cam recentert sich schneller als die Char rotation
+        Cam2pov.m_HorizontalRecentering.m_enabled = false;
+    }
+    public void disableaimcam()
+    {
+        playeraim.aimend();
+        switchtoairstate();
+    }
     public void slowplayer(float slowmovementspeed)
     {
         movementspeed = slowmovementspeed;
@@ -421,7 +421,7 @@ public class Movescript : MonoBehaviour
     public void eleearthslidestart() => playerearth.earthslidestart();
     public void eleearthslidedmg() => playerearth.earthslidedmg();
 
-
+    public void pushplayerup(float amount) => playermovement.pushplayerupwards(amount);
 
     private void Grounded()
     {
@@ -438,54 +438,9 @@ public class Movescript : MonoBehaviour
         Ray ray = new Ray(this.transform.position + Vector3.up * 0.3f, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, 0.5f) == false && graviti < -5f)
         {
-            state = State.Actionintoair;
+            //state = State.Actionintoair;
         }
-    }
-    public void jumppad(float jumpheight)
-    {
-        //state = State.Jump;
-        onground = false;
-        ChangeAnimationState(jumpstate);
-        float gravity = Physics.gravity.y * gravitation;
-        graviti = Mathf.Sqrt(jumpheight * -3 * gravity);
-        graviti = jumpheight;
-    }
-    
-
-    private void Groundedattack()
-    {
-        if (charactercontroller.isGrounded)
-        {
-            graviti = -0.5f;
-        }
-        else
-        {
-            float gravity = Physics.gravity.y * gravitation;
-            graviti += gravity * Time.deltaTime;
-        }
-    }
-    private void Bowgroundmovement()
-    {
-        float h = move.x;                                                                         // Move Script
-        float v = move.y;
-
-        moveDirection = new Vector3(h, 0, v);
-        float magnitude = Mathf.Clamp01(moveDirection.magnitude) * movementspeed;
-        moveDirection.Normalize();
-
-        moveDirection = Quaternion.AngleAxis(CamTransform.rotation.eulerAngles.y, Vector3.up) * moveDirection;                     //Kamera dreht sich mit dem Char
-
-        velocity = moveDirection * magnitude;
-        if (charactercontroller.isGrounded)
-        {
-            //velocity = VelocityUneben(velocity);
-        }
-        velocity.y += graviti;
-
-        charactercontroller.Move(velocity / attackmovementspeed * Time.deltaTime);
-
-    }
-
+    } 
     private void bowswitch()
     {
         float gravity = Physics.gravity.y * gravitation;
@@ -507,25 +462,6 @@ public class Movescript : MonoBehaviour
         velocity.y += graviti;
 
         charactercontroller.Move(velocity / attackmovementspeed * Time.deltaTime);
-    }
-    private void airintoground()
-    {
-        charactercontroller.stepOffset = originalStepOffSet;
-        onground = true;
-        inair = false;
-        attack3intoair = false;
-        attackonceair = true;
-        //jumpcdafterland = 0f;
-        state = State.Ground;
-    }
-    private void intoair()
-    {
-        Statics.otheraction = false;
-        charactercontroller.stepOffset = 0;
-        onground = false;
-        inair = true;
-        gravitation = normalgravition;
-        state = State.Air;
     }
     private void chargearrow()
     {

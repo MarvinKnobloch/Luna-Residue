@@ -33,11 +33,15 @@ public class Playermovement
         {
             if (psm.controlls.Player.Jump.WasPressedThisFrame())
             {
-                psm.graviti = psm.jumpheight;
-                psm.switchtoairstate();
-                psm.ChangeAnimationState(jumpstate);
+                pushplayerupwards(psm.jumpheight);
             }
         }
+    }
+    public void pushplayerupwards(float upwardsmomentum)
+    {
+        psm.graviti = upwardsmomentum;
+        psm.switchtoairstate();
+        psm.ChangeAnimationState(jumpstate);
     }
     public void groundcheck()
     {
