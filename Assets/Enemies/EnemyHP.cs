@@ -7,9 +7,6 @@ using TMPro;
 
 public class EnemyHP : MonoBehaviour
 {
-    //attackchain erneuern wenn weakpoint getriggert wird
-    //höhe von der bar;
-
     [SerializeField] Enemyvalues enemyvalues;
     private Enemycalculatedmg enemycalculatedmg = new Enemycalculatedmg();
     public GameObject damagetext;
@@ -68,18 +65,6 @@ public class EnemyHP : MonoBehaviour
     public event Action markcurrenttarget;
     public event Action unmarkcurrenttarget;
 
-    public void addtocanvas()
-    {
-        gothealthbar = true;
-        addhealthbar(this);     //erstellt eine neu Healthbar mit verbindung zum Enemyhpscript;
-        
-    }
-    public void removefromcanvas()
-    {
-        healthbar = null;
-        gothealthbar = false;
-        removehealthbar(this);
-    }
     private void Awake()
     {
         capsulecollider = GetComponent<CapsuleCollider>();
@@ -211,6 +196,18 @@ public class EnemyHP : MonoBehaviour
             focustargetuihptext(currenthealth, maxhealth);
         }
     }
+    public void addtocanvas()
+    {
+        gothealthbar = true;
+        addhealthbar(this);     //erstellt eine neu Healthbar mit verbindung zum Enemyhpscript;
+
+    }
+    public void removefromcanvas()
+    {
+        healthbar = null;
+        gothealthbar = false;
+        removehealthbar(this);
+    }
     public void enemydebuffstart()
     {
         enemyincreasebasicdmg = true;
@@ -278,6 +275,10 @@ public class EnemyHP : MonoBehaviour
                 if (gothealthbar == true)
                 {
                     healthbar.debuffUI.SetActive(false);
+                    if (isfocus == true)
+                    {
+                        enemyfocusbargameobject.SetActive(false);
+                    }
                 }
                 StopCoroutine("enemydebuffcdstart");
             }

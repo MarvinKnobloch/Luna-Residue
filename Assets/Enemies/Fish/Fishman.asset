@@ -18,5 +18,4 @@ MonoBehaviour:
   movementspeed: 8
   attackdmg: 6
   attackspeed: 1.5
-  spezialdmg: 0
   enemysize: 1
