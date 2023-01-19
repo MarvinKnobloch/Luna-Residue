@@ -11,7 +11,6 @@ public class SwordController : MonoBehaviour
     private float chainbasicdmg = 5;
     private float chainenddmg = 7;
     private float weaponswitchdmg = 10f;
-    public GameObject damagetext;
     public LayerMask Layerhitbox;
 
     private float overallbasicdmg;
@@ -22,17 +21,14 @@ public class SwordController : MonoBehaviour
 
     private float basicmanarestore = 2;
     private float endmanarestore = 5;
-    private float enddmg;
     private float dmgdealed;
 
     private bool crit;
-    private bool resetcombochain;
 
     private float enemydebuffcrit;
 
     public GameObject charmanager;
     private Manamanager manacontroller;
-    private Swordattack swordattack;
 
     private Attributecontroller attributecontroller;
     private SpielerHP spielerhp;
@@ -41,7 +37,6 @@ public class SwordController : MonoBehaviour
     {
         attributecontroller = GetComponent<Attributecontroller>();
         manacontroller = charmanager.GetComponent<Manamanager>();
-        swordattack = GetComponent<Swordattack>();
         spielerhp = GetComponent<SpielerHP>();
     }
     private void OnEnable()
@@ -113,7 +108,7 @@ public class SwordController : MonoBehaviour
         }
         if (cols.Length > 0)
         {
-            comboresetandheal(dmgtype, manarestore);
+            healandmana(dmgtype, manarestore);
         }
     }
     private void calculatecritchance(EnemyHP enemyscript, float dmg)
@@ -137,7 +132,7 @@ public class SwordController : MonoBehaviour
             dmgdealed = Mathf.Round(dmg * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100));
         }
     }
-    private void comboresetandheal(int type, float manarestore)
+    private void healandmana(int type, float manarestore)
     {
         manacontroller.Managemana(manarestore);
         if (type == 0)
@@ -146,11 +141,6 @@ public class SwordController : MonoBehaviour
         }
         else
         {
-            if (resetcombochain == true)
-            {
-                resetcombochain = false;
-                swordattack.combochain--;
-            }
             spielerhp.playerheal(basicendheal);
         }
     }

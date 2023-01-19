@@ -13,7 +13,6 @@ public class Fistattack : MonoBehaviour
 
     private bool root;
     private float basicattackcd;
-    public int combochain;
 
     private bool readattackinput;
     private bool down;
@@ -55,7 +54,6 @@ public class Fistattack : MonoBehaviour
         movementscript.currentstate = null;
         basicattackcd = 1f;
         fistcontroller.enabled = true;
-        combochain = 0;
         readattackinput = false;
         attackestate = Attackstate.weaponswitch;
         StartCoroutine(startweaponswitch());
@@ -69,7 +67,6 @@ public class Fistattack : MonoBehaviour
         attack2,
         attack3,
         attackchain,
-        groundintoair,                                // eine zusätzliche chain, bei ground into air
         weaponswitch,
     }
     void Update()
@@ -91,10 +88,7 @@ public class Fistattack : MonoBehaviour
                     attack3input();
                     break;
                 case Attackstate.attackchain:
-                    airintogroundinput();
-                    break;
-                case Attackstate.groundintoair:
-                    groundintoairinput();
+                    attackchaininput();
                     break;
                 case Attackstate.weaponswitch:
                     break;
@@ -138,7 +132,7 @@ public class Fistattack : MonoBehaviour
                 Statics.otheraction = true;
                 movementscript.ChangeAnimationState(groundbasic1state);
                 readattackinput = false;
-                combochain = 0;
+                movementscript.attackcombochain = 0;
             }
         }
         else if (movementscript.state == Movescript.State.Air)
@@ -150,9 +144,9 @@ public class Fistattack : MonoBehaviour
                 movementscript.graviti = 0f;
                 Statics.otheraction = true;
                 movementscript.attackonceair = false;
-                combochain = 0;
                 readattackinput = false;
                 movementscript.ChangeAnimationState(airbasic1state);
+                movementscript.attackcombochain = 0;
             }
         }
     }
@@ -182,37 +176,27 @@ public class Fistattack : MonoBehaviour
         {
             if (controlls.Player.Attack1.WasPressedThisFrame())
             {
-                combochain++;
+                movementscript.attackcombochain++;
                 down = true;
                 readattackinput = false;
             }
             else if (controlls.Player.Attack2.WasPressedThisFrame())
             {
-                combochain++;
+                movementscript.attackcombochain++;
                 mid = true;
                 readattackinput = false;
             }
             else if (controlls.Player.Attack3.WasPressedThisFrame())
             {
-                combochain++;
+                movementscript.attackcombochain++;
                 up = true;
                 readattackinput = false;
             }
         }
     }
-    private void groundintoairinput()
+    private void attackchaininput()
     {
         if (readattackinput == true)
-        {
-            if (controlls.Player.Attack1.WasPressedThisFrame())
-            {
-                readattackinput = false;
-            }
-        }
-    }
-    private void airintogroundinput()
-    {
-        if (readattackinput == true && combochain < 2)
         {
             if (controlls.Player.Attack1.WasPressedThisFrame())
             {
@@ -262,7 +246,7 @@ public class Fistattack : MonoBehaviour
         movementscript.switchtogroundstate();
         attackestate = Attackstate.waitforattack;
         Statics.otheraction = false;
-        combochain = 0;
+        movementscript.attackcombochain = 0;
         basicattackcd = 0;
     }
     private void fistgroundbasicend()
@@ -303,19 +287,19 @@ public class Fistattack : MonoBehaviour
             }
             else if (up == true)
             {
-                attackestate = Attackstate.groundintoair;
+                attackestate = Attackstate.attackchain;
                 movementscript.ChangeAnimationState(groundupstate);
             }
         }
     }
     private void fiststaygroundend()
     {
-        if (readattackinput == true) fistgroundattackchainend();
-        else
+        if (readattackinput == false && movementscript.attackcombochain < 2)
         {
             attackestate = Attackstate.attack1;
             movementscript.ChangeAnimationState(groundbasic1state);
         }
+        else fistgroundattackchainend();
     }
     private void fistgrounduproot()
     {
@@ -341,7 +325,7 @@ public class Fistattack : MonoBehaviour
         movementscript.switchtoairstate();
         attackestate = Attackstate.waitforattack;
         Statics.otheraction = false;
-        combochain = 0;
+        movementscript.attackcombochain = 0;
         basicattackcd = 0;
     }
     private void fistbasicairend()
@@ -374,23 +358,23 @@ public class Fistattack : MonoBehaviour
     private void fistairdownend()
     {
         root = false;
-        if (readattackinput == true) fistgroundattackchainend();
-        else
+        if (readattackinput == false && movementscript.attackcombochain < 2)
         {
             attackestate = Attackstate.attack1;
             movementscript.graviti = -0.5f;
             movementscript.state = Movescript.State.Groundattack;
             movementscript.ChangeAnimationState(groundbasic1state);
         }
+        else fistgroundattackchainend();
     }
     private void fiststayairend()
     {
-        if (readattackinput == true) fistairattackchainend();
-        else
+        if (readattackinput == false && movementscript.attackcombochain < 2)
         {
             attackestate = Attackstate.attack1;
             movementscript.ChangeAnimationState(airbasic1state);
         }
+        else fistairattackchainend();
     }
     IEnumerator startweaponswitch()
     {

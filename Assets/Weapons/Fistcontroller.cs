@@ -25,7 +25,6 @@ public class Fistcontroller : MonoBehaviour
     private float basicweaponswitchdmg;
 
     private bool crit;
-    private bool resetcombochain;
 
     private float enemydebuffcrit;
 
@@ -36,14 +35,12 @@ public class Fistcontroller : MonoBehaviour
 
     private Manamanager manacontroller;
     private Attributecontroller attributecontroller;
-    private Fistattack fistattack;
     private SpielerHP spielerhp;
 
     private void Awake()
     {
         attributecontroller = GetComponent<Attributecontroller>();
         manacontroller = charmanager.GetComponent<Manamanager>();
-        fistattack = GetComponent<Fistattack>();
         spielerhp = GetComponent<SpielerHP>();
     }
     private void OnEnable()
@@ -133,7 +130,7 @@ public class Fistcontroller : MonoBehaviour
         }
         if (cols.Length > 0)
         {
-            comboresetandheal(dmgtype, manarestore);
+            healandmana(dmgtype, manarestore);
         }
     }
     private void calculatecritchance(EnemyHP enemyscript, float dmg)
@@ -157,7 +154,7 @@ public class Fistcontroller : MonoBehaviour
             dmgdealed = Mathf.Round(dmg * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100));
         }
     }
-    private void comboresetandheal(int type, float manarestore)
+    private void healandmana(int type, float manarestore)
     {
         manacontroller.Managemana(manarestore);
         if (type == 0)
@@ -166,12 +163,6 @@ public class Fistcontroller : MonoBehaviour
         }
         else
         {
-            if (resetcombochain == true)
-            {
-                resetcombochain = false;
-                LoadCharmanager.Overallmainchar.GetComponent<Movescript>().attackcombochain--;
-                //fistattack.combochain--;
-            }
             spielerhp.playerheal(basicendheal);
         }
     }
