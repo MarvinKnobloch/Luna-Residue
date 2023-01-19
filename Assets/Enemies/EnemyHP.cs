@@ -122,7 +122,7 @@ public class EnemyHP : MonoBehaviour
             playerhits[1] = player4hits;
         }
     }
-    public void TakeDamage(float damage, int dmgtype , bool crit)                                               
+    public void takeplayerdamage(float damage, int dmgtype , bool crit)                                               
     {
         if (gameObject.GetComponent<Miniadd>())
         {
@@ -142,48 +142,56 @@ public class EnemyHP : MonoBehaviour
             {
                 showtext.GetComponent<TextMeshPro>().color = Color.red;
             }
-
-            if (currenthealth >= maxhealth)
+            afterdmgtaken();
+        }
+    }
+    public void takesupportdmg(float dmg)
+    {
+        currenthealth -= dmg;
+        afterdmgtaken();
+    }
+    private void afterdmgtaken()
+    {
+        if (currenthealth >= maxhealth)
+        {
+            currenthealth = maxhealth;
+        }
+        if (gothealthbar == true)
+        {
+            float currenthealthpct = currenthealth / maxhealth;
+            healthpctchanged(currenthealthpct);
+        }
+        if (isfocus == true)
+        {
+            focustargetuihptext(currenthealth, maxhealth);
+        }
+        if (!Infightcontroller.infightenemylists.Contains(transform.root.gameObject))
+        {
+            Infightcontroller.infightenemylists.Add(transform.root.gameObject);
+            int enemycount = Infightcontroller.infightenemylists.Count;
+            Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
+            if (Infightcontroller.infightenemylists.Count == 1)
             {
-                currenthealth = maxhealth;
-            }
-            if (gothealthbar == true)
-            {
-                float currenthealthpct = currenthealth / maxhealth;
-                healthpctchanged(currenthealthpct);
-            }
-            if (isfocus == true)
-            {
-                focustargetuihptext(currenthealth, maxhealth);
-            }
-            if (!Infightcontroller.infightenemylists.Contains(transform.root.gameObject))
-            {
-                Infightcontroller.infightenemylists.Add(transform.root.gameObject);
-                int enemycount = Infightcontroller.infightenemylists.Count;
-                Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
-                if (Infightcontroller.infightenemylists.Count == 1)
-                {
-                    infightlistupdate?.Invoke();
-                }
-            }
-            if (currenthealth <= 0)
-            {
-                removefromcanvas();
-                if (Movescript.lockoncheck == true)
-                {
-                    unmarktarget();
-                    focustargetuiend();
-                    Movescript.availabletargets.Remove(GetComponent<Enemylockon>());
-                    LoadCharmanager.Overallmainchar.GetComponent<Movescript>().lockontargetswitch();
-                }
-                gameObject.SetActive(false);
-                Infightcontroller.infightenemylists.Remove(transform.root.gameObject);
-                int enemycount = Infightcontroller.infightenemylists.Count;
-                Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
                 infightlistupdate?.Invoke();
-                supporttargetdied?.Invoke();
-                dropitems();
             }
+        }
+        if (currenthealth <= 0)
+        {
+            removefromcanvas();
+            if (Movescript.lockoncheck == true)
+            {
+                unmarktarget();
+                focustargetuiend();
+                Movescript.availabletargets.Remove(GetComponent<Enemylockon>());
+                LoadCharmanager.Overallmainchar.GetComponent<Movescript>().lockontargetswitch();
+            }
+            gameObject.SetActive(false);
+            Infightcontroller.infightenemylists.Remove(transform.root.gameObject);
+            int enemycount = Infightcontroller.infightenemylists.Count;
+            Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
+            infightlistupdate?.Invoke();
+            supporttargetdied?.Invoke();
+            dropitems();
         }
     }
     public void enemyheal(float heal)

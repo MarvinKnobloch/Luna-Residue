@@ -36,7 +36,7 @@ public class Npcendarrow : MonoBehaviour
         {
             if (Arrowtarget.TryGetComponent(out EnemyHP enemyhp))
             {
-                enemyhp.TakeDamage(basicdmgtodeal, 0, false);
+                enemyhp.takesupportdmg(basicdmgtodeal);
             }
         }
     }

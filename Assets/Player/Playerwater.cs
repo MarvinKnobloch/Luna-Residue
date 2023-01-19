@@ -104,7 +104,7 @@ public class Playerwater
                 if (enemyscript.dmgonce == false)
                 {
                     enemyscript.dmgonce = true;
-                    enemyscript.TakeDamage(dmg, 0 ,false);
+                    enemyscript.takeplayerdamage(dmg, 0 ,false);
                     //psm.activatedmgtext(Enemyhit.gameObject, dmg);
                 }
 

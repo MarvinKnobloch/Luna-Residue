@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class Aoearrow : MonoBehaviour
 {
     public float arrowspeed;
     public float timetodestroy;
-    public bool dmgonce;
+    private bool dmgonce;
     public GameObject Arrowtarget;
     public LayerMask Layerhitbox;
     private float aoeradius;
@@ -40,8 +39,8 @@ public class Aoearrow : MonoBehaviour
     {
         if (Arrowtarget != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Arrowtarget.transform.position, arrowspeed * Time.deltaTime);
-            if (dmgonce == false && Vector3.Distance(transform.position, Arrowtarget.transform.position) < 0.1f)
+            transform.position = Vector3.MoveTowards(transform.position, Arrowtarget.transform.position + Vector3.up, arrowspeed * Time.deltaTime);
+            if (dmgonce == false && Vector3.Distance(transform.position, Arrowtarget.transform.position + Vector3.up) < 0.1f)
             {
                 Checkhitbox();
                 dmgonce = true;
@@ -79,12 +78,12 @@ public class Aoearrow : MonoBehaviour
                         if (Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
                         {
                             crit = true;
-                            enemyscript.TakeDamage(overallcritdmg, dmgtype, crit);
+                            enemyscript.takeplayerdamage(overallcritdmg, dmgtype, crit);
                         }
                         else
                         {
                             crit = false;
-                            enemyscript.TakeDamage(overalldmg, dmgtype, crit);
+                            enemyscript.takeplayerdamage(overalldmg, dmgtype, crit);
                         }
                     }
                 }

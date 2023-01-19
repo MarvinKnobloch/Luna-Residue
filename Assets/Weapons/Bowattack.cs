@@ -14,7 +14,7 @@ public class Bowattack : MonoBehaviour
 
     private bool root;
     private float basicattackcd;
-    public int combochain;
+    //public int combochain;
     private int bowaircount;
 
     private bool readattackinput;
@@ -31,17 +31,8 @@ public class Bowattack : MonoBehaviour
     public GameObject aoearrow;
     private float aoearrowdmg = 7;
 
-
-    public GameObject basicgroundarrow;
-    public GameObject grounddownarrow;
-    public GameObject groundmidarrow;
-    public GameObject grounduparrow;
-    public GameObject basicairarrow;
-    public GameObject airdownarrow;
-    public GameObject airmidarrow;
-    public GameObject airuparrow;
-    public GameObject hookshotarrow;
     public GameObject puzzlearrow;
+
     public Transform Arrowlaunchposi;
     public Transform Camtransform;
     public LayerMask Arrowraycastlayer;
@@ -87,7 +78,6 @@ public class Bowattack : MonoBehaviour
         root = false;
         movementscript.currentstate = null;
         basicattackcd = 1f;
-        combochain = 0;
         bowaircount = 0;
         readattackinput = false;
         attackestate = Attackstate.weaponswitch;
@@ -194,7 +184,7 @@ public class Bowattack : MonoBehaviour
                 Statics.otheraction = true;
                 movementscript.ChangeAnimationState(groundbasic1state);
                 readattackinput = false;
-                combochain = 0;
+                movementscript.attackcombochain = 0;
             }
         }
         else if (movementscript.state == Movescript.State.Air)
@@ -207,7 +197,7 @@ public class Bowattack : MonoBehaviour
                 Statics.otheraction = true;
                 bowaircount = 0;
                 movementscript.attackonceair = false;
-                combochain = 0;
+                movementscript.attackcombochain = 0;
                 readattackinput = false;
                 movementscript.ChangeAnimationState(bowairchargestate);
             }
@@ -232,6 +222,7 @@ public class Bowattack : MonoBehaviour
                 if (controlls.Player.Attack1.WasPressedThisFrame())
                 {
                     bowaircount++;
+                    shotairbasicarrow();
                     movementscript.ChangeAnimationStateInstant(bowairreleasestate);
                     readattackinput = false;
                 }
@@ -240,21 +231,23 @@ public class Bowattack : MonoBehaviour
             {
                 if (controlls.Player.Attack1.WasPressedThisFrame())
                 {
-                    combochain++;
+                    movementscript.attackcombochain++;
                     movementscript.ChangeAnimationState(airdownstate);
                     readattackinput = false;
                 }
                 else if (controlls.Player.Attack2.WasPressedThisFrame())
                 {
-                    combochain++;
+                    movementscript.attackcombochain++;
                     bowaircount = 0;
+                    shotairmidarrow();
                     movementscript.ChangeAnimationState(airmidstate);
                     readattackinput = false;
                 }
                 else if (controlls.Player.Attack3.WasPressedThisFrame())
                 {
-                    combochain++;
+                    movementscript.attackcombochain++;
                     bowaircount = 0;
+                    shotairuparrow();
                     movementscript.ChangeAnimationState(airupstate);
                     readattackinput = false;
                 }
@@ -267,19 +260,19 @@ public class Bowattack : MonoBehaviour
         {
             if (controlls.Player.Attack1.WasPressedThisFrame())
             {
-                combochain++;
+                movementscript.attackcombochain++;
                 down = true;
                 readattackinput = false;
             }
             else if (controlls.Player.Attack2.WasPressedThisFrame())
             {
-                combochain++;
+                movementscript.attackcombochain++;
                 mid = true;
                 readattackinput = false;
             }
             else if (controlls.Player.Attack3.WasPressedThisFrame())
             {
-                combochain++;
+                movementscript.attackcombochain++;
                 up = true;
                 readattackinput = false;
             }
@@ -297,7 +290,7 @@ public class Bowattack : MonoBehaviour
     }
     private void groundattackchaininput()
     {
-        if (readattackinput == true && combochain < 2)
+        if (readattackinput == true)
         {
             if (controlls.Player.Attack1.WasPressedThisFrame())
             {
@@ -307,7 +300,7 @@ public class Bowattack : MonoBehaviour
     }
     private void airattackchaininput()
     {
-        if (readattackinput == true && combochain < 2)
+        if (readattackinput == true && movementscript.attackcombochain < 2)
         {
             if (controlls.Player.Attack1.WasPressedThisFrame())
             {
@@ -382,7 +375,7 @@ public class Bowattack : MonoBehaviour
         movementscript.switchtogroundstate();
         attackestate = Attackstate.waitforattack;
         Statics.otheraction = false;
-        combochain = 0;
+        movementscript.attackcombochain = 0;
         basicattackcd = 0;
     }
     private void bowgroundbasicend()
@@ -421,12 +414,12 @@ public class Bowattack : MonoBehaviour
     }
     private void bowstaygroundend()
     {
-        if (readattackinput == true) groundattackchainend();
-        else
+        if (readattackinput == false && movementscript.attackcombochain < 2)
         {
             attackestate = Attackstate.attack1;
             movementscript.ChangeAnimationState(groundbasic1state);
         }
+        else groundattackchainend();
     }
     private void bowgrounduproot()
     {
@@ -453,7 +446,7 @@ public class Bowattack : MonoBehaviour
         movementscript.switchtoairstate();
         attackestate = Attackstate.waitforattack;
         Statics.otheraction = false;
-        combochain = 0;
+        movementscript.attackcombochain = 0;
         basicattackcd = 0;
         movementscript.disableaimcam();
         playerarrow.SetActive(false);
@@ -467,8 +460,8 @@ public class Bowattack : MonoBehaviour
     }
     private void checkforaircombo()
     {
-        if (combochain >= 2) airattackchainend();
-        else movementscript.ChangeAnimationState(bowairchargestate);
+        if (movementscript.attackcombochain < 2) movementscript.ChangeAnimationState(bowairchargestate);
+        else airattackchainend();
     }
     private void startbowair3intoground()
     {
@@ -484,14 +477,14 @@ public class Bowattack : MonoBehaviour
     private void bowairdownend()
     {
         root = false;
-        if (readattackinput == true) groundattackchainend();
-        else
+        if (readattackinput == false && movementscript.attackcombochain < 2)
         {
             attackestate = Attackstate.attack1;
             movementscript.graviti = -0.5f;
             movementscript.state = Movescript.State.Groundattack;
             movementscript.ChangeAnimationState(groundbasic1state);
         }
+        else groundattackchainend();
     }
     IEnumerator startweaponswitch()
     {
@@ -576,8 +569,8 @@ public class Bowattack : MonoBehaviour
         if (Movescript.lockontarget != null)
         {
             Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
-            GameObject Arrow = Instantiate(singlearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Arrow.GetComponent<Singlearrow>().Arrowtarget = Movescript.lockontarget.gameObject;
+            GameObject Arrow = Instantiate(aoearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
+            Arrow.GetComponent<Aoearrow>().Arrowtarget = Movescript.lockontarget.gameObject;
             Arrow.GetComponent<Aoearrow>().setarrowvalues(dmg, radius, type);
             arrowfalse();
         }
@@ -586,8 +579,7 @@ public class Bowattack : MonoBehaviour
 
     private void shotsinglearrowwhileaim(float dmg, int type)
     {
-        RaycastHit hit;
-        if (Physics.Raycast(Camtransform.position, Camtransform.forward, out hit, Mathf.Infinity, Arrowraycastlayer, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(Camtransform.position, Camtransform.forward, out RaycastHit hit, Mathf.Infinity, Arrowraycastlayer, QueryTriggerInteraction.Ignore))
         {
             Vector3 arrowrotation = (hit.point - Arrowlaunchposi.position).normalized;
             GameObject Arrow = Instantiate(singlearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));

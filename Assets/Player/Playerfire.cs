@@ -56,7 +56,7 @@ public class Playerfire
                 {
                     enemyscript.dmgonce = true;
                     int dmgdealed = 5;
-                    enemyscript.TakeDamage(dmgdealed, 0, false);
+                    enemyscript.takeplayerdamage(dmgdealed, 0, false);
                     //psm.activatedmgtext(Enemyhit.gameObject, dmgdealed);
                 }
             }

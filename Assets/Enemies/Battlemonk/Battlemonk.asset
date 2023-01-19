@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: Battlemonk
   m_EditorClassIdentifier: 
   enemyname: Battlemonk
-  maxhealth: 650
+  maxhealth: 2000
   enemylvl: 10
   movementspeed: 8
   attackdmg: 9
   attackspeed: 1.9
-  spezialdmg: 0
   enemysize: 1

@@ -70,7 +70,7 @@ public class Enemycalculatedmg
         if (enemyscript.enemydebuffcd == false)
         {
             enemyscript.enemydebuffstart();
-            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().attackcombochain--;
+            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().attackcombochain = 0;
         }
         enemyscript.finaldmg = Mathf.Round(dmg * 85 / 100);
     }
@@ -79,7 +79,6 @@ public class Enemycalculatedmg
         if (enemyscript.enemyincreasebasicdmg == true)
         {
             enemyscript.finaldmg = Mathf.Round(dmg * (LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basicattributedmgbuff / 100));
-            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().attackcombochain--;
         }
         else
         {

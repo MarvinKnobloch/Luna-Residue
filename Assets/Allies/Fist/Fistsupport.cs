@@ -61,7 +61,7 @@ public class Fistsupport : MonoBehaviour
                     {
                         enemyscript.tookdmgfrom(4, Statics.forthchartookdmgformamount);
                     }
-                    enemyscript.TakeDamage(basicdmgtodeal, 0, false);
+                    enemyscript.takesupportdmg(basicdmgtodeal);
                 }
 
             }
@@ -92,7 +92,7 @@ public class Fistsupport : MonoBehaviour
                     {
                         enemyscript.tookdmgfrom(4, Statics.forthchartookdmgformamount);
                     }
-                    enemyscript.TakeDamage(basicdmgtodeal, 0, false);
+                    enemyscript.takesupportdmg(basicdmgtodeal);
                 }
 
             }
@@ -124,7 +124,7 @@ public class Fistsupport : MonoBehaviour
                     {
                         enemyscript.tookdmgfrom(4, Statics.forthchartookdmgformamount);
                     }
-                    enemyscript.TakeDamage(enddmgtodeal, 0, false);
+                    enemyscript.takesupportdmg(enddmgtodeal);
                 }
             }
             

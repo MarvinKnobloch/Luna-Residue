@@ -66,7 +66,6 @@ public class Playermovement
         else
         {
             psm.switchtoairstate();
-            Debug.Log("cant hit");
         }
     }
     public void groundanimations()
