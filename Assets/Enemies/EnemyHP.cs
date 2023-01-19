@@ -165,9 +165,9 @@ public class EnemyHP : MonoBehaviour
         {
             focustargetuihptext(currenthealth, maxhealth);
         }
-        if (!Infightcontroller.infightenemylists.Contains(transform.root.gameObject))
+        if (!Infightcontroller.infightenemylists.Contains(transform.gameObject))
         {
-            Infightcontroller.infightenemylists.Add(transform.root.gameObject);
+            Infightcontroller.infightenemylists.Add(transform.gameObject);
             int enemycount = Infightcontroller.infightenemylists.Count;
             Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
             if (Infightcontroller.infightenemylists.Count == 1)
@@ -177,16 +177,16 @@ public class EnemyHP : MonoBehaviour
         }
         if (currenthealth <= 0)
         {
+            gameObject.SetActive(false);
             removefromcanvas();
-            if (Movescript.lockoncheck == true)
+            if (Movescript.lockontarget != null)
             {
                 unmarktarget();
                 focustargetuiend();
                 Movescript.availabletargets.Remove(GetComponent<Enemylockon>());
                 LoadCharmanager.Overallmainchar.GetComponent<Movescript>().lockontargetswitch();
             }
-            gameObject.SetActive(false);
-            Infightcontroller.infightenemylists.Remove(transform.root.gameObject);
+            Infightcontroller.infightenemylists.Remove(transform.gameObject);
             int enemycount = Infightcontroller.infightenemylists.Count;
             Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
             infightlistupdate?.Invoke();

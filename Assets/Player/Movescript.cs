@@ -106,7 +106,6 @@ public class Movescript : MonoBehaviour
     //Lockon
     public LayerMask Lockonlayer;
     public float lockonrange;
-    public static bool lockoncheck;
     [NonSerialized] public bool Checkforenemy;
     public static Transform lockontarget;
     [NonSerialized] public GameObject HealUI;
@@ -171,7 +170,6 @@ public class Movescript : MonoBehaviour
     {
         lockonrange = Statics.playerlockonrange;
         Charrig.enabled = false;
-        lockoncheck = false;
         controlls = Keybindinputmanager.inputActions;
         controlls.Player.Movement.performed += Context => move = Context.ReadValue<Vector2>();
         buttonmashhotkey = controlls.Player.Attack3;
