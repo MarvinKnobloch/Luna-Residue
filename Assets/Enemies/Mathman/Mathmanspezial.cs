@@ -12,10 +12,7 @@ public class Mathmanspezial : MonoBehaviour
     {
         if (Statics.dash == false)
         {
-            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().ChangeAnimationStateInstant(dazestate);
-            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state = Movescript.State.Stun;
-            Statics.dash = true;
-            Statics.dazestunstart = true;
+            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtostun();
             mathmancontroller.SetActive(true);
         }
     }

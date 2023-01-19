@@ -94,7 +94,10 @@ public class Knightcontroller : MonoBehaviour
     }
     private void turnoff()
     {
-        Statics.slow = false;
+        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().movementspeed = Statics.playermovementspeed;
+        Statics.dazestunstart = false;
+        Statics.otheraction = false;
+        Statics.dash = false;
         gameObject.SetActive(false);
     }
 }

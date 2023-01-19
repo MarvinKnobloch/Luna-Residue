@@ -10625,7 +10625,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.43333334
-    functionName: fistairchain
+    functionName: setinputtotrue
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -10639,7 +10639,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.8
-    functionName: fistair3midend
+    functionName: fiststayairend
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

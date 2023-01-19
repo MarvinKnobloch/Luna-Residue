@@ -30,7 +30,7 @@ public class Werewolfsphere : MonoBehaviour
                 target.GetComponent<SpielerHP>().TakeDamage(basedmg);
             }
         }
-        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state = Movescript.State.Airintoground;
+        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
         Statics.dash = false;
         Statics.otheraction = false;
         dazeimage.SetActive(false);

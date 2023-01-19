@@ -79,7 +79,7 @@ public class Healingscript : MonoBehaviour
             }
         }
     }
-    public void heal()                     //wird im movementscript gecalled
+    public void heal()
     {
         if (Statics.healcdbool == false && LoadCharmanager.disableattackbuttons == false)
         {
@@ -145,8 +145,7 @@ public class Healingscript : MonoBehaviour
             if (controlls.Player.Heal.WasReleasedThisFrame() && strgwaspressed == true) //&& animator.GetCurrentAnimatorStateInfo(0).IsName("Healend") == false)
             {
                 cancelhealing();
-                movementscript.graviti = -0.5f;
-                movementscript.state = Movescript.State.Ground;
+                movementscript.switchtogroundstate();
             }
             if (controlls.Player.Jump.WasPerformedThisFrame())
             {

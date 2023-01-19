@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using TMPro;
 
 public class EnemyHP : MonoBehaviour
 {
-    //attackchain erneuern wenn weakpoint getriggert wird
-    //höhe von der bar;
-
     [SerializeField] Enemyvalues enemyvalues;
+    private Enemycalculatedmg enemycalculatedmg = new Enemycalculatedmg();
+    public GameObject damagetext;
 
     [NonSerialized] public string _enemyname;
     public float currenthealth;
@@ -17,6 +17,7 @@ public class EnemyHP : MonoBehaviour
     [NonSerialized] public int sizeofenemy;
     public int _enemylvl;
     [SerializeField] private int addenemylvl = 0;
+    [NonSerialized] public float finaldmg;
 
     private CapsuleCollider capsulecollider;
     [NonSerialized] public float enemyheight;
@@ -33,7 +34,6 @@ public class EnemyHP : MonoBehaviour
     [SerializeField] private GameObject enemyfocusbargameobject;
     [SerializeField] private Image enemyfocusdebuffbar;
 
-    public static bool switchtargetafterdeath;
     public static bool enemygethit;
 
     public bool dmgonce;                           // da ich zwei collider hab und dadurch 2mal dmg gemacht wird, wird es momentan mit einem bool gecheckt ( hab noch keine besser lösung gefunden
@@ -65,18 +65,6 @@ public class EnemyHP : MonoBehaviour
     public event Action markcurrenttarget;
     public event Action unmarkcurrenttarget;
 
-    public void addtocanvas()
-    {
-        gothealthbar = true;
-        addhealthbar(this);     //erstellt eine neu Healthbar mit verbindung zum Enemyhpscript;
-        
-    }
-    public void removefromcanvas()
-    {
-        healthbar = null;
-        gothealthbar = false;
-        removehealthbar(this);
-    }
     private void Awake()
     {
         capsulecollider = GetComponent<CapsuleCollider>();
@@ -88,6 +76,10 @@ public class EnemyHP : MonoBehaviour
         sizeofenemy = enemyvalues.enemysize;
         _enemylvl = enemyvalues.enemylvl + addenemylvl;
         enemyfocusbargameobject = enemyfocusdebuffbar.transform.parent.gameObject;
+    }
+    private void OnEnable()
+    {
+        enemycalculatedmg.enemyscript = this;
     }
     void Start()
     {
@@ -115,12 +107,11 @@ public class EnemyHP : MonoBehaviour
             playerhits[1] = player4hits;
         }
     }
-    public void TakeDamage(float damage)                                               // static kann von jedem anderen script aufgerufen werden (classname+voidname)
-    {                                                                                         // sting kann mit texten verbunden werden. Kann z.b einen text umändern
-        currenthealth -= damage;
-
+    public void takeplayerdamage(float damage, int dmgtype , bool crit)                                               
+    {
         if (gameObject.GetComponent<Miniadd>())
         {
+            currenthealth -= damage;
             if (currenthealth <= 0)
             {
                 gameObject.SetActive(false);
@@ -128,44 +119,64 @@ public class EnemyHP : MonoBehaviour
         }
         else
         {
-            if (currenthealth >= maxhealth)
+            enemycalculatedmg.calculatedmg(damage, dmgtype);
+            currenthealth -= finaldmg;
+            var showtext = Instantiate(damagetext, transform.position, Quaternion.identity);
+            showtext.GetComponent<TextMeshPro>().text = finaldmg.ToString();
+            if (crit == true)
             {
-                currenthealth = maxhealth;
+                showtext.GetComponent<TextMeshPro>().color = Color.red;
             }
-            if (gothealthbar == true)
+            afterdmgtaken();
+        }
+    }
+    public void takesupportdmg(float dmg)
+    {
+        currenthealth -= dmg;
+        afterdmgtaken();
+    }
+    private void afterdmgtaken()
+    {
+        if (currenthealth >= maxhealth)
+        {
+            currenthealth = maxhealth;
+        }
+        if (gothealthbar == true)
+        {
+            float currenthealthpct = currenthealth / maxhealth;
+            healthpctchanged(currenthealthpct);
+        }
+        if (isfocus == true)
+        {
+            focustargetuihptext(currenthealth, maxhealth);
+        }
+        if (!Infightcontroller.infightenemylists.Contains(transform.gameObject))
+        {
+            Infightcontroller.infightenemylists.Add(transform.gameObject);
+            int enemycount = Infightcontroller.infightenemylists.Count;
+            Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
+            if (Infightcontroller.infightenemylists.Count == 1)
             {
-                float currenthealthpct = currenthealth / maxhealth;
-                healthpctchanged(currenthealthpct);
+                infightlistupdate?.Invoke();
             }
-            if (isfocus == true)
-            {
-                focustargetuihptext(currenthealth, maxhealth);
-            }
-            if (!Infightcontroller.infightenemylists.Contains(transform.root.gameObject))
-            {
-                Infightcontroller.infightenemylists.Add(transform.root.gameObject);
-                int enemycount = Infightcontroller.infightenemylists.Count;
-                Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
-                if (Infightcontroller.infightenemylists.Count == 1)
-                {
-                    infightlistupdate?.Invoke();
-                }
-            }
-            if (currenthealth <= 0)
+        }
+        if (currenthealth <= 0)
+        {
+            gameObject.SetActive(false);
+            removefromcanvas();
+            if (Movescript.lockontarget != null)
             {
                 unmarktarget();
-                removefromcanvas();
                 focustargetuiend();
-                gameObject.SetActive(false);
-                Infightcontroller.infightenemylists.Remove(transform.root.gameObject);
-                int enemycount = Infightcontroller.infightenemylists.Count;
-                Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
-                infightlistupdate?.Invoke();
-                supporttargetdied?.Invoke();
-                Movescript.availabletargets.Clear();
-                dropitems();
-                switchtargetafterdeath = true;
+                Movescript.availabletargets.Remove(GetComponent<Enemylockon>());
+                LoadCharmanager.Overallmainchar.GetComponent<Movescript>().lockontargetswitch();
             }
+            Infightcontroller.infightenemylists.Remove(transform.gameObject);
+            int enemycount = Infightcontroller.infightenemylists.Count;
+            Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
+            infightlistupdate?.Invoke();
+            supporttargetdied?.Invoke();
+            dropitems();
         }
     }
     public void enemyheal(float heal)
@@ -184,6 +195,18 @@ public class EnemyHP : MonoBehaviour
         {
             focustargetuihptext(currenthealth, maxhealth);
         }
+    }
+    public void addtocanvas()
+    {
+        gothealthbar = true;
+        addhealthbar(this);     //erstellt eine neu Healthbar mit verbindung zum Enemyhpscript;
+
+    }
+    public void removefromcanvas()
+    {
+        healthbar = null;
+        gothealthbar = false;
+        removehealthbar(this);
     }
     public void enemydebuffstart()
     {
@@ -252,6 +275,10 @@ public class EnemyHP : MonoBehaviour
                 if (gothealthbar == true)
                 {
                     healthbar.debuffUI.SetActive(false);
+                    if (isfocus == true)
+                    {
+                        enemyfocusbargameobject.SetActive(false);
+                    }
                 }
                 StopCoroutine("enemydebuffcdstart");
             }

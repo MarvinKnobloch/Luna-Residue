@@ -16,9 +16,10 @@ public class Knightspezial : MonoBehaviour
     private void knightspezial()
     {
         knightcontroller.SetActive(true);
-        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().ChangeAnimationStateInstant(slowdazestate);
-        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state = Movescript.State.Addgravity;
-        Statics.dazestunstart = true;
+        //LoadCharmanager.Overallmainchar.GetComponent<Movescript>().ChangeAnimationStateInstant(slowdazestate);
+        //LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state = Movescript.State.Slow;
+        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().slowplayer(4);
+        Statics.dazestunstart = true;                //triggert eine funktion die alle werte zurück setzt(im waffen script)
         Statics.otheraction = true;
         Statics.slow = true;
         Statics.dash = true;

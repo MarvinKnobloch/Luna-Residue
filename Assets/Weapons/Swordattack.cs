@@ -1,263 +1,192 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using Cinemachine;
 
 public class Swordattack : MonoBehaviour
 {
+    private SpielerSteu controlls;
+    private Animator animator;
     private Movescript movementscript;
     private SwordController swordcontroller;
     private Healingscript healingscript;
     private EleAbilities eleAbilities;
 
-    private SpielerSteu Steuerung;
-    private Animator animator;
-    public bool root;
-    private bool basic;
-    private bool attackend;
-    private bool basicairattack;
-    private bool stayairattack;
+    private bool root;
+    private float basicattackcd;
 
-    //animationstate
-    const string attack1state = "Basic";
-    const string basicair1state = "Air1";
-    const string dashstate = "Sworddash";
-    const string kickstate = "Kick";
-    const string swordswitchstate = "Swordweaponswitch";
-
-    public bool input;
+    private bool readattackinput;
     private bool down;
     private bool mid;
     private bool up;
 
+    //animations
+    const string groundbasic1state = "Basic";
+    const string groundbasic2state = "Swordbasic2";
+    const string grounddownstate = "Sworddownend";
+    const string groundmidstate = "Swordmidend";
+    const string groundupstate = "Swordupend";
+    const string airbasic1state = "Air1";
+    const string airbasic2state = "Air2";
+    const string airdownstate = "SWair3down";
+    const string airmidstate = "SWair3mid";
+    const string airupstate = "SWair3up";
+    const string swordswitchstate = "Swordweaponswitch";
+    const string dashstate = "Sworddash";
+
     //weaponswitch
-    private bool checkforweaponswitch;
     private float checkforenemyonswitchrange = 3f;
     public LayerMask weaponswitchlayer;
 
-    //Cooldowns
-    private float basicattackcd;
-    public int combochain;
-    public bool basicchain;
-    private bool air3downintobasic;
-    private bool basicairchain;
-
     void Awake()
     {
-        Steuerung = Keybindinputmanager.inputActions;
-        animator = GetComponent<Animator>();
+        controlls = Keybindinputmanager.inputActions;
         movementscript = GetComponent<Movescript>();
+        animator = GetComponent<Animator>();
         swordcontroller = GetComponent<SwordController>();
         healingscript = GetComponent<Healingscript>();
         eleAbilities = GetComponent<EleAbilities>();
     }
-
     private void OnEnable()
     {
-        Steuerung.Enable();
-        basic = false;
+        controlls.Enable();
         root = false;
         movementscript.currentstate = null;
         basicattackcd = 1f;
         swordcontroller.enabled = true;
-        combochain = 0;
-        input = false;
+        readattackinput = false;
+        attackestate = Attackstate.weaponswitch;
         StartCoroutine(startweaponswitch());
     }
-    private void OnDisable()
+
+    private Attackstate attackestate;
+    enum Attackstate
     {
-        CancelInvoke();
-        swordcontroller.enabled = false;
+        waitforattack,
+        attack1,
+        attack2,
+        attackchain,
+        weaponswitch,
     }
     void Update()
     {
-        basicattackcd += Time.deltaTime;
-
         if (LoadCharmanager.disableattackbuttons == false)
         {
-            if (movementscript.amBoden == true)
+            switch (attackestate)
             {
-                if (Steuerung.Player.Attack1.WasPressedThisFrame() && basicattackcd > 1f && Statics.otheraction == false)
-                {
-                    movementscript.state = Movescript.State.Groundattack;
-                    Statics.otheraction = true;
-                    movementscript.ChangeAnimationState(attack1state);
-                    basic = false;
-                    attackend = false;
-                    resetschwertani();
-                }
-                if (Steuerung.Player.Attack1.WasPressedThisFrame() && basicchain == true && combochain <= 1)
-                {
-                    input = false;
-                    basicchain = false;
-                }
-
-                if (basic == true && Steuerung.Player.Attack2.WasPressedThisFrame())
-                {
-                    input = false;
-                    basic = false;
-                }
-                if (attackend == true && Steuerung.Player.Attack1.WasPerformedThisFrame())
-                {
-                    input = false;
-                    attackend = false;
-                    combochain++;
-                    down = true;
-                    mid = false;
-                    up = false;
-                }
-                if (attackend == true && Steuerung.Player.Attack2.WasPerformedThisFrame())
-                {
-                    input = false;
-                    attackend = false;
-                    combochain++;
-                    down = false;
-                    mid = true;
-                    up = false;
-                }
-                if (attackend == true && Steuerung.Player.Attack3.WasPerformedThisFrame())
-                {
-                    input = false;
-                    attackend = false;
-                    combochain++;
-                    down = false;
-                    mid = false;
-                    up = true;
-                }
+                case Attackstate.waitforattack:
+                    waitforattackinput();
+                    break;
+                case Attackstate.attack1:
+                    attack1input();
+                    break;
+                case Attackstate.attack2:
+                    attack2input();
+                    break;
+                case Attackstate.attackchain:
+                    attackchaininput();
+                    break;
+                case Attackstate.weaponswitch:
+                    break;
+                default:
+                    break;
             }
-            if (movementscript.inderluft == true)
-            {
-
-                if (movementscript.attack3intoair == true && Steuerung.Player.Attack1.WasPressedThisFrame())
-                {
-                    movementscript.state = Movescript.State.Airattack;
-                    movementscript.amBoden = false;
-                    movementscript.attack3intoair = false;
-                    input = false;
-                }
-                if (Steuerung.Player.Attack1.WasPressedThisFrame() && air3downintobasic == true && combochain <= 1)
-                {
-                    air3downintobasic = false;
-                    input = false;
-                }
-
-                if (Steuerung.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false && Statics.infight == true)
-                {
-                    movementscript.state = Movescript.State.Airattack;
-                    movementscript.graviti = 0f;
-                    movementscript.gravitation = 0f;
-                    Statics.otheraction = true;
-                    movementscript.attackonceair = false;
-                    basicairattack = false;
-                    stayairattack = false;
-                    input = false;
-                    movementscript.ChangeAnimationState(basicair1state);
-                    resetschwertani();
-                }
-                if (Steuerung.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && basicairchain == true && combochain <= 1)
-                {
-                    basicairchain = false;
-                    input = false;
-                }
-                if (movementscript.amBoden == false)  //(Movementscript.airchain == true && Movementscript.amBoden == false)
-                {
-                    if (basicairattack == true && Steuerung.Player.Attack2.WasPressedThisFrame())
-                    {
-                        movementscript.airattackminheight = true;                        //wegen weaponchain von boden into air
-                        basicairattack = false;
-                        input = false;
-                    }
-                    if (stayairattack == true && Steuerung.Player.Attack1.WasPressedThisFrame())
-                    {
-                        stayairattack = false;
-                        combochain++;
-                        input = false;
-                        down = true;
-                        mid = false;
-                        up = false;
-                    }
-                    if (stayairattack == true && Steuerung.Player.Attack2.WasPressedThisFrame())
-                    {
-                        stayairattack = false;
-                        combochain++;
-                        input = false;
-                        down = false;
-                        mid = true;
-                        up = false;
-                    }
-                    if (stayairattack == true && Steuerung.Player.Attack3.WasPressedThisFrame())
-                    {
-                        stayairattack = false;
-                        combochain++;
-                        input = false;
-                        down = false;
-                        mid = false;
-                        up = true;
-                    }
-                }
-            }
-
-            if (Statics.dazestunstart == true)
+            if (Statics.dazestunstart == true)                                //reset alles values bei stun
             {
                 Statics.dazestunstart = false;
-                Statics.otheraction = true;
                 Statics.playeriframes = false;
-                //Statics.dash = false;
-                root = false;
-                CancelInvoke();
-                resetschwertairstates();
-                resetschwertani();
-                healingscript.resethealvalues();
-                eleAbilities.resetelementalmovementvalues();
-                eleAbilities.icelanceiscanceled();
-                input = false;
-                combochain = 0;
+                resetvalues();
                 movementscript.Charrig.enabled = false;
-                if (Statics.enemyspezialtimescale == false)
+                if (Statics.enemyspezialtimescale == false)                  //???????????
                 {
                     Time.timeScale = Statics.normalgamespeed;
                     Time.fixedDeltaTime = Statics.normaltimedelta;
                 }
-                movementscript.bowair3intoground = false;
             }
-
-            if (Steuerung.Player.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false) 
+            if (controlls.Player.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false)
             {
                 movementscript.state = Movescript.State.Beforedash;                  //damit man beim angreifen noch die Richtung bestimmen kann
                 Statics.dash = true;
-                Statics.otheraction = true;
                 Statics.playeriframes = true;
+                resetvalues();
                 GlobalCD.startdashcd();
-                root = true;
-                CancelInvoke();
-                resetschwertairstates();
-                resetschwertani();
-                healingscript.resethealvalues();
-                eleAbilities.resetelementalmovementvalues();
-                eleAbilities.icelanceiscanceled();
-                input = false;
-                combochain = 0;
                 movementscript.graviti = 0;
-                movementscript.gravitation = 0f;
                 Invoke("dash", 0.05f);                                             //damit man beim angreifen noch die Richtung bestimmen kann
             }
-            /*if (Steuerung.Player.Kick.WasPerformedThisFrame() && Statics.kickcdbool == false && Statics.dash == false)
+        }
+    }
+
+    private void waitforattackinput()
+    {
+        basicattackcd += Time.deltaTime;
+        if (movementscript.state == Movescript.State.Ground)
+        {
+            if (controlls.Player.Attack1.WasPressedThisFrame() && basicattackcd > 0.5f && Statics.otheraction == false)
             {
-                Movementscript.state = Movescript.State.DashKick;
+                movementscript.state = Movescript.State.Groundattack;
+                attackestate = Attackstate.attack1;
                 Statics.otheraction = true;
-                Statics.kick = true;
-                GlobalCD.startkickcd();
-                GetComponent<Healingscript>().healanzeige.SetActive(false);
-                resetschwertairstates();
-                resetschwertani();
-                input = false;
-                combochain = 0;
-                Movementscript.runter = 0;
-                Movementscript.gravitation = 0f;
-                Movementscript.ChangeAnimationStateInstant(kickstate);
-                root = false;
-            }*/
+                movementscript.ChangeAnimationState(groundbasic1state);
+                readattackinput = false;
+                movementscript.attackcombochain = 0;
+            }
+        }
+        else if (movementscript.state == Movescript.State.Air)
+        {
+            if (controlls.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false && Statics.infight == true)
+            {
+                movementscript.state = Movescript.State.Airattack;
+                attackestate = Attackstate.attack1;
+                movementscript.graviti = 0f;
+                Statics.otheraction = true;
+                movementscript.attackonceair = false;
+                readattackinput = false;
+                movementscript.ChangeAnimationState(airbasic1state);
+                movementscript.attackcombochain = 0;
+            }
+        }
+    }
+    private void attack1input()
+    {
+        if(readattackinput == true)
+        {
+            if (controlls.Player.Attack2.WasPressedThisFrame())
+            {
+                readattackinput = false;
+            }
+        }
+    }
+    private void attack2input()
+    {
+        if (readattackinput == true)
+        {
+            if (controlls.Player.Attack1.WasPressedThisFrame())
+            {
+                movementscript.attackcombochain++;
+                down = true;
+                readattackinput = false;
+            }
+            else if (controlls.Player.Attack2.WasPressedThisFrame())
+            {
+                movementscript.attackcombochain++;
+                mid = true;
+                readattackinput = false;
+            }
+            else if (controlls.Player.Attack3.WasPressedThisFrame())
+            {
+                movementscript.attackcombochain++;
+                up = true;
+                readattackinput = false;
+            }
+        }
+    }
+    private void attackchaininput()
+    {
+        if (readattackinput == true)
+        {
+            if (controlls.Player.Attack1.WasPressedThisFrame())
+            {
+                readattackinput = false;
+            }
         }
     }
     private void OnAnimatorMove()
@@ -268,9 +197,20 @@ public class Swordattack : MonoBehaviour
             movementscript.charactercontroller.Move(velocity);
         }
     }
+
+    private void resetvalues()
+    {
+        attackestate = Attackstate.waitforattack;
+        Statics.otheraction = true;
+        root = true;
+        CancelInvoke();
+        healingscript.resethealvalues();
+        eleAbilities.resetelementalmovementvalues();
+        eleAbilities.icelanceiscanceled();
+    }
     private void dash()
     {
-        movementscript.state = Movescript.State.DashKick;
+        movementscript.state = Movescript.State.Empty;
         movementscript.ChangeAnimationStateInstant(dashstate);
     }
     private void sworddashend()
@@ -279,275 +219,138 @@ public class Swordattack : MonoBehaviour
         Statics.playeriframes = false;
         Statics.otheraction = false;
         GlobalCD.startresetdash();
-        movementscript.state = Movescript.State.Actionintoair;
+        movementscript.switchtoairstate();
     }
-    private void swordkickhitboxcheck()
+    private void setinputtotrue()
     {
-        Collider[] kickcol = Physics.OverlapSphere(transform.position, 4f, LayerMask.GetMask("Meleehitbox"));                                               // colliderpos, größe(muss nur im programm angegeben werden wenn keine hitbox erstellt worden ist, rotation, layer
-        foreach (Collider kickhit in kickcol)
+        readattackinput = true;
+    }
+    private void groundattackchainend()
+    {
+        readattackinput = false;
+        movementscript.switchtogroundstate();
+        attackestate = Attackstate.waitforattack;
+        Statics.otheraction = false;
+        movementscript.attackcombochain = 0;
+        basicattackcd = 0;
+    }
+    private void swordgroundbasicend()
+    {
+        if (readattackinput == true) groundattackchainend();
+        else
         {
-            if (kickhit.gameObject.GetComponent<Checkforhitbox>())
+            down = false;
+            mid = false;
+            up = false;
+            attackestate = Attackstate.attack2;
+            movementscript.ChangeAnimationState(groundbasic2state);
+        }
+    }
+    private void swordgroundbasci2end()
+    {
+        if (readattackinput == true) groundattackchainend();
+        else
+        {
+            if (down == true)
             {
-                kickhit.gameObject.GetComponentInParent<Enemymovement>().hardattackinterrupt();
+                attackestate = Attackstate.attackchain;
+                if (down) movementscript.ChangeAnimationState(grounddownstate);
+            }
+            else if (mid == true)
+            {
+                attackestate = Attackstate.attackchain;
+                movementscript.ChangeAnimationState(groundmidstate);
+            }
+            else if (up == true)
+            {
+                attackestate = Attackstate.attackchain;
+                movementscript.ChangeAnimationState(groundupstate);
             }
         }
     }
-    private void schwertbasictrue()
+    private void swordstaygroundend()
     {
-        input = true;
-        basic = true;
-        animator.SetBool("attack1", false);
+        if (readattackinput == false && movementscript.attackcombochain < 2)
+        {
+            attackestate = Attackstate.attack1;
+            movementscript.ChangeAnimationState(groundbasic1state);
+        }
+        else groundattackchainend();
     }
-    private void schwertbasicend()
-    {
-        basic = false;
-        if (input == true)
-        {
-            input = false;
-            movementscript.state = Movescript.State.Ground;
-            Statics.otheraction = false;
-            combochain = 0;
-            basicattackcd = 0.5f;
-        }
-        else
-        {
-            animator.SetBool("attack2", true);
-        }
-    }
-    private void schwertbasci2true()
-    {
-        input = true;
-        attackend = true;
-        animator.SetBool("attack2", false);
-    }
-    private void schwertbasci2end()
-    {
-        attackend = false;
-        if (input == true)
-        {
-            input = false;
-            movementscript.state = Movescript.State.Ground;
-            Statics.otheraction = false;
-            combochain = 0;
-            basicattackcd = 0.5f;
-        }
-        if (down)
-        {
-            animator.SetBool("attackdown", true);
-        }
-        if (mid)
-        {
-            animator.SetBool("attackmid", true);
-        }
-        if (up)
-        {
-            animator.SetBool("attackup", true);
-        }
-    }
-    private void schwertchain()
-    {
-        input = true;
-        basicchain = true;
-        animator.SetBool("attackdown", false);
-        animator.SetBool("attackmid", false);
-    }
-    private void schwertdownend()
-    {
-        basicchain = false;
-        if (input == true)
-        {
-            input = false;
-            movementscript.state = Movescript.State.Ground;
-            Statics.otheraction = false;
-            combochain = 0;
-            basicattackcd = 0.5f;
-        }
-        else
-        {
-            animator.SetBool("attack1", true);
-        }
-    }
-    private void schwertmidend()
-    {
-        basicchain = false;
-        if (input == true)
-        {
-            input = false;
-            movementscript.state = Movescript.State.Ground;
-            Statics.otheraction = false;
-            combochain = 0;
-            basicattackcd = 0.5f;
-        }
-        else
-        {
-            animator.SetBool("attack1", true);
-        }
-    }
-
-    private void schwertuproot()
+    private void swordgrounduproot()
     {
         movementscript.attackonceair = false;
         root = true;
         movementscript.state = Movescript.State.Airattack;
         movementscript.graviti = 0f;
-        movementscript.gravitation = 0f;
-        movementscript.amBoden = false;
-        movementscript.inderluft = true;
     }
-    private void schwertuptrue()
+    private void swordgroundupend()
     {
-        input = true;
-        movementscript.attack3intoair = true;
-        animator.SetBool("attackup", false);
-    }
-    private void schwertupend()
-    {
-        basicchain = false;
-        movementscript.attack3intoair = false;
         root = false;
-        if (input == true)
-        {
-            input = false;
-            movementscript.state = Movescript.State.Actionintoair;
-            Statics.otheraction = false;
-            combochain = 0;
-        }
+        if (readattackinput == true) airattackchainend();
         else
         {
-            animator.SetBool("air1", true);
-            basicairattack = false;
-            stayairattack = false;
+            attackestate = Attackstate.attack1;
+            movementscript.ChangeAnimationState(airbasic1state);
         }
-    }
-    private void Schwertbasicairtrue()
-    {
-        input = true;
-        basicairattack = true;
-        animator.SetBool("air1", false);
-    }
-    private void schwertbasicairend()
-    {
-        basicairattack = false;
-        if (input == true)
-        {
-            input = false;
-            movementscript.state = Movescript.State.Actionintoair;
-            Statics.otheraction = false;
-            combochain = 0;
-        }
-        else
-        {
-            animator.SetBool("air2", true);
-        }
-    }
-    private void Schwertstayair()
-    {
-        input = true;
-        stayairattack = true;
-        animator.SetBool("air2", false);
     }
 
-    private void schwertstayairend()
+    private void airattackchainend()
     {
-        stayairattack = false;
-        if (input == true)
+        readattackinput = false;
+        movementscript.switchtoairstate();
+        attackestate = Attackstate.waitforattack;
+        Statics.otheraction = false;
+        movementscript.attackcombochain = 0;
+        basicattackcd = 0;
+    }
+    private void swordbasicairend()
+    {
+        if (readattackinput == true) airattackchainend();
+        else
         {
-            input = false;
-            movementscript.state = Movescript.State.Actionintoair;
-            Statics.otheraction = false;
-            combochain = 0;
-        }
-        if (down)
-        {
-            animator.SetBool("air3down", true);
-        }
-        if (mid)
-        {
-            animator.SetBool("air3mid", true);
-        }
-        if (up)
-        {
-            animator.SetBool("air3up", true);
+            down = false;
+            mid = false;
+            up = false;
+            attackestate = Attackstate.attack2;
+            movementscript.ChangeAnimationState(airbasic2state);
         }
     }
-    private void schwertair3downroot()
+    private void swordairbasic2end()
+    {
+        if (readattackinput == true) airattackchainend();
+        else
+        {
+            attackestate = Attackstate.attackchain;
+            if (down) movementscript.ChangeAnimationState(airdownstate);
+            else if (mid) movementscript.ChangeAnimationState(airmidstate);
+            else if (up) movementscript.ChangeAnimationState(airupstate);
+        }
+    }
+    private void swordairdownroot()
     {
         root = true;
     }
-    private void swairintoground()
-    {
-        animator.SetBool("air3down", false);
-        air3downintobasic = true;
-        input = true;
-    }
-    private void schwertair3downend()
+    private void swordairdownend()
     {
         root = false;
-        air3downintobasic = false;
-        movementscript.gravitation = 4f;
-        movementscript.graviti = -0.5f;
-
-        Ray ray = new Ray(this.transform.position + Vector3.up * 0.3f, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, 0.4f) && input == false)
+        if (readattackinput == false && movementscript.attackcombochain < 2)
         {
-            movementscript.charactercontroller.stepOffset = 0.2f;
-            movementscript.attackonceair = true;
-            movementscript.amBoden = true;
-            movementscript.inderluft = false;
-            movementscript.airattackminheight = false;
-            animator.SetBool("attack1", true);
+            attackestate = Attackstate.attack1;
+            movementscript.graviti = -0.5f;
             movementscript.state = Movescript.State.Groundattack;
+            movementscript.ChangeAnimationState(groundbasic1state);
         }
-        else
-        {
-            input = true;
-        }
-        if (input == true)
-        {
-            input = false;
-            Statics.otheraction = false;
-            combochain = 0;
-            basicattackcd = 0.5f;
-            movementscript.state = Movescript.State.Actionintoair;
-        }
+        else groundattackchainend();
     }
-    private void schwertairchain()
+    private void swordstayairend()
     {
-        input = true;
-        basicairchain = true;
-        animator.SetBool("air3mid", false);
-        animator.SetBool("air3up", false);
-    }
-    private void schwertair3midend()
-    {
-        basicairchain = false;
-        if (input == true)
+        if (readattackinput == false && movementscript.attackcombochain < 2)
         {
-            input = false;
-            movementscript.state = Movescript.State.Actionintoair;
-            Statics.otheraction = false;
-            combochain = 0;
+            attackestate = Attackstate.attack1;
+            movementscript.ChangeAnimationState(airbasic1state);
         }
-        else
-        {
-            animator.SetBool("air1", true);
-        }
-    }
-    private void schwertair3upend()
-    {
-        basicairchain = false;
-        if (input == true)
-        {
-            input = false;
-            animator.SetBool("air3up", false);
-            movementscript.state = Movescript.State.Actionintoair;
-            Statics.otheraction = false;
-            combochain = 0;
-        }
-        else
-        {
-            animator.SetBool("air1", true);
-        }
+        else airattackchainend();
     }
     IEnumerator startweaponswitch()
     {
@@ -556,39 +359,22 @@ public class Swordattack : MonoBehaviour
     }
     private void swordweaponswitch()
     {
-        checkforweaponswitch = Physics.CheckSphere(transform.position, checkforenemyonswitchrange, weaponswitchlayer);
-        if (checkforweaponswitch == true && Statics.otheraction == false)
+        if (Physics.CheckSphere(transform.position, checkforenemyonswitchrange, weaponswitchlayer))
         {
             Statics.otheraction = true;
-            movementscript.state = Movescript.State.Groundattack;
-            movementscript.charactercontroller.stepOffset = 0;
+            movementscript.graviti = 0;
+            movementscript.state = Movescript.State.Airattack;
             movementscript.ChangeAnimationState(swordswitchstate);
+        }
+        else
+        {
+            attackestate = Attackstate.waitforattack;
         }
     }
     private void swordweaponswitchend()
-    {      
-        movementscript.state = Movescript.State.Air;
+    {
+        attackestate = Attackstate.waitforattack;
+        movementscript.switchtogroundstate();
         Statics.otheraction = false;
-    }
-    private void resetschwertairstates()
-    {
-        basicairattack = false;
-        stayairattack = false;
-        air3downintobasic = false;
-        basicairchain = false;
-        movementscript.attack3intoair = false;
-    }
-    private void resetschwertani()
-    {
-        animator.SetBool("attack1", false);
-        animator.SetBool("attack2", false);
-        animator.SetBool("attackdown", false);
-        animator.SetBool("attackmid", false);
-        animator.SetBool("attackup", false);
-        animator.SetBool("air1", false);
-        animator.SetBool("air2", false);
-        animator.SetBool("air3down", false);
-        animator.SetBool("air3mid", false);
-        animator.SetBool("air3up", false);
     }
 }

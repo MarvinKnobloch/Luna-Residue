@@ -37402,21 +37402,21 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.4
-    functionName: Schwertbasicairtrue
+    functionName: setinputtotrue
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.5
-    functionName: Checkswordhitbox
+    functionName: Checkswordbasichitbox
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.8
-    functionName: schwertbasicairend
+    functionName: swordbasicairend
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

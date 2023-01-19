@@ -59,7 +59,7 @@ public class Swordsupport : MonoBehaviour
                 if (enemyscript.dmgonce == false)
                 {
                     enemyscript.dmgonce = true;
-                    enemyscript.TakeDamage(basicdmgtodeal);
+                    enemyscript.takesupportdmg(basicdmgtodeal);
                 }
             }
     }
@@ -89,7 +89,7 @@ public class Swordsupport : MonoBehaviour
                 if (enemyscript.dmgonce == false)
                 {
                     enemyscript.dmgonce = true;
-                    enemyscript.TakeDamage(enddmgtodeal);
+                    enemyscript.takesupportdmg(enddmgtodeal);
                 }
             }
     }

@@ -48148,14 +48148,21 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: bowuproot
+    functionName: bowgrounduproot
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.5
-    functionName: bowuptrue
+  - time: 0.13333334
+    functionName: pullarrow
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.53333336
+    functionName: setinputtotrue
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -48169,7 +48176,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.9
-    functionName: bowupend
+    functionName: bowgroundupend
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
