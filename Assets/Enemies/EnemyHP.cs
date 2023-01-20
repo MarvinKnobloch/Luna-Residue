@@ -119,7 +119,11 @@ public class EnemyHP : MonoBehaviour
         }
         else
         {
-            enemycalculatedmg.calculatedmg(damage, dmgtype);
+            if (dmgtype == 0) finaldmg = damage;
+            else if (dmgtype == 1) enemycalculatedmg.downdmg(damage);
+            else if (dmgtype == 2) enemycalculatedmg.middmg(damage);
+            else if (dmgtype == 3) enemycalculatedmg.updmg(damage);
+
             currenthealth -= finaldmg;
             var showtext = Instantiate(damagetext, transform.position, Quaternion.identity);
             showtext.GetComponent<TextMeshPro>().text = finaldmg.ToString();

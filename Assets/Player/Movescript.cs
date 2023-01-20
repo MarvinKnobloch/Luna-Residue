@@ -38,7 +38,7 @@ public class Movescript : MonoBehaviour
     public float gravitation;
     public float normalgravition = 3.5f;
     public float graviti;
-    [NonSerialized] public float maxgravity = -15;
+    [NonSerialized] public float maxgravity = -20;
 
     public SphereCollider spherecastcollider;
     public LayerMask groundchecklayer;
