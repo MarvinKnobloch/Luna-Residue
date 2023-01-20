@@ -150,8 +150,19 @@ public class Supportmovement : MonoBehaviour
                 }
                 //break;
             }
+        }      
+    }
+    public void playerfocustarget()
+    {
+        if(Movescript.lockontarget != null)
+        {
+            currenttarget = Movescript.lockontarget.gameObject;
+            if (currenttarget.GetComponentInParent<CapsuleCollider>())                                            //gegner muss ein Capuslecollider haben
+            {
+                targetcollider = currenttarget.GetComponentInParent<CapsuleCollider>();
+                attackrangecheck = (float)(targetcollider.radius + 2.5);
+            }
         }
-        
     }
 
     private void meleeweaponmovement()

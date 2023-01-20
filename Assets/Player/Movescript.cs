@@ -122,7 +122,7 @@ public class Movescript : MonoBehaviour
     [NonSerialized] public float nature1speed = 2;
     [NonSerialized] public float nature1traveltime = 1;
     [NonSerialized] public float icelancespeed = 30;
-    [NonSerialized] public float lightningspeed = 10;
+    [NonSerialized] public float lightningspeed = 25;
     [NonSerialized] public Transform currentlightningtraget;
     [NonSerialized] public Transform lightningfirsttarget;
     [NonSerialized] public Transform ligthningsecondtarget;
@@ -168,6 +168,7 @@ public class Movescript : MonoBehaviour
 
     void Awake()
     {
+        Statics.spellnumbers[0] = 15;
         lockonrange = Statics.playerlockonrange;
         Charrig.enabled = false;
         controlls = Keybindinputmanager.inputActions;
@@ -344,6 +345,8 @@ public class Movescript : MonoBehaviour
     public void lockontargetswitch() => playerlockon.lookfortarget();
     public void switchtogroundstate()
     {
+        Physics.IgnoreLayerCollision(6, 6, false);
+        Physics.IgnoreLayerCollision(8, 6, false);
         ChangeAnimationState(idlestate);
         attackonceair = true;
         graviti = -0.5f;
@@ -351,6 +354,8 @@ public class Movescript : MonoBehaviour
     }
     public void switchtoairstate()
     {
+        Physics.IgnoreLayerCollision(6, 6);
+        Physics.IgnoreLayerCollision(8, 6);
         gravitation = normalgravition;
         state = State.Air;
     }
@@ -425,10 +430,9 @@ public class Movescript : MonoBehaviour
     public void eleearthslidedmg() => playerearth.earthslidedmg();
     public void Abilitiesend()
     {
-        state = State.Air;
         Statics.otheraction = false;
-        Physics.IgnoreLayerCollision(9, 6, false);
-        Physics.IgnoreLayerCollision(11, 6, false);
+        Physics.IgnoreLayerCollision(15, 6, false);
+        switchtoairstate();
     }
     public void pushplayerup(float amount) => playermovement.pushplayerupwards(amount);
 }

@@ -22,7 +22,7 @@ TagManager:
   - Meleehitbox
   - "Geb\xE4ude"
   - IgnoreRaycast
-  - Arrowhitbox
+  - 
   - Items
   - Terrain
   - Interactiv

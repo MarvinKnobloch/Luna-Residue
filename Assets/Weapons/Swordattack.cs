@@ -205,7 +205,7 @@ public class Swordattack : MonoBehaviour
         root = true;
         CancelInvoke();
         healingscript.resethealvalues();
-        eleAbilities.resetelementalmovementvalues();
+        eleAbilities.stopignorelayers();
         eleAbilities.icelanceiscanceled();
     }
     private void dash()

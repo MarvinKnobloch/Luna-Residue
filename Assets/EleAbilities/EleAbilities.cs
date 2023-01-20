@@ -131,10 +131,17 @@ public class EleAbilities : MonoBehaviour
         Movementscript.state = Movescript.State.Air;
         Statics.otheraction = false;
     }
-    public void resetelementalmovementvalues()
+    public void ignorelayers()
     {
-        Physics.IgnoreLayerCollision(9, 6, false);
-        Physics.IgnoreLayerCollision(11, 6, false);
+        Physics.IgnoreLayerCollision(6, 6);
+        Physics.IgnoreLayerCollision(8, 6);
+        Physics.IgnoreLayerCollision(15, 6);
+    }
+    public void stopignorelayers()
+    {
+        Physics.IgnoreLayerCollision(6, 6, false);
+        Physics.IgnoreLayerCollision(8, 6, false);
+        Physics.IgnoreLayerCollision(15, 6, false);
     }
     private void fire1()
     {
@@ -243,7 +250,7 @@ public class EleAbilities : MonoBehaviour
                 lookPos.y = 0;
                 transform.rotation = Quaternion.LookRotation(lookPos);
             }
-
+            ignorelayers();
             ColorUtility.TryParseHtmlString("#1A19C5", out spezialbackgroundcolor);
             spezialbackground.color = spezialbackgroundcolor;
             checkwaterstate(2);
@@ -305,6 +312,7 @@ public class EleAbilities : MonoBehaviour
             Statics.otheraction = true;
             Movementscript.state = Movescript.State.Naturethendril;
             Movementscript.ChangeAnimationState(naturethendrilstate);
+            ignorelayers();
             Movementscript.graviti = 0f;
             Transform target = Movescript.lockontarget;
             Vector3 lookPos = target.transform.position - transform.position;
@@ -375,6 +383,7 @@ public class EleAbilities : MonoBehaviour
             Statics.otheraction = true;
             Movementscript.state = Movescript.State.Icelancestart;
             Movementscript.ChangeAnimationState(icelanceidlestate);
+            ignorelayers();
             Movementscript.graviti = 0f;
             Transform target = Movescript.lockontarget;
             if (Vector3.Distance(transform.position, target.transform.position) < 2f)
@@ -769,6 +778,7 @@ public class EleAbilities : MonoBehaviour
             Movementscript.lightningfirsttarget = target;
             Movementscript.currentlightningtraget = target;
             Movementscript.state = Movescript.State.Stormchainligthning;
+            ignorelayers();
             Movementscript.ChangeAnimationState(stormchainlightningstate);
             Movementscript.graviti = 0;
             transform.rotation = Quaternion.LookRotation(Movescript.lockontarget.transform.position - transform.position, Vector3.up);
@@ -834,6 +844,7 @@ public class EleAbilities : MonoBehaviour
             Statics.otheraction = true;
             Movementscript.state = Movescript.State.Empty;
             Movementscript.ChangeAnimationState(darkportalstate);
+            ignorelayers();
             Movementscript.graviti = 0;
             transform.rotation = Quaternion.LookRotation(Movescript.lockontarget.transform.position - transform.position, Vector3.up);
             ColorUtility.TryParseHtmlString("#1D1414", out spezialbackgroundcolor);
@@ -898,6 +909,7 @@ public class EleAbilities : MonoBehaviour
             Statics.otheraction = true;
             Movementscript.state = Movescript.State.Empty;
             Movementscript.ChangeAnimationState(earthslidechargestate);
+            ignorelayers();
             Transform target = Movescript.lockontarget;
             Vector3 lookPos = target.transform.position - transform.position;
             lookPos.y = 0;

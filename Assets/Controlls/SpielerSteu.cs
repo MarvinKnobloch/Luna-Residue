@@ -251,6 +251,15 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Setsupporttarget"",
+                    ""type"": ""Button"",
+                    ""id"": ""03b1f235-1179-4bc0-9f03-db8477917772"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -570,6 +579,17 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Test"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""570dfaf3-1933-4461-ba8e-45851458db7c"",
+                    ""path"": ""<Keyboard>/f1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Setsupporttarget"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1125,6 +1145,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         m_Player_Openelemenu = m_Player.FindAction("Openelemenu", throwIfNotFound: true);
         m_Player_Openequipentmenu = m_Player.FindAction("Openequipentmenu", throwIfNotFound: true);
         m_Player_Test = m_Player.FindAction("Test", throwIfNotFound: true);
+        m_Player_Setsupporttarget = m_Player.FindAction("Setsupporttarget", throwIfNotFound: true);
         // Menusteuerung
         m_Menusteuerung = asset.FindActionMap("Menusteuerung", throwIfNotFound: true);
         m_Menusteuerung_Leftclick = m_Menusteuerung.FindAction("Leftclick", throwIfNotFound: true);
@@ -1243,6 +1264,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Openelemenu;
     private readonly InputAction m_Player_Openequipentmenu;
     private readonly InputAction m_Player_Test;
+    private readonly InputAction m_Player_Setsupporttarget;
     public struct PlayerActions
     {
         private @SpielerSteu m_Wrapper;
@@ -1272,6 +1294,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         public InputAction @Openelemenu => m_Wrapper.m_Player_Openelemenu;
         public InputAction @Openequipentmenu => m_Wrapper.m_Player_Openequipentmenu;
         public InputAction @Test => m_Wrapper.m_Player_Test;
+        public InputAction @Setsupporttarget => m_Wrapper.m_Player_Setsupporttarget;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1356,6 +1379,9 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @Test.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
                 @Test.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
                 @Test.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
+                @Setsupporttarget.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSetsupporttarget;
+                @Setsupporttarget.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSetsupporttarget;
+                @Setsupporttarget.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSetsupporttarget;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1435,6 +1461,9 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @Test.started += instance.OnTest;
                 @Test.performed += instance.OnTest;
                 @Test.canceled += instance.OnTest;
+                @Setsupporttarget.started += instance.OnSetsupporttarget;
+                @Setsupporttarget.performed += instance.OnSetsupporttarget;
+                @Setsupporttarget.canceled += instance.OnSetsupporttarget;
             }
         }
     }
@@ -1783,6 +1812,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         void OnOpenelemenu(InputAction.CallbackContext context);
         void OnOpenequipentmenu(InputAction.CallbackContext context);
         void OnTest(InputAction.CallbackContext context);
+        void OnSetsupporttarget(InputAction.CallbackContext context);
     }
     public interface IMenusteuerungActions
     {
