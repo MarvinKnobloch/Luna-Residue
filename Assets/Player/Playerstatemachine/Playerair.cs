@@ -6,21 +6,30 @@ public class Playerair
 {
     public Movescript psm;
 
+    const string jumpstate = "Jump";
     const string fallstate = "Fall";
     public void airgravity()
     {
         float grav = Physics.gravity.y * psm.gravitation;
         psm.graviti += grav * Time.deltaTime;
-        if(psm.graviti < -3)
+        if (psm.graviti < psm.maxgravity)
         {
-            psm.ChangeAnimationState(fallstate);
-            if (psm.graviti < psm.maxgravity)
-            {
-                psm.graviti = psm.maxgravity;
-            }
+            psm.graviti = psm.maxgravity;
         }
         psm.velocity.y = psm.graviti;
         psm.charactercontroller.Move(psm.velocity * Time.deltaTime);
+    }
+
+    public void switchformupwardstoair()
+    {
+        if(psm.graviti <= 0) psm.switchtoairstate();
+    }
+    public void airdownwards()
+    {
+        if (psm.graviti < -3)
+        {
+            psm.ChangeAnimationState(fallstate);
+        }
         if (psm.charactercontroller.isGrounded == true && psm.graviti < 0)
         {
             psm.switchtogroundstate();
@@ -37,5 +46,21 @@ public class Playerair
         {
             psm.airattackminheight = true;
         }
+    }
+    public void jump()
+    {
+        if (LoadCharmanager.disableattackbuttons == false || LoadCharmanager.gameispaused == false)
+        {
+            if (psm.controlls.Player.Jump.WasPressedThisFrame())
+            {
+                pushplayerupwards(psm.jumpheight);
+            }
+        }
+    }
+    public void pushplayerupwards(float upwardsmomentum)
+    {
+        psm.graviti = upwardsmomentum;
+        psm.state = Movescript.State.Upwards;
+        psm.ChangeAnimationState(jumpstate);
     }
 }

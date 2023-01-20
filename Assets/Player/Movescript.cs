@@ -133,6 +133,7 @@ public class Movescript : MonoBehaviour
     public enum State
     {
         Ground,
+        Upwards,
         Air,
         Slidedownwall,
         Swim,
@@ -221,13 +222,20 @@ public class Movescript : MonoBehaviour
                 playermovement.movement();
                 playermovement.groundcheck();
                 playermovement.groundanimations();
-                playermovement.jump();
+                playerair.jump();
                 playerheal.starthealing();
+                break;
+            case State.Upwards:
+                playermovement.movement();
+                playerair.airgravity();
+                playerair.minheightforairattack();
+                playerair.switchformupwardstoair();
                 break;
             case State.Air:
                 playermovement.movement();
                 playerair.airgravity();
                 playerair.minheightforairattack();
+                playerair.airdownwards();
                 break;
             case State.Slidedownwall:
                 playerslidewalls.slidewalls();
@@ -238,7 +246,7 @@ public class Movescript : MonoBehaviour
             case State.Swim:
                 playermovement.movement();
                 playerswim.swim();
-                playermovement.jump();
+                playerair.jump();
                 break;
             case State.Stun:
                 playerstun.stun();
@@ -356,7 +364,7 @@ public class Movescript : MonoBehaviour
     {
         Physics.IgnoreLayerCollision(6, 6);
         Physics.IgnoreLayerCollision(8, 6);
-        gravitation = normalgravition;
+        //gravitation = normalgravition;
         state = State.Air;
     }
     public void switchtoattackaimstate()
@@ -434,7 +442,7 @@ public class Movescript : MonoBehaviour
         Physics.IgnoreLayerCollision(15, 6, false);
         switchtoairstate();
     }
-    public void pushplayerup(float amount) => playermovement.pushplayerupwards(amount);
+    public void pushplayerup(float amount) => playerair.pushplayerupwards(amount);
 }
 
 
