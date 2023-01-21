@@ -8,7 +8,6 @@ public class Playermovement
 
     const string idlestate = "Idle";
     const string runstate = "Running";
-    const string jumpstate = "Jump";
     public void movement()
     {
         float h = psm.move.x;
@@ -26,22 +25,6 @@ public class Playermovement
             psm.transform.rotation = Quaternion.RotateTowards(psm.transform.rotation, toRotation, psm.rotationspeed * Time.deltaTime);
         }
         psm.velocity = psm.moveDirection * magnitude;
-    }
-    public void jump()
-    {
-        if (LoadCharmanager.disableattackbuttons == false || LoadCharmanager.gameispaused == false)
-        {
-            if (psm.controlls.Player.Jump.WasPressedThisFrame())
-            {
-                pushplayerupwards(psm.jumpheight);
-            }
-        }
-    }
-    public void pushplayerupwards(float upwardsmomentum)
-    {
-        psm.graviti = upwardsmomentum;
-        psm.switchtoairstate();
-        psm.ChangeAnimationState(jumpstate);
     }
     public void groundcheck()
     {

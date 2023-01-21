@@ -68,7 +68,7 @@ public class Movescript : MonoBehaviour
 
     //StatemachineScripts
     public Playermovement playermovement = new Playermovement();
-    private Playerair playerair = new Playerair();
+    public Playerair playerair = new Playerair();
     private Playerheal playerheal = new Playerheal();
     private Playerslidewalls playerslidewalls = new Playerslidewalls();
     private Playerswim playerswim = new Playerswim();
