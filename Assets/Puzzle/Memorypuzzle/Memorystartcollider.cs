@@ -11,6 +11,7 @@ public class Memorystartcollider : MonoBehaviour
         if(other.gameObject == LoadCharmanager.Overallmainchar.gameObject)
         {
             startpuzzle?.Invoke();
+            gameObject.SetActive(false);
         }
     }
 }

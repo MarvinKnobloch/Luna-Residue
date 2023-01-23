@@ -129,10 +129,14 @@ public class Movescript : MonoBehaviour
     [NonSerialized] public Transform lightningthirdtarget;
     [NonSerialized] public float earthslidespeed = 20;
 
+    //puzzle
+    [NonSerialized] public Vector3 movetowardsposition;
+
     public State state;
     public enum State
     {
         Ground,
+        Movetowards,
         Upwards,
         Air,
         Slidedownwall,
@@ -224,6 +228,9 @@ public class Movescript : MonoBehaviour
                 playermovement.groundanimations();
                 playerair.jump();
                 playerheal.starthealing();
+                break;
+            case State.Movetowards:
+                playermovement.movetowardsposi();
                 break;
             case State.Upwards:
                 playermovement.movement();

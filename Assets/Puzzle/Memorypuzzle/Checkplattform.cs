@@ -11,6 +11,11 @@ public class Checkplattform : MonoBehaviour
     public static event Action resetplattforms;
     public static event Action puzzlefinish;
 
+    public bool isportal;
+    public Vector3 portalend;
+
+    const string fly = "Stormchainlightning";
+
     private void OnEnable()
     {
         plattformnumber = -2;
@@ -23,6 +28,13 @@ public class Checkplattform : MonoBehaviour
             {
                 gameObject.GetComponent<Renderer>().material.color = Color.red;
                 Setplattforms.currentplattformnumber++;
+                if (isportal == true)
+                {
+                    Statics.otheraction = true;
+                    LoadCharmanager.Overallmainchar.GetComponent<Movescript>().movetowardsposition = portalend;
+                    LoadCharmanager.Overallmainchar.GetComponent<Movescript>().ChangeAnimationState(fly);
+                    LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state = Movescript.State.Movetowards;
+                }
                 if(Setplattforms.currentplattformnumber >= Setplattforms.neededplattformnumber)
                 {
                     puzzlefinish?.Invoke();
