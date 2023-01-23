@@ -19,6 +19,7 @@ public class Playerlockon
                 else if(psm.controlls.Player.Lockon.WasPerformedThisFrame()) endlockon();
                 else currentlockonoutofrange();
             }
+            setsupporttargets();
         }
     }
     public void lookfortarget()
@@ -146,5 +147,18 @@ public class Playerlockon
             psm.transform.rotation = Quaternion.Slerp(psm.transform.rotation, rotation, psm.lockonrotationspeed  * Time.deltaTime);
         }
     }
-
+    private void setsupporttargets()
+    {
+        if(psm.controlls.Player.Setsupporttarget.WasPerformedThisFrame() && Movescript.lockontarget != null)
+        {
+            if(LoadCharmanager.Overallthirdchar != null)
+            {
+                LoadCharmanager.Overallthirdchar.GetComponent<Supportmovement>().playerfocustarget();
+            }
+            if(LoadCharmanager.Overallforthchar != null)
+            {
+                LoadCharmanager.Overallforthchar.GetComponent<Supportmovement>().playerfocustarget();
+            }
+        }
+    }
 }

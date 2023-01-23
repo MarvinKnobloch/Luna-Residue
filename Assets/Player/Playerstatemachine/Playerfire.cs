@@ -27,8 +27,9 @@ public class Playerfire
     public void firedashstart()
     {
         psm.ChangeAnimationState(firedashstate);
+        Physics.IgnoreLayerCollision(6, 6);
         Physics.IgnoreLayerCollision(8, 6);
-        Physics.IgnoreLayerCollision(11, 6);
+        Physics.IgnoreLayerCollision(15, 6);
         psm.state = Movescript.State.Firedash;
     }
     public void firedash()

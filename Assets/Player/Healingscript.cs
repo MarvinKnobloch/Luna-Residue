@@ -150,7 +150,7 @@ public class Healingscript : MonoBehaviour
             if (controlls.Player.Jump.WasPerformedThisFrame())
             {
                 cancelhealing();
-                movementscript.playermovement.jump();
+                movementscript.playerair.jump();
             }
         }
     }

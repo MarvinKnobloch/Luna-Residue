@@ -10,7 +10,6 @@ public class Playerslidewalls
     public void slidewalls()
     {
         if (Physics.SphereCast(psm.spherecastcollider.bounds.center, psm.spherecastcollider.radius, Vector3.down, out RaycastHit groundhit, 1.1f, psm.groundchecklayer))
-        //if (Physics.BoxCast(boxCollider.bounds.center, boxCollider.bounds.extents, Vector3.down, out RaycastHit groundhit, Quaternion.identity, 1.1f, groundchecklayer))
         {
             float grav = Physics.gravity.y * psm.gravitation;
             psm.graviti += grav * Time.deltaTime;
@@ -33,6 +32,15 @@ public class Playerslidewalls
                 psm.switchtogroundstate();
             }
             psm.charactercontroller.Move(psm.moveDirection * Time.deltaTime);
+            if (psm.transform.hasChanged)
+            {
+                psm.transform.hasChanged = false;
+            }
+            else
+            {
+                //psm.switchtogroundstate();
+                psm.switchtoairstate();
+            }
         }
         else
         {

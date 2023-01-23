@@ -8,7 +8,6 @@ public class Playermovement
 
     const string idlestate = "Idle";
     const string runstate = "Running";
-    const string jumpstate = "Jump";
     public void movement()
     {
         float h = psm.move.x;
@@ -27,25 +26,9 @@ public class Playermovement
         }
         psm.velocity = psm.moveDirection * magnitude;
     }
-    public void jump()
-    {
-        if (LoadCharmanager.disableattackbuttons == false || LoadCharmanager.gameispaused == false)
-        {
-            if (psm.controlls.Player.Jump.WasPressedThisFrame())
-            {
-                pushplayerupwards(psm.jumpheight);
-            }
-        }
-    }
-    public void pushplayerupwards(float upwardsmomentum)
-    {
-        psm.graviti = upwardsmomentum;
-        psm.switchtoairstate();
-        psm.ChangeAnimationState(jumpstate);
-    }
     public void groundcheck()
     {
-        if (Physics.SphereCast(psm.spherecastcollider.bounds.center, psm.spherecastcollider.radius, Vector3.down, out RaycastHit groundhit, 1.1f, psm.groundchecklayer))
+        if (Physics.SphereCast(psm.spherecastcollider.bounds.center, psm.spherecastcollider.radius, Vector3.down, out RaycastHit groundhit, 1.2f, psm.groundchecklayer))
         {
             float angle = Vector3.Angle(Vector3.up, groundhit.normal);
             if(angle > psm.charactercontroller.slopeLimit +6)          // +3 sonst die ganze zeit state wechsel wenn man gegen ein schräge läuft
@@ -105,5 +88,20 @@ public class Playermovement
             Quaternion toRotation = Quaternion.LookRotation(psm.moveDirection, Vector3.up);
             psm.transform.rotation = Quaternion.RotateTowards(psm.transform.rotation, toRotation, 5000 * Time.deltaTime);
         }
+    }
+    public void movetowardsposi()
+    {
+        Physics.IgnoreLayerCollision(0, 6);
+        Vector3 distancetomove = psm.movetowardsposition - psm.transform.position;
+        Vector3 move = distancetomove.normalized * 10 * Time.deltaTime;
+        psm.charactercontroller.Move(move);
+        psm.transform.rotation = Quaternion.LookRotation(psm.movetowardsposition - psm.transform.position, Vector3.up);
+        if (Vector3.Distance(psm.transform.position, psm.movetowardsposition) < 0.2f)
+        {
+            Physics.IgnoreLayerCollision(0, 6, false);
+            Statics.otheraction = false;
+            psm.switchtoairstate();
+        }
+
     }
 }

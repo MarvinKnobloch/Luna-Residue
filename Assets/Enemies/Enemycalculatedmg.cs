@@ -5,18 +5,7 @@ using UnityEngine;
 public class Enemycalculatedmg
 {
     public EnemyHP enemyscript;
-    public void calculatedmg(float dmg, int type)
-    {
-        if (type == 0) normaldmg(dmg);
-        else if (type == 1) downdmg(dmg);
-        else if (type == 2) middmg(dmg);
-        else if (type == 3) updmg(dmg);
-    }
-    private void normaldmg(float dmg)
-    {
-        enemyscript.finaldmg = dmg;
-    }
-    private void downdmg(float dmg)
+    public void downdmg(float dmg)
     {
         if (enemyscript.sizeofenemy == 0)
         {
@@ -31,7 +20,7 @@ public class Enemycalculatedmg
             nodmgcalculation(dmg);
         }
     }
-    private void middmg(float dmg)
+    public void middmg(float dmg)
     {
         if (enemyscript.sizeofenemy == 0)
         {
@@ -46,7 +35,7 @@ public class Enemycalculatedmg
             armorbreakcalculation(dmg);
         }
     }
-    private void updmg(float dmg)
+    public void updmg(float dmg)
     {
         if (enemyscript.sizeofenemy == 0)
         {
