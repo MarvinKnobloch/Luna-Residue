@@ -18,6 +18,7 @@ public class Statics
     public static float currentplayerposix, currentplayerposiy, currentplayerposiz;
     public static float currentplayerrotationx, currentplayerrotationy, currentplayerrotationz, currentplayerrotationw;
     public static float savecamvalueX;
+    public static float npcdialoguetextspeed = 0.02f;
 
     //player
 

@@ -204,15 +204,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Openelemenu",
-                    "type": "Button",
-                    "id": "c102e4df-2356-435c-839d-23bd630435a3",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Openequipentmenu",
                     "type": "Button",
                     "id": "4eb3e4d1-eada-4488-b850-7952513ac173",
@@ -524,17 +515,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Ability4",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "62323ccc-4370-4d6d-bf66-4af6d04b31ed",
-                    "path": "<Keyboard>/f1",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Openelemenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
