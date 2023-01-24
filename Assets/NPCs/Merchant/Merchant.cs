@@ -13,7 +13,6 @@ public class Merchant : MonoBehaviour, Interactioninterface
     }
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("test");
         gameObject.GetComponent<Npcdialogue>().enddialogue();
     }
 }
