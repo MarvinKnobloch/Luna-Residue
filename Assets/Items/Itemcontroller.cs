@@ -6,8 +6,17 @@ using System;
 public enum Itemtype
 {
     Crafting,
-    Weapon,
-    Armor,
+    Sword,
+    Bow,
+    Fist,
+    Head,
+    Chest,
+    Gloves,
+    Belt,
+    Legs,
+    Shoes,
+    Neckless,
+    Ring,
 }
 public abstract class Itemcontroller : ScriptableObject
 {

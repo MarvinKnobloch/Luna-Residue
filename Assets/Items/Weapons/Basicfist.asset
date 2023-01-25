@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa0d64cb4c80b244dbef2367c99e7fa5, type: 3}
+  m_Script: {fileID: 11500000, guid: a50e13af86f217247a6db76f974de312, type: 3}
   m_Name: Basicfist
   m_EditorClassIdentifier: 
   Uisprite: {fileID: 21300000, guid: 34465469099107f43aa87f873f160932, type: 3}
-  type: 1
+  type: 3
   itemname: Basicfist
   inventoryslot: 0
-  itemshopcosts: 30
+  itemshopcosts: 40
   description: 
   basestats:
   - 0

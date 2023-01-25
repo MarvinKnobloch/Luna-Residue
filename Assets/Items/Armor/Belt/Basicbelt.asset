@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1187804636bbe34fafe72c483d11e83, type: 3}
+  m_Name: Basicbelt
+  m_EditorClassIdentifier: 
+  Uisprite: {fileID: 21300000, guid: 91134e92b07ffcc43ae93d1b5346d6cf, type: 3}
+  type: 7
+  itemname: Basicbelt
+  inventoryslot: 0
+  itemshopcosts: 100
+  description: 
+  basestats:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 1
+  - 1
+  - 0
+  stats:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 1
+  - 1
+  - 0
+  upgradelvl: 0
+  maxupgradelvl: 0
+  upgrades: []

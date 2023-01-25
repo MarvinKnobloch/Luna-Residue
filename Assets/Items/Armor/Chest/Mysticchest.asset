@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Mysticchest
   m_EditorClassIdentifier: 
   Uisprite: {fileID: 21300000, guid: eb537dabb01da454ba537247f5160393, type: 3}
-  type: 2
+  type: 5
   itemname: Mysticchest
+  inventoryslot: 0
+  itemshopcosts: 0
   description: Basic Shirt
   basestats:
   - 0

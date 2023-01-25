@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa0d64cb4c80b244dbef2367c99e7fa5, type: 3}
+  m_Script: {fileID: 11500000, guid: 9fa93c9492e2de24186cf539133be63c, type: 3}
   m_Name: Basicbow
   m_EditorClassIdentifier: 
   Uisprite: {fileID: 21300000, guid: 9a7c8d500b9ea3f4e8ad1c729649de2d, type: 3}
-  type: 1
+  type: 2
   itemname: Basicbow
+  inventoryslot: 0
+  itemshopcosts: 60
   description: 
   basestats:
   - 0
