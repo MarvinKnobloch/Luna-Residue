@@ -8,7 +8,10 @@ public class Merchant : MonoBehaviour, Interactioninterface
 
     public bool Interact(Closestinteraction interactor)
     {
-        gameObject.GetComponent<Npcdialogue>().enabled = true;
+        if(LoadCharmanager.interaction == false)
+        {
+            gameObject.GetComponent<Npcdialogue>().enabled = true;
+        }
         return true;
     }
     private void OnTriggerExit(Collider other)

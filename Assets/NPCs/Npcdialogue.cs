@@ -17,6 +17,7 @@ public class Npcdialogue : MonoBehaviour
     [SerializeField] private bool interaction;
     [SerializeField] private TextMeshProUGUI npcinteraction;
     [SerializeField] private string interactiontext;
+    [SerializeField] private MonoBehaviour interactionscript;
 
     private string interactionhotkeyname;
 
@@ -28,6 +29,7 @@ public class Npcdialogue : MonoBehaviour
     private void OnEnable()
     {
         LoadCharmanager.disableattackbuttons = true;
+        LoadCharmanager.interaction = true;
         StopAllCoroutines();
         npcdialogueui.SetActive(true);
         dialogueindex = 0;
@@ -56,20 +58,19 @@ public class Npcdialogue : MonoBehaviour
             }
             else
             {
-                if(interaction == true)
-                {
-                    //openshop
-                }
+                startinteraction();
                 enddialogue();
             }
         }
         if (controlls.Menusteuerung.Menuesc.WasPerformedThisFrame())
         {
+            LoadCharmanager.disableattackbuttons = false;
+            LoadCharmanager.interaction = false;
             enddialogue();
         }
         if (controlls.Menusteuerung.Rightclick.WasPerformedThisFrame() && interaction == true)
         {
-            //openshop
+            startinteraction();
             enddialogue();
         }
     }
@@ -82,11 +83,20 @@ public class Npcdialogue : MonoBehaviour
         }
         StopCoroutine(startdialogue());
     }
+    private void startinteraction()
+    {
+        if (interaction == true)
+        {
+            if (interactionscript != null)
+            {
+                interactionscript.enabled = true;
+            }
+        }
+    }
     public void enddialogue()
     {
         StopAllCoroutines();
         npcdialogueui.SetActive(false);
-        LoadCharmanager.disableattackbuttons = false;
         enabled = false;
     }
 }

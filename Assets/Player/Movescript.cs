@@ -218,133 +218,137 @@ public class Movescript : MonoBehaviour
 
     private void Update()
     {
-        playerlockon.charlockon();
-        switch (state)
+        if(LoadCharmanager.disableattackbuttons == false)
         {
-            default:
-            case State.Ground:
-                playermovement.movement();
-                playermovement.groundcheck();
-                playermovement.groundanimations();
-                playerair.jump();
-                playerheal.starthealing();
-                break;
-            case State.Movetowards:
-                playermovement.movetowardsposi();
-                break;
-            case State.Upwards:
-                playermovement.movement();
-                playerair.airgravity();
-                playerair.minheightforairattack();
-                playerair.switchformupwardstoair();
-                break;
-            case State.Air:
-                playermovement.movement();
-                playerair.airgravity();
-                playerair.minheightforairattack();
-                playerair.airdownwards();
-                break;
-            case State.Slidedownwall:
-                playerslidewalls.slidewalls();
-                break;
-            case State.Heal:
-                healingscript.heal();
-                break;
-            case State.Swim:
-                playermovement.movement();
-                playerswim.swim();
-                playerair.jump();
-                break;
-            case State.Stun:
-                playerstun.stun();
-                break;
-            case State.Buttonmashstun:
-                playerstun.stun();
-                playerstun.breakstunwithbuttonmash();
-                break;
-            case State.Groundattack:
-                playerattack.attackmovement();
-                playermovement.groundcheck();
-                playerlockon.attacklockonrotation();
-                break;
-            case State.Airattack:
-                playerattack.attackmovement();
-                playerlockon.attacklockonrotation();
-                playerattack.finalairmovement();
-                break;
-            case State.Bowcharge:
-                playeraim.aimplayerrotation();
-                playerbow.chargearrow();
-                playerbow.bowoutofcombataimmovement();
-                playermovement.groundcheck();
-                break;
-            case State.Bowischarged:
-                playeraim.aimplayerrotation();
-                playerbow.shootarrow();
-                playerbow.bowoutofcombataimmovement();
-                playermovement.groundcheck();
-                break;
-            case State.Bowwaitfornewcharge:
-                playerbow.bowoutofcombataimmovement();
-                break;
-            case State.Attackweaponaim:
-                playeraim.aimplayerrotation();
-                playerattack.attackmovement();
-                playerattack.finalairmovement();
-                break;
-            case State.Bowweaponswitch:
-                playerattack.attackmovement();
-                playerattack.finalairmovement();
-                break;
-            case State.Bowhookshot:
-                playerbow.bowhookshot();
-                break;
-            case State.Beforedash:           //damit man beim angreifen noch die Richtung bestimmen kann
-                playermovement.beforedashmovement();
-                break;
-            case State.Firedashstart:
-                playerfire.firedashstartmovement();
-                break;
-            case State.Firedash:
-                playerfire.firedash();
-                break;
-            case State.Waterpushback:
-                playerwater.waterpushback();
-                break;
-            case State.Waterintoair:
-                playerwater.waterintoair();
-                break;
-            case State.Waterkickend:
-                playerwater.waterkickend();
-                break;
-            case State.Naturethendril:
-                playernature.naturethendrilstart();
-                break;
-            case State.Naturethendrilgettotarget:
-                playernature.naturethendrilgettotarget();
-                break;
-            case State.Icelancestart:
-                playerice.icelanceplayermovement();
-                break;
-            case State.Icelancefly:
-                playerice.icelanceplayertotarget();
-                break;
-            case State.Stormchainligthning:
-                playerlightning.stormchainligthning();
-                break;
-            case State.Endlightning:
-                playerlightning.stormlightningbacktomain();
-                break;
-            case State.Darkportalend:
-                playerdark.darkportalending();
-                break;
-            case State.Earthslide:
-                playerearth.earthslidestart();
-                break;
-            case State.Empty:
-                break;
+            playerlockon.charlockon();
+            switch (state)
+            {
+                default:
+                case State.Ground:
+                    playermovement.movement();
+                    playermovement.groundcheck();
+                    playermovement.groundanimations();
+                    playerair.jump();
+                    playerheal.starthealing();
+                    break;
+                case State.Movetowards:
+                    playermovement.movetowardsposi();
+                    break;
+                case State.Upwards:
+                    playermovement.movement();
+                    playerair.airgravity();
+                    playerair.minheightforairattack();
+                    playerair.switchformupwardstoair();
+                    break;
+                case State.Air:
+                    playermovement.movement();
+                    playerair.airgravity();
+                    playerair.minheightforairattack();
+                    playerair.airdownwards();
+                    break;
+                case State.Slidedownwall:
+                    playerslidewalls.slidewalls();
+                    break;
+                case State.Heal:
+                    healingscript.heal();
+                    break;
+                case State.Swim:
+                    playermovement.movement();
+                    playerswim.swim();
+                    playerair.jump();
+                    break;
+                case State.Stun:
+                    playerstun.stun();
+                    break;
+                case State.Buttonmashstun:
+                    playerstun.stun();
+                    playerstun.breakstunwithbuttonmash();
+                    break;
+                case State.Groundattack:
+                    playerattack.attackmovement();
+                    playermovement.groundcheck();
+                    playerlockon.attacklockonrotation();
+                    break;
+                case State.Airattack:
+                    playerattack.attackmovement();
+                    playerlockon.attacklockonrotation();
+                    playerattack.finalairmovement();
+                    break;
+                case State.Bowcharge:
+                    playeraim.aimplayerrotation();
+                    playerbow.chargearrow();
+                    playerbow.bowoutofcombataimmovement();
+                    playermovement.groundcheck();
+                    break;
+                case State.Bowischarged:
+                    playeraim.aimplayerrotation();
+                    playerbow.shootarrow();
+                    playerbow.bowoutofcombataimmovement();
+                    playermovement.groundcheck();
+                    break;
+                case State.Bowwaitfornewcharge:
+                    playerbow.bowoutofcombataimmovement();
+                    break;
+                case State.Attackweaponaim:
+                    playeraim.aimplayerrotation();
+                    playerattack.attackmovement();
+                    playerattack.finalairmovement();
+                    break;
+                case State.Bowweaponswitch:
+                    playerattack.attackmovement();
+                    playerattack.finalairmovement();
+                    break;
+                case State.Bowhookshot:
+                    playerbow.bowhookshot();
+                    break;
+                case State.Beforedash:           //damit man beim angreifen noch die Richtung bestimmen kann
+                    playermovement.beforedashmovement();
+                    break;
+                case State.Firedashstart:
+                    playerfire.firedashstartmovement();
+                    break;
+                case State.Firedash:
+                    playerfire.firedash();
+                    break;
+                case State.Waterpushback:
+                    playerwater.waterpushback();
+                    break;
+                case State.Waterintoair:
+                    playerwater.waterintoair();
+                    break;
+                case State.Waterkickend:
+                    playerwater.waterkickend();
+                    break;
+                case State.Naturethendril:
+                    playernature.naturethendrilstart();
+                    break;
+                case State.Naturethendrilgettotarget:
+                    playernature.naturethendrilgettotarget();
+                    break;
+                case State.Icelancestart:
+                    playerice.icelanceplayermovement();
+                    break;
+                case State.Icelancefly:
+                    playerice.icelanceplayertotarget();
+                    break;
+                case State.Stormchainligthning:
+                    playerlightning.stormchainligthning();
+                    break;
+                case State.Endlightning:
+                    playerlightning.stormlightningbacktomain();
+                    break;
+                case State.Darkportalend:
+                    playerdark.darkportalending();
+                    break;
+                case State.Earthslide:
+                    playerearth.earthslidestart();
+                    break;
+                case State.Empty:
+                    break;
+            }
         }
     }
+
     public void ChangeAnimationState(string newstate)
     {
         if (currentstate == newstate) return;

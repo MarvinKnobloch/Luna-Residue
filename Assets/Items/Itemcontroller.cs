@@ -15,6 +15,7 @@ public abstract class Itemcontroller : ScriptableObject
     public Itemtype type;
     public string itemname;
     public int inventoryslot;
+    public int itemshopcosts;
     [TextArea(5, 20)]
     public string description;
 

@@ -62,10 +62,10 @@ MonoBehaviour:
       amount: 41
       itemname: Firecore
       inventoryposi: 12
-    - item: {fileID: 0}
-      amount: 0
-      itemname: 
-      inventoryposi: 0
+    - item: {fileID: 11400000, guid: aca73481126d62d418b60468c6629c06, type: 2}
+      amount: 8000
+      itemname: Money
+      inventoryposi: 13
     - item: {fileID: 0}
       amount: 0
       itemname: 
