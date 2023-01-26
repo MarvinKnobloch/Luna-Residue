@@ -12,7 +12,6 @@ public enum Itemtype
     Head,
     Chest,
     Gloves,
-    Belt,
     Legs,
     Shoes,
     Neckless,

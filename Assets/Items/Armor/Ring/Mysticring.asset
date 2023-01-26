@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb744567f2852f6429a90d4a125738ce, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a86e7d1aee3d6a418975c5865ddd93e, type: 3}
   m_Name: Mysticring
   m_EditorClassIdentifier: 
   Uisprite: {fileID: 21300000, guid: dace7e6136d8cde4da1addd8c333e1b8, type: 3}
-  type: 2
-  itemname: Coopering
+  type: 11
+  itemname: Mysticring
+  inventoryslot: 0
+  itemshopcosts: 70
   description: 
   basestats:
   - 0

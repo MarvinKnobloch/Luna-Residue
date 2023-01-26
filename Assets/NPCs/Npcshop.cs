@@ -22,11 +22,12 @@ public class Npcshop : MonoBehaviour
 #endif
         cam.gameObject.SetActive(false);
         Time.timeScale = 0f;
-        npcshopui.SetActive(true);
+        npcshopui.GetComponent<Npcshopcontroller>().npcshopitems.Clear();
         for (int i = 0; i < shopitems.Count; i++)
         {
             npcshopui.GetComponent<Npcshopcontroller>().npcshopitems.Add(shopitems[i]);
         }
+        npcshopui.SetActive(true);
         
     }
     private void Update()

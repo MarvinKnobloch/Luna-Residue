@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb744567f2852f6429a90d4a125738ce, type: 3}
+  m_Script: {fileID: 11500000, guid: 677bf9443672bf84e92cd5c3ee748db0, type: 3}
   m_Name: Mysticchest
   m_EditorClassIdentifier: 
   Uisprite: {fileID: 21300000, guid: eb537dabb01da454ba537247f5160393, type: 3}
   type: 5
   itemname: Mysticchest
   inventoryslot: 0
-  itemshopcosts: 0
-  description: Basic Shirt
+  itemshopcosts: 150
+  description: 
   basestats:
   - 0
   - 40
