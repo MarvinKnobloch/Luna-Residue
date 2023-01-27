@@ -19,7 +19,8 @@ public class Npcshopcontroller : MonoBehaviour
     [SerializeField] private GameObject merchantitemslots;
 
     [SerializeField] private TextMeshProUGUI newstats;
-    [SerializeField] private TextMeshProUGUI comparestats;
+    [SerializeField] private TextMeshProUGUI ownitemstats;
+    private string[] statstext = { "Health ", "Defense ", "Attack ", "Crit ", "Critchance ", "Weaponswitch ", "Charswitch ", "Basic " };
 
     [SerializeField] private GameObject[] itemtypeselectionbuttons;
     private Itemtype[] itemtypes = { Itemtype.Sword, Itemtype.Bow, Itemtype.Fist, Itemtype.Head, Itemtype.Chest, Itemtype.Gloves, Itemtype.Legs, Itemtype.Shoes, Itemtype.Neckless, Itemtype.Ring };
@@ -29,6 +30,9 @@ public class Npcshopcontroller : MonoBehaviour
     [SerializeField] private Inventorycontroller[] inventorys;
     [SerializeField] private GameObject inventoryitemprefab;
     [SerializeField] private GameObject playeritemsui;
+    private int gettypeforinventory;
+
+    [SerializeField] private GameObject mouseresetlayer;
 
     private void Awake()
     {
@@ -37,9 +41,11 @@ public class Npcshopcontroller : MonoBehaviour
     private void OnEnable()
     {
         listoftypes.Clear();
+        instaniateditems.Clear();
         currentitemtype = 0;
+        resetownitemstatstext();
 
-        if (money.inventoryslot != 0)  moneycountdisplay.text = matsinventory.Container.Items[money.inventoryslot - 1].amount.ToString() + " Money";
+        if (money.inventoryslot != 0)  moneycountdisplay.text = "Money: " + matsinventory.Container.Items[money.inventoryslot - 1].amount.ToString();
         else  moneycountdisplay.text = 0 + " Money";
         instantiateshopitems();
         setmerchantslots();
@@ -102,8 +108,15 @@ public class Npcshopcontroller : MonoBehaviour
         for (int i = 0; i < npcshopitems.Count; i++)
         {
             var obj = Instantiate(shopitemprefab, merchantitemslots.transform.position, Quaternion.identity, merchantitemslots.transform);
-            obj.GetComponentInChildren<TextMeshProUGUI>().text = npcshopitems[i].itemname;
-            obj.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = npcshopitems[i].itemshopcosts.ToString();
+            obj.GetComponentInChildren<TextMeshProUGUI>().text = npcshopitems[i].itemname + " (" + npcshopitems[i].maxupgradelvl + ")";
+            if(npcshopitems[i].inventoryslot == 0)
+            {
+                obj.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = npcshopitems[i].itemshopcosts.ToString();
+            }
+            else
+            {
+                obj.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "own Item";
+            }
             obj.GetComponent<Npcshopselectitem>().npcshopstatscontroller = this;
             obj.GetComponent<Npcshopselectitem>().merchantitem = npcshopitems[i];
             obj.GetComponent<Npcshopselectitem>().newstats = newstats;
@@ -170,14 +183,17 @@ public class Npcshopcontroller : MonoBehaviour
         {
             obj.gameObject.SetActive(false);
         }
-        /*for (int i = 0; i < inventorys[currentitemtype].Container.Items.Length; i++)
+        for (int i = 0; i < inventorys[currentitemtype].Container.Items.Length; i++)
         {
             if (inventorys[currentitemtype].Container.Items[i].amount != 0)
             {
-                //ar obj = Instantiate(inventoryitemprefab, merchantitemslots.transform.position, Quaternion.identity, merchantitemslots.transform);
-                //obj.GetComponentInChildren<TextMeshProUGUI>().text = inventorys[currentitemtype].Container.Items[i].itemname;
+                GameObject obj = playeritemsui.transform.GetChild(i).gameObject;
+                obj.SetActive(true);
+                obj.GetComponentInChildren<TextMeshProUGUI>().text = inventorys[currentitemtype].Container.Items[i].itemname;
+                obj.GetComponent<Npcplayerinventoryslot>().item = inventorys[currentitemtype].Container.Items[i].item;
             }
-        }*/
+        }
+        mouseresetlayer.SetActive(true);
     }
     public void clickitemtypebutton(int itemtype)
     {
@@ -186,6 +202,38 @@ public class Npcshopcontroller : MonoBehaviour
         itemtypeselectionbuttons[currentitemtype].GetComponent<Image>().color = Color.green;
         currentslotdisplay.text = itemtypeselectionbuttons[currentitemtype].GetComponentInChildren<TextMeshProUGUI>().text;
         displayitemtyp();
+    }
+    private void buyitem()
+    {
+        Itemcontroller itemtobuy = EventSystem.current.currentSelectedGameObject.gameObject.GetComponent<Npcshopselectitem>().merchantitem;
+        matsinventory.Container.Items[money.inventoryslot - 1].amount -= itemtobuy.itemshopcosts;
+        for (int i = 0; i < itemtypes.Length; i++)
+        {
+            if(itemtypes[i] == itemtobuy.type)
+            {
+                i = gettypeforinventory;
+                break;
+            }
+        }
+        //inventorys[gettypeforinventory].Addequipment(LoadCharmanager.Overallmainchar.gameObject, itemtobuy, ,1)
+    }
+    private void resetownitemstatstext()
+    {
+        ownitemstats.text = string.Empty;
+        for (int i = 0; i<statstext.Length; i++)
+        {
+            ownitemstats.text += statstext[i] + "<pos=90%>" + 0 + "\n";
+        }
+    }
+
+    public void removeitemswhenclose()
+    {
+        foreach (Transform obj in merchantitemslots.transform)
+        {
+            Destroy(obj.gameObject);
+        }
+        listoftypes.Clear();
+        instaniateditems.Clear();
     }
 }
 

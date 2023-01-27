@@ -9,6 +9,7 @@ public class Npcshopselectitem : MonoBehaviour
     public Npcshopcontroller npcshopstatscontroller;
     public Itemcontroller merchantitem;
     private string[] statstext = { "Health ", "Defense ", "Attack ", "Crit ", "Critchance ", "Weaponswitch ", "Charswitch ", "Basic " };
+
     public void statsupdate()
     {
         newstats.text = string.Empty;

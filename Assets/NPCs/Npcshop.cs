@@ -9,7 +9,6 @@ public class Npcshop : MonoBehaviour
     [SerializeField] private GameObject npcshopui;
     [SerializeField] private CinemachineFreeLook cam;
     [SerializeField] private List<Itemcontroller> shopitems = new List<Itemcontroller>();
-
     private void Awake()
     {
         controlls = Keybindinputmanager.inputActions;
@@ -34,6 +33,7 @@ public class Npcshop : MonoBehaviour
     {
         if (controlls.Menusteuerung.Menuesc.WasPerformedThisFrame())
         {
+            npcshopui.GetComponent<Npcshopcontroller>().removeitemswhenclose();
             npcshopui.SetActive(false);
             LoadCharmanager.disableattackbuttons = false;
             LoadCharmanager.interaction = false;
