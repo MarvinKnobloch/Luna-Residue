@@ -2,13 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class Npcshopselectitem : MonoBehaviour
+public class Npcshopselectitem : MonoBehaviour, ISelectHandler
 {
     public TextMeshProUGUI newstats;
     public Npcshopcontroller npcshopstatscontroller;
     public Itemcontroller merchantitem;
+    public bool canbuy;
+    public Image buyitembar;
     private string[] statstext = { "Health ", "Defense ", "Attack ", "Crit ", "Critchance ", "Weaponswitch ", "Charswitch ", "Basic " };
+    public void OnSelect(BaseEventData eventData)
+    {
+        npcshopstatscontroller.currentselecteditem = gameObject;
+        statsupdate();
+    }
 
     public void statsupdate()
     {

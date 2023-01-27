@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public class Npcshopcontroller : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class Npcshopcontroller : MonoBehaviour
     private List<GameObject> instaniateditems = new List<GameObject>();
     [SerializeField] private GameObject shopitemprefab;
     [SerializeField] private GameObject merchantitemslots;
+    public GameObject currentselecteditem;
+
 
     [SerializeField] private TextMeshProUGUI newstats;
     [SerializeField] private TextMeshProUGUI ownitemstats;
@@ -33,6 +36,15 @@ public class Npcshopcontroller : MonoBehaviour
     private int gettypeforinventory;
 
     [SerializeField] private GameObject mouseresetlayer;
+
+    //Upgrade
+    private float upgradetime = 2.5f;
+    public float upgradetimer;
+    private bool starttimer;
+
+    private DateTime startdate;
+    private DateTime currentdate;
+    private float seconds;
 
     private void Awake()
     {
@@ -56,66 +68,90 @@ public class Npcshopcontroller : MonoBehaviour
     {
         if (controlls.Menusteuerung.Menucharselectionright.WasPerformedThisFrame())
         {
-            itemtypeselectionbuttons[currentitemtype].GetComponent<Image>().color = Color.white;
-            currentitemtype++;
-            foreach (GameObject obj in itemtypeselectionbuttons)
-            {
-                if (currentitemtype >= itemtypeselectionbuttons.Length)
-                {
-                    currentitemtype = 0;
-                }
-                if (itemtypeselectionbuttons[currentitemtype].activeSelf == false)
-                {
-                    currentitemtype++;
-                    continue;
-                }
-                else
-                {
-                    itemtypeselectionbuttons[currentitemtype].GetComponent<Image>().color = Color.green;
-                    currentslotdisplay.text = itemtypeselectionbuttons[currentitemtype].GetComponentInChildren<TextMeshProUGUI>().text;
-                    break;
-                }
-            }
-            displayitemtyp();
+            itemtypeselectionforward();
         }
         if (controlls.Menusteuerung.Menucharselectionleft.WasPerformedThisFrame())
         {
-            itemtypeselectionbuttons[currentitemtype].GetComponent<Image>().color = Color.white;
-            currentitemtype--;
-            foreach (GameObject obj in itemtypeselectionbuttons)
+            itemtypeselectionbackwards();
+        }
+        if(currentselecteditem.GetComponent<Npcshopselectitem>().canbuy == true)
+        {
+            if (controlls.Equipmentmenu.Upgradeitem.WasPressedThisFrame()) //&& starttimer == false)
             {
-                if (currentitemtype < 0)
+                if(checkformoney() == true)
                 {
-                    currentitemtype = itemtypeselectionbuttons.Length -1;
-                }
-                if (itemtypeselectionbuttons[currentitemtype].activeSelf == false)
-                {
-                    currentitemtype--;
-                    continue;
-                }
-                else
-                {
-                    itemtypeselectionbuttons[currentitemtype].GetComponent<Image>().color = Color.green;
-                    currentslotdisplay.text = itemtypeselectionbuttons[currentitemtype].GetComponentInChildren<TextMeshProUGUI>().text;
-                    break;
+                    Debug.Log("startbuy");
+                    StartCoroutine(buyitemstart());
                 }
             }
-            displayitemtyp();
         }
+    }
+    private void itemtypeselectionforward()
+    {
+        StopAllCoroutines();
+        itemtypeselectionbuttons[currentitemtype].GetComponent<Image>().color = Color.white;
+        currentitemtype++;
+        foreach (GameObject obj in itemtypeselectionbuttons)
+        {
+            if (currentitemtype >= itemtypeselectionbuttons.Length)
+            {
+                currentitemtype = 0;
+            }
+            if (itemtypeselectionbuttons[currentitemtype].activeSelf == false)
+            {
+                currentitemtype++;
+                continue;
+            }
+            else
+            {
+                itemtypeselectionbuttons[currentitemtype].GetComponent<Image>().color = Color.green;
+                currentslotdisplay.text = itemtypeselectionbuttons[currentitemtype].GetComponentInChildren<TextMeshProUGUI>().text;
+                break;
+            }
+        }
+        displayitemtyp();
+    }
+    private void itemtypeselectionbackwards()
+    {
+        StopAllCoroutines();
+        itemtypeselectionbuttons[currentitemtype].GetComponent<Image>().color = Color.white;
+        currentitemtype--;
+        foreach (GameObject obj in itemtypeselectionbuttons)
+        {
+            if (currentitemtype < 0)
+            {
+                currentitemtype = itemtypeselectionbuttons.Length - 1;
+            }
+            if (itemtypeselectionbuttons[currentitemtype].activeSelf == false)
+            {
+                currentitemtype--;
+                continue;
+            }
+            else
+            {
+                itemtypeselectionbuttons[currentitemtype].GetComponent<Image>().color = Color.green;
+                currentslotdisplay.text = itemtypeselectionbuttons[currentitemtype].GetComponentInChildren<TextMeshProUGUI>().text;
+                break;
+            }
+        }
+        displayitemtyp();
     }
     private void  instantiateshopitems()
     {
         for (int i = 0; i < npcshopitems.Count; i++)
         {
             var obj = Instantiate(shopitemprefab, merchantitemslots.transform.position, Quaternion.identity, merchantitemslots.transform);
-            obj.GetComponentInChildren<TextMeshProUGUI>().text = npcshopitems[i].itemname + " (" + npcshopitems[i].maxupgradelvl + ")";
+            obj.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = npcshopitems[i].itemname + " (" + npcshopitems[i].maxupgradelvl + ")";
+            obj.GetComponent<Npcshopselectitem>().buyitembar.gameObject.SetActive(false);
             if(npcshopitems[i].inventoryslot == 0)
             {
-                obj.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = npcshopitems[i].itemshopcosts.ToString();
+                obj.GetComponent<Npcshopselectitem>().canbuy = true;
+                obj.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = npcshopitems[i].itemshopcosts.ToString();
             }
             else
             {
-                obj.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "own Item";
+                obj.GetComponent<Npcshopselectitem>().canbuy = false;
+                obj.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "own Item";
             }
             obj.GetComponent<Npcshopselectitem>().npcshopstatscontroller = this;
             obj.GetComponent<Npcshopselectitem>().merchantitem = npcshopitems[i];
@@ -203,6 +239,42 @@ public class Npcshopcontroller : MonoBehaviour
         currentslotdisplay.text = itemtypeselectionbuttons[currentitemtype].GetComponentInChildren<TextMeshProUGUI>().text;
         displayitemtyp();
     }
+    private bool checkformoney()
+    {
+        if (money.inventoryslot != 0)
+        {
+            if (matsinventory.Container.Items[money.inventoryslot - 1].amount >= EventSystem.current.currentSelectedGameObject.gameObject.GetComponent<Npcshopselectitem>().merchantitem.itemshopcosts)
+            {
+                return true;
+            }
+            else return false;
+        }
+        else return false;
+    }
+    IEnumerator buyitemstart()
+    {
+        startdate = DateTime.Now;
+        Image upgradebar = currentselecteditem.GetComponent<Npcshopselectitem>().buyitembar;
+        upgradebar.gameObject.SetActive(true);
+        upgradebar.fillAmount = 0;
+        upgradetimer = 0f;
+        while (upgradetimer < upgradetime)
+        {
+            if (controlls.Equipmentmenu.Upgradeitem.WasReleasedThisFrame())
+            {
+                Debug.Log("release");
+                upgradebar.gameObject.SetActive(false);
+                StopAllCoroutines();
+            }
+            currentdate = DateTime.Now;
+            seconds = currentdate.Ticks - startdate.Ticks;
+            upgradetimer = seconds * 0.0000001f;
+            upgradebar.fillAmount = upgradetimer / upgradetime;
+            yield return null;
+        }
+        upgradebar.fillAmount = 0;
+        buyitem();
+    }
     private void buyitem()
     {
         Itemcontroller itemtobuy = EventSystem.current.currentSelectedGameObject.gameObject.GetComponent<Npcshopselectitem>().merchantitem;
@@ -215,7 +287,9 @@ public class Npcshopcontroller : MonoBehaviour
                 break;
             }
         }
-        //inventorys[gettypeforinventory].Addequipment(LoadCharmanager.Overallmainchar.gameObject, itemtobuy, ,1)
+        inventorys[gettypeforinventory].Additem(LoadCharmanager.Overallmainchar.gameObject, itemtobuy, 1);
+        EventSystem.current.currentSelectedGameObject.gameObject.GetComponent<Npcshopselectitem>().canbuy = false;
+        EventSystem.current.currentSelectedGameObject.gameObject.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "own Item";
     }
     private void resetownitemstatstext()
     {
@@ -228,6 +302,7 @@ public class Npcshopcontroller : MonoBehaviour
 
     public void removeitemswhenclose()
     {
+        StopAllCoroutines();
         foreach (Transform obj in merchantitemslots.transform)
         {
             Destroy(obj.gameObject);
