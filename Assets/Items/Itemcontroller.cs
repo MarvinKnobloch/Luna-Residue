@@ -6,8 +6,16 @@ using System;
 public enum Itemtype
 {
     Crafting,
-    Weapon,
-    Armor,
+    Sword,
+    Bow,
+    Fist,
+    Head,
+    Chest,
+    Gloves,
+    Legs,
+    Shoes,
+    Neckless,
+    Ring,
 }
 public abstract class Itemcontroller : ScriptableObject
 {
@@ -15,6 +23,7 @@ public abstract class Itemcontroller : ScriptableObject
     public Itemtype type;
     public string itemname;
     public int inventoryslot;
+    public int itemshopcosts;
     [TextArea(5, 20)]
     public string description;
 

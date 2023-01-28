@@ -27,7 +27,7 @@ public class LoadCharmanager : MonoBehaviour
     public static GameObject Overallthirdchar;
     public static GameObject Overallforthchar;
     public static GameObject Savechar;                                       //wird für charwechsel benutzt
-    public static Vector3 savemainposi = new Vector3(-40, 25, 685);                      
+    public static Vector3 savemainposi = new Vector3(-320, 15, 320);                      
     public static Quaternion savemainrota;                                      //memorypuzzle(-40,25,685) //boxpuzzle(305,25,565) switchpuzzle(280,2,180)
     public static float savecamvalueX;                                          //statuepuzzle(-200,2,340) //woods(255,20,435)  //watercave(-330,12,-40)  //lantern(-210,32,500)
 
@@ -36,6 +36,7 @@ public class LoadCharmanager : MonoBehaviour
 
     public static bool disableattackbuttons;
     public static bool gameispaused;
+    public static bool interaction;
 
     private float guardbonushp;
 
@@ -61,45 +62,40 @@ public class LoadCharmanager : MonoBehaviour
     }
     void Update()
     {
-        if(Statics.infight == false)
+        if (Statics.infight == false && interaction == false && Steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame())
         {
-            if (Steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame())
+            if (gameispaused == false)
             {
-                if (gameispaused == false)
+                disableattackbuttons = true;
+                gameispaused = true;
+                savemainposi = Overallmainchar.transform.position;
+                savemainrota = Overallmainchar.transform.rotation;
+                savecamvalueX = Cam1.m_XAxis.Value;
+                foreach (GameObject chars in allcharacters)
                 {
-                    disableattackbuttons = true;
-                    gameispaused = true;
-                    savemainposi = Overallmainchar.transform.position;
-                    savemainrota = Overallmainchar.transform.rotation;
-                    savecamvalueX = Cam1.m_XAxis.Value;
-                    foreach (GameObject chars in allcharacters)
-                    {
-                        chars.SetActive(false);
-                    }
-                    foreach (GameObject mates in teammates)
-                    {
-                        mates.gameObject.SetActive(false);
-                    }
-                    Time.timeScale = 0f;
-                    Cam1.gameObject.SetActive(false);
-                    menu.SetActive(true);
-                    menuoverview.SetActive(true);
-                    //Cursor.visible = true;
-                    //Cursor.lockState = CursorLockMode.None;
+                    chars.SetActive(false);
                 }
-                else
+                foreach (GameObject mates in teammates)
                 {
-                    if(Menucontroller.inoverview == true)
-                    {
-                        maingamevalues();
-                    }
+                    mates.gameObject.SetActive(false);
+                }
+                Time.timeScale = 0f;
+                Cam1.gameObject.SetActive(false);
+                menu.SetActive(true);
+                menuoverview.SetActive(true);
+#if !UNITY_EDITOR
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+#endif
+            }
+            else
+            {
+                if (Menucontroller.inoverview == true)
+                {
+                    maingamevalues();
                 }
             }
-        }
-        if (Steuerung.Player.Test.WasPerformedThisFrame())
-        {
-            SceneManager.LoadScene(1);
-        }
+        }    
     }  
     
     public void maingamevalues()

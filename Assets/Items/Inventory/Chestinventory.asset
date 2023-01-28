@@ -16,85 +16,113 @@ MonoBehaviour:
     Items:
     - item: {fileID: 0}
       amount: 0
-      itemname: 0
-    - item: {fileID: 11400000, guid: 987a0d98c04732843a5af3ef9294a05d, type: 2}
-      amount: 1
-      itemname: Basicchest
+      itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
+      inventoryposi: 0
+    - item: {fileID: 0}
+      amount: 0
+      itemname: 
+      inventoryposi: 0

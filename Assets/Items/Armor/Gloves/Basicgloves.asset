@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb744567f2852f6429a90d4a125738ce, type: 3}
+  m_Script: {fileID: 11500000, guid: ecc4637a3d86cfe4a994404ff7f51c81, type: 3}
   m_Name: Basicgloves
   m_EditorClassIdentifier: 
   Uisprite: {fileID: 21300000, guid: ddefb68d3a2daff41864b2dc506c3dd7, type: 3}
-  type: 2
+  type: 6
   itemname: Basicgloves
+  inventoryslot: 0
+  itemshopcosts: 120
   description: 
   basestats:
   - 0

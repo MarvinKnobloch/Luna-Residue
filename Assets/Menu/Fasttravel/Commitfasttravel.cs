@@ -26,7 +26,9 @@ public class Commitfasttravel : MonoBehaviour
     }
     public void fasttravel()
     {
+        LoadCharmanager.disableattackbuttons = false;
         LoadCharmanager.savemainposi = fasttravelpoint;
+        LoadCharmanager.Overallmainchar.gameObject.GetComponent<Movescript>().state = Movescript.State.Air;
         gameObject.SetActive(false);
         loadcharmananger.GetComponent<LoadCharmanager>().maingamevalues();
     }

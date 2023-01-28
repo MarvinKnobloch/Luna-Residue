@@ -226,15 +226,6 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Openelemenu"",
-                    ""type"": ""Button"",
-                    ""id"": ""c102e4df-2356-435c-839d-23bd630435a3"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Openequipentmenu"",
                     ""type"": ""Button"",
                     ""id"": ""4eb3e4d1-eada-4488-b850-7952513ac173"",
@@ -546,17 +537,6 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Ability4"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""62323ccc-4370-4d6d-bf66-4af6d04b31ed"",
-                    ""path"": ""<Keyboard>/f1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Openelemenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1142,7 +1122,6 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         m_Player_Spezial = m_Player.FindAction("Spezial", throwIfNotFound: true);
         m_Player_GButton = m_Player.FindAction("G Button", throwIfNotFound: true);
         m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
-        m_Player_Openelemenu = m_Player.FindAction("Openelemenu", throwIfNotFound: true);
         m_Player_Openequipentmenu = m_Player.FindAction("Openequipentmenu", throwIfNotFound: true);
         m_Player_Test = m_Player.FindAction("Test", throwIfNotFound: true);
         m_Player_Setsupporttarget = m_Player.FindAction("Setsupporttarget", throwIfNotFound: true);
@@ -1261,7 +1240,6 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Spezial;
     private readonly InputAction m_Player_GButton;
     private readonly InputAction m_Player_Interaction;
-    private readonly InputAction m_Player_Openelemenu;
     private readonly InputAction m_Player_Openequipentmenu;
     private readonly InputAction m_Player_Test;
     private readonly InputAction m_Player_Setsupporttarget;
@@ -1291,7 +1269,6 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         public InputAction @Spezial => m_Wrapper.m_Player_Spezial;
         public InputAction @GButton => m_Wrapper.m_Player_GButton;
         public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
-        public InputAction @Openelemenu => m_Wrapper.m_Player_Openelemenu;
         public InputAction @Openequipentmenu => m_Wrapper.m_Player_Openequipentmenu;
         public InputAction @Test => m_Wrapper.m_Player_Test;
         public InputAction @Setsupporttarget => m_Wrapper.m_Player_Setsupporttarget;
@@ -1370,9 +1347,6 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @Interaction.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
                 @Interaction.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
                 @Interaction.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
-                @Openelemenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenelemenu;
-                @Openelemenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenelemenu;
-                @Openelemenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenelemenu;
                 @Openequipentmenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenequipentmenu;
                 @Openequipentmenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenequipentmenu;
                 @Openequipentmenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenequipentmenu;
@@ -1452,9 +1426,6 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @Interaction.started += instance.OnInteraction;
                 @Interaction.performed += instance.OnInteraction;
                 @Interaction.canceled += instance.OnInteraction;
-                @Openelemenu.started += instance.OnOpenelemenu;
-                @Openelemenu.performed += instance.OnOpenelemenu;
-                @Openelemenu.canceled += instance.OnOpenelemenu;
                 @Openequipentmenu.started += instance.OnOpenequipentmenu;
                 @Openequipentmenu.performed += instance.OnOpenequipentmenu;
                 @Openequipentmenu.canceled += instance.OnOpenequipentmenu;
@@ -1809,7 +1780,6 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         void OnSpezial(InputAction.CallbackContext context);
         void OnGButton(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
-        void OnOpenelemenu(InputAction.CallbackContext context);
         void OnOpenequipentmenu(InputAction.CallbackContext context);
         void OnTest(InputAction.CallbackContext context);
         void OnSetsupporttarget(InputAction.CallbackContext context);

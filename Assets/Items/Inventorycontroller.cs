@@ -25,19 +25,19 @@ public class Inventorycontroller : ScriptableObject
         player.GetComponent<Displayloot>().displayloot(_item.name.ToString());
     }
 
-    public void Addequipment(GameObject player, Itemcontroller _item, Itemcontroller _seconditem, int _amount)
+    public void Addequipment(GameObject player, Itemcontroller _item, Itemcontroller _seconditem, int _seconditemamount)
     {
         for (int i = 0; i < Container.Items.Length; i++)
         {
             if (Container.Items[i].item == _item)
             {
-                player.GetComponent<Movescript>().matsinventory.convertedAdditem(_seconditem, _amount);
+                player.GetComponent<Movescript>().matsinventory.convertedAdditem(_seconditem, _seconditemamount);
                 loottext = _item.name + " convert to 1x " + _seconditem.name;
                 player.GetComponent<Displayloot>().displayloot(loottext);
                 return;
             }
         }
-        setfirstemptyslot(_item, _amount);
+        setfirstemptyslot(_item, _seconditemamount);
         player.GetComponent<Displayloot>().displayloot(_item.name.ToString());
     }
     private void convertedAdditem(Itemcontroller _item, int _amount)

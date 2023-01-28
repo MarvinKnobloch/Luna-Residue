@@ -19,7 +19,7 @@ MonoBehaviour:
       itemname: Cooperore
       inventoryposi: 1
     - item: {fileID: 11400000, guid: 8dd5ccf01a1536e42a4efcbd30bf3935, type: 2}
-      amount: 26
+      amount: 28
       itemname: Silverore
       inventoryposi: 2
     - item: {fileID: 11400000, guid: d597b45572df78743acbd8d64d40a38e, type: 2}
@@ -62,10 +62,10 @@ MonoBehaviour:
       amount: 41
       itemname: Firecore
       inventoryposi: 12
-    - item: {fileID: 0}
-      amount: 0
-      itemname: 
-      inventoryposi: 0
+    - item: {fileID: 11400000, guid: aca73481126d62d418b60468c6629c06, type: 2}
+      amount: 500
+      itemname: Money
+      inventoryposi: 13
     - item: {fileID: 0}
       amount: 0
       itemname: 

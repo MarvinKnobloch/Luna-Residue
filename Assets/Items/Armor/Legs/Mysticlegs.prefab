@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f8dabce9414dbb409042d1dbf356f8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 20e6124549426bd47a7ccf8ca4857597, type: 2}
+  item: {fileID: 11400000, guid: 384467f1252160841903dbf3f2b124e1, type: 2}
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
 --- !u!135 &6349483643873868937
 SphereCollider:
