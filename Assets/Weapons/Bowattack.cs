@@ -132,42 +132,46 @@ public class Bowattack : MonoBehaviour
                 default:
                     break;
             }
-            if (Statics.dazestunstart == true)                                //reset alles values bei stun
+            if (LoadCharmanager.disableattackbuttons == false)
             {
-                Statics.dazestunstart = false;
-                Statics.playeriframes = false;
-                resetvalues();
-                movementscript.Charrig.enabled = false;
-            }
-            if (controlls.Player.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false)
-            {
-                movementscript.state = Movescript.State.Beforedash;                  //damit man beim angreifen noch die Richtung bestimmen kann
-                Statics.dash = true;
-                Statics.playeriframes = true;
-                resetvalues();
-                GlobalCD.startdashcd();
-                movementscript.graviti = 0;
-                Invoke("dash", 0.05f);                                             //damit man beim angreifen noch die Richtung bestimmen kann
-            }
-            if (Movescript.lockontarget != null && controlls.Player.Attack4.WasPressedThisFrame() && Statics.otheraction == false)           // bowhookshot
-            {
-                if (Vector3.Distance(transform.position, Movescript.lockontarget.position) > 2f)
+                if (Statics.dazestunstart == true)                                //reset alles values bei stun
                 {
-                    movementscript.state = Movescript.State.Empty;
-                    attackestate = Attackstate.waitforattack;
-                    movementscript.graviti = 0f;
-                    Statics.otheraction = true;
-                    transform.rotation = Quaternion.LookRotation(Movescript.lockontarget.transform.position - transform.position, Vector3.up);
-                    movementscript.ChangeAnimationState(starthookstate);
+                    Statics.dazestunstart = false;
+                    Statics.playeriframes = false;
+                    resetvalues();
+                    movementscript.Charrig.enabled = false;
                 }
-            }
-            if (movementscript.state == Movescript.State.Ground)                               //out of Combat aim
-            {
-                if (Statics.infight == false && controlls.Player.Attack4.WasPressedThisFrame() && Statics.otheraction == false)
+                if (controlls.Player.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false)
                 {
-                    Statics.otheraction = true;
-                    movementscript.ChangeAnimationState(chargestate);
-                    movementscript.switchtooutofcombataim();
+                    movementscript.state = Movescript.State.Beforedash;                  //damit man beim angreifen noch die Richtung bestimmen kann
+                    Statics.dash = true;
+                    Statics.playeriframes = true;
+                    resetvalues();
+                    GlobalCD.startdashcd();
+                    movementscript.graviti = 0;
+                    Invoke("dash", 0.05f);                                             //damit man beim angreifen noch die Richtung bestimmen kann
+                }
+                if (Movescript.lockontarget != null && controlls.Player.Attack4.WasPressedThisFrame() && Statics.otheraction == false)           // bowhookshot
+                {
+                    if (Vector3.Distance(transform.position, Movescript.lockontarget.position) > 2f)
+                    {
+                        movementscript.state = Movescript.State.Empty;
+                        attackestate = Attackstate.waitforattack;
+                        movementscript.graviti = 0f;
+                        Statics.otheraction = true;
+                        transform.rotation = Quaternion.LookRotation(Movescript.lockontarget.transform.position - transform.position, Vector3.up);
+                        movementscript.ChangeAnimationState(starthookstate);
+                    }
+                }
+                if (movementscript.state == Movescript.State.Ground)                               //out of Combat aim
+                {
+                    if (Statics.infight == false && controlls.Player.Attack4.WasPressedThisFrame() && Statics.otheraction == false)
+                    {
+                        Statics.otheraction = true;
+                        movementscript.ChangeAnimationState(chargestate);
+                        movementscript.switchtooutofcombataim();
+
+                    }
                 }
             }
         }

@@ -17,15 +17,15 @@ public class Npcplayerinventoryslot : MonoBehaviour, IPointerEnterHandler, IPoin
         {
             if (item.stats[i] > 0)
             {
-                ownitemstats.text += statstext[i] + "<pos=90%>" + "<color=green>" + item.stats[i].ToString() + "</color>" + "\n";
+                ownitemstats.text += statstext[i] + "<pos=75%>" + "<color=green>" + item.stats[i].ToString() + "</color>" + "\n";
             }
             else if (item.stats[i] < 0)
             {
-                ownitemstats.text += statstext[i] + "<pos=90%>" + "<color=red>" + item.stats[i].ToString() + "</color>" + "\n";
+                ownitemstats.text += statstext[i] + "<pos=75%>" + "<color=red>" + item.stats[i].ToString() + "</color>" + "\n";
             }
             else
             {
-                ownitemstats.text += statstext[i] + "<pos=90%>" + item.stats[i].ToString() + "\n";
+                ownitemstats.text += statstext[i] + "<pos=75%>" + item.stats[i].ToString() + "\n";
             }
         }
     }
@@ -35,7 +35,7 @@ public class Npcplayerinventoryslot : MonoBehaviour, IPointerEnterHandler, IPoin
         ownitemstats.text = string.Empty;
         for (int i = 0; i < statstext.Length; i++)
         {
-            ownitemstats.text += statstext[i] + "<pos=90%>" + 0 + "\n";
+            ownitemstats.text += statstext[i] + "<pos=75%>" + 0 + "\n";
         }
     }
 }

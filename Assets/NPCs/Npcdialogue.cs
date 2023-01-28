@@ -28,6 +28,7 @@ public class Npcdialogue : MonoBehaviour
     }
     private void OnEnable()
     {
+        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtoemptystate();
         LoadCharmanager.disableattackbuttons = true;
         LoadCharmanager.interaction = true;
         StopAllCoroutines();
@@ -64,6 +65,7 @@ public class Npcdialogue : MonoBehaviour
         }
         if (controlls.Menusteuerung.Menuesc.WasPerformedThisFrame())
         {
+            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtoairstate();
             LoadCharmanager.disableattackbuttons = false;
             LoadCharmanager.interaction = false;
             enddialogue();
@@ -91,6 +93,12 @@ public class Npcdialogue : MonoBehaviour
             {
                 interactionscript.enabled = true;
             }
+        }
+        else
+        {
+            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtoairstate();
+            LoadCharmanager.disableattackbuttons = false;
+            LoadCharmanager.interaction = false;
         }
     }
     public void enddialogue()

@@ -95,27 +95,30 @@ public class Fistattack : MonoBehaviour
                 default:
                     break;
             }
-            if (Statics.dazestunstart == true)                                //reset alles values bei stun
+            if (LoadCharmanager.disableattackbuttons == false)
             {
-                Statics.dazestunstart = false;
-                Statics.playeriframes = false;
-                resetvalues();
-                movementscript.Charrig.enabled = false;
-                if (Statics.enemyspezialtimescale == false)
+                if (Statics.dazestunstart == true)                                //reset alles values bei stun
                 {
-                    Time.timeScale = Statics.normalgamespeed;
-                    Time.fixedDeltaTime = Statics.normaltimedelta;
+                    Statics.dazestunstart = false;
+                    Statics.playeriframes = false;
+                    resetvalues();
+                    movementscript.Charrig.enabled = false;
+                    if (Statics.enemyspezialtimescale == false)
+                    {
+                        Time.timeScale = Statics.normalgamespeed;
+                        Time.fixedDeltaTime = Statics.normaltimedelta;
+                    }
                 }
-            }
-            if (controlls.Player.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false)
-            {
-                movementscript.state = Movescript.State.Beforedash;                  //damit man beim angreifen noch die Richtung bestimmen kann
-                Statics.dash = true;
-                Statics.playeriframes = true;
-                resetvalues();
-                GlobalCD.startdashcd();
-                movementscript.graviti = 0;
-                Invoke("dash", 0.05f);                                             //damit man beim angreifen noch die Richtung bestimmen kann
+                if (controlls.Player.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false)
+                {
+                    movementscript.state = Movescript.State.Beforedash;                  //damit man beim angreifen noch die Richtung bestimmen kann
+                    Statics.dash = true;
+                    Statics.playeriframes = true;
+                    resetvalues();
+                    GlobalCD.startdashcd();
+                    movementscript.graviti = 0;
+                    Invoke("dash", 0.05f);                                             //damit man beim angreifen noch die Richtung bestimmen kann
+                }
             }
         }
     }

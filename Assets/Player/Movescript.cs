@@ -218,7 +218,7 @@ public class Movescript : MonoBehaviour
 
     private void Update()
     {
-        if(LoadCharmanager.disableattackbuttons == false)
+        if(LoadCharmanager.interaction == false)
         {
             playerlockon.charlockon();
             switch (state)
@@ -377,6 +377,11 @@ public class Movescript : MonoBehaviour
         Physics.IgnoreLayerCollision(8, 6);
         //gravitation = normalgravition;
         state = State.Air;
+    }
+    public void switchtoemptystate()
+    {
+        ChangeAnimationState(idlestate);
+        state = State.Empty;
     }
     public void switchtoattackaimstate()
     {

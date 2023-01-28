@@ -35,6 +35,8 @@ public class Npcshop : MonoBehaviour
         {
             npcshopui.GetComponent<Npcshopcontroller>().removeitemswhenclose();
             npcshopui.SetActive(false);
+
+            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtoairstate();
             LoadCharmanager.disableattackbuttons = false;
             LoadCharmanager.interaction = false;
             cam.gameObject.SetActive(true);

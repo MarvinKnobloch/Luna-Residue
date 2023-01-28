@@ -12,6 +12,7 @@ public class Npcshopcontroller : MonoBehaviour
 
     [SerializeField] private Inventorycontroller matsinventory;
     [SerializeField] private Craftingobject money;
+    private int moneyamount;
     [SerializeField] private TextMeshProUGUI moneycountdisplay;
     [SerializeField] private TextMeshProUGUI currentslotdisplay;
     public List<Itemcontroller> npcshopitems = new List<Itemcontroller>();
@@ -33,15 +34,12 @@ public class Npcshopcontroller : MonoBehaviour
     [SerializeField] private Inventorycontroller[] inventorys;
     [SerializeField] private GameObject inventoryitemprefab;
     [SerializeField] private GameObject playeritemsui;
-    private int gettypeforinventory;
 
     [SerializeField] private GameObject mouseresetlayer;
 
     //Upgrade
-    private float upgradetime = 2.5f;
-    public float upgradetimer;
-    private bool starttimer;
-
+    private float buyitemtime = 1.5f;
+    private float buyitemtimer;
     private DateTime startdate;
     private DateTime currentdate;
     private float seconds;
@@ -57,8 +55,7 @@ public class Npcshopcontroller : MonoBehaviour
         currentitemtype = 0;
         resetownitemstatstext();
 
-        if (money.inventoryslot != 0)  moneycountdisplay.text = "Money: " + matsinventory.Container.Items[money.inventoryslot - 1].amount.ToString();
-        else  moneycountdisplay.text = 0 + " Money";
+        setmoneyamount();
         instantiateshopitems();
         setmerchantslots();
         setcurrentitemtype();
@@ -69,18 +66,21 @@ public class Npcshopcontroller : MonoBehaviour
         if (controlls.Menusteuerung.Menucharselectionright.WasPerformedThisFrame())
         {
             itemtypeselectionforward();
+            resetownitemstatstext();
+            displayitemtyp();
         }
         if (controlls.Menusteuerung.Menucharselectionleft.WasPerformedThisFrame())
         {
             itemtypeselectionbackwards();
+            resetownitemstatstext();
+            displayitemtyp();
         }
         if(currentselecteditem.GetComponent<Npcshopselectitem>().canbuy == true)
         {
-            if (controlls.Equipmentmenu.Upgradeitem.WasPressedThisFrame()) //&& starttimer == false)
+            if (controlls.Equipmentmenu.Upgradeitem.WasPressedThisFrame())
             {
                 if(checkformoney() == true)
                 {
-                    Debug.Log("startbuy");
                     StartCoroutine(buyitemstart());
                 }
             }
@@ -89,6 +89,8 @@ public class Npcshopcontroller : MonoBehaviour
     private void itemtypeselectionforward()
     {
         StopAllCoroutines();
+        EventSystem.current.currentSelectedGameObject.gameObject.GetComponent<Npcshopselectitem>().buyitembar.fillAmount = 0;
+
         itemtypeselectionbuttons[currentitemtype].GetComponent<Image>().color = Color.white;
         currentitemtype++;
         foreach (GameObject obj in itemtypeselectionbuttons)
@@ -109,11 +111,12 @@ public class Npcshopcontroller : MonoBehaviour
                 break;
             }
         }
-        displayitemtyp();
     }
     private void itemtypeselectionbackwards()
     {
         StopAllCoroutines();
+        EventSystem.current.currentSelectedGameObject.gameObject.GetComponent<Npcshopselectitem>().buyitembar.fillAmount = 0;
+
         itemtypeselectionbuttons[currentitemtype].GetComponent<Image>().color = Color.white;
         currentitemtype--;
         foreach (GameObject obj in itemtypeselectionbuttons)
@@ -134,7 +137,6 @@ public class Npcshopcontroller : MonoBehaviour
                 break;
             }
         }
-        displayitemtyp();
     }
     private void  instantiateshopitems()
     {
@@ -157,6 +159,19 @@ public class Npcshopcontroller : MonoBehaviour
             obj.GetComponent<Npcshopselectitem>().merchantitem = npcshopitems[i];
             obj.GetComponent<Npcshopselectitem>().newstats = newstats;
             instaniateditems.Add(obj);
+        }
+    }
+    private void setmoneyamount()
+    {
+        if (money.inventoryslot != 0)
+        {
+            moneyamount = matsinventory.Container.Items[money.inventoryslot - 1].amount;
+            moneycountdisplay.text = "Money: " + moneyamount.ToString();
+        }
+        else
+        {
+            moneyamount = 0;
+            moneycountdisplay.text = moneyamount + " Money";
         }
     }
     private void setmerchantslots()
@@ -202,9 +217,10 @@ public class Npcshopcontroller : MonoBehaviour
                 instaniateditems[i].SetActive(false);
             }
             else
-            {
+            {           
                 instaniateditems[i].SetActive(true);
-                if(EventSystem.current.currentSelectedGameObject == null)
+                checkitemformoney(i);
+                if (EventSystem.current.currentSelectedGameObject == null)
                 {
                     EventSystem.current.SetSelectedGameObject(instaniateditems[i]);
                     instaniateditems[i].GetComponent<Npcshopselectitem>().statsupdate();
@@ -213,6 +229,7 @@ public class Npcshopcontroller : MonoBehaviour
         }
         displayinventoryitems();
     }
+
     private void displayinventoryitems()
     {
         foreach (Transform obj in playeritemsui.transform)
@@ -230,6 +247,24 @@ public class Npcshopcontroller : MonoBehaviour
             }
         }
         mouseresetlayer.SetActive(true);
+    }
+    private void checkitemformoney(int i)
+    {
+        if (instaniateditems[i].GetComponent<Npcshopselectitem>().merchantitem.inventoryslot == 0)
+        {
+            if (instaniateditems[i].GetComponent<Npcshopselectitem>().merchantitem.itemshopcosts <= moneyamount)
+            {
+                instaniateditems[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = Color.green;
+            }
+            else
+            {
+                instaniateditems[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = Color.red;
+            }
+        }
+        else
+        {
+            instaniateditems[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = Color.blue;
+        }
     }
     public void clickitemtypebutton(int itemtype)
     {
@@ -257,19 +292,18 @@ public class Npcshopcontroller : MonoBehaviour
         Image upgradebar = currentselecteditem.GetComponent<Npcshopselectitem>().buyitembar;
         upgradebar.gameObject.SetActive(true);
         upgradebar.fillAmount = 0;
-        upgradetimer = 0f;
-        while (upgradetimer < upgradetime)
+        buyitemtimer = 0f;
+        while (buyitemtimer < buyitemtime)
         {
             if (controlls.Equipmentmenu.Upgradeitem.WasReleasedThisFrame())
             {
-                Debug.Log("release");
                 upgradebar.gameObject.SetActive(false);
                 StopAllCoroutines();
             }
             currentdate = DateTime.Now;
             seconds = currentdate.Ticks - startdate.Ticks;
-            upgradetimer = seconds * 0.0000001f;
-            upgradebar.fillAmount = upgradetimer / upgradetime;
+            buyitemtimer = seconds * 0.0000001f;
+            upgradebar.fillAmount = buyitemtimer / buyitemtime;
             yield return null;
         }
         upgradebar.fillAmount = 0;
@@ -279,24 +313,20 @@ public class Npcshopcontroller : MonoBehaviour
     {
         Itemcontroller itemtobuy = EventSystem.current.currentSelectedGameObject.gameObject.GetComponent<Npcshopselectitem>().merchantitem;
         matsinventory.Container.Items[money.inventoryslot - 1].amount -= itemtobuy.itemshopcosts;
-        for (int i = 0; i < itemtypes.Length; i++)
-        {
-            if(itemtypes[i] == itemtobuy.type)
-            {
-                i = gettypeforinventory;
-                break;
-            }
-        }
-        inventorys[gettypeforinventory].Additem(LoadCharmanager.Overallmainchar.gameObject, itemtobuy, 1);
+        setmoneyamount();
+
+        inventorys[currentitemtype].Additem(LoadCharmanager.Overallmainchar.gameObject, itemtobuy, 1);
         EventSystem.current.currentSelectedGameObject.gameObject.GetComponent<Npcshopselectitem>().canbuy = false;
         EventSystem.current.currentSelectedGameObject.gameObject.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "own Item";
+        EventSystem.current.currentSelectedGameObject.gameObject.transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = Color.blue;
+        displayinventoryitems();
     }
     private void resetownitemstatstext()
     {
         ownitemstats.text = string.Empty;
         for (int i = 0; i<statstext.Length; i++)
         {
-            ownitemstats.text += statstext[i] + "<pos=90%>" + 0 + "\n";
+            ownitemstats.text += statstext[i] + "<pos=75%>" + 0 + "\n";
         }
     }
 

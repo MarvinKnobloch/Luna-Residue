@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 4
   itemname: Basichead
   inventoryslot: 0
-  itemshopcosts: 0
+  itemshopcosts: 50
   description: 
   basestats:
   - 10

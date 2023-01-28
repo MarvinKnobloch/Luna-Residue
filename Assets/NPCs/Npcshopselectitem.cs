@@ -26,15 +26,15 @@ public class Npcshopselectitem : MonoBehaviour, ISelectHandler
         {
             if(merchantitem.basestats[i] > 0)
             {
-                newstats.text += statstext[i] + "<pos=90%>" + "<color=green>" + merchantitem.basestats[i].ToString() + "</color>" + "\n";
+                newstats.text += statstext[i] + "<pos=75%>" + "<color=green>" + merchantitem.basestats[i].ToString() + "</color>" + "\n";
             }
             else if (merchantitem.basestats[i] < 0)
             {
-                newstats.text += statstext[i] + "<pos=90%>" + "<color=red>" + merchantitem.basestats[i].ToString() + "</color>" + "\n";
+                newstats.text += statstext[i] + "<pos=75%>" + "<color=red>" + merchantitem.basestats[i].ToString() + "</color>" + "\n";
             }
             else
             {
-                newstats.text += statstext[i] + "<pos=90%>" + merchantitem.basestats[i].ToString() + "\n";
+                newstats.text += statstext[i] + "<pos=75%>" + merchantitem.basestats[i].ToString() + "\n";
             }
         }
     }
