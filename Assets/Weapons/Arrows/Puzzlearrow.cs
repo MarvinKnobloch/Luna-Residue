@@ -6,14 +6,15 @@ public class Puzzlearrow : MonoBehaviour
 {
     public float arrowspeed;
     public float timetodestroy;
-    private float destroyafterhit = 0.1f;
+    [SerializeField] private BoxCollider boxCollider;
+    private float disablecollidertime;
     public Vector3 arrowziel { get; set; }
     public bool hit { get; set; }
     public bool dmgonce;
-    //public Transform Arrowtarget;
 
     void Awake()
     {
+        disablecollidertime = 0;
         Destroy(gameObject, timetodestroy);
         dmgonce = false;
     }
@@ -27,10 +28,10 @@ public class Puzzlearrow : MonoBehaviour
         }
         if (hit == true && Vector3.Distance(transform.position, arrowziel) < 0.1f)
         {
-            destroyafterhit -= Time.deltaTime;
-            if(destroyafterhit <= 0)
+            disablecollidertime += Time.deltaTime;
+            if(disablecollidertime >= 0.1f)
             {
-                Destroy(gameObject);
+                boxCollider.enabled = false;
             }
         }
     }

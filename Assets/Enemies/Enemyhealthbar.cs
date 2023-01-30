@@ -70,6 +70,10 @@ public class Enemyhealthbar : MonoBehaviour
     {
         enemysizetext.color = Color.white;
     }
+    public void removehealthbar()
+    {
+        healthbargameobject.removefromcanvas();
+    }
 
     /*private void debuffstart()
     {

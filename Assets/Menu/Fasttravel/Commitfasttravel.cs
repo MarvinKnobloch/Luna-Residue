@@ -7,6 +7,7 @@ public class Commitfasttravel : MonoBehaviour
 {
     public Vector3 fasttravelpoint;
     [SerializeField] private GameObject loadcharmananger;
+    [SerializeField] private GameObject enemyhealthbars;
 
     private SpielerSteu steuerung;
     private void Awake()
@@ -29,6 +30,11 @@ public class Commitfasttravel : MonoBehaviour
         LoadCharmanager.disableattackbuttons = false;
         LoadCharmanager.savemainposi = fasttravelpoint;
         LoadCharmanager.Overallmainchar.gameObject.GetComponent<Movescript>().state = Movescript.State.Air;
+        foreach(Transform enemys in enemyhealthbars.transform)
+        {
+            enemys.GetComponent<Enemyhealthbar>().removehealthbar();
+        }
+
         gameObject.SetActive(false);
         loadcharmananger.GetComponent<LoadCharmanager>().maingamevalues();
     }
