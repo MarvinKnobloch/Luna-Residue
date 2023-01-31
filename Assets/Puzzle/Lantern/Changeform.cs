@@ -11,6 +11,7 @@ public class Changeform : MonoBehaviour, Interactioninterface
     
     private Color browncolor;
     public int state;
+    private int savestate;
 
     private void Awake()
     {
@@ -43,5 +44,30 @@ public class Changeform : MonoBehaviour, Interactioninterface
         state = 0;
         gameObject.GetComponent<Renderer>().material.color = browncolor;
         lantern.SetActive(false);
+    }
+    public void savelanternstate()
+    {
+        savestate = state;
+    }
+
+    public void loadlanternstate()
+    {
+        state = savestate;
+        if (state == 0)
+        {
+            lantern.SetActive(false);
+            gameObject.GetComponent<Renderer>().material.color = browncolor;
+        }
+        else if (state == 1)
+        {
+            lantern.SetActive(true);
+            gameObject.GetComponent<Renderer>().material.color = Color.green;
+        }
+        else if (state == 2)
+        {
+            lantern.SetActive(false);
+            gameObject.GetComponent<Renderer>().material.color = Color.red;
+        }
+
     }
 }

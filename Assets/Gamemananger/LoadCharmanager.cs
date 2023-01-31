@@ -27,7 +27,7 @@ public class LoadCharmanager : MonoBehaviour
     public static GameObject Overallthirdchar;
     public static GameObject Overallforthchar;
     public static GameObject Savechar;                                       //wird für charwechsel benutzt
-    public static Vector3 savemainposi = new Vector3(-320, 15, 320);                      
+    public static Vector3 savemainposi = new Vector3(0,5,0);
     public static Quaternion savemainrota;                                      //memorypuzzle(-40,25,685) //boxpuzzle(305,25,565) switchpuzzle(280,2,180)
     public static float savecamvalueX;                                          //statuepuzzle(-200,2,340) //woods(255,20,435)  //watercave(-330,12,-40)  //lantern(-210,32,500)
 
@@ -62,27 +62,22 @@ public class LoadCharmanager : MonoBehaviour
     }
     void Update()
     {
-        if (Statics.infight == false && interaction == false && Steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame())
+        if (Statics.infight == false && interaction == false && Steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame() && Statics.otheraction == false)
         {
             if (gameispaused == false)
             {
                 disableattackbuttons = true;
-                gameispaused = true;
+                Physics.IgnoreLayerCollision(0, 6);               //collision wird deaktiviert und nach einem frame wird das menü aufgerufen damit die area collider getriggert werden
                 savemainposi = Overallmainchar.transform.position;
                 savemainrota = Overallmainchar.transform.rotation;
                 savecamvalueX = Cam1.m_XAxis.Value;
-                foreach (GameObject chars in allcharacters)
-                {
-                    chars.SetActive(false);
-                }
                 foreach (GameObject mates in teammates)
                 {
                     mates.gameObject.SetActive(false);
                 }
-                Time.timeScale = 0f;
-                Cam1.gameObject.SetActive(false);
-                menu.SetActive(true);
-                menuoverview.SetActive(true);
+                gameispaused = true;
+                StartCoroutine(activatemenu());
+
 #if !UNITY_EDITOR
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
@@ -96,10 +91,23 @@ public class LoadCharmanager : MonoBehaviour
                 }
             }
         }    
-    }  
-    
+    }
+    IEnumerator activatemenu()
+    {
+        yield return null;
+        Time.timeScale = 0f;
+        foreach (GameObject chars in allcharacters)
+        {
+            chars.SetActive(false);
+        }
+        Cam1.gameObject.SetActive(false);
+        menu.SetActive(true);
+        menuoverview.SetActive(true);
+    }
+
     public void maingamevalues()
     {
+        Physics.IgnoreLayerCollision(0, 6, false);
         maincharload = PlayerPrefs.GetInt("Maincharindex");
         secondcharload = PlayerPrefs.GetInt("Secondcharindex");
         Overallmainchar = allcharacters[maincharload];

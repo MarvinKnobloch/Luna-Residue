@@ -71,9 +71,9 @@ public class Timeswitch : MonoBehaviour
                     obj.GetComponent<Renderer>().material.color = bluecolor;
                 }
             }
-            else if (obj.GetComponent<Withtimer>())
+            else if (obj.GetComponent<Switchwithtimer>())
             {
-                if (obj.GetComponent<Withtimer>().maxreached == false)
+                if (obj.GetComponent<Switchwithtimer>().maxreached == false)
                 {
                     obj.GetComponent<Renderer>().material.color = bluecolor;
                 }
@@ -106,9 +106,9 @@ public class Timeswitch : MonoBehaviour
                     obj.GetComponent<Renderer>().material.color = redcolor;
                 }
             }
-            else if (obj.GetComponent<Withtimer>())
+            else if (obj.GetComponent<Switchwithtimer>())
             {
-                if (obj.GetComponent<Withtimer>().maxreached == false)
+                if (obj.GetComponent<Switchwithtimer>().maxreached == false)
                 {
                     obj.GetComponent<Renderer>().material.color = redcolor;
                 }

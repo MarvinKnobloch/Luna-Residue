@@ -11,6 +11,7 @@ public class Laserbeam : MonoBehaviour
     public string Mirror;
     [SerializeField] GameObject endgoal;
     [SerializeField] Material goalmaterial;
+    [SerializeField] private LayerMask mirrorlayer;
 
     void Start()
     {
@@ -33,7 +34,7 @@ public class Laserbeam : MonoBehaviour
         for (int i = 0; i < maxreflections; i++)
         {
             Ray laser = new Ray(position, direction);
-            if(Physics.Raycast(laser, out RaycastHit laserhit, laserrange, 1, QueryTriggerInteraction.Ignore))
+            if(Physics.Raycast(laser, out RaycastHit laserhit, laserrange, mirrorlayer, QueryTriggerInteraction.Ignore))
             {
                 position = laserhit.point;
                 direction = Vector3.Reflect(direction, laserhit.normal);
