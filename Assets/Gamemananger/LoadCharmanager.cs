@@ -62,12 +62,20 @@ public class LoadCharmanager : MonoBehaviour
     }
     void Update()
     {
-        if (Statics.infight == false && interaction == false && Steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame())
+        if (Statics.infight == false && interaction == false && Steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame() && Statics.otheraction == false)
         {
             if (gameispaused == false)
             {
                 disableattackbuttons = true;
                 Physics.IgnoreLayerCollision(0, 6);               //collision wird deaktiviert und nach einem frame wird das menü aufgerufen damit die area collider getriggert werden
+                savemainposi = Overallmainchar.transform.position;
+                savemainrota = Overallmainchar.transform.rotation;
+                savecamvalueX = Cam1.m_XAxis.Value;
+                foreach (GameObject mates in teammates)
+                {
+                    mates.gameObject.SetActive(false);
+                }
+                gameispaused = true;
                 StartCoroutine(activatemenu());
 
 #if !UNITY_EDITOR
@@ -87,19 +95,11 @@ public class LoadCharmanager : MonoBehaviour
     IEnumerator activatemenu()
     {
         yield return null;
-        savemainposi = Overallmainchar.transform.position;
-        savemainrota = Overallmainchar.transform.rotation;
-        savecamvalueX = Cam1.m_XAxis.Value;
+        Time.timeScale = 0f;
         foreach (GameObject chars in allcharacters)
         {
             chars.SetActive(false);
         }
-        foreach (GameObject mates in teammates)
-        {
-            mates.gameObject.SetActive(false);
-        }
-        gameispaused = true;
-        Time.timeScale = 0f;
         Cam1.gameObject.SetActive(false);
         menu.SetActive(true);
         menuoverview.SetActive(true);
