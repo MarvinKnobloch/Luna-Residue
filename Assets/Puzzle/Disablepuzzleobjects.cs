@@ -14,6 +14,7 @@ public class Disablepuzzleobjects : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
+        Debug.Log("halli");
         if (other.gameObject == LoadCharmanager.Overallmainchar)
         {
             Object.SetActive(false);

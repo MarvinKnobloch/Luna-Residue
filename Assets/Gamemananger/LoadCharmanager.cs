@@ -67,22 +67,9 @@ public class LoadCharmanager : MonoBehaviour
             if (gameispaused == false)
             {
                 disableattackbuttons = true;
-                gameispaused = true;
-                savemainposi = Overallmainchar.transform.position;
-                savemainrota = Overallmainchar.transform.rotation;
-                savecamvalueX = Cam1.m_XAxis.Value;
-                foreach (GameObject chars in allcharacters)
-                {
-                    chars.SetActive(false);
-                }
-                foreach (GameObject mates in teammates)
-                {
-                    mates.gameObject.SetActive(false);
-                }
-                Time.timeScale = 0f;
-                Cam1.gameObject.SetActive(false);
-                menu.SetActive(true);
-                menuoverview.SetActive(true);
+                Physics.IgnoreLayerCollision(0, 6);               //collision wird deaktiviert und nach einem frame wird das menü aufgerufen damit die area collider getriggert werden
+                StartCoroutine(activatemenu());
+
 #if !UNITY_EDITOR
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
@@ -96,10 +83,31 @@ public class LoadCharmanager : MonoBehaviour
                 }
             }
         }    
-    }  
-    
+    }
+    IEnumerator activatemenu()
+    {
+        yield return null;
+        savemainposi = Overallmainchar.transform.position;
+        savemainrota = Overallmainchar.transform.rotation;
+        savecamvalueX = Cam1.m_XAxis.Value;
+        foreach (GameObject chars in allcharacters)
+        {
+            chars.SetActive(false);
+        }
+        foreach (GameObject mates in teammates)
+        {
+            mates.gameObject.SetActive(false);
+        }
+        gameispaused = true;
+        Time.timeScale = 0f;
+        Cam1.gameObject.SetActive(false);
+        menu.SetActive(true);
+        menuoverview.SetActive(true);
+    }
+
     public void maingamevalues()
     {
+        Physics.IgnoreLayerCollision(0, 6, false);
         maincharload = PlayerPrefs.GetInt("Maincharindex");
         secondcharload = PlayerPrefs.GetInt("Secondcharindex");
         Overallmainchar = allcharacters[maincharload];

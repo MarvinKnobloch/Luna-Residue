@@ -91,14 +91,14 @@ public class Playermovement
     }
     public void movetowardsposi()
     {
-        Physics.IgnoreLayerCollision(0, 6);
+        Physics.IgnoreLayerCollision(16, 6);
         Vector3 distancetomove = psm.movetowardsposition - psm.transform.position;
         Vector3 move = distancetomove.normalized * 10 * Time.deltaTime;
         psm.charactercontroller.Move(move);
         psm.transform.rotation = Quaternion.LookRotation(psm.movetowardsposition - psm.transform.position, Vector3.up);
         if (Vector3.Distance(psm.transform.position, psm.movetowardsposition) < 0.2f)
         {
-            Physics.IgnoreLayerCollision(0, 6, false);
+            Physics.IgnoreLayerCollision(16, 6, false);
             Statics.otheraction = false;
             psm.switchtoairstate();
         }
