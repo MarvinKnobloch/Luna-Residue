@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
+using System.IO;
+
 
 public class Saveloadstatics : MonoBehaviour
 {
     private Isaveload loadsaveinterface = new Saveloadgame();
     private Convertstatics convertstatics = new Convertstatics();
+    [SerializeField] private Swinventory swinventory;
+    [SerializeField] GameObject test;
     [SerializeField] private Loadmenucontroller loadmenucontroller;
 
     public void savestaticsinscript(int slot)
@@ -24,6 +28,8 @@ public class Saveloadstatics : MonoBehaviour
     }
     private void Savestaticsdata(int slot)
     {
+        //swinventory.SaveToFile(slot);
+        Savesw(slot);
         string savepath = "/Statics" + slot + ".json";
         if (loadsaveinterface.savedata(savepath, convertstatics))
         {
@@ -38,9 +44,22 @@ public class Saveloadstatics : MonoBehaviour
             Debug.Log("Error: Could not save Data");
         }
     }
+    public void Savesw(int slot)
+    {
+        string savepath = "/" + swinventory.FILENAME + slot + ".json";
+        if (loadsaveinterface.savedata(savepath, swinventory))
+        {
+            Debug.Log("Data was saved");
+        }
+        else
+        {
+            Debug.Log("Error: Could not save Data");
+        }
+    }
 
     public void Loadstaticdata()
     {
+        swinventory.LoadDataFromFile(loadmenucontroller.selectedslot);
         int slot = loadmenucontroller.selectedslot;
         string loadpath = "/Statics" + slot + ".json";
         try
@@ -53,6 +72,30 @@ public class Saveloadstatics : MonoBehaviour
         {
             Debug.LogError($"error Could not load data {e.Message} {e.StackTrace}");
         }
+    }
+
+
+    /*public void LoadGameData(int slot)
+    {
+        string loadpath = Path.Combine(Application.persistentDataPath, "SW" + slot + ".json");
+        if (File.Exists(loadpath))
+        {
+            JsonUtility.FromJsonOverwrite(loadpath, swinventory);
+        }
+        else
+        {
+            Debug.Log("file doesnt exsist");
+        }
+    }*/
+    public void Loadsw()
+    {
+        //int slot = loadmenucontroller.selectedslot;
+        //string loadpath = "/SW" + slot + ".json";
+
+            //JsonUtility.FromJsonOverwrite(loadpath, swinventory);
+            //swinventory = loadsaveinterface.loaddata<Swinventory>(loadpath);
+            //Debug.Log("data has been loaded");
+
     }
     private void setstaticsafterload()
     {
