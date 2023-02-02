@@ -14,12 +14,12 @@ public class Saveloadgame : Isaveload
         {
             if (File.Exists(path))
             {
-                Debug.Log("already exits, delete and creat new one");
+                //Debug.Log("already exits, delete and creat new one");
                 File.Delete(path);
             }
             else
             {
-                Debug.Log("creat first save");
+                //Debug.Log("creat first save");
             }
             string json_data = JsonUtility.ToJson(data);
             File.WriteAllText(path, json_data);
@@ -36,7 +36,7 @@ public class Saveloadgame : Isaveload
             return false;
         }
     }
-    public T loaddata<T>(string dataname)
+    public T loaddata<T>(string dataname)                       //mit der methode können kein monobehaviour/scriptable objects geladen werden
     {
         string path = Application.persistentDataPath + dataname;
         {

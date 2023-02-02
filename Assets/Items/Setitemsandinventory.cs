@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Updateitemsininventory : MonoBehaviour
+public class Setitemsandinventory : MonoBehaviour
 {
-    [SerializeField] private Inventorycontroller[] inventorys;
+    [SerializeField] public Inventorycontroller[] inventorys;
     [SerializeField] private Swordobject[] sworditems;
     [SerializeField] private Bowobject[] bowitems;
     [SerializeField] private Fistobject[] fistitems;
@@ -15,6 +15,8 @@ public class Updateitemsininventory : MonoBehaviour
     [SerializeField] private Shoesobject[] shoesitems;
     [SerializeField] private Necklessobject[] necklessitems;
     [SerializeField] private Ringobject[] ringitems;
+    [SerializeField] private Craftingobject[] craftingitems;
+
 
     public void resetitems()
     {
@@ -28,8 +30,8 @@ public class Updateitemsininventory : MonoBehaviour
         resetitems(shoesitems);
         resetitems(necklessitems);
         resetitems(ringitems);
-        inventorysupdate();
     }
+
     private void resetitems(Itemcontroller[] items)
     {
         for (int i = 0; i < items.Length; i++)
@@ -39,29 +41,38 @@ public class Updateitemsininventory : MonoBehaviour
             items[i].stats = items[i].basestats;
         }
     }
-    /*private void chestitemreset()
+    public void updateitemsininventory()
     {
-        for (int i = 0; i < chestitems.Length; i++)
-        {
-            chestitems[i].inventoryslot = 0;
-            chestitems[i].upgradelvl = 0;
-            chestitems[i].stats = chestitems[i].basestats;
-        }
-    }*/
-    public void inventorysupdate()
+        updateitems();
+    }
+    public void resetinventorys()
     {
         for (int i = 0; i < inventorys.Length; i++)
         {
             for (int t = 0; t < inventorys[i].Container.Items.Length; t++)
             {
-                if (inventorys[t].Container.Items[t].amount != 0)
+                inventorys[i].Container.Items[t].item = null;
+                inventorys[i].Container.Items[t].amount = 0;
+                inventorys[i].Container.Items[t].inventoryposi = 0;
+                inventorys[i].Container.Items[t].itemname = "";
+                inventorys[i].Container.Items[t].itemlvl = 0;
+            }
+        }
+    }
+    private void updateitems()
+    {
+        for (int i = 0; i < inventorys.Length; i++)
+        {
+            for (int t = 0; t < inventorys[i].Container.Items.Length; t++)
+            {
+                if (inventorys[i].Container.Items[t].amount != 0)
                 {
-                    Itemcontroller item = inventorys[t].Container.Items[t].item;
-                    item.inventoryslot = inventorys[t].Container.Items[t].inventoryposi;
-                    item.upgradelvl = inventorys[t].Container.Items[t].itemlvl;
+                    Itemcontroller item = inventorys[i].Container.Items[t].item;
+                    item.inventoryslot = inventorys[i].Container.Items[t].inventoryposi;
+                    item.upgradelvl = inventorys[i].Container.Items[t].itemlvl;
                     if (item.upgradelvl != 0)
                     {
-                        item.stats = item.upgrades[item.upgradelvl].newstats;
+                        item.stats = item.upgrades[item.upgradelvl - 1].newstats;
                     }
                 }
                 else

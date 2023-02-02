@@ -6,16 +6,21 @@ using UnityEngine.SceneManagement;
 using System.IO;
 
 
-public class Saveloadstatics : MonoBehaviour
+public class Saveandloadgame : MonoBehaviour
 {
     private Isaveload loadsaveinterface = new Saveloadgame();
-    private Convertstatics convertstatics = new Convertstatics();
-    [SerializeField] private Inventorycontroller fistinventory;
-    [SerializeField] private Swinventory swinventory;
-    [SerializeField] GameObject test;
     [SerializeField] private Loadmenucontroller loadmenucontroller;
 
-    public void savestaticsinscript(int slot)
+    private Convertstatics convertstatics = new Convertstatics();
+    [SerializeField] private Setitemsandinventory setitemsandinventory;
+
+    public void savegamedata(int slot)
+    {
+        saveinventorys(slot);
+        savestaticsinscript();
+        savestatics(slot);
+    }
+    private void savestaticsinscript()
     {
         convertstatics.playerposition = LoadCharmanager.savemainposi;
         convertstatics.playerrotation = LoadCharmanager.savemainrota;
@@ -25,17 +30,12 @@ public class Saveloadstatics : MonoBehaviour
         convertstatics.charrequiredexp = Statics.charrequiredexp;
         convertstatics.gamesavedate = System.DateTime.UtcNow.ToString("dd MMMM, yyyy");
         convertstatics.gamesavetime = System.DateTime.UtcNow.ToString("HH:mm");
-        Savestaticsdata(slot);
     }
-    private void Savestaticsdata(int slot)
+    private void savestatics(int slot)
     {
-        //swinventory.SaveToFile(slot);
-        Savesw(slot);
-        saveinventory(slot);
         string savepath = "/Statics" + slot + ".json";
         if (loadsaveinterface.savedata(savepath, convertstatics))
         {
-            Debug.Log("Data was saved");
             Slotvaluesarray.slotisnotempty[slot] = true;
             Slotvaluesarray.slotlvl[slot] = convertstatics.charcurrentlvl;
             Slotvaluesarray.slotdate[slot] = convertstatics.gamesavedate;
@@ -46,64 +46,44 @@ public class Saveloadstatics : MonoBehaviour
             Debug.Log("Error: Could not save Data");
         }
     }
-    public void saveinventory(int slot)
+    private void saveinventorys(int slot)
     {
-        string savepath = "/Fistinventory" + slot + ".json";
-        if (loadsaveinterface.savedata(savepath, fistinventory))
+        for (int i = 0; i < setitemsandinventory.inventorys.Length; i++)
         {
-            Debug.Log("Data was saved");
-        }
-        else
-        {
-            Debug.Log("Error: Could not save Data");
-        }
-    }
-    public void Savesw(int slot)
-    {
-        string savepath = "/" + swinventory.FILENAME + slot + ".json";
-        if (loadsaveinterface.savedata(savepath, swinventory))
-        {
-            Debug.Log("Data was saved");
-        }
-        else
-        {
-            Debug.Log("Error: Could not save Data");
+            string savepath = "/" + setitemsandinventory.inventorys[i].Container.savepathname + slot + ".json";
+            if (loadsaveinterface.savedata(savepath, setitemsandinventory.inventorys[i]))
+            {
+                continue;
+            }
+            else
+            {
+                Debug.Log("Error: Could not save Data");
+            }
         }
     }
 
-    public void Loadstaticdata()
+    public void loadgamedate()
     {
         int slot = loadmenucontroller.selectedslot;
+        loadstaticdata(slot);
+        setstaticsafterload();
+        SceneManager.LoadScene(1);
+        loadinventorys(slot);
+        setitemsandinventory.resetitems();
+        setitemsandinventory.updateitemsininventory();
+    }
+    private void loadstaticdata(int slot)
+    {
         string loadpath = "/Statics" + slot + ".json";
         try
         {
             convertstatics = loadsaveinterface.loaddata<Convertstatics>(loadpath);
-            Debug.Log("data has been loaded");
         }
         catch (Exception e)
         {
             Debug.LogError($"error Could not load data {e.Message} {e.StackTrace}");
         }
-        setstaticsafterload();
-        SceneManager.LoadScene(1);
-        swinventory.LoadDataFromFile(slot);
-        Loadfistinventory(slot);
     }
-    public void Loadfistinventory(int slot)
-    {
-        var filePath = Path.Combine(Application.persistentDataPath, "Fistinventory" + slot + ".json");
-
-        if (!File.Exists(filePath))
-        {
-            return;
-        }
-        Debug.Log("loadfistinventory");
-        var json = File.ReadAllText(filePath);
-        JsonUtility.FromJsonOverwrite(json, fistinventory);
-    }
-
-
-
     private void setstaticsafterload()
     {
         if (convertstatics != null)
@@ -114,6 +94,22 @@ public class Saveloadstatics : MonoBehaviour
             Statics.charcurrentlvl = convertstatics.charcurrentlvl;
             Statics.charcurrentexp = convertstatics.charcurrentexp;
             Statics.charrequiredexp = convertstatics.charrequiredexp;
+        }
+    }
+    private void loadinventorys(int slot)
+    {
+        for (int i = 0; i < setitemsandinventory.inventorys.Length; i++)
+        {
+            var filePath = Path.Combine(Application.persistentDataPath, setitemsandinventory.inventorys[i].Container.savepathname + slot + ".json");
+            if (!File.Exists(filePath))
+            {
+                continue;
+            }
+            else
+            {
+                var json = File.ReadAllText(filePath);
+                JsonUtility.FromJsonOverwrite(json, setitemsandinventory.inventorys[i]);
+            }
         }
     }
 }

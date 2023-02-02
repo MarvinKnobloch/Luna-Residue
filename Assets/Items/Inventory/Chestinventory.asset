@@ -13,116 +13,145 @@ MonoBehaviour:
   m_Name: Chestinventory
   m_EditorClassIdentifier: 
   Container:
+    savepathname: Chestinventory
     Items:
+    - item: {fileID: 11400000, guid: 926b8daac2862ab40876b06cad7e1733, type: 2}
+      amount: 1
+      itemname: Basicchest
+      inventoryposi: 1
+      itemlvl: 0
+    - item: {fileID: 11400000, guid: 5fb93356bba4e664eb2de690b365e8ce, type: 2}
+      amount: 1
+      itemname: Mysticchest
+      inventoryposi: 2
+      itemlvl: 3
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
-    - item: {fileID: 0}
-      amount: 0
-      itemname: 
-      inventoryposi: 0
-    - item: {fileID: 0}
-      amount: 0
-      itemname: 
-      inventoryposi: 0
+      itemlvl: 0

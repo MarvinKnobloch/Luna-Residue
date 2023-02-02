@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 6737092273977564718}
   - component: {fileID: 4606312465027023959}
   m_Layer: 12
-  m_Name: Cooperore
+  m_Name: Copperore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

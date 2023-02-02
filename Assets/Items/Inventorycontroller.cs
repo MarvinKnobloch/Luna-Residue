@@ -75,6 +75,7 @@ public class Inventorycontroller : ScriptableObject
 [System.Serializable]
 public class Inventory
 {
+    public string savepathname;
     //public List<Inventoryslot> Items = new List<Inventoryslot>();
     public Inventoryslot[] Items = new Inventoryslot[28];
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 
 
-public class Swinventory : MonoBehaviour
+public class Saveandloadmonobehaviour : MonoBehaviour
 {
     public string FILENAME { get; } = "Swordinventory";
     [SerializeField] private Itemtest[] items = new Itemtest[28];

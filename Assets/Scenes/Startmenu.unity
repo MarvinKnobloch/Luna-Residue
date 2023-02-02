@@ -5353,7 +5353,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Q
+  m_Text: ^Q
 --- !u!222 &437036605
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6067,6 +6067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadmenucontroller: {fileID: 472829688}
+  setitemsandinventory: {fileID: 892553122}
 --- !u!1 &497845772
 GameObject:
   m_ObjectHideFlags: 0
@@ -7966,7 +7967,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ^F
+  m_Text: F
 --- !u!222 &596156285
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12987,6 +12988,7 @@ GameObject:
   - component: {fileID: 892553118}
   - component: {fileID: 892553117}
   - component: {fileID: 892553121}
+  - component: {fileID: 892553122}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -13095,8 +13097,79 @@ MonoBehaviour:
   - {fileID: 1717314527}
   loadgameobj: {fileID: 472829687}
   settingsobj: {fileID: 813137111}
+  setitemsandinventory: {fileID: 892553122}
   selectedcolor: {r: 1, g: 1, b: 1, a: 0.39215687}
   notselectedcolor: {r: 1, g: 1, b: 1, a: 0}
+--- !u!114 &892553122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 892553116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c83d592706418e4a984bc6b6cf1947d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventorys:
+  - {fileID: 11400000, guid: bff24377c34696e41867a5d7c902d67c, type: 2}
+  - {fileID: 11400000, guid: ce84528fcac987c45bbc7a40d37adb24, type: 2}
+  - {fileID: 11400000, guid: 0f5b0f3c722ca244abc797b8ee1b9611, type: 2}
+  - {fileID: 11400000, guid: 329dcd0e96e006a41a9d362ddd391f7b, type: 2}
+  - {fileID: 11400000, guid: 8a5e55bef56c9b841ab8819dce68c5b7, type: 2}
+  - {fileID: 11400000, guid: 0d560ecf5f8617141bec8e4e77fb330c, type: 2}
+  - {fileID: 11400000, guid: 13774127ac0964a4f9cdc819f7d144f3, type: 2}
+  - {fileID: 11400000, guid: fdbd1444081169d45aa874b5f2a75403, type: 2}
+  - {fileID: 11400000, guid: 5fa892f122bd9f54cb5e69bbe4f44089, type: 2}
+  - {fileID: 11400000, guid: 84f3537afecb40949a1f064114dbd52e, type: 2}
+  - {fileID: 11400000, guid: 2ca52730c693b224db957e8268c41db8, type: 2}
+  sworditems:
+  - {fileID: 11400000, guid: 0069bc3099ef6384f957e19665f186b7, type: 2}
+  - {fileID: 11400000, guid: 5a98190f246b4c2429dbdfe77e8fa06c, type: 2}
+  bowitems:
+  - {fileID: 11400000, guid: 09142d55d20d73749a97b89475cfbef6, type: 2}
+  - {fileID: 11400000, guid: 52e86b8165f3335418854a9f12de0d40, type: 2}
+  fistitems:
+  - {fileID: 11400000, guid: def86eccede274a4e9838b1c9237eb18, type: 2}
+  - {fileID: 11400000, guid: 4ac61c029d89ae244bb8a40f0b7be961, type: 2}
+  headitems:
+  - {fileID: 11400000, guid: 947a2c09834ead84aab8523907aa0c8b, type: 2}
+  - {fileID: 11400000, guid: 43f764551917a8845a7d36e833c3ced9, type: 2}
+  chestitems:
+  - {fileID: 11400000, guid: 926b8daac2862ab40876b06cad7e1733, type: 2}
+  - {fileID: 11400000, guid: 5fb93356bba4e664eb2de690b365e8ce, type: 2}
+  glovesitems:
+  - {fileID: 11400000, guid: b16dda3e67b0e3d40922eeb2f19c90f9, type: 2}
+  - {fileID: 11400000, guid: 679d841505f3da44b843bb22ab50584e, type: 2}
+  legitems:
+  - {fileID: 11400000, guid: 34a6490ab048be74c86ea029fbce8f92, type: 2}
+  - {fileID: 11400000, guid: 384467f1252160841903dbf3f2b124e1, type: 2}
+  shoesitems:
+  - {fileID: 11400000, guid: 0549e7603c39c0c4c93e57df167980eb, type: 2}
+  - {fileID: 11400000, guid: be8f00b23af756d4e9888e3e3d5f86d9, type: 2}
+  necklessitems:
+  - {fileID: 11400000, guid: f6dac265e35b45245aa78d9ea5c6db86, type: 2}
+  - {fileID: 11400000, guid: 36f6e1537a9c3674c92de3f7734c1a43, type: 2}
+  ringitems:
+  - {fileID: 11400000, guid: b6280d59b038f2343b7fe6ef8b52a3bb, type: 2}
+  - {fileID: 11400000, guid: 2715349855285884b9d9fee7569c063e, type: 2}
+  craftingitems:
+  - {fileID: 11400000, guid: aca73481126d62d418b60468c6629c06, type: 2}
+  - {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
+  - {fileID: 11400000, guid: 70e46c03fb07eb348bb319316e61c034, type: 2}
+  - {fileID: 11400000, guid: 8dd5ccf01a1536e42a4efcbd30bf3935, type: 2}
+  - {fileID: 11400000, guid: d597b45572df78743acbd8d64d40a38e, type: 2}
+  - {fileID: 11400000, guid: c7bec1db8fd84c24bb4b51f1b99f8f96, type: 2}
+  - {fileID: 11400000, guid: 867ad472d96907c44b05073ab90369ee, type: 2}
+  - {fileID: 11400000, guid: 853f0ce448216094c9a1be91aa072b19, type: 2}
+  - {fileID: 11400000, guid: e29c162be54667745b27f24731e95fe9, type: 2}
+  - {fileID: 11400000, guid: 2c5d719e8a0ad9c45b36bd0837b32e08, type: 2}
+  - {fileID: 11400000, guid: 087674ad92d75f24e92db8515b55e3e3, type: 2}
+  - {fileID: 11400000, guid: 7f503194a85088b4ea9653ceab96c95b, type: 2}
+  - {fileID: 11400000, guid: 73c80dfb09adfee499cd17b195fcdd02, type: 2}
+  - {fileID: 11400000, guid: 86d6d0ec3403b124f9a553e397d70f34, type: 2}
+  - {fileID: 11400000, guid: 0960a2238d03d57408bfdd8ee4cca568, type: 2}
 --- !u!1 &893148287
 GameObject:
   m_ObjectHideFlags: 0
@@ -17375,8 +17448,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 472829693}
-        m_TargetAssemblyTypeName: Saveloadstatics, Assembly-CSharp
-        m_MethodName: Loadstaticdata
+        m_TargetAssemblyTypeName: Saveandloadgame, Assembly-CSharp
+        m_MethodName: loadgamedate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17920,7 +17993,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Q
+  m_Text: ^Q
 --- !u!222 &1228251789
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17992,7 +18065,7 @@ MonoBehaviour:
     m_Interactions: 
     m_Processors: 
     m_Groups: 
-    m_Action: Sprung
+    m_Action: Jump
     m_Flags: 0
   Keybindtext: {fileID: 928714891}
   resetbutton: {fileID: 1842385440}
@@ -19861,7 +19934,7 @@ MonoBehaviour:
     m_Interactions: 
     m_Processors: 
     m_Groups: 
-    m_Action: Laufen
+    m_Action: Movement
     m_Flags: 8
   Keybindtext: {fileID: 1937776739}
   resetbutton: {fileID: 967338496}
@@ -23241,7 +23314,7 @@ MonoBehaviour:
     m_Interactions: 
     m_Processors: 
     m_Groups: 
-    m_Action: Laufen
+    m_Action: Movement
     m_Flags: 8
   Keybindtext: {fileID: 1914594259}
   resetbutton: {fileID: 649400247}
@@ -26798,7 +26871,7 @@ MonoBehaviour:
     m_Interactions: 
     m_Processors: 
     m_Groups: 
-    m_Action: Laufen
+    m_Action: Movement
     m_Flags: 8
   Keybindtext: {fileID: 730536548}
   resetbutton: {fileID: 1898071965}
@@ -32145,7 +32218,7 @@ MonoBehaviour:
     m_Interactions: 
     m_Processors: 
     m_Groups: 
-    m_Action: Laufen
+    m_Action: Movement
     m_Flags: 8
   Keybindtext: {fileID: 2005889349}
   resetbutton: {fileID: 1878466227}
