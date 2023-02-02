@@ -6,8 +6,8 @@ using System.IO;
 
 public class Swinventory : MonoBehaviour
 {
-    public int test;
-    public string FILENAME = "SW";
+    public string FILENAME { get; } = "Swordinventory";
+    [SerializeField] private Itemtest[] items = new Itemtest[28];
 
     private void Awake()
     {
@@ -15,17 +15,17 @@ public class Swinventory : MonoBehaviour
     }
 
 
-    /*public void SaveToFile(int slot)
+    /*public void Savesw(int slot)
     {
-        var filePath = Path.Combine(Application.persistentDataPath, FILENAME + slot + ".json");
-
-        if (!File.Exists(filePath))
+        string savepath = "/" + swinventory.FILENAME + slot + ".json";
+        if (loadsaveinterface.savedata(savepath, swinventory))
         {
-            File.Create(filePath);
+            Debug.Log("Data was saved");
         }
-
-        var json = JsonUtility.ToJson(this);
-        File.WriteAllText(filePath, json);
+        else
+        {
+            Debug.Log("Error: Could not save Data");
+        }
     }*/
 
 
@@ -41,28 +41,4 @@ public class Swinventory : MonoBehaviour
         var json = File.ReadAllText(filePath);
         JsonUtility.FromJsonOverwrite(json, this);
     }
-    /*
-    public void SaveGameData(int slot)
-    {
-        string savepath = Path.Combine(Application.persistentDataPath, FILENAME);
-        if (!File.Exists(savepath))
-        {
-            File.Create(savepath);
-        }
-
-        var json = JsonUtility.ToJson(this);
-        File.WriteAllText(savepath, json);
-    }
-    public void LoadGameData(int slot)
-    {
-        string loadpath = Path.Combine(Application.persistentDataPath, FILENAME);
-        if (File.Exists(loadpath))
-        {
-            JsonUtility.FromJsonOverwrite(loadpath, this);
-        }
-        else
-        {
-            Debug.Log("file doesnt exsist");
-        }
-    }*/
 }

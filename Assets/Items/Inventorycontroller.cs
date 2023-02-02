@@ -85,6 +85,7 @@ public class Inventoryslot
     public int amount;
     public string itemname;
     public int inventoryposi;
+    public int itemlvl;
     public Inventoryslot(Itemcontroller _item, int _amount)
     {
         item = _item;
