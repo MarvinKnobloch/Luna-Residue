@@ -34,7 +34,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             currentint = Statics.currentequiptmentchar;
             slotbuttontext.gameObject.GetComponent<TextMeshProUGUI>().text = GetComponentInChildren<Text>().text;
             setequipnameandimage(equipslotnumber, currentint, GetComponentInChildren<Text>().text, gameObject);
-            transform.GetChild(0).GetComponentInChildren<Image>().color = Color.green;
+            gameObject.GetComponent<Image>().color = Color.green;
 
             Statics.charmaxhealth[currentint] += itemvalues.stats[0] - setitemobj.currentmaxhealth[currentint];
             setitemobj.currentmaxhealth[currentint] = itemvalues.stats[0];
@@ -85,7 +85,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             if (Statics.currentheadimage[charnumber] != null)
             {
-                Statics.currentheadimage[charnumber].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;
+                Statics.currentheadimage[charnumber].transform.GetComponent<Image>().color = Color.white;
             }
             Statics.charcurrentheadname[charnumber] = itemname;
             Statics.currentheadimage[charnumber] = itemimageobj;
@@ -95,7 +95,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             if (Statics.currentchestimage[charnumber] != null)
             {
-                Statics.currentchestimage[charnumber].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;
+                Statics.currentchestimage[charnumber].transform.GetComponent<Image>().color = Color.white;
             }
             Statics.charcurrentchestname[charnumber] = itemname;
             Statics.currentchestimage[charnumber] = itemimageobj;
@@ -105,7 +105,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             if (Statics.currentglovesimage[charnumber] != null)
             {
-                Statics.currentglovesimage[charnumber].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;
+                Statics.currentglovesimage[charnumber].transform.GetComponent<Image>().color = Color.white;
             }
             Statics.charcurrentglovesname[charnumber] = itemname;
             Statics.currentglovesimage[charnumber] = itemimageobj;
@@ -115,7 +115,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             if (Statics.currentlegimage[charnumber] != null)
             {
-                Statics.currentlegimage[charnumber].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;
+                Statics.currentlegimage[charnumber].transform.GetComponent<Image>().color = Color.white;
             }
             Statics.charcurrentlegname[charnumber] = itemname;
             Statics.currentlegimage[charnumber] = itemimageobj;
@@ -125,7 +125,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             if (Statics.currentshoesimage[charnumber] != null)
             {
-                Statics.currentshoesimage[charnumber].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;
+                Statics.currentshoesimage[charnumber].transform.GetComponent<Image>().color = Color.white;
             }
             Statics.charcurrentshoesname[charnumber] = itemname;
             Statics.currentshoesimage[charnumber] = itemimageobj;
@@ -135,7 +135,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             if (Statics.currentnecklessimage[charnumber] != null)
             {
-                Statics.currentnecklessimage[charnumber].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;
+                Statics.currentnecklessimage[charnumber].transform.GetComponent<Image>().color = Color.white;
             }
             Statics.charcurrentnecklessname[charnumber] = itemname;
             Statics.currentnecklessimage[charnumber] = itemimageobj;
@@ -145,7 +145,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             if (Statics.currentringimage[charnumber] != null)
             {
-                Statics.currentringimage[charnumber].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;
+                Statics.currentringimage[charnumber].transform.GetComponent<Image>().color = Color.white;
             }
             Statics.charcurrentringname[charnumber] = itemname;
             Statics.currentringimage[charnumber] = itemimageobj;
@@ -154,7 +154,8 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     public void upgradeequipeditems()
     {
-        transform.GetChild(3).GetComponentInChildren<Text>().text = itemvalues.upgradelvl.ToString();
+        transform.GetChild(2).GetComponentInChildren<Text>().text = itemvalues.upgradelvl.ToString();
+        //update inventory itemlvl
         if (equipslotnumber == 3)
         {
             int currentchar = 0;

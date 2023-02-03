@@ -43,9 +43,10 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
                 if (Statics.currentswordimage[currentint] != null)
                 {
-                    Statics.currentswordimage[currentint].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;                //setzt das alte image beim wechseln auf weiß(falls vorhanden)
+                    Statics.currentswordimage[currentint].transform.GetComponent<Image>().color = Color.white;
+                    //Statics.currentswordimage[currentint].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;                //setzt das alte image beim wechseln auf weiß(falls vorhanden)
                 }
-                transform.GetChild(0).GetComponentInChildren<Image>().color = Color.green;                                                         //setzt das neue image beim wechseln auf grün
+                gameObject.GetComponent<Image>().color = Color.green;                                                         //setzt das neue image beim wechseln auf grün
                 Statics.charcurrentswordname[currentint] = GetComponentInChildren<Text>().text;
                 Statics.currentswordimage[currentint] = this.gameObject;                                                                           //speichert das image vom char im static
                 Statics.activeswordslot = this.gameObject;
@@ -65,9 +66,9 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
                 if (Statics.currentbowimage[currentint] != null)
                 {
-                    Statics.currentbowimage[currentint].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;
+                    Statics.currentbowimage[currentint].transform.GetComponent<Image>().color = Color.white;
                 }
-                transform.GetChild(0).GetComponentInChildren<Image>().color = Color.green;
+                gameObject.GetComponent<Image>().color = Color.green;
                 Statics.charcurrentbowname[currentint] = GetComponentInChildren<Text>().text;
                 Statics.currentbowimage[currentint] = this.gameObject;
                 Statics.activebowslot = this.gameObject;
@@ -87,9 +88,9 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
                 if (Statics.currentfistimage[currentint] != null)
                 {
-                    Statics.currentfistimage[currentint].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;
+                    Statics.currentfistimage[currentint].transform.GetComponent<Image>().color = Color.white;
                 }
-                transform.GetChild(0).GetComponentInChildren<Image>().color = Color.green; 
+                gameObject.GetComponent<Image>().color = Color.green;
                 Statics.charcurrentfistname[currentint] = GetComponentInChildren<Text>().text;
                 Statics.currentfistimage[currentint] = this.gameObject;
                 Statics.activefistslot = this.gameObject;
@@ -99,6 +100,7 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
+        //gameObject.GetComponent<Image>().color = Color.gray;
         currentint = Statics.currentequiptmentchar;
         if (equipslotnumber == 0)
         {
@@ -154,6 +156,7 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
     {
+        //gameObject.GetComponent<Image>().color = Color.white;
         statsreset();
     }
     private void OnDisable()
