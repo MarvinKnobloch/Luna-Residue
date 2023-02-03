@@ -83,11 +83,9 @@ public class Statics
 
     //infight
     public static bool infight;
-
-    //puzzles
-    public static int memorycurrentplattform = 1;
-    public static bool memoryisrunning;
-    public static bool stopshowing;
+    public static int playertookdmgfromamount = 1;                  //wird beim charchange geändert
+    public static int thirdchartookdmgformamount = 1;
+    public static int forthchartookdmgformamount = 1;
 
     //interaction
     public static List<GameObject> interactionobjects = new List<GameObject>();
@@ -103,6 +101,7 @@ public class Statics
     public static int[] spellnumbers = { 24, 24, 24, 24, 24, 24, 24, 24 };        // 24 = anzahl der vorhanden Spells
     public static Color[] spellcolors = new Color[8];
 
+    
     //stones
     public static int[] characterbaseelements = { 3, 1, 7, 6, 2 };        //Maria = ice, Erika = Water, Kaja = Earth, Yaku = Dark, Arissa = Nature}
     public static int[] charactersecondelement = { 8, 8, 8, 8, 8 };       // 8 = hat noch kein element
@@ -111,9 +110,6 @@ public class Statics
     public static int secondcharstoneclass = 3;
     public static int thirdcharstoneclass = 3;
     public static int forthcharstoneclass = 3;
-    public static int playertookdmgfromamount = 1;                  //wird beim charchange geändert
-    public static int thirdchartookdmgformamount = 1;
-    public static int forthchartookdmgformamount = 1;
     public static float groupstonehealbonus = 0;
     public static float groupstonedefensebonus = 0;
     public static float groupstonedmgbonus = 0;

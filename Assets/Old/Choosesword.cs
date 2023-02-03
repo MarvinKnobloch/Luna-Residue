@@ -49,7 +49,7 @@ public class Choosesword : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             }
             transform.GetChild(0).GetComponentInChildren<Image>().color = Color.green;                                                         //setzt das neue image beim wechseln auf grün
             Statics.currentswordimage[currentint] = this.gameObject;                                                                           //speichert das image vom char im static
-            Statics.activeswordslot = this.gameObject;
+            //Statics.activeswordslot = this.gameObject;
         }
         EventSystem.current.SetSelectedGameObject(swordbutton);                                                                                // damit danach wieder der slotangewählt ist
     }

@@ -17,19 +17,8 @@ public class Saveandloadgame : MonoBehaviour
     public void savegamedata(int slot)
     {
         saveinventorys(slot);
-        savestaticsinscript();
+        convertstatics.savestaticsinscript();
         savestatics(slot);
-    }
-    private void savestaticsinscript()
-    {
-        convertstatics.playerposition = LoadCharmanager.savemainposi;
-        convertstatics.playerrotation = LoadCharmanager.savemainrota;
-        convertstatics.camvalueX = LoadCharmanager.savecamvalueX;
-        convertstatics.charcurrentlvl = Statics.charcurrentlvl;
-        convertstatics.charcurrentexp = Statics.charcurrentexp;
-        convertstatics.charrequiredexp = Statics.charrequiredexp;
-        convertstatics.gamesavedate = System.DateTime.UtcNow.ToString("dd MMMM, yyyy");
-        convertstatics.gamesavetime = System.DateTime.UtcNow.ToString("HH:mm");
     }
     private void savestatics(int slot)
     {
@@ -66,7 +55,10 @@ public class Saveandloadgame : MonoBehaviour
     {
         int slot = loadmenucontroller.selectedslot;
         loadstaticdata(slot);
-        setstaticsafterload();
+        if (convertstatics != null)
+        {
+            convertstatics.setstaticsafterload();
+        }
         SceneManager.LoadScene(1);
         loadinventorys(slot);
         setitemsandinventory.resetitems();
@@ -82,18 +74,6 @@ public class Saveandloadgame : MonoBehaviour
         catch (Exception e)
         {
             Debug.LogError($"error Could not load data {e.Message} {e.StackTrace}");
-        }
-    }
-    private void setstaticsafterload()
-    {
-        if (convertstatics != null)
-        {
-            LoadCharmanager.savemainposi = convertstatics.playerposition;
-            LoadCharmanager.savemainrota = convertstatics.playerrotation;
-            LoadCharmanager.savecamvalueX = convertstatics.camvalueX;
-            Statics.charcurrentlvl = convertstatics.charcurrentlvl;
-            Statics.charcurrentexp = convertstatics.charcurrentexp;
-            Statics.charrequiredexp = convertstatics.charrequiredexp;
         }
     }
     private void loadinventorys(int slot)

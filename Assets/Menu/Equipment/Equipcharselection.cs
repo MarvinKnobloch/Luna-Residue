@@ -97,6 +97,7 @@ public class Equipcharselection : MonoBehaviour
         Statics.currentequiptmentchar = currentchar;
         nametext.text = Statics.characternames[Statics.currentequiptmentchar] + " LvL" + Statics.charcurrentlvl;
         settextandimage(Statics.currentequiptmentchar);
+        setselectedbutton();
     }
     private void settextandimage(int currentint)
     {
@@ -233,6 +234,9 @@ public class Equipcharselection : MonoBehaviour
             obj.GetComponent<Image>().color = Color.white;
         }
         charbuttons[Statics.currentequiptmentchar].GetComponent<Image>().color = Color.green;
+    }
+    private void setselectedbutton()
+    {
         if(currentbuttonslot != null)
         {
             EventSystem.current.SetSelectedGameObject(currentbuttonslot);
