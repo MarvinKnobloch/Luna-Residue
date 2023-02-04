@@ -25,6 +25,7 @@ public class Equipmentmenucontroller : MonoBehaviour
         }
         swordgrid.SetActive(true);
         EventSystem.current.SetSelectedGameObject(swordbutton);
+        swordbutton.gameObject.GetComponent<Setcolorcurrentweapon>().triggerbutton();
     }
     private void Update()
     {

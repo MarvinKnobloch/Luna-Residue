@@ -79,7 +79,8 @@ public class Statics
     public static float normaltimedelta;
 
     //equiptment
-    public static int currentequiptmentchar;
+    public static int currentequipmentchar;
+    public static int currentequipmentbutton;
 
     //infight
     public static bool infight;
@@ -157,6 +158,17 @@ public class Statics
     public static string[] charcurrentbowname = { "empty", "empty", "empty", "empty", "empty" };
     public static float[] charfistattack = new float[5];
     public static string[] charcurrentfistname = { "empty", "empty", "empty", "empty", "empty" };
+
+    public static Itemcontroller[] charcurrentsword = new Itemcontroller[5];
+    public static Itemcontroller[] charcurrentbow = new Itemcontroller[5];
+    public static Itemcontroller[] charcurrentfist = new Itemcontroller[5];
+    public static Itemcontroller[] charcurrenthead = new Itemcontroller[5];
+    public static Itemcontroller[] charcurrentchest = new Itemcontroller[5];
+    public static Itemcontroller[] charcurrentgloves = new Itemcontroller[5];
+    public static Itemcontroller[] charcurrentlegs = new Itemcontroller[5];
+    public static Itemcontroller[] charcurrentshoes = new Itemcontroller[5];
+    public static Itemcontroller[] charcurrentneckless = new Itemcontroller[5];
+    public static Itemcontroller[] charcurrentring = new Itemcontroller[5];
 
     public static string[] charcurrentheadname = { "empty", "empty", "empty", "empty", "empty" };
     public static string[] charcurrentchestname = { "empty", "empty", "empty", "empty", "empty" };

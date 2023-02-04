@@ -171,6 +171,7 @@ GameObject:
   - component: {fileID: 3531132629961774365}
   - component: {fileID: 3531132629961774354}
   - component: {fileID: -9002615231568118848}
+  - component: {fileID: 1993928053293558155}
   m_Layer: 5
   m_Name: Armorslotprefab
   m_TagString: Untagged
@@ -185,7 +186,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3531132629961774352}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -306,7 +307,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71eaf6f990c847e4f8de3bd3917ecc77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentint: 0
+--- !u!114 &1993928053293558155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3531132629961774352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f40b37d5c6be1924589d0cdeda107378, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8476810143734148023
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 {
     private GameObject slotbuttontext;
     private GameObject slotbutton;
+    private TextMeshProUGUI statsnumbers;
 
     [NonSerialized] public Itemcontroller itemvalues;
 
@@ -19,140 +20,77 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     [NonSerialized] public int equipslotnumber;                       //wird im Inventoryui gesetzt
 
-    public int currentint = 0;
+    [NonSerialized] public int selectedchar = 0;
 
     private void Awake()
     {
+        gameObject.GetComponent<Equiparmor>().chooseitem = this;
         setitemobj = GetComponentInParent<Setstats>();
         slotbuttontext = gameObject.GetComponentInParent<Setstats>().slottext;
         slotbutton = gameObject.GetComponentInParent<Setstats>().slotbutton;
+        statsnumbers = gameObject.GetComponentInParent<Setstats>().statsnumbers;
     }
     public void setitem()
     {
         if (itemvalues != null)
         {
-            currentint = Statics.currentequiptmentchar;
+            selectedchar = Statics.currentequipmentchar;
             slotbuttontext.gameObject.GetComponent<TextMeshProUGUI>().text = GetComponentInChildren<Text>().text;
-            setequipnameandimage(equipslotnumber, currentint, GetComponentInChildren<Text>().text, gameObject);
-            gameObject.GetComponent<Image>().color = Color.green;
-
-            Statics.charmaxhealth[currentint] += itemvalues.stats[0] - setitemobj.currentmaxhealth[currentint];
-            setitemobj.currentmaxhealth[currentint] = itemvalues.stats[0];
-            setitemobj.statsmaxhealth.text = Statics.charmaxhealth[currentint] + "";
-            setitemobj.statsmaxhealth.color = Color.white;
-
-            Statics.chardefense[currentint] += itemvalues.stats[1] - setitemobj.currentdefense[currentint];
-            setitemobj.currentdefense[currentint] = itemvalues.stats[1];
-            setitemobj.statsdefense.text = Statics.chardefense[currentint] + "";
-            setitemobj.statsdefense.color = Color.white;
-
-            Statics.charattack[currentint] += itemvalues.stats[2] - setitemobj.currentattack[currentint];
-            setitemobj.currentattack[currentint] = itemvalues.stats[2];
-            setitemobj.statsattack.text = Statics.charattack[currentint] + "";
-            setitemobj.statsattack.color = Color.white;
-
-            Statics.charcritchance[currentint] += itemvalues.stats[3] - setitemobj.currentcritchance[currentint];
-            setitemobj.currentcritchance[currentint] = itemvalues.stats[3];
-            setitemobj.statscritchance.text = Statics.charcritchance[currentint] + "%";
-            setitemobj.statscritchance.color = Color.white;
-
-            Statics.charcritdmg[currentint] += itemvalues.stats[4] - setitemobj.currentcritdmg[currentint];
-            setitemobj.currentcritdmg[currentint] = itemvalues.stats[4];
-            setitemobj.statscritdmg.text = Statics.charcritdmg[currentint] + "%";
-            setitemobj.statscritdmg.color = Color.white;
-
-            Statics.charweaponbuff[currentint] += itemvalues.stats[5] - setitemobj.currentweaponbuff[currentint];
-            setitemobj.currentweaponbuff[currentint] = itemvalues.stats[5];
-            setitemobj.statsweaponbuff.text = Statics.charweaponbuff[currentint] - 100 + "%";
-            setitemobj.statsweaponbuff.color = Color.white;
-
-            Statics.charswitchbuff[currentint] += itemvalues.stats[6] - setitemobj.currentcharswitchbuff[currentint];
-            setitemobj.currentcharswitchbuff[currentint] = itemvalues.stats[6];
-            setitemobj.statscharswitchbuff.text = Statics.charswitchbuff[currentint] - 100 + "%";
-            setitemobj.statscharswitchbuff.color = Color.white;
-
-            Statics.charbasicdmgbuff[currentint] += itemvalues.stats[7] - setitemobj.currentbasicdmgbuff[currentint];
-            setitemobj.currentbasicdmgbuff[currentint] = itemvalues.stats[7];
-            setitemobj.statsbasicdmgbuff.text = Statics.charbasicdmgbuff[currentint] + "%";
-            setitemobj.statsbasicdmgbuff.color = Color.white;
+            setnewitem(equipslotnumber);
+            statsupdate();
+            EventSystem.current.SetSelectedGameObject(slotbutton);                            //beim onselect call wird die selectfarbe gesetzt
         }
-        EventSystem.current.SetSelectedGameObject(slotbutton);
     }
-    public void setequipnameandimage(int equipslot, int charnumber, string itemname, GameObject itemimageobj)             //hier werden name und image gesetzt damit ich nur ein script für chooseitem brauch, jeder equipmentslot hat eine eigene nummer
-                                                                                                                          //muss im InventoryUI geändert werden falls die Reihenfolge sich ändert
+    private void statsupdate()
+    {
+        statsnumbers.text = string.Empty;
+        statsnumbers.color = Color.white;
+        statsnumbers.text = Statics.charmaxhealth[selectedchar] + "\n" +
+                            Statics.chardefense[selectedchar] + "\n" +
+                            Statics.charattack[selectedchar] + "\n" +
+                            Statics.charcritchance[selectedchar] + "%" + "\n" +
+                            Statics.charcritdmg[selectedchar] + "%" + "\n" +
+                            (Statics.charweaponbuff[selectedchar] - 100) + "%" + "\n" +
+                            Statics.charweaponbuffduration[selectedchar] + "sec" + "\n" +
+                            (Statics.charswitchbuff[selectedchar] - 100) + "%" + "\n" +
+                            Statics.charswitchbuffduration[selectedchar] + "sec" + "\n" +
+                            Statics.charbasiccritbuff[selectedchar] + "%" + "\n" +
+                            Statics.charbasicdmgbuff[selectedchar] + "%";
+    }
+
+    public void setnewitem(int equipslot)                                           //equipslot wird im inventoryui gesetzt     
+
     {
         if (equipslot == 3)                //head = number3
         {
-            if (Statics.currentheadimage[charnumber] != null)
-            {
-                Statics.currentheadimage[charnumber].transform.GetComponent<Image>().color = Color.white;
-            }
-            Statics.charcurrentheadname[charnumber] = itemname;
-            Statics.currentheadimage[charnumber] = itemimageobj;
-            Statics.activeheadslot = itemimageobj;
+            gameObject.GetComponent<Equiparmor>().sethead();
         }
         else if (equipslot == 4)         //chest = number4
         {
-            if (Statics.currentchestimage[charnumber] != null)
-            {
-                Statics.currentchestimage[charnumber].transform.GetComponent<Image>().color = Color.white;
-            }
-            Statics.charcurrentchestname[charnumber] = itemname;
-            Statics.currentchestimage[charnumber] = itemimageobj;
-            Statics.activechestslot = itemimageobj;
+            gameObject.GetComponent<Equiparmor>().setchest();
         }
         else if (equipslot == 5)        //gloves = number5
         {
-            if (Statics.currentglovesimage[charnumber] != null)
-            {
-                Statics.currentglovesimage[charnumber].transform.GetComponent<Image>().color = Color.white;
-            }
-            Statics.charcurrentglovesname[charnumber] = itemname;
-            Statics.currentglovesimage[charnumber] = itemimageobj;
-            Statics.activeglovesslot = itemimageobj;
+            gameObject.GetComponent<Equiparmor>().setgloves();
         }
-        else if (equipslot == 6)        //belt = number6
+        else if (equipslot == 6)        //legs = number6
         {
-            if (Statics.currentlegimage[charnumber] != null)
-            {
-                Statics.currentlegimage[charnumber].transform.GetComponent<Image>().color = Color.white;
-            }
-            Statics.charcurrentlegname[charnumber] = itemname;
-            Statics.currentlegimage[charnumber] = itemimageobj;
-            Statics.activebeltslot = itemimageobj;
+            gameObject.GetComponent<Equiparmor>().setlegs();
         }
         else if (equipslot == 7)        //shoes = number7
         {
-            if (Statics.currentshoesimage[charnumber] != null)
-            {
-                Statics.currentshoesimage[charnumber].transform.GetComponent<Image>().color = Color.white;
-            }
-            Statics.charcurrentshoesname[charnumber] = itemname;
-            Statics.currentshoesimage[charnumber] = itemimageobj;
-            Statics.activeshoesslot = itemimageobj;
+            gameObject.GetComponent<Equiparmor>().setshoes();
         }
         else if (equipslot == 8)        //neckless = number8
         {
-            if (Statics.currentnecklessimage[charnumber] != null)
-            {
-                Statics.currentnecklessimage[charnumber].transform.GetComponent<Image>().color = Color.white;
-            }
-            Statics.charcurrentnecklessname[charnumber] = itemname;
-            Statics.currentnecklessimage[charnumber] = itemimageobj;
-            Statics.activenecklessslot = itemimageobj;
+            gameObject.GetComponent<Equiparmor>().setneckless();
         }
         else if (equipslot == 9)        //ring = number9
         {
-            if (Statics.currentringimage[charnumber] != null)
-            {
-                Statics.currentringimage[charnumber].transform.GetComponent<Image>().color = Color.white;
-            }
-            Statics.charcurrentringname[charnumber] = itemname;
-            Statics.currentringimage[charnumber] = itemimageobj;
-            Statics.activeringslot = itemimageobj;
+            gameObject.GetComponent<Equiparmor>().setring();
         }
     }
-    public void upgradeequipeditems()
+    /*public void upgradeequipeditems()
     {
         transform.GetChild(2).GetComponentInChildren<Text>().text = itemvalues.upgradelvl.ToString();
         //update inventory itemlvl
@@ -253,7 +191,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         setitemobj.currentattack[currentchar] = itemvalues.stats[2];
 
         Statics.charcritchance[currentchar] += itemvalues.stats[3] - setitemobj.currentcritchance[currentchar];
-        setitemobj.currentcritchance[currentint] = itemvalues.stats[3];
+        setitemobj.currentcritchance[selectedchar] = itemvalues.stats[3];
 
         Statics.charcritdmg[currentchar] += itemvalues.stats[4] - setitemobj.currentcritdmg[currentchar];
         setitemobj.currentcritdmg[currentchar] = itemvalues.stats[4];
@@ -266,145 +204,188 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         Statics.charbasicdmgbuff[currentchar] += itemvalues.stats[7] - setitemobj.currentbasicdmgbuff[currentchar];
         setitemobj.currentbasicdmgbuff[currentchar] = itemvalues.stats[7];
-    }
+    }*/
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
-        currentint = Statics.currentequiptmentchar;
+        statsnumbers.text = string.Empty;
+        statsnumbers.color = Color.white;
+        selectedchar = Statics.currentequipmentchar;
         if (itemvalues != null)
         {
-            float currenthealth = setitemobj.currentmaxhealth[currentint];
-            float currentdenfese = setitemobj.currentdefense[currentint];
-            float currentattack = setitemobj.currentattack[currentint];
-            float currentcritchance = setitemobj.currentcritchance[currentint];
-            float currentcritdmg = setitemobj.currentcritdmg[currentint];
-            float currentweaponbuff = setitemobj.currentweaponbuff[currentint];
-            float currentcharbuff = setitemobj.currentcharswitchbuff[currentint];
-            float currentbasicbuff = setitemobj.currentbasicdmgbuff[currentint];
-
-            if (itemvalues.stats[0] > currenthealth)
+            if (Statics.currentequipmentbutton == 3)
             {
-                setitemobj.statsmaxhealth.color = Color.green;
-                setitemobj.statsmaxhealth.text = "( +" + (itemvalues.stats[0] - currenthealth) + " ) " + (itemvalues.stats[0] + Statics.charmaxhealth[currentint]);               //berechnung eventuell falsch, richtig variante ist in Chooseweapon
-            }
-            if (itemvalues.stats[0] < currenthealth)
-            {
-                setitemobj.statsmaxhealth.color = Color.red;
-                setitemobj.statsmaxhealth.text = "( " + (itemvalues.stats[0] - currenthealth) + " ) " + (Statics.charmaxhealth[currentint] - currenthealth);
+                ontrigger(Statics.charcurrenthead[selectedchar]);
+                /*ontriggerflatstats(Statics.charcurrenthead[selectedchar], 0, Statics.charmaxhealth[selectedchar]);
+                ontriggerflatstats(Statics.charcurrenthead[selectedchar], 1, Statics.chardefense[selectedchar]);
+                ontriggerflatstats(Statics.charcurrenthead[selectedchar], 2, Statics.charattack[selectedchar]);
+                ontriggerpercentage(Statics.charcurrenthead[selectedchar], 3, Statics.charcritchance[selectedchar]);
+                ontriggerpercentage(Statics.charcurrenthead[selectedchar], 4, Statics.charcritdmg[selectedchar]);
+                ontriggerpercentage(Statics.charcurrenthead[selectedchar], 5, Statics.charweaponbuff[selectedchar] - 100);
+                ontriggerduration(Statics.charweaponbuffduration[selectedchar]);
+                ontriggerpercentage(Statics.charcurrenthead[selectedchar], 6, Statics.charswitchbuff[selectedchar] - 100);
+                ontriggerduration(Statics.charswitchbuffduration[selectedchar]);
+                ontriggerpercentage(Statics.charcurrenthead[selectedchar], 7, Statics.charbasiccritbuff[selectedchar]);
+                ontriggerpercentage(Statics.charcurrenthead[selectedchar], 8, Statics.charbasicdmgbuff[selectedchar]);*/
             }
 
-            if (itemvalues.stats[1] > currentdenfese)
+            else if (Statics.currentequipmentbutton == 4)
             {
-                setitemobj.statsdefense.color = Color.green;
-                setitemobj.statsdefense.text = "( +" + (itemvalues.stats[1] - currentdenfese) + " ) " + (itemvalues.stats[1] + Statics.chardefense[currentint]);
+                ontrigger(Statics.charcurrentchest[selectedchar]);
+                /*ontriggerflatstats(Statics.charcurrentchest[selectedchar], 0, Statics.charmaxhealth[selectedchar]);
+                ontriggerflatstats(Statics.charcurrentchest[selectedchar], 1, Statics.chardefense[selectedchar]);
+                ontriggerflatstats(Statics.charcurrentchest[selectedchar], 2, Statics.charattack[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentchest[selectedchar], 3, Statics.charcritchance[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentchest[selectedchar], 4, Statics.charcritdmg[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentchest[selectedchar], 5, Statics.charweaponbuff[selectedchar] - 100);
+                ontriggerduration(Statics.charweaponbuffduration[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentchest[selectedchar], 6, Statics.charswitchbuff[selectedchar] - 100);
+                ontriggerduration(Statics.charswitchbuffduration[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentchest[selectedchar], 7, Statics.charbasiccritbuff[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentchest[selectedchar], 8, Statics.charbasicdmgbuff[selectedchar]);*/
             }
+            else if (Statics.currentequipmentbutton == 5)
+            {
+                ontrigger(Statics.charcurrentgloves[selectedchar]);
+                /*ontriggerflatstats(Statics.charcurrentgloves[selectedchar], 0, Statics.charmaxhealth[selectedchar]);
+                ontriggerflatstats(Statics.charcurrentgloves[selectedchar], 1, Statics.chardefense[selectedchar]);
+                ontriggerflatstats(Statics.charcurrentgloves[selectedchar], 2, Statics.charattack[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentgloves[selectedchar], 3, Statics.charcritchance[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentgloves[selectedchar], 4, Statics.charcritdmg[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentgloves[selectedchar], 5, Statics.charweaponbuff[selectedchar] - 100);
+                ontriggerduration(Statics.charweaponbuffduration[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentgloves[selectedchar], 6, Statics.charswitchbuff[selectedchar] - 100);
+                ontriggerduration(Statics.charswitchbuffduration[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentgloves[selectedchar], 7, Statics.charbasiccritbuff[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentgloves[selectedchar], 8, Statics.charbasicdmgbuff[selectedchar]);*/
+            }
+            else if (Statics.currentequipmentbutton == 6)
+            {
+                ontrigger(Statics.charcurrentlegs[selectedchar]);
+                /*ontriggerflatstats(Statics.charcurrentlegs[selectedchar], 0, Statics.charmaxhealth[selectedchar]);
+                ontriggerflatstats(Statics.charcurrentlegs[selectedchar], 1, Statics.chardefense[selectedchar]);
+                ontriggerflatstats(Statics.charcurrentlegs[selectedchar], 2, Statics.charattack[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentlegs[selectedchar], 3, Statics.charcritchance[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentlegs[selectedchar], 4, Statics.charcritdmg[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentlegs[selectedchar], 5, Statics.charweaponbuff[selectedchar] - 100);
+                ontriggerduration(Statics.charweaponbuffduration[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentlegs[selectedchar], 6, Statics.charswitchbuff[selectedchar] - 100);
+                ontriggerduration(Statics.charswitchbuffduration[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentlegs[selectedchar], 7, Statics.charbasiccritbuff[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentlegs[selectedchar], 8, Statics.charbasicdmgbuff[selectedchar]);*/
+            }
+            else if (Statics.currentequipmentbutton == 7)
+            {
+                ontrigger(Statics.charcurrentshoes[selectedchar]);
+                /*ontriggerflatstats(Statics.charcurrentshoes[selectedchar], 0, Statics.charmaxhealth[selectedchar]);
+                ontriggerflatstats(Statics.charcurrentshoes[selectedchar], 1, Statics.chardefense[selectedchar]);
+                ontriggerflatstats(Statics.charcurrentshoes[selectedchar], 2, Statics.charattack[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentshoes[selectedchar], 3, Statics.charcritchance[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentshoes[selectedchar], 4, Statics.charcritdmg[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentshoes[selectedchar], 5, Statics.charweaponbuff[selectedchar] - 100);
+                ontriggerduration(Statics.charweaponbuffduration[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentshoes[selectedchar], 6, Statics.charswitchbuff[selectedchar] - 100);
+                ontriggerduration(Statics.charswitchbuffduration[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentshoes[selectedchar], 7, Statics.charbasiccritbuff[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentshoes[selectedchar], 8, Statics.charbasicdmgbuff[selectedchar]);*/
+            }
+            else if (Statics.currentequipmentbutton == 8)
+            {
+                ontrigger(Statics.charcurrentneckless[selectedchar]);
+                /*ontriggerflatstats(Statics.charcurrentneckless[selectedchar], 0, Statics.charmaxhealth[selectedchar]);
+                ontriggerflatstats(Statics.charcurrentneckless[selectedchar], 1, Statics.chardefense[selectedchar]);
+                ontriggerflatstats(Statics.charcurrentneckless[selectedchar], 2, Statics.charattack[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentneckless[selectedchar], 3, Statics.charcritchance[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentneckless[selectedchar], 4, Statics.charcritdmg[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentneckless[selectedchar], 5, Statics.charweaponbuff[selectedchar] - 100);
+                ontriggerduration(Statics.charweaponbuffduration[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentneckless[selectedchar], 6, Statics.charswitchbuff[selectedchar] - 100);
+                ontriggerduration(Statics.charswitchbuffduration[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentneckless[selectedchar], 7, Statics.charbasiccritbuff[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentneckless[selectedchar], 8, Statics.charbasicdmgbuff[selectedchar]);*/
+            }
+            else if (Statics.currentequipmentbutton == 9)
+            {
+                ontrigger(Statics.charcurrentring[selectedchar]);
+                /*ontriggerflatstats(Statics.charcurrentring[selectedchar], 0, Statics.charmaxhealth[selectedchar]);
+                ontriggerflatstats(Statics.charcurrentring[selectedchar], 1, Statics.chardefense[selectedchar]);
+                ontriggerflatstats(Statics.charcurrentring[selectedchar], 2, Statics.charattack[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentring[selectedchar], 3, Statics.charcritchance[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentring[selectedchar], 4, Statics.charcritdmg[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentring[selectedchar], 5, Statics.charweaponbuff[selectedchar] - 100);
+                ontriggerduration(Statics.charweaponbuffduration[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentring[selectedchar], 6, Statics.charswitchbuff[selectedchar] - 100);
+                ontriggerduration(Statics.charswitchbuffduration[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentring[selectedchar], 7, Statics.charbasiccritbuff[selectedchar]);
+                ontriggerpercentage(Statics.charcurrentring[selectedchar], 8, Statics.charbasicdmgbuff[selectedchar]);*/
+            }
+        }
+    }
+    private void ontrigger(Itemcontroller slot)
+    {
+        ontriggerflatstats(slot, 0, Statics.charmaxhealth[selectedchar]);
+        ontriggerflatstats(slot, 1, Statics.chardefense[selectedchar]);
+        ontriggerflatstats(slot, 2, Statics.charattack[selectedchar]);
+        ontriggerpercentage(slot, 3, Statics.charcritchance[selectedchar]);
+        ontriggerpercentage(slot, 4, Statics.charcritdmg[selectedchar]);
+        ontriggerpercentage(slot, 5, Statics.charweaponbuff[selectedchar] - 100);
+        ontriggerduration(Statics.charweaponbuffduration[selectedchar]);
+        ontriggerpercentage(slot, 6, Statics.charswitchbuff[selectedchar] - 100);
+        ontriggerduration(Statics.charswitchbuffduration[selectedchar]);
+        ontriggerbasiccritpercentage(Statics.charbasiccritbuff[selectedchar]);
+        ontriggerpercentage(slot, 7, Statics.charbasicdmgbuff[selectedchar]);
+    }
+    private void ontriggerflatstats(Itemcontroller equipeditem, int itemstat, float currentstatvalue)
+    {
+        float difference = itemvalues.stats[itemstat] - equipeditem.stats[itemstat];
+        if (itemvalues.stats[itemstat] > equipeditem.stats[itemstat])
+        {
+            statsnumbers.text += "<color=green>" + "( +" + difference + " ) " + (difference + currentstatvalue) + "</color>" + "\n";
+        }
+        else if (itemvalues.stats[itemstat] < equipeditem.stats[itemstat])
+        {
+            statsnumbers.text += "<color=red>" + "( +" + difference + " ) " + (difference + currentstatvalue) + "</color>" + "\n";
+        }
+        else
+        {
+            statsnumbers.text += currentstatvalue + "\n";
+        }
+    }
+    private void ontriggerpercentage(Itemcontroller equipeditem, int itemstat, float currentstatvalue)
+    {
+        float difference = itemvalues.stats[itemstat] - equipeditem.stats[itemstat];
+        if (itemvalues.stats[itemstat] > equipeditem.stats[itemstat])
+        {
+            statsnumbers.text += "<color=green>" + "( +" + difference + " ) " + (difference + currentstatvalue) + "%" + "</color>" + "\n";
+        }
+        else if (itemvalues.stats[itemstat] < equipeditem.stats[itemstat])
+        {
+            statsnumbers.text += "<color=red>" + "( +" + difference + " ) " + (difference + currentstatvalue) + "%" + "</color>" + "\n";
+        }
+        else
+        {
+            statsnumbers.text += currentstatvalue + "%" + "\n";
+        }
+    }
+    private void ontriggerbasiccritpercentage(float currentstatvalue)
+    {
+        statsnumbers.text += currentstatvalue + "%" + "\n";
+    }
+    private void ontriggerduration(float currentstatvalue)
+    {
+        {
+            statsnumbers.text += currentstatvalue + "sec" + "\n";
+        }
+    }
 
-            if (itemvalues.stats[1] < currentdenfese)
-            {
-                setitemobj.statsdefense.color = Color.red;
-                setitemobj.statsdefense.text = "( " + (itemvalues.stats[1] - currentdenfese) + " ) " + (Statics.chardefense[currentint] - currentdenfese);
-            }
 
-            if (itemvalues.stats[2] > currentattack)
-            {
-                setitemobj.statsattack.color = Color.green;
-                setitemobj.statsattack.text = "( +" + (itemvalues.stats[2] - currentattack) + " ) " + (itemvalues.stats[2] + Statics.charattack[currentint]);
-            }
-            if (itemvalues.stats[2] < currentattack)
-            {
-                setitemobj.statsattack.color = Color.red;
-                setitemobj.statsattack.text = "( " + (itemvalues.stats[2] - currentattack) + " ) " + (Statics.charattack[currentint] - currentattack);
-            }
-
-            if (itemvalues.stats[3] > currentcritchance)
-            {
-                setitemobj.statscritchance.color = Color.green;
-                setitemobj.statscritchance.text = "( +" + (itemvalues.stats[3] - currentcritchance) + "%" + " ) " + (itemvalues.stats[3] + Statics.charcritchance[currentint]) + "%";
-            }
-            if (itemvalues.stats[3] < currentcritchance)
-            {
-                setitemobj.statscritchance.color = Color.red;
-                setitemobj.statscritchance.text = "( " + (itemvalues.stats[3] - currentcritchance) + "%" + " ) " + (Statics.charcritchance[currentint] - currentcritchance) + "%";
-            }
-
-            if (itemvalues.stats[4] > currentcritdmg)
-            {
-                setitemobj.statscritdmg.color = Color.green;
-                setitemobj.statscritdmg.text = "( +" + (itemvalues.stats[4] - currentcritdmg) + "%" + " ) " + (itemvalues.stats[4] + Statics.charcritdmg[currentint]) + "%";
-            }
-            if (itemvalues.stats[4] < currentcritdmg)
-            {
-                setitemobj.statscritdmg.color = Color.red;
-                setitemobj.statscritdmg.text = "( " + (itemvalues.stats[4] - currentcritdmg) + "%" + " ) " + (Statics.charcritdmg[currentint] - currentcritdmg) + "%";
-            }
-
-            if (itemvalues.stats[5] > currentweaponbuff)
-            {
-                setitemobj.statsweaponbuff.color = Color.green;
-                setitemobj.statsweaponbuff.text = "( +" + (itemvalues.stats[5] - currentweaponbuff) + "%" + " ) " + (itemvalues.stats[5] + Statics.charweaponbuff[currentint] - 100) + "%";
-            }
-            if (itemvalues.stats[5] < currentweaponbuff)
-            {
-                setitemobj.statsweaponbuff.color = Color.red;
-                setitemobj.statsweaponbuff.text = "( " + (itemvalues.stats[5] - currentweaponbuff) + "%" + " ) " + (Statics.charweaponbuff[currentint] - currentweaponbuff - 100) + "%";
-            }
-
-            if (itemvalues.stats[6] > currentcharbuff)
-            {
-                setitemobj.statscharswitchbuff.color = Color.green;
-                setitemobj.statscharswitchbuff.text = "( +" + (itemvalues.stats[6] - currentcharbuff) + "%" + " ) " + (itemvalues.stats[6] + Statics.charswitchbuff[currentint] - 100) + "%";
-            }
-            if (itemvalues.stats[6] < currentcharbuff)
-            {
-                setitemobj.statscharswitchbuff.color = Color.red;
-                setitemobj.statscharswitchbuff.text = "( " + (itemvalues.stats[6] - currentcharbuff) + "%" + " ) " + (Statics.charswitchbuff[currentint] - currentcharbuff - 100) + "%";
-            }
-
-            if (itemvalues.stats[7] > currentbasicbuff)
-            {
-                setitemobj.statsbasicdmgbuff.color = Color.green;
-                setitemobj.statsbasicdmgbuff.text = "( +" + (itemvalues.stats[7] - currentbasicbuff) + "%" + " ) " + (itemvalues.stats[7] + Statics.charbasicdmgbuff[currentint]) + "%";
-            }
-            if (itemvalues.stats[7] < currentbasicbuff)
-            {
-                setitemobj.statsbasicdmgbuff.color = Color.red;
-                setitemobj.statsbasicdmgbuff.text = "( " + (itemvalues.stats[7] - currentbasicbuff) + "%" + " ) " + (Statics.charbasicdmgbuff[currentint] - currentbasicbuff) + "%";
-            }
-            setitemobj.itemtextcontroller.itemvalues = itemvalues;
+            /*setitemobj.itemtextcontroller.itemvalues = itemvalues;
             setitemobj.itemtextcontroller.chooseitem = this;
             setitemobj.itemtextcontroller.equipslotnumber = equipslotnumber;
             setitemobj.showitemstatsobj.SetActive(true);
         }
-    }
+    }*/
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
     {
-        statsreset();
-    }
-    private void statsreset()
-    {
-        setitemobj.statsmaxhealth.text = Statics.charmaxhealth[currentint] + "";
-        setitemobj.statsmaxhealth.color = Color.white;
-
-        setitemobj.statsdefense.text = Statics.chardefense[currentint] + "";
-        setitemobj.statsdefense.color = Color.white;
-
-        setitemobj.statsattack.text = Statics.charattack[currentint] + "";
-        setitemobj.statsattack.color = Color.white;
-
-        setitemobj.statscritchance.text = Statics.charcritchance[currentint] + "%";
-        setitemobj.statscritchance.color = Color.white;
-
-        setitemobj.statscritdmg.text = Statics.charcritdmg[currentint] + "%";
-        setitemobj.statscritdmg.color = Color.white;
-
-        setitemobj.statsweaponbuff.text = Statics.charweaponbuff[currentint] - 100 + "%";
-        setitemobj.statsweaponbuff.color = Color.white;
-
-        setitemobj.statscharswitchbuff.text = Statics.charswitchbuff[currentint] - 100 + "%";
-        setitemobj.statscharswitchbuff.color = Color.white;
-
-        setitemobj.statsbasicdmgbuff.text = Statics.charbasicdmgbuff[currentint] + "%";
-        setitemobj.statsbasicdmgbuff.color = Color.white;
-
-        setitemobj.showitemstatsobj.SetActive(false);
+        statsupdate();
     }
 }

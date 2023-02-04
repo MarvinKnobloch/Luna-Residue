@@ -36,7 +36,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  upgradelvl: 0
+  upgradelvl: 2
   maxupgradelvl: 3
   upgrades:
   - newstats:

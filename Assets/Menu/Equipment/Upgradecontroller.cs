@@ -93,7 +93,7 @@ public class Upgradecontroller : MonoBehaviour
         }
         removemats();
         itemtoupgrade.upgradelvl++;
-        chooseitem.upgradeequipeditems();
+        //chooseitem.upgradeequipeditems();
         itemtextcontroller.textupdate();
         resetonpointenterlayer.SetActive(true);
     }

@@ -15,16 +15,16 @@ MonoBehaviour:
   Container:
     savepathname: Headinventory
     Items:
-    - item: {fileID: 0}
-      amount: 0
-      itemname: 
-      inventoryposi: 0
+    - item: {fileID: 11400000, guid: 947a2c09834ead84aab8523907aa0c8b, type: 2}
+      amount: 1
+      itemname: Basichead
+      inventoryposi: 1
       itemlvl: 0
-    - item: {fileID: 0}
-      amount: 0
-      itemname: 
-      inventoryposi: 0
-      itemlvl: 0
+    - item: {fileID: 11400000, guid: 43f764551917a8845a7d36e833c3ced9, type: 2}
+      amount: 1
+      itemname: Mystichead
+      inventoryposi: 2
+      itemlvl: 2
     - item: {fileID: 0}
       amount: 0
       itemname: 

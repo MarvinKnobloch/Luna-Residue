@@ -29,7 +29,7 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
     public void setweapon()
     {
-        currentint = Statics.currentequiptmentchar;
+        currentint = Statics.currentequipmentchar;
         if (equipslotnumber == 0)
         {
             if (itemvalues != null)
@@ -101,7 +101,7 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
         //gameObject.GetComponent<Image>().color = Color.gray;
-        currentint = Statics.currentequiptmentchar;
+        currentint = Statics.currentequipmentchar;
         if (equipslotnumber == 0)
         {
             float currentsword = setitemobj.currentsworddmg[currentint];

@@ -20,19 +20,8 @@ public class Equipcharselection : MonoBehaviour
     public Text statsfistattack;
 
     [SerializeField] private TextMeshProUGUI[] slotbuttontext;
-
-    /*public TextMeshProUGUI swordbutton;
-    public TextMeshProUGUI bowbutton;
-    public TextMeshProUGUI fistbutton;
-    public TextMeshProUGUI headbutton;
-    public TextMeshProUGUI chestbutton;
-    public TextMeshProUGUI glovesbutton;
-    public TextMeshProUGUI beltbutton;
-    public TextMeshProUGUI shoesbutton;
-    public TextMeshProUGUI necklessbutton;
-    public TextMeshProUGUI ringbutton;*/
-
-    public GameObject[] charbuttons;
+    [SerializeField] private GameObject[] charbuttons;
+    [SerializeField] private GameObject[] grids;
     [SerializeField] private GameObject resetonpointerenterlayer;
 
     private void Awake()
@@ -41,9 +30,9 @@ public class Equipcharselection : MonoBehaviour
     }
     private void OnEnable()
     {
-        Statics.currentequiptmentchar = PlayerPrefs.GetInt("Maincharindex");
-        nametext.text = Statics.characternames[Statics.currentequiptmentchar] + " LvL" + Statics.charcurrentlvl;
-        settextandimage(Statics.currentequiptmentchar);
+        Statics.currentequipmentchar = PlayerPrefs.GetInt("Maincharindex");
+        nametext.text = Statics.characternames[Statics.currentequipmentchar] + " LvL" + Statics.charcurrentlvl;
+        settextandimage(Statics.currentequipmentchar);
     }
     private void Update()
     {
@@ -60,35 +49,35 @@ public class Equipcharselection : MonoBehaviour
     }
     private void selectionforward()
     {
-        if (Statics.currentequiptmentchar >= Statics.playablechars - 1)
+        if (Statics.currentequipmentchar >= Statics.playablechars - 1)
         {
-            Statics.currentequiptmentchar = 0;
-            choosechar(Statics.currentequiptmentchar);
+            Statics.currentequipmentchar = 0;
+            choosechar(Statics.currentequipmentchar);
         }
         else
         {
-            Statics.currentequiptmentchar++;
-            choosechar(Statics.currentequiptmentchar);
+            Statics.currentequipmentchar++;
+            choosechar(Statics.currentequipmentchar);
         }
     }
     private void selectionbackward()
     {
-        if (Statics.currentequiptmentchar == 0)
+        if (Statics.currentequipmentchar == 0)
         {
-            Statics.currentequiptmentchar = Statics.playablechars - 1;
-            choosechar(Statics.currentequiptmentchar);
+            Statics.currentequipmentchar = Statics.playablechars - 1;
+            choosechar(Statics.currentequipmentchar);
         }
         else
         {
-            Statics.currentequiptmentchar--;
-            choosechar(Statics.currentequiptmentchar);
+            Statics.currentequipmentchar--;
+            choosechar(Statics.currentequipmentchar);
         }
     }
     public void choosechar(int currentchar)
     {
-        Statics.currentequiptmentchar = currentchar;
-        nametext.text = Statics.characternames[Statics.currentequiptmentchar] + " LvL" + Statics.charcurrentlvl;
-        settextandimage(Statics.currentequiptmentchar);
+        Statics.currentequipmentchar = currentchar;
+        nametext.text = Statics.characternames[Statics.currentequipmentchar] + " LvL" + Statics.charcurrentlvl;
+        settextandimage(Statics.currentequipmentchar);
         setselectedbutton();
     }
     private void settextandimage(int currentchar)
@@ -125,7 +114,7 @@ public class Equipcharselection : MonoBehaviour
         slotbuttontext[8].text = Statics.charcurrentnecklessname[currentchar].ToString();
         slotbuttontext[9].text = Statics.charcurrentringname[currentchar].ToString();
 
-        if (Statics.activeswordslot != null)
+        /*if (Statics.activeswordslot != null)
         {
             Statics.activeswordslot.transform.GetComponent<Image>().color = Color.white;
         }
@@ -223,12 +212,12 @@ public class Equipcharselection : MonoBehaviour
         {
             Statics.currentringimage[currentchar].transform.GetComponent<Image>().color = Color.green;
             Statics.activeringslot = Statics.currentringimage[currentchar];
-        }
+        }*/
         foreach (GameObject obj in charbuttons)
         {
             obj.GetComponent<Image>().color = Color.white;
         }
-        charbuttons[Statics.currentequiptmentchar].GetComponent<Image>().color = Color.green;
+        charbuttons[Statics.currentequipmentchar].GetComponent<Image>().color = Color.green;
     }
     
     private void setselectedbutton()
@@ -236,6 +225,14 @@ public class Equipcharselection : MonoBehaviour
         if(currentbuttonslot != null)
         {
             EventSystem.current.SetSelectedGameObject(currentbuttonslot);
+            if(Statics.currentequipmentbutton < 3)
+            {
+                currentbuttonslot.gameObject.GetComponent<Setcolorcurrentweapon>().triggerbutton();
+            }
+            else
+            {
+                currentbuttonslot.gameObject.GetComponent<Setcolorcurrentarmor>().triggerbutton();
+            }
         }
     }
 }
