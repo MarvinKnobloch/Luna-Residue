@@ -14,18 +14,14 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     [NonSerialized] public Itemcontroller itemvalues;
 
-    private Setstats setitemobj;
+    private Setstats setstats;
 
     [NonSerialized] public Text upgradelvltext;
-
-    [NonSerialized] public int equipslotnumber;                       //wird im Inventoryui gesetzt
-
     [NonSerialized] public int selectedchar = 0;
 
     private void Awake()
     {
-        gameObject.GetComponent<Equiparmor>().chooseitem = this;
-        setitemobj = GetComponentInParent<Setstats>();
+        setstats = GetComponentInParent<Setstats>();
         slotbuttontext = gameObject.GetComponentInParent<Setstats>().slottext;
         slotbutton = gameObject.GetComponentInParent<Setstats>().slotbutton;
         statsnumbers = gameObject.GetComponentInParent<Setstats>().statsnumbers;
@@ -36,7 +32,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             selectedchar = Statics.currentequipmentchar;
             slotbuttontext.gameObject.GetComponent<TextMeshProUGUI>().text = GetComponentInChildren<Text>().text;
-            setnewitem(equipslotnumber);
+            setnewitem(Statics.currentequipmentbutton);
             statsupdate();
             EventSystem.current.SetSelectedGameObject(slotbutton);                            //beim onselect call wird die selectfarbe gesetzt
         }
@@ -63,264 +59,208 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if (equipslot == 3)                //head = number3
         {
-            gameObject.GetComponent<Equiparmor>().sethead();
+            setitemandvalues(Statics.charcurrenthead[selectedchar]);
+            Statics.charcurrenthead[selectedchar] = itemvalues;
         }
         else if (equipslot == 4)         //chest = number4
         {
-            gameObject.GetComponent<Equiparmor>().setchest();
+            setitemandvalues(Statics.charcurrentchest[selectedchar]);
+            Statics.charcurrentchest[selectedchar] = itemvalues;
         }
         else if (equipslot == 5)        //gloves = number5
         {
-            gameObject.GetComponent<Equiparmor>().setgloves();
+            setitemandvalues(Statics.charcurrentgloves[selectedchar]);
+            Statics.charcurrentgloves[selectedchar] = itemvalues;
         }
         else if (equipslot == 6)        //legs = number6
         {
-            gameObject.GetComponent<Equiparmor>().setlegs();
+            setitemandvalues(Statics.charcurrentlegs[selectedchar]);
+            Statics.charcurrentlegs[selectedchar] = itemvalues;
         }
         else if (equipslot == 7)        //shoes = number7
         {
-            gameObject.GetComponent<Equiparmor>().setshoes();
+            setitemandvalues(Statics.charcurrentshoes[selectedchar]);
+            Statics.charcurrentshoes[selectedchar] = itemvalues;
         }
         else if (equipslot == 8)        //neckless = number8
         {
-            gameObject.GetComponent<Equiparmor>().setneckless();
+            setitemandvalues(Statics.charcurrentneckless[selectedchar]);
+            Statics.charcurrentneckless[selectedchar] = itemvalues;
         }
         else if (equipslot == 9)        //ring = number9
         {
-            gameObject.GetComponent<Equiparmor>().setring();
+            setitemandvalues(Statics.charcurrentring[selectedchar]);
+            Statics.charcurrentring[selectedchar] = itemvalues;
         }
     }
-    /*public void upgradeequipeditems()
+    private void setitemandvalues(Itemcontroller staticsslot)
+    {
+        if (staticsslot != null)
+        {
+            Statics.charmaxhealth[selectedchar] += itemvalues.stats[0] - staticsslot.stats[0];
+            Statics.chardefense[selectedchar] += itemvalues.stats[1] - staticsslot.stats[1];
+            Statics.charattack[selectedchar] += itemvalues.stats[2] - staticsslot.stats[2];
+            Statics.charcritchance[selectedchar] += itemvalues.stats[3] - staticsslot.stats[3];
+            Statics.charcritdmg[selectedchar] += itemvalues.stats[4] - staticsslot.stats[4];
+            Statics.charweaponbuff[selectedchar] += itemvalues.stats[5] - staticsslot.stats[5];
+            Statics.charswitchbuff[selectedchar] += itemvalues.stats[6] - staticsslot.stats[6];
+            Statics.charbasicdmgbuff[selectedchar] += itemvalues.stats[7] - staticsslot.stats[7];
+        }
+        else
+        {
+            Debug.Log("noitem");
+        }
+    }
+    public void subtractequipeditem()
+    {
+        if (Statics.currentequipmentbutton == 3)
+        {
+            setstaticsslot(Statics.charcurrenthead);
+        }
+        else if (Statics.currentequipmentbutton == 4)
+        {
+            setstaticsslot(Statics.charcurrentchest);
+        }
+        else if (Statics.currentequipmentbutton == 5)
+        {
+            setstaticsslot(Statics.charcurrentgloves);
+        }
+        else if (Statics.currentequipmentbutton == 6)
+        {
+            setstaticsslot(Statics.charcurrentlegs);
+        }
+        else if (Statics.currentequipmentbutton == 7)
+        {
+            setstaticsslot(Statics.charcurrentshoes);
+        }
+        else if (Statics.currentequipmentbutton == 8)
+        {
+            setstaticsslot(Statics.charcurrentneckless);
+        }
+        else if (Statics.currentequipmentbutton == 8)
+        {
+            setstaticsslot(Statics.charcurrentring);
+        }
+    }
+    public void setstaticsslot(Itemcontroller[] staticslotitem)
+    {
+        for (int i = 0; i < staticslotitem.Length; i++)
+        {
+            if (itemvalues == staticslotitem[i])
+            {
+                subtractstatsbeforeupgrade(i);
+            }
+        }
+    }
+    public void upgradeequipeditems()
     {
         transform.GetChild(2).GetComponentInChildren<Text>().text = itemvalues.upgradelvl.ToString();
-        //update inventory itemlvl
-        if (equipslotnumber == 3)
+        if (Statics.currentequipmentbutton == 3)
         {
-            int currentchar = 0;
-            foreach (string item in Statics.charcurrentheadname)
-            {
-                if (itemvalues.itemname == item)
-                {
-                    setstatsafterupgrade(currentchar);
-                }
-                currentchar++;
-            }
+            setstaticslotadd(Statics.charcurrenthead);
         }
-        if (equipslotnumber == 4)
+        if (Statics.currentequipmentbutton == 4)
         {
-            int currentchar = 0;
-            foreach (string item in Statics.charcurrentchestname)
-            {
-                if (itemvalues.itemname == item)
-                {
-                    setstatsafterupgrade(currentchar);
-                }
-                currentchar++;
-            }
+            setstaticslotadd(Statics.charcurrentchest);
         }
-        if (equipslotnumber == 5)
+        if (Statics.currentequipmentbutton == 5)
         {
-            int currentchar = 0;
-            foreach (string item in Statics.charcurrentglovesname)
-            {
-                if (itemvalues.itemname == item)
-                {
-                    setstatsafterupgrade(currentchar);
-                }
-                currentchar++;
-            }
+            setstaticslotadd(Statics.charcurrentgloves);
         }
-        if (equipslotnumber == 6)
+        if (Statics.currentequipmentbutton == 6)
         {
-            int currentchar = 0;
-            foreach (string item in Statics.charcurrentlegname)
-            {
-                if (itemvalues.itemname == item)
-                {
-                    setstatsafterupgrade(currentchar);
-                }
-                currentchar++;
-            }
+            setstaticslotadd(Statics.charcurrentlegs);
         }
-        if (equipslotnumber == 7)
+        if (Statics.currentequipmentbutton == 7)
         {
-            int currentchar = 0;
-            foreach (string item in Statics.charcurrentshoesname)
-            {
-                if (itemvalues.itemname == item)
-                {
-                    setstatsafterupgrade(currentchar);
-                }
-                currentchar++;
-            }
+            setstaticslotadd(Statics.charcurrentshoes);
         }
-        if (equipslotnumber == 8)
+        if (Statics.currentequipmentbutton == 8)
         {
-            int currentchar = 0;
-            foreach (string item in Statics.charcurrentnecklessname)
-            {
-                if (itemvalues.itemname == item)
-                {
-                    setstatsafterupgrade(currentchar);
-                }
-                currentchar++;
-            }
+            setstaticslotadd(Statics.charcurrentneckless);
         }
-        if (equipslotnumber == 9)
+        if (Statics.currentequipmentbutton == 9)
         {
-            int currentchar = 0;
-            foreach (string item in Statics.charcurrentringname)
+            setstaticslotadd(Statics.charcurrentring);
+        }
+        statsupdate();
+    }
+    private void setstaticslotadd(Itemcontroller[] staticslotitem)
+    {
+        for (int i = 0; i < staticslotitem.Length; i++)
+        {
+            if (itemvalues == staticslotitem[i])
             {
-                if (itemvalues.itemname == item)
-                {
-                    setstatsafterupgrade(currentchar);
-                }
-                currentchar++;
+                addstatsafterupgrade(i);
             }
         }
     }
-    private void setstatsafterupgrade(int currentchar)
+    private void subtractstatsbeforeupgrade(int currentchar)
     {
-        Statics.charmaxhealth[currentchar] += itemvalues.stats[0] - setitemobj.currentmaxhealth[currentchar];
-        setitemobj.currentmaxhealth[currentchar] = itemvalues.stats[0];
-
-        Statics.chardefense[currentchar] += itemvalues.stats[1] - setitemobj.currentdefense[currentchar];
-        setitemobj.currentdefense[currentchar] = itemvalues.stats[1];
-
-        Statics.charattack[currentchar] += itemvalues.stats[2] - setitemobj.currentattack[currentchar];
-        setitemobj.currentattack[currentchar] = itemvalues.stats[2];
-
-        Statics.charcritchance[currentchar] += itemvalues.stats[3] - setitemobj.currentcritchance[currentchar];
-        setitemobj.currentcritchance[selectedchar] = itemvalues.stats[3];
-
-        Statics.charcritdmg[currentchar] += itemvalues.stats[4] - setitemobj.currentcritdmg[currentchar];
-        setitemobj.currentcritdmg[currentchar] = itemvalues.stats[4];
-
-        Statics.charweaponbuff[currentchar] += itemvalues.stats[5] - setitemobj.currentweaponbuff[currentchar];
-        setitemobj.currentweaponbuff[currentchar] = itemvalues.stats[5];
-
-        Statics.charswitchbuff[currentchar] += itemvalues.stats[6] - setitemobj.currentcharswitchbuff[currentchar];
-        setitemobj.currentcharswitchbuff[currentchar] = itemvalues.stats[6];
-
-        Statics.charbasicdmgbuff[currentchar] += itemvalues.stats[7] - setitemobj.currentbasicdmgbuff[currentchar];
-        setitemobj.currentbasicdmgbuff[currentchar] = itemvalues.stats[7];
-    }*/
+        Statics.charmaxhealth[currentchar] -= itemvalues.stats[0];
+        Statics.chardefense[currentchar] -= itemvalues.stats[1];
+        Statics.charattack[currentchar] -= itemvalues.stats[2];
+        Statics.charcritchance[currentchar] -= itemvalues.stats[3];
+        Statics.charcritdmg[currentchar] -= itemvalues.stats[4];
+        Statics.charweaponbuff[currentchar] -= itemvalues.stats[5];
+        Statics.charswitchbuff[currentchar] -= itemvalues.stats[6];
+        Statics.charbasicdmgbuff[currentchar] -= itemvalues.stats[7];
+    }
+    private void addstatsafterupgrade(int currentchar)
+    {
+        Statics.charmaxhealth[currentchar] += itemvalues.stats[0];
+        Statics.chardefense[currentchar] += itemvalues.stats[1];
+        Statics.charattack[currentchar] += itemvalues.stats[2];
+        Statics.charcritchance[currentchar] += itemvalues.stats[3];
+        Statics.charcritdmg[currentchar] += itemvalues.stats[4];
+        Statics.charweaponbuff[currentchar] += itemvalues.stats[5];
+        Statics.charswitchbuff[currentchar] += itemvalues.stats[6];
+        Statics.charbasicdmgbuff[currentchar] += itemvalues.stats[7];
+    }
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
-        statsnumbers.text = string.Empty;
-        statsnumbers.color = Color.white;
-        selectedchar = Statics.currentequipmentchar;
         if (itemvalues != null)
         {
+            selectedchar = Statics.currentequipmentchar;
+
+            setstats.upgradeuitextcontroller.item = itemvalues;
+            setstats.upgradeuitextcontroller.chooseitem = this;
+            setstats.upgradeui.SetActive(true);
+
+            statsnumbers.text = string.Empty;
+            statsnumbers.color = Color.white;
             if (Statics.currentequipmentbutton == 3)
             {
-                ontrigger(Statics.charcurrenthead[selectedchar]);
-                /*ontriggerflatstats(Statics.charcurrenthead[selectedchar], 0, Statics.charmaxhealth[selectedchar]);
-                ontriggerflatstats(Statics.charcurrenthead[selectedchar], 1, Statics.chardefense[selectedchar]);
-                ontriggerflatstats(Statics.charcurrenthead[selectedchar], 2, Statics.charattack[selectedchar]);
-                ontriggerpercentage(Statics.charcurrenthead[selectedchar], 3, Statics.charcritchance[selectedchar]);
-                ontriggerpercentage(Statics.charcurrenthead[selectedchar], 4, Statics.charcritdmg[selectedchar]);
-                ontriggerpercentage(Statics.charcurrenthead[selectedchar], 5, Statics.charweaponbuff[selectedchar] - 100);
-                ontriggerduration(Statics.charweaponbuffduration[selectedchar]);
-                ontriggerpercentage(Statics.charcurrenthead[selectedchar], 6, Statics.charswitchbuff[selectedchar] - 100);
-                ontriggerduration(Statics.charswitchbuffduration[selectedchar]);
-                ontriggerpercentage(Statics.charcurrenthead[selectedchar], 7, Statics.charbasiccritbuff[selectedchar]);
-                ontriggerpercentage(Statics.charcurrenthead[selectedchar], 8, Statics.charbasicdmgbuff[selectedchar]);*/
+                mouseenter(Statics.charcurrenthead[selectedchar]);
             }
 
             else if (Statics.currentequipmentbutton == 4)
             {
-                ontrigger(Statics.charcurrentchest[selectedchar]);
-                /*ontriggerflatstats(Statics.charcurrentchest[selectedchar], 0, Statics.charmaxhealth[selectedchar]);
-                ontriggerflatstats(Statics.charcurrentchest[selectedchar], 1, Statics.chardefense[selectedchar]);
-                ontriggerflatstats(Statics.charcurrentchest[selectedchar], 2, Statics.charattack[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentchest[selectedchar], 3, Statics.charcritchance[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentchest[selectedchar], 4, Statics.charcritdmg[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentchest[selectedchar], 5, Statics.charweaponbuff[selectedchar] - 100);
-                ontriggerduration(Statics.charweaponbuffduration[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentchest[selectedchar], 6, Statics.charswitchbuff[selectedchar] - 100);
-                ontriggerduration(Statics.charswitchbuffduration[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentchest[selectedchar], 7, Statics.charbasiccritbuff[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentchest[selectedchar], 8, Statics.charbasicdmgbuff[selectedchar]);*/
+                mouseenter(Statics.charcurrentchest[selectedchar]);
             }
             else if (Statics.currentequipmentbutton == 5)
             {
-                ontrigger(Statics.charcurrentgloves[selectedchar]);
-                /*ontriggerflatstats(Statics.charcurrentgloves[selectedchar], 0, Statics.charmaxhealth[selectedchar]);
-                ontriggerflatstats(Statics.charcurrentgloves[selectedchar], 1, Statics.chardefense[selectedchar]);
-                ontriggerflatstats(Statics.charcurrentgloves[selectedchar], 2, Statics.charattack[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentgloves[selectedchar], 3, Statics.charcritchance[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentgloves[selectedchar], 4, Statics.charcritdmg[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentgloves[selectedchar], 5, Statics.charweaponbuff[selectedchar] - 100);
-                ontriggerduration(Statics.charweaponbuffduration[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentgloves[selectedchar], 6, Statics.charswitchbuff[selectedchar] - 100);
-                ontriggerduration(Statics.charswitchbuffduration[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentgloves[selectedchar], 7, Statics.charbasiccritbuff[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentgloves[selectedchar], 8, Statics.charbasicdmgbuff[selectedchar]);*/
+                mouseenter(Statics.charcurrentgloves[selectedchar]);
             }
             else if (Statics.currentequipmentbutton == 6)
             {
-                ontrigger(Statics.charcurrentlegs[selectedchar]);
-                /*ontriggerflatstats(Statics.charcurrentlegs[selectedchar], 0, Statics.charmaxhealth[selectedchar]);
-                ontriggerflatstats(Statics.charcurrentlegs[selectedchar], 1, Statics.chardefense[selectedchar]);
-                ontriggerflatstats(Statics.charcurrentlegs[selectedchar], 2, Statics.charattack[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentlegs[selectedchar], 3, Statics.charcritchance[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentlegs[selectedchar], 4, Statics.charcritdmg[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentlegs[selectedchar], 5, Statics.charweaponbuff[selectedchar] - 100);
-                ontriggerduration(Statics.charweaponbuffduration[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentlegs[selectedchar], 6, Statics.charswitchbuff[selectedchar] - 100);
-                ontriggerduration(Statics.charswitchbuffduration[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentlegs[selectedchar], 7, Statics.charbasiccritbuff[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentlegs[selectedchar], 8, Statics.charbasicdmgbuff[selectedchar]);*/
+                mouseenter(Statics.charcurrentlegs[selectedchar]);
             }
             else if (Statics.currentequipmentbutton == 7)
             {
-                ontrigger(Statics.charcurrentshoes[selectedchar]);
-                /*ontriggerflatstats(Statics.charcurrentshoes[selectedchar], 0, Statics.charmaxhealth[selectedchar]);
-                ontriggerflatstats(Statics.charcurrentshoes[selectedchar], 1, Statics.chardefense[selectedchar]);
-                ontriggerflatstats(Statics.charcurrentshoes[selectedchar], 2, Statics.charattack[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentshoes[selectedchar], 3, Statics.charcritchance[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentshoes[selectedchar], 4, Statics.charcritdmg[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentshoes[selectedchar], 5, Statics.charweaponbuff[selectedchar] - 100);
-                ontriggerduration(Statics.charweaponbuffduration[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentshoes[selectedchar], 6, Statics.charswitchbuff[selectedchar] - 100);
-                ontriggerduration(Statics.charswitchbuffduration[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentshoes[selectedchar], 7, Statics.charbasiccritbuff[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentshoes[selectedchar], 8, Statics.charbasicdmgbuff[selectedchar]);*/
+                mouseenter(Statics.charcurrentshoes[selectedchar]);
             }
             else if (Statics.currentequipmentbutton == 8)
             {
-                ontrigger(Statics.charcurrentneckless[selectedchar]);
-                /*ontriggerflatstats(Statics.charcurrentneckless[selectedchar], 0, Statics.charmaxhealth[selectedchar]);
-                ontriggerflatstats(Statics.charcurrentneckless[selectedchar], 1, Statics.chardefense[selectedchar]);
-                ontriggerflatstats(Statics.charcurrentneckless[selectedchar], 2, Statics.charattack[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentneckless[selectedchar], 3, Statics.charcritchance[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentneckless[selectedchar], 4, Statics.charcritdmg[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentneckless[selectedchar], 5, Statics.charweaponbuff[selectedchar] - 100);
-                ontriggerduration(Statics.charweaponbuffduration[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentneckless[selectedchar], 6, Statics.charswitchbuff[selectedchar] - 100);
-                ontriggerduration(Statics.charswitchbuffduration[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentneckless[selectedchar], 7, Statics.charbasiccritbuff[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentneckless[selectedchar], 8, Statics.charbasicdmgbuff[selectedchar]);*/
+                mouseenter(Statics.charcurrentneckless[selectedchar]);
             }
             else if (Statics.currentequipmentbutton == 9)
             {
-                ontrigger(Statics.charcurrentring[selectedchar]);
-                /*ontriggerflatstats(Statics.charcurrentring[selectedchar], 0, Statics.charmaxhealth[selectedchar]);
-                ontriggerflatstats(Statics.charcurrentring[selectedchar], 1, Statics.chardefense[selectedchar]);
-                ontriggerflatstats(Statics.charcurrentring[selectedchar], 2, Statics.charattack[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentring[selectedchar], 3, Statics.charcritchance[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentring[selectedchar], 4, Statics.charcritdmg[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentring[selectedchar], 5, Statics.charweaponbuff[selectedchar] - 100);
-                ontriggerduration(Statics.charweaponbuffduration[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentring[selectedchar], 6, Statics.charswitchbuff[selectedchar] - 100);
-                ontriggerduration(Statics.charswitchbuffduration[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentring[selectedchar], 7, Statics.charbasiccritbuff[selectedchar]);
-                ontriggerpercentage(Statics.charcurrentring[selectedchar], 8, Statics.charbasicdmgbuff[selectedchar]);*/
+                mouseenter(Statics.charcurrentring[selectedchar]);
             }
         }
     }
-    private void ontrigger(Itemcontroller slot)
+    private void mouseenter(Itemcontroller slot)
     {
         ontriggerflatstats(slot, 0, Statics.charmaxhealth[selectedchar]);
         ontriggerflatstats(slot, 1, Statics.chardefense[selectedchar]);
@@ -343,7 +283,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
         else if (itemvalues.stats[itemstat] < equipeditem.stats[itemstat])
         {
-            statsnumbers.text += "<color=red>" + "( +" + difference + " ) " + (difference + currentstatvalue) + "</color>" + "\n";
+            statsnumbers.text += "<color=red>" + "( " + difference + " ) " + (difference + currentstatvalue) + "</color>" + "\n";
         }
         else
         {
@@ -359,7 +299,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
         else if (itemvalues.stats[itemstat] < equipeditem.stats[itemstat])
         {
-            statsnumbers.text += "<color=red>" + "( +" + difference + " ) " + (difference + currentstatvalue) + "%" + "</color>" + "\n";
+            statsnumbers.text += "<color=red>" + "( " + difference + " ) " + (difference + currentstatvalue) + "%" + "</color>" + "\n";
         }
         else
         {
@@ -376,16 +316,9 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             statsnumbers.text += currentstatvalue + "sec" + "\n";
         }
     }
-
-
-            /*setitemobj.itemtextcontroller.itemvalues = itemvalues;
-            setitemobj.itemtextcontroller.chooseitem = this;
-            setitemobj.itemtextcontroller.equipslotnumber = equipslotnumber;
-            setitemobj.showitemstatsobj.SetActive(true);
-        }
-    }*/
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
     {
+        setstats.upgradeui.SetActive(false);
         statsupdate();
     }
 }

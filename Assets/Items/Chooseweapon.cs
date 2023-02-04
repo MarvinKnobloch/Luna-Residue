@@ -170,21 +170,21 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             setitemobj.statssworddmg.text = Statics.charswordattack[currentint] + "";
             setitemobj.statssworddmg.color = Color.white;
 
-            setitemobj.showitemstatsobj.SetActive(false);
+            setitemobj.upgradeui.SetActive(false);
         }
         else if (equipslotnumber == 1)
         {
             setitemobj.statsbowdmg.text = Statics.charbowattack[currentint] + "";
             setitemobj.statsbowdmg.color = Color.white;
 
-            setitemobj.showitemstatsobj.SetActive(false);
+            setitemobj.upgradeui.SetActive(false);
         }
         else if (equipslotnumber == 2)
         {
             setitemobj.statsfistdmg.text = Statics.charfistattack[currentint] + "";
             setitemobj.statsfistdmg.color = Color.white;
 
-            setitemobj.showitemstatsobj.SetActive(false);
+            setitemobj.upgradeui.SetActive(false);
         }
     }
 }

@@ -4,12 +4,14 @@ using UnityEngine;
 using TMPro;
 using System;
 
-public class Itemtextcontroller : MonoBehaviour
+public class Upgradeuitextcontroller : MonoBehaviour
 {
     [SerializeField] private GameObject upgradeobj;
     private SpielerSteu Steuerung;
 
-    public Itemcontroller itemvalues;
+    public Chooseitem chooseitem;
+    public Itemcontroller item;
+
     private int neededupgrademats = 0;
     private int canupgradeint = 0;
     private TextMeshProUGUI iteminfotext;
@@ -18,10 +20,6 @@ public class Itemtextcontroller : MonoBehaviour
     [SerializeField] private Inventorycontroller matsinventory;
     [SerializeField] private Upgradecontroller upgradecontroller;
 
-    public Chooseitem chooseitem;
-    public Chooseweapon chooseweapon;
-    [NonSerialized] public int equipslotnumber;
-   
 
     private void Awake()
     {
@@ -30,14 +28,10 @@ public class Itemtextcontroller : MonoBehaviour
     }
     private void OnEnable()
     {
-        textupdate();
+        valuesupdate();
         if(chooseitem != null)
         {
             upgradecontroller.chooseitem = chooseitem;
-        }
-        if(chooseweapon != null)
-        {
-            upgradecontroller.chooseweapon = chooseweapon;
         }
     }
     private void OnDisable()
@@ -46,59 +40,66 @@ public class Itemtextcontroller : MonoBehaviour
         upgradecontroller.chooseitem = null;
         chooseitem = null;
         upgradecontroller.chooseweapon = null;
-        chooseweapon = null;
     }
 
     private void Update()
     {
         if (Steuerung.Player.Attack3.WasPressedThisFrame())                //stats zurücksetzt, damit ich es nicht von hand machen muss
         {
-            itemvalues.upgradelvl = 0;
+            item.upgradelvl = 0;
             int currentstat = 0;
-            foreach (float stat in itemvalues.stats)
+            foreach (float stat in item.stats)
             {
-                itemvalues.stats[currentstat] = itemvalues.basestats[currentstat];
+                item.stats[currentstat] = item.basestats[currentstat];
                 currentstat++;
             }
-            textupdate();
         }
     }
-    public void textupdate()
+    public void valuesupdate()
     {
-        if (itemvalues.upgradelvl < itemvalues.maxupgradelvl)
+        itemheaderandcheckforupgrade();
+        itemstats();
+        upgradedetails();
+    }
+    private void itemheaderandcheckforupgrade()
+    {
+        iteminfotext.text = string.Empty;
+        iteminfotext.text = item.itemname + " LvL " + item.upgradelvl + "\n";
+        if (item.upgradelvl != item.maxupgradelvl)
+        {
+            iteminfotext.text += "(max LvL " + item.maxupgradelvl + ")" + "\n";
+        }
+
+        if (item.upgradelvl < item.maxupgradelvl)
         {
             upgradeobj.SetActive(true);
-            upgradecontroller.itemtoupgrade = itemvalues;
+            upgradecontroller.itemtoupgrade = item;
         }
         else
         {
             upgradeobj.SetActive(false);
         }
-        iteminfotext.text = "";
-        iteminfotext.text = itemvalues.itemname + " LvL " + itemvalues.upgradelvl + "\n";
-        if(itemvalues.upgradelvl != itemvalues.maxupgradelvl)
-        {
-            iteminfotext.text += "(max LvL " + itemvalues.maxupgradelvl + ")" + "\n";
-        }
-
+    }
+    private void itemstats()
+    {
         int currentstat = 0;
-        foreach (int stat in itemvalues.stats)
+        foreach (int stat in item.stats)
         {
-            if (itemvalues.upgradelvl < itemvalues.maxupgradelvl)
+            if (item.upgradelvl < item.maxupgradelvl)
             {
-                if (stat != 0 || itemvalues.upgrades[itemvalues.upgradelvl].newstats[currentstat] != 0)               // || damit auch die values angezeigt werden, die von 0 auf +irgendwas gehen
+                if (stat != 0 || item.upgrades[item.upgradelvl].newstats[currentstat] != 0)               // || damit auch die values angezeigt werden, die von 0 auf +irgendwas gehen
                 {
-                    if (itemvalues.stats[currentstat] < itemvalues.upgrades[itemvalues.upgradelvl].newstats[currentstat])
+                    if (item.stats[currentstat] < item.upgrades[item.upgradelvl].newstats[currentstat])
                     {
-                        iteminfotext.text += "\n" + itemvalues.stats[currentstat] + " -> " + "<color=green>" + itemvalues.upgrades[itemvalues.upgradelvl].newstats[currentstat] + "</color>" + " " + statsname[currentstat];
+                        iteminfotext.text += "\n" + item.stats[currentstat] + " -> " + "<color=green>" + item.upgrades[item.upgradelvl].newstats[currentstat] + "</color>" + " " + statsname[currentstat];
                     }
-                    else if (itemvalues.stats[currentstat] > itemvalues.upgrades[itemvalues.upgradelvl].newstats[currentstat])
+                    else if (item.stats[currentstat] > item.upgrades[item.upgradelvl].newstats[currentstat])
                     {
-                        iteminfotext.text += "\n" + itemvalues.stats[currentstat] + " -> " + "<color=red>" + itemvalues.upgrades[itemvalues.upgradelvl].newstats[currentstat] + "</color>" + " " + statsname[currentstat];
+                        iteminfotext.text += "\n" + item.stats[currentstat] + " -> " + "<color=red>" + item.upgrades[item.upgradelvl].newstats[currentstat] + "</color>" + " " + statsname[currentstat];
                     }
                     else
                     {
-                        iteminfotext.text += "\n" + itemvalues.stats[currentstat] + " -> " + itemvalues.upgrades[itemvalues.upgradelvl].newstats[currentstat] + " " + statsname[currentstat];
+                        iteminfotext.text += "\n" + item.stats[currentstat] + " -> " + item.upgrades[item.upgradelvl].newstats[currentstat] + " " + statsname[currentstat];
                     }
                 }
             }
@@ -106,19 +107,22 @@ public class Itemtextcontroller : MonoBehaviour
             {
                 if (stat != 0)
                 {
-                    iteminfotext.text += "\n" + itemvalues.stats[currentstat] + " " + statsname[currentstat];
-                }               
+                    iteminfotext.text += "\n" + item.stats[currentstat] + " " + statsname[currentstat];
+                }
             }
             currentstat++;
         }
-        if (itemvalues.upgradelvl < itemvalues.maxupgradelvl)
+    }
+    private void upgradedetails()
+    {
+        if (item.upgradelvl < item.maxupgradelvl)
         {
             neededupgrademats = 0;
             canupgradeint = 0;
             iteminfotext.text += "\n" + "\n" + "Upradecosts"; //+ "\n";
 
             int currentinventoryposi = 0;
-            foreach (Itemcontroller.Upgradesmats material in itemvalues.upgrades[itemvalues.upgradelvl].Upgrademats)
+            foreach (Itemcontroller.Upgradesmats material in item.upgrades[item.upgradelvl].Upgrademats)
             {
                 neededupgrademats++;
                 int upgradematamount = 0;
@@ -132,7 +136,6 @@ public class Itemtextcontroller : MonoBehaviour
                         currentinventoryposi++;
                         break;
                     }
-
                 }
                 if (upgradematamount >= material.costs)                  //text für die matkosten
                 {

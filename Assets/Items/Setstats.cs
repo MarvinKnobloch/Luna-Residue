@@ -20,6 +20,6 @@ public class Setstats : MonoBehaviour
     [NonSerialized] public float[] currentfistdmg = new float[5];
 
 
-    public GameObject showitemstatsobj;
-    public Itemtextcontroller itemtextcontroller;
+    public GameObject upgradeui;
+    public Upgradeuitextcontroller upgradeuitextcontroller;
 }

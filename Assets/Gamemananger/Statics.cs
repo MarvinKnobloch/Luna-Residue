@@ -80,7 +80,7 @@ public class Statics
 
     //equiptment
     public static int currentequipmentchar;
-    public static int currentequipmentbutton;
+    public static int currentequipmentbutton;         //wird beim button gesetzt(onclick event)
 
     //infight
     public static bool infight;

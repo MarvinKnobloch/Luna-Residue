@@ -19,6 +19,7 @@ public class Equipmentmenucontroller : MonoBehaviour
     }
     private void OnEnable()
     {
+        Statics.currentequipmentbutton = 0;
         foreach (GameObject grids in itemgrids)
         {
             grids.SetActive(false);

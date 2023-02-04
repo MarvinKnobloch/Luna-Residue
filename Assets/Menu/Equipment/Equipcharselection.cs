@@ -103,116 +103,17 @@ public class Equipcharselection : MonoBehaviour
         statsbowattack.text = Statics.charbowattack[currentchar] + "";
         statsfistattack.text = Statics.charfistattack[currentchar] + "";
 
-        slotbuttontext[0].text = Statics.charcurrentswordname[currentchar].ToString();
-        slotbuttontext[1].text = Statics.charcurrentbowname[currentchar].ToString();
-        slotbuttontext[2].text = Statics.charcurrentfistname[currentchar].ToString();
-        slotbuttontext[3].text = Statics.charcurrentheadname[currentchar].ToString();
-        slotbuttontext[4].text = Statics.charcurrentchestname[currentchar].ToString();
-        slotbuttontext[5].text = Statics.charcurrentglovesname[currentchar].ToString();
-        slotbuttontext[6].text = Statics.charcurrentlegname[currentchar].ToString();
-        slotbuttontext[7].text = Statics.charcurrentshoesname[currentchar].ToString();
-        slotbuttontext[8].text = Statics.charcurrentnecklessname[currentchar].ToString();
-        slotbuttontext[9].text = Statics.charcurrentringname[currentchar].ToString();
+        //slotbuttontext[0].text = Statics.charcurrentsword[currentchar].itemname.;
+        //slotbuttontext[1].text = Statics.charcurrentbow[currentchar].itemname;
+        //slotbuttontext[2].text = Statics.charcurrentfist[currentchar].itemname;
+        slotbuttontext[3].text = Statics.charcurrenthead[currentchar].itemname;
+        slotbuttontext[4].text = Statics.charcurrentchest[currentchar].itemname;
+        slotbuttontext[5].text = Statics.charcurrentgloves[currentchar].itemname;
+        slotbuttontext[6].text = Statics.charcurrentlegs[currentchar].itemname;
+        slotbuttontext[7].text = Statics.charcurrentshoes[currentchar].itemname;
+        slotbuttontext[8].text = Statics.charcurrentneckless[currentchar].itemname;
+        slotbuttontext[9].text = Statics.charcurrentring[currentchar].itemname;
 
-        /*if (Statics.activeswordslot != null)
-        {
-            Statics.activeswordslot.transform.GetComponent<Image>().color = Color.white;
-        }
-        if (Statics.currentswordimage[currentchar] != null)
-        {
-            Statics.currentswordimage[currentchar].transform.GetComponent<Image>().color = Color.green;
-            Statics.activeswordslot = Statics.currentswordimage[currentchar];
-        }
-
-        if (Statics.activebowslot != null)
-        {
-            Statics.activebowslot.transform.GetComponent<Image>().color = Color.white;
-        }
-        if (Statics.currentbowimage[currentchar] != null)
-        {
-            Statics.currentbowimage[currentchar].transform.GetComponent<Image>().color = Color.green;
-            Statics.activebowslot = Statics.currentbowimage[currentchar];
-        }
-
-        if (Statics.activefistslot != null)
-        {
-            Statics.activefistslot.transform.GetComponent<Image>().color = Color.white;
-        }
-        if (Statics.currentfistimage[currentchar] != null)
-        {
-            Statics.currentfistimage[currentchar].transform.GetComponent<Image>().color = Color.green;
-            Statics.activefistslot = Statics.currentfistimage[currentchar];
-        }
-
-        if (Statics.activeheadslot != null)
-        {
-            Statics.activeheadslot.transform.GetComponent<Image>().color = Color.white;
-        }
-        if (Statics.currentheadimage[currentchar] != null)
-        {
-            Statics.currentheadimage[currentchar].transform.GetComponent<Image>().color = Color.green;
-            Statics.activeheadslot = Statics.currentheadimage[currentchar];
-        }
-
-        if (Statics.activechestslot != null)
-        {
-            Statics.activechestslot.transform.GetComponent<Image>().color = Color.white;
-        }
-        if (Statics.currentchestimage[currentchar] != null)
-        {
-            Statics.currentchestimage[currentchar].transform.GetComponent<Image>().color = Color.green;
-            Statics.activechestslot = Statics.currentchestimage[currentchar];
-        }
-
-        if (Statics.activeglovesslot != null)
-        {
-            Statics.activeglovesslot.transform.GetComponent<Image>().color = Color.white;
-        }
-        if (Statics.currentglovesimage[currentchar] != null)
-        {
-            Statics.currentglovesimage[currentchar].transform.GetComponent<Image>().color = Color.green;
-            Statics.activeglovesslot = Statics.currentglovesimage[currentchar];
-        }
-
-        if (Statics.activebeltslot != null)
-        {
-            Statics.activebeltslot.transform.GetComponent<Image>().color = Color.white;
-        }
-        if (Statics.currentlegimage[currentchar] != null)
-        {
-            Statics.currentlegimage[currentchar].transform.GetComponent<Image>().color = Color.green;
-            Statics.activebeltslot = Statics.currentlegimage[currentchar];
-        }
-
-        if (Statics.activeshoesslot != null)
-        {
-            Statics.activeshoesslot.transform.GetComponent<Image>().color = Color.white;
-        }
-        if (Statics.currentshoesimage[currentchar] != null)
-        {
-            Statics.currentshoesimage[currentchar].transform.GetComponent<Image>().color = Color.green;
-            Statics.activeshoesslot = Statics.currentshoesimage[currentchar];
-        }
-
-        if (Statics.activenecklessslot != null)
-        {
-            Statics.activenecklessslot.transform.GetComponent<Image>().color = Color.white;
-        }
-        if (Statics.currentnecklessimage[currentchar] != null)
-        {
-            Statics.currentnecklessimage[currentchar].transform.GetComponent<Image>().color = Color.green;
-            Statics.activenecklessslot = Statics.currentnecklessimage[currentchar];
-        }
-
-        if (Statics.activeringslot != null)
-        {
-            Statics.activeringslot.transform.GetComponent<Image>().color = Color.white;
-        }
-        if (Statics.currentringimage[currentchar] != null)
-        {
-            Statics.currentringimage[currentchar].transform.GetComponent<Image>().color = Color.green;
-            Statics.activeringslot = Statics.currentringimage[currentchar];
-        }*/
         foreach (GameObject obj in charbuttons)
         {
             obj.GetComponent<Image>().color = Color.white;

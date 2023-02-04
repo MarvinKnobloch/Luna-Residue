@@ -22,64 +22,47 @@ public class Setcolorcurrentarmor : MonoBehaviour, ISelectHandler
             }
             else
             {
-                if (Statics.currentequipmentbutton == 3 && Statics.charcurrenthead != null)
+                if (Statics.currentequipmentbutton == 3)
                 {
-                    if (obj.GetComponent<Chooseitem>().itemvalues == Statics.charcurrenthead[Statics.currentequipmentchar])
-                    {
-                        obj.GetComponent<Image>().color = Color.green;
-                    }
-                    else obj.GetComponent<Image>().color = Color.white;
+                    setcolor(Statics.charcurrenthead[Statics.currentequipmentchar], obj);
                 }
-                else if (Statics.currentequipmentbutton == 4 && Statics.charcurrentchest != null)
+                else if (Statics.currentequipmentbutton == 4)
                 {
-                    if (obj.GetComponent<Chooseitem>().itemvalues == Statics.charcurrentchest[Statics.currentequipmentchar])
-                    {
-                        obj.GetComponent<Image>().color = Color.green;
-                    }
-                    else obj.GetComponent<Image>().color = Color.white;
+                    setcolor(Statics.charcurrentchest[Statics.currentequipmentchar], obj);
                 }
-                else if (Statics.currentequipmentbutton == 5 && Statics.charcurrentgloves != null)
+                else if (Statics.currentequipmentbutton == 5)
                 {
-                    if (obj.GetComponent<Chooseitem>().itemvalues == Statics.charcurrentgloves[Statics.currentequipmentchar])
-                    {
-                        obj.GetComponent<Image>().color = Color.green;
-                    }
-                    else obj.GetComponent<Image>().color = Color.white;
+                    setcolor(Statics.charcurrentgloves[Statics.currentequipmentchar], obj);
                 }
-                else if (Statics.currentequipmentbutton == 6 && Statics.charcurrentlegs != null)
+                else if (Statics.currentequipmentbutton == 6)
                 {
-                    if (obj.GetComponent<Chooseitem>().itemvalues == Statics.charcurrentlegs[Statics.currentequipmentchar])
-                    {
-                        obj.GetComponent<Image>().color = Color.green;
-                    }
-                    else obj.GetComponent<Image>().color = Color.white;
+                    setcolor(Statics.charcurrentlegs[Statics.currentequipmentchar], obj);
                 }
-                else if (Statics.currentequipmentbutton == 7 && Statics.charcurrentshoes != null)
+                else if (Statics.currentequipmentbutton == 7)
                 {
-                    if (obj.GetComponent<Chooseitem>().itemvalues == Statics.charcurrentshoes[Statics.currentequipmentchar])
-                    {
-                        obj.GetComponent<Image>().color = Color.green;
-                    }
-                    else obj.GetComponent<Image>().color = Color.white;
+                    setcolor(Statics.charcurrentshoes[Statics.currentequipmentchar], obj);
                 }
-                else if (Statics.currentequipmentbutton == 8 && Statics.charcurrentneckless != null)
+                else if (Statics.currentequipmentbutton == 8)
                 {
-                    if (obj.GetComponent<Chooseitem>().itemvalues == Statics.charcurrentneckless[Statics.currentequipmentchar])
-                    {
-                        obj.GetComponent<Image>().color = Color.green;
-                    }
-                    else obj.GetComponent<Image>().color = Color.white;
+                    setcolor(Statics.charcurrentneckless[Statics.currentequipmentchar], obj);
                 }
-                else if (Statics.currentequipmentbutton == 9 && Statics.charcurrentring != null)
+                else if (Statics.currentequipmentbutton == 9)
                 {
-                    if (obj.GetComponent<Chooseitem>().itemvalues == Statics.charcurrentring[Statics.currentequipmentchar])
-                    {
-                        obj.GetComponent<Image>().color = Color.green;
-                    }
-                    else obj.GetComponent<Image>().color = Color.white;
+                    setcolor(Statics.charcurrentring[Statics.currentequipmentchar], obj);
                 }
-                else obj.GetComponent<Image>().color = Color.white;
             }
         }
+    }
+    private void setcolor(Itemcontroller itemslot, Transform obj)
+    {
+        if (itemslot != null)
+        {
+            if (obj.GetComponent<Chooseitem>().itemvalues == itemslot)
+            {
+                obj.GetComponent<Image>().color = Color.green;
+            }
+            else obj.GetComponent<Image>().color = Color.white;
+        }
+        else obj.GetComponent<Image>().color = Color.white;
     }
 }
