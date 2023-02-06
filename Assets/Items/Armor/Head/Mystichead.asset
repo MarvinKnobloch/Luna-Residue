@@ -15,7 +15,7 @@ MonoBehaviour:
   Uisprite: {fileID: 21300000, guid: 995b0d02c8738854ba174f607a9bb682, type: 3}
   type: 4
   itemname: Mystichead
-  inventoryslot: 0
+  inventoryslot: 2
   itemshopcosts: 95
   description: 
   basestats:

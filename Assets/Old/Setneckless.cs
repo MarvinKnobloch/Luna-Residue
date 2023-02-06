@@ -31,5 +31,5 @@ public class Setneckless : MonoBehaviour
     [NonSerialized] public float[] currentbasicdmgbuff = new float[5];
 
     public GameObject showitemstatsobj;
-    public Itemtextcontroller itemtextcontroller;
+    public Upgradeuitextcontroller itemtextcontroller;
 }

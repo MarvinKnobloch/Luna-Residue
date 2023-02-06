@@ -15,7 +15,8 @@ MonoBehaviour:
   Uisprite: {fileID: 0}
   type: 0
   itemname: Money
-  inventoryslot: 0
+  inventoryslot: 13
+  itemshopcosts: 0
   description: 
   basestats: []
   stats: []

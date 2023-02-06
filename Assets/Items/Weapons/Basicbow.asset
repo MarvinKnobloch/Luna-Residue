@@ -15,7 +15,7 @@ MonoBehaviour:
   Uisprite: {fileID: 21300000, guid: 9a7c8d500b9ea3f4e8ad1c729649de2d, type: 3}
   type: 2
   itemname: Basicbow
-  inventoryslot: 0
+  inventoryslot: 1
   itemshopcosts: 60
   description: 
   basestats:

@@ -12,6 +12,7 @@ public class Startmenucontroller : MonoBehaviour
     [SerializeField] private GameObject[] buttons;
     [SerializeField] private GameObject loadgameobj;
     [SerializeField] private GameObject settingsobj;
+    [SerializeField] private Setitemsandinventory setitemsandinventory;
     //private Isaveload loadsaveinterface = new Saveloadgame();
     private Convertstatics convertstatics = new Convertstatics();
 
@@ -90,6 +91,8 @@ public class Startmenucontroller : MonoBehaviour
         PlayerPrefs.SetInt("Arissamainweaponindex", 0);
         PlayerPrefs.SetInt("Arissasecondweaponindex", 1);
 
+        setitemsandinventory.resetitems();
+        setitemsandinventory.resetinventorys();
         SceneManager.LoadScene(1);
     }
 

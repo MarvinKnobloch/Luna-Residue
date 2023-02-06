@@ -19,12 +19,14 @@ public class Equipmentmenucontroller : MonoBehaviour
     }
     private void OnEnable()
     {
+        Statics.currentequipmentbutton = 0;
         foreach (GameObject grids in itemgrids)
         {
             grids.SetActive(false);
         }
         swordgrid.SetActive(true);
         EventSystem.current.SetSelectedGameObject(swordbutton);
+        swordbutton.gameObject.GetComponent<Setcolorcurrentweapon>().triggerbutton();
     }
     private void Update()
     {

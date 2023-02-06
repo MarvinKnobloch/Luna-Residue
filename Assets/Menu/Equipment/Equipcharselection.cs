@@ -13,34 +13,14 @@ public class Equipcharselection : MonoBehaviour
     private SpielerSteu Steuerung;
     public static GameObject currentbuttonslot;
 
-    public Text statshealth;
-    public Text statsdefense;
-    public Text statsattack;
-    public Text statscritchance;
-    public Text statscritdmg;
-    public Text statsweaponbuff;
-    public Text statsweaponbuffduration;
-    public Text statscharbuff;
-    public Text statscharbuffduration;
-    public Text statsbasiccrit;
-    public Text statsbasicbuffdmg;
+    [SerializeField] private TextMeshProUGUI statsnumbers;
 
-    public Text statsswordattack;
-    public Text statsbowattack;
-    public Text statsfistattack;
+    public TextMeshProUGUI sworddmg;
+    public TextMeshProUGUI bowdmg;
+    public TextMeshProUGUI fistdmg;
 
-    public TextMeshProUGUI swordbutton;
-    public TextMeshProUGUI bowbutton;
-    public TextMeshProUGUI fistbutton;
-    public TextMeshProUGUI headbutton;
-    public TextMeshProUGUI chestbutton;
-    public TextMeshProUGUI glovesbutton;
-    public TextMeshProUGUI beltbutton;
-    public TextMeshProUGUI shoesbutton;
-    public TextMeshProUGUI necklessbutton;
-    public TextMeshProUGUI ringbutton;
-
-    public GameObject[] charbuttons;
+    [SerializeField] private TextMeshProUGUI[] slotbuttontext;
+    [SerializeField] private GameObject[] charbuttons;
     [SerializeField] private GameObject resetonpointerenterlayer;
 
     private void Awake()
@@ -49,9 +29,9 @@ public class Equipcharselection : MonoBehaviour
     }
     private void OnEnable()
     {
-        Statics.currentequiptmentchar = PlayerPrefs.GetInt("Maincharindex");
-        nametext.text = Statics.characternames[Statics.currentequiptmentchar] + " LvL" + Statics.charcurrentlvl;
-        settextandimage(Statics.currentequiptmentchar);
+        Statics.currentequipmentchar = PlayerPrefs.GetInt("Maincharindex");
+        nametext.text = Statics.characternames[Statics.currentequipmentchar] + " LvL" + Statics.charcurrentlvl;
+        settextandimage(Statics.currentequipmentchar);
     }
     private void Update()
     {
@@ -68,174 +48,88 @@ public class Equipcharselection : MonoBehaviour
     }
     private void selectionforward()
     {
-        if (Statics.currentequiptmentchar >= Statics.playablechars - 1)
+        if (Statics.currentequipmentchar >= Statics.playablechars - 1)
         {
-            Statics.currentequiptmentchar = 0;
-            choosechar(Statics.currentequiptmentchar);
+            Statics.currentequipmentchar = 0;
+            choosechar(Statics.currentequipmentchar);
         }
         else
         {
-            Statics.currentequiptmentchar++;
-            choosechar(Statics.currentequiptmentchar);
+            Statics.currentequipmentchar++;
+            choosechar(Statics.currentequipmentchar);
         }
     }
     private void selectionbackward()
     {
-        if (Statics.currentequiptmentchar == 0)
+        if (Statics.currentequipmentchar == 0)
         {
-            Statics.currentequiptmentchar = Statics.playablechars - 1;
-            choosechar(Statics.currentequiptmentchar);
+            Statics.currentequipmentchar = Statics.playablechars - 1;
+            choosechar(Statics.currentequipmentchar);
         }
         else
         {
-            Statics.currentequiptmentchar--;
-            choosechar(Statics.currentequiptmentchar);
+            Statics.currentequipmentchar--;
+            choosechar(Statics.currentequipmentchar);
         }
     }
     public void choosechar(int currentchar)
     {
-        Statics.currentequiptmentchar = currentchar;
-        nametext.text = Statics.characternames[Statics.currentequiptmentchar] + " LvL" + Statics.charcurrentlvl;
-        settextandimage(Statics.currentequiptmentchar);
+        Statics.currentequipmentchar = currentchar;
+        nametext.text = Statics.characternames[Statics.currentequipmentchar] + " LvL" + Statics.charcurrentlvl;
+        settextandimage(Statics.currentequipmentchar);
+        setselectedbutton();
     }
-    private void settextandimage(int currentint)
+    private void settextandimage(int currentchar)
     {
-        statshealth.text = Statics.charmaxhealth[currentint] + "";
-        statsdefense.text = Statics.chardefense[currentint] + "";
-        statsattack.text = Statics.charattack[currentint] + "";
-        statscritchance.text = Statics.charcritchance[currentint] + "%";
-        statscritdmg.text = Statics.charcritdmg[currentint] + "%";
-        statsweaponbuff.text = Statics.charweaponbuff[currentint] - 100 + "%";
-        statsweaponbuffduration.text = Statics.charweaponbuffduration[currentint] + "sec";
-        statscharbuff.text = Statics.charswitchbuff[currentint] - 100 + "%";
-        statscharbuffduration.text = Statics.charswitchbuffduration[currentint] + "sec";
-        statsbasiccrit.text = Statics.charbasiccritbuff[currentint] + "%";
-        statsbasicbuffdmg.text = Statics.charbasicdmgbuff[currentint] + "%";
+        statsnumbers.text = string.Empty;
+        statsnumbers.color = Color.white;
+        statsnumbers.text = Statics.charmaxhealth[currentchar] + "\n" +
+                            Statics.chardefense[currentchar] + "\n" +
+                            Statics.charattack[currentchar] + "\n" +
+                            Statics.charcritchance[currentchar] + "%" + "\n" +
+                            Statics.charcritdmg[currentchar] + "%" + "\n" +
+                            (Statics.charweaponbuff[currentchar] - 100) + "%" + "\n" +
+                            Statics.charweaponbuffduration[currentchar] + "sec" + "\n" +
+                            (Statics.charswitchbuff[currentchar] - 100) + "%" + "\n" +
+                            Statics.charswitchbuffduration[currentchar] + "sec" + "\n" +
+                            Statics.charbasiccritbuff[currentchar] + "%" + "\n" +
+                            Statics.charbasicdmgbuff[currentchar] + "%";
 
-        swordbutton.text = Statics.charswordattack[currentint].ToString();
+        sworddmg.text = Statics.charswordattack[currentchar].ToString();
+        bowdmg.text = Statics.charbowattack[currentchar].ToString();
+        fistdmg.text = Statics.charfistattack[currentchar].ToString();
 
-        statsswordattack.text = Statics.charswordattack[currentint] + "";
-        statsbowattack.text = Statics.charbowattack[currentint] + "";
-        statsfistattack.text = Statics.charfistattack[currentint] + "";
+        slotbuttontext[0].text = Statics.charcurrentsword[currentchar].itemname;
+        slotbuttontext[1].text = Statics.charcurrentbow[currentchar].itemname;
+        slotbuttontext[2].text = Statics.charcurrentfist[currentchar].itemname;
+        slotbuttontext[3].text = Statics.charcurrenthead[currentchar].itemname;
+        slotbuttontext[4].text = Statics.charcurrentchest[currentchar].itemname;
+        slotbuttontext[5].text = Statics.charcurrentgloves[currentchar].itemname;
+        slotbuttontext[6].text = Statics.charcurrentlegs[currentchar].itemname;
+        slotbuttontext[7].text = Statics.charcurrentshoes[currentchar].itemname;
+        slotbuttontext[8].text = Statics.charcurrentneckless[currentchar].itemname;
+        slotbuttontext[9].text = Statics.charcurrentring[currentchar].itemname;
 
-        swordbutton.text = Statics.charcurrentswordname[currentint].ToString();
-        bowbutton.text = Statics.charcurrentbowname[currentint].ToString();
-        fistbutton.text = Statics.charcurrentfistname[currentint].ToString();
-        headbutton.text = Statics.charcurrentheadname[currentint].ToString();
-        chestbutton.text = Statics.charcurrentchestname[currentint].ToString();
-        glovesbutton.text = Statics.charcurrentglovesname[currentint].ToString();
-        beltbutton.text = Statics.charcurrentlegname[currentint].ToString();
-        shoesbutton.text = Statics.charcurrentshoesname[currentint].ToString();
-        necklessbutton.text = Statics.charcurrentnecklessname[currentint].ToString();
-        ringbutton.text = Statics.charcurrentringname[currentint].ToString();
-
-        if (Statics.activeswordslot != null)
-        {
-            Statics.activeswordslot.transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;
-        }
-        if (Statics.currentswordimage[currentint] != null)
-        {
-            Statics.currentswordimage[currentint].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.green;
-            Statics.activeswordslot = Statics.currentswordimage[currentint];
-        }
-
-        if (Statics.activebowslot != null)
-        {
-            Statics.activebowslot.transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;
-        }
-        if (Statics.currentbowimage[currentint] != null)
-        {
-            Statics.currentbowimage[currentint].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.green;
-            Statics.activebowslot = Statics.currentbowimage[currentint];
-        }
-
-        if (Statics.activefistslot != null)
-        {
-            Statics.activefistslot.transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;
-        }
-        if (Statics.currentfistimage[currentint] != null)
-        {
-            Statics.currentfistimage[currentint].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.green;
-            Statics.activefistslot = Statics.currentfistimage[currentint];
-        }
-
-        if (Statics.activeheadslot != null)
-        {
-            Statics.activeheadslot.transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;
-        }
-        if (Statics.currentheadimage[currentint] != null)
-        {
-            Statics.currentheadimage[currentint].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.green;
-            Statics.activeheadslot = Statics.currentheadimage[currentint];
-        }
-
-        if (Statics.activechestslot != null)
-        {
-            Statics.activechestslot.transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;
-        }
-        if (Statics.currentchestimage[currentint] != null)
-        {
-            Statics.currentchestimage[currentint].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.green;
-            Statics.activechestslot = Statics.currentchestimage[currentint];
-        }
-
-        if (Statics.activeglovesslot != null)
-        {
-            Statics.activeglovesslot.transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;
-        }
-        if (Statics.currentglovesimage[currentint] != null)
-        {
-            Statics.currentglovesimage[currentint].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.green;
-            Statics.activeglovesslot = Statics.currentglovesimage[currentint];
-        }
-
-        if (Statics.activebeltslot != null)
-        {
-            Statics.activebeltslot.transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;
-        }
-        if (Statics.currentlegimage[currentint] != null)
-        {
-            Statics.currentlegimage[currentint].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.green;
-            Statics.activebeltslot = Statics.currentlegimage[currentint];
-        }
-
-        if (Statics.activeshoesslot != null)
-        {
-            Statics.activeshoesslot.transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;
-        }
-        if (Statics.currentshoesimage[currentint] != null)
-        {
-            Statics.currentshoesimage[currentint].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.green;
-            Statics.activeshoesslot = Statics.currentshoesimage[currentint];
-        }
-
-        if (Statics.activenecklessslot != null)
-        {
-            Statics.activenecklessslot.transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;
-        }
-        if (Statics.currentnecklessimage[currentint] != null)
-        {
-            Statics.currentnecklessimage[currentint].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.green;
-            Statics.activenecklessslot = Statics.currentnecklessimage[currentint];
-        }
-
-        if (Statics.activeringslot != null)
-        {
-            Statics.activeringslot.transform.GetChild(0).GetComponentInChildren<Image>().color = Color.white;
-        }
-        if (Statics.currentringimage[currentint] != null)
-        {
-            Statics.currentringimage[currentint].transform.GetChild(0).GetComponentInChildren<Image>().color = Color.green;
-            Statics.activeringslot = Statics.currentringimage[currentint];
-        }
         foreach (GameObject obj in charbuttons)
         {
             obj.GetComponent<Image>().color = Color.white;
         }
-        charbuttons[Statics.currentequiptmentchar].GetComponent<Image>().color = Color.green;
+        charbuttons[Statics.currentequipmentchar].GetComponent<Image>().color = Color.green;
+    }
+    
+    private void setselectedbutton()
+    {
         if(currentbuttonslot != null)
         {
             EventSystem.current.SetSelectedGameObject(currentbuttonslot);
+            if(Statics.currentequipmentbutton < 3)
+            {
+                currentbuttonslot.gameObject.GetComponent<Setcolorcurrentweapon>().triggerbutton();
+            }
+            else
+            {
+                currentbuttonslot.gameObject.GetComponent<Setcolorcurrentarmor>().triggerbutton();
+            }
         }
     }
 }

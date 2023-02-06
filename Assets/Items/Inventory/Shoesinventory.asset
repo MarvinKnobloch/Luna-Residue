@@ -13,116 +13,145 @@ MonoBehaviour:
   m_Name: Shoesinventory
   m_EditorClassIdentifier: 
   Container:
+    savepathname: Shoesinventory
     Items:
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0
     - item: {fileID: 0}
       amount: 0
       itemname: 
       inventoryposi: 0
+      itemlvl: 0

@@ -28,15 +28,15 @@ MonoBehaviour:
   - 0
   - 2
   stats:
-  - 10
+  - 20
   - 0
   - 0
   - 0
   - 0
   - 0
   - 0
-  - 2
-  upgradelvl: 0
+  - 6
+  upgradelvl: 1
   maxupgradelvl: 1
   upgrades:
   - newstats:

@@ -19,13 +19,14 @@ public class Upgradecontroller : MonoBehaviour
     private TextMeshProUGUI upgradetext;
     public bool canupgrade;
 
-    [SerializeField] Itemtextcontroller itemtextcontroller;
+    [SerializeField] Upgradeuitextcontroller itemtextcontroller;
 
+    [SerializeField] private Inventorycontroller[] inventorys;
     public Inventorycontroller matsinventory;
-    public int[] iteminventoryposi = new int[5];                  //es dürfen maximal 5 mats zum übergraden verwendet werden
+    public int[] craftingmatinventoryposi = new int[5];                  //es dürfen maximal 5 mats zum übergraden verwendet werden
     public int[] upgrademinusvalue = new int[5];
 
-    private float upgradetime = 2.5f;
+    private float upgradetime = 1.5f;
     public float upgradetimer;
     private bool starttimer;
 
@@ -86,6 +87,7 @@ public class Upgradecontroller : MonoBehaviour
     private void upgradeitem()
     {
         int currentint = 0;
+        chooseitem.subtractequipeditem();
         foreach (float stat in itemtoupgrade.stats)
         {
             itemtoupgrade.stats[currentint] = itemtoupgrade.upgrades[itemtoupgrade.upgradelvl].newstats[currentint];
@@ -94,68 +96,17 @@ public class Upgradecontroller : MonoBehaviour
         removemats();
         itemtoupgrade.upgradelvl++;
         chooseitem.upgradeequipeditems();
-        itemtextcontroller.textupdate();
+        itemtextcontroller.valuesupdate();
         resetonpointenterlayer.SetActive(true);
+        inventorys[Statics.currentequipmentbutton -3].Container.Items[itemtoupgrade.inventoryslot -1].itemlvl++;                    //-3 weil die waffeninventory nicht dabei sind / -1 weil array
+        //inventory itemlvl muss noch upgedated werden
     }
     private void removemats()
     {
         for (int i = 0; i < itemtoupgrade.upgrades[itemtoupgrade.upgradelvl].Upgrademats.Length; i++)
         {
-            matsinventory.Container.Items[iteminventoryposi[i]].amount -= upgrademinusvalue[i];
+            matsinventory.Container.Items[craftingmatinventoryposi[i]].amount -= upgrademinusvalue[i];
         }
 
     }
 }
-
-
-//public float deltaTime;
-//public DateTime tp1;
-//private DateTime tp2;
-/*
-IEnumerator upgraditem()
-{
-    tp1 = DateTime.Now;
-    tp2 = DateTime.Now;
-    Debug.Log("hallo");
-    deltaTime = 0f;
-    upgradetimer = 0f;
-    while (upgradetimer < upgradetime)
-    {
-        tp2 = DateTime.Now;
-        deltaTime = (float)((tp2.Ticks - tp1.Ticks) / 10000000.0);
-        tp1 = tp2;
-        upgradetimer += deltaTime;
-        yield return null;
-    }
-    Debug.Log("upgradecomplete");
-    starttimer = false;
-
-}*/
-
-/*IEnumerator upgraditem()
-{
-    //private Stopwatch stopwatch = new Stopwatch();
-    //public string time;
-
-        //stopwatch.Start();
-        //stopwatch.Stop();
-        //stopwatch.Reset();
-
-    upgradeimage.fillAmount = 0;
-    stopwatch.Reset();
-    UnityEngine.Debug.Log("hallo");
-    upgradetimer = 0f;
-    while (upgradetimer < upgradetime)
-    {
-        stopwatch.Start();
-        stopwatch.Stop();
-        TimeSpan ts = stopwatch.Elapsed;
-        seconds = Convert.ToSingle(ts.TotalMilliseconds);
-        upgradetimer = seconds * 120;
-        upgradeimage.fillAmount = upgradetimer / upgradetime;
-        yield return null;
-    }
-    UnityEngine.Debug.Log("upgradecomplete");
-    upgradeimage.fillAmount = 0;
-    starttimer = false;
-}*/
