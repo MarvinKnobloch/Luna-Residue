@@ -14,17 +14,18 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     [NonSerialized] public Itemcontroller itemvalues;
 
-    private Setstats setstats;
+    private Armorgridvalues armorgridvalues;
+
 
     [NonSerialized] public Text upgradelvltext;
     [NonSerialized] public int selectedchar = 0;
 
     private void Awake()
     {
-        setstats = GetComponentInParent<Setstats>();
-        slotbuttontext = gameObject.GetComponentInParent<Setstats>().slottext;
-        slotbutton = gameObject.GetComponentInParent<Setstats>().slotbutton;
-        statsnumbers = gameObject.GetComponentInParent<Setstats>().statsnumbers;
+        armorgridvalues = GetComponentInParent<Armorgridvalues>();
+        slotbuttontext = gameObject.GetComponentInParent<Armorgridvalues>().slottext;
+        slotbutton = gameObject.GetComponentInParent<Armorgridvalues>().slotbutton;
+        statsnumbers = gameObject.GetComponentInParent<Armorgridvalues>().statsnumbers;
     }
     public void setitem()
     {
@@ -223,9 +224,9 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             selectedchar = Statics.currentequipmentchar;
 
-            setstats.upgradeuitextcontroller.item = itemvalues;
-            setstats.upgradeuitextcontroller.chooseitem = this;
-            setstats.upgradeui.SetActive(true);
+            armorgridvalues.upgradeuitextcontroller.item = itemvalues;
+            armorgridvalues.upgradeuitextcontroller.chooseitem = this;
+            armorgridvalues.upgradeui.SetActive(true);
 
             statsnumbers.text = string.Empty;
             statsnumbers.color = Color.white;
@@ -318,7 +319,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
     {
-        setstats.upgradeui.SetActive(false);
+        armorgridvalues.upgradeui.SetActive(false);
         statsupdate();
     }
 }

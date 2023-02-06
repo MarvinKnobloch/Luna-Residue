@@ -131,7 +131,7 @@ public class Upgradeuitextcontroller : MonoBehaviour
                     if (matsinventory.Container.Items[i].item == material.upgrademat)
                     {
                         upgradematamount = matsinventory.Container.Items[i].amount;
-                        upgradecontroller.iteminventoryposi[currentinventoryposi] = i;                                    //matposition + kosten werden gespeichtert und weitergegeben damit man keinen weitern loop machen muss
+                        upgradecontroller.craftingmatinventoryposi[currentinventoryposi] = i;                                    //matposition + kosten werden gespeichtert und weitergegeben damit man keinen weitern loop machen muss
                         upgradecontroller.upgrademinusvalue[currentinventoryposi] = material.costs;
                         currentinventoryposi++;
                         break;

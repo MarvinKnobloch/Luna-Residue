@@ -36,24 +36,13 @@ public class Convertstatics
     public float[] charfistattack;
     public string[] charcurrentfistname;
 
-    public string[] charcurrentheadname;
-    public string[] charcurrentchestname;
-    public string[] charcurrentglovesname;
-    public string[] charcurrentshoesname;
-    public string[] charcurrentlegname;
-    public string[] charcurrentnecklessname;
-    public string[] charcurrentringname;
-
-    public GameObject[] currentswordimage;
-    public GameObject[] currentbowimage;
-    public GameObject[] currentfistimage;
-    public GameObject[] currentheadimage;
-    public GameObject[] currentchestimage;
-    public GameObject[] currentglovesimage;
-    public GameObject[] currentshoesimage;
-    public GameObject[] currentlegimage;
-    public GameObject[] currentnecklessimage;
-    public GameObject[] currentringimage;
+    public Itemcontroller[] currenthead;
+    public Itemcontroller[] currentchest;
+    public Itemcontroller[] currentgloves;
+    public Itemcontroller[] currentlegs;
+    public Itemcontroller[] currentshoes;
+    public Itemcontroller[] currentneckless;
+    public Itemcontroller[] currentring;
 
     public void savestaticsinscript()
     {
@@ -84,30 +73,17 @@ public class Convertstatics
         charbasicdmgbuff = Statics.charbasicdmgbuff;
 
         charswordattack = Statics.charswordattack;
-        charcurrentswordname = Statics.charcurrentswordname;
         charbowattack = Statics.charbowattack;
-        charcurrentbowname = Statics.charcurrentbowname;
         charfistattack = Statics.charfistattack;
-        charcurrentfistname = Statics.charcurrentfistname;
 
-        charcurrentheadname = Statics.charcurrentheadname;
-        charcurrentchestname = Statics.charcurrentchestname;
-        charcurrentglovesname = Statics.charcurrentglovesname;
-        charcurrentshoesname = Statics.charcurrentshoesname;
-        charcurrentlegname = Statics.charcurrentlegname;
-        charcurrentnecklessname = Statics.charcurrentnecklessname;
-        charcurrentringname = Statics.charcurrentringname;
+        currenthead = Statics.charcurrenthead;
+        currentchest = Statics.charcurrentchest;
+        currentgloves = Statics.charcurrentgloves;
+        currentshoes = Statics.charcurrentshoes;
+        currentlegs = Statics.charcurrentlegs;
+        currentneckless = Statics.charcurrentneckless;
+        currentring = Statics.charcurrentring;
 
-        currentswordimage = Statics.currentswordimage;
-        currentbowimage = Statics.currentbowimage;
-        currentfistimage = Statics.currentfistimage;
-        currentheadimage = Statics.currentheadimage;
-        currentchestimage = Statics.currentchestimage;
-        currentglovesimage = Statics.currentglovesimage;
-        currentshoesimage = Statics.currentshoesimage;
-        currentlegimage = Statics.currentlegimage;
-        currentnecklessimage = Statics.currentnecklessimage;
-        currentringimage = Statics.currentringimage;
 
             /*public static int currentactiveplayer;
     public static int currentthirdchar;
@@ -159,37 +135,15 @@ public class Convertstatics
         Statics.charbasicdmgbuff = charbasicdmgbuff;
 
         Statics.charswordattack = charswordattack;
-        Statics.charcurrentswordname = charcurrentswordname;
         Statics.charbowattack = charbowattack;
-        Statics.charcurrentbowname = charcurrentbowname;
         Statics.charfistattack = charfistattack;
-        Statics.charcurrentfistname = charcurrentfistname;
 
-        Statics.charcurrentheadname = charcurrentheadname;
-        Statics.charcurrentchestname = charcurrentchestname;
-        Statics.charcurrentglovesname = charcurrentglovesname;
-        Statics.charcurrentshoesname = charcurrentshoesname;
-        Statics.charcurrentlegname = charcurrentlegname;
-        Statics.charcurrentnecklessname = charcurrentnecklessname;
-        Statics.charcurrentringname = charcurrentringname;
-
-        Statics.currentswordimage = currentswordimage;
-        Statics.currentbowimage = currentbowimage;
-        Statics.currentfistimage = currentfistimage;
-        Statics.currentheadimage = currentheadimage;
-        Statics.currentchestimage = currentchestimage;
-        Statics.currentglovesimage = currentglovesimage;
-        Statics.currentshoesimage = currentshoesimage;
-        Statics.currentlegimage = currentlegimage;
-        Statics.currentnecklessimage = currentnecklessimage;
-        Statics.currentringimage = currentringimage;
+        Statics.charcurrenthead = currenthead;
+        Statics.charcurrentchest = currentchest;
+        Statics.charcurrentgloves = currentgloves;
+        Statics.charcurrentshoes = currentshoes;
+        Statics.charcurrentlegs = currentlegs;
+        Statics.charcurrentneckless = currentneckless;
+        Statics.charcurrentring = currentring;
     }
 }
-
-/*public float playerposix;               //Loadcharmanager werte, werden beim menu öffnen gespeichert
-public float playerposiy;
-public float playerposiz;
-public float playerrotax;
-public float playerrotay;
-public float playerrotaz;
-public float playerrotaw;*/

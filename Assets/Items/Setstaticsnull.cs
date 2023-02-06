@@ -8,6 +8,9 @@ public class Setstaticsnull : MonoBehaviour
 
     private void Awake()
     {
+        setnullobject(Statics.charcurrentsword);
+        setnullobject(Statics.charcurrentbow);
+        setnullobject(Statics.charcurrentfist);
         setnullobject(Statics.charcurrenthead);
         setnullobject(Statics.charcurrentchest);
         setnullobject(Statics.charcurrentgloves);

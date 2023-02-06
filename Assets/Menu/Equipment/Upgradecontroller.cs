@@ -21,8 +21,9 @@ public class Upgradecontroller : MonoBehaviour
 
     [SerializeField] Upgradeuitextcontroller itemtextcontroller;
 
+    [SerializeField] private Inventorycontroller[] inventorys;
     public Inventorycontroller matsinventory;
-    public int[] iteminventoryposi = new int[5];                  //es dürfen maximal 5 mats zum übergraden verwendet werden
+    public int[] craftingmatinventoryposi = new int[5];                  //es dürfen maximal 5 mats zum übergraden verwendet werden
     public int[] upgrademinusvalue = new int[5];
 
     private float upgradetime = 1.5f;
@@ -97,13 +98,14 @@ public class Upgradecontroller : MonoBehaviour
         chooseitem.upgradeequipeditems();
         itemtextcontroller.valuesupdate();
         resetonpointenterlayer.SetActive(true);
+        inventorys[Statics.currentequipmentbutton -3].Container.Items[itemtoupgrade.inventoryslot -1].itemlvl++;                    //-3 weil die waffeninventory nicht dabei sind / -1 weil array
         //inventory itemlvl muss noch upgedated werden
     }
     private void removemats()
     {
         for (int i = 0; i < itemtoupgrade.upgrades[itemtoupgrade.upgradelvl].Upgrademats.Length; i++)
         {
-            matsinventory.Container.Items[iteminventoryposi[i]].amount -= upgrademinusvalue[i];
+            matsinventory.Container.Items[craftingmatinventoryposi[i]].amount -= upgrademinusvalue[i];
         }
 
     }

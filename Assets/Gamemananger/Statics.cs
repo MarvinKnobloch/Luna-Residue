@@ -119,18 +119,6 @@ public class Statics
     public static bool forthcharishealer;
     public static float alliegrouphealspawntime = 8;
 
-    //itemgrid
-    public static GameObject activeswordslot;
-    public static GameObject activebowslot;
-    public static GameObject activefistslot;
-    public static GameObject activeheadslot;
-    public static GameObject activechestslot;
-    public static GameObject activeglovesslot;
-    public static GameObject activeshoesslot;
-    public static GameObject activebeltslot;
-    public static GameObject activenecklessslot;
-    public static GameObject activeringslot;
-
     //playerstats
     public static int charcurrentlvl = 1;
     public static float charcurrentexp = 0;
@@ -153,11 +141,8 @@ public class Statics
     public static float[] charbasicdmgbuff = { 150, 150, 150, 150, 150 };
 
     public static float[] charswordattack = new float[5];
-    public static string[] charcurrentswordname = { "empty", "empty", "empty", "empty", "empty" };
     public static float[] charbowattack = new float[5];
-    public static string[] charcurrentbowname = { "empty", "empty", "empty", "empty", "empty" };
     public static float[] charfistattack = new float[5];
-    public static string[] charcurrentfistname = { "empty", "empty", "empty", "empty", "empty" };
 
     public static Itemcontroller[] charcurrentsword = new Itemcontroller[5];
     public static Itemcontroller[] charcurrentbow = new Itemcontroller[5];
@@ -170,25 +155,6 @@ public class Statics
     public static Itemcontroller[] charcurrentneckless = new Itemcontroller[5];
     public static Itemcontroller[] charcurrentring = new Itemcontroller[5];
 
-    public static string[] charcurrentheadname = { "empty", "empty", "empty", "empty", "empty" };
-    public static string[] charcurrentchestname = { "empty", "empty", "empty", "empty", "empty" };
-    public static string[] charcurrentglovesname = { "empty", "empty", "empty", "empty", "empty" };
-    public static string[] charcurrentshoesname = { "empty", "empty", "empty", "empty", "empty" };
-    public static string[] charcurrentlegname = { "empty", "empty", "empty", "empty", "empty" };
-    public static string[] charcurrentnecklessname = { "empty", "empty", "empty", "empty", "empty" };
-    public static string[] charcurrentringname = { "empty", "empty", "empty", "empty", "empty" };
-
-    public static GameObject[] currentswordimage = new GameObject[5];
-    public static GameObject[] currentbowimage = new GameObject[5];
-    public static GameObject[] currentfistimage = new GameObject[5];
-    public static GameObject[] currentheadimage = new GameObject[5];
-    public static GameObject[] currentchestimage = new GameObject[5];
-    public static GameObject[] currentglovesimage = new GameObject[5];
-    public static GameObject[] currentshoesimage = new GameObject[5];
-    public static GameObject[] currentlegimage = new GameObject[5];
-    public static GameObject[] currentnecklessimage = new GameObject[5];
-    public static GameObject[] currentringimage = new GameObject[5];
-
     public static float healthperskillpoint = 25;
     public static float armorperskillpoint = 25;
     public static float attackperskillpoint = 1;
@@ -197,30 +163,4 @@ public class Statics
     public static float weaponswitchbuffperskillpoint = 3;
     public static float charswitchbuffperskillpoint = 3;
     public static float basicbuffdmgperskillpoint = 4;
-
-
-    // Mariastats
-    /*public static int mariacurrentlvl = 1;
-    public static float mariacurrentexp = 10f;
-    public static float mariacurrentrequiredexp = 52f;
-
-    //Erikastats
-    public static int erikacurrentlvl = 1;
-    public static float erikacurrentexp = 0f;
-    public static float erikacurrentrequiredexp = 52f;
-
-    //Kajawstats
-    public static int kajacurrentlvl = 1;
-    public static float kajacurrentexp = 0f;
-    public static float kajacurrentrequiredexp = 52f;
-
-    //Yakustats yaku
-    public static int yakucurrentlvl = 1;
-    public static float yakucurrentexp = 0f;
-    public static float yakucurrentrequiredexp = 52f;
-
-    //Arissastats arrisa
-    public static int arissacurrentlvl = 1;
-    public static float arissacurrentexp = 0f;
-    public static float arissacurrentrequiredexp = 52f;*/
 }

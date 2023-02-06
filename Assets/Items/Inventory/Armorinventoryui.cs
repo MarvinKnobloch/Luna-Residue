@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class Armorinventoryui : MonoBehaviour
 {
     [SerializeField] private Inventorycontroller inventory;
-    [SerializeField] private int equipslotnumber;
 
     Dictionary<GameObject, Inventoryslot> itemsdisplayed = new Dictionary<GameObject, Inventoryslot>();                         // Das Dictionary welches die Inventoryslots speichert
 

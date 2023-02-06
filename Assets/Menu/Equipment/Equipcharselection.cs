@@ -15,13 +15,12 @@ public class Equipcharselection : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI statsnumbers;
 
-    public Text statsswordattack;
-    public Text statsbowattack;
-    public Text statsfistattack;
+    public TextMeshProUGUI sworddmg;
+    public TextMeshProUGUI bowdmg;
+    public TextMeshProUGUI fistdmg;
 
     [SerializeField] private TextMeshProUGUI[] slotbuttontext;
     [SerializeField] private GameObject[] charbuttons;
-    [SerializeField] private GameObject[] grids;
     [SerializeField] private GameObject resetonpointerenterlayer;
 
     private void Awake()
@@ -96,16 +95,13 @@ public class Equipcharselection : MonoBehaviour
                             Statics.charbasiccritbuff[currentchar] + "%" + "\n" +
                             Statics.charbasicdmgbuff[currentchar] + "%";
 
+        sworddmg.text = Statics.charswordattack[currentchar].ToString();
+        bowdmg.text = Statics.charbowattack[currentchar].ToString();
+        fistdmg.text = Statics.charfistattack[currentchar].ToString();
 
-        //swordbutton.text = Statics.charswordattack[currentint].ToString();
-
-        statsswordattack.text = Statics.charswordattack[currentchar] + "";
-        statsbowattack.text = Statics.charbowattack[currentchar] + "";
-        statsfistattack.text = Statics.charfistattack[currentchar] + "";
-
-        //slotbuttontext[0].text = Statics.charcurrentsword[currentchar].itemname.;
-        //slotbuttontext[1].text = Statics.charcurrentbow[currentchar].itemname;
-        //slotbuttontext[2].text = Statics.charcurrentfist[currentchar].itemname;
+        slotbuttontext[0].text = Statics.charcurrentsword[currentchar].itemname;
+        slotbuttontext[1].text = Statics.charcurrentbow[currentchar].itemname;
+        slotbuttontext[2].text = Statics.charcurrentfist[currentchar].itemname;
         slotbuttontext[3].text = Statics.charcurrenthead[currentchar].itemname;
         slotbuttontext[4].text = Statics.charcurrentchest[currentchar].itemname;
         slotbuttontext[5].text = Statics.charcurrentgloves[currentchar].itemname;
