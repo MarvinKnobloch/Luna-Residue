@@ -16,9 +16,6 @@ public class GlobalCD : MonoBehaviour
     public static int currentweaponswitchchar;
     public static int currentcharswitchchar;
 
-    public Image kickcdUI;
-    public Text kickcdtext;
-
     public Image weaponswitchcdUI;
     public Text weaponswitchtext;
 
@@ -40,7 +37,6 @@ public class GlobalCD : MonoBehaviour
     private float currentmissingcharbufftime;
     void Awake()
     {
-        Statics.kickcdbool = false;
         Statics.dashcdbool = false;
         Statics.charswitchbool = false;
         Statics.healcdbool = true;
@@ -74,10 +70,6 @@ public class GlobalCD : MonoBehaviour
     public static void startresetdash()
     {
         instance.StartCoroutine("resetdash");
-    }
-    public static void startkickcd()
-    {
-        instance.StartCoroutine("kickcd");
     }
     public static void startweaponswitchcd()
     {
@@ -173,27 +165,6 @@ public class GlobalCD : MonoBehaviour
             {
                 Statics.dash = false;
                 StopCoroutine("resetdash");
-            }
-            yield return null;
-        }
-    }
-    IEnumerator kickcd()
-    {
-        Statics.kickcdbool = true;
-        kickcdUI.fillAmount = 0;
-        Statics.kickcdmissingtime = 0;
-
-        while (true)
-        {
-            Statics.kickcdmissingtime += Time.deltaTime;
-            kickcdUI.fillAmount = Statics.kickcdmissingtime / Statics.kickcd;
-            kickcdtext.text = Mathf.RoundToInt(Statics.kickcd - Statics.kickcdmissingtime).ToString();
-
-            if (Statics.kickcdmissingtime >= Statics.kickcd)
-            {
-                Statics.kickcdbool = false;
-                kickcdtext.text = "";
-                StopCoroutine("kickcd");
             }
             yield return null;
         }

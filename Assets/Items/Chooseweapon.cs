@@ -12,19 +12,19 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private GameObject slotbutton;
 
     [NonSerialized] public Itemcontroller itemvalues;
-    private Weapongridvalues weapongridvalues;
+    private Gridvalues gridvalues;
 
     public int selectedchar = 0;
 
     private void Awake()
     {
-        weapongridvalues = GetComponentInParent<Weapongridvalues>();
-        slotbuttontext = gameObject.GetComponentInParent<Weapongridvalues>().slottext;
-        slotbutton = gameObject.GetComponentInParent<Weapongridvalues>().slotbutton;
+        gridvalues = GetComponentInParent<Gridvalues>();
+        slotbuttontext = gameObject.GetComponentInParent<Gridvalues>().slottext;
+        slotbutton = gameObject.GetComponentInParent<Gridvalues>().slotbutton;
     }
     public void setweapon()
     {
-        if(itemvalues != null)
+        if (itemvalues != null)
         {
             selectedchar = Statics.currentequipmentchar;
             slotbuttontext.gameObject.GetComponent<TextMeshProUGUI>().text = GetComponentInChildren<Text>().text;
@@ -35,9 +35,23 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
     private void statsupdate()
     {
-        weapongridvalues.sworddmg.text = Statics.charswordattack[selectedchar].ToString();
-        weapongridvalues.bowdmg.text = Statics.charbowattack[selectedchar].ToString();
-        weapongridvalues.fistdmg.text = Statics.charfistattack[selectedchar].ToString();
+        gridvalues.sworddmg.text = Statics.charswordattack[selectedchar].ToString();
+        gridvalues.bowdmg.text = Statics.charbowattack[selectedchar].ToString();
+        gridvalues.fistdmg.text = Statics.charfistattack[selectedchar].ToString();
+
+        gridvalues.statsnumbers.text = string.Empty;
+        gridvalues.statsnumbers.color = Color.white;
+        gridvalues.statsnumbers.text = Statics.charmaxhealth[selectedchar] + "\n" +
+                            Statics.chardefense[selectedchar] + "\n" +
+                            Statics.charattack[selectedchar] + "\n" +
+                            Statics.charcritchance[selectedchar] + "%" + "\n" +
+                            Statics.charcritdmg[selectedchar] + "%" + "\n" +
+                            (Statics.charweaponbuff[selectedchar] - 100) + "%" + "\n" +
+                            Statics.charweaponbuffduration[selectedchar] + "sec" + "\n" +
+                            (Statics.charswitchbuff[selectedchar] - 100) + "%" + "\n" +
+                            Statics.charswitchbuffduration[selectedchar] + "sec" + "\n" +
+                            Statics.charbasiccritbuff[selectedchar] + "%" + "\n" +
+                            Statics.charbasicdmgbuff[selectedchar] + "%";
     }
     private void setnewitem(int equipslot)
     {
@@ -68,17 +82,21 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
             if (Statics.currentequipmentbutton == 0)
             {
-                ontriggerstats(Statics.charcurrentsword[selectedchar], weapongridvalues.sworddmg);
+                ontriggerstats(Statics.charcurrentsword[selectedchar], gridvalues.sworddmg);
             }
 
             else if (Statics.currentequipmentbutton == 1)
             {
-                ontriggerstats(Statics.charcurrentbow[selectedchar], weapongridvalues.bowdmg);
+                ontriggerstats(Statics.charcurrentbow[selectedchar], gridvalues.bowdmg);
             }
             else if (Statics.currentequipmentbutton == 2)
             {
-                ontriggerstats(Statics.charcurrentfist[selectedchar], weapongridvalues.fistdmg);
+                ontriggerstats(Statics.charcurrentfist[selectedchar], gridvalues.fistdmg);
             }
+        }
+        else
+        {
+            statsupdate();
         }
     }
     private void ontriggerstats(Itemcontroller equipeditem, TextMeshProUGUI weapondmgtext)

@@ -14,18 +14,17 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     [NonSerialized] public Itemcontroller itemvalues;
 
-    private Armorgridvalues armorgridvalues;
-
+    private Gridvalues gridvalues;
 
     [NonSerialized] public Text upgradelvltext;
     [NonSerialized] public int selectedchar = 0;
 
     private void Awake()
     {
-        armorgridvalues = GetComponentInParent<Armorgridvalues>();
-        slotbuttontext = gameObject.GetComponentInParent<Armorgridvalues>().slottext;
-        slotbutton = gameObject.GetComponentInParent<Armorgridvalues>().slotbutton;
-        statsnumbers = gameObject.GetComponentInParent<Armorgridvalues>().statsnumbers;
+        gridvalues = GetComponentInParent<Gridvalues>();
+        slotbuttontext = gameObject.GetComponentInParent<Gridvalues>().slottext;
+        slotbutton = gameObject.GetComponentInParent<Gridvalues>().slotbutton;
+        statsnumbers = gameObject.GetComponentInParent<Gridvalues>().statsnumbers;
     }
     public void setitem()
     {
@@ -53,6 +52,10 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                             Statics.charswitchbuffduration[selectedchar] + "sec" + "\n" +
                             Statics.charbasiccritbuff[selectedchar] + "%" + "\n" +
                             Statics.charbasicdmgbuff[selectedchar] + "%";
+
+        gridvalues.sworddmg.text = Statics.charswordattack[selectedchar].ToString();
+        gridvalues.bowdmg.text = Statics.charbowattack[selectedchar].ToString();
+        gridvalues.fistdmg.text = Statics.charfistattack[selectedchar].ToString();
     }
 
     public void setnewitem(int equipslot)                                           //equipslot wird im inventoryui gesetzt     
@@ -224,9 +227,9 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             selectedchar = Statics.currentequipmentchar;
 
-            armorgridvalues.upgradeuitextcontroller.item = itemvalues;
-            armorgridvalues.upgradeuitextcontroller.chooseitem = this;
-            armorgridvalues.upgradeui.SetActive(true);
+            gridvalues.upgradeuitextcontroller.item = itemvalues;
+            gridvalues.upgradeuitextcontroller.chooseitem = this;
+            gridvalues.upgradeui.SetActive(true);
 
             statsnumbers.text = string.Empty;
             statsnumbers.color = Color.white;
@@ -259,6 +262,10 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             {
                 mouseenter(Statics.charcurrentring[selectedchar]);
             }
+        }
+        else
+        {
+            statsupdate();
         }
     }
     private void mouseenter(Itemcontroller slot)
@@ -319,7 +326,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
     {
-        armorgridvalues.upgradeui.SetActive(false);
+        gridvalues.upgradeui.SetActive(false);
         statsupdate();
     }
 }

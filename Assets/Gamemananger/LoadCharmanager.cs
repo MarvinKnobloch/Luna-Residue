@@ -19,6 +19,7 @@ public class LoadCharmanager : MonoBehaviour
     private Uiactionscontroller uiactionscontroller;
     [SerializeField] private GameObject menu;
     [SerializeField] private GameObject menuoverview;
+    public static Puzzlesave puzzlesave;
 
     public GameObject[] allcharacters;
     public static GameObject Overallmainchar;
@@ -48,6 +49,7 @@ public class LoadCharmanager : MonoBehaviour
     {
         Statics.otheraction = false;
         uiactionscontroller = GetComponent<Uiactionscontroller>();
+        puzzlesave = GetComponent<Puzzlesave>();
         Steuerung = Keybindinputmanager.inputActions;
         maingamevalues();
     }

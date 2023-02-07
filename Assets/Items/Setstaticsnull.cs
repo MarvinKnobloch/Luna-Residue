@@ -6,6 +6,12 @@ public class Setstaticsnull : MonoBehaviour
 {
     [SerializeField] private Itemcontroller nullobject;
 
+/*#if UNITY_EDITOR
+    private void Awake()
+    {
+        resetequipment();
+    }
+#endif*/
     public void resetstatics()
     {
         resetequipment();

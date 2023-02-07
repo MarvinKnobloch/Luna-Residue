@@ -10,35 +10,40 @@ public class Statics
     public static float mousesensitivity = 1;
     public static float rangeweaponaimsensitivity = 1;
     public static int currentscreenmode;
+    public static float npcdialoguetextspeed = 0.02f;
 
     //gamevalues
-    public Vector3 test = new Vector3(1, 1, 1);
     public static string gamesavedate;
     public static string gamesavetime;
     public static float currentplayerposix, currentplayerposiy, currentplayerposiz;
     public static float currentplayerrotationx, currentplayerrotationy, currentplayerrotationz, currentplayerrotationw;
     public static float savecamvalueX;
-    public static float npcdialoguetextspeed = 0.02f;
 
-    //player
-
+    //charvalues
     public static int currentactiveplayer;
     public static int currentthirdchar;
     public static int currentforthchar;
+
+    //presetgamevalues
     public static int playablechars = 5;
 
-    public static bool otheraction;
-    public static bool stopmovenandrotation;
-    public static bool dash;
+    public static float normalgamespeed;
+    public static float normaltimedelta;
+
     public static float playerlockonrange = 20;
-    public static bool playeriframes;
     public static float playermovementspeed = 10;
     public static float playergravity = 4;
-
     public static float playerbasiccritchance = 5;
     public static float bowbasicmanarestore = 2;
     public static float bowendmanarestore = 5;
 
+    //gameplaystatics
+    public static bool otheraction;
+    public static bool stopmovenandrotation;
+    public static bool dash;
+    public static bool playeriframes;
+
+    //playercds
     public static float healcd = 2f;
     public static float healmissingtime = 10f;
     public static bool healcdbool;
@@ -48,17 +53,12 @@ public class Statics
     public static float dashcost = 2f;
     public static bool dashcdbool;
 
-    public static float kickcd = 5f;
-    public static float kickcdmissingtime;
-    public static bool kickcdbool;
-
     public static float weaponswitchcd = 2f;
     public static float weaponswitchmissingtime;
     public static bool weapsonswitchbool;
 
-    //public static float charswitchbuffbasicduration = 4f;
-    public static float charswitchbuffmissingtime;
     public static float charswitchcd = 5f;
+    public static float charswitchbuffmissingtime;
     public static float charswitchmissingtime;
     public static bool charswitchbool;
 
@@ -66,21 +66,10 @@ public class Statics
     public static float weaponswitchbuff = 100f;
     public static float weaponswitchbuffmissingtime;
 
-    public static int currentelementstate;
-    public static int currentcombospell;
-
-    public static float dazecounter;
-    public static float dazekicksneeded;
-    public static bool dazestunstart;                 //um die parameter zurückzusetzen (wird im attack script gemacht)
-    public static bool slow;
-    public static bool enemyspezialtimescale;
-
-    public static float normalgamespeed;
-    public static float normaltimedelta;
-
-    //equiptment
-    public static int currentequipmentchar;
-    public static int currentequipmentbutton;         //wird beim button gesetzt(onclick event)
+    //interaction
+    public static List<GameObject> interactionobjects = new List<GameObject>();
+    public static Transform closestinteractionobject;
+    public static bool timer;
 
     //infight
     public static bool infight;
@@ -88,21 +77,24 @@ public class Statics
     public static int thirdchartookdmgformamount = 1;
     public static int forthchartookdmgformamount = 1;
 
-    //interaction
-    public static List<GameObject> interactionobjects = new List<GameObject>();
-    public static Transform closestinteractionobject;
-    public static bool timer;
-
     //enemy
     public static float enemyspecialcd = 13;
     public static float currentenemyspecialcd = 13;
     public static float enemydebufftime = 8;
 
-    //abilities
+    public static float dazecounter;
+    public static float dazekicksneeded;
+    public static bool dazestunstart;                 //um die parameter zurückzusetzen (wird im attack script gemacht)
+    public static bool slow;
+    public static bool enemyspezialtimescale;
+
+    //eleabilities
     public static int[] spellnumbers = { 24, 24, 24, 24, 24, 24, 24, 24 };        // 24 = anzahl der vorhanden Spells
     public static Color[] spellcolors = new Color[8];
 
-    
+    public static int currentelementstate;
+    public static int currentcombospell;
+
     //stones
     public static int[] characterbaseelements = { 3, 1, 7, 6, 2 };        //Maria = ice, Erika = Water, Kaja = Earth, Yaku = Dark, Arissa = Nature}
     public static int[] charactersecondelement = { 8, 8, 8, 8, 8 };       // 8 = hat noch kein element
@@ -139,6 +131,10 @@ public class Statics
     public static float[] charswitchbuffduration = { 5, 5, 5, 5, 5 };
     public static float[] charbasiccritbuff = { 1, 1, 1, 1, 1 };
     public static float[] charbasicdmgbuff = { 150, 150, 150, 150, 150 };
+
+    //equiptment
+    public static int currentequipmentchar;
+    public static int currentequipmentbutton;         //wird beim button gesetzt(onclick event)
 
     public static float[] charswordattack = new float[5];
     public static float[] charbowattack = new float[5];

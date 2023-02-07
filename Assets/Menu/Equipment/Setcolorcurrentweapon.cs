@@ -8,6 +8,7 @@ public class Setcolorcurrentweapon : MonoBehaviour, ISelectHandler
 {
     [SerializeField] private GameObject grid;
     [SerializeField] private GameObject resetonpointerenterlayer;
+    [SerializeField] private GameObject upgradeui;
 
     public void OnSelect(BaseEventData eventData)
     {
@@ -15,6 +16,7 @@ public class Setcolorcurrentweapon : MonoBehaviour, ISelectHandler
     }
     public void triggerbutton()
     {
+        upgradeui.SetActive(false);
         resetonpointerenterlayer.SetActive(true);
         foreach (Transform obj in grid.transform)
         {

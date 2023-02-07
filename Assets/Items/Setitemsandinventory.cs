@@ -17,12 +17,13 @@ public class Setitemsandinventory : MonoBehaviour
     [SerializeField] private Ringobject[] ringitems;
     [SerializeField] private Craftingobject[] craftingitems;
 
-    /*private void Awake()
+/*#if UNITY_EDITOR
+    private void Awake()
     {
         resetitems();
         resetinventorys();
-    }*/
-
+    }
+#endif*/
     public void resetitems()
     {
         resetitemvalues(sworditems);
