@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18cc2f9930d0424cbf493436efb61fb, type: 3}
   m_Name: Glovesinventory
   m_EditorClassIdentifier: 
+  matsinventory: {fileID: 11400000, guid: 2ca52730c693b224db957e8268c41db8, type: 2}
   Container:
     savepathname: Glovesinventory
     Items:

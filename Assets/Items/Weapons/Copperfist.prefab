@@ -136,7 +136,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8236317832123417058}
   - component: {fileID: 9112887751326767961}
-  - component: {fileID: 1059111912822508861}
+  - component: {fileID: 2931189753618830839}
   m_Layer: 0
   m_Name: pickupcollider
   m_TagString: Untagged
@@ -171,7 +171,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1059111912822508861
+--- !u!114 &2931189753618830839
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,8 +180,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8168285298347726985}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 986a3eec71d391a45a258f252a9ba494, type: 3}
+  m_Script: {fileID: 11500000, guid: cd3317f5b71bea64389686667c3702fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: def86eccede274a4e9838b1c9237eb18, type: 2}
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
+  inventory: {fileID: 11400000, guid: 0f5b0f3c722ca244abc797b8ee1b9611, type: 2}

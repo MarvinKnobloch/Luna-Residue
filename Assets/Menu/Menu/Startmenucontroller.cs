@@ -12,7 +12,8 @@ public class Startmenucontroller : MonoBehaviour
     [SerializeField] private GameObject[] buttons;
     [SerializeField] private GameObject loadgameobj;
     [SerializeField] private GameObject settingsobj;
-    [SerializeField] private Setitemsandinventory setitemsandinventory;
+    private Setitemsandinventory setitemsandinventory;
+    private Setstaticsnull setstaticsnull;
     //private Isaveload loadsaveinterface = new Saveloadgame();
     private Convertstatics convertstatics = new Convertstatics();
 
@@ -21,6 +22,8 @@ public class Startmenucontroller : MonoBehaviour
 
     private void Awake()
     {
+        setitemsandinventory = GetComponent<Setitemsandinventory>();
+        setstaticsnull = GetComponent<Setstaticsnull>();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         loadgamesettings();
@@ -93,6 +96,7 @@ public class Startmenucontroller : MonoBehaviour
 
         setitemsandinventory.resetitems();
         setitemsandinventory.resetinventorys();
+        setstaticsnull.resetstatics();
         SceneManager.LoadScene(1);
     }
 

@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class Setcolorcurrentarmor : MonoBehaviour, ISelectHandler
 {
     [SerializeField] private GameObject grid;
+    [SerializeField] private GameObject resetonpointerenterlayer;
+    [SerializeField] private GameObject upgradeui;
 
     public void OnSelect(BaseEventData eventData)
     {
@@ -14,6 +16,8 @@ public class Setcolorcurrentarmor : MonoBehaviour, ISelectHandler
     }
     public void triggerbutton()
     {
+        upgradeui.SetActive(false);
+        resetonpointerenterlayer.SetActive(true);
         foreach (Transform obj in grid.transform)
         {
             if (obj.GetComponent<Chooseitem>().itemvalues == null)

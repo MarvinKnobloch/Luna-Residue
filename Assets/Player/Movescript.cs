@@ -90,19 +90,6 @@ public class Movescript : MonoBehaviour
     const string idlestate = "Idle";
     const string dazestate = "Daze";
 
-    //Inventory;
-    public Inventorycontroller matsinventory;
-    public Inventorycontroller swordinventory;
-    public Inventorycontroller bowinventory;
-    public Inventorycontroller fistinventory;
-    public Inventorycontroller headinventory;
-    public Inventorycontroller chestinventory;
-    public Inventorycontroller glovesinventory;
-    public Inventorycontroller shoesinventory;
-    public Inventorycontroller beltinventory;
-    public Inventorycontroller necklessinventory;
-    public Inventorycontroller ringinventory;
-
     //Lockon
     public LayerMask Lockonlayer;
     public float lockonrange;

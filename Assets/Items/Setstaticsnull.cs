@@ -6,7 +6,11 @@ public class Setstaticsnull : MonoBehaviour
 {
     [SerializeField] private Itemcontroller nullobject;
 
-    private void Awake()
+    public void resetstatics()
+    {
+        resetequipment();
+    }
+    private void resetequipment()
     {
         setnullobject(Statics.charcurrentsword);
         setnullobject(Statics.charcurrentbow);

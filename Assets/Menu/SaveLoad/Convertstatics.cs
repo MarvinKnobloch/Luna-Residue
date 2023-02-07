@@ -30,12 +30,12 @@ public class Convertstatics
     public float[] charbasicdmgbuff;
 
     public float[] charswordattack;
-    public string[] charcurrentswordname;
     public float[] charbowattack;
-    public string[] charcurrentbowname;
     public float[] charfistattack;
-    public string[] charcurrentfistname;
 
+    public Itemcontroller[] currentsword;
+    public Itemcontroller[] currentbow;
+    public Itemcontroller[] currentfist;
     public Itemcontroller[] currenthead;
     public Itemcontroller[] currentchest;
     public Itemcontroller[] currentgloves;
@@ -76,6 +76,9 @@ public class Convertstatics
         charbowattack = Statics.charbowattack;
         charfistattack = Statics.charfistattack;
 
+        currentsword = Statics.charcurrentsword;
+        currentbow = Statics.charcurrentbow;
+        currentfist = Statics.charcurrentfist;
         currenthead = Statics.charcurrenthead;
         currentchest = Statics.charcurrentchest;
         currentgloves = Statics.charcurrentgloves;
@@ -138,6 +141,9 @@ public class Convertstatics
         Statics.charbowattack = charbowattack;
         Statics.charfistattack = charfistattack;
 
+        Statics.charcurrentsword = currentsword;
+        Statics.charcurrentbow = currentbow;
+        Statics.charcurrentfist = currentfist;
         Statics.charcurrenthead = currenthead;
         Statics.charcurrentchest = currentchest;
         Statics.charcurrentgloves = currentgloves;

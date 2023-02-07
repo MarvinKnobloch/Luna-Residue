@@ -24,10 +24,13 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
     public void setweapon()
     {
-        selectedchar = Statics.currentequipmentchar;
-        slotbuttontext.gameObject.GetComponent<TextMeshProUGUI>().text = GetComponentInChildren<Text>().text;
-        setnewitem(Statics.currentequipmentbutton);
-        statsupdate();
+        if(itemvalues != null)
+        {
+            selectedchar = Statics.currentequipmentchar;
+            slotbuttontext.gameObject.GetComponent<TextMeshProUGUI>().text = GetComponentInChildren<Text>().text;
+            setnewitem(Statics.currentequipmentbutton);
+            statsupdate();
+        }
         EventSystem.current.SetSelectedGameObject(slotbutton);                            //beim onselect call wird die selectfarbe gesetzt
     }
     private void statsupdate()
@@ -51,8 +54,8 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
         else if (equipslot == 2)        //fist = number2
         {
-            Statics.charbowattack[selectedchar] = itemvalues.stats[2];
-            Statics.charcurrentbow[selectedchar] = itemvalues;
+            Statics.charfistattack[selectedchar] = itemvalues.stats[2];
+            Statics.charcurrentfist[selectedchar] = itemvalues;
         }
         statsupdate();
     }

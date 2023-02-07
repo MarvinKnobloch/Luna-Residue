@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class Setcolorcurrentweapon : MonoBehaviour, ISelectHandler
 {
     [SerializeField] private GameObject grid;
+    [SerializeField] private GameObject resetonpointerenterlayer;
 
     public void OnSelect(BaseEventData eventData)
     {
@@ -14,6 +15,7 @@ public class Setcolorcurrentweapon : MonoBehaviour, ISelectHandler
     }
     public void triggerbutton()
     {
+        resetonpointerenterlayer.SetActive(true);
         foreach (Transform obj in grid.transform)
         {
             if (obj.GetComponent<Chooseweapon>().itemvalues == null)

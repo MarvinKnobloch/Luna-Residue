@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 7f503194a85088b4ea9653ceab96c95b, type: 2}
+  matsinventory: {fileID: 11400000, guid: 2ca52730c693b224db957e8268c41db8, type: 2}
 --- !u!1 &6737092273977564704
 GameObject:
   m_ObjectHideFlags: 0
