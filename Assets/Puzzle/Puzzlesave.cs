@@ -6,4 +6,9 @@ public class Puzzlesave : MonoBehaviour
 {
     public bool laserpuzzlecomplete;
     public bool boxpuzzlecomplete;
+
+    private void Awake()
+    {
+        
+    }
 }

@@ -13,6 +13,7 @@ public class Statics
     public static float npcdialoguetextspeed = 0.02f;
 
     //gamevalues
+    public static int currentgameslot = -1;
     public static string gamesavedate;
     public static string gamesavetime;
     public static float currentplayerposix, currentplayerposiy, currentplayerposiz;

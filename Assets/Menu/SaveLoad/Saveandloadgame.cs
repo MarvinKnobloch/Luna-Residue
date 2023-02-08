@@ -13,15 +13,17 @@ public class Saveandloadgame : MonoBehaviour
 
     private Convertstatics convertstatics = new Convertstatics();
     [SerializeField] private Setitemsandinventory setitemsandinventory;
-    [SerializeField] private Puzzlesave puzzlesave;
-
+    [SerializeField] private Areacontroller areacontroller;
 
     public void savegamedata(int slot)
     {
         saveinventorys(slot);
         convertstatics.savestaticsinscript();
         savestatics(slot);
-        savemonobehaviour(slot, "/puzzlesave", puzzlesave);
+        if (areacontroller != null)
+        {
+            savemonobehaviour(slot, "/" + areacontroller.areaname, areacontroller.areatosave);
+        }
     }
     private void savestatics(int slot)
     {
@@ -58,7 +60,7 @@ public class Saveandloadgame : MonoBehaviour
         string savepath = filename + slot + ".json";
         if (loadsaveinterface.savedata(savepath, monobehaviour))
         {
-            Debug.Log("saved" + monobehaviour);
+            //
         }
         else
         {
@@ -69,6 +71,7 @@ public class Saveandloadgame : MonoBehaviour
     public void loadgamedate()
     {
         int slot = loadmenucontroller.selectedslot;
+        Statics.currentgameslot = loadmenucontroller.selectedslot;
         loadstaticdata(slot);
         if (convertstatics != null)
         {
@@ -78,7 +81,6 @@ public class Saveandloadgame : MonoBehaviour
         loadinventorys(slot);
         setitemsandinventory.resetitems();
         setitemsandinventory.updateitemsininventory();
-        loadmonobehaviour(slot, "puzzlesave", puzzlesave);
     }
     private void loadstaticdata(int slot)
     {
@@ -108,7 +110,7 @@ public class Saveandloadgame : MonoBehaviour
             }
         }
     }
-    private void loadmonobehaviour(int slot, string filename, MonoBehaviour monobehaviour)
+    /*private void loadmonobehaviour(int slot, string filename, MonoBehaviour monobehaviour)
     {
         var filePath = Path.Combine(Application.persistentDataPath, filename + slot + ".json");
         if (File.Exists(filePath))
@@ -121,5 +123,5 @@ public class Saveandloadgame : MonoBehaviour
         {
             Debug.Log("doesnt exist");
         }
-    }
+    }*/
 }

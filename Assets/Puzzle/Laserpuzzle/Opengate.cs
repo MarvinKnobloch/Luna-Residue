@@ -10,7 +10,7 @@ public class Opengate : MonoBehaviour
     [SerializeField] GameObject disablegreenlaser;
     [SerializeField] GameObject disableredlaser;
     [SerializeField] GameObject disablebluelaser;
-    private Puzzlesave puzzlesave;
+    [SerializeField] private Firstarea firstarea;
 
     public Vector3 gateisclosedposi;
     public Vector3 gateisopen;
@@ -22,8 +22,7 @@ public class Opengate : MonoBehaviour
     private void Start()
     {
         controlls = Keybindinputmanager.inputActions;
-        puzzlesave = LoadCharmanager.puzzlesave;
-        if (puzzlesave.laserpuzzlecomplete == true)
+        if (firstarea.laserpuzzlecomplete == true)
         {
             transform.position = gateisopen;
         }
@@ -32,10 +31,10 @@ public class Opengate : MonoBehaviour
     {
         if (controlls.Player.Dash.WasPerformedThisFrame())
         {
-            if (puzzlesave.laserpuzzlecomplete == false)
+            if (firstarea.laserpuzzlecomplete == false)
             {
                 StartCoroutine("openthegate");
-                puzzlesave.laserpuzzlecomplete = true;
+                firstarea.laserpuzzlecomplete = true;
             }
         }
     }
@@ -51,10 +50,10 @@ public class Opengate : MonoBehaviour
     {
         if (Greenend.GetComponent<Lasersuccsess>().laserdoeshit == true && Redend.GetComponent<Lasersuccsess>().laserdoeshit == true && Blueend.GetComponent<Lasersuccsess>().laserdoeshit == true)
         {
-            if(puzzlesave.laserpuzzlecomplete == false)
+            if(firstarea.laserpuzzlecomplete == false)
             {
                 StartCoroutine("openthegate");
-                puzzlesave.laserpuzzlecomplete = true;
+                firstarea.laserpuzzlecomplete = true;
             }
         }                
     }
