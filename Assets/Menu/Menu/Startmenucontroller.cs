@@ -78,10 +78,10 @@ public class Startmenucontroller : MonoBehaviour
     }
     public void newgame()
     {
-        PlayerPrefs.SetInt("Maincharindex", 0);
-        PlayerPrefs.SetInt("Secondcharindex", 1);
-        PlayerPrefs.SetInt("Thirdcharindex", 2);
-        PlayerPrefs.SetInt("Forthcharindex", 3);
+        Statics.currentfirstchar = 0;
+        Statics.currentsecondchar = 1;
+        Statics.currentthirdchar = 2;
+        Statics.currentforthchar = 3;
 
         PlayerPrefs.SetInt("Mariamainweaponindex", 0);
         PlayerPrefs.SetInt("Mariasecondweaponindex", 1);

@@ -6,7 +6,7 @@ public class Arissaselection : MonoBehaviour
 {
     private void OnEnable()
     {
-        if (PlayerPrefs.GetInt("Maincharindex") == 4 || PlayerPrefs.GetInt("Secondcharindex") == 4)
+        if (Statics.currentfirstchar == 4 || Statics.currentsecondchar == 4)
         {
             this.gameObject.SetActive(false);
         }

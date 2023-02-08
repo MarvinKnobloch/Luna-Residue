@@ -6,7 +6,7 @@ public class Erikaselection : MonoBehaviour
 {
     private void OnEnable()
     {
-        if (PlayerPrefs.GetInt("Maincharindex") == 1 || PlayerPrefs.GetInt("Secondcharindex") == 1)
+        if (Statics.currentfirstchar == 1 || Statics.currentsecondchar == 1)
         {
             this.gameObject.SetActive(false);
         }

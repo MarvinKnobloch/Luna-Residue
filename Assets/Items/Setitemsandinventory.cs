@@ -52,6 +52,7 @@ public class Setitemsandinventory : MonoBehaviour
     {
         for (int i = 0; i < inventorys.Length; i++)
         {
+            inventorys[i].matsinventory = inventorys[0];
             for (int t = 0; t < inventorys[i].Container.Items.Length; t++)
             {
                 inventorys[i].Container.Items[t].item = null;

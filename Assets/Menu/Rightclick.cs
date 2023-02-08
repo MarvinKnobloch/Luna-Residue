@@ -4,11 +4,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class Leftrightclick : MonoBehaviour, IPointerClickHandler
+public class Rightclick : MonoBehaviour, IPointerClickHandler
 {
     public UnityEvent onRigthClick;
-    void Start()
-    { }
 
     public void OnPointerClick(PointerEventData eventData)
     {

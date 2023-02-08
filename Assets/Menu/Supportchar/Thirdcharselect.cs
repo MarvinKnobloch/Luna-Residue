@@ -15,9 +15,9 @@ public class Thirdcharselect : MonoBehaviour
 
     private void Start()
     {
-        if (PlayerPrefs.GetInt("Thirdcharindex") < 8)
+        if (Statics.currentthirdchar != -1)
         {
-            thirdchartext.text = buttontext[PlayerPrefs.GetInt("Thirdcharindex")].text;
+            thirdchartext.text = buttontext[Statics.currentthirdchar].text;
         }
         else
         {
@@ -27,7 +27,7 @@ public class Thirdcharselect : MonoBehaviour
     private void OnEnable()
     {
         charselection.SetActive(false);
-        selectetdCharacter = PlayerPrefs.GetInt("Thirdcharindex");
+        selectetdCharacter = Statics.currentthirdchar;
     }
     public void changethirdcharacter(int newCharacter)
     {
@@ -36,14 +36,14 @@ public class Thirdcharselect : MonoBehaviour
             forthchar.sameforthcharfalse();
             selectetdCharacter = newCharacter;
             thirdchartext.text = buttontext[newCharacter].text;
-            PlayerPrefs.SetInt("Thirdcharindex", selectetdCharacter);
+            Statics.currentthirdchar = selectetdCharacter;
             charselection.SetActive(false);
         }
         else
         {
             selectetdCharacter = newCharacter;
             thirdchartext.text = buttontext[newCharacter].text;
-            PlayerPrefs.SetInt("Thirdcharindex", selectetdCharacter);
+            Statics.currentthirdchar = selectetdCharacter;
             charselection.SetActive(false);
         }
     }
@@ -51,6 +51,6 @@ public class Thirdcharselect : MonoBehaviour
     {
         selectetdCharacter = forthchar.selectetdCharacter;
         thirdchartext.text = forthchar.forthchartext.text;
-        PlayerPrefs.SetInt("Thirdcharindex", selectetdCharacter);
+        Statics.currentthirdchar = selectetdCharacter;
     }
 }

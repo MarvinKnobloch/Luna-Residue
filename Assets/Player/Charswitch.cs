@@ -65,7 +65,7 @@ public class Charswitch : MonoBehaviour
         Cam1.Follow = LoadCharmanager.Overallmainchar.transform;
         aimcam.LookAt = LoadCharmanager.Overallmainchar.transform;
         aimcam.Follow = LoadCharmanager.Overallmainchar.transform;
-        GlobalCD.currentcharswitchchar = PlayerPrefs.GetInt("Secondcharindex");
+        GlobalCD.currentcharswitchchar = Statics.currentsecondchar;
         GlobalCD.startcharswitch();
         ability1.color = Statics.spellcolors[3];
         ability2.color = Statics.spellcolors[4];
@@ -103,7 +103,7 @@ public class Charswitch : MonoBehaviour
         Cam1.Follow = LoadCharmanager.Overallmainchar.transform;
         aimcam.LookAt = LoadCharmanager.Overallmainchar.transform;
         aimcam.Follow = LoadCharmanager.Overallmainchar.transform;
-        GlobalCD.currentcharswitchchar = PlayerPrefs.GetInt("Maincharindex");
+        GlobalCD.currentcharswitchchar = Statics.currentfirstchar;
         GlobalCD.startcharswitch();
         ability1.color = Statics.spellcolors[0];
         ability2.color = Statics.spellcolors[1];

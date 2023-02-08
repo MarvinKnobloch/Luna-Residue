@@ -15,9 +15,9 @@ public class Forthcharselect : MonoBehaviour
 
     private void Start()
     {
-        if (PlayerPrefs.GetInt("Forthcharindex") < 8)
+        if (Statics.currentforthchar != -1)
         {
-            forthchartext.text = buttontext[PlayerPrefs.GetInt("Forthcharindex")].text;
+            forthchartext.text = buttontext[Statics.currentforthchar].text;
         }
         else
         {
@@ -27,7 +27,7 @@ public class Forthcharselect : MonoBehaviour
     private void OnEnable()
     {
         charselection.SetActive(false);
-        selectetdCharacter = PlayerPrefs.GetInt("Forthcharindex");
+        selectetdCharacter = Statics.currentforthchar;
     }
     public void changeforthcharacter(int newCharacter)
     {
@@ -36,14 +36,14 @@ public class Forthcharselect : MonoBehaviour
             thirdchar.samethirdcharfalse();
             selectetdCharacter = newCharacter;
             forthchartext.text = buttontext[newCharacter].text;
-            PlayerPrefs.SetInt("Forthcharindex", selectetdCharacter);
+            Statics.currentforthchar = selectetdCharacter;
             charselection.SetActive(false);
         }
         else
         {
             selectetdCharacter = newCharacter;
             forthchartext.text = buttontext[newCharacter].text;
-            PlayerPrefs.SetInt("Forthcharindex", selectetdCharacter);
+            Statics.currentforthchar = selectetdCharacter;
             charselection.SetActive(false);
         }
     }
@@ -51,6 +51,6 @@ public class Forthcharselect : MonoBehaviour
     {
         selectetdCharacter = thirdchar.selectetdCharacter;
         forthchartext.text = thirdchar.thirdchartext.text;
-        PlayerPrefs.SetInt("Forthcharindex", selectetdCharacter);
+        Statics.currentforthchar = selectetdCharacter;
     }
 }

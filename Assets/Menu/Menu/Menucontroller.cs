@@ -9,7 +9,7 @@ public class Menucontroller : MonoBehaviour
     private void OnEnable()
     {
         inoverview = true;
-        fasttravelmenu.SetActive(false);
+        fasttravelmenu.SetActive(false);                //weil das Ui beim fasttravel commit nicht mehr geschlossen wird
     }
     private void OnDisable()
     {

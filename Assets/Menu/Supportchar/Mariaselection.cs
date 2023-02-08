@@ -6,7 +6,7 @@ public class Mariaselection : MonoBehaviour
 {
     private void OnEnable()
     {
-        if (PlayerPrefs.GetInt("Maincharindex") == 0 || PlayerPrefs.GetInt("Secondcharindex") == 0)
+        if (Statics.currentfirstchar == 0 || Statics.currentsecondchar == 0)
         {
             this.gameObject.SetActive(false);
         }

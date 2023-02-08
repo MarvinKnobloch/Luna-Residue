@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 public class Menucharcontroller : MonoBehaviour
 {
-    [SerializeField] internal Secondcharcontroller secondchar;
-    public GameObject[] charactersicon;
-    public int selectetdCharacter;
+    [SerializeField] private GameObject[] firstcharicons;
+    [SerializeField] private GameObject[] secondcharicons;
+    private int firstchar;
+    private int secondchar;
 
     public GameObject thirdcharselection;
     public Text thirdchartext;
@@ -28,126 +29,85 @@ public class Menucharcontroller : MonoBehaviour
     }
     void Start()
     {
-        foreach (GameObject Chars in charactersicon)
+        foreach (GameObject Chars in firstcharicons)
         {
             Chars.SetActive(false);
         }
-        int maincharload = PlayerPrefs.GetInt("Maincharindex");
-        charactersicon[maincharload].SetActive(true);
-        selectetdCharacter = maincharload;
+        firstchar = Statics.currentfirstchar;
+        firstcharicons[firstchar].SetActive(true);
+        secondchar = Statics.currentsecondchar;
+        secondcharicons[secondchar].SetActive(true);
     }
-    public void ChangeCharacter(int newCharacter)
+    public void changefirstchar(int newcharacter)
     {
-        charactersicon[selectetdCharacter].SetActive(false);
-        charactersicon[newCharacter].SetActive(true);
-        if (secondchar.selectetdCharacter == newCharacter)
+        firstcharicons[firstchar].SetActive(false);
+        firstcharicons[newcharacter].SetActive(true);
+        if (secondchar == newcharacter)
         {
-            secondchar.samenumberfalse();
-            selectetdCharacter = newCharacter;
-            PlayerPrefs.SetInt("Maincharindex", selectetdCharacter);
-            thirdcharselection.SetActive(false);
-            forthcharselection.SetActive(false);
-            if (selectetdCharacter == PlayerPrefs.GetInt("Thirdcharindex"))
-            {
-                PlayerPrefs.SetInt("Thirdcharindex", 8);
-                thirdchartext.text = "empty";
-            }
-            if (selectetdCharacter == PlayerPrefs.GetInt("Forthcharindex"))
-            {
-                PlayerPrefs.SetInt("Forthcharindex", 8);
-                forthchartext.text = "empty";
-            }
+            firstsameassecond();
+            firstchar = newcharacter;
+            Statics.currentfirstchar = firstchar;
         }
         else
         {
-            selectetdCharacter = newCharacter;
-            PlayerPrefs.SetInt("Maincharindex", selectetdCharacter);
-            thirdcharselection.SetActive(false);
-            forthcharselection.SetActive(false);
-            if (selectetdCharacter == PlayerPrefs.GetInt("Thirdcharindex"))
-            {
-                PlayerPrefs.SetInt("Thirdcharindex", 8);
-                thirdchartext.text = "empty";
-            }
-            if (selectetdCharacter == PlayerPrefs.GetInt("Forthcharindex"))
-            {
-                PlayerPrefs.SetInt("Forthcharindex", 8);
-                forthchartext.text = "empty";
-            }
+            firstchar = newcharacter;
+            Statics.currentfirstchar = firstchar;
         }
+        thirdandforthchar();
     }
-    public void samenumberfalse()
+    private void firstsameassecond()
     {
-        charactersicon[selectetdCharacter].SetActive(false);
-        selectetdCharacter = secondchar.selectetdCharacter;
-        PlayerPrefs.SetInt("Maincharindex", selectetdCharacter);
-        charactersicon[selectetdCharacter].SetActive(true);
+        secondcharicons[secondchar].SetActive(false);
+        secondchar = firstchar;
+        Statics.currentsecondchar = secondchar;
+        secondcharicons[secondchar].SetActive(true);
+    }
+
+    public void changesecondchar(int newcharacter)
+    {
+        secondcharicons[secondchar].SetActive(false);
+        secondcharicons[secondchar].SetActive(true);
+        if (firstchar == newcharacter)
+        {
+            secondsameasfirst();
+            secondchar = newcharacter;
+            Statics.currentsecondchar = secondchar;
+        }
+        else
+        {
+            secondchar = newcharacter;
+            Statics.currentsecondchar = secondchar;
+        }
+        thirdandforthchar();
+    }
+    private void secondsameasfirst()
+    {
+        firstcharicons[firstchar].SetActive(false);
+        firstchar = secondchar;
+        Statics.currentfirstchar = firstchar;
+        firstcharicons[firstchar].SetActive(true);
+    }
+
+    private void thirdandforthchar()
+    {
+        thirdcharselection.SetActive(false);
+        forthcharselection.SetActive(false);
+        if (firstchar == Statics.currentthirdchar)
+        {
+            Statics.currentthirdchar = -1;
+            thirdchartext.text = "empty";
+        }
+        if (firstchar == Statics.currentforthchar)
+        {
+            Statics.currentforthchar = -1;
+            forthchartext.text = "empty";
+        }
     }
     public void savecharplayerprefs()
     {
-        PlayerPrefs.SetInt("Maincharindex", selectetdCharacter);
-        PlayerPrefs.SetInt("Secondcharindex", secondchar.selectetdCharacter);
+        Debug.Log("hallo");
+        PlayerPrefs.SetInt("Maincharindex", firstchar);
+        //PlayerPrefs.SetInt("Secondcharindex", secondchar.selectetdCharacter);
     }
 }
-
-
-/*{
-    foreach (GameObject Chars in charactersicon)
-    {
-        Chars.SetActive(false);
-    }
-    int maincharload = PlayerPrefs.GetInt("Maincharindex");
-    charactersicon[maincharload].SetActive(true);
-    selectetdCharacter = maincharload;
-    maincharloadindex = selectetdCharacter;
-}
-void Update()
-{
-    if (Steuerung.Menusteuerung.Loadgame.WasPerformedThisFrame())
-    {
-        Startgame();
-    }
-}
-public void ChangeCharacter(int newCharacter)
-{
-    charactersicon[selectetdCharacter].SetActive(false);
-    charactersicon[newCharacter].SetActive(true);
-    if (secondchar.selectetdCharacter == newCharacter)
-    {
-        secondchar.samenumberfalse();
-        selectetdCharacter = newCharacter;
-        maincharloadindex = selectetdCharacter;
-        PlayerPrefs.SetInt("Maincharindex", maincharloadindex);
-        thirdcharselection.SetActive(false);
-        forthcharselection.SetActive(false);
-    }
-    else
-    {
-        selectetdCharacter = newCharacter;
-        maincharloadindex = selectetdCharacter;
-        PlayerPrefs.SetInt("Maincharindex", maincharloadindex);
-        thirdcharselection.SetActive(false);
-        forthcharselection.SetActive(false);
-    }
-}
-public void samenumberfalse()
-{
-    charactersicon[selectetdCharacter].SetActive(false);
-    selectetdCharacter = secondchar.selectetdCharacter;
-    PlayerPrefs.SetInt("Maincharindex", selectetdCharacter);
-    Changecharwhensame(selectetdCharacter);
-}
-public void Changecharwhensame(int newCharacter)
-{
-    charactersicon[newCharacter].SetActive(true);
-    selectetdCharacter = newCharacter;
-    maincharloadindex = selectetdCharacter;
-    PlayerPrefs.SetInt("Maincharindex", maincharloadindex);
-}
-public void Startgame()
-{
-    SceneManager.LoadScene(0);
-    PlayerPrefs.SetInt("Maincharindex", maincharloadindex);
-    PlayerPrefs.SetInt("Secondcharindex", secondchar.secondcharloadindex);
-}*/
 

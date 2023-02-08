@@ -120,7 +120,7 @@ public class HealthUImanager : MonoBehaviour
             if (secondchar.GetComponent<Attributecontroller>().guardhpbuff == true)
             {
                 secondchar.GetComponent<SpielerHP>().maxhealth += Statics.guardbonushpeachlvl;
-                Statics.charmaxhealth[PlayerPrefs.GetInt("Secondcharindex")] = secondchar.GetComponent<SpielerHP>().maxhealth;
+                Statics.charmaxhealth[Statics.currentsecondchar] = secondchar.GetComponent<SpielerHP>().maxhealth;
                 secondcharhealth = secondchar.GetComponent<SpielerHP>().health;
                 secondcharmaxhealth = secondchar.GetComponent<SpielerHP>().maxhealth;
                 float hFraction = secondcharhealth / secondcharmaxhealth;
@@ -133,7 +133,7 @@ public class HealthUImanager : MonoBehaviour
             if (mainchar.GetComponent<Attributecontroller>().guardhpbuff == true)
             {
                 mainchar.GetComponent<SpielerHP>().maxhealth += Statics.guardbonushpeachlvl;
-                Statics.charmaxhealth[PlayerPrefs.GetInt("Maincharindex")] = mainchar.GetComponent<SpielerHP>().maxhealth;
+                Statics.charmaxhealth[Statics.currentfirstchar] = mainchar.GetComponent<SpielerHP>().maxhealth;
                 secondcharhealth = mainchar.GetComponent<SpielerHP>().health;
                 secondcharmaxhealth = mainchar.GetComponent<SpielerHP>().maxhealth;
                 float hFraction = secondcharhealth / secondcharmaxhealth;

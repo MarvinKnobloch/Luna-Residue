@@ -22,8 +22,10 @@ public class Statics
 
     //charvalues
     public static int currentactiveplayer;
-    public static int currentthirdchar;
-    public static int currentforthchar;
+    public static int currentfirstchar = 0;
+    public static int currentsecondchar = 1;
+    public static int currentthirdchar = 2;
+    public static int currentforthchar = 3;
 
     //presetgamevalues
     public static int playablechars = 5;

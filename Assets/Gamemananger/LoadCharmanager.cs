@@ -108,8 +108,8 @@ public class LoadCharmanager : MonoBehaviour
     public void maingamevalues()
     {
         Physics.IgnoreLayerCollision(0, 6, false);
-        maincharload = PlayerPrefs.GetInt("Maincharindex");
-        secondcharload = PlayerPrefs.GetInt("Secondcharindex");
+        maincharload = Statics.currentfirstchar;
+        secondcharload = Statics.currentsecondchar;
         Overallmainchar = allcharacters[maincharload];
         Overallsecondchar = allcharacters[secondcharload];
         Overallmainchar.transform.position = savemainposi;
@@ -117,13 +117,13 @@ public class LoadCharmanager : MonoBehaviour
         Overallmainchar.SetActive(true);
         Overallsecondchar.SetActive(true);
         Statics.currentactiveplayer = 0;                            //PlayerPrefs.GetInt("Maincharindex");
-        if (PlayerPrefs.GetInt("Thirdcharindex") < Statics.playablechars)
+        if (Statics.currentthirdchar != -1)
         {
-            Overallthirdchar = teammates[PlayerPrefs.GetInt("Thirdcharindex")];     //3 ist aktiv
+            Overallthirdchar = teammates[Statics.currentthirdchar];     //3 ist aktiv
             Overallthirdchar.SetActive(true);                                       //wird momentan im Infightcontroller wieder ausgeblendet
-            if (PlayerPrefs.GetInt("Forthcharindex") < Statics.playablechars)
+            if (Statics.currentforthchar != -1)
             {
-                Overallforthchar = teammates[PlayerPrefs.GetInt("Forthcharindex")];   //wenn 3 aktiv ist wieder gecheckt ob 4 aktiv ist
+                Overallforthchar = teammates[Statics.currentforthchar];   //wenn 3 aktiv ist wieder gecheckt ob 4 aktiv ist
                 Overallforthchar.SetActive(true);
             }
             else
@@ -133,9 +133,9 @@ public class LoadCharmanager : MonoBehaviour
         }
         else
         {
-            if (PlayerPrefs.GetInt("Forthcharindex") < Statics.playablechars)                      //wenn 3 nicht aktiv ist wird gecheckt ob 4 aktiv ist
+            if (Statics.currentforthchar != -1)                      //wenn 3 nicht aktiv ist wird gecheckt ob 4 aktiv ist
             {
-                Overallthirdchar = teammates[PlayerPrefs.GetInt("Forthcharindex")];
+                Overallthirdchar = teammates[Statics.currentforthchar];
                 Overallthirdchar.SetActive(true);
                 Overallforthchar = null;
             }
@@ -145,8 +145,6 @@ public class LoadCharmanager : MonoBehaviour
                 Overallforthchar = null;
             }
         }
-        Statics.currentthirdchar = PlayerPrefs.GetInt("Thirdcharindex");
-        Statics.currentforthchar = PlayerPrefs.GetInt("Forthcharindex");
 
         Cam1.LookAt = Overallmainchar.transform;
         Cam1.Follow = Overallmainchar.transform;
