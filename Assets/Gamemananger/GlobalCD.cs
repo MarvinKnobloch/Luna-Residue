@@ -30,7 +30,6 @@ public class GlobalCD : MonoBehaviour
     public Text charwechseltext;
 
     private bool dashcounterisrunning;
-    private bool weaponbuffcounterisrunning;
     private bool charswitchbuffisrunning;
 
     private float currentmissingweaponbufftime;
@@ -75,8 +74,10 @@ public class GlobalCD : MonoBehaviour
     {
         instance.StartCoroutine("weaponcd");
     }
-    public static void startweaponswitchbuff()
+    public static void startweaponswitchbuff(int currentchar)
     {
+        currentweaponswitchchar = currentchar;
+        instance.StopCoroutine("weaponswitchbuff");
         instance.StartCoroutine("weaponswitchbuff");
     }
     public static void startcharswitch()
@@ -192,19 +193,10 @@ public class GlobalCD : MonoBehaviour
     }
     IEnumerator weaponswitchbuff()
     {
-        weaponswitchbuffimage.SetActive(true);
-        if (weaponbuffcounterisrunning == true)
-        {
-            StopCoroutine("weaponswitchbuff");
-            weaponbuffcounterisrunning = false;
-            StartCoroutine("weaponswitchbuff");
-        }
-        else
-        {
-            Statics.weaponswitchbuffmissingtime += Statics.charweaponbuffduration[currentweaponswitchchar];
-            weaponbuffcounterisrunning = true;
-            currentmissingweaponbufftime = Statics.weaponswitchbuffmissingtime;
-        }
+        weaponswitchbuffimage.SetActive(true);       
+        Statics.weaponswitchbuffmissingtime += Statics.charweaponbuffduration[currentweaponswitchchar];
+        currentmissingweaponbufftime = Statics.weaponswitchbuffmissingtime;
+        
         while (true)
         {
             Statics.weaponswitchbuffmissingtime -= Time.deltaTime;
@@ -216,7 +208,6 @@ public class GlobalCD : MonoBehaviour
                 Statics.weaponswitchbuff = 100;
                 weaponswitchbuffimage.SetActive(false);
                 StopCoroutine("weaponswitchbuff");
-                weaponbuffcounterisrunning = false;
             }
             yield return null;
         }

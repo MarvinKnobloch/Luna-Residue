@@ -107,8 +107,7 @@ public class LoadCharmanager : MonoBehaviour
 
     public void maingamevalues()
     {
-        Physics.IgnoreLayerCollision(0, 6, false);
-        Debug.Log(Statics.currentfirstchar);
+        Physics.IgnoreLayerCollision(0, 6, false);               //wegenfasttravel?
         maincharload = Statics.currentfirstchar;
         secondcharload = Statics.currentsecondchar;
         Overallmainchar = allcharacters[maincharload];
@@ -117,7 +116,7 @@ public class LoadCharmanager : MonoBehaviour
         Overallmainchar.transform.rotation = savemainrota;
         Overallmainchar.SetActive(true);
         Overallsecondchar.SetActive(true);
-        Statics.currentactiveplayer = 0;                            //PlayerPrefs.GetInt("Maincharindex");
+        Statics.currentactiveplayer = Statics.currentfirstchar;                            //PlayerPrefs.GetInt("Maincharindex");
         if (Statics.currentthirdchar != -1)
         {
             Overallthirdchar = teammates[Statics.currentthirdchar];     //3 ist aktiv

@@ -32,11 +32,11 @@ public class Movescript : MonoBehaviour
     [NonSerialized] public Vector2 move;
     [NonSerialized] public Vector3 moveDirection;
     [NonSerialized] public Vector3 velocity;
-    public float movementspeed;
-    public float rotationspeed;
-    public float jumpheight;
+    public float movementspeed = Statics.playermovementspeed;
+    public float rotationspeed = Statics.playerroationspeed;
+    public float jumpheight = Statics.playerjumpheight;
     public float gravitation;
-    public float normalgravition = 3.5f;
+    public float normalgravition = Statics.playergravity;
     public float graviti;
     [NonSerialized] public float maxgravity = -35;
 

@@ -36,12 +36,14 @@ public class Statics
     public static float normalgamespeed;
     public static float normaltimedelta;
 
-    public static float playerlockonrange = 20;
     public static float playermovementspeed = 10;
-    public static float playergravity = 4;
+    public static float playerroationspeed = 700;
+    public static float playerjumpheight = 13;
+    public static float playergravity = 3.5f;
     public static float playerbasiccritchance = 5;
     public static float bowbasicmanarestore = 2;
     public static float bowendmanarestore = 5;
+    public static float playerlockonrange = 20;
 
     //gameplaystatics
     public static bool otheraction;
