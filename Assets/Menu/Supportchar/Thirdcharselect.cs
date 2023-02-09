@@ -31,21 +31,31 @@ public class Thirdcharselect : MonoBehaviour
     }
     public void changethirdcharacter(int newCharacter)
     {
-        if (forthchar.selectetdCharacter == newCharacter)
+        if(newCharacter == -1)
         {
-            forthchar.sameforthcharfalse();
-            selectetdCharacter = newCharacter;
-            thirdchartext.text = buttontext[newCharacter].text;
-            Statics.currentthirdchar = selectetdCharacter;
+            Statics.currentthirdchar = -1;
+            thirdchartext.text = "empty";
             charselection.SetActive(false);
         }
         else
         {
-            selectetdCharacter = newCharacter;
-            thirdchartext.text = buttontext[newCharacter].text;
-            Statics.currentthirdchar = selectetdCharacter;
-            charselection.SetActive(false);
+            if (forthchar.selectetdCharacter == newCharacter)
+            {
+                forthchar.sameforthcharfalse();
+                selectetdCharacter = newCharacter;
+                thirdchartext.text = buttontext[newCharacter].text;
+                Statics.currentthirdchar = selectetdCharacter;
+                charselection.SetActive(false);
+            }
+            else
+            {
+                selectetdCharacter = newCharacter;
+                thirdchartext.text = buttontext[newCharacter].text;
+                Statics.currentthirdchar = selectetdCharacter;
+                charselection.SetActive(false);
+            }
         }
+
     }
     public void samethirdcharfalse()
     {

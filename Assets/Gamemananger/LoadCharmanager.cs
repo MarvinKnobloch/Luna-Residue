@@ -108,6 +108,7 @@ public class LoadCharmanager : MonoBehaviour
     public void maingamevalues()
     {
         Physics.IgnoreLayerCollision(0, 6, false);
+        Debug.Log(Statics.currentfirstchar);
         maincharload = Statics.currentfirstchar;
         secondcharload = Statics.currentsecondchar;
         Overallmainchar = allcharacters[maincharload];

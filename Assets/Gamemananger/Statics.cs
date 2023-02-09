@@ -27,6 +27,9 @@ public class Statics
     public static int currentthirdchar = 2;
     public static int currentforthchar = 3;
 
+    public static int[] firstweapon = new int[5];
+    public static int[] secondweapon = { 1, 1, 1, 1, 1 };            //new int[5]   1,1,1,1,1 wegen test bei maingame scene start
+
     //presetgamevalues
     public static int playablechars = 5;
 

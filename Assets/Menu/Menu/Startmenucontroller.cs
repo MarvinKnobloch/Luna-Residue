@@ -78,21 +78,22 @@ public class Startmenucontroller : MonoBehaviour
     }
     public void newgame()
     {
+        Statics.currentactiveplayer = 0;
         Statics.currentfirstchar = 0;
         Statics.currentsecondchar = 1;
         Statics.currentthirdchar = 2;
         Statics.currentforthchar = 3;
 
-        PlayerPrefs.SetInt("Mariamainweaponindex", 0);
-        PlayerPrefs.SetInt("Mariasecondweaponindex", 1);
-        PlayerPrefs.SetInt("Erikamainweaponindex", 0);
-        PlayerPrefs.SetInt("Erikasecondweaponindex", 1);
-        PlayerPrefs.SetInt("Kajamainweaponindex", 0);
-        PlayerPrefs.SetInt("Kajasecondweaponindex", 1);
-        PlayerPrefs.SetInt("Yakumainweaponindex", 0);
-        PlayerPrefs.SetInt("Yakusecondweaponindex", 1);
-        PlayerPrefs.SetInt("Arissamainweaponindex", 0);
-        PlayerPrefs.SetInt("Arissasecondweaponindex", 1);
+        Statics.firstweapon[0] = 0;
+        Statics.secondweapon[0] = 1;
+        Statics.firstweapon[1] = 0;
+        Statics.secondweapon[1] = 1;
+        Statics.firstweapon[2] = 0;
+        Statics.secondweapon[2] = 1;
+        Statics.firstweapon[3] = 0;
+        Statics.secondweapon[3] = 1;
+        Statics.firstweapon[4] = 0;
+        Statics.secondweapon[4] = 1;
 
         setitemsandinventory.resetitems();
         setitemsandinventory.resetinventorys();

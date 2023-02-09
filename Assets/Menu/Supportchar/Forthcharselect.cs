@@ -31,20 +31,29 @@ public class Forthcharselect : MonoBehaviour
     }
     public void changeforthcharacter(int newCharacter)
     {
-        if (thirdchar.selectetdCharacter == newCharacter)
+        if (newCharacter == -1)
         {
-            thirdchar.samethirdcharfalse();
-            selectetdCharacter = newCharacter;
-            forthchartext.text = buttontext[newCharacter].text;
-            Statics.currentforthchar = selectetdCharacter;
+            Statics.currentforthchar = -1;
+            forthchartext.text = "empty";
             charselection.SetActive(false);
         }
         else
         {
-            selectetdCharacter = newCharacter;
-            forthchartext.text = buttontext[newCharacter].text;
-            Statics.currentforthchar = selectetdCharacter;
-            charselection.SetActive(false);
+            if (thirdchar.selectetdCharacter == newCharacter)
+            {
+                thirdchar.samethirdcharfalse();
+                selectetdCharacter = newCharacter;
+                forthchartext.text = buttontext[newCharacter].text;
+                Statics.currentforthchar = selectetdCharacter;
+                charselection.SetActive(false);
+            }
+            else
+            {
+                selectetdCharacter = newCharacter;
+                forthchartext.text = buttontext[newCharacter].text;
+                Statics.currentforthchar = selectetdCharacter;
+                charselection.SetActive(false);
+            }
         }
     }
     public void sameforthcharfalse()

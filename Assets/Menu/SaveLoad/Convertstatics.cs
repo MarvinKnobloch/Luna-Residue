@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Convertstatics 
 {
-    public Vector3 playerposition;
+    public Vector3 playerposition;                       //Werte müssen public sein sonst werde sich nicht gespeichtert
     public Quaternion playerrotation;
     public float camvalueX;
     public int charcurrentlvl;
@@ -12,6 +12,11 @@ public class Convertstatics
     public float charrequiredexp;
     public string gamesavedate;
     public string gamesavetime;
+
+    public int firstchar;
+    public int secondchar;
+    public int thirdchar;
+    public int forthchar;
 
     public Color[] characterelementcolor;
     public Color[] charactersecondelementcolor;
@@ -28,6 +33,9 @@ public class Convertstatics
     public float[] charswitchbuffduration;
     public float[] charbasiccritbuff;
     public float[] charbasicdmgbuff;
+
+    public int[] firstweapon;
+    public int[] secondweapon;
 
     public float[] charswordattack;
     public float[] charbowattack;
@@ -56,6 +64,14 @@ public class Convertstatics
         charcurrentexp = Statics.charcurrentexp;
         charrequiredexp = Statics.charrequiredexp;
 
+        firstchar = Statics.currentfirstchar;
+        secondchar = Statics.currentsecondchar;
+        thirdchar = Statics.currentthirdchar;
+        forthchar = Statics.currentforthchar;
+
+        firstweapon = Statics.firstweapon;
+        secondweapon = Statics.secondweapon;
+
         characterelementcolor = Statics.characterelementcolor;
         charactersecondelementcolor = Statics.charactersecondelementcolor;
         charbasichealth = Statics.charbasichealth;
@@ -71,6 +87,7 @@ public class Convertstatics
         charswitchbuffduration = Statics.charswitchbuffduration;
         charbasiccritbuff = Statics.charbasiccritbuff;
         charbasicdmgbuff = Statics.charbasicdmgbuff;
+
 
         charswordattack = Statics.charswordattack;
         charbowattack = Statics.charbowattack;
@@ -88,10 +105,7 @@ public class Convertstatics
         currentring = Statics.charcurrentring;
 
 
-            /*public static int currentactiveplayer;
-    public static int currentthirdchar;
-    public static int currentforthchar;
-    public static float charwechselbuff = 100f;
+    /*public static float charwechselbuff = 100f;
     public static float weaponswitchbuff = 100f;
     public static int[] charactersecondelement = { 8, 8, 8, 8, 8 };       // 8 = hat noch kein element
     public static string[] characterclassrolltext = new string[5];
@@ -120,6 +134,15 @@ public class Convertstatics
         charcurrentlvl = Statics.charcurrentlvl;
         charcurrentexp = Statics.charcurrentexp;
         charrequiredexp = Statics.charrequiredexp;
+
+        Statics.currentactiveplayer = 0;
+        Statics.currentfirstchar = firstchar;
+        Statics.currentsecondchar = secondchar;
+        Statics.currentthirdchar = thirdchar;
+        Statics.currentforthchar = forthchar;
+
+        Statics.firstweapon = firstweapon;
+        Statics.secondweapon = secondweapon;
 
         Statics.characterelementcolor = characterelementcolor;
         Statics.charactersecondelementcolor = charactersecondelementcolor;
