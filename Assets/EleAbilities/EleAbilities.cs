@@ -75,32 +75,32 @@ public class EleAbilities : MonoBehaviour
             {
                 if (Steuerung.Player.Ability1.WasPerformedThisFrame())
                 {
-                    if (Statics.currentactiveplayer == 0 && Statics.spellnumbers[0] < 24)                // 24 = anzahl der vorhanden Spells
+                    if (Statics.currentactiveplayer == 0 && Statics.spellnumbers[0] != -1)
                     {
                         choosespell(Statics.spellnumbers[0]);
                     }
-                    if (Statics.currentactiveplayer == 1 && Statics.spellnumbers[2] < 24)
+                    if (Statics.currentactiveplayer == 1 && Statics.spellnumbers[2] != -1)
                     {
                         choosespell(Statics.spellnumbers[2]);
                     }
                 }
                 if (Steuerung.Player.Ability2.WasPerformedThisFrame())
                 {
-                    if (Statics.currentactiveplayer == 0 && Statics.spellnumbers[1] < 24)
+                    if (Statics.currentactiveplayer == 0 && Statics.spellnumbers[1] != -1)
                     {
                         choosespell(Statics.spellnumbers[1]);
                     }
-                    if (Statics.currentactiveplayer == 1 && Statics.spellnumbers[3] < 24)
+                    if (Statics.currentactiveplayer == 1 && Statics.spellnumbers[3] != -1)
                     {
                         choosespell(Statics.spellnumbers[3]);
                     }
                 }
-                if (Steuerung.Player.Ability3.WasPerformedThisFrame() && Statics.spellnumbers[4] < 24)
+                if (Steuerung.Player.Ability3.WasPerformedThisFrame() && Statics.spellnumbers[4] != -1)
                 {
                     choosespell(Statics.spellnumbers[4]);
                 }
 
-                if (Steuerung.Player.Ability4.WasPerformedThisFrame() && Statics.spellnumbers[5] < 24)
+                if (Steuerung.Player.Ability4.WasPerformedThisFrame() && Statics.spellnumbers[5] != -1)
                 {
                     choosespell(Statics.spellnumbers[5]);
                 }
@@ -108,11 +108,11 @@ public class EleAbilities : MonoBehaviour
                 if (Steuerung.Player.Ability56.WasPerformedThisFrame())
                 {
                     float z = Steuerung.Player.Ability56.ReadValue<float>();
-                    if (z > 1 && Statics.spellnumbers[6] < 24)
+                    if (z > 1 && Statics.spellnumbers[6] != -1)
                     {
                         choosespell(Statics.spellnumbers[6]);
                     }
-                    if (z < -1 && Statics.spellnumbers[7] < 24)
+                    if (z < -1 && Statics.spellnumbers[7] != -1)
                     {
                         choosespell(Statics.spellnumbers[7]);
                     }

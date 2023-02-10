@@ -111,12 +111,12 @@ public class Statics
     public static int currentcombospell;
 
     //eleabilities
-    public static int[] spellnumbers = { 24, 24, 24, 24, 24, 24, 24, 24 };        // 24 = anzahl der vorhanden Spells
+    public static int[] spellnumbers = { -1, -1, -1, -1, -1, -1, -1, -1 };        // -1 = kein spell
     public static Color[] spellcolors = new Color[8];
 
     //stones
     public static int[] characterbaseelements = { 3, 1, 7, 6, 2 };        //Maria = ice, Erika = Water, Kaja = Earth, Yaku = Dark, Arissa = Nature}
-    public static int[] charactersecondelement = { 8, 8, 8, 8, 8 };       // 8 = hat noch kein element
+    public static int[] charactersecondelement = { -1, -1, -1, -1, -1 };       // -1 = hat kein element
     public static string[] characterclassrolltext = new string[5];
     public static int maincharstoneclass = 3;
     public static int secondcharstoneclass = 3;

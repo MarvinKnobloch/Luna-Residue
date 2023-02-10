@@ -41,7 +41,7 @@ public class Stonecontroller : MonoBehaviour, IPointerEnterHandler, IPointerExit
             elemenucontroller.stonetext = stonetext.text;
             elemenucontroller.stonecolor = GetComponent<Image>().color;
             elemenucontroller.elementonstoneselect = element;                      //element des Ausgewählen Steines
-            elemenucontroller.choosestone(this.gameObject);
+            elemenucontroller.choosestone();
         }
     }
 

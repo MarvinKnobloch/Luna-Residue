@@ -111,7 +111,7 @@ public class Startmenucontroller : MonoBehaviour
         Statics.weaponswitchbuff = 100;
         Statics.timer = false;
 
-        Statics.charactersecondelement = new int[] { 8, 8, 8, 8, 8 };       // 8 = hat noch kein element
+        Statics.charactersecondelement = new int[] { -1, -1, -1, -1, -1 };       // 8 = hat noch kein element
         Statics.characterclassrolltext = new string[5];
         Statics.maincharstoneclass = 3;
         Statics.secondcharstoneclass = 3;
