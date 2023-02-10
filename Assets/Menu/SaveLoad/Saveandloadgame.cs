@@ -81,6 +81,7 @@ public class Saveandloadgame : MonoBehaviour
         loadinventorys(slot);
         setitemsandinventory.resetitems();
         setitemsandinventory.updateitemsininventory();
+        resetgameplaystatics();
     }
     private void loadstaticdata(int slot)
     {
@@ -109,6 +110,16 @@ public class Saveandloadgame : MonoBehaviour
                 JsonUtility.FromJsonOverwrite(json, setitemsandinventory.inventorys[i]);
             }
         }
+    }
+    private void resetgameplaystatics()
+    {
+        Statics.healcdbool = false;
+        Statics.dashcdbool = false;
+        Statics.weapsonswitchbool = false;
+        Statics.charswitchbool = false;
+        Statics.characterswitchbuff = 100;
+        Statics.weaponswitchbuff = 100;
+        Statics.timer = false;
     }
     /*private void loadmonobehaviour(int slot, string filename, MonoBehaviour monobehaviour)
     {

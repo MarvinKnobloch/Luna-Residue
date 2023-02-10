@@ -124,12 +124,12 @@ public class SwordController : MonoBehaviour
         if (Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
         {
             crit = true;
-            dmgdealed = Mathf.Round(dmg * (attributecontroller.critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100f) / 100));
+            dmgdealed = Mathf.Round(dmg * (attributecontroller.critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.characterswitchbuff - 100f) / 100));
         }
         else
         {
             crit = false;
-            dmgdealed = Mathf.Round(dmg * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100));
+            dmgdealed = Mathf.Round(dmg * ((Statics.weaponswitchbuff + Statics.characterswitchbuff - 100) / 100));
         }
     }
     private void healandmana(int type, float manarestore)

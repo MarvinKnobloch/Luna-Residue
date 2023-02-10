@@ -21,14 +21,14 @@ public class Statics
     public static float savecamvalueX;
 
     //charvalues
-    public static int currentactiveplayer;
+    public static int currentactiveplayer;                     //??????
     public static int currentfirstchar = 0;
     public static int currentsecondchar = 1;
     public static int currentthirdchar = 2;
     public static int currentforthchar = 3;
 
-    public static int[] firstweapon = new int[5];
-    public static int[] secondweapon = { 1, 1, 1, 1, 1 };            //new int[5]   1,1,1,1,1 wegen test bei maingame scene start
+    public static int[] firstweapon = { 0, 0, 0, 0, 0 };
+    public static int[] secondweapon = { 1, 1, 1, 1, 1 };
 
     //presetgamevalues
     public static int playablechars = 5;
@@ -44,6 +44,15 @@ public class Statics
     public static float bowbasicmanarestore = 2;
     public static float bowendmanarestore = 5;
     public static float playerlockonrange = 20;
+
+    public static float healthperskillpoint = 25;
+    public static float armorperskillpoint = 25;
+    public static float attackperskillpoint = 1;
+    public static float critchanceperskillpoint = 1;
+    public static float critdmgperskillpoint = 2;
+    public static float weaponswitchbuffperskillpoint = 3;
+    public static float charswitchbuffperskillpoint = 3;
+    public static float basicbuffdmgperskillpoint = 4;
 
     //gameplaystatics
     public static bool otheraction;
@@ -63,16 +72,18 @@ public class Statics
 
     public static float weaponswitchcd = 2f;
     public static float weaponswitchmissingtime;
-    public static bool weapsonswitchbool;
+    public static bool weapsonswitchbool; 
+
+    public static float weaponswitchbuff = 100f;
+    public static float weaponswitchbuffmissingtime;
 
     public static float charswitchcd = 5f;
-    public static float charswitchbuffmissingtime;
     public static float charswitchmissingtime;
     public static bool charswitchbool;
 
-    public static float charwechselbuff = 100f;
-    public static float weaponswitchbuff = 100f;
-    public static float weaponswitchbuffmissingtime;
+    public static float characterswitchbuff = 100f;
+    public static float charswitchbuffmissingtime;
+
 
     //interaction
     public static List<GameObject> interactionobjects = new List<GameObject>();
@@ -96,12 +107,12 @@ public class Statics
     public static bool slow;
     public static bool enemyspezialtimescale;
 
+    public static int currentelementstate;
+    public static int currentcombospell;
+
     //eleabilities
     public static int[] spellnumbers = { 24, 24, 24, 24, 24, 24, 24, 24 };        // 24 = anzahl der vorhanden Spells
     public static Color[] spellcolors = new Color[8];
-
-    public static int currentelementstate;
-    public static int currentcombospell;
 
     //stones
     public static int[] characterbaseelements = { 3, 1, 7, 6, 2 };        //Maria = ice, Erika = Water, Kaja = Earth, Yaku = Dark, Arissa = Nature}
@@ -114,13 +125,14 @@ public class Statics
     public static float groupstonehealbonus = 0;
     public static float groupstonedefensebonus = 0;
     public static float groupstonedmgbonus = 0;
-    public static float guardbonushpeachlvl = 10;
     public static bool thirdcharishealer;
     public static bool forthcharishealer;
+
+    public static float guardbonushpeachlvl = 10;
     public static float alliegrouphealspawntime = 8;
 
     //playerstats
-    public static int charcurrentlvl = 1;
+    public static int charcurrentlvl = 1;              //playerstats werden bei newgame auch nochmal gesetzt
     public static float charcurrentexp = 0;
     public static float charrequiredexp = 52;
     public static string[] characternames = { "Maria", "Erika", "Kaja", "Yaku", "Arissa" };
@@ -159,12 +171,16 @@ public class Statics
     public static Itemcontroller[] charcurrentneckless = new Itemcontroller[5];
     public static Itemcontroller[] charcurrentring = new Itemcontroller[5];
 
-    public static float healthperskillpoint = 25;
-    public static float armorperskillpoint = 25;
-    public static float attackperskillpoint = 1;
-    public static float critchanceperskillpoint = 1;
-    public static float critdmgperskillpoint = 2;
-    public static float weaponswitchbuffperskillpoint = 3;
-    public static float charswitchbuffperskillpoint = 3;
-    public static float basicbuffdmgperskillpoint = 4;
+    //skillpoints
+    public static int[] charspendedskillpoints = new int[5];
+    public static int[] charskillpoints = new int[5];
+
+    public static int[] charhealthskillpoints = new int[5];
+    public static int[] chardefenseskillpoints = new int[5];
+    public static int[] charattackskillpoints = new int[5];
+    public static int[] charcritchanceskillpoints = new int[5];
+    public static int[] charcritdmgskillpoints = new int[5];
+    public static int[] charweaponskillpoints = new int[5];
+    public static int[] charcharswitchskillpoints = new int[5];
+    public static int[] charbasicskillpoints = new int[5];
 }

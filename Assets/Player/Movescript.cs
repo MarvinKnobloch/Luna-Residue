@@ -160,7 +160,6 @@ public class Movescript : MonoBehaviour
 
     void Awake()
     {
-        Statics.spellnumbers[0] = 15;
         lockonrange = Statics.playerlockonrange;
         Charrig.enabled = false;
         controlls = Keybindinputmanager.inputActions;

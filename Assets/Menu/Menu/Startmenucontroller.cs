@@ -84,16 +84,63 @@ public class Startmenucontroller : MonoBehaviour
         Statics.currentthirdchar = 2;
         Statics.currentforthchar = 3;
 
-        Statics.firstweapon[0] = 0;
-        Statics.secondweapon[0] = 1;
-        Statics.firstweapon[1] = 0;
-        Statics.secondweapon[1] = 1;
-        Statics.firstweapon[2] = 0;
-        Statics.secondweapon[2] = 1;
-        Statics.firstweapon[3] = 0;
-        Statics.secondweapon[3] = 1;
-        Statics.firstweapon[4] = 0;
-        Statics.secondweapon[4] = 1;
+        Statics.charcurrentlvl = 1;
+        Statics.charcurrentexp = 0;
+        Statics.charrequiredexp = 52;
+
+        Statics.charbasichealth = new float[] { 100, 93, 97, 91, 95 };
+        Statics.charcurrenthealth = new float[] { 100, 93, 97, 91, 95 };
+        Statics.charmaxhealth = new float[] { 100, 93, 97, 91, 95 };
+        Statics.chardefense = new float[] { 100, 100, 100, 100, 100 };
+        Statics.charattack = new float[] { 1, 1, 1, 1, 1 };
+        Statics.charcritchance = new float[] { 5, 5, 5, 5, 5 };
+        Statics.charcritdmg = new float[] { 150, 150, 150, 150, 150 };
+        Statics.charweaponbuff = new float[] { 100, 100, 100, 100, 100 };
+        Statics.charweaponbuffduration = new float[] { 5, 5, 5, 5, 5 };
+        Statics.charswitchbuff = new float[] { 100, 100, 100, 100, 100 };
+        Statics.charswitchbuffduration = new float[] { 5, 5, 5, 5, 5 };
+        Statics.charbasiccritbuff = new float[] { 1, 1, 1, 1, 1 };
+        Statics.charbasicdmgbuff = new float[] { 150, 150, 150, 150, 150 };
+
+        //resetgameplaystatics
+        Statics.healcdbool = false;
+        Statics.dashcdbool = false;
+        Statics.weapsonswitchbool = false;
+        Statics.charswitchbool = false;
+        Statics.characterswitchbuff = 100;
+        Statics.weaponswitchbuff = 100;
+        Statics.timer = false;
+
+        Statics.charactersecondelement = new int[] { 8, 8, 8, 8, 8 };       // 8 = hat noch kein element
+        Statics.characterclassrolltext = new string[5];
+        Statics.maincharstoneclass = 3;
+        Statics.secondcharstoneclass = 3;
+        Statics.thirdcharstoneclass = 3;
+        Statics.forthcharstoneclass = 3;
+        Statics.groupstonehealbonus = 0;
+        Statics.groupstonedefensebonus = 0;
+        Statics.groupstonedmgbonus = 0;
+        Statics.thirdcharishealer = false;
+        Statics.forthcharishealer = false;
+
+        for (int i = 0; i < Statics.playablechars; i++)
+        {
+            Statics.firstweapon[i] = 0;
+            Statics.secondweapon[i] = 1;
+        }
+        for (int i = 0; i < Statics.playablechars; i++)
+        {
+            Statics.charspendedskillpoints[i] = 0;
+            Statics.charskillpoints[i] = 0;
+            Statics.charhealthskillpoints[i] = 0;
+            Statics.chardefenseskillpoints[i] = 0;
+            Statics.charattackskillpoints[i] = 0;
+            Statics.charcritchanceskillpoints[i] = 0;
+            Statics.charcritchanceskillpoints[i] = 0;
+            Statics.charweaponskillpoints[i] = 0;
+            Statics.charcharswitchskillpoints[i] = 0;
+            Statics.charbasicskillpoints[i] = 0;
+        }
 
         setitemsandinventory.resetitems();
         setitemsandinventory.resetinventorys();

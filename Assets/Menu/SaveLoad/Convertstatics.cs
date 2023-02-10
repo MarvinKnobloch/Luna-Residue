@@ -52,6 +52,34 @@ public class Convertstatics
     public Itemcontroller[] currentneckless;
     public Itemcontroller[] currentring;
 
+    public int[] charspendedskillpoints;
+    public int[] charskillpoints;
+
+    public int[] charhealthskillpoints;
+    public int[] chardefenseskillpoints;
+    public int[] charattackskillpoints;
+    public int[] charcritchanceskillpoints;
+    public int[] charcritdmgskillpoints;
+    public int[] charweaponskillpoints;
+    public int[] charcharswitchskillpoints;
+    public int[] charbasicskillpoints;
+
+
+    public int[] spellnumbers;
+    public Color[] spellcolors;
+    public int[] charactersecondelement;
+    public string[] characterclassrolltext;
+    public int maincharstoneclass;
+    public int secondcharstoneclass;
+    public int thirdcharstoneclass;
+    public int forthcharstoneclass;
+    public float groupstonehealbonus;
+    public float groupstonedefensebonus;
+    public float groupstonedmgbonus;
+    public bool thirdcharishealer;
+    public bool forthcharishealer;
+
+
     public void savestaticsinscript()
     {
         playerposition = LoadCharmanager.savemainposi;
@@ -72,8 +100,6 @@ public class Convertstatics
         firstweapon = Statics.firstweapon;
         secondweapon = Statics.secondweapon;
 
-        characterelementcolor = Statics.characterelementcolor;
-        charactersecondelementcolor = Statics.charactersecondelementcolor;
         charbasichealth = Statics.charbasichealth;
         charcurrenthealth = Statics.charcurrenthealth;
         charmaxhealth = Statics.charmaxhealth;
@@ -104,22 +130,34 @@ public class Convertstatics
         currentneckless = Statics.charcurrentneckless;
         currentring = Statics.charcurrentring;
 
+        charspendedskillpoints = Statics.charspendedskillpoints;
+        charskillpoints = Statics.charskillpoints;
+        charhealthskillpoints = Statics.charhealthskillpoints;
+        chardefenseskillpoints = Statics.chardefenseskillpoints;
+        charattackskillpoints = Statics.charattackskillpoints;
+        charcritchanceskillpoints = Statics.charcritchanceskillpoints;
+        charcritdmgskillpoints = Statics.charcritchanceskillpoints;
+        charweaponskillpoints = Statics.charweaponskillpoints;
+        charcharswitchskillpoints = Statics.charcharswitchskillpoints;
+        charbasicskillpoints = Statics.charbasicskillpoints;
 
-    /*public static float charwechselbuff = 100f;
-    public static float weaponswitchbuff = 100f;
-    public static int[] charactersecondelement = { 8, 8, 8, 8, 8 };       // 8 = hat noch kein element
-    public static string[] characterclassrolltext = new string[5];
-    public static int maincharstoneclass = 3;
-    public static int secondcharstoneclass = 3;
-    public static int thirdcharstoneclass = 3;
-    public static int forthcharstoneclass = 3;
-    public static float groupstonehealbonus = 0;
-    public static float groupstonedefensebonus = 0;
-    public static float groupstonedmgbonus = 0;
-    public static float guardbonushpeachlvl = 10;
-    public static bool thirdcharishealer;
-    public static bool forthcharishealer;*/
-}
+        characterelementcolor = Statics.characterelementcolor;
+        charactersecondelementcolor = Statics.charactersecondelementcolor;
+
+        spellnumbers = Statics.spellnumbers;
+        spellcolors = Statics.spellcolors;
+        charactersecondelement = Statics.charactersecondelement;
+        characterclassrolltext = Statics.characterclassrolltext;
+        maincharstoneclass = Statics.maincharstoneclass;
+        secondcharstoneclass = Statics.secondcharstoneclass;
+        thirdcharstoneclass = Statics.thirdcharstoneclass;
+        forthcharstoneclass = Statics.forthcharstoneclass;
+        groupstonehealbonus = Statics.groupstonehealbonus;
+        groupstonedefensebonus = Statics.groupstonedefensebonus;
+        groupstonedmgbonus = Statics.groupstonedmgbonus;
+        thirdcharishealer = Statics.thirdcharishealer;
+        forthcharishealer = Statics.forthcharishealer;
+    }
 
     public void setstaticsafterload()
     {
@@ -174,5 +212,30 @@ public class Convertstatics
         Statics.charcurrentlegs = currentlegs;
         Statics.charcurrentneckless = currentneckless;
         Statics.charcurrentring = currentring;
+
+        Statics.charspendedskillpoints = charspendedskillpoints;
+        Statics.charskillpoints = charskillpoints;
+        Statics.charhealthskillpoints = charhealthskillpoints;
+        Statics.chardefenseskillpoints = chardefenseskillpoints;
+        Statics.charattackskillpoints = charattackskillpoints;
+        Statics.charcritchanceskillpoints = charcritchanceskillpoints;
+        Statics.charcritchanceskillpoints = charcritdmgskillpoints;
+        Statics.charweaponskillpoints = charweaponskillpoints;
+        Statics.charcharswitchskillpoints = charcharswitchskillpoints;
+        Statics.charbasicskillpoints = charbasicskillpoints;
+
+        Statics.spellnumbers = spellnumbers;
+        Statics.spellcolors = spellcolors;
+        Statics.charactersecondelement = charactersecondelement;
+        Statics.characterclassrolltext = characterclassrolltext;
+        Statics.maincharstoneclass = maincharstoneclass;
+        Statics.secondcharstoneclass = secondcharstoneclass;
+        Statics.thirdcharstoneclass = thirdcharstoneclass;
+        Statics.forthcharstoneclass = forthcharstoneclass;
+        Statics.groupstonehealbonus = groupstonehealbonus;
+        Statics.groupstonedefensebonus = groupstonedefensebonus;
+        Statics.groupstonedmgbonus = groupstonedmgbonus;
+        Statics.thirdcharishealer = thirdcharishealer;
+        Statics.forthcharishealer = forthcharishealer;
     }
 }

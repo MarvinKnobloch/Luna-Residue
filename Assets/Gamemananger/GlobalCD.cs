@@ -39,7 +39,7 @@ public class GlobalCD : MonoBehaviour
         Statics.dashcdbool = false;
         Statics.charswitchbool = false;
         Statics.healcdbool = true;
-        Statics.charwechselbuff = 100;
+        Statics.characterswitchbuff = 100;
         Statics.weaponswitchbuff = 100;
         Statics.otheraction = false;
         instance = this;
@@ -218,7 +218,7 @@ public class GlobalCD : MonoBehaviour
         charwechselcdUI.fillAmount = 0;
         Statics.charswitchmissingtime = 0;
 
-        Statics.charwechselbuff = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().charswitchbuff;
+        Statics.characterswitchbuff = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().charswitchbuff;
         charwechselbuffUI.fillAmount = 0;
         while (true)
         {
@@ -258,7 +258,7 @@ public class GlobalCD : MonoBehaviour
 
             if (Statics.charswitchbuffmissingtime <= 0)
             {
-                Statics.charwechselbuff = 100;
+                Statics.characterswitchbuff = 100;
                 charswitchbuffimage.SetActive(false);
                 charswitchbuffisrunning = false;
                 StopCoroutine("charswitchbuff");
