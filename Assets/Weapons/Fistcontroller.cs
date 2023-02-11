@@ -55,16 +55,16 @@ public class Fistcontroller : MonoBehaviour
     public void fistdmgupdate()
     {
         overallbasicdmg = chainbasicdmg + attributecontroller.attack + attributecontroller.fistattack;
-        overallbasicdmg += attributecontroller.overallstonebonusdmg * 0.01f * overallbasicdmg;               //wenn ich den bonus noch durch 2 teile wär die rechung so wie wenn ich den bonus zu den switchbonus addiere
+        overallbasicdmg += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * overallbasicdmg);               //wenn ich den bonus noch durch 2 teile wär die rechung so wie wenn ich den bonus zu den switchbonus addiere
 
         overallenddmg = chainenddmg + attributecontroller.attack + attributecontroller.fistattack;
-        overallenddmg += attributecontroller.overallstonebonusdmg * 0.01f * overallenddmg;
+        overallenddmg += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * overallenddmg);
 
         overallair3middmg = air3middmg + attributecontroller.attack + attributecontroller.fistattack;
-        overallair3middmg += attributecontroller.overallstonebonusdmg * 0.01f * overallair3middmg;
+        overallair3middmg += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * overallair3middmg);
 
         basicweaponswitchdmg = weaponswitchdmg + attributecontroller.attack + attributecontroller.fistattack;
-        basicweaponswitchdmg += attributecontroller.overallstonebonusdmg * 0.01f * basicweaponswitchdmg;
+        basicweaponswitchdmg += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * basicweaponswitchdmg);
 
         overallcritchance = Statics.playerbasiccritchance + attributecontroller.critchance;
     }

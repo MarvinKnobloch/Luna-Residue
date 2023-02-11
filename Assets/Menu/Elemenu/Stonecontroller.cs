@@ -37,7 +37,7 @@ public class Stonecontroller : MonoBehaviour, IPointerEnterHandler, IPointerExit
     {
         if (isactiv == true)
         {
-            GetComponentInParent<Stonegridcontroller>().checkforcorrectelementinslot(element);
+            GetComponentInParent<Stonegridcontroller>().resetslotifnewelement(element);
             elemenucontroller.stoneclassroll = stoneclassroll;                     // roll(Damage, Tank , Healer)
             elemenucontroller.stonetext = stonetext.text;
             elemenucontroller.stonecolor = GetComponent<Image>().color;

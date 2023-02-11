@@ -159,8 +159,6 @@ public class Convertstatics
         groupstonehealbonus = Statics.groupstonehealbonus;
         groupstonedefensebonus = Statics.groupstonedefensebonus;
         groupstonedmgbonus = Statics.groupstonedmgbonus;
-        thirdcharishealer = Statics.thirdcharishealer;
-        forthcharishealer = Statics.forthcharishealer;
     }
 
     public void setstaticsafterload()
@@ -241,7 +239,11 @@ public class Convertstatics
         Statics.groupstonehealbonus = groupstonehealbonus;
         Statics.groupstonedefensebonus = groupstonedefensebonus;
         Statics.groupstonedmgbonus = groupstonedmgbonus;
-        Statics.thirdcharishealer = thirdcharishealer;
-        Statics.forthcharishealer = forthcharishealer;
+
+        /*atbcontroller.ishealer = false;
+        if (atbcontroller.guardhpbuff == true)
+        {
+            atbcontroller.guardhpbuff = false;
+        }*/
     }
 }

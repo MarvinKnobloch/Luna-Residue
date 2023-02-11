@@ -41,7 +41,8 @@ public class SpielerHP : MonoBehaviour
         {
             return;
         }
-        float dmgtodeal = Mathf.Round(damage - ((attributecontroller.defense / 40 + attributecontroller.overallstonedmgreduction) * 0.01f * damage));
+
+        float dmgtodeal = Mathf.Round(damage - ((((Statics.groupstonedefensebonus + attributecontroller.stoneclassdmgreduction) * 0.01f) + attributecontroller.defense / 40) * damage));
         health -= dmgtodeal;                                                             
         if (health > maxhealth)
         {
@@ -51,7 +52,7 @@ public class SpielerHP : MonoBehaviour
     }
     public void playerheal(float heal)
     {
-        health += Mathf.Round(heal + (attributecontroller.overallstonehealbonus * 0.01f * heal));
+        health += Mathf.Round(heal + (Statics.groupstonehealbonus + attributecontroller.stoneclassbonusheal * 0.01f * heal));
         if (health > maxhealth)
         {
             health = maxhealth;

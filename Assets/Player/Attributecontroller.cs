@@ -20,22 +20,26 @@ public class Attributecontroller : MonoBehaviour
     [NonSerialized] public float bowattack;
     [NonSerialized] public float fistattack;
 
-    [NonSerialized] public float overallstonebonusdmg;
-    [NonSerialized] public float overallstonedmgreduction;
-    [NonSerialized] public float overallstonehealbonus;
+    [NonSerialized] public bool isdmgclassroll;
+    [NonSerialized] public float stoneclassbonusdmg;
 
-    [NonSerialized] public bool ishealer;
+    [NonSerialized] public bool isguardclassroll;
+    [NonSerialized] public float stoneclassdmgreduction;
+
+    [NonSerialized] public bool ishealerclassroll;
+    [NonSerialized] public float stoneclassbonusheal;
+
     [NonSerialized] public bool guardhpbuff;
-
     [NonSerialized] public float dmgfromallies;
 
     void Awake()
     {
+        classrollupdate();
         spielerhp.health = Statics.charcurrenthealth[charnumber];
     }
     private void OnEnable()
     {
-        updateattributes();              //onenable für die teammates
+        //updateattributes();              //onenable für die teammates
     }
     public void updateattributes()
     {
@@ -54,9 +58,84 @@ public class Attributecontroller : MonoBehaviour
         fistattack = Statics.charfistattack[charnumber];
         if(gameObject == LoadCharmanager.Overallthirdchar || gameObject == LoadCharmanager.Overallforthchar)
         {
-            if(gameObject == LoadCharmanager.Overallthirdchar)
+            supportcharupdate();
+        }
+    }
+    public void classrollupdate()
+    {
+        if (isdmgclassroll == true)
+        {
+            if (Statics.thirdcharstoneclass == 0 || Statics.forthcharstoneclass == 0)
             {
-                if(Statics.thirdcharishealer == true)
+                stoneclassbonusdmg = Statics.groupstonedmgbonus;
+            }
+            else
+            {
+                stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.5f;
+            }
+            stoneclassbonusheal = 0;
+            stoneclassdmgreduction = 0;
+            Statics.playertookdmgfromamount = 1;
+        }
+        else if (isguardclassroll)
+        {
+            if (Statics.thirdcharstoneclass == 0 || Statics.forthcharstoneclass == 0)
+            {
+                stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.5f;
+            }
+            else
+            {
+                stoneclassbonusdmg = 0;
+            }
+            stoneclassbonusheal = 0;
+            stoneclassdmgreduction = Statics.groupstonedefensebonus;
+            Statics.playertookdmgfromamount = 2;
+        }
+        else if (ishealerclassroll)
+        {
+            if (Statics.thirdcharstoneclass == 0 || Statics.forthcharstoneclass == 0)
+            {
+                stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.5f;
+            }
+            else
+            {
+                stoneclassbonusdmg = 0;
+            }
+            stoneclassbonusheal = Statics.groupstonehealbonus;
+            stoneclassdmgreduction = 0;
+            Statics.playertookdmgfromamount = 1;
+        }
+        else
+        {
+            if (Statics.thirdcharstoneclass == 0 || Statics.forthcharstoneclass == 0)
+            {
+                stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.5f;
+            }
+            else
+            {
+                stoneclassbonusdmg = 0;
+            }
+            stoneclassbonusheal = 0;
+            stoneclassdmgreduction = 0;
+            Statics.playertookdmgfromamount = 1;
+        }
+        updateattributes();
+    }
+    public void levelup()
+    {
+        if (isguardclassroll == true)
+        {
+            Statics.charmaxhealth[charnumber] += Statics.guardbonushpeachlvl;
+        }
+        spielerhp.UpdatehealthUI();
+    }
+    private void supportcharupdate()
+    {
+        if (gameObject == LoadCharmanager.Overallthirdchar || gameObject == LoadCharmanager.Overallforthchar)
+        {
+            if (gameObject == LoadCharmanager.Overallthirdchar)
+            {
+                if (ishealerclassroll == true)
                 {
                     GetComponent<Supportmovement>().ishealer = true;
                 }
@@ -65,9 +144,9 @@ public class Attributecontroller : MonoBehaviour
                     GetComponent<Supportmovement>().ishealer = false;
                 }
             }
-            if(gameObject == LoadCharmanager.Overallforthchar)
+            if (gameObject == LoadCharmanager.Overallforthchar)
             {
-                if (Statics.forthcharishealer == true)
+                if (ishealerclassroll == true)
                 {
                     GetComponent<Supportmovement>().ishealer = true;
                 }
@@ -79,57 +158,9 @@ public class Attributecontroller : MonoBehaviour
             alliesdmg();
         }
     }
-    public void levelup()
-    {
-        if (guardhpbuff == true)
-        {
-            spielerhp.maxhealth += Statics.guardbonushpeachlvl;
-            Statics.charmaxhealth[charnumber] = spielerhp.maxhealth;
-        }
-        spielerhp.UpdatehealthUI();
-    }
-
     public void alliesdmg()
     {
         dmgfromallies = attack + (critchance - 4) + ((critdmg - 148) / Statics.critdmgperskillpoint) + ((Statics.charweaponbuff[charnumber] - 97) / Statics.weaponswitchbuffperskillpoint) + ((charswitchbuff - 97) / Statics.charswitchbuffperskillpoint) + ((basicattributedmgbuff - 146) / Statics.basicbuffdmgperskillpoint);
         dmgfromallies = dmgfromallies * 0.5f;                  //durch 2 teilen weil es sonst zu viel ist
-    }       // durch die minus zahlen ergibt jeder wert bei spielstart 1
+    }   // durch die minus zahlen ergibt jeder wert bei spielstart 1
 }
-
-/*public void levelup()
-{
-    if (guardhpbuff == true)
-    {
-        if (gameObject == LoadCharmanager.Overallmainchar)
-        {
-            if (Statics.currentactiveplayer == 0)
-            {
-                Statics.charmaxhealth[PlayerPrefs.GetInt("Maincharindex")] += Statics.guardbonushpeachlvl;
-            }
-            else
-            {
-                Statics.charmaxhealth[PlayerPrefs.GetInt("Secondcharindex")] += Statics.guardbonushpeachlvl;
-            }
-        }
-        else if (gameObject == LoadCharmanager.Overallsecondchar)
-        {
-            if (Statics.currentactiveplayer == 1)
-            {
-                Statics.charmaxhealth[PlayerPrefs.GetInt("Maincharindex")] += Statics.guardbonushpeachlvl;
-            }
-            else
-            {
-                Statics.charmaxhealth[PlayerPrefs.GetInt("Secondcharindex")] += Statics.guardbonushpeachlvl;
-            }
-        }
-        else if (gameObject == LoadCharmanager.Overallthirdchar)
-        {
-            Statics.charmaxhealth[Statics.currentthirdchar] += Statics.guardbonushpeachlvl;
-        }
-        else if (gameObject == LoadCharmanager.Overallforthchar)
-        {
-            Statics.charmaxhealth[Statics.currentforthchar] += Statics.guardbonushpeachlvl;
-        }
-        //GetComponent<SpielerHP>().UpdatehealthUI();
-    }
-}*/

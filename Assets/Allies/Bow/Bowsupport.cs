@@ -33,10 +33,10 @@ public class Bowsupport : MonoBehaviour
     private void bowdmgupdate()
     {
         basicdmgtodeal = Mathf.Round(basicarrowdmg + attributecontroller.dmgfromallies + attributecontroller.bowattack);
-        basicdmgtodeal += Mathf.Round(attributecontroller.overallstonebonusdmg * 0.01f * basicdmgtodeal);
+        basicdmgtodeal += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * basicdmgtodeal);
 
         enddmgtodeal = Mathf.Round(endarrowdmg + attributecontroller.dmgfromallies + attributecontroller.bowattack);
-        enddmgtodeal += Mathf.Round(attributecontroller.overallstonebonusdmg * 0.01f * enddmgtodeal);
+        enddmgtodeal += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * enddmgtodeal);
     }
 
     private void shotchainarrow()

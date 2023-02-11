@@ -119,15 +119,13 @@ public class Statics
     public static int[] characterbaseelements = { 3, 1, 7, 6, 2 };        //Maria = ice, Erika = Water, Kaja = Earth, Yaku = Dark, Arissa = Nature}
     public static int[] charactersecondelement = { -1, -1, -1, -1, -1 };       // -1 = hat kein element
     public static string[] characterclassrolltext = new string[5];
-    public static int maincharstoneclass = 3;
-    public static int secondcharstoneclass = 3;
-    public static int thirdcharstoneclass = 3;
-    public static int forthcharstoneclass = 3;
+    public static int maincharstoneclass = -1;
+    public static int secondcharstoneclass = -1;
+    public static int thirdcharstoneclass = -1;
+    public static int forthcharstoneclass = -1;
     public static float groupstonehealbonus = 0;
     public static float groupstonedefensebonus = 0;
     public static float groupstonedmgbonus = 0;
-    public static bool thirdcharishealer;
-    public static bool forthcharishealer;
 
     public static float guardbonushpeachlvl = 10;
     public static float alliegrouphealspawntime = 8;

@@ -77,7 +77,7 @@ public class Supportmovement : MonoBehaviour
         {
             StartCoroutine(matehealcd());
         }
-        float healamount = Mathf.Round(basicpotionheal + (GetComponent<Attributecontroller>().overallstonehealbonus) * 0.01f * basicpotionheal * Statics.charcurrentlvl);
+        float healamount = Mathf.Round(basicpotionheal + (Statics.groupstonehealbonus + GetComponent<Attributecontroller>().stoneclassbonusheal) * 0.01f * basicpotionheal * Statics.charcurrentlvl);
         healpotion.GetComponent<Alliesbottlecontroller>().potionheal = healamount;
     }
     private void OnDisable()

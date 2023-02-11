@@ -30,7 +30,9 @@ public class Aoearrow : MonoBehaviour
     {
         aoeradius = radius;
         dmgtype = type;
-        overalldmg = Mathf.Round((dmg + LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().attack + LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().bowattack) * ((Statics.weaponswitchbuff + Statics.characterswitchbuff - 100f) / 100));
+        overalldmg = dmg + LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().attack + LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().bowattack;
+        overalldmg += Mathf.Round(Statics.groupstonedmgbonus + LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().stoneclassbonusdmg * 0.01f * overalldmg);
+        overalldmg = Mathf.Round(overalldmg * ((Statics.weaponswitchbuff + Statics.characterswitchbuff - 100f) / 100));
         overallcritchance = Statics.playerbasiccritchance + LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critchance;
         overallcritdmg = Mathf.Round(overalldmg * (LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.characterswitchbuff - 100f) / 100));
     }

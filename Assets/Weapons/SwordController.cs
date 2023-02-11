@@ -52,13 +52,13 @@ public class SwordController : MonoBehaviour
     private void sworddmgupdate()
     {
         overallbasicdmg = chainbasicdmg + attributecontroller.attack + attributecontroller.swordattack;
-        overallbasicdmg += attributecontroller.overallstonebonusdmg * 0.01f * overallbasicdmg;
+        overallbasicdmg += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * overallbasicdmg);
 
         overallenddmg = chainenddmg + attributecontroller.attack + attributecontroller.swordattack;
-        overallenddmg += attributecontroller.overallstonebonusdmg * 0.01f * overallenddmg;
+        overallenddmg += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * overallenddmg);
 
         basicweaponswitchdmg = weaponswitchdmg + attributecontroller.attack + attributecontroller.swordattack;
-        basicweaponswitchdmg += attributecontroller.overallstonebonusdmg * 0.01f * basicweaponswitchdmg;
+        basicweaponswitchdmg += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * basicweaponswitchdmg);
 
         overallcritchance = Statics.playerbasiccritchance + attributecontroller.critchance;
     }

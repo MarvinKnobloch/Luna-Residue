@@ -151,7 +151,6 @@ public class Elemenucontroller : MonoBehaviour
     }
     public void choosecharbuttonpress(int slot)
     {
-        //bei charwechsel geht der drag spell kaputt
         if(slot == 0) choosefirstandsecondchar(0, firstchar);
         else if(slot == 1) choosefirstandsecondchar(1, secondchar);
         else if(slot == 2) choosethirdandforthchar(2, thirdchar, forthchar);
@@ -225,11 +224,26 @@ public class Elemenucontroller : MonoBehaviour
         if (currentelemenuchar == 0)
         {
             setstonefirstandsecondchar(firstchar);
+            if (stoneclassroll == 1 && Statics.maincharstoneclass != 1)               //falls der char vorher nicht guard war
+            {
+                Statics.charcurrenthealth[firstchar] += Statics.charcurrentlvl * Statics.guardbonushpeachlvl;
+            }
+            else if (stoneclassroll != 1 && Statics.maincharstoneclass == 1)  //falls der char vorher guard war
+            {
+                Statics.charcurrenthealth[firstchar] -= Statics.charcurrentlvl * Statics.guardbonushpeachlvl;
+            }
             Statics.maincharstoneclass = stoneclassroll;
         }
         else if(currentelemenuchar == 1)
         {
-            setstonefirstandsecondchar(secondchar);
+            if (stoneclassroll == 1 && Statics.secondcharstoneclass != 1)               //falls der char vorher nicht guard war
+            {
+                Statics.charcurrenthealth[secondchar] += Statics.charcurrentlvl * Statics.guardbonushpeachlvl;
+            }
+            else if (stoneclassroll != 1 && Statics.secondcharstoneclass == 1)  //falls der char vorher guard war
+            {
+                Statics.charcurrenthealth[secondchar] -= Statics.charcurrentlvl * Statics.guardbonushpeachlvl;
+            }
             Statics.secondcharstoneclass = stoneclassroll;
         }
         else if(currentelemenuchar == 2)
