@@ -38,6 +38,25 @@ public class Elemenucontroller : MonoBehaviour
     void Awake()
     {
         controlls = Keybindinputmanager.inputActions;
+        setspellslotsafterload();
+    }
+    private void setspellslotsafterload()
+    {
+        for (int i = 0; i < Statics.spellnumbers.Length; i++)
+        {
+            if (Statics.spellnumbers[i] != -1)
+            {
+                abilityimages[i].color = Statics.spellcolors[i];
+                TextMeshProUGUI spellname = spelltext[Statics.spellnumbers[i]];
+                abilityimages[i].gameObject.GetComponentInChildren<TextMeshProUGUI>().text = spellname.text;
+                abilityimages[i].gameObject.GetComponent<Setspells>().setspellafterload(i, spellname.text);
+            }
+            else
+            {
+                abilityimages[i].color = Color.white;
+                abilityimages[i].gameObject.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+            }
+        }
     }
     private void OnEnable()
     {
@@ -58,19 +77,6 @@ public class Elemenucontroller : MonoBehaviour
         foreach (GameObject spell in selectablespells)
         {
             spell.SetActive(false);
-        }
-        for (int i = 0; i < Statics.spellnumbers.Length; i++)
-        {
-            if (Statics.spellnumbers[i] != -1)
-            {
-                abilityimages[i].color = Statics.spellcolors[i];
-                abilityimages[i].gameObject.GetComponentInChildren<TextMeshProUGUI>().text = spelltext[Statics.spellnumbers[i]].text;
-            }
-            else
-            {
-                abilityimages[i].color = Color.white;
-                abilityimages[i].gameObject.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
-            }
         }
         abilityimages[0].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = controlls.Player.Ability1.GetBindingDisplayString();
         abilityimages[1].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = controlls.Player.Ability2.GetBindingDisplayString();
@@ -127,24 +133,15 @@ public class Elemenucontroller : MonoBehaviour
         }
         if (controlls.Elementalmenu._2.WasPerformedThisFrame())
         {
-            if (Statics.currentsecondchar != -1)
-            {
-                choosefirstandsecondchar(1, secondchar);
-            }
+            choosefirstandsecondchar(1, secondchar);
         }
         if (controlls.Elementalmenu._3.WasPerformedThisFrame())
         {
-            if(Statics.currentthirdchar != -1)
-            {
-                choosethirdandforthchar(2, thirdchar, forthchar);
-            }
+            choosethirdandforthchar(2, thirdchar, forthchar);
         }
         if (controlls.Elementalmenu._4.WasPerformedThisFrame())
         {
-            if(Statics.currentforthchar != -1)
-            {
-                choosethirdandforthchar(3, forthchar, thirdchar);
-            }
+            choosethirdandforthchar(3, forthchar, thirdchar);
         }
         if (controlls.Menusteuerung.Menuesc.WasPerformedThisFrame())
         {
@@ -158,30 +155,37 @@ public class Elemenucontroller : MonoBehaviour
         if(slot == 0) choosefirstandsecondchar(0, firstchar);
         else if(slot == 1) choosefirstandsecondchar(1, secondchar);
         else if(slot == 2) choosethirdandforthchar(2, thirdchar, forthchar);
-        else if(slot == 4) choosethirdandforthchar(3, forthchar, thirdchar);
+        else if(slot == 3) choosethirdandforthchar(3, forthchar, thirdchar);
     }
     public void choosefirstandsecondchar(int charslot, int charstaticint)
     {
-        foreach (GameObject spell in selectablespells)
+        if (charstaticint == -1)
         {
-            spell.SetActive(false);
+            return;
         }
-        if (Statics.charactersecondelement[charstaticint] != -1)
+        else
         {
-            selectablespells[Statics.charactersecondelement[charstaticint]].SetActive(true);
-        }
-        selectablespells[Statics.characterbaseelements[charstaticint]].SetActive(true);
+            foreach (GameObject spell in selectablespells)
+            {
+                spell.SetActive(false);
+            }
+            if (Statics.charactersecondelement[charstaticint] != -1)
+            {
+                selectablespells[Statics.charactersecondelement[charstaticint]].SetActive(true);
+            }
+            selectablespells[Statics.characterbaseelements[charstaticint]].SetActive(true);
 
-        foreach (GameObject image in charselectionimage)
-        {
-            image.SetActive(false);
+            foreach (GameObject image in charselectionimage)
+            {
+                image.SetActive(false);
+            }
+            charselectionimage[charslot].SetActive(true);
+            currentelemenuchar = charslot;
         }
-        charselectionimage[charslot].SetActive(true);
-        currentelemenuchar = charslot;
     }
     public void choosethirdandforthchar(int charslot, int charstaticint, int othercharstaticint)
     {
-        if (charstaticint != -1)
+        if (charstaticint == -1)
         {
             return;
         }
@@ -210,6 +214,7 @@ public class Elemenucontroller : MonoBehaviour
                 image.SetActive(false);
             }
             charselectionimage[charslot].SetActive(true);
+            currentelemenuchar = charslot;
         }
     }
     

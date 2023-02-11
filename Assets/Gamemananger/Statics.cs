@@ -115,6 +115,7 @@ public class Statics
     public static Color[] spellcolors = new Color[8];
 
     //stones
+    public static bool[] stoneisactivated = new bool[24];
     public static int[] characterbaseelements = { 3, 1, 7, 6, 2 };        //Maria = ice, Erika = Water, Kaja = Earth, Yaku = Dark, Arissa = Nature}
     public static int[] charactersecondelement = { -1, -1, -1, -1, -1 };       // -1 = hat kein element
     public static string[] characterclassrolltext = new string[5];

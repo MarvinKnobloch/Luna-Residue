@@ -67,6 +67,8 @@ public class Convertstatics
 
     public int[] spellnumbers;
     public Color[] spellcolors;
+
+    public bool[] stoneisactivated;
     public int[] charactersecondelement;
     public string[] characterclassrolltext;
     public int maincharstoneclass;
@@ -146,6 +148,8 @@ public class Convertstatics
 
         spellnumbers = Statics.spellnumbers;
         spellcolors = Statics.spellcolors;
+
+        stoneisactivated = Statics.stoneisactivated;
         charactersecondelement = Statics.charactersecondelement;
         characterclassrolltext = Statics.characterclassrolltext;
         maincharstoneclass = Statics.maincharstoneclass;
@@ -226,6 +230,8 @@ public class Convertstatics
 
         Statics.spellnumbers = spellnumbers;
         Statics.spellcolors = spellcolors;
+
+        Statics.stoneisactivated = stoneisactivated;
         Statics.charactersecondelement = charactersecondelement;
         Statics.characterclassrolltext = characterclassrolltext;
         Statics.maincharstoneclass = maincharstoneclass;

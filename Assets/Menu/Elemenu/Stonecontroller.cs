@@ -12,6 +12,7 @@ public class Stonecontroller : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private TextMeshProUGUI stonetext;
     public int element;
     public bool isactiv;
+    public int stonenumber;
 
     private Elemenucontroller elemenucontroller;
     private GameObject awakemessageobj;

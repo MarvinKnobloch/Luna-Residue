@@ -20,7 +20,8 @@ public class Dragspell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Dragspellcontroller.drag = true;
+        Dragspellcontroller.dragedfromspellslot = false;
+        Dragspellcontroller.dragedfromouterspellcircle = true;
         dragimage.SetActive(true);
         dragimage.GetComponent<Image>().color = spellcolor;
         dragimage.GetComponentInChildren<TextMeshProUGUI>().text = spelltext;
@@ -36,6 +37,6 @@ public class Dragspell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         dragimage.GetComponent<CanvasGroup>().blocksRaycasts = true;
         dragimage.SetActive(false);
-        Dragspellcontroller.drag = false;
+        Dragspellcontroller.dragedfromouterspellcircle = false;
     }
 }

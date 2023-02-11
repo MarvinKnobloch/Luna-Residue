@@ -25,6 +25,26 @@ public class Stonegridcontroller : MonoBehaviour
     private int thirdchar;
     private int forthchar;
 
+    private void Awake()
+    {
+        setstonesafterload();
+    }
+    private void setstonesafterload()
+    {
+        int i = 0;
+        foreach (Transform obj in transform)
+        {
+            obj.GetComponentInChildren<Stonecontroller>().stonenumber = i;
+            if (Statics.stoneisactivated[i] == true)
+            {
+                obj.GetComponentInChildren<Stonecontroller>().isactiv = true;
+                Color colornew = obj.GetComponentInChildren<Image>().color;
+                colornew.a = 1;
+                obj.GetComponentInChildren<Image>().color = colornew;
+            }
+            i++;
+        }
+    }
     private void OnEnable()
     {
         firstchar = Statics.currentfirstchar;

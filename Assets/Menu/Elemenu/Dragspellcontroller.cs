@@ -6,8 +6,9 @@ using System;
 public class Dragspellcontroller : MonoBehaviour
 {
     public int spellnumber;
-    public static bool drag;
-    public static bool dragfromspellslot;
+    public static bool dragedfromouterspellcircle;
+    public static bool dragedfromspellslot;
+    public static int checkforcorrectslot;
 
     public static GameObject currentspellslot;
 }
