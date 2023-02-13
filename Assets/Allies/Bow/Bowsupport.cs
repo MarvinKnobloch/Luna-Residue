@@ -15,13 +15,13 @@ public class Bowsupport : MonoBehaviour
     private float enddmgtodeal;
 
     private Attributecontroller attributecontroller;
-    private SpielerHP hpscript;
+    private Playerhp hpscript;
     private Supportmovement supportmovescript;
 
     private void Awake()
     {
         attributecontroller = GetComponent<Attributecontroller>();
-        hpscript = GetComponent<SpielerHP>();
+        hpscript = GetComponent<Playerhp>();
         supportmovescript = GetComponent<Supportmovement>();
     }
 

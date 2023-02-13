@@ -19,15 +19,15 @@ public class Elkconedmg : MonoBehaviour
             timerstart = true;
             StartCoroutine(oneframe());
         }
-        if (other.gameObject.GetComponent<SpielerHP>())
+        if (other.gameObject.GetComponent<Playerhp>())
         {
             if (other.GetComponent<Supportmovement>())
             {
-                other.GetComponent<SpielerHP>().TakeDamage(Mathf.Round(basedmg / 3));
+                other.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg / 3));
             }
             else
             {
-                other.GetComponent<SpielerHP>().TakeDamage(basedmg);
+                other.GetComponent<Playerhp>().TakeDamage(basedmg);
             }
         }
     }

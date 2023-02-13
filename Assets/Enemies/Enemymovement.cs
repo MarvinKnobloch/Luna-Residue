@@ -430,7 +430,7 @@ public class Enemymovement : MonoBehaviour
     }
     private void normalattackdmg()
     {
-        currenttarget.GetComponent<SpielerHP>().TakeDamage(basedmg);
+        currenttarget.GetComponent<Playerhp>().TakeDamage(basedmg);
     }
     private void resethardattackcheck()
     {

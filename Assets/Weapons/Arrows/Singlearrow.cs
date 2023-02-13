@@ -76,7 +76,7 @@ public class Singlearrow : MonoBehaviour
             else
             {
                 Manamanager.manamanager.Managemana(Statics.bowendmanarestore);
-                LoadCharmanager.Overallmainchar.gameObject.GetComponent<SpielerHP>().playerheal(7);
+                LoadCharmanager.Overallmainchar.gameObject.GetComponent<Playerhp>().playerheal(7);
             }
             /*if (resetcombochain == true)
             {

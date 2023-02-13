@@ -27,7 +27,7 @@ public class Minizombiecontroller : MonoBehaviour
         facezombie();
         if(Vector3.Distance(transform.position, Zombie.transform.position) < range)
         {
-            LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().TakeDamage(basedmg);
+            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg);
             gameObject.SetActive(false);
         }
         if (Zombie.activeSelf == false)

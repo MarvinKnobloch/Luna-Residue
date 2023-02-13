@@ -26,13 +26,9 @@ public class LoadCharmanager : MonoBehaviour
     public GameObject[] teammates;
     public static GameObject Overallthirdchar;
     public static GameObject Overallforthchar;
-    public static GameObject Savechar;                                       //wird für charwechsel benutzt
     public static Vector3 savemainposi = new Vector3(0,5,0);
     public static Quaternion savemainrota;                                      //memorypuzzle(-40,25,685) //boxpuzzle(305,25,565) switchpuzzle(280,2,180)
     public static float savecamvalueX;                                          //statuepuzzle(-200,2,340) //woods(255,20,435)  //watercave(-330,12,-40)  //lantern(-210,32,500)
-
-    private int maincharload;
-    private int secondcharload;
 
     public static bool disableattackbuttons;
     public static bool gameispaused;
@@ -102,22 +98,26 @@ public class LoadCharmanager : MonoBehaviour
     public void maingamevalues()
     {
         Physics.IgnoreLayerCollision(0, 6, false);               //collision wird deaktiviert und nach einem frame wird das menü aufgerufen damit die area collider getriggert werden
-        maincharload = Statics.currentfirstchar;
-        secondcharload = Statics.currentsecondchar;
-        Overallmainchar = allcharacters[maincharload];
-        Overallsecondchar = allcharacters[secondcharload];
+        Overallmainchar = allcharacters[Statics.currentfirstchar];
+        Overallsecondchar = allcharacters[Statics.currentsecondchar];
         Overallmainchar.transform.position = savemainposi;
         Overallmainchar.transform.rotation = savemainrota;
+        Statics.currentactiveplayer = 0;
         Overallmainchar.SetActive(true);
         Overallsecondchar.SetActive(true);
+        Overallmainchar.GetComponent<Playerhp>().playerhpuislot = 0;
+        Overallsecondchar.GetComponent<Playerhp>().playerhpuislot = 1;
         Statics.currentactiveplayer = Statics.currentfirstchar;                            //PlayerPrefs.GetInt("Maincharindex");
         if (Statics.currentthirdchar != -1)
         {
             Overallthirdchar = teammates[Statics.currentthirdchar];     //3 ist aktiv
+            Overallthirdchar.GetComponent<Playerhp>().playerhpuislot = 2;
             Overallthirdchar.SetActive(true);                                       //wird momentan im Infightcontroller wieder ausgeblendet
+
             if (Statics.currentforthchar != -1)
             {
                 Overallforthchar = teammates[Statics.currentforthchar];   //wenn 3 aktiv ist wieder gecheckt ob 4 aktiv ist
+                Overallforthchar.GetComponent<Playerhp>().playerhpuislot = 3;
                 Overallforthchar.SetActive(true);
             }
             else
@@ -127,9 +127,11 @@ public class LoadCharmanager : MonoBehaviour
         }
         else
         {
-            if (Statics.currentforthchar != -1)                      //wenn 3 nicht aktiv ist wird gecheckt ob 4 aktiv ist
+            if (Statics.currentforthchar != -1)                      //wenn 3 nicht aktiv ist wird gecheckt ob 4 aktiv ist, und 4 ist dann 3
             {
-                Overallthirdchar = teammates[Statics.currentforthchar];
+                Statics.currentthirdchar = Statics.currentforthchar;
+                Statics.currentforthchar = -1;
+                Overallthirdchar = teammates[Statics.currentthirdchar];
                 Overallthirdchar.SetActive(true);
                 Overallforthchar = null;
             }
@@ -156,7 +158,6 @@ public class LoadCharmanager : MonoBehaviour
         classandstatsupdate(Statics.currentthirdchar);
         classandstatsupdate(Statics.currentforthchar);
         GetComponent<HealthUImanager>().sethealthbars();
-        //bei charswitch passt der guardbuff noch nicht
 
         setweapons?.Invoke();
 

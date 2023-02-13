@@ -80,10 +80,18 @@ public class Expmanager : MonoBehaviour
     public void levelup()
     {
         charlvl++;
-        checkforguard(Statics.currentfirstchar, 1);
-        checkforguard(Statics.currentsecondchar, 2);
-        checkforguard(Statics.currentthirdchar, 3);
-        checkforguard(Statics.currentforthchar, 4);
+        if(Statics.currentactiveplayer == 0)
+        {
+            checkforguard(Statics.currentfirstchar, 0);
+            checkforguard(Statics.currentsecondchar, 1);
+        }
+        else
+        {
+            checkforguard(Statics.currentfirstchar, 1);
+            checkforguard(Statics.currentsecondchar, 0);
+        }
+        checkforguard(Statics.currentthirdchar, 2);
+        checkforguard(Statics.currentforthchar, 3);
 
         foreach (Image bar in expbar)
         {

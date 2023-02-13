@@ -23,7 +23,7 @@ public class Plantcontroller : MonoBehaviour
         {
             if (sphere.activeSelf == true)
             {
-                LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().TakeDamage(basedmg);
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg);
                 sphere.SetActive(false);
             }
         }

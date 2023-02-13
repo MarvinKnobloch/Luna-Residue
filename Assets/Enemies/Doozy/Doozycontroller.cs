@@ -80,7 +80,7 @@ public class Doozycontroller : MonoBehaviour
         maincam.m_XAxis.m_MaxSpeed = 0.6f;
         LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
         dmgcount = 5 - memoryclicknumber;
-        LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().TakeDamage(dmgcount * basedmg);
+        LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(dmgcount * basedmg);
         secondgrid.SetActive(false);
         gameObject.SetActive(false);
     }

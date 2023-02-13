@@ -25,7 +25,7 @@ public class Gasmantarget : MonoBehaviour
             if(dmgonce == false)
             {
                 dmgonce = true;
-                LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().TakeDamage(faillinedmg);
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(faillinedmg);
             }
             laserfail = true;
         }

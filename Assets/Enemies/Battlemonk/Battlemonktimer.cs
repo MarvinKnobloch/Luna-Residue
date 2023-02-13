@@ -36,7 +36,7 @@ public class Battlemonktimer : MonoBehaviour
     {
         if(Statics.dash == false)
         {
-            LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().TakeDamage(basedmg);
+            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg);
         }
     }
 }

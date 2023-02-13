@@ -34,7 +34,7 @@ public class Towercontroller : MonoBehaviour
         {
             if (dealdmg == true)
             {
-                LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().TakeDamage(basedmg);
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg);
             }
             timerUI.SetActive(false);
             LoadCharmanager.Overallmainchar.transform.parent = null;

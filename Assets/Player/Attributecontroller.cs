@@ -6,7 +6,7 @@ using System;
 public class Attributecontroller : MonoBehaviour
 {
     [SerializeField] private int charnumber;
-    [SerializeField] private SpielerHP spielerhp;
+    [SerializeField] private Playerhp playerhp;
 
     [NonSerialized] public float attack;
     [NonSerialized] public float defense;
@@ -34,7 +34,6 @@ public class Attributecontroller : MonoBehaviour
 
     public void classrollupdate()
     {
-        Debug.Log(charnumber);
         if (isdmgclassroll == true)
         {
             if (Statics.characterclassroll[Statics.currentthirdchar] == 0 || Statics.characterclassroll[Statics.currentforthchar] == 0)
@@ -85,8 +84,8 @@ public class Attributecontroller : MonoBehaviour
     }
     public void updateattributes()
     {
-        spielerhp.health = Statics.charcurrenthealth[charnumber];
-        spielerhp.maxhealth = Statics.charmaxhealth[charnumber];
+        playerhp.health = Statics.charcurrenthealth[charnumber];
+        playerhp.maxhealth = Statics.charmaxhealth[charnumber];
 
         defense = Statics.chardefense[charnumber];
         attack = Statics.charattack[charnumber];

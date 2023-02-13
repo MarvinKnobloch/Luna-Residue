@@ -78,7 +78,6 @@ public class Startmenucontroller : MonoBehaviour
     }
     public void newgame()
     {
-        Statics.currentactiveplayer = 0;
         Statics.currentfirstchar = 0;
         Statics.currentsecondchar = 1;
         Statics.currentthirdchar = 2;

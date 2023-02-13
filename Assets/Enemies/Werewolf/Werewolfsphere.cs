@@ -27,7 +27,7 @@ public class Werewolfsphere : MonoBehaviour
         {
             if (target.gameObject == LoadCharmanager.Overallmainchar.gameObject)
             {
-                target.GetComponent<SpielerHP>().TakeDamage(basedmg);
+                target.GetComponent<Playerhp>().TakeDamage(basedmg);
             }
         }
         LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();

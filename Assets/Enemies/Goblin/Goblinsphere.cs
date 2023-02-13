@@ -18,15 +18,15 @@ public class Goblinsphere : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, 3f, Aoetargets);
         foreach (Collider target in colliders)
         {
-            if (target.GetComponent<SpielerHP>())
+            if (target.GetComponent<Playerhp>())
             {
                 if (target.GetComponent<Supportmovement>())
                 {
-                    target.GetComponent<SpielerHP>().TakeDamage(basedmg / 3);
+                    target.GetComponent<Playerhp>().TakeDamage(basedmg / 3);
                 }
                 else
                 {
-                    target.GetComponent<SpielerHP>().TakeDamage(basedmg);
+                    target.GetComponent<Playerhp>().TakeDamage(basedmg);
                 }
             }
         }

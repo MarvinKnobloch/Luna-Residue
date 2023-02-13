@@ -22,15 +22,15 @@ public class Vampirecube : MonoBehaviour
     {
         Collider[] colliders = Physics.OverlapBox(transform.position, new Vector3(16f, 0.8f, 16f), Quaternion.identity, Aoetargets);
         foreach (Collider target in colliders)
-            if (target.GetComponent<SpielerHP>())
+            if (target.GetComponent<Playerhp>())
             {
                 if (target.GetComponent<Supportmovement>())
                 {
-                    target.GetComponent<SpielerHP>().TakeDamage(Mathf.Round(basedmg / 3));
+                    target.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg / 3));
                 }
                 else
                 {
-                    target.GetComponent<SpielerHP>().TakeDamage(basedmg);
+                    target.GetComponent<Playerhp>().TakeDamage(basedmg);
                 }
             }
         vampirecontroller.SetActive(false);

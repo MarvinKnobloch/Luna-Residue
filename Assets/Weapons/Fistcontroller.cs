@@ -35,13 +35,13 @@ public class Fistcontroller : MonoBehaviour
 
     private Manamanager manacontroller;
     private Attributecontroller attributecontroller;
-    private SpielerHP spielerhp;
+    private Playerhp spielerhp;
 
     private void Awake()
     {
         attributecontroller = GetComponent<Attributecontroller>();
         manacontroller = charmanager.GetComponent<Manamanager>();
-        spielerhp = GetComponent<SpielerHP>();
+        spielerhp = GetComponent<Playerhp>();
     }
     private void OnEnable()
     {

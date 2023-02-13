@@ -21,7 +21,7 @@ public class Statics
     public static float savecamvalueX;
 
     //charvalues
-    public static int currentactiveplayer;                     //??????
+    public static int currentactiveplayer;                //für hpanzeige
     public static int currentfirstchar = 0;
     public static int currentsecondchar = 1;
     public static int currentthirdchar = 2;
@@ -111,7 +111,7 @@ public class Statics
     public static int currentcombospell;
 
     //eleabilities
-    public static int[] spellnumbers = { -1, -1, -1, -1, -1, -1, -1, -1 };        // -1 = kein spell
+    public static int[] spellnumbers = { -1, -1, -1, -1, -1, -1, -1, -1 };
     public static Color[] spellcolors = new Color[8];
 
     //stones
@@ -130,7 +130,7 @@ public class Statics
     public static float alliegrouphealspawntime = 8;
 
     //playerstats
-    public static int charcurrentlvl = 1;              //playerstats werden bei newgame auch nochmal gesetzt
+    public static int charcurrentlvl = 1;
     public static float charcurrentexp = 0;
     public static float charrequiredexp = 52;
     public static string[] characternames = { "Maria", "Erika", "Kaja", "Yaku", "Arissa" };

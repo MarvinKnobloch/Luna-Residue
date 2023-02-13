@@ -14,12 +14,12 @@ public class Swordsupport : MonoBehaviour
     private float basicdmgtodeal;
 
     private Attributecontroller attributecontroller;
-    private SpielerHP hpscript;
+    private Playerhp hpscript;
 
     private void Awake()
     {
         attributecontroller = GetComponent<Attributecontroller>();
-        hpscript = GetComponent<SpielerHP>();
+        hpscript = GetComponent<Playerhp>();
     }
     private void OnEnable()
     {
