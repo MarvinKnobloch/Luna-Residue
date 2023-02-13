@@ -108,17 +108,15 @@ public class Elemenucontroller : MonoBehaviour
     {
         charbutton[charslot].GetComponentInChildren<TextMeshProUGUI>().text = Statics.characternames[charstaticint];
         charbutton[charslot].GetComponent<Image>().color = Statics.characterelementcolor[charstaticint];
-        if (Statics.charactersecondelement[charstaticint] != -1)
-        {
-            characterstoneimage[charslot].GetComponent<Image>().color = Statics.charactersecondelementcolor[charstaticint];
-            characterstonetext[charslot].GetComponent<TextMeshProUGUI>().text = Statics.characterclassrolltext[charstaticint];
-        }
+
+        characterstoneimage[charslot].GetComponent<Image>().color = Statics.charactersecondelementcolor[charstaticint];
+        characterstonetext[charslot].GetComponent<TextMeshProUGUI>().text = Statics.characterclassrolltext[charstaticint];
     }
     private void setnochartext(int charslot)
     {
         charbutton[charslot].GetComponentInChildren<TextMeshProUGUI>().text = "empty";
         charbutton[charslot].GetComponent<Image>().color = Color.white;
-        characterstonetext[charslot].text = "";
+        characterstonetext[charslot].text = string.Empty;
         characterstoneimage[charslot].GetComponent<Image>().color = Color.white;
     }
     private void OnDisable()
@@ -224,37 +222,23 @@ public class Elemenucontroller : MonoBehaviour
         if (currentelemenuchar == 0)
         {
             setstonefirstandsecondchar(firstchar);
-            if (stoneclassroll == 1 && Statics.maincharstoneclass != 1)               //falls der char vorher nicht guard war
-            {
-                Statics.charcurrenthealth[firstchar] += Statics.charcurrentlvl * Statics.guardbonushpeachlvl;
-            }
-            else if (stoneclassroll != 1 && Statics.maincharstoneclass == 1)  //falls der char vorher guard war
-            {
-                Statics.charcurrenthealth[firstchar] -= Statics.charcurrentlvl * Statics.guardbonushpeachlvl;
-            }
-            Statics.maincharstoneclass = stoneclassroll;
+            Statics.characterclassroll[firstchar] = stoneclassroll;
         }
         else if(currentelemenuchar == 1)
         {
-            if (stoneclassroll == 1 && Statics.secondcharstoneclass != 1)               //falls der char vorher nicht guard war
-            {
-                Statics.charcurrenthealth[secondchar] += Statics.charcurrentlvl * Statics.guardbonushpeachlvl;
-            }
-            else if (stoneclassroll != 1 && Statics.secondcharstoneclass == 1)  //falls der char vorher guard war
-            {
-                Statics.charcurrenthealth[secondchar] -= Statics.charcurrentlvl * Statics.guardbonushpeachlvl;
-            }
-            Statics.secondcharstoneclass = stoneclassroll;
+            setstonefirstandsecondchar(secondchar);
+            Statics.characterclassroll[secondchar] = stoneclassroll;
         }
         else if(currentelemenuchar == 2)
         {
             setstonethirdandforthchar(thirdchar, forthchar);
-            Statics.thirdcharstoneclass = stoneclassroll;
+            Statics.characterclassroll[thirdchar] = stoneclassroll;
+
         }
         else if(currentelemenuchar == 3)
         {
             setstonethirdandforthchar(forthchar, thirdchar);
-            Statics.forthcharstoneclass = stoneclassroll;
+            Statics.characterclassroll[forthchar] = stoneclassroll;
         }
     }
     private void setstonefirstandsecondchar(int charstaticint)
@@ -262,6 +246,15 @@ public class Elemenucontroller : MonoBehaviour
         Statics.charactersecondelementcolor[charstaticint] = stonecolor;
         Statics.characterclassrolltext[charstaticint] = stonetext;
         Statics.charactersecondelement[charstaticint] = elementonstoneselect;
+
+        if (stoneclassroll == 1 && Statics.characterclassroll[charstaticint] != 1)               //falls der char vorher nicht guard war
+        {
+            Statics.charmaxhealth[charstaticint] += Statics.charcurrentlvl * Statics.guardbonushpeachlvl;
+        }
+        else if (stoneclassroll != 1 && Statics.characterclassroll[charstaticint] == 1)  //falls der char vorher guard war
+        {
+            Statics.charmaxhealth[charstaticint] -= Statics.charcurrentlvl * Statics.guardbonushpeachlvl;
+        }
 
         foreach (GameObject spell in selectablespells)
         {
@@ -278,6 +271,15 @@ public class Elemenucontroller : MonoBehaviour
         Statics.charactersecondelementcolor[charstaticint] = stonecolor;
         Statics.characterclassrolltext[charstaticint] = stonetext;
         Statics.charactersecondelement[charstaticint] = elementonstoneselect;
+
+        if (stoneclassroll == 1 && Statics.characterclassroll[charstaticint] != 1)               //falls der char vorher nicht guard war
+        {
+            Statics.charmaxhealth[charstaticint] += Statics.charcurrentlvl * Statics.guardbonushpeachlvl;
+        }
+        else if (stoneclassroll != 1 && Statics.characterclassroll[charstaticint] == 1)  //falls der char vorher guard war
+        {
+            Statics.charmaxhealth[charstaticint] -= Statics.charcurrentlvl * Statics.guardbonushpeachlvl;
+        }
 
         foreach (GameObject spell in selectablespells)
         {

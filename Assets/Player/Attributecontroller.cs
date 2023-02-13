@@ -32,17 +32,60 @@ public class Attributecontroller : MonoBehaviour
     [NonSerialized] public bool guardhpbuff;
     [NonSerialized] public float dmgfromallies;
 
-    void Awake()
+    public void classrollupdate()
     {
-        classrollupdate();
-        spielerhp.health = Statics.charcurrenthealth[charnumber];
+        Debug.Log(charnumber);
+        if (isdmgclassroll == true)
+        {
+            if (Statics.characterclassroll[Statics.currentthirdchar] == 0 || Statics.characterclassroll[Statics.currentforthchar] == 0)
+            {
+                stoneclassbonusdmg = Statics.groupstonedmgbonus;
+            }
+            else
+            {
+                stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.5f;
+            }
+            stoneclassbonusheal = 0;
+            stoneclassdmgreduction = 0;
+            Statics.playertookdmgfromamount = 1;
+        }
+        else if (isguardclassroll)
+        {
+            checkforsupportdmgbuff();
+            stoneclassbonusheal = 0;
+            stoneclassdmgreduction = Statics.groupstonedefensebonus;
+            Statics.playertookdmgfromamount = 2;
+        }
+        else if (ishealerclassroll)
+        {
+            checkforsupportdmgbuff();
+            stoneclassbonusheal = Statics.groupstonehealbonus;
+            stoneclassdmgreduction = 0;
+            Statics.playertookdmgfromamount = 1;
+        }
+        else
+        {
+            checkforsupportdmgbuff();
+            stoneclassbonusheal = 0;
+            stoneclassdmgreduction = 0;
+            Statics.playertookdmgfromamount = 1;
+        }
+        updateattributes();
     }
-    private void OnEnable()
+    private void checkforsupportdmgbuff()
     {
-        //updateattributes();              //onenable für die teammates
+        if (Statics.characterclassroll[Statics.currentthirdchar] == 0 || Statics.characterclassroll[Statics.currentforthchar] == 0)
+        {
+            stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.5f;
+        }
+        else
+        {
+            stoneclassbonusdmg = 0;
+        }
     }
     public void updateattributes()
     {
+        spielerhp.health = Statics.charcurrenthealth[charnumber];
         spielerhp.maxhealth = Statics.charmaxhealth[charnumber];
 
         defense = Statics.chardefense[charnumber];
@@ -60,74 +103,6 @@ public class Attributecontroller : MonoBehaviour
         {
             supportcharupdate();
         }
-    }
-    public void classrollupdate()
-    {
-        if (isdmgclassroll == true)
-        {
-            if (Statics.thirdcharstoneclass == 0 || Statics.forthcharstoneclass == 0)
-            {
-                stoneclassbonusdmg = Statics.groupstonedmgbonus;
-            }
-            else
-            {
-                stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.5f;
-            }
-            stoneclassbonusheal = 0;
-            stoneclassdmgreduction = 0;
-            Statics.playertookdmgfromamount = 1;
-        }
-        else if (isguardclassroll)
-        {
-            if (Statics.thirdcharstoneclass == 0 || Statics.forthcharstoneclass == 0)
-            {
-                stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.5f;
-            }
-            else
-            {
-                stoneclassbonusdmg = 0;
-            }
-            stoneclassbonusheal = 0;
-            stoneclassdmgreduction = Statics.groupstonedefensebonus;
-            Statics.playertookdmgfromamount = 2;
-        }
-        else if (ishealerclassroll)
-        {
-            if (Statics.thirdcharstoneclass == 0 || Statics.forthcharstoneclass == 0)
-            {
-                stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.5f;
-            }
-            else
-            {
-                stoneclassbonusdmg = 0;
-            }
-            stoneclassbonusheal = Statics.groupstonehealbonus;
-            stoneclassdmgreduction = 0;
-            Statics.playertookdmgfromamount = 1;
-        }
-        else
-        {
-            if (Statics.thirdcharstoneclass == 0 || Statics.forthcharstoneclass == 0)
-            {
-                stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.5f;
-            }
-            else
-            {
-                stoneclassbonusdmg = 0;
-            }
-            stoneclassbonusheal = 0;
-            stoneclassdmgreduction = 0;
-            Statics.playertookdmgfromamount = 1;
-        }
-        updateattributes();
-    }
-    public void levelup()
-    {
-        if (isguardclassroll == true)
-        {
-            Statics.charmaxhealth[charnumber] += Statics.guardbonushpeachlvl;
-        }
-        spielerhp.UpdatehealthUI();
     }
     private void supportcharupdate()
     {
@@ -162,5 +137,5 @@ public class Attributecontroller : MonoBehaviour
     {
         dmgfromallies = attack + (critchance - 4) + ((critdmg - 148) / Statics.critdmgperskillpoint) + ((Statics.charweaponbuff[charnumber] - 97) / Statics.weaponswitchbuffperskillpoint) + ((charswitchbuff - 97) / Statics.charswitchbuffperskillpoint) + ((basicattributedmgbuff - 146) / Statics.basicbuffdmgperskillpoint);
         dmgfromallies = dmgfromallies * 0.5f;                  //durch 2 teilen weil es sonst zu viel ist
-    }   // durch die minus zahlen ergibt jeder wert bei spielstart 1
+    }                                                          // durch die minus zahlen ergibt jeder wert bei spielstart 1
 }

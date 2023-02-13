@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class SpielerHP : MonoBehaviour
 {
-    public float health;
-    public float maxhealth;
+    [SerializeField] private int charnumber;
+    [NonSerialized] public float health;
+    [NonSerialized] public float maxhealth;
     public Image Healthbar;
     public TextMeshProUGUI healthText;
     public Text playername;
@@ -34,6 +36,7 @@ public class SpielerHP : MonoBehaviour
             Healthbar.fillAmount = hFraction;
         }
         healthText.text = "HP " + health + " / " + maxhealth;
+        Statics.charcurrenthealth[charnumber] = health;
     }
     public void TakeDamage(float damage)
     {
@@ -44,28 +47,16 @@ public class SpielerHP : MonoBehaviour
 
         float dmgtodeal = Mathf.Round(damage - ((((Statics.groupstonedefensebonus + attributecontroller.stoneclassdmgreduction) * 0.01f) + attributecontroller.defense / 40) * damage));
         health -= dmgtodeal;                                                             
-        if (health > maxhealth)
-        {
-            health = maxhealth;
-        }
         UpdatehealthUI();
     }
     public void playerheal(float heal)
     {
         health += Mathf.Round(heal + (Statics.groupstonehealbonus + attributecontroller.stoneclassbonusheal * 0.01f * heal));
-        if (health > maxhealth)
-        {
-            health = maxhealth;
-        }
         UpdatehealthUI();
     }
     public void castheal(float heal)
     {
         health += heal;
-        if (health > maxhealth)
-        {
-            health = maxhealth;
-        }
         UpdatehealthUI();
     }
 }

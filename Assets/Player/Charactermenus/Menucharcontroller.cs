@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
-public class Weaponmenucontroller : MonoBehaviour
+public class Menucharcontroller : MonoBehaviour
 {
     [SerializeField] private int charnumber;
 
@@ -11,9 +12,7 @@ public class Weaponmenucontroller : MonoBehaviour
     [SerializeField] private GameObject weaponslot2;
     [SerializeField] private GameObject weapongrid1;
     [SerializeField] private GameObject weapongrid2;
-    [SerializeField] private Text lvltext;
-    [SerializeField] private Text exp;
-    [SerializeField] private Text hpanzeige;
+    [SerializeField] private TextMeshProUGUI charstats;
     [SerializeField] private Sprite[] images;
 
     private bool weapongridopen;
@@ -29,9 +28,11 @@ public class Weaponmenucontroller : MonoBehaviour
         secondweapon = Statics.secondweapon[charnumber];
         weaponslot1.gameObject.GetComponent<Image>().sprite = images[firstweapon];
         weaponslot2.gameObject.GetComponent<Image>().sprite = images[secondweapon];
-        lvltext.text = "Level " + Statics.charcurrentlvl;
-        exp.text = "EXP " + Statics.charcurrentexp + "/" + Statics.charrequiredexp;
-        hpanzeige.text = "HP " + Statics.charcurrenthealth[charnumber] + "/" + Statics.charmaxhealth[charnumber];
+        charstats.text = string.Empty;
+        charstats.text = "Class: " + Statics.characterclassrolltext[charnumber] + "\n" +
+                         "HP " + Statics.charcurrenthealth[charnumber] + "/" + Statics.charmaxhealth[charnumber] + "\n" +
+                         "Level " + Statics.charcurrentlvl + "\n" +
+                         "EXP " + Statics.charcurrentexp + "/" + Statics.charrequiredexp;
     }
     public void openweapongrid(GameObject grid)
     {

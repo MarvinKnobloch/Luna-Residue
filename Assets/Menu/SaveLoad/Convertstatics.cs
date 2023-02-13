@@ -18,7 +18,6 @@ public class Convertstatics
     public int thirdchar;
     public int forthchar;
 
-    public Color[] characterelementcolor;
     public Color[] charactersecondelementcolor;
     public float[] charbasichealth;
     public float[] charcurrenthealth;
@@ -71,6 +70,7 @@ public class Convertstatics
     public bool[] stoneisactivated;
     public int[] charactersecondelement;
     public string[] characterclassrolltext;
+    public int[] characterclassroll;
     public int maincharstoneclass;
     public int secondcharstoneclass;
     public int thirdcharstoneclass;
@@ -143,19 +143,16 @@ public class Convertstatics
         charcharswitchskillpoints = Statics.charcharswitchskillpoints;
         charbasicskillpoints = Statics.charbasicskillpoints;
 
-        characterelementcolor = Statics.characterelementcolor;
-        charactersecondelementcolor = Statics.charactersecondelementcolor;
+
 
         spellnumbers = Statics.spellnumbers;
         spellcolors = Statics.spellcolors;
 
         stoneisactivated = Statics.stoneisactivated;
+        charactersecondelementcolor = Statics.charactersecondelementcolor;
         charactersecondelement = Statics.charactersecondelement;
         characterclassrolltext = Statics.characterclassrolltext;
-        maincharstoneclass = Statics.maincharstoneclass;
-        secondcharstoneclass = Statics.secondcharstoneclass;
-        thirdcharstoneclass = Statics.thirdcharstoneclass;
-        forthcharstoneclass = Statics.forthcharstoneclass;
+        characterclassroll = Statics.characterclassroll;
         groupstonehealbonus = Statics.groupstonehealbonus;
         groupstonedefensebonus = Statics.groupstonedefensebonus;
         groupstonedmgbonus = Statics.groupstonedmgbonus;
@@ -183,9 +180,6 @@ public class Convertstatics
 
         Statics.firstweapon = firstweapon;
         Statics.secondweapon = secondweapon;
-
-        Statics.characterelementcolor = characterelementcolor;
-        Statics.charactersecondelementcolor = charactersecondelementcolor;
         Statics.charbasichealth = charbasichealth;
         Statics.charcurrenthealth = charcurrenthealth;
         Statics.charmaxhealth = charmaxhealth;
@@ -230,20 +224,12 @@ public class Convertstatics
         Statics.spellcolors = spellcolors;
 
         Statics.stoneisactivated = stoneisactivated;
+        Statics.charactersecondelementcolor = charactersecondelementcolor;
         Statics.charactersecondelement = charactersecondelement;
         Statics.characterclassrolltext = characterclassrolltext;
-        Statics.maincharstoneclass = maincharstoneclass;
-        Statics.secondcharstoneclass = secondcharstoneclass;
-        Statics.thirdcharstoneclass = thirdcharstoneclass;
-        Statics.forthcharstoneclass = forthcharstoneclass;
+        Statics.characterclassroll = characterclassroll;
         Statics.groupstonehealbonus = groupstonehealbonus;
         Statics.groupstonedefensebonus = groupstonedefensebonus;
         Statics.groupstonedmgbonus = groupstonedmgbonus;
-
-        /*atbcontroller.ishealer = false;
-        if (atbcontroller.guardhpbuff == true)
-        {
-            atbcontroller.guardhpbuff = false;
-        }*/
     }
 }

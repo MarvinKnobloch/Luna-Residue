@@ -69,7 +69,7 @@ public class Charswitch : MonoBehaviour
         GlobalCD.startcharswitch();
         ability1.color = Statics.spellcolors[3];
         ability2.color = Statics.spellcolors[4];
-        if(Statics.secondcharstoneclass == 1)
+        if(Statics.characterclassroll[Statics.currentsecondchar] == 1)
         {
             Statics.playertookdmgfromamount = 2;
         }
@@ -107,7 +107,7 @@ public class Charswitch : MonoBehaviour
         GlobalCD.startcharswitch();
         ability1.color = Statics.spellcolors[0];
         ability2.color = Statics.spellcolors[1];
-        if (Statics.maincharstoneclass == 1)
+        if (Statics.characterclassroll[Statics.currentfirstchar] == 1)
         {
             Statics.playertookdmgfromamount = 2;
         }

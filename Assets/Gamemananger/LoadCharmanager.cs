@@ -151,17 +151,18 @@ public class LoadCharmanager : MonoBehaviour
         aimcam.Follow = Overallmainchar.transform;
 
 
-        classrollupdate(Statics.maincharstoneclass, Statics.currentfirstchar);                   // bonus hp von guard wird im elemenu beim auswählen des stones gesetzt
-        classrollupdate(Statics.secondcharstoneclass, Statics.currentsecondchar);
-        classrollupdate(Statics.thirdcharstoneclass, Statics.currentthirdchar);
-        classrollupdate(Statics.forthcharstoneclass, Statics.currentforthchar);
+        classandstatsupdate(Statics.currentfirstchar);                   // bonus hp von guard wird im elemenu beim auswählen des stones gesetzt
+        classandstatsupdate(Statics.currentsecondchar);
+        classandstatsupdate(Statics.currentthirdchar);
+        classandstatsupdate(Statics.currentforthchar);
+        GetComponent<HealthUImanager>().sethealthbars();
+        //bei charswitch passt der guardbuff noch nicht
 
         setweapons?.Invoke();
 
         swordcontrollerupdate?.Invoke();
         fistcontrollerupdate?.Invoke();
 
-        GetComponent<HealthUImanager>().sethealthbars();
         uiactionscontroller.setimagecolor();
 
         foreach (GameObject mates in teammates)
@@ -190,9 +191,9 @@ public class LoadCharmanager : MonoBehaviour
         //Cursor.lockState = CursorLockMode.Locked;
 #endif
     }
-    private void classrollupdate(int charclassroll, int charnumber)
+    private void classandstatsupdate(int charnumber)
     {
-        if (charclassroll == 0)
+        if (Statics.characterclassroll[charnumber] == 0)
         {
             if (allcharacters[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
             {
@@ -202,7 +203,7 @@ public class LoadCharmanager : MonoBehaviour
                 atbcontroller.classrollupdate();
             }
         }
-        else if (charclassroll == 1)
+        else if (Statics.characterclassroll[charnumber] == 1)
         {
             if (allcharacters[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
             {
@@ -212,13 +213,23 @@ public class LoadCharmanager : MonoBehaviour
                 atbcontroller.classrollupdate();
             }
         }
-        else if (charclassroll == 2)
+        else if (Statics.characterclassroll[charnumber] == 2)
         {
             if (allcharacters[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
             {
                 atbcontroller.isdmgclassroll = false;
                 atbcontroller.isguardclassroll = false;
                 atbcontroller.ishealerclassroll = true;
+                atbcontroller.classrollupdate();
+            }
+        }
+        else
+        {
+            if (allcharacters[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
+            {
+                atbcontroller.isdmgclassroll = false;
+                atbcontroller.isguardclassroll = false;
+                atbcontroller.ishealerclassroll = false;
                 atbcontroller.classrollupdate();
             }
         }

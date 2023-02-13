@@ -40,10 +40,6 @@ public class Selectcharcontroller : MonoBehaviour
     }
     public void changefirstchar(int newcharacter)
     {
-        if(Statics.maincharstoneclass == 1)
-        {
-            // guardbuff hp logik
-        }
         firstcharicons[firstchar].SetActive(false);
         firstcharicons[newcharacter].SetActive(true);
         if (secondchar == newcharacter)

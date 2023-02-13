@@ -112,12 +112,10 @@ public class Startmenucontroller : MonoBehaviour
         Statics.timer = false;
 
         Statics.stoneisactivated = new bool[24];
-        Statics.charactersecondelement = new int[] { -1, -1, -1, -1, -1 };       // 8 = hat noch kein element
+        Statics.charactersecondelement = new int[] { -1, -1, -1, -1, -1 };
+        Statics.charactersecondelementcolor = new Color[] { new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255) };
         Statics.characterclassrolltext = new string[5];
-        Statics.maincharstoneclass = -1;
-        Statics.secondcharstoneclass = -1;
-        Statics.thirdcharstoneclass = -1;
-        Statics.forthcharstoneclass = -1;
+        Statics.characterclassroll = new int[] { -1, -1, -1, -1, -1 };
         Statics.groupstonehealbonus = 0;
         Statics.groupstonedefensebonus = 0;
         Statics.groupstonedmgbonus = 0;

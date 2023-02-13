@@ -38,7 +38,7 @@ public class HealthUImanager : MonoBehaviour
     private GameObject expsavechar;
 
     public void sethealthbars()
-    {
+    { 
         mainchar = LoadCharmanager.Overallmainchar;
         secondchar = LoadCharmanager.Overallsecondchar;
 
@@ -47,7 +47,10 @@ public class HealthUImanager : MonoBehaviour
         mainchar.GetComponent<SpielerHP>().Healthbar = mainbar;
         mainchar.GetComponent<SpielerHP>().healthText = maincharhp;
         mainname.text = mainchar.GetComponent<SpielerHP>().playername.text;
-        mainchar.GetComponent<SpielerHP>().UpdatehealthUI();
+
+        float percantage = Statics.charcurrenthealth[Statics.currentfirstchar] / Statics.charmaxhealth[Statics.currentfirstchar];
+        mainbar.fillAmount = percantage;
+        maincharhp.text = "HP " + Statics.charcurrenthealth[Statics.currentfirstchar] + " / " + Statics.charmaxhealth[Statics.currentfirstchar];
 
         secondchar.GetComponent<SpielerHP>().Healthbar = mainbar;
         secondchar.GetComponent<SpielerHP>().healthText = maincharhp;
@@ -59,13 +62,15 @@ public class HealthUImanager : MonoBehaviour
         secondcharhp.text = "HP " + secondcharhealth + " / " + secondcharmaxhealth;
         secondname.text = secondchar.GetComponent<SpielerHP>().playername.text;
 
-        if (LoadCharmanager.Overallthirdchar != null)                                                          //(PlayerPrefs.GetInt("Thirdcharindex") <= 5)
+        if (LoadCharmanager.Overallthirdchar != null)
         {
             thirdchar = LoadCharmanager.Overallthirdchar;
             thirdchar.GetComponent<SpielerHP>().Healthbar = thirdcharbar;
             thirdchar.GetComponent<SpielerHP>().healthText = thirdcharhp;
             thirdcharname.text = thirdchar.GetComponent<SpielerHP>().playername.text;
-            thirdchar.GetComponent<SpielerHP>().UpdatehealthUI();
+            float hppercentage = Statics.charcurrenthealth[Statics.currentthirdchar] / Statics.charmaxhealth[Statics.currentthirdchar];
+            thirdcharbar.fillAmount = hppercentage;
+            thirdcharhp.text = "HP " + Statics.charcurrenthealth[Statics.currentthirdchar] + " / " + Statics.charmaxhealth[Statics.currentthirdchar];
             char3anzeige.SetActive(true);
         }
         else
@@ -73,13 +78,15 @@ public class HealthUImanager : MonoBehaviour
             char3anzeige.SetActive(false);
         }
 
-        if (LoadCharmanager.Overallforthchar != null)                  //(PlayerPrefs.GetInt("Forthcharindex") <= 5)
+        if (LoadCharmanager.Overallforthchar != null)
         {
             forthchar = LoadCharmanager.Overallforthchar;
             forthchar.GetComponent<SpielerHP>().Healthbar = forthcharbar;
             forthchar.GetComponent<SpielerHP>().healthText = forthcharhp;
             forthcharname.text = forthchar.GetComponent<SpielerHP>().playername.text;
-            forthchar.GetComponent<SpielerHP>().UpdatehealthUI();
+            float hppercentage = Statics.charcurrenthealth[Statics.currentforthchar] / Statics.charmaxhealth[Statics.currentforthchar];
+            forthcharbar.fillAmount = hppercentage;
+            forthcharhp.text = "HP " + Statics.charcurrenthealth[Statics.currentforthchar] + " / " + Statics.charmaxhealth[Statics.currentforthchar];
             char4anzeige.SetActive(true);
         }
         else
@@ -113,88 +120,28 @@ public class HealthUImanager : MonoBehaviour
         secondname.text = mainchar.GetComponent<SpielerHP>().playername.text;
 
     }
-    public void seconcharlvlupdate()
+    public void hpupdateafterlvlup(int charnumber, int slot)
     {
-        if (Statics.currentactiveplayer == 0)
+        float hFraction = Statics.charcurrenthealth[charnumber] / Statics.charmaxhealth[charnumber];
+        if (slot == 1)
         {
-            if (secondchar.GetComponent<Attributecontroller>().guardhpbuff == true)
-            {
-                secondchar.GetComponent<SpielerHP>().maxhealth += Statics.guardbonushpeachlvl;
-                Statics.charmaxhealth[Statics.currentsecondchar] = secondchar.GetComponent<SpielerHP>().maxhealth;
-                secondcharhealth = secondchar.GetComponent<SpielerHP>().health;
-                secondcharmaxhealth = secondchar.GetComponent<SpielerHP>().maxhealth;
-                float hFraction = secondcharhealth / secondcharmaxhealth;
-                secondbar.fillAmount = hFraction;
-                secondcharhp.text = "HP " + secondcharhealth + " / " + secondcharmaxhealth;
-            }
+            mainbar.fillAmount = hFraction;
+            maincharhp.text = "HP " + Statics.charcurrenthealth[charnumber] + " / " + Statics.charmaxhealth[charnumber];
         }
-        else if (Statics.currentactiveplayer == 1)
+        else if(slot == 2)
         {
-            if (mainchar.GetComponent<Attributecontroller>().guardhpbuff == true)
-            {
-                mainchar.GetComponent<SpielerHP>().maxhealth += Statics.guardbonushpeachlvl;
-                Statics.charmaxhealth[Statics.currentfirstchar] = mainchar.GetComponent<SpielerHP>().maxhealth;
-                secondcharhealth = mainchar.GetComponent<SpielerHP>().health;
-                secondcharmaxhealth = mainchar.GetComponent<SpielerHP>().maxhealth;
-                float hFraction = secondcharhealth / secondcharmaxhealth;
-                secondbar.fillAmount = hFraction;
-                secondcharhp.text = "HP " + secondcharhealth + " / " + secondcharmaxhealth;
-            }
+            secondbar.fillAmount = hFraction;
+            secondcharhp.text = "HP " + Statics.charcurrenthealth[charnumber] + " / " + Statics.charmaxhealth[charnumber];
+        }
+        else if (slot == 3)
+        {
+            thirdcharbar.fillAmount = hFraction;
+            thirdcharhp.text = "HP " + Statics.charcurrenthealth[charnumber] + " / " + Statics.charmaxhealth[charnumber];
+        }
+        else if (slot == 4)
+        {
+            forthcharbar.fillAmount = hFraction;
+            forthcharhp.text = "HP " + Statics.charcurrenthealth[charnumber] + " / " + Statics.charmaxhealth[charnumber];
         }
     }
 }
-
-    /*public void secondcharhpupdate()
-    {
-        if (Statics.currentactiveplayer == 0)
-        {
-            secondcharhealth = secondchar.GetComponent<SpielerHP>().health;
-            secondcharmaxhealth = secondchar.GetComponent<SpielerHP>().maxhealth;
-            float hFraction = secondcharhealth / secondcharmaxhealth;
-            secondbar.fillAmount = hFraction;
-            secondcharhp.text = "HP " + secondcharhealth + " / " + secondcharmaxhealth;
-        }
-        else if (Statics.currentactiveplayer == 1)
-        {
-            secondcharhealth = mainchar.GetComponent<SpielerHP>().health;
-            secondcharmaxhealth = mainchar.GetComponent<SpielerHP>().maxhealth;
-            float hFraction = secondcharhealth / secondcharmaxhealth;
-            secondbar.fillAmount = hFraction;
-            secondcharhp.text = "HP " + secondcharhealth + " / " + secondcharmaxhealth;
-        }
-    }
-}*/
-
-
-/*expsavechar = mainchar;
-mainchar = secondchar;
-secondchar = expsavechar;
-
-secondcharhealth = secondchar.GetComponent<SpielerHP>().health;
-secondcharmaxhealth = secondchar.GetComponent<SpielerHP>().maxhealth;
-float hFraction = secondcharhealth / secondcharmaxhealth;
-secondbar.fillAmount = hFraction;
-secondcharhp.text = "HP " + secondcharhealth + " / " + secondcharmaxhealth;
-secondname.text = secondchar.GetComponent<SpielerHP>().playername.text;
-
-mainchar.GetComponent<SpielerHP>().Healthbar = mainbar;
-mainchar.GetComponent<SpielerHP>().healthText = maincharhp;
-mainname.text = mainchar.GetComponent<SpielerHP>().playername.text;
-mainchar.GetComponent<SpielerHP>().UpdatehealthUI();*/
-
-
-/*expsavechar = mainchar;
-mainchar = secondchar;
-secondchar = expsavechar;
-
-secondcharhealth = secondchar.GetComponent<SpielerHP>().health;
-secondcharmaxhealth = secondchar.GetComponent<SpielerHP>().maxhealth;
-float hFraction = secondcharhealth / secondcharmaxhealth;
-secondbar.fillAmount = hFraction;
-secondcharhp.text = "HP " + secondcharhealth + " / " + secondcharmaxhealth;
-secondname.text = secondchar.GetComponent<SpielerHP>().playername.text;
-
-mainchar.GetComponent<SpielerHP>().Healthbar = mainbar;
-mainchar.GetComponent<SpielerHP>().healthText = maincharhp;
-mainname.text = mainchar.GetComponent<SpielerHP>().playername.text;
-mainchar.GetComponent<SpielerHP>().UpdatehealthUI();*/

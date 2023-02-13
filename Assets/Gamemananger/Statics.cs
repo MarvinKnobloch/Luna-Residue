@@ -117,12 +117,11 @@ public class Statics
     //stones
     public static bool[] stoneisactivated = new bool[24];
     public static int[] characterbaseelements = { 3, 1, 7, 6, 2 };        //Maria = ice, Erika = Water, Kaja = Earth, Yaku = Dark, Arissa = Nature}
-    public static int[] charactersecondelement = { -1, -1, -1, -1, -1 };       // -1 = hat kein element
+    public static Color[] characterelementcolor = { new Color32(33, 156, 147, 255), new Color32(26, 25, 197, 255), new Color32(75, 46, 17, 255), new Color32(29, 20, 20, 255), new Color32(29, 144, 40, 255) };                      //Farben werden im Elementalmenu gesetzt
+    public static Color[] charactersecondelementcolor = { new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255) };
+    public static int[] charactersecondelement = { -1, -1, -1, -1, -1 };
     public static string[] characterclassrolltext = new string[5];
-    public static int maincharstoneclass = -1;
-    public static int secondcharstoneclass = -1;
-    public static int thirdcharstoneclass = -1;
-    public static int forthcharstoneclass = -1;
+    public static int[] characterclassroll = { -1, -1, -1, -1, -1 };
     public static float groupstonehealbonus = 0;
     public static float groupstonedefensebonus = 0;
     public static float groupstonedmgbonus = 0;
@@ -135,8 +134,6 @@ public class Statics
     public static float charcurrentexp = 0;
     public static float charrequiredexp = 52;
     public static string[] characternames = { "Maria", "Erika", "Kaja", "Yaku", "Arissa" };
-    public static Color[] characterelementcolor = { new Color32(33, 156, 147, 255), new Color32(26, 25, 197, 255), new Color32(75, 46, 17, 255), new Color32(29, 20, 20, 255), new Color32(29, 144, 40, 255) };                      //Farben werden im Elementalmenu gesetzt
-    public static Color[] charactersecondelementcolor = new Color[5];
     public static float[] charbasichealth = { 100, 93, 97, 91, 95 };
     public static float[] charcurrenthealth = { 100, 93, 97, 91, 95 };
     public static float[] charmaxhealth = { 100, 93, 97, 91, 95 };
