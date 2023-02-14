@@ -51,14 +51,9 @@ public class SwordController : MonoBehaviour
     }
     private void sworddmgupdate()
     {
-        overallbasicdmg = chainbasicdmg + attributecontroller.attack + attributecontroller.swordattack;
-        overallbasicdmg += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * overallbasicdmg);
-
-        overallenddmg = chainenddmg + attributecontroller.attack + attributecontroller.swordattack;
-        overallenddmg += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * overallenddmg);
-
-        basicweaponswitchdmg = weaponswitchdmg + attributecontroller.attack + attributecontroller.swordattack;
-        basicweaponswitchdmg += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * basicweaponswitchdmg);
+        overallbasicdmg = Damagecalculation.calculateplayerdmgdone(chainbasicdmg, attributecontroller.attack, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
+        overallenddmg = Damagecalculation.calculateplayerdmgdone(chainenddmg, attributecontroller.attack, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
+        basicweaponswitchdmg = Damagecalculation.calculateplayerdmgdone(weaponswitchdmg, attributecontroller.attack, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
 
         overallcritchance = Statics.playerbasiccritchance + attributecontroller.critchance;
     }

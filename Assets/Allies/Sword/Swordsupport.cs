@@ -27,11 +27,8 @@ public class Swordsupport : MonoBehaviour
     }
     private void sworddmgupdate()
     {
-        basicdmgtodeal = Mathf.Round(basicsworddmg + attributecontroller.dmgfromallies + attributecontroller.swordattack);
-        basicdmgtodeal += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * basicdmgtodeal);
-
-        enddmgtodeal = Mathf.Round(endsworddmg + attributecontroller.dmgfromallies + attributecontroller.swordattack);
-        enddmgtodeal += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * enddmgtodeal);
+        basicdmgtodeal = Damagecalculation.calculateplayerdmgdone(basicsworddmg, attributecontroller.dmgfromallies, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
+        enddmgtodeal = Damagecalculation.calculateplayerdmgdone(endsworddmg, attributecontroller.dmgfromallies, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
     }
 
     private void basicswordswing()

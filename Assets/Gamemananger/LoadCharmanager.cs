@@ -102,12 +102,11 @@ public class LoadCharmanager : MonoBehaviour
         Overallsecondchar = allcharacters[Statics.currentsecondchar];
         Overallmainchar.transform.position = savemainposi;
         Overallmainchar.transform.rotation = savemainrota;
-        Statics.currentactiveplayer = 0;
+        Statics.currentactiveplayer = 0; 
         Overallmainchar.SetActive(true);
         Overallsecondchar.SetActive(true);
         Overallmainchar.GetComponent<Playerhp>().playerhpuislot = 0;
         Overallsecondchar.GetComponent<Playerhp>().playerhpuislot = 1;
-        Statics.currentactiveplayer = Statics.currentfirstchar;                            //PlayerPrefs.GetInt("Maincharindex");
         if (Statics.currentthirdchar != -1)
         {
             Overallthirdchar = teammates[Statics.currentthirdchar];     //3 ist aktiv
@@ -153,10 +152,10 @@ public class LoadCharmanager : MonoBehaviour
         aimcam.Follow = Overallmainchar.transform;
 
 
-        classandstatsupdate(Statics.currentfirstchar);                   // bonus hp von guard wird im elemenu beim auswählen des stones gesetzt
-        classandstatsupdate(Statics.currentsecondchar);
-        classandstatsupdate(Statics.currentthirdchar);
-        classandstatsupdate(Statics.currentforthchar);
+        classandstatsupdate(Statics.currentfirstchar, allcharacters);                   // bonus hp von guard wird im elemenu beim auswählen des stones gesetzt
+        classandstatsupdate(Statics.currentsecondchar, allcharacters);
+        classandstatsupdate(Statics.currentthirdchar, teammates);
+        classandstatsupdate(Statics.currentforthchar, teammates);
         GetComponent<HealthUImanager>().sethealthbars();
 
         setweapons?.Invoke();
@@ -192,11 +191,11 @@ public class LoadCharmanager : MonoBehaviour
         //Cursor.lockState = CursorLockMode.Locked;
 #endif
     }
-    private void classandstatsupdate(int charnumber)
+    private void classandstatsupdate(int charnumber, GameObject[] playerorsupport)
     {
         if (Statics.characterclassroll[charnumber] == 0)
         {
-            if (allcharacters[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
+            if (playerorsupport[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
             {
                 atbcontroller.isdmgclassroll = true;
                 atbcontroller.isguardclassroll = false;
@@ -206,7 +205,7 @@ public class LoadCharmanager : MonoBehaviour
         }
         else if (Statics.characterclassroll[charnumber] == 1)
         {
-            if (allcharacters[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
+            if (playerorsupport[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
             {
                 atbcontroller.isdmgclassroll = false;
                 atbcontroller.isguardclassroll = true;
@@ -216,7 +215,7 @@ public class LoadCharmanager : MonoBehaviour
         }
         else if (Statics.characterclassroll[charnumber] == 2)
         {
-            if (allcharacters[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
+            if (playerorsupport[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
             {
                 atbcontroller.isdmgclassroll = false;
                 atbcontroller.isguardclassroll = false;
@@ -226,7 +225,7 @@ public class LoadCharmanager : MonoBehaviour
         }
         else
         {
-            if (allcharacters[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
+            if (playerorsupport[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
             {
                 atbcontroller.isdmgclassroll = false;
                 atbcontroller.isguardclassroll = false;

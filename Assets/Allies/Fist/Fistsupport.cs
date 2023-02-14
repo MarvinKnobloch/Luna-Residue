@@ -29,11 +29,8 @@ public class Fistsupport : MonoBehaviour
     }
     private void fistdmgupdate()
     {
-        basicdmgtodeal = Mathf.Round(basicfistdmg + attributecontroller.dmgfromallies + attributecontroller.fistattack);
-        basicdmgtodeal += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * basicdmgtodeal);
-
-        enddmgtodeal = Mathf.Round(endfistdmg + attributecontroller.dmgfromallies + attributecontroller.fistattack);
-        enddmgtodeal += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * enddmgtodeal);
+        basicdmgtodeal = Damagecalculation.calculateplayerdmgdone(basicfistdmg, attributecontroller.dmgfromallies, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
+        enddmgtodeal = Damagecalculation.calculateplayerdmgdone(endfistdmg, attributecontroller.dmgfromallies, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
     }
 
     private void firstfistattack()

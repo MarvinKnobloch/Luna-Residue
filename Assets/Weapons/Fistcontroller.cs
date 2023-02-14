@@ -54,17 +54,10 @@ public class Fistcontroller : MonoBehaviour
     }
     public void fistdmgupdate()
     {
-        overallbasicdmg = chainbasicdmg + attributecontroller.attack + attributecontroller.fistattack;
-        overallbasicdmg += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * overallbasicdmg);               //wenn ich den bonus noch durch 2 teile wär die rechung so wie wenn ich den bonus zu den switchbonus addiere
-
-        overallenddmg = chainenddmg + attributecontroller.attack + attributecontroller.fistattack;
-        overallenddmg += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * overallenddmg);
-
-        overallair3middmg = air3middmg + attributecontroller.attack + attributecontroller.fistattack;
-        overallair3middmg += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * overallair3middmg);
-
-        basicweaponswitchdmg = weaponswitchdmg + attributecontroller.attack + attributecontroller.fistattack;
-        basicweaponswitchdmg += Mathf.Round(Statics.groupstonedmgbonus + attributecontroller.stoneclassbonusdmg * 0.01f * basicweaponswitchdmg);
+        overallbasicdmg = Damagecalculation.calculateplayerdmgdone(chainbasicdmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
+        overallenddmg = Damagecalculation.calculateplayerdmgdone(chainenddmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
+        overallair3middmg = Damagecalculation.calculateplayerdmgdone(air3middmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
+        basicweaponswitchdmg = Damagecalculation.calculateplayerdmgdone(weaponswitchdmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
 
         overallcritchance = Statics.playerbasiccritchance + attributecontroller.critchance;
     }

@@ -8,8 +8,8 @@ using System;
 public class Playerhp : MonoBehaviour
 {
     [SerializeField] private int charnumber;
-    [NonSerialized] public float health;
-    [NonSerialized] public float maxhealth;
+    public float health;
+    public float maxhealth;
     [NonSerialized] public int playerhpuislot;
     [SerializeField] HealthUImanager healthUImanager;
     private Attributecontroller attributecontroller;
@@ -25,7 +25,7 @@ public class Playerhp : MonoBehaviour
             return;
         }
 
-        float dmgtodeal = Mathf.Round(damage - ((((Statics.groupstonedefensebonus + attributecontroller.stoneclassdmgreduction) * 0.01f) + attributecontroller.defense / 40) * damage));
+        float dmgtodeal = Mathf.Round(damage - ((Statics.groupstonedefensebonus + attributecontroller.stoneclassdmgreduction + (attributecontroller.defense / 40)) * 0.01f * damage));
         health -= dmgtodeal;
         handlehealth();
     }
@@ -41,6 +41,7 @@ public class Playerhp : MonoBehaviour
     }
     private void handlehealth()
     {
+
         if (health > maxhealth)
         {
             health = maxhealth;
