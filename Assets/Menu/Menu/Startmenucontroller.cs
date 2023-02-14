@@ -35,6 +35,7 @@ public class Startmenucontroller : MonoBehaviour
         {
             button.GetComponent<Image>().color = notselectedcolor;
         }
+        Mouseactivate.enablemouse();
     }
     private void loadsaveslots()
     {
@@ -52,17 +53,6 @@ public class Startmenucontroller : MonoBehaviour
             {
                 Debug.Log("Data Slot" + i + " doesn't exist");
             }
-            /*try
-            {
-                string loadpath = "/Statics" + i + ".json";
-                statics = loadsaveinterface.loaddata<Statics>(loadpath);
-                Debug.Log("data has been loaded");
-                saveslotvalues(i);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"error Could not load data {e.Message} {e.StackTrace}");
-            }*/
         }
     }
     private void loadgamesettings()
@@ -162,43 +152,3 @@ public class Startmenucontroller : MonoBehaviour
 #endif
     }
 }
-
-
-/*private void Update()
-{
-    if (steuerung.Startmenu.Up.WasPerformedThisFrame())
-    {
-        Debug.Log("hallo");
-        if(currentbutton == 0)
-        {
-            buttons[currentbutton].GetComponent<Image>().color = notselectedcolor;
-            currentbutton = 3;
-            EventSystem.current.SetSelectedGameObject(buttons[currentbutton]);
-            buttons[currentbutton].GetComponent<Image>().color = selectedcolor;
-        }
-        else
-        {
-            buttons[currentbutton].GetComponent<Image>().color = notselectedcolor;
-            currentbutton--;
-            EventSystem.current.SetSelectedGameObject(buttons[currentbutton]);
-            buttons[currentbutton].GetComponent<Image>().color = selectedcolor;
-        }
-    }
-    if (steuerung.Startmenu.Down.WasPerformedThisFrame())
-    {
-        if(currentbutton == 3)
-        {
-            buttons[currentbutton].GetComponent<Image>().color = notselectedcolor;
-            currentbutton = 0;
-            EventSystem.current.SetSelectedGameObject(buttons[currentbutton]);
-            buttons[currentbutton].GetComponent<Image>().color = selectedcolor;
-        }
-        else
-        {
-            buttons[currentbutton].GetComponent<Image>().color = notselectedcolor;
-            currentbutton++;
-            EventSystem.current.SetSelectedGameObject(buttons[currentbutton]);
-            buttons[currentbutton].GetComponent<Image>().color = selectedcolor;
-        }
-    }
-}*/

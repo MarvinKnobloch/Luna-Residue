@@ -73,14 +73,31 @@ public class Attributecontroller : MonoBehaviour
     }
     private void checkforsupportdmgbuff()
     {
-        if (Statics.characterclassroll[Statics.currentthirdchar] == 0 || Statics.characterclassroll[Statics.currentforthchar] == 0)
+        if(Statics.currentthirdchar != -1)
         {
-            stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.5f;
+            if(Statics.characterclassroll[Statics.currentthirdchar] == 0)
+            {
+                stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.5f;
+                return;
+            }
+        }
+        if (Statics.currentforthchar != -1)
+        {
+            if (Statics.characterclassroll[Statics.currentforthchar] == 0)
+            {
+                stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.5f;
+                return;
+            }
+            else
+            {
+                stoneclassbonusdmg = 0;
+            }
         }
         else
         {
             stoneclassbonusdmg = 0;
         }
+        
     }
     public void updateattributes()
     {

@@ -57,7 +57,6 @@ public class LoadCharmanager : MonoBehaviour
             if (gameispaused == false)
             {
                 disableattackbuttons = true;
-                Physics.IgnoreLayerCollision(0, 6);               //collision wird deaktiviert und nach einem frame wird das menü aufgerufen damit die area collider getriggert werden
                 savemainposi = Overallmainchar.transform.position;
                 savemainrota = Overallmainchar.transform.rotation;
                 savecamvalueX = Cam1.m_XAxis.Value;
@@ -66,12 +65,11 @@ public class LoadCharmanager : MonoBehaviour
                     mates.gameObject.SetActive(false);
                 }
                 gameispaused = true;
-                StartCoroutine(activatemenu());
-
-#if !UNITY_EDITOR
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-#endif
+                Time.timeScale = 0f;
+                Cam1.gameObject.SetActive(false);
+                menu.SetActive(true);
+                menuoverview.SetActive(true);
+                Mouseactivate.enablemouse();
             }
             else
             {
@@ -82,28 +80,28 @@ public class LoadCharmanager : MonoBehaviour
             }
         }    
     }
-    IEnumerator activatemenu()
+    public void loadonfastravel()
+    {
+        StartCoroutine("loadgame");
+    }
+    IEnumerator loadgame()
     {
         yield return null;
-        Time.timeScale = 0f;
-        foreach (GameObject chars in allcharacters)
-        {
-            chars.SetActive(false);
-        }
-        Cam1.gameObject.SetActive(false);
-        menu.SetActive(true);
-        menuoverview.SetActive(true);
+        maingamevalues();
     }
 
     public void maingamevalues()
     {
-        Physics.IgnoreLayerCollision(0, 6, false);               //collision wird deaktiviert und nach einem frame wird das menü aufgerufen damit die area collider getriggert werden
+        foreach (GameObject chars in allcharacters)
+        {
+            chars.SetActive(false);
+        }
         Overallmainchar = allcharacters[Statics.currentfirstchar];
         Overallsecondchar = allcharacters[Statics.currentsecondchar];
-        Overallmainchar.transform.position = savemainposi;
-        Overallmainchar.transform.rotation = savemainrota;
         Statics.currentactiveplayer = 0; 
         Overallmainchar.SetActive(true);
+        Overallmainchar.transform.position = savemainposi;
+        Overallmainchar.transform.rotation = savemainrota;
         Overallsecondchar.SetActive(true);
         Overallmainchar.GetComponent<Playerhp>().playerhpuislot = 0;
         Overallsecondchar.GetComponent<Playerhp>().playerhpuislot = 1;
@@ -185,52 +183,51 @@ public class LoadCharmanager : MonoBehaviour
         Time.timeScale = Statics.normalgamespeed;
         Time.fixedDeltaTime = Statics.normaltimedelta;
         Cam1.gameObject.SetActive(true);
-
- #if !UNITY_EDITOR
-        //Cursor.visible = false;
-        //Cursor.lockState = CursorLockMode.Locked;
-#endif
+        Mouseactivate.disablemouse();
     }
     private void classandstatsupdate(int charnumber, GameObject[] playerorsupport)
     {
-        if (Statics.characterclassroll[charnumber] == 0)
+        if(charnumber != -1)
         {
-            if (playerorsupport[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
+            if (Statics.characterclassroll[charnumber] == 0)
             {
-                atbcontroller.isdmgclassroll = true;
-                atbcontroller.isguardclassroll = false;
-                atbcontroller.ishealerclassroll = false;
-                atbcontroller.classrollupdate();
+                if (playerorsupport[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
+                {
+                    atbcontroller.isdmgclassroll = true;
+                    atbcontroller.isguardclassroll = false;
+                    atbcontroller.ishealerclassroll = false;
+                    atbcontroller.classrollupdate();
+                }
             }
-        }
-        else if (Statics.characterclassroll[charnumber] == 1)
-        {
-            if (playerorsupport[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
+            else if (Statics.characterclassroll[charnumber] == 1)
             {
-                atbcontroller.isdmgclassroll = false;
-                atbcontroller.isguardclassroll = true;
-                atbcontroller.ishealerclassroll = false;
-                atbcontroller.classrollupdate();
+                if (playerorsupport[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
+                {
+                    atbcontroller.isdmgclassroll = false;
+                    atbcontroller.isguardclassroll = true;
+                    atbcontroller.ishealerclassroll = false;
+                    atbcontroller.classrollupdate();
+                }
             }
-        }
-        else if (Statics.characterclassroll[charnumber] == 2)
-        {
-            if (playerorsupport[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
+            else if (Statics.characterclassroll[charnumber] == 2)
             {
-                atbcontroller.isdmgclassroll = false;
-                atbcontroller.isguardclassroll = false;
-                atbcontroller.ishealerclassroll = true;
-                atbcontroller.classrollupdate();
+                if (playerorsupport[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
+                {
+                    atbcontroller.isdmgclassroll = false;
+                    atbcontroller.isguardclassroll = false;
+                    atbcontroller.ishealerclassroll = true;
+                    atbcontroller.classrollupdate();
+                }
             }
-        }
-        else
-        {
-            if (playerorsupport[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
+            else
             {
-                atbcontroller.isdmgclassroll = false;
-                atbcontroller.isguardclassroll = false;
-                atbcontroller.ishealerclassroll = false;
-                atbcontroller.classrollupdate();
+                if (playerorsupport[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
+                {
+                    atbcontroller.isdmgclassroll = false;
+                    atbcontroller.isguardclassroll = false;
+                    atbcontroller.ishealerclassroll = false;
+                    atbcontroller.classrollupdate();
+                }
             }
         }
     }

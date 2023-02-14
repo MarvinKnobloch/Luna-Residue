@@ -55,6 +55,7 @@ public class Doozycontroller : MonoBehaviour
     }
     private void turnonsecondgrid()
     {
+        Mouseactivate.enablemouse();
         LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtostun();
         Statics.enemyspezialtimescale = true;
         Time.timeScale = 0.5f;
@@ -71,18 +72,10 @@ public class Doozycontroller : MonoBehaviour
     }
     private void dealdmg()
     {
-        Statics.otheraction = false;
-        Statics.dash = false;
-        Statics.enemyspezialtimescale = false;
-        Time.timeScale = Statics.normalgamespeed;
-        Time.fixedDeltaTime = Statics.normaltimedelta;
-        maincam.m_YAxis.m_MaxSpeed = 0.008f;
-        maincam.m_XAxis.m_MaxSpeed = 0.6f;
         LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
         dmgcount = 5 - memoryclicknumber;
         LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(dmgcount * basedmg);
-        secondgrid.SetActive(false);
-        gameObject.SetActive(false);
+        turnoff();
     }
     public void success()
     {
@@ -102,5 +95,6 @@ public class Doozycontroller : MonoBehaviour
         CancelInvoke();
         secondgrid.SetActive(false);
         gameObject.SetActive(false);
+        Mouseactivate.disablemouse();
     }
 }

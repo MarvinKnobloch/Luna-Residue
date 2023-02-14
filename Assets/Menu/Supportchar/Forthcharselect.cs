@@ -13,7 +13,7 @@ public class Forthcharselect : MonoBehaviour
 
     public int selectetdCharacter;
 
-    private void Start()
+    private void OnEnable()
     {
         if (Statics.currentforthchar != -1)
         {
@@ -23,9 +23,6 @@ public class Forthcharselect : MonoBehaviour
         {
             forthchartext.text = "empty";
         }
-    }
-    private void OnEnable()
-    {
         charselection.SetActive(false);
         selectetdCharacter = Statics.currentforthchar;
     }

@@ -27,8 +27,9 @@ public class Commitfasttravel : MonoBehaviour
     }
     public void fasttravel()
     {
-        LoadCharmanager.disableattackbuttons = false;
-        foreach(Transform enemys in enemyhealthbars.transform)
+        Time.timeScale = Statics.normalgamespeed;
+        Time.fixedDeltaTime = Statics.normaltimedelta;
+        foreach (Transform enemys in enemyhealthbars.transform)
         {
             enemys.GetComponent<Enemyhealthbar>().removehealthbar();
         }

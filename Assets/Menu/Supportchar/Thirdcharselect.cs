@@ -13,7 +13,7 @@ public class Thirdcharselect : MonoBehaviour
 
     public int selectetdCharacter;
 
-    private void Start()
+    private void OnEnable()
     {
         if (Statics.currentthirdchar != -1)
         {
@@ -23,9 +23,6 @@ public class Thirdcharselect : MonoBehaviour
         {
             thirdchartext.text = "empty";
         }
-    }
-    private void OnEnable()
-    {
         charselection.SetActive(false);
         selectetdCharacter = Statics.currentthirdchar;
     }

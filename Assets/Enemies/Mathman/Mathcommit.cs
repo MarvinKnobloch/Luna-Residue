@@ -30,6 +30,7 @@ public class Mathcommit : MonoBehaviour
         changetime = false;
         timer = answertime;
         StartCoroutine("mathtimer");
+        Mouseactivate.enablemouse();
     }
     private void Update()
     {
@@ -92,6 +93,7 @@ public class Mathcommit : MonoBehaviour
         solutionUI.color = Color.white;
         solution.text = "";
         mathmancontroller.SetActive(false);
+        Mouseactivate.disablemouse();
     }
     IEnumerator mathtimer()
     {
