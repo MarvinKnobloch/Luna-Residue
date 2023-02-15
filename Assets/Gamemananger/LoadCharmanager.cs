@@ -82,9 +82,18 @@ public class LoadCharmanager : MonoBehaviour
     }
     public void loadonfastravel()
     {
-        StartCoroutine("loadgame");
+        Time.timeScale = Statics.normalgamespeed;                             // Time scale muss vorher wieder auf normalspeed gesetzt werden sonst wird onexit nicht getriggert
+        Time.fixedDeltaTime = Statics.normaltimedelta;
+        StartCoroutine("portchar");
     }
-    IEnumerator loadgame()
+    IEnumerator portchar()
+    {
+        yield return null;
+        Overallmainchar.transform.position = savemainposi;                   // ein frame dealy für timescale
+        Overallmainchar.transform.rotation = savemainrota;
+        StartCoroutine("loadgamevalues");                                    //ein frame dealy sonst wird nicht getriggert 
+    }
+    IEnumerator loadgamevalues()                                            
     {
         yield return null;
         maingamevalues();
