@@ -23,9 +23,5 @@ public class Firstarea : MonoBehaviour
             var json = File.ReadAllText(filePath);
             JsonUtility.FromJsonOverwrite(json, monobehaviour);
         }
-        else
-        {
-            Debug.Log("doesnt exist");
-        }
     }
 }

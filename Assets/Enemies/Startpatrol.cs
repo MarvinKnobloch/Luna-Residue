@@ -10,7 +10,7 @@ public class Startpatrol : MonoBehaviour
         {
             if(transform.GetChild(0).gameObject.activeSelf == true)
             {
-                GetComponentInChildren<Enemymovement>().patrolstart();
+                GetComponentInChildren<Enemymovement>().triggerenemy();
             }
         }
     }

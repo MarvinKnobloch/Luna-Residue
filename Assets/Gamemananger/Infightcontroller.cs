@@ -29,12 +29,12 @@ public class Infightcontroller : MonoBehaviour
     private void OnEnable()
     {
         EnemyHP.infightlistupdate += checkifinfight;
-        Enemymovement.infightlistupdate += checkifinfight;
+        Enemyreset.infightlistupdate += checkifinfight;
     }
     private void OnDisable()
     {
         EnemyHP.infightlistupdate -= checkifinfight;
-        Enemymovement.infightlistupdate -= checkifinfight;
+        Enemyreset.infightlistupdate -= checkifinfight;
     }
     public static void checkifinfight()
     {

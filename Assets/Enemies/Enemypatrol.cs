@@ -1,0 +1,80 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class Enemypatrol
+{
+    public Enemymovement esm;
+
+    const string idlestate = "Idle";
+    const string patrolstate = "Patrol";
+
+    public void triggerenemy()        //ontriggerenter
+    {
+        esm.Meshagent.speed = esm.patrolspeed;
+        esm.patroltimer = 0f;
+        esm.ChangeAnimationState(idlestate);
+        esm.state = Enemymovement.State.waitfornextpatrolpoint;
+    }
+    public void waitfornextpatrolpoint()
+    {
+        esm.patroltimer += Time.deltaTime;
+        esm.checkforplayerinrange();
+        if (esm.patroltimer > esm.patrolwaittimer)
+        {
+            esm.patroltimer = 0f;
+            esm.patrolposi = esm.spawnpostion + Random.insideUnitSphere * 10;
+            esm.patrolposi.y = esm.transform.position.y;
+            NavMeshHit hit;
+            bool blocked;
+            blocked = NavMesh.Raycast(esm.transform.position, esm.patrolposi, out hit, NavMesh.AllAreas);
+            if (blocked == true)
+            {
+                esm.patrolposi = hit.position;
+                esm.Meshagent.SetDestination(esm.patrolposi);
+                esm.ChangeAnimationState(patrolstate);
+                esm.state = Enemymovement.State.patrol;
+            }
+            else
+            {
+                esm.Meshagent.SetDestination(esm.patrolposi);
+                esm.ChangeAnimationState(patrolstate);
+                esm.state = Enemymovement.State.patrol;
+            }
+        }
+    }
+    public void patrol()
+    {
+        esm.checkforplayerinrange();
+        if (Vector3.Distance(esm.transform.position, esm.patrolposi) <= 2)
+        {
+            esm.patroltimer = 0f;
+            esm.ChangeAnimationState(idlestate);
+            esm.state = Enemymovement.State.waitfornextpatrolpoint;
+        }
+        else
+        {
+            esm.patrolposi.y = esm.transform.position.y;
+            esm.Meshagent.SetDestination(esm.patrolposi);
+        }
+    }
+    public void patrolend()
+    {
+        esm.ChangeAnimationState(idlestate);
+        esm.state = Enemymovement.State.empty;
+    }
+    public void checkforplayerinrange()
+    {
+        esm.checkforplayertimer += Time.deltaTime;
+        if (esm.checkforplayertimer > 0.5f)
+        {
+            esm.checkforplayertimer = 0;
+            if (Vector3.Distance(esm.transform.position, LoadCharmanager.Overallmainchar.transform.position) < esm.aggrorangecheck)
+            {
+                esm.Meshagent.speed = esm.normalnavspeed;
+                esm.state = Enemymovement.State.gettomeleerange;
+            }
+        }
+    }
+}
