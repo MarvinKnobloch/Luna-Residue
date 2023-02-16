@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class Enemyattack
 {
     public Enemymovement esm;
+    private float sideposition;
 
     const string idlestate = "Idle";
     const string runstate = "Run";
@@ -16,41 +17,14 @@ public class Enemyattack
         esm.normalattacktimer += Time.deltaTime;
         if (esm.normalattacktimer > esm.normalattackcd)
         {
-            if (esm.currenttarget.gameObject != LoadCharmanager.Overallmainchar.gameObject)
+            if (Vector3.Distance(esm.transform.position, esm.currenttarget.transform.position + esm.transform.forward * -2) > esm.attackrange)
             {
-                if (esm.currenttarget.gameObject.GetComponent<Supportmovement>().currenttarget != esm.gameObject)
-                {
-                    if (Vector3.Distance(esm.transform.position, esm.currenttarget.transform.position + esm.currenttarget.transform.forward * -2) > esm.attackrange) //new Vector3(esm.currenttarget.transform.position.x, esm.transform.position.y, esm.currenttarget.transform.position.z)
-                    {
-                        esm.ChangeAnimationState(runstate);
-                        esm.Meshagent.SetDestination(esm.currenttarget.transform.position + esm.currenttarget.transform.forward * -2);
-                    }
-                    else attack();
-                }
-                else
-                {
-                    if (Vector3.Distance(esm.transform.position, esm.currenttarget.transform.position) > esm.attackrange)
-                    {
-                        esm.ChangeAnimationState(runstate);
-                        esm.Meshagent.SetDestination(esm.currenttarget.transform.position);
-                    }
-                    else attack();
-                } 
+                esm.ChangeAnimationState(runstate);
+                esm.Meshagent.SetDestination(esm.currenttarget.transform.position + esm.transform.forward * -2);
             }
-            else
-            {
-                if (Vector3.Distance(esm.transform.position, esm.currenttarget.transform.position) > esm.attackrange)
-                {
-                    esm.ChangeAnimationState(runstate);
-                    esm.Meshagent.SetDestination(esm.currenttarget.transform.position);
-                }
-                else attack();
-            }
+            else attack();
         }
-        else
-        {
-            esm.FaceTraget();
-        }
+        esm.FaceTraget();
         esm.checkforspezialattack();
         esm.checkforreset();
     }
@@ -88,6 +62,7 @@ public class Enemyattack
         else
         {
             esm.ChangeAnimationState(idlestate);
+            sideposition = Random.Range(-2f, 2f);
             esm.state = Enemymovement.State.waitforattacks;
         }
     }
@@ -105,14 +80,36 @@ public class Enemyattack
         esm.followplayerafterattack += Time.deltaTime;
         if (esm.followplayerafterattack > 0.3f)
         {
-            if (Vector3.Distance(esm.transform.position, new Vector3(esm.currenttarget.transform.position.x, esm.transform.position.y, esm.currenttarget.transform.position.z)) > esm.attackrange)
+            if (esm.currenttarget.gameObject != LoadCharmanager.Overallmainchar.gameObject)
             {
-                esm.ChangeAnimationState(runstate);
-                esm.Meshagent.SetDestination(esm.currenttarget.transform.position);
+                if (esm.currenttarget.gameObject.GetComponent<Supportmovement>().currenttarget != esm.gameObject)
+                {
+                    Vector3 newposi = esm.currenttarget.transform.position + esm.currenttarget.transform.forward * -2 + esm.currenttarget.transform.right * sideposition;
+                    if (Vector3.Distance(esm.transform.position, newposi) > esm.attackrange)
+                    {
+                        esm.ChangeAnimationState(runstate);
+                        esm.Meshagent.SetDestination(newposi);
+                    }
+                    else esm.ChangeAnimationState(idlestate);
+                }
+                else
+                {
+                    if (Vector3.Distance(esm.transform.position, esm.currenttarget.transform.position + esm.transform.forward * -2) > esm.attackrange)
+                    {
+                        esm.ChangeAnimationState(runstate);
+                        esm.Meshagent.SetDestination(esm.currenttarget.transform.position + esm.transform.forward * -2);
+                    }
+                    else esm.ChangeAnimationState(idlestate);
+                }
             }
             else
             {
-                esm.ChangeAnimationState(idlestate);
+                if (Vector3.Distance(esm.transform.position, esm.currenttarget.transform.position + esm.transform.forward * -2) > esm.attackrange)
+                {
+                    esm.ChangeAnimationState(runstate);
+                    esm.Meshagent.SetDestination(esm.currenttarget.transform.position + esm.transform.forward * -2);
+                }
+                else esm.ChangeAnimationState(idlestate);
             }
             esm.followplayerafterattack = 0;
         }
@@ -145,3 +142,34 @@ public class Enemyattack
         }
     }
 }
+
+/*if (esm.currenttarget.gameObject != LoadCharmanager.Overallmainchar.gameObject)
+{
+    if (esm.currenttarget.gameObject.GetComponent<Supportmovement>().currenttarget != esm.gameObject)
+    {
+        if (Vector3.Distance(esm.transform.position, esm.currenttarget.transform.position + esm.currenttarget.transform.forward * -1) > esm.attackrange) //new Vector3(esm.currenttarget.transform.position.x, esm.transform.position.y, esm.currenttarget.transform.position.z)
+        {
+            esm.ChangeAnimationState(runstate);
+            esm.Meshagent.SetDestination(esm.currenttarget.transform.position + esm.currenttarget.transform.forward * -1);
+        }
+        else attack();
+    }
+    else
+    {
+        if (Vector3.Distance(esm.transform.position, esm.currenttarget.transform.position) > esm.attackrange)
+        {
+            esm.ChangeAnimationState(runstate);
+            esm.Meshagent.SetDestination(esm.currenttarget.transform.position);
+        }
+        else attack();
+    }
+}
+else
+{
+    if (Vector3.Distance(esm.transform.position, esm.currenttarget.transform.position) > esm.attackrange)
+    {
+        esm.ChangeAnimationState(runstate);
+        esm.Meshagent.SetDestination(esm.currenttarget.transform.position);
+    }
+    else attack();
+}*/

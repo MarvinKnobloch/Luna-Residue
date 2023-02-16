@@ -17,7 +17,7 @@ public class Enemymovement : MonoBehaviour
     [NonSerialized] public float enemyresetrange = 20;
     [NonSerialized] public float checkforplayertimer;
     [NonSerialized] public float aggrorangecheck = 20;
-    [NonSerialized] public float attackrange = 3;
+    [NonSerialized] public float attackrange = 3f;
     [NonSerialized] public float followplayerafterattack;
     [NonSerialized] public float chancetochangeposi = 33;
     [NonSerialized] public float checkforresettimer;

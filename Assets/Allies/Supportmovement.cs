@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 public class Supportmovement : MonoBehaviour
 {
     public NavMeshAgent Meshagent;
     private Animator animator;
-    private LayerMask hitbox;
+    [NonSerialized] public LayerMask hitbox;
 
     [SerializeField]
     public GameObject currenttarget;
-    private CapsuleCollider targetcollider;
 
-    private float lookfortargetrange = 30f;
-    private float attackrangecheck = 3;
+    [NonSerialized] public float lookfortargetrange = 20f;
+    [NonSerialized] public float attackrangecheck;
+    [NonSerialized] public float addedattackrangetocollider = 2.5f;
     public float attacktimer;
     public float attackspeed;
     private float resetrange = 34;                  //muss kleiner als die enemybaractivate sein
@@ -22,8 +23,9 @@ public class Supportmovement : MonoBehaviour
 
     public bool rangeweaponequiped;
     public bool ishealer;
-    private bool healcdisready;
-    [SerializeField] private GameObject healpotion;
+    [NonSerialized] public float healtimer;
+    [NonSerialized] public float additverandonhealtimer;
+    [SerializeField] public GameObject healpotion;
     private int basicpotionheal = 12;
 
     private Vector3 posiafterattack;
@@ -34,7 +36,9 @@ public class Supportmovement : MonoBehaviour
     const string attack1state = "Attack1";
     const string attack2state = "Attack2";
     const string attack3state = "Attack3";
-    const string healstate = "Alliesheal";
+
+    private Supportchoosetarget supportchoosetarget = new Supportchoosetarget();
+    private Supportheal supportheal = new Supportheal();
 
     public State state;
     public enum State
@@ -55,6 +59,7 @@ public class Supportmovement : MonoBehaviour
         Meshagent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         attacktimer = attackspeed;
+        supportchoosetarget.ssm = this;
     }
     private void OnEnable()
     {
@@ -70,12 +75,6 @@ public class Supportmovement : MonoBehaviour
         else
         {
             state = State.rangeweaporange;
-        }
-        healcdisready = false;
-        StopAllCoroutines();
-        if (ishealer == true)
-        {
-            StartCoroutine(matehealcd());
         }
         float healamount = Mathf.Round(basicpotionheal + (Statics.groupstonehealbonus + GetComponent<Attributecontroller>().stoneclassbonusheal) * 0.01f * basicpotionheal * Statics.charcurrentlvl);
         healpotion.GetComponent<Alliesbottlecontroller>().potionheal = healamount;
@@ -93,15 +92,19 @@ public class Supportmovement : MonoBehaviour
             default:
             case State.gettomeleerange:
                 meleeweaponmovement();
+                supportheal.supporthealing();
                 break;
             case State.waitformeleeattack:
                 waitingformeleeattack();
+                supportheal.supporthealing();
                 break;
             case State.rangeweaporange:
                 rangeweaponmovement();
+                supportheal.supporthealing();
                 break;
             case State.waitforrangeattack:
                 waitingforrangeattack();
+                supportheal.supporthealing();
                 break;
             case State.attacktarget:
                 Attackenemy();
@@ -121,6 +124,8 @@ public class Supportmovement : MonoBehaviour
         currenttarget = null;
         settarget();
     }
+    private void settarget() => supportchoosetarget.settarget();
+    public void playerfocustarget() => supportchoosetarget.playerfocustarget();
     private void supportreset()
     {
         if (Vector3.Distance(currenttarget.transform.position, LoadCharmanager.Overallmainchar.transform.position) > resetrange)
@@ -129,41 +134,7 @@ public class Supportmovement : MonoBehaviour
             ChangeAnimationState(runstate);
         }
     }
-    public void settarget()
-    {
-        //if(currenttarget == null)   
-        Collider[] colliders = Physics.OverlapSphere(LoadCharmanager.Overallmainchar.transform.position, lookfortargetrange, hitbox);
-        foreach (Collider checkforenemys in colliders)
-        {
-            if (checkforenemys.GetComponentInChildren<Miniadd>())
-            {
-                break;
-            }
-            if (checkforenemys.GetComponentInParent<EnemyHP>())
-            {
-                currenttarget = checkforenemys.gameObject;
-                if (currenttarget.GetComponentInParent<CapsuleCollider>())                                            //gegner muss ein Capuslecollider haben
-                {
-                    targetcollider = currenttarget.GetComponentInParent<CapsuleCollider>();
-                    attackrangecheck = (float)(targetcollider.radius + 2.5);
-                    return;
-                }
-                //break;
-            }
-        }      
-    }
-    public void playerfocustarget()
-    {
-        if(Movescript.lockontarget != null)
-        {
-            currenttarget = Movescript.lockontarget.gameObject;
-            if (currenttarget.GetComponentInParent<CapsuleCollider>())                                            //gegner muss ein Capuslecollider haben
-            {
-                targetcollider = currenttarget.GetComponentInParent<CapsuleCollider>();
-                attackrangecheck = (float)(targetcollider.radius + 2.5);
-            }
-        }
-    }
+
 
     private void meleeweaponmovement()
     {
@@ -186,11 +157,6 @@ public class Supportmovement : MonoBehaviour
                 state = State.waitformeleeattack;
                 ChangeAnimationState(idlestate);
                 Meshagent.ResetPath();
-            }
-            if (healcdisready == true)
-            {
-                ChangeAnimationState(healstate);
-                state = State.castheal;
             }
         }
         else
@@ -222,11 +188,6 @@ public class Supportmovement : MonoBehaviour
                 ChangeAnimationState(idlestate);
                 Meshagent.ResetPath();
             }
-            if (healcdisready == true)
-            {
-                ChangeAnimationState(healstate);
-                state = State.castheal;
-            }
         }
         else
         {
@@ -250,11 +211,6 @@ public class Supportmovement : MonoBehaviour
             {
                 state = State.gettomeleerange;
             }
-            if (healcdisready == true)
-            {
-                ChangeAnimationState(healstate);
-                state = State.castheal;
-            }
         }
         else
         {
@@ -277,11 +233,6 @@ public class Supportmovement : MonoBehaviour
             }
             else
             {
-                if (healcdisready == true)
-                {
-                    ChangeAnimationState(healstate);
-                    state = State.castheal;
-                }
 
                 if (gameObject != currenttarget.GetComponentInParent<Enemymovement>().currenttarget)
                 {
@@ -546,27 +497,5 @@ public class Supportmovement : MonoBehaviour
         animator.CrossFadeInFixedTime(newstate, 0.1f);
         currentstate = newstate;
     }
-    public void matecastheal()
-    {
-        Vector3 potionspawn = transform.position;
-        potionspawn.y += 4;
-        healpotion.transform.position = potionspawn;
-        healpotion.SetActive(true);
-        healcdisready = false;
-        StartCoroutine(matehealcd());
-        if (rangeweaponequiped == false)
-        {
-            state = State.gettomeleerange;
-        }
-        else
-        {
-            state = State.rangeweaporange;
-        }
-    }
-    IEnumerator matehealcd()
-    {
-        int randomtime = Random.Range(1, 5);
-        yield return new WaitForSeconds(Statics.alliegrouphealspawntime + randomtime);
-        healcdisready = true;
-    }
+    public void matecastheal() => supportheal.matecastheal();
 }
