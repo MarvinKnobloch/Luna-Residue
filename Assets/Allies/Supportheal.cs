@@ -12,7 +12,7 @@ public class Supportheal
         if (ssm.ishealer == true)
         {
             ssm.healtimer += Time.deltaTime;
-            if(ssm.healtimer + ssm.additverandonhealtimer > Statics.alliegrouphealspawntime)
+            if(ssm.healtimer + ssm.additverandomhealtimer > Statics.alliegrouphealspawntime)
             {
                 ssm.healtimer = 0;
                 ssm.ChangeAnimationState(healstate);
@@ -26,14 +26,7 @@ public class Supportheal
         potionspawn.y += 4;
         ssm.healpotion.transform.position = potionspawn;
         ssm.healpotion.SetActive(true);
-        ssm.additverandonhealtimer = Random.Range(1, 5);
-        if (ssm.rangeweaponequiped == false)
-        {
-            ssm.state = Supportmovement.State.gettomeleerange;
-        }
-        else
-        {
-            ssm.state = Supportmovement.State.rangeweaporange;
-        }
+        ssm.additverandomhealtimer = Random.Range(1, 5);
+        ssm.switchtoweaponstate();
     }
 }

@@ -15,39 +15,46 @@ public class Supportmovement : MonoBehaviour
 
     [NonSerialized] public float lookfortargetrange = 20f;
     [NonSerialized] public float attackrangecheck;
-    [NonSerialized] public float addedattackrangetocollider = 2.5f;
+    [NonSerialized] public float addedattackrangetocollider = 2f;
+    [NonSerialized] public float addedrangeattackrange = 15;
     public float attacktimer;
-    public float attackspeed;
-    private float resetrange = 34;                  //muss kleiner als die enemybaractivate sein
-    private float chancetochangeposi = 33;
+    [NonSerialized] public float attackcd = 2;
+
+    [NonSerialized] public float followenemytimer;
+
+
+    [NonSerialized] public float supportresetrange = 34;                  //muss kleiner als die enemybaractivate sein
+    [NonSerialized] public float resettimer;
+    [NonSerialized] public float resetcombattimer;
+
+    [NonSerialized] public float chancetochangeposi = 33;
+    [NonSerialized] public Vector3 posiafterattack;
 
     public bool rangeweaponequiped;
     public bool ishealer;
     [NonSerialized] public float healtimer;
-    [NonSerialized] public float additverandonhealtimer;
+    [NonSerialized] public float additverandomhealtimer;
     [SerializeField] public GameObject healpotion;
     private int basicpotionheal = 12;
 
-    private Vector3 posiafterattack;
-
     public string currentstate;
     const string idlestate = "Idle";
-    const string runstate = "Run";
-    const string attack1state = "Attack1";
-    const string attack2state = "Attack2";
-    const string attack3state = "Attack3";
 
     private Supportchoosetarget supportchoosetarget = new Supportchoosetarget();
     private Supportheal supportheal = new Supportheal();
+    private Supportmeleeattack supportmeleeattack = new Supportmeleeattack();
+    private Supportrangeattack supportrangeattack = new Supportrangeattack();
+    private Supportutilityfunctions supportutilityfunctions = new Supportutilityfunctions();
 
     public State state;
     public enum State
     {
-        gettomeleerange,
-        rangeweaporange,
+        empty,
+        waitforattackcd,
+        waitforrangeattackcd,
         waitformeleeattack,
         waitforrangeattack,
-        attacktarget,
+        attackstate,
         changeposiafterattack,
         castheal,
         reset,
@@ -58,24 +65,21 @@ public class Supportmovement : MonoBehaviour
         hitbox = LayerMask.GetMask("Meleehitbox");
         Meshagent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        attacktimer = attackspeed;
+
         supportchoosetarget.ssm = this;
+        supportheal.ssm = this;
+        supportmeleeattack.ssm = this;
+        supportrangeattack.ssm = this;
+        supportutilityfunctions.ssm = this;
     }
     private void OnEnable()
     {
-        currentstate = null;
         EnemyHP.supporttargetdied += enemyhasdied;
-        Infightcontroller.setsupporttarget += settarget;
+        Infightcontroller.setsupporttarget += switchtarget;
+        currentstate = null;
         currenttarget = null;
-        settarget();
-        if (rangeweaponequiped == false)
-        {
-            state = State.gettomeleerange;
-        }
-        else
-        {
-            state = State.rangeweaporange;
-        }
+        attacktimer = attackcd;
+        switchtarget();
         float healamount = Mathf.Round(basicpotionheal + (Statics.groupstonehealbonus + GetComponent<Attributecontroller>().stoneclassbonusheal) * 0.01f * basicpotionheal * Statics.charcurrentlvl);
         healpotion.GetComponent<Alliesbottlecontroller>().potionheal = healamount;
     }
@@ -83,406 +87,74 @@ public class Supportmovement : MonoBehaviour
     {
         currenttarget = null;
         EnemyHP.supporttargetdied -= enemyhasdied;
-        Infightcontroller.setsupporttarget -= settarget;
+        Infightcontroller.setsupporttarget -= switchtarget;
     }
     void Update()
     {
         switch (state)
         {
             default:
-            case State.gettomeleerange:
-                meleeweaponmovement();
+            case State.empty:
+                break;
+            case State.waitforattackcd:
+                supportmeleeattack.waitforattackcd();
                 supportheal.supporthealing();
                 break;
             case State.waitformeleeattack:
-                waitingformeleeattack();
+                supportmeleeattack.waitingformeleeattack();
                 supportheal.supporthealing();
                 break;
-            case State.rangeweaporange:
-                rangeweaponmovement();
+            case State.waitforrangeattackcd:
+                supportrangeattack.waitforrangeattackcd();
                 supportheal.supporthealing();
                 break;
             case State.waitforrangeattack:
-                waitingforrangeattack();
+                supportrangeattack.waitingforrangeattack();
                 supportheal.supporthealing();
                 break;
-            case State.attacktarget:
-                Attackenemy();
+            case State.attackstate:
+                supportutilityfunctions.attackstate();
                 break;
             case State.changeposiafterattack:
-                repositionafterattack();
+                supportutilityfunctions.repositionafterattack();
                 break;
             case State.castheal:
                 break;
             case State.reset:
-                resetcombat();
+                supportutilityfunctions.resetcombat();
                 break;
         }
     }
     public void enemyhasdied()
     {
         currenttarget = null;
-        settarget();
+        switchtarget();
     }
-    private void settarget() => supportchoosetarget.settarget();
     public void playerfocustarget() => supportchoosetarget.playerfocustarget();
-    private void supportreset()
-    {
-        if (Vector3.Distance(currenttarget.transform.position, LoadCharmanager.Overallmainchar.transform.position) > resetrange)
-        {
-            state = State.reset;
-            ChangeAnimationState(runstate);
-        }
-    }
 
+    public void switchtarget()
+    {
+        state = State.empty;
+        supportchoosetarget.settarget();
+    }
+    public void switchtoweaponstate()
+    {
+        ChangeAnimationState(idlestate);
+        if (rangeweaponequiped == false) state = State.waitforattackcd;
+        else state = State.waitforrangeattackcd;
+    }
+    public void supportreset() => supportutilityfunctions.supportreset();
+    public void matecastheal() => supportheal.matecastheal();
 
-    private void meleeweaponmovement()
-    {
-        if (currenttarget != null)
-        {
-            supportreset();
+    private void meleeattack1end() => supportmeleeattack.meleeattack1end();                 //wird bei der animation gecalled
+    private void meleeattack2end() => supportmeleeattack.meleeattack2end();                 //wird bei der animation gecalled
+    private void meleeattack3end() => supportmeleeattack.meleeattack3end();                 //wird bei der animation gecalled
 
-            attacktimer += Time.deltaTime;
-            Meshagent.SetDestination(currenttarget.transform.position);
-            if (Meshagent.velocity.magnitude < 0.3f)
-            {
-                ChangeAnimationState(idlestate);
-            }
-            else
-            {
-                ChangeAnimationState(runstate);
-            }
-            if (Vector3.Distance(transform.position, currenttarget.transform.position) < attackrangecheck)
-            {
-                state = State.waitformeleeattack;
-                ChangeAnimationState(idlestate);
-                Meshagent.ResetPath();
-            }
-        }
-        else
-        {
-            settarget();
-            state = State.reset;
-        }
-    }
+    private void rangeattack1end() => supportrangeattack.rangeattack1end();                 //wird bei der animation gecalled
+    private void rangeattack2end() => supportrangeattack.rangeattack2end();                 //wird bei der animation gecalled
+    private void rangeattack3end() => supportrangeattack.rangeattack3end();                 //wird bei der animation gecalled
 
-    private void rangeweaponmovement()
-    {
-        if (currenttarget != null)
-        {
-            supportreset();
-
-            attacktimer += Time.deltaTime;
-            Meshagent.SetDestination(currenttarget.transform.position);
-            if (Meshagent.velocity.magnitude < 0.3f)
-            {
-                ChangeAnimationState(idlestate);
-            }
-            else
-            {
-                ChangeAnimationState(runstate);
-            }
-            if (Vector3.Distance(transform.position, currenttarget.transform.position) < attackrangecheck + 10)
-            {
-                state = State.waitforrangeattack;
-                ChangeAnimationState(idlestate);
-                Meshagent.ResetPath();
-            }
-        }
-        else
-        {
-            settarget();
-            state = State.reset;
-        }
-    }
-
-    private void waitingformeleeattack()
-    {
-        if (currenttarget != null)
-        {
-            supportreset();
-            attacktimer += Time.deltaTime;
-            FaceTraget();
-            if (attacktimer > attackspeed)
-            {
-                state = State.attacktarget;
-            }
-            if (Vector3.Distance(transform.position, currenttarget.transform.position) > attackrangecheck)
-            {
-                state = State.gettomeleerange;
-            }
-        }
-        else
-        {
-            settarget();
-            state = State.reset;
-        }
-    }
-
-    private void waitingforrangeattack()
-    {
-        if (currenttarget != null)
-        {
-            supportreset();
-            attacktimer += Time.deltaTime;
-            if (attacktimer > attackspeed)
-            {
-                FaceTraget();
-                Meshagent.ResetPath();
-                state = State.attacktarget;
-            }
-            else
-            {
-
-                if (gameObject != currenttarget.GetComponentInParent<Enemymovement>().currenttarget)
-                {
-                    Vector3 rangenewposi = currenttarget.transform.position + currenttarget.transform.forward * -14;
-                    rangenewposi.y = transform.position.y;
-                    NavMeshHit hit;
-                    bool blocked;
-                    blocked = NavMesh.Raycast(transform.position, rangenewposi, out hit, NavMesh.AllAreas);
-                    if (blocked == true)
-                    {
-                        //Debug.Log("blocked");
-                        Meshagent.SetDestination(hit.position);
-                        ChangeAnimationState(runstate);
-                        if (Vector3.Distance(transform.position, hit.position) <= 2)
-                        {
-                            FaceTraget();
-                            ChangeAnimationState(idlestate);
-                            Meshagent.ResetPath();
-                        }
-                    }
-                    else if (Vector3.Distance(transform.position, rangenewposi) < 5)
-                    {
-                        FaceTraget();
-                        ChangeAnimationState(idlestate);
-                        Meshagent.ResetPath();
-                    }
-                    else
-                    {
-                        Meshagent.SetDestination(rangenewposi);
-                        ChangeAnimationState(runstate);
-                    }
-                }
-                else
-                {
-                    FaceTraget();
-                    ChangeAnimationState(idlestate);
-                    Meshagent.ResetPath();
-                }
-            }
-        }
-        else
-        {
-            settarget();
-            state = State.reset;
-        }
-    }
-    private void Attackenemy()
-    {
-        if (currenttarget != null)
-        {
-            supportreset();
-            FaceTraget();
-            if (attacktimer > attackspeed)
-            {
-                ChangeAnimationState(attack1state);
-                attacktimer = 0f;
-            }
-        }
-        else
-        {
-            settarget();
-            state = State.reset;
-        }
-    }
-
-    private void repositionafterattack()
-    {
-        if (currenttarget != null)
-        {
-            supportreset();
-            posiafterattack.y = transform.position.y;
-            if (Vector3.Distance(transform.position, posiafterattack) <= 2)
-            {
-                Meshagent.ResetPath();
-                ChangeAnimationState(idlestate);
-                state = State.gettomeleerange;
-            }
-        }
-        else
-        {
-            settarget();
-            state = State.reset;
-        }
-    }
-    private void resetcombat()
-    {
-        if (Vector3.Distance(transform.position, LoadCharmanager.Overallmainchar.transform.position) < 3)
-        {
-            ChangeAnimationState(idlestate);
-            Meshagent.ResetPath();
-            if (Statics.infight == true)
-            {
-                if(rangeweaponequiped == false)
-                {
-                    //state = State.gettomeleerange;
-                }
-                else
-                {
-                    //state = State.rangeweaporange;
-                }
-            }
-        }
-        else
-        {
-            Meshagent.SetDestination(LoadCharmanager.Overallmainchar.transform.position);
-            ChangeAnimationState(runstate);
-        }
-    }
-
-    private void meleeattack1end()
-    {
-        if (currenttarget != null)
-        {
-            supportreset();
-            if (Vector3.Distance(transform.position, currenttarget.transform.position) > attackrangecheck)
-            {
-                state = State.gettomeleerange;
-            }
-            else
-            {
-                ChangeAnimationState(attack2state);
-            }
-        }
-        else
-        {
-            settarget();
-            state = State.reset;
-        }
-    }
-    private void meleeattack2end()
-    {
-        if (currenttarget != null)
-        {
-            supportreset();
-            if (Vector3.Distance(transform.position, currenttarget.transform.position) > attackrangecheck)
-            {
-                state = State.gettomeleerange;
-            }
-            else
-            {
-                ChangeAnimationState(attack3state);
-            }
-        }
-        else
-        {
-            settarget();
-            state = State.reset;
-        }
-    }
-    private void meleeattack3end()
-    {
-        if (currenttarget != null)
-        {
-            supportreset();
-            int newposi = UnityEngine.Random.Range(0, 100);
-            if (newposi < chancetochangeposi)
-            {
-                posiafterattack = currenttarget.transform.position + UnityEngine.Random.insideUnitSphere * 5;
-                posiafterattack.y = transform.position.y;
-                NavMeshHit hit;
-                bool blocked;
-                blocked = NavMesh.Raycast(transform.position, posiafterattack, out hit, NavMesh.AllAreas);
-                if (blocked == true)
-                {
-                    posiafterattack = hit.position;
-                    Meshagent.SetDestination(posiafterattack);
-                    ChangeAnimationState(runstate);
-                    state = State.changeposiafterattack;
-                }
-                else
-                {
-                    Meshagent.SetDestination(posiafterattack);
-                    ChangeAnimationState(runstate);
-                    state = State.changeposiafterattack;
-                }
-            }
-            else
-            {
-                ChangeAnimationState(runstate);
-                state = State.gettomeleerange;
-            }
-        }
-        else
-        {
-            settarget();
-            state = State.reset;
-        }
-    }
-    private void rangeattack1end()
-    {
-        if (currenttarget != null)
-        {
-            supportreset();
-            if (Vector3.Distance(transform.position, currenttarget.transform.position) > attackrangecheck + 15)
-            {
-                state = State.rangeweaporange;
-            }
-            else
-            {
-                ChangeAnimationState(attack2state);
-            }
-        }
-        else
-        {
-            settarget();
-            state = State.reset;
-        }
-    }
-    private void rangeattack2end()
-    {
-        if (currenttarget != null)
-        {
-            supportreset();
-            if (Vector3.Distance(transform.position, currenttarget.transform.position) > attackrangecheck + 15)
-            {
-                state = State.rangeweaporange;
-            }
-            else
-            {
-                ChangeAnimationState(attack3state);
-            }
-        }
-        else
-        {
-            settarget();
-            state = State.reset;
-        }
-    }
-    private void rangeattack3end()
-    {
-        if (currenttarget != null)
-        {
-            supportreset();
-            if (Vector3.Distance(transform.position, currenttarget.transform.position) > attackrangecheck + 15)
-            {
-                state = State.rangeweaporange;
-            }
-            else
-            {
-                state = State.waitforrangeattack;
-                ChangeAnimationState(idlestate);
-            }
-        }
-        else
-        {
-            settarget();
-            state = State.reset;
-        }
-    }
-    private void FaceTraget()
+    public void FaceTraget()
     {
         if (currenttarget != null)
         {
@@ -497,5 +169,4 @@ public class Supportmovement : MonoBehaviour
         animator.CrossFadeInFixedTime(newstate, 0.1f);
         currentstate = newstate;
     }
-    public void matecastheal() => supportheal.matecastheal();
 }
