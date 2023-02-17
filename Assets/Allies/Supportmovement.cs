@@ -144,6 +144,8 @@ public class Supportmovement : MonoBehaviour
         else state = State.waitforrangeattackcd;
     }
     public void supportreset() => supportutilityfunctions.supportreset();
+    public void dying() => supportutilityfunctions.dying();
+    public void supportresurrected() => supportutilityfunctions.supportresurrected();
     public void matecastheal() => supportheal.matecastheal();
 
     private void meleeattack1end() => supportmeleeattack.meleeattack1end();                 //wird bei der animation gecalled
@@ -167,6 +169,12 @@ public class Supportmovement : MonoBehaviour
     {
         if (currentstate == newstate) return;
         animator.CrossFadeInFixedTime(newstate, 0.1f);
+        currentstate = newstate;
+    }
+    public void ChangeAnimationStateInstant(string newstate)
+    {
+        if (currentstate == newstate) return;
+        animator.Play(newstate);
         currentstate = newstate;
     }
 }

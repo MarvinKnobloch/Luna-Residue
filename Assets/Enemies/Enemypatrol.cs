@@ -20,7 +20,7 @@ public class Enemypatrol
     public void waitfornextpatrolpoint()
     {
         esm.patroltimer += Time.deltaTime;
-        esm.checkforplayerinrange();
+        checkforplayerinrange();
         if (esm.patroltimer > esm.patrolwaittimer)
         {
             esm.patroltimer = 0f;
@@ -46,7 +46,7 @@ public class Enemypatrol
     }
     public void patrol()
     {
-        esm.checkforplayerinrange();
+        checkforplayerinrange();
         if (Vector3.Distance(esm.transform.position, esm.patrolposi) <= 2)
         {
             esm.patroltimer = 0f;

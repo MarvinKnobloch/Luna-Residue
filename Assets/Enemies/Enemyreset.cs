@@ -17,7 +17,7 @@ public class Enemyreset
             if (Vector3.Distance(esm.spawnpostion, esm.transform.position) > esm.enemyresetrange)
             {
                 esm.healticktimer = 0f;
-                esm.gameObject.GetComponent<EnemyHP>().enemyhasreset();
+                esm.gameObject.GetComponent<EnemyHP>().resetplayerhits();
                 esm.spezialattack = false;
                 esm.ChangeAnimationState(runstate);
                 esm.state = Enemymovement.State.resetheal;

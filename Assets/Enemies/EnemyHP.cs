@@ -41,13 +41,10 @@ public class EnemyHP : MonoBehaviour
     public GameObject[] itemdroplist;
     public int[] itemdropchance;
 
-    public int[] playerhits;
-    private int player1hits = 0;                                  
-    private int player3hits = 0;
-    private int player4hits = 0;
-    public int mosthits;
-
-    private int activeplayers = 3;
+    [SerializeField] private int[] playerhits = { 0, 0, 0 };
+    private int mosthits;
+    private int playerwithmosthits;
+    private int hitstakensincelastaggrocheck;
 
     public static event Action supporttargetdied;
 
@@ -80,31 +77,12 @@ public class EnemyHP : MonoBehaviour
     {
         enemycalculatedmg.enemyscript = this;
         currenthealth = maxhealth;
-    }
-    void Start()
-    {
-        if (LoadCharmanager.Overallthirdchar == null)
+        mosthits = 0;
+        playerwithmosthits = 0;
+        hitstakensincelastaggrocheck = 5;
+        for (int i = 0; i < playerhits.Length; i++)
         {
-            activeplayers -= 1;
-        }
-        if(LoadCharmanager.Overallforthchar == null)
-        {
-            activeplayers -= 1;
-        }
-        playerhits = new int[activeplayers];
-
-        playerhits[0] = player1hits;
-        if(LoadCharmanager.Overallthirdchar != null)
-        {
-            playerhits[1] = player3hits;
-        }
-        if(LoadCharmanager.Overallthirdchar !=null && LoadCharmanager.Overallforthchar != null)
-        {
-            playerhits[2] = player4hits;
-        }
-        if (LoadCharmanager.Overallthirdchar == null && LoadCharmanager.Overallforthchar != null)
-        {
-            playerhits[1] = player4hits;
+            playerhits[i] = 0;
         }
     }
     public void takeplayerdamage(float damage, int dmgtype , bool crit)                                               
@@ -305,55 +283,51 @@ public class EnemyHP : MonoBehaviour
 
     public void tookdmgfrom(int player, int hitamount)
     {
-        if(player == 1)
+        hitstakensincelastaggrocheck++;
+        if(player == 1) playerhits[0] += hitamount;
+        else if(player == 3) playerhits[1] += hitamount;
+        else if(player == 4) playerhits[2] += hitamount;
+        if(hitstakensincelastaggrocheck >= 5)
         {
-            player1hits += hitamount;
+            setnewtarget();
         }
-        if(player == 3)
-        {
-            player3hits += hitamount;
-        }
-        if(player == 4)
-        {
-            player4hits += hitamount;
-        }
-        playerhits[0] = player1hits;
-        if (LoadCharmanager.Overallthirdchar != null)
-        {
-            playerhits[1] = player3hits;
-        }
-        if (LoadCharmanager.Overallthirdchar != null && LoadCharmanager.Overallforthchar != null)
-        {
-            playerhits[2] = player4hits;
-        }
-        if (LoadCharmanager.Overallthirdchar == null && LoadCharmanager.Overallforthchar != null)
-        {
-            playerhits[1] = player4hits;
-        }
-        setnewtarget();
     }
-    public void enemyhasreset()
+    public void resetplayerhits()
     {
         mosthits = 0;
-        player1hits = 0; 
-        player3hits = 0;
-        player4hits = 0;
-        playerhits[0] = player1hits;
-        if (LoadCharmanager.Overallthirdchar != null)
+        playerwithmosthits = 0;
+        for (int i = 0; i < playerhits.Length; i++)
         {
-            playerhits[1] = player3hits;
-        }
-        if (LoadCharmanager.Overallthirdchar != null && LoadCharmanager.Overallforthchar != null)
-        {
-            playerhits[2] = player4hits;
-        }
-        if (LoadCharmanager.Overallthirdchar == null && LoadCharmanager.Overallforthchar != null)
-        {
-            playerhits[1] = player4hits;
+            playerhits[i] = 0;
         }
         setnewtarget();
     }
 
+    private void setnewtarget()
+    {
+        hitstakensincelastaggrocheck = 0;
+        for (int i = 0; i < playerhits.Length; i++)
+        {
+            if (playerhits[i] > mosthits)
+            {
+                mosthits = playerhits[i];
+                playerwithmosthits = i;
+            }
+        }
+        if(playerwithmosthits == 0) GetComponent<Enemymovement>().currenttarget = LoadCharmanager.Overallmainchar;
+        else if (playerwithmosthits == 1) GetComponent<Enemymovement>().currenttarget = LoadCharmanager.Overallthirdchar;
+        else if (playerwithmosthits == 2) GetComponent<Enemymovement>().currenttarget = LoadCharmanager.Overallforthchar;
+    }
+    public void newtargetonplayerdeath(int player)
+    {
+        mosthits = -1;
+        playerhits[player] = -10;
+        setnewtarget();
+    }
+    public void playerisresurrected(int player)
+    {
+        playerhits[player] = mosthits - 10;
+    }
     private void dropitems()
     {
         int i = 0;
@@ -365,43 +339,6 @@ public class EnemyHP : MonoBehaviour
                 GameObject.Instantiate(obj, transform.position, transform.rotation);
             }
             i++;
-        }
-    }
-    private void setnewtarget()
-    {
-        for (int i = 0; i < playerhits.Length; i++)
-        {
-            if (playerhits[i] > mosthits)
-            {
-                mosthits = playerhits[i];
-            }
-        }
-        if (mosthits == player1hits)
-        {
-            if (gameObject.GetComponentInParent<Enemymovement>())
-            {
-                GetComponentInParent<Enemymovement>().currenttarget = LoadCharmanager.Overallmainchar;
-            }
-        }
-        if (LoadCharmanager.Overallthirdchar != null)
-        {
-            if (mosthits == player3hits)
-            {
-                if (gameObject.GetComponentInParent<Enemymovement>())
-                {
-                    GetComponentInParent<Enemymovement>().currenttarget = LoadCharmanager.Overallthirdchar;
-                }
-            }
-        }
-        if (LoadCharmanager.Overallforthchar != null)
-        {
-            if (mosthits == player4hits)
-            {
-                if (gameObject.GetComponentInParent<Enemymovement>())
-                {
-                    GetComponentInParent<Enemymovement>().currenttarget = LoadCharmanager.Overallforthchar;
-                }
-            }
         }
     }
 }
