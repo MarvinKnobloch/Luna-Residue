@@ -15,12 +15,12 @@ public class Fistsupport : MonoBehaviour
     private float basicdmgtodeal;
 
     private Attributecontroller attributecontroller;
-    private SpielerHP hpscript;
+    private Playerhp hpscript;
 
     private void Awake()
     {
         attributecontroller = GetComponent<Attributecontroller>();
-        hpscript = GetComponent<SpielerHP>();
+        hpscript = GetComponent<Playerhp>();
     }
 
     private void OnEnable()
@@ -29,11 +29,8 @@ public class Fistsupport : MonoBehaviour
     }
     private void fistdmgupdate()
     {
-        basicdmgtodeal = Mathf.Round(basicfistdmg + attributecontroller.dmgfromallies + attributecontroller.fistattack);
-        basicdmgtodeal += Mathf.Round(attributecontroller.overallstonebonusdmg * 0.01f * basicdmgtodeal);
-
-        enddmgtodeal = Mathf.Round(endfistdmg + attributecontroller.dmgfromallies + attributecontroller.fistattack);
-        enddmgtodeal += Mathf.Round(attributecontroller.overallstonebonusdmg * 0.01f * enddmgtodeal);
+        basicdmgtodeal = Damagecalculation.calculateplayerdmgdone(basicfistdmg, attributecontroller.dmgfromallies, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
+        enddmgtodeal = Damagecalculation.calculateplayerdmgdone(endfistdmg, attributecontroller.dmgfromallies, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
     }
 
     private void firstfistattack()

@@ -5353,7 +5353,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ^Q
+  m_Text: Q
 --- !u!222 &437036605
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6068,6 +6068,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadmenucontroller: {fileID: 472829688}
   setitemsandinventory: {fileID: 892553122}
+  areacontroller: {fileID: 0}
 --- !u!1 &497845772
 GameObject:
   m_ObjectHideFlags: 0
@@ -8617,7 +8618,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: R
+  m_Text: ^R
 --- !u!222 &661517607
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12989,6 +12990,7 @@ GameObject:
   - component: {fileID: 892553117}
   - component: {fileID: 892553121}
   - component: {fileID: 892553122}
+  - component: {fileID: 892553123}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -13097,7 +13099,6 @@ MonoBehaviour:
   - {fileID: 1717314527}
   loadgameobj: {fileID: 472829687}
   settingsobj: {fileID: 813137111}
-  setitemsandinventory: {fileID: 892553122}
   selectedcolor: {r: 1, g: 1, b: 1, a: 0.39215687}
   notselectedcolor: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &892553122
@@ -13113,6 +13114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventorys:
+  - {fileID: 11400000, guid: 2ca52730c693b224db957e8268c41db8, type: 2}
   - {fileID: 11400000, guid: bff24377c34696e41867a5d7c902d67c, type: 2}
   - {fileID: 11400000, guid: ce84528fcac987c45bbc7a40d37adb24, type: 2}
   - {fileID: 11400000, guid: 0f5b0f3c722ca244abc797b8ee1b9611, type: 2}
@@ -13123,7 +13125,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fdbd1444081169d45aa874b5f2a75403, type: 2}
   - {fileID: 11400000, guid: 5fa892f122bd9f54cb5e69bbe4f44089, type: 2}
   - {fileID: 11400000, guid: 84f3537afecb40949a1f064114dbd52e, type: 2}
-  - {fileID: 11400000, guid: 2ca52730c693b224db957e8268c41db8, type: 2}
   sworditems:
   - {fileID: 11400000, guid: 0069bc3099ef6384f957e19665f186b7, type: 2}
   - {fileID: 11400000, guid: 5a98190f246b4c2429dbdfe77e8fa06c, type: 2}
@@ -13170,6 +13171,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 73c80dfb09adfee499cd17b195fcdd02, type: 2}
   - {fileID: 11400000, guid: 86d6d0ec3403b124f9a553e397d70f34, type: 2}
   - {fileID: 11400000, guid: 0960a2238d03d57408bfdd8ee4cca568, type: 2}
+--- !u!114 &892553123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 892553116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d69501fbbd6fc744ab69ab643990dd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nullobject: {fileID: 11400000, guid: a5ebde1d38d85f344a477e078251877e, type: 2}
 --- !u!1 &893148287
 GameObject:
   m_ObjectHideFlags: 0
@@ -17993,7 +18007,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ^Q
+  m_Text: Q
 --- !u!222 &1228251789
 CanvasRenderer:
   m_ObjectHideFlags: 0

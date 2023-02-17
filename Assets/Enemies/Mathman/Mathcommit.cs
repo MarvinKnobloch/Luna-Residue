@@ -30,6 +30,7 @@ public class Mathcommit : MonoBehaviour
         changetime = false;
         timer = answertime;
         StartCoroutine("mathtimer");
+        Mouseactivate.enablemouse();
     }
     private void Update()
     {
@@ -59,7 +60,7 @@ public class Mathcommit : MonoBehaviour
             }
             else
             {
-                LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1)));
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1)));
                 solutionUI.color = Color.red;
                 LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
                 Statics.otheraction = false;
@@ -74,7 +75,7 @@ public class Mathcommit : MonoBehaviour
         }
         else
         {
-            LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1)));
+            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1)));
             solutionUI.color = Color.red;
             LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
             Statics.otheraction = false;
@@ -92,13 +93,14 @@ public class Mathcommit : MonoBehaviour
         solutionUI.color = Color.white;
         solution.text = "";
         mathmancontroller.SetActive(false);
+        Mouseactivate.disablemouse();
     }
     IEnumerator mathtimer()
     {
         while (true)
         {
             yield return new WaitForSeconds(2.5f);
-            LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1)));
+            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1)));
             solution.text = "";
             LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
             Statics.otheraction = false;

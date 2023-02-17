@@ -35,4 +35,14 @@ public class Setspells : MonoBehaviour
         dragslotspell.spellcolor = GetComponent<Image>().color;
         dragslotspell.spelltext = GetComponentInChildren<TextMeshProUGUI>().text;
     }
+    public void setspellafterload(int slot, string spellname)
+    {
+        dragslotspell = GetComponent<Dragslotspell>();                              //sonst ist dragslotspell noch null
+        spellnumber = Statics.spellnumbers[slot];
+        spellelement = (int)Mathf.Floor((float)spellnumber / 3);
+        dragslotspell.gotspell = true;
+        dragslotspell.spellnumber = spellnumber;
+        dragslotspell.spellcolor = Statics.spellcolors[slot];
+        dragslotspell.spelltext = spellname;
+    }
 }

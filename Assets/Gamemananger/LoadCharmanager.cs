@@ -26,19 +26,13 @@ public class LoadCharmanager : MonoBehaviour
     public GameObject[] teammates;
     public static GameObject Overallthirdchar;
     public static GameObject Overallforthchar;
-    public static GameObject Savechar;                                       //wird für charwechsel benutzt
     public static Vector3 savemainposi = new Vector3(0,5,0);
     public static Quaternion savemainrota;                                      //memorypuzzle(-40,25,685) //boxpuzzle(305,25,565) switchpuzzle(280,2,180)
     public static float savecamvalueX;                                          //statuepuzzle(-200,2,340) //woods(255,20,435)  //watercave(-330,12,-40)  //lantern(-210,32,500)
 
-    private int maincharload;
-    private int secondcharload;
-
     public static bool disableattackbuttons;
     public static bool gameispaused;
     public static bool interaction;
-
-    private float guardbonushp;
 
     public static event Action setweapons;
     public static event Action swordcontrollerupdate;
@@ -52,10 +46,6 @@ public class LoadCharmanager : MonoBehaviour
         maingamevalues();
     }
 
-    private void Start()
-    {
-        guardbonushp = Statics.guardbonushpeachlvl;
-    }
     private void OnEnable()
     {
         Steuerung.Enable();
@@ -67,7 +57,6 @@ public class LoadCharmanager : MonoBehaviour
             if (gameispaused == false)
             {
                 disableattackbuttons = true;
-                Physics.IgnoreLayerCollision(0, 6);               //collision wird deaktiviert und nach einem frame wird das menü aufgerufen damit die area collider getriggert werden
                 savemainposi = Overallmainchar.transform.position;
                 savemainrota = Overallmainchar.transform.rotation;
                 savecamvalueX = Cam1.m_XAxis.Value;
@@ -76,12 +65,11 @@ public class LoadCharmanager : MonoBehaviour
                     mates.gameObject.SetActive(false);
                 }
                 gameispaused = true;
-                StartCoroutine(activatemenu());
-
-#if !UNITY_EDITOR
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-#endif
+                Time.timeScale = 0f;
+                Cam1.gameObject.SetActive(false);
+                menu.SetActive(true);
+                menuoverview.SetActive(true);
+                Mouseactivate.enablemouse();
             }
             else
             {
@@ -92,38 +80,50 @@ public class LoadCharmanager : MonoBehaviour
             }
         }    
     }
-    IEnumerator activatemenu()
+    public void loadonfastravel()
+    {
+        Time.timeScale = Statics.normalgamespeed;                             // Time scale muss vorher wieder auf normalspeed gesetzt werden sonst wird onexit nicht getriggert
+        Time.fixedDeltaTime = Statics.normaltimedelta;
+        StartCoroutine("portchar");
+    }
+    IEnumerator portchar()
     {
         yield return null;
-        Time.timeScale = 0f;
-        foreach (GameObject chars in allcharacters)
-        {
-            chars.SetActive(false);
-        }
-        Cam1.gameObject.SetActive(false);
-        menu.SetActive(true);
-        menuoverview.SetActive(true);
+        Overallmainchar.transform.position = savemainposi;                   // ein frame dealy für timescale
+        Overallmainchar.transform.rotation = savemainrota;
+        StartCoroutine("loadgamevalues");                                    //ein frame dealy sonst wird nicht getriggert 
+    }
+    IEnumerator loadgamevalues()                                            
+    {
+        yield return null;
+        maingamevalues();
     }
 
     public void maingamevalues()
     {
-        Physics.IgnoreLayerCollision(0, 6, false);
-        maincharload = PlayerPrefs.GetInt("Maincharindex");
-        secondcharload = PlayerPrefs.GetInt("Secondcharindex");
-        Overallmainchar = allcharacters[maincharload];
-        Overallsecondchar = allcharacters[secondcharload];
+        foreach (GameObject chars in allcharacters)
+        {
+            chars.SetActive(false);
+        }
+        Overallmainchar = allcharacters[Statics.currentfirstchar];
+        Overallsecondchar = allcharacters[Statics.currentsecondchar];
+        Statics.currentactiveplayer = 0; 
+        Overallmainchar.SetActive(true);
         Overallmainchar.transform.position = savemainposi;
         Overallmainchar.transform.rotation = savemainrota;
-        Overallmainchar.SetActive(true);
         Overallsecondchar.SetActive(true);
-        Statics.currentactiveplayer = 0;                            //PlayerPrefs.GetInt("Maincharindex");
-        if (PlayerPrefs.GetInt("Thirdcharindex") < Statics.playablechars)
+        Overallmainchar.GetComponent<Playerhp>().playerhpuislot = 0;
+        Overallsecondchar.GetComponent<Playerhp>().playerhpuislot = 1;
+        if (Statics.currentthirdchar != -1)
         {
-            Overallthirdchar = teammates[PlayerPrefs.GetInt("Thirdcharindex")];     //3 ist aktiv
+            Overallthirdchar = teammates[Statics.currentthirdchar];     //3 ist aktiv
+            Overallthirdchar.GetComponent<Playerhp>().playerhpuislot = 2;
             Overallthirdchar.SetActive(true);                                       //wird momentan im Infightcontroller wieder ausgeblendet
-            if (PlayerPrefs.GetInt("Forthcharindex") < Statics.playablechars)
+
+            if (Statics.currentforthchar != -1)
             {
-                Overallforthchar = teammates[PlayerPrefs.GetInt("Forthcharindex")];   //wenn 3 aktiv ist wieder gecheckt ob 4 aktiv ist
+                Overallforthchar = teammates[Statics.currentforthchar];   //wenn 3 aktiv ist wieder gecheckt ob 4 aktiv ist
+                Overallforthchar.GetComponent<Playerhp>().playerhpuislot = 3;
                 Overallforthchar.SetActive(true);
             }
             else
@@ -133,9 +133,11 @@ public class LoadCharmanager : MonoBehaviour
         }
         else
         {
-            if (PlayerPrefs.GetInt("Forthcharindex") < Statics.playablechars)                      //wenn 3 nicht aktiv ist wird gecheckt ob 4 aktiv ist
+            if (Statics.currentforthchar != -1)                      //wenn 3 nicht aktiv ist wird gecheckt ob 4 aktiv ist, und 4 ist dann 3
             {
-                Overallthirdchar = teammates[PlayerPrefs.GetInt("Forthcharindex")];
+                Statics.currentthirdchar = Statics.currentforthchar;
+                Statics.currentforthchar = -1;
+                Overallthirdchar = teammates[Statics.currentthirdchar];
                 Overallthirdchar.SetActive(true);
                 Overallforthchar = null;
             }
@@ -145,8 +147,6 @@ public class LoadCharmanager : MonoBehaviour
                 Overallforthchar = null;
             }
         }
-        Statics.currentthirdchar = PlayerPrefs.GetInt("Thirdcharindex");
-        Statics.currentforthchar = PlayerPrefs.GetInt("Forthcharindex");
 
         Cam1.LookAt = Overallmainchar.transform;
         Cam1.Follow = Overallmainchar.transform;
@@ -159,20 +159,17 @@ public class LoadCharmanager : MonoBehaviour
         aimcam.Follow = Overallmainchar.transform;
 
 
-        classrollupdate();
-        foreach (GameObject chars in allcharacters)
-        {
-            chars.GetComponent<Attributecontroller>().updateattributes();
-        }
-        foreach (GameObject mates in teammates)
-        {
-            mates.GetComponent<Attributecontroller>().updateattributes();
-        }
+        classandstatsupdate(Statics.currentfirstchar, allcharacters);                   // bonus hp von guard wird im elemenu beim auswählen des stones gesetzt
+        classandstatsupdate(Statics.currentsecondchar, allcharacters);
+        classandstatsupdate(Statics.currentthirdchar, teammates);
+        classandstatsupdate(Statics.currentforthchar, teammates);
+        GetComponent<HealthUImanager>().sethealthbars();
+
         setweapons?.Invoke();
+
         swordcontrollerupdate?.Invoke();
         fistcontrollerupdate?.Invoke();
 
-        GetComponent<HealthUImanager>().sethealthbars();
         uiactionscontroller.setimagecolor();
 
         foreach (GameObject mates in teammates)
@@ -195,417 +192,52 @@ public class LoadCharmanager : MonoBehaviour
         Time.timeScale = Statics.normalgamespeed;
         Time.fixedDeltaTime = Statics.normaltimedelta;
         Cam1.gameObject.SetActive(true);
-        //Cursor.visible = false;
-        //Cursor.lockState = CursorLockMode.Locked;
+        Mouseactivate.disablemouse();
     }
-
-    private void classrollupdate()
+    private void classandstatsupdate(int charnumber, GameObject[] playerorsupport)
     {
-        float dmgbonus = Statics.groupstonedmgbonus;
-        float defensebonus = Statics.groupstonedefensebonus;
-        float healbonus = Statics.groupstonehealbonus;
-
-        if (Statics.maincharstoneclass == 0)
+        if(charnumber != -1)
         {
-            if (allcharacters[maincharload].TryGetComponent(out Attributecontroller atbcontroller))
+            if (Statics.characterclassroll[charnumber] == 0)
             {
-                if(Statics.thirdcharstoneclass == 0 || Statics.forthcharstoneclass == 0)
+                if (playerorsupport[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
                 {
-                    atbcontroller.overallstonebonusdmg = dmgbonus * 3;
-                }
-                else
-                {
-                    atbcontroller.overallstonebonusdmg = dmgbonus * 2;
-                }
-                atbcontroller.overallstonedmgreduction = defensebonus;
-                atbcontroller.overallstonehealbonus = healbonus;
-                atbcontroller.ishealer = false;
-                if (atbcontroller.guardhpbuff == true)
-                {
-                    atbcontroller.guardhpbuff = false;
-                    Statics.charmaxhealth[maincharload] -= Statics.charcurrentlvl * guardbonushp;
-                }
-                if (Statics.currentactiveplayer == 0)                                 //es gibt kein secondplayertookdmgfrom, desewegen sollte hier alles richtig sein
-                {
-                    Statics.playertookdmgfromamount = 1;
+                    atbcontroller.isdmgclassroll = true;
+                    atbcontroller.isguardclassroll = false;
+                    atbcontroller.ishealerclassroll = false;
+                    atbcontroller.classrollupdate();
                 }
             }
-        }
-        else if (Statics.maincharstoneclass == 1)
-        {
-            if (allcharacters[maincharload].TryGetComponent(out Attributecontroller atbcontroller))
+            else if (Statics.characterclassroll[charnumber] == 1)
             {
-                atbcontroller.overallstonebonusdmg = dmgbonus;
-                atbcontroller.overallstonedmgreduction = defensebonus * 2;
-                atbcontroller.overallstonehealbonus = healbonus;
-                atbcontroller.ishealer = false;
-                if (atbcontroller.guardhpbuff == false)
+                if (playerorsupport[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
                 {
-                    atbcontroller.guardhpbuff = true;
-                    Statics.charmaxhealth[maincharload] += Statics.charcurrentlvl * guardbonushp;
-                }
-                if (Statics.currentactiveplayer == 0)
-                {
-                    Statics.playertookdmgfromamount = 2;
+                    atbcontroller.isdmgclassroll = false;
+                    atbcontroller.isguardclassroll = true;
+                    atbcontroller.ishealerclassroll = false;
+                    atbcontroller.classrollupdate();
                 }
             }
-        }
-        else if (Statics.maincharstoneclass == 2)
-        {
-            if (allcharacters[maincharload].TryGetComponent(out Attributecontroller atbcontroller))
+            else if (Statics.characterclassroll[charnumber] == 2)
             {
-                atbcontroller.overallstonebonusdmg = dmgbonus;
-                atbcontroller.overallstonedmgreduction = defensebonus;
-                atbcontroller.overallstonehealbonus = healbonus * 2;
-                atbcontroller.ishealer = true;
-                if (atbcontroller.guardhpbuff == true)
+                if (playerorsupport[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
                 {
-                    atbcontroller.guardhpbuff = false;
-                    Statics.charmaxhealth[maincharload] -= Statics.charcurrentlvl * guardbonushp;
-                }
-                if (Statics.currentactiveplayer == 0)
-                {
-                    Statics.playertookdmgfromamount = 1;
-                }
-            }
-        }
-        else                   //falls ein stone aktviert worden ist aber keiner ausgewählt wurde
-        {
-            if (allcharacters[maincharload].TryGetComponent(out Attributecontroller atbcontroller))
-            {
-                if (Statics.thirdcharstoneclass == 0 || Statics.forthcharstoneclass == 0)
-                {
-                    atbcontroller.overallstonebonusdmg = dmgbonus * 2;
-                }
-                else
-                {
-                    atbcontroller.overallstonebonusdmg = dmgbonus;
-                }
-                atbcontroller.overallstonedmgreduction = defensebonus;
-                atbcontroller.overallstonehealbonus = healbonus;
-            }
-        }
-
-        if (Statics.secondcharstoneclass == 0)
-        {
-            if (allcharacters[secondcharload].TryGetComponent(out Attributecontroller atbcontroller))
-            {
-                if (Statics.thirdcharstoneclass == 0 || Statics.forthcharstoneclass == 0)
-                {
-                    atbcontroller.overallstonebonusdmg = dmgbonus * 3;
-                }
-                else
-                {
-                    atbcontroller.overallstonebonusdmg = dmgbonus * 2;
-                }
-                atbcontroller.overallstonedmgreduction = defensebonus;
-                atbcontroller.overallstonehealbonus = healbonus;
-                atbcontroller.ishealer = false;
-                if (atbcontroller.guardhpbuff == true)
-                {
-                    atbcontroller.guardhpbuff = false;
-                    Statics.charmaxhealth[secondcharload] -= Statics.charcurrentlvl * guardbonushp;
-                }
-                if (Statics.currentactiveplayer == 1)
-                {
-                    Statics.playertookdmgfromamount = 1;
-                }
-            }
-        }
-        else if (Statics.secondcharstoneclass == 1)
-        {
-            if (allcharacters[secondcharload].TryGetComponent(out Attributecontroller atbcontroller))
-            {
-                atbcontroller.overallstonebonusdmg = dmgbonus;
-                atbcontroller.overallstonedmgreduction = defensebonus * 2;
-                atbcontroller.overallstonehealbonus = healbonus;
-                atbcontroller.ishealer = false;
-                if (atbcontroller.guardhpbuff == false)
-                {
-                    atbcontroller.guardhpbuff = true;
-                    Statics.charmaxhealth[secondcharload] += Statics.charcurrentlvl * guardbonushp;
-                }
-                if (Statics.currentactiveplayer == 1)
-                {
-                    Statics.playertookdmgfromamount = 2;
-                }
-            }
-        }
-        else if (Statics.secondcharstoneclass == 2)
-        {
-            if (allcharacters[secondcharload].TryGetComponent(out Attributecontroller atbcontroller))
-            {
-                atbcontroller.overallstonebonusdmg = dmgbonus;
-                atbcontroller.overallstonedmgreduction = defensebonus;
-                atbcontroller.overallstonehealbonus = healbonus * 2;
-                atbcontroller.ishealer = true;
-                if (atbcontroller.guardhpbuff == true)
-                {
-                    atbcontroller.guardhpbuff = false;
-                    Statics.charmaxhealth[secondcharload] -= Statics.charcurrentlvl * guardbonushp;
-                }
-                if (Statics.currentactiveplayer == 1)
-                {
-                    Statics.playertookdmgfromamount = 1;
-                }
-            }
-        }
-        else
-        {
-            if (allcharacters[secondcharload].TryGetComponent(out Attributecontroller atbcontroller))
-            {
-                if (Statics.thirdcharstoneclass == 0 || Statics.forthcharstoneclass == 0)
-                {
-                    atbcontroller.overallstonebonusdmg = dmgbonus * 2;
-                }
-                else
-                {
-                    atbcontroller.overallstonebonusdmg = dmgbonus;
-                }
-                atbcontroller.overallstonedmgreduction = defensebonus;
-                atbcontroller.overallstonehealbonus = healbonus;
-            }
-        }
-
-        if(Overallthirdchar != null)
-        {
-            if (Statics.thirdcharstoneclass == 0)
-            {
-                if (Overallthirdchar.TryGetComponent(out Attributecontroller atbcontroller))
-                {
-                    atbcontroller.overallstonebonusdmg = dmgbonus * 2;
-                    atbcontroller.overallstonedmgreduction = defensebonus;
-                    atbcontroller.overallstonehealbonus = healbonus;
-                    Statics.thirdcharishealer = false;
-                    if (atbcontroller.guardhpbuff == true)
-                    {
-                        atbcontroller.guardhpbuff = false;
-                        Statics.charmaxhealth[Statics.currentthirdchar] -= Statics.charcurrentlvl * guardbonushp;
-                    }
-                    Statics.thirdchartookdmgformamount = 1;
-                }
-            }
-            else if (Statics.thirdcharstoneclass == 1)
-            {
-                if (Overallthirdchar.TryGetComponent(out Attributecontroller atbcontroller))
-                {
-                    atbcontroller.overallstonebonusdmg = dmgbonus;
-                    atbcontroller.overallstonedmgreduction = defensebonus * 2;
-                    atbcontroller.overallstonehealbonus = healbonus;
-                    Statics.thirdcharishealer = false;
-                    if (atbcontroller.guardhpbuff == false)
-                    {
-                        atbcontroller.guardhpbuff = true;
-                        Statics.charmaxhealth[Statics.currentthirdchar] += Statics.charcurrentlvl * guardbonushp;
-                    }
-                    Statics.thirdchartookdmgformamount = 2;
-                }
-            }
-            else if (Statics.thirdcharstoneclass == 2)
-            {
-                if (Overallthirdchar.TryGetComponent(out Attributecontroller atbcontroller))
-                {
-                    atbcontroller.overallstonebonusdmg = dmgbonus;
-                    atbcontroller.overallstonedmgreduction = defensebonus;
-                    atbcontroller.overallstonehealbonus = healbonus * 2;
-                    Statics.thirdcharishealer = true;
-                    if (atbcontroller.guardhpbuff == true)
-                    {
-                        atbcontroller.guardhpbuff = false;
-                        Statics.charmaxhealth[Statics.currentthirdchar] -= Statics.charcurrentlvl * guardbonushp;
-                    }
-                    Statics.thirdchartookdmgformamount = 1;
+                    atbcontroller.isdmgclassroll = false;
+                    atbcontroller.isguardclassroll = false;
+                    atbcontroller.ishealerclassroll = true;
+                    atbcontroller.classrollupdate();
                 }
             }
             else
             {
-                if (Overallthirdchar.TryGetComponent(out Attributecontroller atbcontroller))
+                if (playerorsupport[charnumber].TryGetComponent(out Attributecontroller atbcontroller))
                 {
-                    atbcontroller.overallstonebonusdmg = dmgbonus;
-                    atbcontroller.overallstonedmgreduction = defensebonus;
-                    atbcontroller.overallstonehealbonus = healbonus;
-                }
-            }
-        }
-        if (Overallforthchar != null)
-        {
-            if (Statics.forthcharstoneclass == 0)
-            {
-                if (Overallforthchar.TryGetComponent(out Attributecontroller atbcontroller))
-                {
-                    atbcontroller.overallstonebonusdmg = dmgbonus * 2;
-                    atbcontroller.overallstonedmgreduction = defensebonus;
-                    atbcontroller.overallstonehealbonus = healbonus;
-                    Statics.forthcharishealer = false;
-                    if (atbcontroller.guardhpbuff == true)
-                    {
-                        atbcontroller.guardhpbuff = false;
-                        Statics.charmaxhealth[Statics.currentforthchar] -= Statics.charcurrentlvl * guardbonushp;
-                    }
-                    Statics.forthchartookdmgformamount = 1;
-                }
-            }
-            else if (Statics.forthcharstoneclass == 1)
-            {
-                if (Overallforthchar.TryGetComponent(out Attributecontroller atbcontroller))
-                {
-                    atbcontroller.overallstonebonusdmg = dmgbonus;
-                    atbcontroller.overallstonedmgreduction = defensebonus * 2;
-                    atbcontroller.overallstonehealbonus = healbonus;
-                    Statics.forthcharishealer = false;
-                    if (atbcontroller.guardhpbuff == false)
-                    {
-                        atbcontroller.guardhpbuff = true;
-                        Statics.charmaxhealth[Statics.currentforthchar] += Statics.charcurrentlvl * guardbonushp;
-                    }
-                    Statics.forthchartookdmgformamount = 2;
-                }
-            }
-            else if (Statics.forthcharstoneclass == 2)
-            {
-                if (Overallforthchar.TryGetComponent(out Attributecontroller atbcontroller))
-                {
-                    atbcontroller.overallstonebonusdmg = dmgbonus;
-                    atbcontroller.overallstonedmgreduction = defensebonus;
-                    atbcontroller.overallstonehealbonus = healbonus * 2;
-                    Statics.forthcharishealer = true;
-                    if (atbcontroller.guardhpbuff == true)
-                    {
-                        atbcontroller.guardhpbuff = false;
-                        Statics.charmaxhealth[Statics.currentforthchar] -= Statics.charcurrentlvl * guardbonushp;
-                    }
-                    Statics.forthchartookdmgformamount = 1;
-                }
-            }
-            else
-            {
-                if (Overallforthchar.TryGetComponent(out Attributecontroller atbcontroller))
-                {
-                    atbcontroller.overallstonebonusdmg = dmgbonus;
-                    atbcontroller.overallstonedmgreduction = defensebonus;
-                    atbcontroller.overallstonehealbonus = healbonus;
+                    atbcontroller.isdmgclassroll = false;
+                    atbcontroller.isguardclassroll = false;
+                    atbcontroller.ishealerclassroll = false;
+                    atbcontroller.classrollupdate();
                 }
             }
         }
     }
 }
-
-/*void Update()
-{
-    if (Statics.infight == false)
-    {
-        if (gameispaused == false)
-        {
-            if (Steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame())
-            {
-                Overallsecondchar.SetActive(true);
-                savecamvalueX = Cam1.m_XAxis.Value;
-                savemainrota = Overallmainchar.transform.rotation;
-                savemainposi = Overallmainchar.transform.position;
-                openmenu();
-            }
-        }
-        if (Steuerung.Player.Openelemenu.WasPerformedThisFrame())                                 // Pausemenu aktivieren ist momentan im Loadcharmanager
-        {
-            if (gameispaused == false)
-            {
-                gameispaused = true;
-                disableattackbuttons = true;
-                Elementalmenu.gameObject.SetActive(true);
-                Cam1.gameObject.SetActive(false);
-                if (Overallthirdchar != null)
-                {
-                    Overallthirdchar.SetActive(false);
-                }
-                if (Overallforthchar != null)
-                {
-                    Overallforthchar.SetActive(false);
-                }
-                Time.timeScale = 0f;
-            }
-            else
-            {
-                gameispaused = false;
-                disableattackbuttons = false;
-                uiactionscontroller.setimagecolor();
-                Elementalmenu.gameObject.SetActive(false);
-                classrollupdate();
-                foreach (GameObject chars in allcharacters)
-                {
-                    chars.GetComponent<Attributecontroller>().updateattributes();
-                }
-                foreach (GameObject mates in teammates)
-                {
-                    mates.GetComponent<Attributecontroller>().updateattributes();
-                }
-                GetComponent<HealthUImanager>().secondcharhpupdate();
-                Overallmainchar.GetComponent<SpielerHP>().UpdatehealthUI();
-                if (Overallthirdchar != null)
-                {
-                    Overallthirdchar.GetComponent<SpielerHP>().UpdatehealthUI();
-                }
-                if (Overallforthchar != null)
-                {
-                    Overallforthchar.GetComponent<SpielerHP>().UpdatehealthUI();
-                }
-                swordcontrollerupdate?.Invoke();
-                fistcontrollerupdate?.Invoke();
-                Cam1.gameObject.SetActive(true);
-                Time.timeScale = 1f;
-            }
-        }
-        if (Steuerung.Player.Openequipentmenu.WasPerformedThisFrame())
-        {
-            if (disableattackbuttons == false)
-            {
-                Statics.currentequiptmentchar = 0;
-                disableattackbuttons = true;
-                Equipmentmenu.gameObject.SetActive(true);
-                Cam1.gameObject.SetActive(false);
-                if (Overallthirdchar != null)
-                {
-                    Overallthirdchar.SetActive(false);
-                }
-                if (Overallforthchar != null)
-                {
-                    Overallforthchar.SetActive(false);
-                }
-                Time.timeScale = 0f;
-            }
-            else
-            {
-                foreach (GameObject chars in allcharacters)
-                {
-                    chars.GetComponent<Attributecontroller>().updateattributes();
-                }
-                foreach (GameObject mates in teammates)
-                {
-                    mates.GetComponent<Attributecontroller>().updateattributes();
-                }
-                GetComponent<HealthUImanager>().secondcharhpupdate();
-                Overallmainchar.GetComponent<SpielerHP>().UpdatehealthUI();
-                if (Overallthirdchar != null)
-                {
-                    Overallthirdchar.GetComponent<SpielerHP>().UpdatehealthUI();
-                }
-                if (Overallforthchar != null)
-                {
-                    Overallforthchar.GetComponent<SpielerHP>().UpdatehealthUI();
-                }
-                swordcontrollerupdate?.Invoke();
-                fistcontrollerupdate?.Invoke();
-                disableattackbuttons = false;
-                Equipmentmenu.gameObject.SetActive(false);
-                Cam1.gameObject.SetActive(true);
-                Time.timeScale = 1f;
-            }
-        }
-    }
-}
-private void openmenu()
-{
-    Overallmainchar.SetActive(false);
-    Overallsecondchar.SetActive(false);
-    Movescript.availabletargets.Clear();
-    SceneManager.LoadScene(1);
-}*/

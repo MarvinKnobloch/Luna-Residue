@@ -27,14 +27,13 @@ public class Commitfasttravel : MonoBehaviour
     }
     public void fasttravel()
     {
-        LoadCharmanager.disableattackbuttons = false;
-        foreach(Transform enemys in enemyhealthbars.transform)
+        foreach (Transform enemys in enemyhealthbars.transform)
         {
             enemys.GetComponent<Enemyhealthbar>().removehealthbar();
         }
         LoadCharmanager.savemainposi = fasttravelpoint;
         LoadCharmanager.Overallmainchar.gameObject.GetComponent<Movescript>().switchtoairstate();
-        loadcharmananger.GetComponent<LoadCharmanager>().maingamevalues();
+        loadcharmananger.GetComponent<LoadCharmanager>().loadonfastravel();
         gameObject.SetActive(false);
 
     }

@@ -194,7 +194,7 @@ public class Healingscript : MonoBehaviour
         buttons[0].text = WASD[randomkeys[0]].text;
         buttons[1].text = WASD[randomkeys[1]].text;
         buttons[2].text = WASD[randomkeys[2]].text;
-        if (attributecontroller.ishealer == true)
+        if (attributecontroller.ishealerclassroll == true)
         {
             buttonimage[3].gameObject.SetActive(true);
             buttonimage[4].gameObject.SetActive(true);
@@ -234,7 +234,7 @@ public class Healingscript : MonoBehaviour
         {
             singlehealcast = true;
         }
-        if(attributecontroller.ishealer == true)
+        if(attributecontroller.ishealerclassroll == true)
         {
             if (currentcombo == grouphealbuttonamount)
             {
@@ -279,18 +279,18 @@ public class Healingscript : MonoBehaviour
         healanzeige.SetActive(false);
         Statics.otheraction = false;
         //float basicheal = singleheal + Statics.charcurrentlvl;
-        float healamount = Mathf.Round(singleheal + (GetComponent<Attributecontroller>().overallstonehealbonus) * 0.01f * singleheal * Statics.charcurrentlvl);
+        float healamount = Mathf.Round(singleheal + (Statics.groupstonehealbonus + GetComponent<Attributecontroller>().stoneclassbonusheal) * 0.01f * singleheal * Statics.charcurrentlvl);
         if(healtarget == 1)
         {
-            LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().castheal(healamount);
+            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().castheal(healamount);
         }
         if(healtarget == 2)
         {
-            LoadCharmanager.Overallthirdchar.GetComponent<SpielerHP>().castheal(healamount);
+            LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().castheal(healamount);
         }
         if (healtarget == 3)
         {
-            LoadCharmanager.Overallforthchar.GetComponent<SpielerHP>().castheal(healamount);
+            LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().castheal(healamount);
         }
         healtarget = 0;
         GlobalCD.starthealingcd();
@@ -307,15 +307,15 @@ public class Healingscript : MonoBehaviour
         readinputs = false;
         healanzeige.SetActive(false);
         Statics.otheraction = false;
-        float healamount = Mathf.Round(groupheal + (GetComponent<Attributecontroller>().overallstonehealbonus) * 0.01f * groupheal * Statics.charcurrentlvl);
-        LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().castheal(healamount);
+        float healamount = Mathf.Round(groupheal + (Statics.groupstonehealbonus + GetComponent<Attributecontroller>().stoneclassbonusheal) * 0.01f * groupheal * Statics.charcurrentlvl);
+        LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().castheal(healamount);
         if (LoadCharmanager.Overallthirdchar != null)
         {
-            LoadCharmanager.Overallthirdchar.GetComponent<SpielerHP>().castheal(healamount);
+            LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().castheal(healamount);
         }
         if (LoadCharmanager.Overallforthchar != null)
         {
-            LoadCharmanager.Overallforthchar.GetComponent<SpielerHP>().castheal(healamount);
+            LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().castheal(healamount);
         }
         GlobalCD.starthealingcd();
         movementscript.state = Movescript.State.Ground;

@@ -35,7 +35,7 @@ public class Ninjastar : MonoBehaviour
     {
         if (other.gameObject == LoadCharmanager.Overallmainchar)
         {
-            LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().TakeDamage(basedmg);
+            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg);
             gameObject.SetActive(false);
         }
     }

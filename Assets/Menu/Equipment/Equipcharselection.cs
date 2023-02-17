@@ -21,7 +21,6 @@ public class Equipcharselection : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI[] slotbuttontext;
     [SerializeField] private GameObject[] charbuttons;
-    [SerializeField] private GameObject resetonpointerenterlayer;
 
     private void Awake()
     {
@@ -29,7 +28,7 @@ public class Equipcharselection : MonoBehaviour
     }
     private void OnEnable()
     {
-        Statics.currentequipmentchar = PlayerPrefs.GetInt("Maincharindex");
+        Statics.currentequipmentchar = 0;           //PlayerPrefs.GetInt("Maincharindex");
         nametext.text = Statics.characternames[Statics.currentequipmentchar] + " LvL" + Statics.charcurrentlvl;
         settextandimage(Statics.currentequipmentchar);
     }
@@ -37,12 +36,10 @@ public class Equipcharselection : MonoBehaviour
     {
         if (Steuerung.Menusteuerung.Menucharselectionleft.WasPerformedThisFrame())
         {
-            resetonpointerenterlayer.SetActive(true);
             selectionbackward();
         }
         if (Steuerung.Menusteuerung.Menucharselectionright.WasPerformedThisFrame())
         {
-            resetonpointerenterlayer.SetActive(true);
             selectionforward();
         }
     }

@@ -6,77 +6,80 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
 public class Inventorycontroller : ScriptableObject
 {
+    public Inventorycontroller matsinventory;
     public Inventory Container;
     private string loottext;
-    //public List<Inventoryslot> Container = new List<Inventoryslot>();
-    public void Additem(GameObject player, Itemcontroller _item, int _amount)
+    public void Additem(Itemcontroller item, int amount)
     {
-        for (int i = 0; i < Container.Items.Length; i++)
+        if (item.inventoryslot != 0)
         {
-            if (Container.Items[i].item == _item)
-            {
-                Container.Items[i].Addamount(_amount);
-                Container.Items[i].inventoryposi = i + 1;                             // ist hier unnötig aber ist erstmal zur absicherung drin, muss theoretisch nur bei setfirstemptyslot gecalled werden
-                _item.inventoryslot = i + 1;
-                return;
-            }
+            matsinventory.Container.Items[item.inventoryslot - 1].amount += amount;
+            loottext = amount + "x " + item.name;
+            LoadCharmanager.Overallmainchar.GetComponent<Displayloot>().displayloot(loottext);
         }
-        setfirstemptyslot(_item, _amount);
-        player.GetComponent<Displayloot>().displayloot(_item.name.ToString());
+        else
+        {
+            setfirstemptyslot(item, amount);
+            LoadCharmanager.Overallmainchar.GetComponent<Displayloot>().displayloot(item.name.ToString());
+        }
     }
 
-    public void Addequipment(GameObject player, Itemcontroller _item, Itemcontroller _seconditem, int _seconditemamount)
+    public void Addequipment(Itemcontroller item, Itemcontroller seconditem, int seconditemamount)
     {
-        for (int i = 0; i < Container.Items.Length; i++)
+        if (item.inventoryslot != 0)
         {
-            if (Container.Items[i].item == _item)
+            if(seconditem.inventoryslot != 0)
             {
-                player.GetComponent<Movescript>().matsinventory.convertedAdditem(_seconditem, _seconditemamount);
-                loottext = _item.name + " convert to 1x " + _seconditem.name;
-                player.GetComponent<Displayloot>().displayloot(loottext);
-                return;
+                matsinventory.Container.Items[item.inventoryslot - 1].amount += seconditemamount;
+                loottext = item.name + " convert to " + seconditemamount + "x " + seconditem.name;
+                LoadCharmanager.Overallmainchar.GetComponent<Displayloot>().displayloot(loottext);
+            }
+            else
+            {
+                loottext = item.name + " convert to " + seconditemamount + "x " + seconditem.name;
+                LoadCharmanager.Overallmainchar.GetComponent<Displayloot>().displayloot(loottext);
+                setfirstitemifconverted(seconditem, seconditemamount);
             }
         }
-        setfirstemptyslot(_item, _seconditemamount);
-        player.GetComponent<Displayloot>().displayloot(_item.name.ToString());
-    }
-    private void convertedAdditem(Itemcontroller _item, int _amount)
-    {
-        for (int i = 0; i < Container.Items.Length; i++)
+        else
         {
-            if (Container.Items[i].item == _item)
-            {
-                Container.Items[i].Addamount(_amount);
-                Container.Items[i].inventoryposi = i + 1;                             // ist hier unnötig aber ist erstmal zur absicherung drin, muss theoretisch nur bei setfirstemptyslot gecalled werden
-                _item.inventoryslot = i + 1;
-                return;
-            }
+            setfirstemptyslot(item, 1);
+            LoadCharmanager.Overallmainchar.GetComponent<Displayloot>().displayloot(item.name.ToString());
         }
-        setfirstemptyslot(_item, _amount);
     }
-
-
-    public Inventoryslot setfirstemptyslot(Itemcontroller _item, int _amount)
+    public Inventoryslot setfirstemptyslot(Itemcontroller item, int amount)
     {
         for (int i = 0; i < Container.Items.Length; i++)
         {
             if (Container.Items[i].amount == 0)
             {
-                Container.Items[i].slotupdate(_item, _amount);
+                Container.Items[i].slotupdate(item, amount);
                 Container.Items[i].inventoryposi = i + 1;
-                _item.inventoryslot = i + 1;
+                item.inventoryslot = i + 1;
                 return Container.Items[i];
             }
         }
+        return null;       
+    }
+    private Inventoryslot setfirstitemifconverted(Itemcontroller item, int amount)
+    {
+        for (int i = 0; i < matsinventory.Container.Items.Length; i++)
+        {
+            if (matsinventory.Container.Items[i].amount == 0)
+            {
+                matsinventory.Container.Items[i].slotupdate(item, amount);
+                matsinventory.Container.Items[i].inventoryposi = i + 1;
+                item.inventoryslot = i + 1;
+                return matsinventory.Container.Items[i];
+            }
+        }
         return null;
-        
     }
 }
 [System.Serializable]
 public class Inventory
 {
     public string savepathname;
-    //public List<Inventoryslot> Items = new List<Inventoryslot>();
     public Inventoryslot[] Items = new Inventoryslot[28];
 }
 [System.Serializable]

@@ -13,20 +13,27 @@ public class Dragslotspell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [NonSerialized] public Color spellcolor;
     [NonSerialized] public string spelltext;
     public int spellnumber;                            //wird beim löschen nicht zurückgesetzt, sollte aber egal sein weil man sowieso nicht dragen kann
+    [SerializeField] private int dragedfromchar;
+    private Dragspellcontroller dragspellcontroller;
 
+    private void Awake()
+    {
+        dragspellcontroller = dragimage.GetComponent<Dragspellcontroller>();
+    }
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (gotspell == true)
         {
-            Dragspellcontroller.drag = true;
-            Dragspellcontroller.dragfromspellslot = true;                                   //für dragswitch
+            Dragspellcontroller.dragedfromouterspellcircle = false;
+            Dragspellcontroller.dragedfromspellslot = true;                                   //für dragswitch
 
             Dragspellcontroller.currentspellslot = this.gameObject;                         //für dragswitch
 
             dragimage.SetActive(true);
             dragimage.GetComponent<Image>().color = spellcolor;
             dragimage.GetComponentInChildren<TextMeshProUGUI>().text = spelltext;
-            dragimage.GetComponent<Dragspellcontroller>().spellnumber = spellnumber;
+            dragspellcontroller.spellnumber = spellnumber;
+            Dragspellcontroller.checkforcorrectslot = dragedfromchar;
             dragimage.GetComponent<CanvasGroup>().blocksRaycasts = false;
         }
     }
@@ -44,8 +51,8 @@ public class Dragslotspell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             dragimage.GetComponent<CanvasGroup>().blocksRaycasts = true;
             dragimage.SetActive(false);
-            Dragspellcontroller.drag = false;
-            Dragspellcontroller.dragfromspellslot = false;
+            Dragspellcontroller.dragedfromouterspellcircle = false;
+            Dragspellcontroller.dragedfromspellslot = false;
         }
     }
 }

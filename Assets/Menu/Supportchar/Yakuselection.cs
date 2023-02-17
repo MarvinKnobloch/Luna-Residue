@@ -6,7 +6,7 @@ public class Yakuselection : MonoBehaviour
 {
     private void OnEnable()
     {
-        if (PlayerPrefs.GetInt("Maincharindex") == 3 || PlayerPrefs.GetInt("Secondcharindex") == 3)
+        if (Statics.currentfirstchar == 3 || Statics.currentsecondchar == 3)
         {
             this.gameObject.SetActive(false);
         }

@@ -41,7 +41,7 @@ public class Upgradeuitextcontroller : MonoBehaviour
         chooseitem = null;
         upgradecontroller.chooseweapon = null;
     }
-
+#if UNITY_EDITOR
     private void Update()
     {
         if (Steuerung.Player.Attack3.WasPressedThisFrame())                //stats zurücksetzt, damit ich es nicht von hand machen muss
@@ -55,6 +55,7 @@ public class Upgradeuitextcontroller : MonoBehaviour
             }
         }
     }
+#endif
     public void valuesupdate()
     {
         itemheaderandcheckforupgrade();

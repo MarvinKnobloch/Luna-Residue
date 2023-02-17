@@ -101,6 +101,7 @@ public class Awakecontroller : MonoBehaviour
         }
         awakeimage.fillAmount = 0;
         stonecontroller.isactiv = true;
+        Statics.stoneisactivated[stonecontroller.stonenumber] = true;
         Color colornew = stonecontroller.gameObject.GetComponent<Image>().color;
         colornew.a = 1;
         stonecontroller.gameObject.GetComponent<Image>().color = colornew;

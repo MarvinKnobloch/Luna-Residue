@@ -22,15 +22,15 @@ public class Vampiresphere : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, 2.5f, Aoetargets);
         foreach (Collider target in colliders)
         {
-            if (target.GetComponent<SpielerHP>())
+            if (target.GetComponent<Playerhp>())
             {
                 if (target.GetComponent<Supportmovement>())
                 {
-                    target.GetComponent<SpielerHP>().TakeDamage(Mathf.Round(basedmg / 3));
+                    target.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg / 3));
                 }
                 else
                 {
-                    target.GetComponent<SpielerHP>().TakeDamage(basedmg);
+                    target.GetComponent<Playerhp>().TakeDamage(basedmg);
                 }
             }
         }

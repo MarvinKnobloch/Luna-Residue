@@ -45,31 +45,13 @@ public class Charswitch : MonoBehaviour
     }
     private void switchtosecondchar()
     {
-        if (Statics.healmissingtime > 9f)
-        {
-            Statics.healmissingtime = 9f;
-            GlobalCD.onswitchhealingcd();
-        }
-        Statics.otheraction = false;
-        Time.timeScale = Statics.normalgamespeed;
-        Time.fixedDeltaTime = Statics.normaltimedelta;
-        LoadCharmanager.Overallsecondchar.transform.position = LoadCharmanager.Overallmainchar.transform.position;
-        LoadCharmanager.Overallsecondchar.transform.rotation = LoadCharmanager.Overallmainchar.transform.rotation;
-        LoadCharmanager.Overallmainchar.SetActive(false);
-        LoadCharmanager.Savechar = LoadCharmanager.Overallmainchar;
-        LoadCharmanager.Overallmainchar = LoadCharmanager.Overallsecondchar;
-        LoadCharmanager.Overallmainchar.SetActive(true);
-        LoadCharmanager.Overallsecondchar = LoadCharmanager.Savechar;
+        switchvalues();
         GetComponent<HealthUImanager>().switchtosecond();
-        Cam1.LookAt = LoadCharmanager.Overallmainchar.transform;
-        Cam1.Follow = LoadCharmanager.Overallmainchar.transform;
-        aimcam.LookAt = LoadCharmanager.Overallmainchar.transform;
-        aimcam.Follow = LoadCharmanager.Overallmainchar.transform;
-        GlobalCD.currentcharswitchchar = PlayerPrefs.GetInt("Secondcharindex");
+        GlobalCD.currentcharswitchchar = Statics.currentsecondchar;
         GlobalCD.startcharswitch();
         ability1.color = Statics.spellcolors[3];
         ability2.color = Statics.spellcolors[4];
-        if(Statics.secondcharstoneclass == 1)
+        if(Statics.characterclassroll[Statics.currentsecondchar] == 1)
         {
             Statics.playertookdmgfromamount = 2;
         }
@@ -78,36 +60,17 @@ public class Charswitch : MonoBehaviour
             Statics.playertookdmgfromamount = 1;
         }
         Statics.currentactiveplayer = 1;                                                     
-        manacontroller.Managemana(5);
     }
 
     private void switchtomainchar()
     {
-        if (Statics.healmissingtime > 9f)
-        {
-            Statics.healmissingtime = 9f;
-            GlobalCD.onswitchhealingcd();
-        }
-        Statics.otheraction = false;
-        Time.timeScale = Statics.normalgamespeed;
-        Time.fixedDeltaTime = Statics.normaltimedelta;
-        LoadCharmanager.Overallsecondchar.transform.position = LoadCharmanager.Overallmainchar.transform.position;
-        LoadCharmanager.Overallsecondchar.transform.rotation = LoadCharmanager.Overallmainchar.transform.rotation;
-        LoadCharmanager.Overallmainchar.SetActive(false);
-        LoadCharmanager.Savechar = LoadCharmanager.Overallmainchar;
-        LoadCharmanager.Overallmainchar = LoadCharmanager.Overallsecondchar;
-        LoadCharmanager.Overallmainchar.SetActive(true);
-        LoadCharmanager.Overallsecondchar = LoadCharmanager.Savechar;
+        switchvalues();
         GetComponent<HealthUImanager>().switchtomain();
-        Cam1.LookAt = LoadCharmanager.Overallmainchar.transform;
-        Cam1.Follow = LoadCharmanager.Overallmainchar.transform;
-        aimcam.LookAt = LoadCharmanager.Overallmainchar.transform;
-        aimcam.Follow = LoadCharmanager.Overallmainchar.transform;
-        GlobalCD.currentcharswitchchar = PlayerPrefs.GetInt("Maincharindex");
+        GlobalCD.currentcharswitchchar = Statics.currentfirstchar;
         GlobalCD.startcharswitch();
         ability1.color = Statics.spellcolors[0];
         ability2.color = Statics.spellcolors[1];
-        if (Statics.maincharstoneclass == 1)
+        if (Statics.characterclassroll[Statics.currentfirstchar] == 1)
         {
             Statics.playertookdmgfromamount = 2;
         }
@@ -115,9 +78,26 @@ public class Charswitch : MonoBehaviour
         {
             Statics.playertookdmgfromamount = 1;
         }
-        Statics.currentactiveplayer = 0;                      //PlayerPrefs.GetInt("Maincharindex");
+        Statics.currentactiveplayer = 0;
+    }
+    private void switchvalues()
+    {
+        Time.timeScale = Statics.normalgamespeed;
+        Time.fixedDeltaTime = Statics.normaltimedelta;
+        LoadCharmanager.Overallsecondchar.transform.position = LoadCharmanager.Overallmainchar.transform.position;
+        LoadCharmanager.Overallsecondchar.transform.rotation = LoadCharmanager.Overallmainchar.transform.rotation;
+        LoadCharmanager.Overallmainchar.SetActive(false);
+        GameObject Savechar = LoadCharmanager.Overallmainchar;
+        LoadCharmanager.Overallmainchar = LoadCharmanager.Overallsecondchar;
+        LoadCharmanager.Overallmainchar.SetActive(true);
+        LoadCharmanager.Overallsecondchar = Savechar;
+        Cam1.LookAt = LoadCharmanager.Overallmainchar.transform;
+        Cam1.Follow = LoadCharmanager.Overallmainchar.transform;
+        aimcam.LookAt = LoadCharmanager.Overallmainchar.transform;
+        aimcam.Follow = LoadCharmanager.Overallmainchar.transform;
+        LoadCharmanager.Overallmainchar.gameObject.GetComponent<Playerhp>().playerhpuislot = 0;
         manacontroller.Managemana(5);
-    }    
+    }
 }
 
 
@@ -126,25 +106,6 @@ if (Statics.healmissingtime > 9f)
 {
     Statics.healmissingtime = 9f;
     GlobalCD.onswitchhealingcd();
-}
-Statics.otheraction = false;
-Time.timeScale = normalgamespeed;
-Time.fixedDeltaTime = normaltimedelta;
-LockonUI.SetActive(false);
-Cam1.m_RecenterToTargetHeading.m_RecenteringTime = 0.2f;
-Movescript.lockoncheck = false;
-Cam1.m_RecenterToTargetHeading.m_enabled = false;
-Movescript.availabletargets.Clear();
-LoadCharmanager.Overallsecondchar.transform.position = LoadCharmanager.Overallmainchar.transform.position;
-LoadCharmanager.Overallsecondchar.transform.rotation = LoadCharmanager.Overallmainchar.transform.rotation;
-LoadCharmanager.Overallmainchar.SetActive(false);
-LoadCharmanager.Overallsecondchar.SetActive(true);
-GetComponent<HealthUImanager>().switchtosecond();
-Cam1.LookAt = LoadCharmanager.Overallsecondchar.transform;
-Cam1.Follow = LoadCharmanager.Overallsecondchar.transform;
-Cam2.LookAt = LoadCharmanager.Overallsecondchar.transform;
-Cam2.Follow = LoadCharmanager.Overallsecondchar.transform;
-secondcharscript.enabled = true;
-this.enabled = false;*/
+}*/
 
 

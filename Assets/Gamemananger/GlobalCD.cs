@@ -16,9 +16,6 @@ public class GlobalCD : MonoBehaviour
     public static int currentweaponswitchchar;
     public static int currentcharswitchchar;
 
-    public Image kickcdUI;
-    public Text kickcdtext;
-
     public Image weaponswitchcdUI;
     public Text weaponswitchtext;
 
@@ -33,18 +30,16 @@ public class GlobalCD : MonoBehaviour
     public Text charwechseltext;
 
     private bool dashcounterisrunning;
-    private bool weaponbuffcounterisrunning;
     private bool charswitchbuffisrunning;
 
     private float currentmissingweaponbufftime;
     private float currentmissingcharbufftime;
     void Awake()
     {
-        Statics.kickcdbool = false;
         Statics.dashcdbool = false;
         Statics.charswitchbool = false;
         Statics.healcdbool = true;
-        Statics.charwechselbuff = 100;
+        Statics.characterswitchbuff = 100;
         Statics.weaponswitchbuff = 100;
         Statics.otheraction = false;
         instance = this;
@@ -75,16 +70,14 @@ public class GlobalCD : MonoBehaviour
     {
         instance.StartCoroutine("resetdash");
     }
-    public static void startkickcd()
-    {
-        instance.StartCoroutine("kickcd");
-    }
     public static void startweaponswitchcd()
     {
         instance.StartCoroutine("weaponcd");
     }
-    public static void startweaponswitchbuff()
+    public static void startweaponswitchbuff(int currentchar)
     {
+        currentweaponswitchchar = currentchar;
+        instance.StopCoroutine("weaponswitchbuff");
         instance.StartCoroutine("weaponswitchbuff");
     }
     public static void startcharswitch()
@@ -177,27 +170,6 @@ public class GlobalCD : MonoBehaviour
             yield return null;
         }
     }
-    IEnumerator kickcd()
-    {
-        Statics.kickcdbool = true;
-        kickcdUI.fillAmount = 0;
-        Statics.kickcdmissingtime = 0;
-
-        while (true)
-        {
-            Statics.kickcdmissingtime += Time.deltaTime;
-            kickcdUI.fillAmount = Statics.kickcdmissingtime / Statics.kickcd;
-            kickcdtext.text = Mathf.RoundToInt(Statics.kickcd - Statics.kickcdmissingtime).ToString();
-
-            if (Statics.kickcdmissingtime >= Statics.kickcd)
-            {
-                Statics.kickcdbool = false;
-                kickcdtext.text = "";
-                StopCoroutine("kickcd");
-            }
-            yield return null;
-        }
-    }
     IEnumerator weaponcd()
     {
         Statics.weapsonswitchbool = true;
@@ -221,19 +193,10 @@ public class GlobalCD : MonoBehaviour
     }
     IEnumerator weaponswitchbuff()
     {
-        weaponswitchbuffimage.SetActive(true);
-        if (weaponbuffcounterisrunning == true)
-        {
-            StopCoroutine("weaponswitchbuff");
-            weaponbuffcounterisrunning = false;
-            StartCoroutine("weaponswitchbuff");
-        }
-        else
-        {
-            Statics.weaponswitchbuffmissingtime += Statics.charweaponbuffduration[currentweaponswitchchar];
-            weaponbuffcounterisrunning = true;
-            currentmissingweaponbufftime = Statics.weaponswitchbuffmissingtime;
-        }
+        weaponswitchbuffimage.SetActive(true);       
+        Statics.weaponswitchbuffmissingtime += Statics.charweaponbuffduration[currentweaponswitchchar];
+        currentmissingweaponbufftime = Statics.weaponswitchbuffmissingtime;
+        
         while (true)
         {
             Statics.weaponswitchbuffmissingtime -= Time.deltaTime;
@@ -245,7 +208,6 @@ public class GlobalCD : MonoBehaviour
                 Statics.weaponswitchbuff = 100;
                 weaponswitchbuffimage.SetActive(false);
                 StopCoroutine("weaponswitchbuff");
-                weaponbuffcounterisrunning = false;
             }
             yield return null;
         }
@@ -256,7 +218,7 @@ public class GlobalCD : MonoBehaviour
         charwechselcdUI.fillAmount = 0;
         Statics.charswitchmissingtime = 0;
 
-        Statics.charwechselbuff = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().charswitchbuff;
+        Statics.characterswitchbuff = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().charswitchbuff;
         charwechselbuffUI.fillAmount = 0;
         while (true)
         {
@@ -296,7 +258,7 @@ public class GlobalCD : MonoBehaviour
 
             if (Statics.charswitchbuffmissingtime <= 0)
             {
-                Statics.charwechselbuff = 100;
+                Statics.characterswitchbuff = 100;
                 charswitchbuffimage.SetActive(false);
                 charswitchbuffisrunning = false;
                 StopCoroutine("charswitchbuff");

@@ -32,11 +32,11 @@ public class Movescript : MonoBehaviour
     [NonSerialized] public Vector2 move;
     [NonSerialized] public Vector3 moveDirection;
     [NonSerialized] public Vector3 velocity;
-    public float movementspeed;
-    public float rotationspeed;
-    public float jumpheight;
+    public float movementspeed = Statics.playermovementspeed;
+    public float rotationspeed = Statics.playerroationspeed;
+    public float jumpheight = Statics.playerjumpheight;
     public float gravitation;
-    public float normalgravition = 3.5f;
+    public float normalgravition = Statics.playergravity;
     public float graviti;
     [NonSerialized] public float maxgravity = -35;
 
@@ -89,19 +89,6 @@ public class Movescript : MonoBehaviour
     public string currentstate;
     const string idlestate = "Idle";
     const string dazestate = "Daze";
-
-    //Inventory;
-    public Inventorycontroller matsinventory;
-    public Inventorycontroller swordinventory;
-    public Inventorycontroller bowinventory;
-    public Inventorycontroller fistinventory;
-    public Inventorycontroller headinventory;
-    public Inventorycontroller chestinventory;
-    public Inventorycontroller glovesinventory;
-    public Inventorycontroller shoesinventory;
-    public Inventorycontroller beltinventory;
-    public Inventorycontroller necklessinventory;
-    public Inventorycontroller ringinventory;
 
     //Lockon
     public LayerMask Lockonlayer;
@@ -173,7 +160,6 @@ public class Movescript : MonoBehaviour
 
     void Awake()
     {
-        Statics.spellnumbers[0] = 15;
         lockonrange = Statics.playerlockonrange;
         Charrig.enabled = false;
         controlls = Keybindinputmanager.inputActions;

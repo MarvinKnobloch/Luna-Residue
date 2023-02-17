@@ -36,7 +36,7 @@ public class Gasmancontroller : MonoBehaviour
     }
     private void turnoffeverything()
     {
-        LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().TakeDamage(toslowdmg);
+        LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(toslowdmg);
         blueline.SetActive(false);
         redline.SetActive(false);
         gameObject.SetActive(false);

@@ -15,13 +15,13 @@ public class Bowsupport : MonoBehaviour
     private float enddmgtodeal;
 
     private Attributecontroller attributecontroller;
-    private SpielerHP hpscript;
+    private Playerhp hpscript;
     private Supportmovement supportmovescript;
 
     private void Awake()
     {
         attributecontroller = GetComponent<Attributecontroller>();
-        hpscript = GetComponent<SpielerHP>();
+        hpscript = GetComponent<Playerhp>();
         supportmovescript = GetComponent<Supportmovement>();
     }
 
@@ -32,11 +32,8 @@ public class Bowsupport : MonoBehaviour
 
     private void bowdmgupdate()
     {
-        basicdmgtodeal = Mathf.Round(basicarrowdmg + attributecontroller.dmgfromallies + attributecontroller.bowattack);
-        basicdmgtodeal += Mathf.Round(attributecontroller.overallstonebonusdmg * 0.01f * basicdmgtodeal);
-
-        enddmgtodeal = Mathf.Round(endarrowdmg + attributecontroller.dmgfromallies + attributecontroller.bowattack);
-        enddmgtodeal += Mathf.Round(attributecontroller.overallstonebonusdmg * 0.01f * enddmgtodeal);
+        basicdmgtodeal = Damagecalculation.calculateplayerdmgdone(basicarrowdmg, attributecontroller.dmgfromallies, attributecontroller.bowattack, attributecontroller.stoneclassbonusdmg);
+        enddmgtodeal = Damagecalculation.calculateplayerdmgdone(endarrowdmg, attributecontroller.dmgfromallies, attributecontroller.bowattack, attributecontroller.stoneclassbonusdmg);
     }
 
     private void shotchainarrow()

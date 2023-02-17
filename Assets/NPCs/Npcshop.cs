@@ -15,10 +15,7 @@ public class Npcshop : MonoBehaviour
     }
     private void OnEnable()
     {
-#if !UNITY_EDITOR
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-#endif
+
         cam.gameObject.SetActive(false);
         Time.timeScale = 0f;
         npcshopui.GetComponent<Npcshopcontroller>().npcshopitems.Clear();
@@ -27,6 +24,7 @@ public class Npcshop : MonoBehaviour
             npcshopui.GetComponent<Npcshopcontroller>().npcshopitems.Add(shopitems[i]);
         }
         npcshopui.SetActive(true);
+        Mouseactivate.enablemouse();
         
     }
     private void Update()
@@ -42,6 +40,7 @@ public class Npcshop : MonoBehaviour
             cam.gameObject.SetActive(true);
             Time.timeScale = Statics.normalgamespeed;
             enabled = false;
+            Mouseactivate.disablemouse();
         }
     }
 }

@@ -31,13 +31,13 @@ public class SwordController : MonoBehaviour
     private Manamanager manacontroller;
 
     private Attributecontroller attributecontroller;
-    private SpielerHP spielerhp;
+    private Playerhp spielerhp;
 
     private void Awake()
     {
         attributecontroller = GetComponent<Attributecontroller>();
         manacontroller = charmanager.GetComponent<Manamanager>();
-        spielerhp = GetComponent<SpielerHP>();
+        spielerhp = GetComponent<Playerhp>();
     }
     private void OnEnable()
     {
@@ -51,14 +51,9 @@ public class SwordController : MonoBehaviour
     }
     private void sworddmgupdate()
     {
-        overallbasicdmg = chainbasicdmg + attributecontroller.attack + attributecontroller.swordattack;
-        overallbasicdmg += attributecontroller.overallstonebonusdmg * 0.01f * overallbasicdmg;
-
-        overallenddmg = chainenddmg + attributecontroller.attack + attributecontroller.swordattack;
-        overallenddmg += attributecontroller.overallstonebonusdmg * 0.01f * overallenddmg;
-
-        basicweaponswitchdmg = weaponswitchdmg + attributecontroller.attack + attributecontroller.swordattack;
-        basicweaponswitchdmg += attributecontroller.overallstonebonusdmg * 0.01f * basicweaponswitchdmg;
+        overallbasicdmg = Damagecalculation.calculateplayerdmgdone(chainbasicdmg, attributecontroller.attack, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
+        overallenddmg = Damagecalculation.calculateplayerdmgdone(chainenddmg, attributecontroller.attack, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
+        basicweaponswitchdmg = Damagecalculation.calculateplayerdmgdone(weaponswitchdmg, attributecontroller.attack, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
 
         overallcritchance = Statics.playerbasiccritchance + attributecontroller.critchance;
     }
@@ -124,12 +119,12 @@ public class SwordController : MonoBehaviour
         if (Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
         {
             crit = true;
-            dmgdealed = Mathf.Round(dmg * (attributecontroller.critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100f) / 100));
+            dmgdealed = Mathf.Round(dmg * (attributecontroller.critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.characterswitchbuff - 100f) / 100));
         }
         else
         {
             crit = false;
-            dmgdealed = Mathf.Round(dmg * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100));
+            dmgdealed = Mathf.Round(dmg * ((Statics.weaponswitchbuff + Statics.characterswitchbuff - 100) / 100));
         }
     }
     private void healandmana(int type, float manarestore)

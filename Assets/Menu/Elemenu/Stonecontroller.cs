@@ -12,6 +12,7 @@ public class Stonecontroller : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private TextMeshProUGUI stonetext;
     public int element;
     public bool isactiv;
+    public int stonenumber;
 
     private Elemenucontroller elemenucontroller;
     private GameObject awakemessageobj;
@@ -36,12 +37,12 @@ public class Stonecontroller : MonoBehaviour, IPointerEnterHandler, IPointerExit
     {
         if (isactiv == true)
         {
-            GetComponentInParent<Stonegridcontroller>().checkforcorrectelementinslot(element);
+            GetComponentInParent<Stonegridcontroller>().resetslotifnewelement(element);
             elemenucontroller.stoneclassroll = stoneclassroll;                     // roll(Damage, Tank , Healer)
             elemenucontroller.stonetext = stonetext.text;
             elemenucontroller.stonecolor = GetComponent<Image>().color;
             elemenucontroller.elementonstoneselect = element;                      //element des Ausgewählen Steines
-            elemenucontroller.choosestone(this.gameObject);
+            elemenucontroller.choosestone();
         }
     }
 

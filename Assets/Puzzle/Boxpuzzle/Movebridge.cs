@@ -13,7 +13,15 @@ public class Movebridge : MonoBehaviour
     public float movebridgetimer;
     public Vector3 startposi;
     public Vector3 endposi;
+    [SerializeField] private Firstarea firstarea;
 
+    private void Start()
+    {
+        if(firstarea.boxpuzzlecomplete == true)
+        {
+            transform.position = endposi;
+        }
+    }
     private void OnEnable()
     {
         Boxfinish.checkforbridge += bridge;
@@ -36,10 +44,10 @@ public class Movebridge : MonoBehaviour
         }
         if(needcubes == cubesfinished)
         {
-            if(bridgemoves == false)
+            if(firstarea.boxpuzzlecomplete == false)
             {
                 StartCoroutine("movebridge");
-                bridgemoves = true;
+                firstarea.boxpuzzlecomplete = true;
             }
         }
     }
@@ -53,7 +61,7 @@ public class Movebridge : MonoBehaviour
 
             if (movingbridge >= movebridgetimer)
             {
-                StopCoroutine("openthegate");
+                StopCoroutine("movebridge");
             }
             yield return null;
         }

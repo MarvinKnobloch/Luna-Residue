@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class Matsitemcontroller : MonoBehaviour
 {
-    public Itemcontroller item;
+    [SerializeField] private Itemcontroller item;
+    [SerializeField] private Inventorycontroller matsinventory;
+    private bool pickuponce;
+
+    private void OnEnable()
+    {
+        pickuponce = true;
+    }
     public void OnTriggerEnter(Collider other)
     {
-        //if (other.GetComponent<Movescript>())
-        if(other.gameObject == LoadCharmanager.Overallmainchar)
+        if(other.gameObject == LoadCharmanager.Overallmainchar && pickuponce == true)
         {
-            GameObject player = other.gameObject;
-            other.GetComponent<Movescript>().matsinventory.Additem(player, item, 1);
-            Destroy(transform.parent.gameObject);
+            pickuponce = false;
+            matsinventory.Additem(item, 1);
+            transform.parent.gameObject.SetActive(false);
         }
     }
 }

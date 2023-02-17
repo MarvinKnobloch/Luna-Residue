@@ -30,9 +30,11 @@ public class Aoearrow : MonoBehaviour
     {
         aoeradius = radius;
         dmgtype = type;
-        overalldmg = Mathf.Round((dmg + LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().attack + LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().bowattack) * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100f) / 100));
+        Attributecontroller atb = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>();
+        overalldmg = Damagecalculation.calculateplayerdmgdone(dmg, atb.attack, atb.bowattack, atb.stoneclassbonusdmg);
+        overalldmg = Mathf.Round(overalldmg * ((Statics.weaponswitchbuff + Statics.characterswitchbuff - 100f) / 100));
         overallcritchance = Statics.playerbasiccritchance + LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critchance;
-        overallcritdmg = Mathf.Round(overalldmg * (LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100f) / 100));
+        overallcritdmg = Mathf.Round(overalldmg * (LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.characterswitchbuff - 100f) / 100));
     }
 
     void Update()
@@ -102,7 +104,7 @@ public class Aoearrow : MonoBehaviour
                 else
                 {
                     Manamanager.manamanager.Managemana(Statics.bowendmanarestore);
-                    LoadCharmanager.Overallmainchar.gameObject.GetComponent<SpielerHP>().playerheal(7);
+                    LoadCharmanager.Overallmainchar.gameObject.GetComponent<Playerhp>().playerheal(7);
                 }
             }
         }

@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class Equipmentmenucontroller : MonoBehaviour
 {
-    private SpielerSteu steuerung;
+    private SpielerSteu controlls;
 
     [SerializeField] private GameObject overview;
     [SerializeField] private GameObject equipmentmenu;
@@ -15,7 +15,7 @@ public class Equipmentmenucontroller : MonoBehaviour
 
     private void Awake()
     {
-        steuerung = Keybindinputmanager.inputActions;
+        controlls = Keybindinputmanager.inputActions;
     }
     private void OnEnable()
     {
@@ -30,7 +30,7 @@ public class Equipmentmenucontroller : MonoBehaviour
     }
     private void Update()
     {
-        if (steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame())
+        if (controlls.Menusteuerung.Menuesc.WasPerformedThisFrame())
         {
             overview.SetActive(true);
             equipmentmenu.SetActive(false);

@@ -12,7 +12,8 @@ public class Startmenucontroller : MonoBehaviour
     [SerializeField] private GameObject[] buttons;
     [SerializeField] private GameObject loadgameobj;
     [SerializeField] private GameObject settingsobj;
-    [SerializeField] private Setitemsandinventory setitemsandinventory;
+    private Setitemsandinventory setitemsandinventory;
+    private Setstaticsnull setstaticsnull;
     //private Isaveload loadsaveinterface = new Saveloadgame();
     private Convertstatics convertstatics = new Convertstatics();
 
@@ -21,6 +22,8 @@ public class Startmenucontroller : MonoBehaviour
 
     private void Awake()
     {
+        setitemsandinventory = GetComponent<Setitemsandinventory>();
+        setstaticsnull = GetComponent<Setstaticsnull>();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         loadgamesettings();
@@ -32,6 +35,7 @@ public class Startmenucontroller : MonoBehaviour
         {
             button.GetComponent<Image>().color = notselectedcolor;
         }
+        Mouseactivate.enablemouse();
     }
     private void loadsaveslots()
     {
@@ -49,17 +53,6 @@ public class Startmenucontroller : MonoBehaviour
             {
                 Debug.Log("Data Slot" + i + " doesn't exist");
             }
-            /*try
-            {
-                string loadpath = "/Statics" + i + ".json";
-                statics = loadsaveinterface.loaddata<Statics>(loadpath);
-                Debug.Log("data has been loaded");
-                saveslotvalues(i);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"error Could not load data {e.Message} {e.StackTrace}");
-            }*/
         }
     }
     private void loadgamesettings()
@@ -75,24 +68,69 @@ public class Startmenucontroller : MonoBehaviour
     }
     public void newgame()
     {
-        PlayerPrefs.SetInt("Maincharindex", 0);
-        PlayerPrefs.SetInt("Secondcharindex", 1);
-        PlayerPrefs.SetInt("Thirdcharindex", 2);
-        PlayerPrefs.SetInt("Forthcharindex", 3);
+        Statics.currentfirstchar = 0;
+        Statics.currentsecondchar = 1;
+        Statics.currentthirdchar = 2;
+        Statics.currentforthchar = 3;
 
-        PlayerPrefs.SetInt("Mariamainweaponindex", 0);
-        PlayerPrefs.SetInt("Mariasecondweaponindex", 1);
-        PlayerPrefs.SetInt("Erikamainweaponindex", 0);
-        PlayerPrefs.SetInt("Erikasecondweaponindex", 1);
-        PlayerPrefs.SetInt("Kajamainweaponindex", 0);
-        PlayerPrefs.SetInt("Kajasecondweaponindex", 1);
-        PlayerPrefs.SetInt("Yakumainweaponindex", 0);
-        PlayerPrefs.SetInt("Yakusecondweaponindex", 1);
-        PlayerPrefs.SetInt("Arissamainweaponindex", 0);
-        PlayerPrefs.SetInt("Arissasecondweaponindex", 1);
+        Statics.charcurrentlvl = 1;
+        Statics.charcurrentexp = 0;
+        Statics.charrequiredexp = 52;
+
+        Statics.charbasichealth = new float[] { 100, 93, 97, 91, 95 };
+        Statics.charcurrenthealth = new float[] { 100, 93, 97, 91, 95 };
+        Statics.charmaxhealth = new float[] { 100, 93, 97, 91, 95 };
+        Statics.chardefense = new float[] { 100, 100, 100, 100, 100 };
+        Statics.charattack = new float[] { 1, 1, 1, 1, 1 };
+        Statics.charcritchance = new float[] { 5, 5, 5, 5, 5 };
+        Statics.charcritdmg = new float[] { 150, 150, 150, 150, 150 };
+        Statics.charweaponbuff = new float[] { 100, 100, 100, 100, 100 };
+        Statics.charweaponbuffduration = new float[] { 5, 5, 5, 5, 5 };
+        Statics.charswitchbuff = new float[] { 100, 100, 100, 100, 100 };
+        Statics.charswitchbuffduration = new float[] { 5, 5, 5, 5, 5 };
+        Statics.charbasiccritbuff = new float[] { 1, 1, 1, 1, 1 };
+        Statics.charbasicdmgbuff = new float[] { 150, 150, 150, 150, 150 };
+
+        //resetgameplaystatics
+        Statics.healcdbool = false;
+        Statics.dashcdbool = false;
+        Statics.weapsonswitchbool = false;
+        Statics.charswitchbool = false;
+        Statics.characterswitchbuff = 100;
+        Statics.weaponswitchbuff = 100;
+        Statics.timer = false;
+
+        Statics.stoneisactivated = new bool[24];
+        Statics.charactersecondelement = new int[] { -1, -1, -1, -1, -1 };
+        Statics.charactersecondelementcolor = new Color[] { new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255) };
+        Statics.characterclassrolltext = new string[5];
+        Statics.characterclassroll = new int[] { -1, -1, -1, -1, -1 };
+        Statics.groupstonehealbonus = 0;
+        Statics.groupstonedefensebonus = 0;
+        Statics.groupstonedmgbonus = 0;
+
+        for (int i = 0; i < Statics.playablechars; i++)
+        {
+            Statics.firstweapon[i] = 0;
+            Statics.secondweapon[i] = 1;
+        }
+        for (int i = 0; i < Statics.playablechars; i++)
+        {
+            Statics.charspendedskillpoints[i] = 0;
+            Statics.charskillpoints[i] = 0;
+            Statics.charhealthskillpoints[i] = 0;
+            Statics.chardefenseskillpoints[i] = 0;
+            Statics.charattackskillpoints[i] = 0;
+            Statics.charcritchanceskillpoints[i] = 0;
+            Statics.charcritchanceskillpoints[i] = 0;
+            Statics.charweaponskillpoints[i] = 0;
+            Statics.charcharswitchskillpoints[i] = 0;
+            Statics.charbasicskillpoints[i] = 0;
+        }
 
         setitemsandinventory.resetitems();
         setitemsandinventory.resetinventorys();
+        setstaticsnull.resetstatics();
         SceneManager.LoadScene(1);
     }
 
@@ -114,43 +152,3 @@ public class Startmenucontroller : MonoBehaviour
 #endif
     }
 }
-
-
-/*private void Update()
-{
-    if (steuerung.Startmenu.Up.WasPerformedThisFrame())
-    {
-        Debug.Log("hallo");
-        if(currentbutton == 0)
-        {
-            buttons[currentbutton].GetComponent<Image>().color = notselectedcolor;
-            currentbutton = 3;
-            EventSystem.current.SetSelectedGameObject(buttons[currentbutton]);
-            buttons[currentbutton].GetComponent<Image>().color = selectedcolor;
-        }
-        else
-        {
-            buttons[currentbutton].GetComponent<Image>().color = notselectedcolor;
-            currentbutton--;
-            EventSystem.current.SetSelectedGameObject(buttons[currentbutton]);
-            buttons[currentbutton].GetComponent<Image>().color = selectedcolor;
-        }
-    }
-    if (steuerung.Startmenu.Down.WasPerformedThisFrame())
-    {
-        if(currentbutton == 3)
-        {
-            buttons[currentbutton].GetComponent<Image>().color = notselectedcolor;
-            currentbutton = 0;
-            EventSystem.current.SetSelectedGameObject(buttons[currentbutton]);
-            buttons[currentbutton].GetComponent<Image>().color = selectedcolor;
-        }
-        else
-        {
-            buttons[currentbutton].GetComponent<Image>().color = notselectedcolor;
-            currentbutton++;
-            EventSystem.current.SetSelectedGameObject(buttons[currentbutton]);
-            buttons[currentbutton].GetComponent<Image>().color = selectedcolor;
-        }
-    }
-}*/

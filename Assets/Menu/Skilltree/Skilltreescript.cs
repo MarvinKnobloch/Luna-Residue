@@ -13,7 +13,7 @@ public class Skilltreescript : MonoBehaviour
     private int skillpointsperlvl = 2;
 
     [SerializeField] private Image[] charselectionimage;
-    [SerializeField] private int currentint;
+    [SerializeField] private int currentchar;
 
     public Text skillpointtext;
     public Text nametext;
@@ -38,17 +38,6 @@ public class Skilltreescript : MonoBehaviour
     public Text statsbasiccrit;
     public Text statsbasicbuffdmg;
 
-    private static int[] charspendedskillpoints = new int[5];
-    private static int[] charskillpoints = new int[5];
-
-    public static int[] charhealthpoints = new int[5];
-    private static int[] chardefensepoints = new int[5];
-    private static int[] charattackpoints = new int[5];
-    private static int[] charcritchancepoints = new int[5];
-    private static int[] charcritdmgpoints = new int[5];
-    private static int[] charweaponpoints = new int[5];
-    private static int[] charcharswitchpoints = new int[5];
-    private static int[] charbasicpoints = new int[5];
 
     private void Awake()
     {
@@ -77,9 +66,9 @@ public class Skilltreescript : MonoBehaviour
         {
             chars.color = Color.white;
         }
-        currentint = PlayerPrefs.GetInt("Maincharindex");
-        charselectionimage[currentint].color = Color.green;
-        choosechar(currentint);
+        currentchar = PlayerPrefs.GetInt("Maincharindex");
+        charselectionimage[currentchar].color = Color.green;
+        choosechar(currentchar);
     }
     private void closeskilltree()
     {
@@ -88,35 +77,35 @@ public class Skilltreescript : MonoBehaviour
     }
     public void choosechar(int currentchar)
     {
-        currentint = currentchar;           // falls man mit click den char auswählt
-        nametext.text = Statics.characternames[currentint] + " LvL" + Statics.charcurrentlvl;
+        this.currentchar = currentchar;           // falls man mit click den char auswählt
+        nametext.text = Statics.characternames[this.currentchar] + " LvL" + Statics.charcurrentlvl;
         settextandpoints();
     }
 
     private void selectionforward() 
     {
-        if(currentint >= charselectionimage.Length -1)
+        if(currentchar >= charselectionimage.Length -1)
         {
-            currentint = 0;
-            choosechar(currentint);
+            currentchar = 0;
+            choosechar(currentchar);
         }
         else
         {
-            currentint++;
-            choosechar(currentint);
+            currentchar++;
+            choosechar(currentchar);
         }
     }
     private void selectionbackward()
     {
-        if (currentint == 0)
+        if (currentchar == 0)
         {
-            currentint = charselectionimage.Length -1;
-            choosechar(currentint);
+            currentchar = charselectionimage.Length -1;
+            choosechar(currentchar);
         }
         else
         {
-            currentint--;
-            choosechar(currentint);
+            currentchar--;
+            choosechar(currentchar);
         }
     }
     public void imagewhite()
@@ -131,243 +120,243 @@ public class Skilltreescript : MonoBehaviour
     {
         imagewhite();
 
-        charselectionimage[currentint].color = Color.green;
-        charskillpoints[currentint] = Statics.charcurrentlvl * skillpointsperlvl - charspendedskillpoints[currentint];
-        skillpointtext.text = "Skillpoints " + charskillpoints[currentint];
+        charselectionimage[currentchar].color = Color.green;
+        Statics.charskillpoints[currentchar] = Statics.charcurrentlvl * skillpointsperlvl - Statics.charspendedskillpoints[currentchar];
+        skillpointtext.text = "Skillpoints " + Statics.charskillpoints[currentchar];
 
-        healthbuttonnumber.text = "" + charhealthpoints[currentint];
-        defensebuttonnumber.text = "" + chardefensepoints[currentint];
-        attackbuttonnumber.text = "" + charattackpoints[currentint];
-        critchancebuttonnumber.text = "" + charcritchancepoints[currentint];
-        critdmgbuttonnumber.text = "" + charcritdmgpoints[currentint];
-        weaponbuttonnumber.text = "" + charweaponpoints[currentint];
-        charbuttonnumber.text = "" + charcharswitchpoints[currentint];
-        basicbuttonnumber.text = "" + charbasicpoints[currentint];
-        statshealth.text = Statics.charcurrenthealth[currentint] + "/ " + Statics.charmaxhealth[currentint];
-        statsdefense.text = Statics.chardefense[currentint] + "";
-        statsattack.text = Statics.charattack[currentint] + "";
-        statscritchance.text = Statics.charcritchance[currentint] + "%";
-        statscritdmg.text = Statics.charcritdmg[currentint] + "%";
-        statsweaponbuff.text = Statics.charweaponbuff[currentint] - 100 + "%";
-        statsweaponbuffduration.text = Statics.charweaponbuffduration[currentint] + "sec";
-        statscharbuff.text = Statics.charswitchbuff[currentint] - 100 + "%";
-        statscharbuffduration.text = Statics.charswitchbuffduration[currentint] + "sec";
-        statsbasiccrit.text = Statics.charbasiccritbuff[currentint] + "%";
-        statsbasicbuffdmg.text = Statics.charbasicdmgbuff[currentint] + "%";
+        healthbuttonnumber.text = "" + Statics.charhealthskillpoints[currentchar];
+        defensebuttonnumber.text = "" + Statics.chardefenseskillpoints[currentchar];
+        attackbuttonnumber.text = "" + Statics.charattackskillpoints[currentchar];
+        critchancebuttonnumber.text = "" + Statics.charcritchanceskillpoints[currentchar];
+        critdmgbuttonnumber.text = "" + Statics.charcritdmgskillpoints[currentchar];
+        weaponbuttonnumber.text = "" + Statics.charweaponskillpoints[currentchar];
+        charbuttonnumber.text = "" + Statics.charcharswitchskillpoints[currentchar];
+        basicbuttonnumber.text = "" + Statics.charbasicskillpoints[currentchar];
+        statshealth.text = Statics.charcurrenthealth[currentchar] + "/ " + Statics.charmaxhealth[currentchar];
+        statsdefense.text = Statics.chardefense[currentchar] + "";
+        statsattack.text = Statics.charattack[currentchar] + "";
+        statscritchance.text = Statics.charcritchance[currentchar] + "%";
+        statscritdmg.text = Statics.charcritdmg[currentchar] + "%";
+        statsweaponbuff.text = Statics.charweaponbuff[currentchar] - 100 + "%";
+        statsweaponbuffduration.text = Statics.charweaponbuffduration[currentchar] + "sec";
+        statscharbuff.text = Statics.charswitchbuff[currentchar] - 100 + "%";
+        statscharbuffduration.text = Statics.charswitchbuffduration[currentchar] + "sec";
+        statsbasiccrit.text = Statics.charbasiccritbuff[currentchar] + "%";
+        statsbasicbuffdmg.text = Statics.charbasicdmgbuff[currentchar] + "%";
     }
 
     public void plusbutton()
     {
-        charspendedskillpoints[currentint] += 1;
+        Statics.charspendedskillpoints[currentchar] += 1;
         updateunspendpoint();
     }
 
     public void minusbutton()
     {
-        charspendedskillpoints[currentint] -= 1;
+        Statics.charspendedskillpoints[currentchar] -= 1;
 
         updateunspendpoint();
     }
     public void updateunspendpoint()
     {
-        charskillpoints[currentint] = Statics.charcurrentlvl * skillpointsperlvl - charspendedskillpoints[currentint];
-        skillpointtext.text = "Skillpoints" + charskillpoints[currentint];
+        Statics.charskillpoints[currentchar] = Statics.charcurrentlvl * skillpointsperlvl - Statics.charspendedskillpoints[currentchar];
+        skillpointtext.text = "Skillpoints" + Statics.charskillpoints[currentchar];
     }
 
     public void healthnumberplus()
     {
-        if(charskillpoints[currentint] > 0)
+        if(Statics.charskillpoints[currentchar] > 0)
         {
-            charhealthpoints[currentint] += 1;
-            Statics.charmaxhealth[currentint] += Statics.healthperskillpoint;
-            if(Statics.charcurrenthealth[currentint] > Statics.charmaxhealth[currentint])
+            Statics.charhealthskillpoints[currentchar] += 1;
+            Statics.charmaxhealth[currentchar] += Statics.healthperskillpoint;
+            if(Statics.charcurrenthealth[currentchar] > Statics.charmaxhealth[currentchar])
             {
-                Statics.charcurrenthealth[currentint] = Statics.charmaxhealth[currentint];
+                Statics.charcurrenthealth[currentchar] = Statics.charmaxhealth[currentchar];
             }
-            statshealth.text = Statics.charcurrenthealth[currentint] + "/ " + Statics.charmaxhealth[currentint];
-            healthbuttonnumber.text = "" + charhealthpoints[currentint];
+            statshealth.text = Statics.charcurrenthealth[currentchar] + "/ " + Statics.charmaxhealth[currentchar];
+            healthbuttonnumber.text = "" + Statics.charhealthskillpoints[currentchar];
             plusbutton();
         }
     }
     public void healthnumberminus()
     {
-        if (charhealthpoints[currentint] > 0)
+        if (Statics.charhealthskillpoints[currentchar] > 0)
         {
-            charhealthpoints[currentint] -= 1;
-            Statics.charmaxhealth[currentint] -= Statics.healthperskillpoint;
-            if (Statics.charcurrenthealth[currentint] > Statics.charmaxhealth[currentint])
+            Statics.charhealthskillpoints[currentchar] -= 1;
+            Statics.charmaxhealth[currentchar] -= Statics.healthperskillpoint;
+            if (Statics.charcurrenthealth[currentchar] > Statics.charmaxhealth[currentchar])
             {
-                Statics.charcurrenthealth[currentint] = Statics.charmaxhealth[currentint];
+                Statics.charcurrenthealth[currentchar] = Statics.charmaxhealth[currentchar];
             }
-            statshealth.text = Statics.charcurrenthealth[currentint] + "/ " + Statics.charmaxhealth[currentint];
-            healthbuttonnumber.text = "" + charhealthpoints[currentint];                   
+            statshealth.text = Statics.charcurrenthealth[currentchar] + "/ " + Statics.charmaxhealth[currentchar];
+            healthbuttonnumber.text = "" + Statics.charhealthskillpoints[currentchar];                   
             minusbutton();
         }
     }
     public void defensenumberplus()
     {
-        if (charskillpoints[currentint] > 0)
+        if (Statics.charskillpoints[currentchar] > 0)
         {
-            chardefensepoints[currentint] += 1;
-            Statics.chardefense[currentint] += Statics.armorperskillpoint;
-            statsdefense.text = Statics.chardefense[currentint] + "";
-            defensebuttonnumber.text = "" + chardefensepoints[currentint];
+            Statics.chardefenseskillpoints[currentchar] += 1;
+            Statics.chardefense[currentchar] += Statics.armorperskillpoint;
+            statsdefense.text = Statics.chardefense[currentchar] + "";
+            defensebuttonnumber.text = "" + Statics.chardefenseskillpoints[currentchar];
             plusbutton();
         }
     }
     public void defensenumberminus()
     {
-        if (chardefensepoints[currentint] > 0)
+        if (Statics.chardefenseskillpoints[currentchar] > 0)
         {
-            chardefensepoints[currentint] -= 1;
-            Statics.chardefense[currentint] -= Statics.armorperskillpoint;
-            statsdefense.text = Statics.chardefense[currentint] + "";
-            defensebuttonnumber.text = "" + chardefensepoints[currentint];
+            Statics.chardefenseskillpoints[currentchar] -= 1;
+            Statics.chardefense[currentchar] -= Statics.armorperskillpoint;
+            statsdefense.text = Statics.chardefense[currentchar] + "";
+            defensebuttonnumber.text = "" + Statics.chardefenseskillpoints[currentchar];
             minusbutton();
         }
     }
     public void attacknumberplus()
     {
-        if (charskillpoints[currentint] > 0)
+        if (Statics.charskillpoints[currentchar] > 0)
         {
-            charattackpoints[currentint] += 1;
-            Statics.charattack[currentint] += Statics.attackperskillpoint;
-            statsattack.text = Statics.charattack[currentint] + "";
-            attackbuttonnumber.text = "" + charattackpoints[currentint];
+            Statics.charattackskillpoints[currentchar] += 1;
+            Statics.charattack[currentchar] += Statics.attackperskillpoint;
+            statsattack.text = Statics.charattack[currentchar] + "";
+            attackbuttonnumber.text = "" + Statics.charattackskillpoints[currentchar];
             plusbutton();
         }
     }
     public void attacknumberminus()
     {
-        if (charattackpoints[currentint] > 0)
+        if (Statics.charattackskillpoints[currentchar] > 0)
         {
-            charattackpoints[currentint] -= 1;
-            Statics.charattack[currentint] -= Statics.attackperskillpoint;
-            statsattack.text = Statics.charattack[currentint] + "";
-            attackbuttonnumber.text = "" + charattackpoints[currentint];
+            Statics.charattackskillpoints[currentchar] -= 1;
+            Statics.charattack[currentchar] -= Statics.attackperskillpoint;
+            statsattack.text = Statics.charattack[currentchar] + "";
+            attackbuttonnumber.text = "" + Statics.charattackskillpoints[currentchar];
             minusbutton();
         }
     }
     public void critchancenumberplus()
     {
-        if (charskillpoints[currentint] > 0)
+        if (Statics.charskillpoints[currentchar] > 0)
         {
-            charcritchancepoints[currentint] += 1;
-            Statics.charcritchance[currentint] += Statics.critchanceperskillpoint;
-            statscritchance.text = Statics.charcritchance[currentint] + "%";
-            critchancebuttonnumber.text = "" + charcritchancepoints[currentint];
+            Statics.charcritchanceskillpoints[currentchar] += 1;
+            Statics.charcritchance[currentchar] += Statics.critchanceperskillpoint;
+            statscritchance.text = Statics.charcritchance[currentchar] + "%";
+            critchancebuttonnumber.text = "" + Statics.charcritchanceskillpoints[currentchar];
             plusbutton();
         }
     }
     public void critchancenumberminus()
     {
-        if (charcritchancepoints[currentint] > 0)
+        if (Statics.charcritchanceskillpoints[currentchar] > 0)
         {
-            charcritchancepoints[currentint] -= 1;
-            Statics.charcritchance[currentint] -= Statics.critchanceperskillpoint;
-            statscritchance.text = Statics.charcritchance[currentint] + "%";
-            critchancebuttonnumber.text = "" + charcritchancepoints[currentint];
+            Statics.charcritchanceskillpoints[currentchar] -= 1;
+            Statics.charcritchance[currentchar] -= Statics.critchanceperskillpoint;
+            statscritchance.text = Statics.charcritchance[currentchar] + "%";
+            critchancebuttonnumber.text = "" + Statics.charcritchanceskillpoints[currentchar];
             minusbutton();
         }
     }
     public void critdmgnumberplus()
     {
-        if (charskillpoints[currentint] > 0)
+        if (Statics.charskillpoints[currentchar] > 0)
         {
-            charcritdmgpoints[currentint] += 1;
-            Statics.charcritdmg[currentint] += Statics.critdmgperskillpoint;
-            statscritdmg.text = Statics.charcritdmg[currentint] + "%";
-            critdmgbuttonnumber.text = "" + charcritdmgpoints[currentint];
+            Statics.charcritdmgskillpoints[currentchar] += 1;
+            Statics.charcritdmg[currentchar] += Statics.critdmgperskillpoint;
+            statscritdmg.text = Statics.charcritdmg[currentchar] + "%";
+            critdmgbuttonnumber.text = "" + Statics.charcritdmgskillpoints[currentchar];
             plusbutton();
         }
     }
     public void critdmgnumberminus()
     {
-        if (charcritdmgpoints[currentint] > 0)
+        if (Statics.charcritdmgskillpoints[currentchar] > 0)
         {
-            charcritdmgpoints[currentint] -= 1;
-            Statics.charcritdmg[currentint] -= Statics.critdmgperskillpoint;
-            statscritdmg.text = Statics.charcritdmg[currentint] + "%";
-            critdmgbuttonnumber.text = "" + charcritdmgpoints[currentint];
+            Statics.charcritdmgskillpoints[currentchar] -= 1;
+            Statics.charcritdmg[currentchar] -= Statics.critdmgperskillpoint;
+            statscritdmg.text = Statics.charcritdmg[currentchar] + "%";
+            critdmgbuttonnumber.text = "" + Statics.charcritdmgskillpoints[currentchar];
             minusbutton();
         }
     }
     public void weaponnumberplus()
     {
-        if (charskillpoints[currentint] > 0)
+        if (Statics.charskillpoints[currentchar] > 0)
         {
-            charweaponpoints[currentint] += 1;
-            Statics.charweaponbuff[currentint] += Statics.weaponswitchbuffperskillpoint;
-            Statics.charweaponbuffduration[currentint] += 0.05f;
-            statsweaponbuff.text = Statics.charweaponbuff[currentint] - 100 + "%";
-            statsweaponbuffduration.text = Statics.charweaponbuffduration[currentint].ToString("F2") + "sec";
-            weaponbuttonnumber.text = "" + charweaponpoints[currentint];
+            Statics.charweaponskillpoints[currentchar] += 1;
+            Statics.charweaponbuff[currentchar] += Statics.weaponswitchbuffperskillpoint;
+            Statics.charweaponbuffduration[currentchar] += 0.05f;
+            statsweaponbuff.text = Statics.charweaponbuff[currentchar] - 100 + "%";
+            statsweaponbuffduration.text = Statics.charweaponbuffduration[currentchar].ToString("F2") + "sec";
+            weaponbuttonnumber.text = "" + Statics.charweaponskillpoints[currentchar];
             plusbutton();
         }
     }
     public void weaponnumberminus()
     {
-        if (charweaponpoints[currentint] > 0)
+        if (Statics.charweaponskillpoints[currentchar] > 0)
         {
-            charweaponpoints[currentint] -= 1;
-            Statics.charweaponbuff[currentint] -= Statics.weaponswitchbuffperskillpoint;
-            Statics.charweaponbuffduration[currentint] -= 0.05f;
-            statsweaponbuff.text = Statics.charweaponbuff[currentint] - 100 + "%";
-            statsweaponbuffduration.text = Statics.charweaponbuffduration[currentint].ToString("F2") + "sec";
-            weaponbuttonnumber.text = "" + charweaponpoints[currentint];
+            Statics.charweaponskillpoints[currentchar] -= 1;
+            Statics.charweaponbuff[currentchar] -= Statics.weaponswitchbuffperskillpoint;
+            Statics.charweaponbuffduration[currentchar] -= 0.05f;
+            statsweaponbuff.text = Statics.charweaponbuff[currentchar] - 100 + "%";
+            statsweaponbuffduration.text = Statics.charweaponbuffduration[currentchar].ToString("F2") + "sec";
+            weaponbuttonnumber.text = "" + Statics.charweaponskillpoints[currentchar];
             minusbutton();
         }
     }
     public void charnumberplus()
     {
-        if (charskillpoints[currentint] > 0)
+        if (Statics.charskillpoints[currentchar] > 0)
         {
-            charcharswitchpoints[currentint] += 1;
-            Statics.charswitchbuff[currentint] += Statics.charswitchbuffperskillpoint;
-            Statics.charswitchbuffduration[currentint] += 0.05f;
-            statscharbuff.text = Statics.charswitchbuff[currentint] - 100 + "%";
-            statscharbuffduration.text = Statics.charswitchbuffduration[currentint].ToString("F2") + "sec";
-            charbuttonnumber.text = "" + charcharswitchpoints[currentint];
+            Statics.charcharswitchskillpoints[currentchar] += 1;
+            Statics.charswitchbuff[currentchar] += Statics.charswitchbuffperskillpoint;
+            Statics.charswitchbuffduration[currentchar] += 0.05f;
+            statscharbuff.text = Statics.charswitchbuff[currentchar] - 100 + "%";
+            statscharbuffduration.text = Statics.charswitchbuffduration[currentchar].ToString("F2") + "sec";
+            charbuttonnumber.text = "" + Statics.charcharswitchskillpoints[currentchar];
             plusbutton();
         }
     }
 
     public void charnumberminus()
     {
-        if (charcharswitchpoints[currentint] > 0)
+        if (Statics.charcharswitchskillpoints[currentchar] > 0)
         {
-            charcharswitchpoints[currentint] -= 1;
-            Statics.charswitchbuff[currentint] -= Statics.charswitchbuffperskillpoint;
-            Statics.charswitchbuffduration[currentint] -= 0.05f;
-            statscharbuff.text = Statics.charswitchbuff[currentint] - 100 + "%";
-            statscharbuffduration.text = Statics.charswitchbuffduration[currentint].ToString("F2") + "sec";
-            charbuttonnumber.text = "" + charcharswitchpoints[currentint];
+            Statics.charcharswitchskillpoints[currentchar] -= 1;
+            Statics.charswitchbuff[currentchar] -= Statics.charswitchbuffperskillpoint;
+            Statics.charswitchbuffduration[currentchar] -= 0.05f;
+            statscharbuff.text = Statics.charswitchbuff[currentchar] - 100 + "%";
+            statscharbuffduration.text = Statics.charswitchbuffduration[currentchar].ToString("F2") + "sec";
+            charbuttonnumber.text = "" + Statics.charcharswitchskillpoints[currentchar];
             minusbutton();
         }
     }
     public void basicnumberplus()
     {
-        if (charskillpoints[currentint] > 0)
+        if (Statics.charskillpoints[currentchar] > 0)
         {
-            charbasicpoints[currentint] += 1;
-            Statics.charbasiccritbuff[currentint] += 1;
-            Statics.charbasicdmgbuff[currentint] += Statics.basicbuffdmgperskillpoint;
-            statsbasiccrit.text = Statics.charbasiccritbuff[currentint] + "%";
-            statsbasicbuffdmg.text = Statics.charbasicdmgbuff[currentint] + "%";
-            basicbuttonnumber.text = "" + charbasicpoints[currentint];
+            Statics.charbasicskillpoints[currentchar] += 1;
+            Statics.charbasiccritbuff[currentchar] += 1;
+            Statics.charbasicdmgbuff[currentchar] += Statics.basicbuffdmgperskillpoint;
+            statsbasiccrit.text = Statics.charbasiccritbuff[currentchar] + "%";
+            statsbasicbuffdmg.text = Statics.charbasicdmgbuff[currentchar] + "%";
+            basicbuttonnumber.text = "" + Statics.charbasicskillpoints[currentchar];
             plusbutton();
         }
     }
     public void basicnumberminus()
     {
-        if (charbasicpoints[currentint] > 0)
+        if (Statics.charbasicskillpoints[currentchar] > 0)
         {
-            charbasicpoints[currentint] -= 1;
-            Statics.charbasiccritbuff[currentint] -= 1;
-            Statics.charbasicdmgbuff[currentint] -= Statics.basicbuffdmgperskillpoint;
-            statsbasiccrit.text = Statics.charbasiccritbuff[currentint] + "%";
-            statsbasicbuffdmg.text = Statics.charbasicdmgbuff[currentint] + "%";
-            basicbuttonnumber.text = "" + charbasicpoints[currentint];
+            Statics.charbasicskillpoints[currentchar] -= 1;
+            Statics.charbasiccritbuff[currentchar] -= 1;
+            Statics.charbasicdmgbuff[currentchar] -= Statics.basicbuffdmgperskillpoint;
+            statsbasiccrit.text = Statics.charbasiccritbuff[currentchar] + "%";
+            statsbasicbuffdmg.text = Statics.charbasicdmgbuff[currentchar] + "%";
+            basicbuttonnumber.text = "" + Statics.charbasicskillpoints[currentchar];
             minusbutton();
         }
     }

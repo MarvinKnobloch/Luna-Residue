@@ -11,6 +11,7 @@ public class Expmanager : MonoBehaviour
 
     private SpielerSteu Steuerung;
     [SerializeField] private Attributecontroller[] attributecontroller;
+    private HealthUImanager healthUImanager;
 
     public Image[] expbar;
 
@@ -25,6 +26,7 @@ public class Expmanager : MonoBehaviour
     void Awake()
     {
         Steuerung = new SpielerSteu();
+        healthUImanager = GetComponent<HealthUImanager>();
         charlvl = Statics.charcurrentlvl;
         currentexp = Statics.charcurrentexp;
         requiredexp = Statics.charrequiredexp;
@@ -78,24 +80,37 @@ public class Expmanager : MonoBehaviour
     public void levelup()
     {
         charlvl++;
-        LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().levelup();
-        if(LoadCharmanager.Overallthirdchar != null)
+        if(Statics.currentactiveplayer == 0)
         {
-            LoadCharmanager.Overallthirdchar.GetComponent<Attributecontroller>().levelup();
+            checkforguard(Statics.currentfirstchar, 0);
+            checkforguard(Statics.currentsecondchar, 1);
         }
-        if (LoadCharmanager.Overallforthchar)
+        else
         {
-            LoadCharmanager.Overallforthchar.GetComponent<Attributecontroller>().levelup();
+            checkforguard(Statics.currentfirstchar, 1);
+            checkforguard(Statics.currentsecondchar, 0);
         }
+        checkforguard(Statics.currentthirdchar, 2);
+        checkforguard(Statics.currentforthchar, 3);
 
         foreach (Image bar in expbar)
         {
             bar.fillAmount = 0f;
         }
-        GetComponent<HealthUImanager>().seconcharlvlupdate();
         currentexp = Mathf.RoundToInt(currentexp - requiredexp);
         requiredexp = calculaterequiredexp();
         updateexpbar();
+    }
+    private void checkforguard(int charnumber, int charposi)
+    {
+        if(charnumber != -1)
+        {
+            if (Statics.characterclassroll[charnumber] == 1)
+            {
+                Statics.charmaxhealth[charnumber] += Statics.guardbonushpeachlvl;
+                healthUImanager.hpupdateafterlvlup(charnumber, charposi);
+            }
+        }
     }
     private int calculaterequiredexp()                                       // formel ist aus einem Video
     {

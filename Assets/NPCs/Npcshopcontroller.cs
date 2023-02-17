@@ -315,7 +315,7 @@ public class Npcshopcontroller : MonoBehaviour
         matsinventory.Container.Items[money.inventoryslot - 1].amount -= itemtobuy.itemshopcosts;
         setmoneyamount();
 
-        inventorys[currentitemtype].Additem(LoadCharmanager.Overallmainchar.gameObject, itemtobuy, 1);
+        inventorys[currentitemtype].Additem(itemtobuy, 1);
         EventSystem.current.currentSelectedGameObject.gameObject.GetComponent<Npcshopselectitem>().canbuy = false;
         EventSystem.current.currentSelectedGameObject.gameObject.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "own Item";
         EventSystem.current.currentSelectedGameObject.gameObject.transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = Color.blue;

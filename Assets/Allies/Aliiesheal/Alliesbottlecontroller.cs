@@ -26,14 +26,14 @@ public class Alliesbottlecontroller : MonoBehaviour
     {
         if (other.gameObject == LoadCharmanager.Overallmainchar && cancollect == true)
         {
-            LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().castheal(potionheal);
+            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().castheal(potionheal);
             if (LoadCharmanager.Overallthirdchar != null)
             {
-                LoadCharmanager.Overallthirdchar.GetComponent<SpielerHP>().castheal(potionheal);
+                LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().castheal(potionheal);
             }
             if (LoadCharmanager.Overallforthchar != null)
             {
-                LoadCharmanager.Overallforthchar.GetComponent<SpielerHP>().castheal(potionheal);
+                LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().castheal(potionheal);
             }
             potiondisable();
         }

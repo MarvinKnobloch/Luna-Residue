@@ -35,13 +35,13 @@ public class Fistcontroller : MonoBehaviour
 
     private Manamanager manacontroller;
     private Attributecontroller attributecontroller;
-    private SpielerHP spielerhp;
+    private Playerhp spielerhp;
 
     private void Awake()
     {
         attributecontroller = GetComponent<Attributecontroller>();
         manacontroller = charmanager.GetComponent<Manamanager>();
-        spielerhp = GetComponent<SpielerHP>();
+        spielerhp = GetComponent<Playerhp>();
     }
     private void OnEnable()
     {
@@ -54,17 +54,10 @@ public class Fistcontroller : MonoBehaviour
     }
     public void fistdmgupdate()
     {
-        overallbasicdmg = chainbasicdmg + attributecontroller.attack + attributecontroller.fistattack;
-        overallbasicdmg += attributecontroller.overallstonebonusdmg * 0.01f * overallbasicdmg;               //wenn ich den bonus noch durch 2 teile wär die rechung so wie wenn ich den bonus zu den switchbonus addiere
-
-        overallenddmg = chainenddmg + attributecontroller.attack + attributecontroller.fistattack;
-        overallenddmg += attributecontroller.overallstonebonusdmg * 0.01f * overallenddmg;
-
-        overallair3middmg = air3middmg + attributecontroller.attack + attributecontroller.fistattack;
-        overallair3middmg += attributecontroller.overallstonebonusdmg * 0.01f * overallair3middmg;
-
-        basicweaponswitchdmg = weaponswitchdmg + attributecontroller.attack + attributecontroller.fistattack;
-        basicweaponswitchdmg += attributecontroller.overallstonebonusdmg * 0.01f * basicweaponswitchdmg;
+        overallbasicdmg = Damagecalculation.calculateplayerdmgdone(chainbasicdmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
+        overallenddmg = Damagecalculation.calculateplayerdmgdone(chainenddmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
+        overallair3middmg = Damagecalculation.calculateplayerdmgdone(air3middmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
+        basicweaponswitchdmg = Damagecalculation.calculateplayerdmgdone(weaponswitchdmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
 
         overallcritchance = Statics.playerbasiccritchance + attributecontroller.critchance;
     }
@@ -146,12 +139,12 @@ public class Fistcontroller : MonoBehaviour
         if (Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
         {
             crit = true;
-            dmgdealed = Mathf.Round(dmg * (attributecontroller.critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100f) / 100));
+            dmgdealed = Mathf.Round(dmg * (attributecontroller.critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.characterswitchbuff - 100f) / 100));
         }
         else
         {
             crit = false;
-            dmgdealed = Mathf.Round(dmg * ((Statics.weaponswitchbuff + Statics.charwechselbuff - 100) / 100));
+            dmgdealed = Mathf.Round(dmg * ((Statics.weaponswitchbuff + Statics.characterswitchbuff - 100) / 100));
         }
     }
     private void healandmana(int type, float manarestore)

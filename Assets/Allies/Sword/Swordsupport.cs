@@ -14,12 +14,12 @@ public class Swordsupport : MonoBehaviour
     private float basicdmgtodeal;
 
     private Attributecontroller attributecontroller;
-    private SpielerHP hpscript;
+    private Playerhp hpscript;
 
     private void Awake()
     {
         attributecontroller = GetComponent<Attributecontroller>();
-        hpscript = GetComponent<SpielerHP>();
+        hpscript = GetComponent<Playerhp>();
     }
     private void OnEnable()
     {
@@ -27,11 +27,8 @@ public class Swordsupport : MonoBehaviour
     }
     private void sworddmgupdate()
     {
-        basicdmgtodeal = Mathf.Round(basicsworddmg + attributecontroller.dmgfromallies + attributecontroller.swordattack);
-        basicdmgtodeal += Mathf.Round(attributecontroller.overallstonebonusdmg * 0.01f * basicdmgtodeal);
-
-        enddmgtodeal = Mathf.Round(endsworddmg + attributecontroller.dmgfromallies + attributecontroller.swordattack);
-        enddmgtodeal += Mathf.Round(attributecontroller.overallstonebonusdmg * 0.01f * enddmgtodeal);
+        basicdmgtodeal = Damagecalculation.calculateplayerdmgdone(basicsworddmg, attributecontroller.dmgfromallies, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
+        enddmgtodeal = Damagecalculation.calculateplayerdmgdone(endsworddmg, attributecontroller.dmgfromallies, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
     }
 
     private void basicswordswing()

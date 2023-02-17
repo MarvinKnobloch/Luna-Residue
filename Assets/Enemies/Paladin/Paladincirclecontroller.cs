@@ -23,7 +23,7 @@ public class Paladincirclecontroller : MonoBehaviour
         {
             if (players.gameObject == LoadCharmanager.Overallmainchar)
             {
-                LoadCharmanager.Overallmainchar.GetComponent<SpielerHP>().TakeDamage(basedmg);
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg);
             }
         }
         gameObject.SetActive(false);

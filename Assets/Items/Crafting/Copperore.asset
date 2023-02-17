@@ -14,17 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Uisprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
   type: 0
-  itemname: Cooperore
+  itemname: Copperore
+  inventoryslot: 1
+  itemshopcosts: 0
   description: Upgrade Equipment
-  health: 0
-  defense: 0
-  attack: 0
-  critchance: 0
-  critdmg: 0
-  weaponswitch: 0
-  charswitch: 0
-  basic: 0
-  stats: 
+  basestats: []
+  stats: []
   upgradelvl: 0
   maxupgradelvl: 0
   upgrades: []

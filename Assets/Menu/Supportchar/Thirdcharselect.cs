@@ -13,44 +13,51 @@ public class Thirdcharselect : MonoBehaviour
 
     public int selectetdCharacter;
 
-    private void Start()
+    private void OnEnable()
     {
-        if (PlayerPrefs.GetInt("Thirdcharindex") < 8)
+        if (Statics.currentthirdchar != -1)
         {
-            thirdchartext.text = buttontext[PlayerPrefs.GetInt("Thirdcharindex")].text;
+            thirdchartext.text = buttontext[Statics.currentthirdchar].text;
         }
         else
         {
             thirdchartext.text = "empty";
         }
-    }
-    private void OnEnable()
-    {
         charselection.SetActive(false);
-        selectetdCharacter = PlayerPrefs.GetInt("Thirdcharindex");
+        selectetdCharacter = Statics.currentthirdchar;
     }
     public void changethirdcharacter(int newCharacter)
     {
-        if (forthchar.selectetdCharacter == newCharacter)
+        if(newCharacter == -1)
         {
-            forthchar.sameforthcharfalse();
-            selectetdCharacter = newCharacter;
-            thirdchartext.text = buttontext[newCharacter].text;
-            PlayerPrefs.SetInt("Thirdcharindex", selectetdCharacter);
+            Statics.currentthirdchar = -1;
+            thirdchartext.text = "empty";
             charselection.SetActive(false);
         }
         else
         {
-            selectetdCharacter = newCharacter;
-            thirdchartext.text = buttontext[newCharacter].text;
-            PlayerPrefs.SetInt("Thirdcharindex", selectetdCharacter);
-            charselection.SetActive(false);
+            if (forthchar.selectetdCharacter == newCharacter)
+            {
+                forthchar.sameforthcharfalse();
+                selectetdCharacter = newCharacter;
+                thirdchartext.text = buttontext[newCharacter].text;
+                Statics.currentthirdchar = selectetdCharacter;
+                charselection.SetActive(false);
+            }
+            else
+            {
+                selectetdCharacter = newCharacter;
+                thirdchartext.text = buttontext[newCharacter].text;
+                Statics.currentthirdchar = selectetdCharacter;
+                charselection.SetActive(false);
+            }
         }
+
     }
     public void samethirdcharfalse()
     {
         selectetdCharacter = forthchar.selectetdCharacter;
         thirdchartext.text = forthchar.forthchartext.text;
-        PlayerPrefs.SetInt("Thirdcharindex", selectetdCharacter);
+        Statics.currentthirdchar = selectetdCharacter;
     }
 }

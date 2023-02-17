@@ -17,22 +17,29 @@ public class Setitemsandinventory : MonoBehaviour
     [SerializeField] private Ringobject[] ringitems;
     [SerializeField] private Craftingobject[] craftingitems;
 
-
+/*#if UNITY_EDITOR
+    private void Awake()
+    {
+        resetitems();
+        resetinventorys();
+    }
+#endif*/
     public void resetitems()
     {
-        resetitems(sworditems);
-        resetitems(bowitems);
-        resetitems(fistitems);
-        resetitems(headitems);
-        resetitems(chestitems);
-        resetitems(glovesitems);
-        resetitems(legitems);
-        resetitems(shoesitems);
-        resetitems(necklessitems);
-        resetitems(ringitems);
+        resetitemvalues(sworditems);
+        resetitemvalues(bowitems);
+        resetitemvalues(fistitems);
+        resetitemvalues(headitems);
+        resetitemvalues(chestitems);
+        resetitemvalues(glovesitems);
+        resetitemvalues(legitems);
+        resetitemvalues(shoesitems);
+        resetitemvalues(necklessitems);
+        resetitemvalues(ringitems);
+        resetitemvalues(craftingitems);
     }
 
-    private void resetitems(Itemcontroller[] items)
+    private void resetitemvalues(Itemcontroller[] items)
     {
         for (int i = 0; i < items.Length; i++)
         {
@@ -41,14 +48,11 @@ public class Setitemsandinventory : MonoBehaviour
             items[i].stats = items[i].basestats;
         }
     }
-    public void updateitemsininventory()
-    {
-        updateitems();
-    }
     public void resetinventorys()
     {
         for (int i = 0; i < inventorys.Length; i++)
         {
+            inventorys[i].matsinventory = inventorys[0];
             for (int t = 0; t < inventorys[i].Container.Items.Length; t++)
             {
                 inventorys[i].Container.Items[t].item = null;
@@ -58,6 +62,10 @@ public class Setitemsandinventory : MonoBehaviour
                 inventorys[i].Container.Items[t].itemlvl = 0;
             }
         }
+    }
+    public void updateitemsininventory()
+    {
+        updateitems();
     }
     private void updateitems()
     {

@@ -15,7 +15,7 @@ public class Elkcircle : MonoBehaviour
         {
             if (target.gameObject == LoadCharmanager.Overallmainchar.gameObject)
             {
-                target.GetComponent<SpielerHP>().TakeDamage(basedmg);
+                target.GetComponent<Playerhp>().TakeDamage(basedmg);
             }
         }
         gameObject.SetActive(false);

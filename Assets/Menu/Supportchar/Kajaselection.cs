@@ -6,7 +6,7 @@ public class Kajaselection : MonoBehaviour
 {
     private void OnEnable()
     {
-        if (PlayerPrefs.GetInt("Maincharindex") == 2 || PlayerPrefs.GetInt("Secondcharindex") == 2)
+        if (Statics.currentfirstchar == 2 || Statics.currentsecondchar == 2)
         {
             this.gameObject.SetActive(false);
         }
