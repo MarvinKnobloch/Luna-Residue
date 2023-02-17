@@ -72,7 +72,18 @@ public class Enemypatrol
             esm.checkforplayertimer = 0;
             if (Vector3.Distance(esm.transform.position, LoadCharmanager.Overallmainchar.transform.position) < esm.aggrorangecheck)
             {
+                if (!Infightcontroller.infightenemylists.Contains(esm.transform.gameObject))
+                {
+                    Infightcontroller.infightenemylists.Add(esm.transform.gameObject);
+                    int enemycount = Infightcontroller.infightenemylists.Count;
+                    Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
+                    if (Infightcontroller.infightenemylists.Count == 1)
+                    {
+                        Infightcontroller.checkifinfight();
+                    }
+                }
                 esm.Meshagent.speed = esm.normalnavspeed;
+                esm.normalattacktimer = esm.normalattackcd;
                 esm.state = Enemymovement.State.gettomeleerange;
             }
         }

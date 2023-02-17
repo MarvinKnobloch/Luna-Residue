@@ -6,7 +6,6 @@ using System;
 public class Enemyreset
 {
     public Enemymovement esm;
-    public static event Action infightlistupdate;
 
     const string idlestate = "Idle";
     const string runstate = "Run";
@@ -22,10 +21,10 @@ public class Enemyreset
                 esm.spezialattack = false;
                 esm.ChangeAnimationState(runstate);
                 esm.state = Enemymovement.State.resetheal;
-                if (Infightcontroller.infightenemylists.Contains(esm.transform.root.gameObject))
+                if (Infightcontroller.infightenemylists.Contains(esm.transform.gameObject))
                 {
-                    Infightcontroller.infightenemylists.Remove(esm.transform.root.gameObject);
-                    infightlistupdate?.Invoke();
+                    Infightcontroller.infightenemylists.Remove(esm.transform.gameObject);
+                    Infightcontroller.checkifinfight();
                 }
             }
             esm.checkforresettimer = 0f;
@@ -44,6 +43,8 @@ public class Enemyreset
         {
             esm.currenttarget = LoadCharmanager.Overallmainchar;
             esm.Meshagent.ResetPath();
+            esm.Meshagent.speed = esm.patrolspeed;
+            esm.healtickamount = esm.enemyhpscript.maxhealth / 100;              //call ich hier und nicht beim awake, weil es schonmal verbuggt war und der enemy nicht gehealt würden(weil noch keine maxhp gesetzt war????)
             esm.ChangeAnimationState(idlestate);
             esm.state = Enemymovement.State.idleheal;
         }

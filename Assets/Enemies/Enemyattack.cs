@@ -25,8 +25,7 @@ public class Enemyattack
             else attack();
         }
         esm.FaceTraget();
-        esm.checkforspezialattack();
-        esm.checkforreset();
+        checkforspezialattack();
     }
     private void attack()
     {
@@ -113,7 +112,7 @@ public class Enemyattack
             }
             esm.followplayerafterattack = 0;
         }
-        esm.checkforspezialattack();
+        checkforspezialattack();
     }
     public void repositionafterattack()
     {
@@ -129,8 +128,7 @@ public class Enemyattack
             esm.ChangeAnimationState(idlestate);
             esm.state = Enemymovement.State.gettomeleerange;
         }
-        esm.checkforspezialattack();
-        esm.checkforreset();
+        checkforspezialattack();
     }
     public void checkforspezialattack()
     {

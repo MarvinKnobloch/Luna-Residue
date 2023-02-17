@@ -13,7 +13,7 @@ public class Supportmovement : MonoBehaviour
     [SerializeField]
     public GameObject currenttarget;
 
-    [NonSerialized] public float lookfortargetrange = 20f;
+    [NonSerialized] public float lookfortargetrange = 25f;
     [NonSerialized] public float attackrangecheck;
     [NonSerialized] public float addedattackrangetocollider = 2f;
     [NonSerialized] public float addedrangeattackrange = 15;
@@ -23,7 +23,7 @@ public class Supportmovement : MonoBehaviour
     [NonSerialized] public float followenemytimer;
 
 
-    [NonSerialized] public float supportresetrange = 34;                  //muss kleiner als die enemybaractivate sein
+    [NonSerialized] public float supportresetrange = 30;                  //muss kleiner als die enemybaractivate sein
     [NonSerialized] public float resettimer;
     [NonSerialized] public float resetcombattimer;
 

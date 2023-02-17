@@ -45,7 +45,6 @@ public class Supportrangeattack
         if (ssm.currenttarget != null)
         {
             ssm.supportreset();
-            ssm.FaceTraget();
             ssm.attacktimer += Time.deltaTime;
             if (ssm.attacktimer > ssm.attackcd)
             {
@@ -73,7 +72,7 @@ public class Supportrangeattack
                             ssm.Meshagent.ResetPath();
                         }
                     }
-                    else if (Vector3.Distance(ssm.transform.position, rangenewposi) < 5)
+                    else if (Vector3.Distance(ssm.transform.position, rangenewposi) < 10)
                     {
                         ssm.FaceTraget();
                         ssm.ChangeAnimationState(idlestate);
@@ -119,7 +118,7 @@ public class Supportrangeattack
             int newposi = Random.Range(0, 100);
             if (newposi < ssm.chancetochangeposi)
             {
-                ssm.posiafterattack = ssm.currenttarget.transform.position + Random.insideUnitSphere * 4;
+                ssm.posiafterattack = ssm.transform.position + Random.insideUnitSphere * 5;
                 ssm.posiafterattack.y = ssm.transform.position.y;
                 NavMeshHit hit;
                 bool blocked;

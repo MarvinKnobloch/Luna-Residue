@@ -49,7 +49,6 @@ public class EnemyHP : MonoBehaviour
 
     private int activeplayers = 3;
 
-    public static event Action infightlistupdate;
     public static event Action supporttargetdied;
 
     public static event Action<EnemyHP> addhealthbar;
@@ -80,6 +79,7 @@ public class EnemyHP : MonoBehaviour
     private void OnEnable()
     {
         enemycalculatedmg.enemyscript = this;
+        currenthealth = maxhealth;
     }
     void Start()
     {
@@ -154,16 +154,6 @@ public class EnemyHP : MonoBehaviour
         {
             focustargetuihptext(currenthealth, maxhealth);
         }
-        if (!Infightcontroller.infightenemylists.Contains(transform.gameObject))
-        {
-            Infightcontroller.infightenemylists.Add(transform.gameObject);
-            int enemycount = Infightcontroller.infightenemylists.Count;
-            Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
-            if (Infightcontroller.infightenemylists.Count == 1)
-            {
-                infightlistupdate?.Invoke();
-            }
-        }
         if (currenthealth <= 0)
         {
             gameObject.SetActive(false);
@@ -178,7 +168,7 @@ public class EnemyHP : MonoBehaviour
             Infightcontroller.infightenemylists.Remove(transform.gameObject);
             int enemycount = Infightcontroller.infightenemylists.Count;
             Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
-            infightlistupdate?.Invoke();
+            Infightcontroller.checkifinfight();
             supporttargetdied?.Invoke();
             dropitems();
         }

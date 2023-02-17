@@ -14,7 +14,7 @@ public class Enemymovement : MonoBehaviour
 
     public GameObject currenttarget;
 
-    [NonSerialized] public float enemyresetrange = 20;
+    [NonSerialized] public float enemyresetrange = 55;
     [NonSerialized] public float checkforplayertimer;
     [NonSerialized] public float aggrorangecheck = 20;
     [NonSerialized] public float attackrange = 3f;
@@ -81,12 +81,9 @@ public class Enemymovement : MonoBehaviour
         basedmg = enemyvalues.attackdmg;
         normalnavspeed = enemyvalues.movementspeed;
         normalattackcd = enemyvalues.attackspeed;
-
-        healtickamount = enemyhpscript.maxhealth / 100;
     }
     private void OnEnable()
     {
-        normalattacktimer = normalattackcd;
         currentstate = null;
         state = State.empty;
         currenttarget = LoadCharmanager.Overallmainchar;
@@ -109,18 +106,23 @@ public class Enemymovement : MonoBehaviour
                 enemypatrol.patrol();
                 break;
             case State.gettomeleerange:
+                enemyreset.checkforreset();
                 enemyattack.gettomeleerange();
                 break;
             case State.waitforattacks:
+                enemyreset.checkforreset();
                 enemyattack.waitingforattacks();
                 break;
             case State.changeposi:
+                enemyreset.checkforreset();
                 enemyattack.repositionafterattack();
                 break;
             case State.isattacking:
+                enemyreset.checkforreset();
                 FaceTraget();
                 break;
             case State.spezialattack:
+                enemyreset.checkforreset();
                 resetpath();
                 Facemainchar();
                 break;
@@ -135,8 +137,6 @@ public class Enemymovement : MonoBehaviour
     public void triggerenemy() => enemypatrol.triggerenemy();       //ontriggerenter
     public void patrolend() => enemypatrol.patrolend();        //ontriggerexit
     public void checkforplayerinrange() => enemypatrol.checkforplayerinrange();
-    public void checkforspezialattack() => enemyattack.checkforspezialattack();
-    public void checkforreset() => enemyreset.checkforreset();
     private void backtowaitforattack() => enemyattack.backtowaitforattack();         //wird mit der animation gecalled
     private void resetpath() => Meshagent.ResetPath();
     private void callemptystate() => state = State.empty;                          //wird mit der animation gecalled

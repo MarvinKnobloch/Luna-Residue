@@ -64,7 +64,7 @@ public class Supportutilityfunctions
                 ssm.Meshagent.ResetPath();
                 if (Statics.infight == true)
                 {
-                    Collider[] colliders = Physics.OverlapSphere(LoadCharmanager.Overallmainchar.transform.position, 5, ssm.hitbox);
+                    Collider[] colliders = Physics.OverlapSphere(LoadCharmanager.Overallmainchar.transform.position, 10, ssm.hitbox);
                     foreach (Collider checkforenemys in colliders)
                     {
                         if (checkforenemys.GetComponentInChildren<Miniadd>())

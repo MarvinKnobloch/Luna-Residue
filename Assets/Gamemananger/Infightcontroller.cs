@@ -26,16 +26,6 @@ public class Infightcontroller : MonoBehaviour
         checkifinfight();
         instance.CancelInvoke();
     }
-    private void OnEnable()
-    {
-        EnemyHP.infightlistupdate += checkifinfight;
-        Enemyreset.infightlistupdate += checkifinfight;
-    }
-    private void OnDisable()
-    {
-        EnemyHP.infightlistupdate -= checkifinfight;
-        Enemyreset.infightlistupdate -= checkifinfight;
-    }
     public static void checkifinfight()
     {
         if (infightenemylists.Count == 0)
@@ -92,9 +82,9 @@ public class Infightcontroller : MonoBehaviour
             int enemycount = infightenemylists.Count;
             //Debug.Log(Statics.currentenemyspecialcd);
             int enemyonlist = UnityEngine.Random.Range(1, enemycount +1);
-            if (infightenemylists[enemyonlist - 1].GetComponentInChildren<Enemymovement>())                        //inChildren weil ich momentan desn collider auf die liste setzte
+            if (infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>())                        //inChildren weil ich momentan desn collider auf die liste setzte
             {
-                infightenemylists[enemyonlist - 1].GetComponentInChildren<Enemymovement>().spezialattack = true;
+                infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>().spezialattack = true;
             }
         }
     }
