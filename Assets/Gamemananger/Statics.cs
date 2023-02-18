@@ -54,6 +54,8 @@ public class Statics
     public static float charswitchbuffperskillpoint = 3;
     public static float basicbuffdmgperskillpoint = 4;
 
+    public static int presetresurrectcd = 5;
+
     //gameplaystatics
     public static bool otheraction;
     public static bool stopmovenandrotation;
@@ -95,6 +97,9 @@ public class Statics
     public static int playertookdmgfromamount = 1;                  //wird beim charchange geändert
     public static int thirdchartookdmgformamount = 1;
     public static int forthchartookdmgformamount = 1;
+    public static bool oneplayerisdead;
+    public static int supportresurrectcd;
+    public static bool supportcanresurrect;
 
     //enemy
     public static float enemyspecialcd = 13;
@@ -134,7 +139,7 @@ public class Statics
     public static float charcurrentexp = 0;
     public static float charrequiredexp = 52;
     public static string[] characternames = { "Maria", "Erika", "Kaja", "Yaku", "Arissa" };
-    public static float[] charbasichealth = { 100, 93, 97, 91, 95 };
+    public static float[] charbasichealth = { 10, 93, 97, 91, 95 };
     public static float[] charcurrenthealth = { 100, 93, 97, 91, 95 };
     public static float[] charmaxhealth = { 100, 93, 97, 91, 95 };
     public static float[] chardefense = { 100, 100, 100, 100, 100 };

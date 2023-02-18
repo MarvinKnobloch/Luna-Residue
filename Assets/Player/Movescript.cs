@@ -89,6 +89,7 @@ public class Movescript : MonoBehaviour
     public string currentstate;
     const string idlestate = "Idle";
     const string dazestate = "Daze";
+    const string playerstandupstate = "Playerstandup";
 
     //Lockon
     public LayerMask Lockonlayer;
@@ -444,6 +445,15 @@ public class Movescript : MonoBehaviour
         switchtoairstate();
     }
     public void pushplayerup(float amount) => playerair.pushplayerupwards(amount);
+
+    public void resurrected()
+    {
+        ChangeAnimationState(playerstandupstate);
+        float reshealth = Mathf.Round(GetComponent<Playerhp>().maxhealth * (0.2f + (Statics.groupstonehealbonus * 0.01f)));
+        GetComponent<Playerhp>().addhealth(reshealth);
+        GetComponent<Playerhp>().playerisdead = false;
+    }
+    private void playerstandup() => switchtogroundstate();
 }
 
 

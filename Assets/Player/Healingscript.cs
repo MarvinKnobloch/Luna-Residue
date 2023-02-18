@@ -314,8 +314,7 @@ public class Healingscript : MonoBehaviour
         {
             if (playerhp.playerisdead == true)
             {
-                float healamount = Mathf.Round(groupheal + (Statics.groupstonehealbonus + GetComponent<Attributecontroller>().stoneclassbonusheal) * 0.01f * groupheal * Statics.charcurrentlvl);
-                playerhp.playerisresurrected(healamount);
+                playerhp.playerisresurrected();
             }
             else
             {

@@ -85,6 +85,14 @@ public class GlobalCD : MonoBehaviour
         instance.StartCoroutine("charswitchbuff");
         instance.StartCoroutine("charswitchcd");
     }
+    public static void startsupportresurrectioncd()
+    {
+        instance.StartCoroutine("supportresurrection");
+    }
+    public static void stopsupportresurrectioncd()
+    {
+        instance.StopCoroutine("supportresurrection");
+    }
     IEnumerator healingcd()
     {
         Statics.healcdbool = true;
@@ -265,5 +273,12 @@ public class GlobalCD : MonoBehaviour
             }
             yield return null;
         }
+    }
+    IEnumerator supportresurrection()
+    {
+        int randomnumber = Random.Range(1, 3);
+        yield return new WaitForSeconds(Statics.supportresurrectcd + randomnumber);
+        Statics.supportcanresurrect = true;
+        StopCoroutine("supportresurrection()");
     }
 }

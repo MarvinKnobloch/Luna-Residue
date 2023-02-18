@@ -38,6 +38,9 @@ public class Supportmovement : MonoBehaviour
     [SerializeField] public GameObject healpotion;
     private int basicpotionheal = 12;
 
+    [NonSerialized] public GameObject resurrecttraget;
+
+
     public string currentstate;
     const string idlestate = "Idle";
 
@@ -58,6 +61,7 @@ public class Supportmovement : MonoBehaviour
         attackstate,
         changeposiafterattack,
         castheal,
+        resurrect,
         reset,
     }
 
@@ -98,18 +102,22 @@ public class Supportmovement : MonoBehaviour
                 break;
             case State.waitforattackcd:
                 supportmeleeattack.waitforattackcd();
+                supportheal.checkforresurrect();
                 supportheal.supporthealing();
                 break;
             case State.waitformeleeattack:
                 supportmeleeattack.waitingformeleeattack();
+                supportheal.checkforresurrect();
                 supportheal.supporthealing();
                 break;
             case State.waitforrangeattackcd:
                 supportrangeattack.waitforrangeattackcd();
+                supportheal.checkforresurrect();
                 supportheal.supporthealing();
                 break;
             case State.waitforrangeattack:
                 supportrangeattack.waitingforrangeattack();
+                supportheal.checkforresurrect();
                 supportheal.supporthealing();
                 break;
             case State.attackstate:
@@ -119,6 +127,9 @@ public class Supportmovement : MonoBehaviour
                 supportutilityfunctions.repositionafterattack();
                 break;
             case State.castheal:
+                break;
+            case State.resurrect:
+                supportheal.resurrectplayer();
                 break;
             case State.reset:
                 supportutilityfunctions.resetcombat();
@@ -144,7 +155,8 @@ public class Supportmovement : MonoBehaviour
         else state = State.waitforrangeattackcd;
     }
     public void supportreset() => supportutilityfunctions.supportreset();
-    public void supportresurrected() => supportutilityfunctions.supportresurrected();
+    public void supportresurrected() => supportheal.supportresurrected();
+    private void resurrect() => supportheal.resurrect();
     public void matecastheal() => supportheal.matecastheal();
 
     private void meleeattack1end() => supportmeleeattack.meleeattack1end();                 //wird bei der animation gecalled

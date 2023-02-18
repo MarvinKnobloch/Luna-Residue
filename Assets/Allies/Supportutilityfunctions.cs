@@ -8,7 +8,6 @@ public class Supportutilityfunctions
 
     const string idlestate = "Idle";
     const string runstate = "Run";
-    const string standupstate = "Standup";
 
     public void attackstate()
     {
@@ -93,9 +92,5 @@ public class Supportutilityfunctions
             }
             ssm.resetcombattimer = 0;
         }
-    }
-    public void supportresurrected()
-    {
-        ssm.ChangeAnimationState(standupstate);       //switchtarget wird am ende der animation gecalled
     }
 }
