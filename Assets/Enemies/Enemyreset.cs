@@ -20,6 +20,7 @@ public class Enemyreset
                 esm.gameObject.GetComponent<EnemyHP>().resetplayerhits();
                 esm.spezialattack = false;
                 esm.ChangeAnimationState(runstate);
+                esm.healtickamount = esm.enemyhpscript.maxhealth * 0.02f;
                 esm.state = Enemymovement.State.resetheal;
                 if (Infightcontroller.infightenemylists.Contains(esm.transform.gameObject))
                 {
@@ -35,16 +36,16 @@ public class Enemyreset
         esm.healticktimer += Time.deltaTime;
         if (esm.healticktimer > esm.healticksafterreset)
         {
+            esm.Meshagent.SetDestination(esm.spawnpostion);                      //würde schon überschrieben als ich es bei checkforreset gecalled habe
             esm.enemyhpscript.enemyheal(esm.healtickamount);
             esm.healticktimer = 0f;
         }
-        esm.Meshagent.SetDestination(esm.spawnpostion);
         if (Vector3.Distance(esm.spawnpostion, esm.transform.position) < 2)
         {
             esm.currenttarget = LoadCharmanager.Overallmainchar;
             esm.Meshagent.ResetPath();
             esm.Meshagent.speed = esm.patrolspeed;
-            esm.healtickamount = esm.enemyhpscript.maxhealth / 100;              //call ich hier und nicht beim awake, weil es schonmal verbuggt war und der enemy nicht gehealt würden(weil noch keine maxhp gesetzt war????)
+            esm.healtickamount = esm.enemyhpscript.maxhealth * 0.05f;
             esm.ChangeAnimationState(idlestate);
             esm.state = Enemymovement.State.idleheal;
         }

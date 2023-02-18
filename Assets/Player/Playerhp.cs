@@ -83,7 +83,14 @@ public class Playerhp : MonoBehaviour
                 playerisdead = true;
                 if (playerhpuislot == 0)           //0 ist immer mainchar
                 {
-                    //gameObject.GetComponent<Movescript>();
+                    Statics.resetvaluesondeathorstun = true;
+                    LoadCharmanager.disableattackbuttons = true;
+                    gameObject.GetComponent<Movescript>().ChangeAnimationStateInstant(dyingstate);
+                    gameObject.GetComponent<Movescript>().state = Movescript.State.Empty;
+                    foreach (GameObject obj in Infightcontroller.infightenemylists)
+                    {
+                        obj.GetComponent<EnemyHP>().newtargetonplayerdeath(playerhpuislot);
+                    }
                 }
                 else
                 {

@@ -361,7 +361,6 @@ public class Movescript : MonoBehaviour
     {
         Physics.IgnoreLayerCollision(6, 6);
         Physics.IgnoreLayerCollision(8, 6);
-        //gravitation = normalgravition;
         state = State.Air;
     }
     public void switchtoemptystate()
@@ -399,7 +398,7 @@ public class Movescript : MonoBehaviour
         ChangeAnimationStateInstant(dazestate);
         state = State.Stun;
         Statics.dash = true;
-        Statics.dazestunstart = true;
+        Statics.resetvaluesondeathorstun = true;
     }
     public void switchtooutofcombataim()
     {
@@ -418,7 +417,7 @@ public class Movescript : MonoBehaviour
         state = State.Buttonmashstun;
         dazeimage.SetActive(true);
         dazeimage.GetComponentInChildren<Text>().text = "Spam " + buttonmashhotkey.GetBindingDisplayString();
-        Statics.dazestunstart = true;
+        Statics.resetvaluesondeathorstun = true;
         Statics.dazecounter = 0;
         Statics.dazekicksneeded = buttonmashcount;
         Statics.dash = true;

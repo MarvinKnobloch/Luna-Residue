@@ -99,7 +99,7 @@ public class Supportmeleeattack
     private void afterattackaction()
     {
         ssm.attacktimer = 0f;
-        if (ssm.currenttarget != null)
+        if (ssm.currenttarget != null && ssm.playerhp.playerisdead == false)
         {
             int newposi = Random.Range(0, 100);
             if (newposi < ssm.chancetochangeposi)
@@ -133,7 +133,7 @@ public class Supportmeleeattack
     }
     private void attackrangecheck(string state)
     {
-        if (ssm.currenttarget != null)
+        if (ssm.currenttarget != null && ssm.playerhp.playerisdead == false)
         {
             if (Vector3.Distance(ssm.transform.position, ssm.currenttarget.transform.position + ssm.transform.forward * -2) > ssm.attackrangecheck)
             {

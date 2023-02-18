@@ -134,9 +134,9 @@ public class Bowattack : MonoBehaviour
             }
             if (LoadCharmanager.disableattackbuttons == false)
             {
-                if (Statics.dazestunstart == true)                                //reset alles values bei stun
+                if (Statics.resetvaluesondeathorstun == true)                                //reset alles values bei stun
                 {
-                    Statics.dazestunstart = false;
+                    Statics.resetvaluesondeathorstun = false;
                     Statics.playeriframes = false;
                     resetvalues();
                     movementscript.Charrig.enabled = false;
@@ -470,6 +470,8 @@ public class Bowattack : MonoBehaviour
     private void startbowair3intoground()
     {
         root = true;
+        Physics.IgnoreLayerCollision(6, 6);             //player und enemy collision
+        Physics.IgnoreLayerCollision(8, 6);
         attackestate = Attackstate.groundattackchain;
         movementscript.playeraim.aimend();
         playerarrow.SetActive(false);
@@ -480,6 +482,8 @@ public class Bowattack : MonoBehaviour
     }
     private void bowairdownend()
     {
+        Physics.IgnoreLayerCollision(6, 6, false);
+        Physics.IgnoreLayerCollision(8, 6, false);
         root = false;
         if (readattackinput == false && movementscript.attackcombochain < 2)
         {

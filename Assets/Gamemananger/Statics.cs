@@ -103,7 +103,7 @@ public class Statics
 
     public static float dazecounter;
     public static float dazekicksneeded;
-    public static bool dazestunstart;                 //um die parameter zurückzusetzen (wird im attack script gemacht)
+    public static bool resetvaluesondeathorstun;                 //um die parameter zurückzusetzen (wird im attack script gemacht)
     public static bool slow;
     public static bool enemyspezialtimescale;
 

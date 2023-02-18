@@ -138,6 +138,7 @@ public class LoadCharmanager : MonoBehaviour
                 Statics.currentthirdchar = Statics.currentforthchar;
                 Statics.currentforthchar = -1;
                 Overallthirdchar = teammates[Statics.currentthirdchar];
+                Overallthirdchar.GetComponent<Playerhp>().playerhpuislot = 2;
                 Overallthirdchar.SetActive(true);
                 Overallforthchar = null;
             }

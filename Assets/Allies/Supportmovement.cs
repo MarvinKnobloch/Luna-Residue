@@ -9,6 +9,7 @@ public class Supportmovement : MonoBehaviour
     public NavMeshAgent Meshagent;
     private Animator animator;
     [NonSerialized] public LayerMask hitbox;
+    [NonSerialized] public Playerhp playerhp;
 
     [SerializeField]
     public GameObject currenttarget;
@@ -65,6 +66,7 @@ public class Supportmovement : MonoBehaviour
         hitbox = LayerMask.GetMask("Meleehitbox");
         Meshagent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        playerhp = GetComponent<Playerhp>();
 
         supportchoosetarget.ssm = this;
         supportheal.ssm = this;
@@ -147,11 +149,11 @@ public class Supportmovement : MonoBehaviour
 
     private void meleeattack1end() => supportmeleeattack.meleeattack1end();                 //wird bei der animation gecalled
     private void meleeattack2end() => supportmeleeattack.meleeattack2end();                 //wird bei der animation gecalled
-    private void meleeattack3end() => supportmeleeattack.meleeattack3end();                 //wird bei der animation gecalled
+    private void meleeattack3end() => supportmeleeattack.meleeattack3end();
 
     private void rangeattack1end() => supportrangeattack.rangeattack1end();                 //wird bei der animation gecalled
     private void rangeattack2end() => supportrangeattack.rangeattack2end();                 //wird bei der animation gecalled
-    private void rangeattack3end() => supportrangeattack.rangeattack3end();                 //wird bei der animation gecalled
+    private void rangeattack3end() => supportrangeattack.rangeattack3end();
 
     public void FaceTraget()
     {

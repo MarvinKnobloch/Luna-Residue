@@ -21,7 +21,7 @@ public class Enemymovement : MonoBehaviour
     [NonSerialized] public float followplayerafterattack;
     [NonSerialized] public float chancetochangeposi = 33;
     [NonSerialized] public float checkforresettimer;
-    [NonSerialized] public float healticksafterreset = 0.75f;
+    [NonSerialized] public float healticksafterreset = 1;
     [NonSerialized] public float healticktimer;
     [NonSerialized] public float healtickamount;
 

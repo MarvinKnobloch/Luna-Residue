@@ -97,9 +97,9 @@ public class Fistattack : MonoBehaviour
             }
             if (LoadCharmanager.disableattackbuttons == false)
             {
-                if (Statics.dazestunstart == true)                                //reset alles values bei stun
+                if (Statics.resetvaluesondeathorstun == true)                                //reset alles values bei stun
                 {
-                    Statics.dazestunstart = false;
+                    Statics.resetvaluesondeathorstun = false;
                     Statics.playeriframes = false;
                     resetvalues();
                     movementscript.Charrig.enabled = false;
@@ -357,9 +357,13 @@ public class Fistattack : MonoBehaviour
     private void fistairdownroot()
     {
         root = true;
+        Physics.IgnoreLayerCollision(6, 6);             //player und enemy collision
+        Physics.IgnoreLayerCollision(8, 6);
     }
     private void fistairdownend()
     {
+        Physics.IgnoreLayerCollision(6, 6, false);
+        Physics.IgnoreLayerCollision(8, 6, false);
         root = false;
         if (readattackinput == false && movementscript.attackcombochain < 2)
         {
