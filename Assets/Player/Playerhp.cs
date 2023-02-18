@@ -14,7 +14,8 @@ public class Playerhp : MonoBehaviour
     public int playerhpuislot;
     [SerializeField] HealthUImanager healthUImanager;
     private Attributecontroller attributecontroller;
-    [SerializeField] private MonoBehaviour charstatemachine;
+
+    const string dyingstate = "Dying";
 
     void Awake()
     {
@@ -22,10 +23,12 @@ public class Playerhp : MonoBehaviour
     }
     private void OnEnable()
     {
-        if(health > 0)
+        if(playerisdead == true)
         {
             playerisdead = false;
+            addhealth(1);
         }
+
     }
     public void TakeDamage(float damage)
     {
@@ -43,7 +46,7 @@ public class Playerhp : MonoBehaviour
         health += Mathf.Round(heal + (Statics.groupstonehealbonus + attributecontroller.stoneclassbonusheal * 0.01f * heal));
         handlehealth();
     }
-    public void castheal(float heal)
+    public void addhealth(float heal)
     {
         health += heal;
         handlehealth();
@@ -51,7 +54,7 @@ public class Playerhp : MonoBehaviour
     public void playerisresurrected(float healamount)
     {
         playerisdead = false;
-        castheal(healamount * 2);
+        addhealth(healamount * 2);
         if (playerhpuislot == 0)           //0 ist immer mainchar
         {
             //gameObject.GetComponent<Movescript>();
@@ -84,8 +87,9 @@ public class Playerhp : MonoBehaviour
                 }
                 else
                 {
-                    gameObject.GetComponent<Supportmovement>().dying();
-                    foreach(GameObject obj in Infightcontroller.infightenemylists)
+                    gameObject.GetComponent<Supportmovement>().ChangeAnimationStateInstant(dyingstate);                  //wenn ich die 2 sachen über eine funktion call werden sie manchmal überschrieben und dann wird die empty state überschrieben
+                    gameObject.GetComponent<Supportmovement>().state = Supportmovement.State.empty;
+                    foreach (GameObject obj in Infightcontroller.infightenemylists)
                     {
                         obj.GetComponent<EnemyHP>().newtargetonplayerdeath(playerhpuislot -1);
                     }

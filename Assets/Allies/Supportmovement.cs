@@ -75,7 +75,6 @@ public class Supportmovement : MonoBehaviour
     private void OnEnable()
     {
         EnemyHP.supporttargetdied += enemyhasdied;
-        Infightcontroller.setsupporttarget += switchtarget;
         currentstate = null;
         currenttarget = null;
         attacktimer = attackcd;
@@ -87,7 +86,6 @@ public class Supportmovement : MonoBehaviour
     {
         currenttarget = null;
         EnemyHP.supporttargetdied -= enemyhasdied;
-        Infightcontroller.setsupporttarget -= switchtarget;
     }
     void Update()
     {
@@ -144,7 +142,6 @@ public class Supportmovement : MonoBehaviour
         else state = State.waitforrangeattackcd;
     }
     public void supportreset() => supportutilityfunctions.supportreset();
-    public void dying() => supportutilityfunctions.dying();
     public void supportresurrected() => supportutilityfunctions.supportresurrected();
     public void matecastheal() => supportheal.matecastheal();
 

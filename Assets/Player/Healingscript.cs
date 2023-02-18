@@ -280,9 +280,9 @@ public class Healingscript : MonoBehaviour
     private void castsingleheal()
     {
         float healamount = Mathf.Round(singleheal + (Statics.groupstonehealbonus + GetComponent<Attributecontroller>().stoneclassbonusheal) * 0.01f * singleheal * Statics.charcurrentlvl);
-        if(healtarget == 1) LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().castheal(healamount);
-        else if(healtarget == 2) LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().castheal(healamount);
-        else if (healtarget == 3) LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().castheal(healamount);
+        if(healtarget == 1) LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().addhealth(healamount);
+        else if(healtarget == 2) LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().addhealth(healamount);
+        else if (healtarget == 3) LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().addhealth(healamount);
         healtarget = 0;
         resetvaluesafterheal();
     }
@@ -290,14 +290,14 @@ public class Healingscript : MonoBehaviour
     private void castgroupheal()
     {
         float healamount = Mathf.Round(groupheal + (Statics.groupstonehealbonus + GetComponent<Attributecontroller>().stoneclassbonusheal) * 0.01f * groupheal * Statics.charcurrentlvl);
-        LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().castheal(healamount);
+        LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().addhealth(healamount);
         if (LoadCharmanager.Overallthirdchar != null)
         {
-            LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().castheal(healamount);
+            LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().addhealth(healamount);
         }
         if (LoadCharmanager.Overallforthchar != null)
         {
-            LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().castheal(healamount);
+            LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().addhealth(healamount);
         }
         resetvaluesafterheal();
     }
@@ -320,7 +320,7 @@ public class Healingscript : MonoBehaviour
             else
             {
                 float healamount = Mathf.Round(groupheal + (Statics.groupstonehealbonus + GetComponent<Attributecontroller>().stoneclassbonusheal) * 0.01f * groupheal * Statics.charcurrentlvl);
-                playerhp.castheal(healamount);
+                playerhp.addhealth(healamount);
             }
         }
     }

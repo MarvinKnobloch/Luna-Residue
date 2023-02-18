@@ -43,6 +43,8 @@ public class Enemymovement : MonoBehaviour
     [NonSerialized] public Vector3 patrolposi;
     [NonSerialized] public Vector3 posiafterattack;
 
+    const string attack1state = "Attack1";
+
     private Enemypatrol enemypatrol = new Enemypatrol();
     private Enemyattack enemyattack = new Enemyattack();
     private Enemyreset enemyreset = new Enemyreset();
@@ -137,6 +139,13 @@ public class Enemymovement : MonoBehaviour
     public void triggerenemy() => enemypatrol.triggerenemy();       //ontriggerenter
     public void patrolend() => enemypatrol.patrolend();        //ontriggerexit
     public void checkforplayerinrange() => enemypatrol.checkforplayerinrange();
+    public void switchtoattackstate()
+    {
+        normalattacktimer = 0;
+        ChangeAnimationState(attack1state);
+        Meshagent.ResetPath();
+        state = State.isattacking;
+    }
     private void backtowaitforattack() => enemyattack.backtowaitforattack();         //wird mit der animation gecalled
     private void resetpath() => Meshagent.ResetPath();
     private void callemptystate() => state = State.empty;                          //wird mit der animation gecalled

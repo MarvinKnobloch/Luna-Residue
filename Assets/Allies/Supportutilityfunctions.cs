@@ -8,7 +8,6 @@ public class Supportutilityfunctions
 
     const string idlestate = "Idle";
     const string runstate = "Run";
-    const string dyingstate = "Dying";
     const string standupstate = "Standup";
 
     public void attackstate()
@@ -94,11 +93,6 @@ public class Supportutilityfunctions
             }
             ssm.resetcombattimer = 0;
         }
-    }
-    public void dying()
-    {
-        ssm.ChangeAnimationStateInstant(dyingstate);
-        ssm.state = Supportmovement.State.empty;
     }
     public void supportresurrected()
     {

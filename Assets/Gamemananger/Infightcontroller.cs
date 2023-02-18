@@ -13,10 +13,7 @@ public class Infightcontroller : MonoBehaviour
 
     public static float teammatesdespawntime = 5;
 
-    public static event Action setsupporttarget;
-
     public float spezialtimer;
-    private bool spezialtimerisrunning;
 
 
     private void Start()
@@ -46,7 +43,6 @@ public class Infightcontroller : MonoBehaviour
         else
         {
             GameObject mainchar = LoadCharmanager.Overallmainchar;
-            setsupporttarget?.Invoke();
             if (Statics.infight == false)
             {
                 Statics.infight = true;
@@ -68,10 +64,20 @@ public class Infightcontroller : MonoBehaviour
     }
     public void disablethirdchar()
     {
+        if(LoadCharmanager.Overallthirdchar.TryGetComponent(out Playerhp playerhp))
+        {
+            playerhp.playerisdead = false;
+            playerhp.addhealth(Mathf.Round(Statics.charmaxhealth[Statics.currentthirdchar] * 0.1f));
+        }
         LoadCharmanager.Overallthirdchar.SetActive(false);
     }
     public void disableforthchar()
     {
+        if (LoadCharmanager.Overallforthchar.TryGetComponent(out Playerhp playerhp))
+        {
+            playerhp.playerisdead = false;
+            playerhp.addhealth(Mathf.Round(Statics.charmaxhealth[Statics.currentforthchar] * 0.1f));
+        }
         LoadCharmanager.Overallforthchar.SetActive(false);
     }
     IEnumerator enemyspezialcd()
@@ -82,7 +88,7 @@ public class Infightcontroller : MonoBehaviour
             int enemycount = infightenemylists.Count;
             //Debug.Log(Statics.currentenemyspecialcd);
             int enemyonlist = UnityEngine.Random.Range(1, enemycount +1);
-            if (infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>())                        //inChildren weil ich momentan desn collider auf die liste setzte
+            if (infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>())
             {
                 infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>().spezialattack = true;
             }
