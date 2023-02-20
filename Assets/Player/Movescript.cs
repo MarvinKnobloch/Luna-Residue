@@ -21,6 +21,7 @@ public class Movescript : MonoBehaviour
     private InputAction buttonmashhotkey;
 
     [NonSerialized] public Animator animator;
+    [NonSerialized] public Playerhp playerhp;
 
     public Transform CamTransform;
     public CinemachineFreeLook Cam1;
@@ -89,7 +90,6 @@ public class Movescript : MonoBehaviour
     public string currentstate;
     const string idlestate = "Idle";
     const string dazestate = "Daze";
-    const string playerstandupstate = "Playerstandup";
 
     //Lockon
     public LayerMask Lockonlayer;
@@ -169,6 +169,7 @@ public class Movescript : MonoBehaviour
         charactercontroller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         healingscript = GetComponent<Healingscript>();
+        playerhp = GetComponent<Playerhp>();
         state = State.Air;
         starttime = Time.time;
         Statics.normalgamespeed = 1;
@@ -401,6 +402,8 @@ public class Movescript : MonoBehaviour
         Statics.dash = true;
         Statics.resetvaluesondeathorstun = true;
     }
+    public void resurrected() => playerheal.resurrected();
+    private void playerstandup() => playerheal.playerstandup();
     public void switchtooutofcombataim()
     {
         CinemachinePOV Cam2pov = Cam2.GetCinemachineComponent<CinemachinePOV>();
@@ -445,15 +448,6 @@ public class Movescript : MonoBehaviour
         switchtoairstate();
     }
     public void pushplayerup(float amount) => playerair.pushplayerupwards(amount);
-
-    public void resurrected()
-    {
-        ChangeAnimationState(playerstandupstate);
-        float reshealth = Mathf.Round(GetComponent<Playerhp>().maxhealth * (0.2f + (Statics.groupstonehealbonus * 0.01f)));
-        GetComponent<Playerhp>().addhealth(reshealth);
-        GetComponent<Playerhp>().playerisdead = false;
-    }
-    private void playerstandup() => switchtogroundstate();
 }
 
 

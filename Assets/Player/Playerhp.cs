@@ -66,38 +66,40 @@ public class Playerhp : MonoBehaviour
         {
             health = maxhealth;
         }
-        else if(health <= 0)
+        if(health <= 0 && playerisdead == false)
         {
+            playerisdead = true;
             health = 0;
-            if(playerisdead == false)
+            if (playerhpuislot == 0)           //0 ist immer mainchar
             {
-                playerisdead = true;
-                if (playerhpuislot == 0)           //0 ist immer mainchar
+                Statics.resetvaluesondeathorstun = true;
+                LoadCharmanager.disableattackbuttons = true;
+                gameObject.GetComponent<Movescript>().ChangeAnimationStateInstant(dyingstate);
+                gameObject.GetComponent<Movescript>().state = Movescript.State.Empty;
+                if (Statics.oneplayerisdead == false)
                 {
-                    Statics.resetvaluesondeathorstun = true;
-                    LoadCharmanager.disableattackbuttons = true;
-                    gameObject.GetComponent<Movescript>().ChangeAnimationStateInstant(dyingstate);
-                    gameObject.GetComponent<Movescript>().state = Movescript.State.Empty;
-                    foreach (GameObject obj in Infightcontroller.infightenemylists)
-                    {
-                        obj.GetComponent<EnemyHP>().newtargetonplayerdeath(playerhpuislot);
-                    }
+                    Statics.oneplayerisdead = true;
+                    GlobalCD.startsupportresurrectioncd();
                 }
-                else
+                foreach (GameObject obj in Infightcontroller.infightenemylists)
                 {
-                    gameObject.GetComponent<Supportmovement>().ChangeAnimationStateInstant(dyingstate);                  //wenn ich die 2 sachen über eine funktion call werden sie manchmal überschrieben und dann wird die empty state überschrieben
-                    gameObject.GetComponent<Supportmovement>().state = Supportmovement.State.empty;
-                    if(Statics.oneplayerisdead == false)
-                    {
-                        Statics.oneplayerisdead = true;
-                        GlobalCD.startsupportresurrectioncd();
-                    }
-                    foreach (GameObject obj in Infightcontroller.infightenemylists)
-                    {
-                        obj.GetComponent<EnemyHP>().newtargetonplayerdeath(playerhpuislot -1);
-                    }
+                    obj.GetComponent<EnemyHP>().newtargetonplayerdeath(playerhpuislot);
                 }
             }
+            else
+            {
+                gameObject.GetComponent<Supportmovement>().ChangeAnimationStateInstant(dyingstate);                  //wenn ich die 2 sachen über eine funktion call werden sie manchmal überschrieben und dann wird die empty state überschrieben
+                gameObject.GetComponent<Supportmovement>().state = Supportmovement.State.empty;
+                if (Statics.oneplayerisdead == false)
+                {
+                    Statics.oneplayerisdead = true;
+                    GlobalCD.startsupportresurrectioncd();
+                }
+                foreach (GameObject obj in Infightcontroller.infightenemylists)
+                {
+                    obj.GetComponent<EnemyHP>().newtargetonplayerdeath(playerhpuislot - 1);
+                }
+            }        
         }
         Statics.charcurrenthealth[charnumber] = health;
         healthUImanager.healthupdate(playerhpuislot, health, maxhealth);

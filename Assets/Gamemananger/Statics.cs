@@ -55,6 +55,7 @@ public class Statics
     public static float basicbuffdmgperskillpoint = 4;
 
     public static int presetresurrectcd = 5;
+    public static int presethealcd = 3;
 
     //gameplaystatics
     public static bool otheraction;
@@ -63,7 +64,7 @@ public class Statics
     public static bool playeriframes;
 
     //playercds
-    public static float healcd = 2f;
+    public static float healcd;
     public static float healmissingtime = 10f;
     public static bool healcdbool;
 
@@ -98,7 +99,7 @@ public class Statics
     public static int thirdchartookdmgformamount = 1;
     public static int forthchartookdmgformamount = 1;
     public static bool oneplayerisdead;
-    public static int supportresurrectcd;
+    public static int infightresurrectcd;                           //wird im infightcontroller zurückgesetzt
     public static bool supportcanresurrect;
 
     //enemy
@@ -139,9 +140,9 @@ public class Statics
     public static float charcurrentexp = 0;
     public static float charrequiredexp = 52;
     public static string[] characternames = { "Maria", "Erika", "Kaja", "Yaku", "Arissa" };
-    public static float[] charbasichealth = { 10, 93, 97, 91, 95 };
-    public static float[] charcurrenthealth = { 100, 93, 97, 91, 95 };
-    public static float[] charmaxhealth = { 100, 93, 97, 91, 95 };
+    public static float[] charbasichealth = { 100, 93, 9, 91, 95 };
+    public static float[] charcurrenthealth = { 100, 93, 9, 91, 95 };
+    public static float[] charmaxhealth = { 100, 93, 9, 91, 95 };
     public static float[] chardefense = { 100, 100, 100, 100, 100 };
     public static float[] charattack = { 1, 1, 1, 1, 1 };
     public static float[] charcritchance = { 5, 5, 5, 5, 5 };

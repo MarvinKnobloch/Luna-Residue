@@ -38,8 +38,7 @@ public class Supportmovement : MonoBehaviour
     [SerializeField] public GameObject healpotion;
     private int basicpotionheal = 12;
 
-    [NonSerialized] public GameObject resurrecttraget;
-
+    public GameObject resurrecttraget;
 
     public string currentstate;
     const string idlestate = "Idle";

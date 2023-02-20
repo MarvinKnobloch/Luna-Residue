@@ -29,7 +29,7 @@ public class TargetUI : MonoBehaviour
     }
     private void setfocus(EnemyHP enemyhpscript)
     {
-        nameandlvl.text = enemyhpscript._enemyname + " " + enemyhpscript._enemylvl;
+        nameandlvl.text = enemyhpscript.enemyname + " " + enemyhpscript.enemylvl;
         healthbargameobject.healthpctchanged += healthuiupdate;
     }
 

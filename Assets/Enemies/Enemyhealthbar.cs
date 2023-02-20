@@ -35,15 +35,15 @@ public class Enemyhealthbar : MonoBehaviour
         int size = enemyhealthbar.sizeofenemy;
         if(size == 0)
         {
-            enemysizetext.text = "S" + healthbargameobject._enemylvl;
+            enemysizetext.text = "S" + healthbargameobject.enemylvl;
         }
         else if (size == 1)
         {
-            enemysizetext.text = "M" + healthbargameobject._enemylvl;
+            enemysizetext.text = "M" + healthbargameobject.enemylvl;
         }
         else if (size == 2)
         {
-            enemysizetext.text = "B" + healthbargameobject._enemylvl;
+            enemysizetext.text = "B" + healthbargameobject.enemylvl;
         }
         //focusdebuffbar = enemyhealthbar.enemyfocusdebuffbar;
         //enemyfocusgameobject = enemyhealthbar.enemyfocusbargameobject;

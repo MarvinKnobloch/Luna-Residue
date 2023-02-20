@@ -82,6 +82,7 @@ public class Enemypatrol
                         Infightcontroller.checkifinfight();
                     }
                 }
+                esm.currenttarget = LoadCharmanager.Overallmainchar;
                 esm.Meshagent.speed = esm.normalnavspeed;
                 esm.normalattacktimer = esm.normalattackcd;
                 esm.state = Enemymovement.State.gettomeleerange;

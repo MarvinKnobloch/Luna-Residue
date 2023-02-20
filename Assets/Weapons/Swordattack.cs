@@ -97,6 +97,7 @@ public class Swordattack : MonoBehaviour
                 Statics.dash = true;
                 Statics.playeriframes = true;
                 resetvalues();
+                root = true;
                 GlobalCD.startdashcd();
                 movementscript.graviti = 0;
                 Invoke("dash", 0.05f);                                             //damit man beim angreifen noch die Richtung bestimmen kann
@@ -104,10 +105,10 @@ public class Swordattack : MonoBehaviour
         }
         if (Statics.resetvaluesondeathorstun == true)
         {
-            Debug.Log("test");
             Statics.resetvaluesondeathorstun = false;
             Statics.playeriframes = false;
             resetvalues();
+            root = false;
             movementscript.Charrig.enabled = false;
             if (Statics.enemyspezialtimescale == false)                  //???????????
             {
@@ -204,7 +205,6 @@ public class Swordattack : MonoBehaviour
     {
         attackestate = Attackstate.waitforattack;
         Statics.otheraction = true;
-        root = true;
         CancelInvoke();
         healingscript.resethealvalues();
         eleAbilities.stopignorelayers();

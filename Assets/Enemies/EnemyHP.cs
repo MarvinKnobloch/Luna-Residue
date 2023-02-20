@@ -7,23 +7,24 @@ using TMPro;
 
 public class EnemyHP : MonoBehaviour
 {
-    [SerializeField] Enemyvalues enemyvalues;
+    [SerializeField] private Enemyvalues enemyvalues;
     private Enemycalculatedmg enemycalculatedmg = new Enemycalculatedmg();
+    private Enemymovement enemymovement;
     public GameObject damagetext;
 
-    [NonSerialized] public string _enemyname;
+    [NonSerialized] public string enemyname;
     public float currenthealth;
     public float maxhealth;
     [NonSerialized] public int sizeofenemy;
-    public int _enemylvl;
-    [SerializeField] private int addenemylvl = 0;
+    public int enemylvl;
+    [SerializeField] private int addenemylvl;
     [NonSerialized] public float finaldmg;
 
     private CapsuleCollider capsulecollider;
     [NonSerialized] public float enemyheight;
 
-    public bool enemyincreasebasicdmg;
-    public bool enemydebuffcd;
+    [NonSerialized] public bool enemyincreasebasicdmg;
+    [NonSerialized] public bool enemydebuffcd;
     [NonSerialized] public float debufftimer;
     [NonSerialized] public float debuffcdtimer;
     [NonSerialized] public float debufffillamount;
@@ -34,12 +35,11 @@ public class EnemyHP : MonoBehaviour
     [SerializeField] private GameObject enemyfocusbargameobject;
     [SerializeField] private Image enemyfocusdebuffbar;
 
-    public static bool enemygethit;
+    //public static bool enemygethit;
+    private bool enemyisdead;
+    [NonSerialized] public bool dmgonce;                           // da ich zwei collider hab und dadurch 2mal dmg gemacht wird, wird es momentan mit einem bool gecheckt ( hab noch keine besser lösung gefunden
 
-    public bool dmgonce;                           // da ich zwei collider hab und dadurch 2mal dmg gemacht wird, wird es momentan mit einem bool gecheckt ( hab noch keine besser lösung gefunden
-
-    public GameObject[] itemdroplist;
-    public int[] itemdropchance;
+    public Enemydrops[] itemdroplist;
 
     [SerializeField] private int[] playerhits = { 0, 0, 0 };
     private int mosthits;
@@ -64,18 +64,20 @@ public class EnemyHP : MonoBehaviour
     private void Awake()
     {
         capsulecollider = GetComponent<CapsuleCollider>();
+        enemymovement = GetComponent<Enemymovement>();
         enemyheight = (capsulecollider.height * transform.localScale.y) + 0.4f;
-        _enemyname = enemyvalues.enemyname;
+        enemyname = enemyvalues.enemyname;
         maxhealth = enemyvalues.maxhealth;
         currenthealth = Mathf.Clamp(currenthealth, 0, maxhealth);
         currenthealth = maxhealth;
         sizeofenemy = enemyvalues.enemysize;
-        _enemylvl = enemyvalues.enemylvl + addenemylvl;
+        enemylvl = enemyvalues.enemylvl + addenemylvl;
         enemyfocusbargameobject = enemyfocusdebuffbar.transform.parent.gameObject;
     }
     private void OnEnable()
     {
         enemycalculatedmg.enemyscript = this;
+        enemyisdead = false;
         currenthealth = maxhealth;
         mosthits = 0;
         playerwithmosthits = 0;
@@ -132,9 +134,10 @@ public class EnemyHP : MonoBehaviour
         {
             focustargetuihptext(currenthealth, maxhealth);
         }
-        if (currenthealth <= 0)
+        if (currenthealth <= 0 && enemyisdead == false)
         {
-            gameObject.SetActive(false);
+            enemyisdead = true;
+            currenthealth = 0;
             removefromcanvas();
             if (Movescript.lockontarget != null)
             {
@@ -148,8 +151,14 @@ public class EnemyHP : MonoBehaviour
             Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
             Infightcontroller.checkifinfight();
             supporttargetdied?.Invoke();
-            dropitems();
+            enemymovement.enemydied();
+            Invoke("enemydied", 3);
         }
+    }
+    private void enemydied()
+    {
+        gameObject.SetActive(false);
+        dropitems();
     }
     public void enemyheal(float heal)
     {
@@ -257,14 +266,9 @@ public class EnemyHP : MonoBehaviour
             yield return null;
         }
     }
-    public void marktarget()
-    {
-        markcurrenttarget();
-    }
-    public void unmarktarget()
-    {
-        unmarkcurrenttarget();
-    }
+    public void marktarget() => markcurrenttarget();
+    public void unmarktarget() => unmarkcurrenttarget();
+
     public void focustargetuistart()
     {
         isfocus = true;
@@ -294,13 +298,13 @@ public class EnemyHP : MonoBehaviour
     }
     public void resetplayerhits()
     {
-        mosthits = 0;
+        mosthits = -1;
         playerwithmosthits = 0;
+        hitstakensincelastaggrocheck = 5;
         for (int i = 0; i < playerhits.Length; i++)
         {
             playerhits[i] = 0;
         }
-        setnewtarget();
     }
 
     private void setnewtarget()
@@ -314,9 +318,9 @@ public class EnemyHP : MonoBehaviour
                 playerwithmosthits = i;
             }
         }
-        if(playerwithmosthits == 0) GetComponent<Enemymovement>().currenttarget = LoadCharmanager.Overallmainchar;
-        else if (playerwithmosthits == 1) GetComponent<Enemymovement>().currenttarget = LoadCharmanager.Overallthirdchar;
-        else if (playerwithmosthits == 2) GetComponent<Enemymovement>().currenttarget = LoadCharmanager.Overallforthchar;
+        if(playerwithmosthits == 0) enemymovement.currenttarget = LoadCharmanager.Overallmainchar;
+        else if (playerwithmosthits == 1) enemymovement.currenttarget = LoadCharmanager.Overallthirdchar;
+        else if (playerwithmosthits == 2) enemymovement.currenttarget = LoadCharmanager.Overallforthchar;
     }
     public void newtargetonplayerdeath(int player)
     {
@@ -330,15 +334,19 @@ public class EnemyHP : MonoBehaviour
     }
     private void dropitems()
     {
-        int i = 0;
-        foreach (GameObject obj in itemdroplist)
+        foreach (Enemydrops obj in itemdroplist)
         {
             int randomnumber = UnityEngine.Random.Range(0, 100);
-            if (randomnumber <= itemdropchance[i])
+            if (randomnumber <= obj.itemdropchance)
             {
-                GameObject.Instantiate(obj, transform.position, transform.rotation);
+                Instantiate(obj.itemtodrop, transform.position, transform.rotation);
             }
-            i++;
         }
     }
+}
+[Serializable]
+public class Enemydrops
+{
+    [SerializeField] public GameObject itemtodrop;
+    [SerializeField] public int itemdropchance;
 }

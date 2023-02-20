@@ -32,6 +32,10 @@ public class Infightcontroller : MonoBehaviour
             instance.StopCoroutine("enemyspezialcd");
             infightimage.SetActive(false);
             instance.Invoke("disablechars", teammatesdespawntime);
+            if(LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == true)
+            {
+                LoadCharmanager.Overallmainchar.GetComponent<Movescript>().resurrected();
+            }
             GlobalCD.stopsupportresurrectioncd();
         }
         else
@@ -39,7 +43,7 @@ public class Infightcontroller : MonoBehaviour
             GameObject mainchar = LoadCharmanager.Overallmainchar;
             if (Statics.infight == false)
             {
-                Statics.supportresurrectcd = Statics.presetresurrectcd;
+                Statics.infightresurrectcd = Statics.presetresurrectcd;
                 Statics.supportcanresurrect = false;
                 Statics.oneplayerisdead = false;
                 Statics.infight = true;

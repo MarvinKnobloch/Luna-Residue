@@ -38,14 +38,9 @@ public class Supportheal
         {
             Statics.supportcanresurrect = false;
             ssm.resurrecttraget = null;
-            if (LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == true) ssm.resurrecttraget = LoadCharmanager.Overallmainchar;
-            else if (LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().playerisdead == true) ssm.resurrecttraget = LoadCharmanager.Overallthirdchar;
-            else if (LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().playerisdead == true) ssm.resurrecttraget = LoadCharmanager.Overallforthchar;
+            setresurrecttarget();
 
-            if(ssm.resurrecttraget == null)
-            {
-                return;
-            }
+            if(ssm.resurrecttraget == null) return;
             else
             {
                 ssm.Meshagent.SetDestination(ssm.resurrecttraget.transform.position);
@@ -54,9 +49,27 @@ public class Supportheal
             }
         }
     }
+    private void setresurrecttarget()
+    {
+        if (LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == true)
+        {
+            ssm.resurrecttraget = LoadCharmanager.Overallmainchar;
+            return;
+        }
+        else if (LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().playerisdead == true)
+        {
+            ssm.resurrecttraget = LoadCharmanager.Overallthirdchar;
+            return;
+        }
+        else if (LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().playerisdead == true)
+        {
+            ssm.resurrecttraget = LoadCharmanager.Overallforthchar;
+            return;
+        }
+    }
     public void resurrectplayer()
     {
-        if (Vector3.Distance(ssm.currenttarget.transform.position, ssm.resurrecttraget.transform.position) > 3)
+        if (Vector3.Distance(ssm.transform.position, ssm.resurrecttraget.transform.position) < 3)
         {
             ssm.Meshagent.ResetPath();
             ssm.ChangeAnimationState(resurrectplayerstate);
@@ -65,7 +78,8 @@ public class Supportheal
     }
     public void resurrect()
     {
-        if(ssm.resurrecttraget == LoadCharmanager.Overallmainchar)
+        Statics.infightresurrectcd++;
+        if (ssm.resurrecttraget == LoadCharmanager.Overallmainchar)
         {
             ssm.resurrecttraget.GetComponent<Movescript>().resurrected();
         }
@@ -73,15 +87,14 @@ public class Supportheal
         {
             ssm.resurrecttraget.GetComponent<Supportmovement>().supportresurrected();
         }
+
         if (LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == true || LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().playerisdead == true || LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().playerisdead == true)
         {
             Debug.Log("stilloneplayerdead");
-            Statics.supportresurrectcd++;
             GlobalCD.startsupportresurrectioncd();
         }
         else
         {
-            Debug.Log("noplayerdead");
             Statics.oneplayerisdead = false;
         }
     }

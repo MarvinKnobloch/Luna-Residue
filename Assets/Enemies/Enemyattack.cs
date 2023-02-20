@@ -10,7 +10,6 @@ public class Enemyattack
 
     const string idlestate = "Idle";
     const string runstate = "Run";
-    const string attack1state = "Attack1"; 
     const string spezialattackstate = "Spezial";
     public void gettomeleerange()                              //der enemy wartet bis er attackieren kann, danach geht er erst zum target
     {

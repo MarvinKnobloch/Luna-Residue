@@ -10,9 +10,9 @@ public class Enemymovement : MonoBehaviour
     public LayerMask Player;
     private Animator animator;
     [SerializeField] Enemyvalues enemyvalues;
-    [NonSerialized] public EnemyHP enemyhpscript;
+    [NonSerialized] public EnemyHP enemyhp;
 
-    public GameObject currenttarget;
+    [NonSerialized] public GameObject currenttarget;
 
     [NonSerialized] public float enemyresetrange = 55;
     [NonSerialized] public float checkforplayertimer;
@@ -26,12 +26,10 @@ public class Enemymovement : MonoBehaviour
     [NonSerialized] public float healtickamount;
 
     [SerializeField] private int enemylvl;
-    [SerializeField] private float basedmg;
+    private float basedmg;
     [NonSerialized] public float normalattackcd;
     [NonSerialized] public float normalattacktimer;
-    public bool spezialattack;
-
-    public bool gethit;
+    [NonSerialized] public bool spezialattack;
 
     [NonSerialized] public float patroltimer;
     [NonSerialized] public float patrolwaittimer = 5f;
@@ -69,8 +67,8 @@ public class Enemymovement : MonoBehaviour
 
     private void Awake()
     {
-        enemyhpscript = GetComponent<EnemyHP>();
-        enemylvl = GetComponent<EnemyHP>()._enemylvl;   //weil ich noch zusätzliche lvl im enemyhp adden kann
+        enemyhp = GetComponent<EnemyHP>();
+        enemylvl = GetComponent<EnemyHP>().enemylvl;   //weil ich noch zusätzliche lvl im enemyhp adden kann
         Meshagent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
@@ -150,6 +148,7 @@ public class Enemymovement : MonoBehaviour
     private void resetpath() => Meshagent.ResetPath();
     private void callemptystate() => state = State.empty;                          //wird mit der animation gecalled
     private void normalattackdmg() => currenttarget.GetComponent<Playerhp>().TakeDamage(basedmg);                    //wird mit der animation gecalled
+    public void enemydied() => enemyreset.enemydied();
     public void FaceTraget()
     {
         Vector3 direction = (currenttarget.transform.position - transform.position).normalized;                    // normalized wegen magnitude
