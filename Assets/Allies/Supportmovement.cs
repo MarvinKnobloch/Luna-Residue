@@ -9,6 +9,7 @@ public class Supportmovement : MonoBehaviour
     public NavMeshAgent Meshagent;
     private Animator animator;
     [NonSerialized] public LayerMask hitbox;
+    [NonSerialized] public Playerhp playerhp;
 
     [SerializeField]
     public GameObject currenttarget;
@@ -37,6 +38,8 @@ public class Supportmovement : MonoBehaviour
     [SerializeField] public GameObject healpotion;
     private int basicpotionheal = 12;
 
+    public GameObject resurrecttraget;
+
     public string currentstate;
     const string idlestate = "Idle";
 
@@ -57,6 +60,7 @@ public class Supportmovement : MonoBehaviour
         attackstate,
         changeposiafterattack,
         castheal,
+        resurrect,
         reset,
     }
 
@@ -65,6 +69,7 @@ public class Supportmovement : MonoBehaviour
         hitbox = LayerMask.GetMask("Meleehitbox");
         Meshagent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        playerhp = GetComponent<Playerhp>();
 
         supportchoosetarget.ssm = this;
         supportheal.ssm = this;
@@ -75,7 +80,6 @@ public class Supportmovement : MonoBehaviour
     private void OnEnable()
     {
         EnemyHP.supporttargetdied += enemyhasdied;
-        Infightcontroller.setsupporttarget += switchtarget;
         currentstate = null;
         currenttarget = null;
         attacktimer = attackcd;
@@ -87,7 +91,6 @@ public class Supportmovement : MonoBehaviour
     {
         currenttarget = null;
         EnemyHP.supporttargetdied -= enemyhasdied;
-        Infightcontroller.setsupporttarget -= switchtarget;
     }
     void Update()
     {
@@ -98,18 +101,22 @@ public class Supportmovement : MonoBehaviour
                 break;
             case State.waitforattackcd:
                 supportmeleeattack.waitforattackcd();
+                supportheal.checkforresurrect();
                 supportheal.supporthealing();
                 break;
             case State.waitformeleeattack:
                 supportmeleeattack.waitingformeleeattack();
+                supportheal.checkforresurrect();
                 supportheal.supporthealing();
                 break;
             case State.waitforrangeattackcd:
                 supportrangeattack.waitforrangeattackcd();
+                supportheal.checkforresurrect();
                 supportheal.supporthealing();
                 break;
             case State.waitforrangeattack:
                 supportrangeattack.waitingforrangeattack();
+                supportheal.checkforresurrect();
                 supportheal.supporthealing();
                 break;
             case State.attackstate:
@@ -119,6 +126,9 @@ public class Supportmovement : MonoBehaviour
                 supportutilityfunctions.repositionafterattack();
                 break;
             case State.castheal:
+                break;
+            case State.resurrect:
+                supportheal.resurrectplayer();
                 break;
             case State.reset:
                 supportutilityfunctions.resetcombat();
@@ -144,15 +154,17 @@ public class Supportmovement : MonoBehaviour
         else state = State.waitforrangeattackcd;
     }
     public void supportreset() => supportutilityfunctions.supportreset();
+    public void supportresurrected() => supportheal.supportresurrected();
+    private void resurrect() => supportheal.resurrect();
     public void matecastheal() => supportheal.matecastheal();
 
     private void meleeattack1end() => supportmeleeattack.meleeattack1end();                 //wird bei der animation gecalled
     private void meleeattack2end() => supportmeleeattack.meleeattack2end();                 //wird bei der animation gecalled
-    private void meleeattack3end() => supportmeleeattack.meleeattack3end();                 //wird bei der animation gecalled
+    private void meleeattack3end() => supportmeleeattack.meleeattack3end();
 
     private void rangeattack1end() => supportrangeattack.rangeattack1end();                 //wird bei der animation gecalled
     private void rangeattack2end() => supportrangeattack.rangeattack2end();                 //wird bei der animation gecalled
-    private void rangeattack3end() => supportrangeattack.rangeattack3end();                 //wird bei der animation gecalled
+    private void rangeattack3end() => supportrangeattack.rangeattack3end();
 
     public void FaceTraget()
     {
@@ -167,6 +179,12 @@ public class Supportmovement : MonoBehaviour
     {
         if (currentstate == newstate) return;
         animator.CrossFadeInFixedTime(newstate, 0.1f);
+        currentstate = newstate;
+    }
+    public void ChangeAnimationStateInstant(string newstate)
+    {
+        if (currentstate == newstate) return;
+        animator.Play(newstate);
         currentstate = newstate;
     }
 }

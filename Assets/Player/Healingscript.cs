@@ -48,6 +48,7 @@ public class Healingscript : MonoBehaviour
     const string healloop = "Healloop";
     const string singlehealend = "Singlehealend";
     const string grouphealend = "Grouphealend";
+    const string resurrectstate = "Resurrect";
 
     private void Awake()
     {
@@ -125,24 +126,19 @@ public class Healingscript : MonoBehaviour
                 }
                 if (resurrectioncast == true)
                 {
-                    if (controlls.SpielerHeal.Target1.WasPerformedThisFrame())
-                    {
-                        healtarget = 1;
-                        Debug.Log("res1");
-                    }
                     if (controlls.SpielerHeal.Target2.WasPerformedThisFrame() && LoadCharmanager.Overallthirdchar != null)
                     {
                         healtarget = 2;
-                        Debug.Log("res2");
+                        movementscript.ChangeAnimationState(resurrectstate);
                     }
                     if (controlls.SpielerHeal.Target3.WasPerformedThisFrame() && LoadCharmanager.Overallforthchar != null)
                     {
                         healtarget = 3;
-                        Debug.Log("res3");
+                        movementscript.ChangeAnimationState(resurrectstate);
                     }
                 }
             }
-            if (controlls.Player.Heal.WasReleasedThisFrame() && strgwaspressed == true) //&& animator.GetCurrentAnimatorStateInfo(0).IsName("Healend") == false)
+            if (controlls.Player.Heal.WasReleasedThisFrame() && strgwaspressed == true)
             {
                 cancelhealing();
                 movementscript.switchtogroundstate();
@@ -268,7 +264,7 @@ public class Healingscript : MonoBehaviour
             movementscript.ChangeAnimationStateInstant(healloop);
         }
     }
-    public void castsingleheal()
+    private void resetvaluesafterheal(int resurrectcd)
     {
         currentcombo = 0;
         singlehealcast = false;
@@ -278,47 +274,59 @@ public class Healingscript : MonoBehaviour
         readinputs = false;
         healanzeige.SetActive(false);
         Statics.otheraction = false;
-        //float basicheal = singleheal + Statics.charcurrentlvl;
-        float healamount = Mathf.Round(singleheal + (Statics.groupstonehealbonus + GetComponent<Attributecontroller>().stoneclassbonusheal) * 0.01f * singleheal * Statics.charcurrentlvl);
-        if(healtarget == 1)
-        {
-            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().castheal(healamount);
-        }
-        if(healtarget == 2)
-        {
-            LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().castheal(healamount);
-        }
-        if (healtarget == 3)
-        {
-            LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().castheal(healamount);
-        }
-        healtarget = 0;
-        GlobalCD.starthealingcd();
+        GlobalCD.starthealingcd(resurrectcd);
         movementscript.state = Movescript.State.Ground;
+    }
+    private void castsingleheal()
+    {
+        float healamount = Mathf.Round(singleheal + (Statics.groupstonehealbonus + GetComponent<Attributecontroller>().stoneclassbonusheal) * 0.01f * singleheal * Statics.charcurrentlvl);
+        if(healtarget == 1) LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().addhealth(healamount);
+        else if(healtarget == 2) LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().addhealth(healamount);
+        else if (healtarget == 3) LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().addhealth(healamount);
+        healtarget = 0;
+        resetvaluesafterheal(0);
     }
 
     private void castgroupheal()
     {
-        currentcombo = 0;
-        singlehealcast = false;
-        grouphealcast = false;
-        resurrectioncast = false;
-        strgwaspressed = false;
-        readinputs = false;
-        healanzeige.SetActive(false);
-        Statics.otheraction = false;
         float healamount = Mathf.Round(groupheal + (Statics.groupstonehealbonus + GetComponent<Attributecontroller>().stoneclassbonusheal) * 0.01f * groupheal * Statics.charcurrentlvl);
-        LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().castheal(healamount);
+        LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().addhealth(healamount);
         if (LoadCharmanager.Overallthirdchar != null)
         {
-            LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().castheal(healamount);
+            LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().addhealth(healamount);
         }
         if (LoadCharmanager.Overallforthchar != null)
         {
-            LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().castheal(healamount);
+            LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().addhealth(healamount);
         }
-        GlobalCD.starthealingcd();
-        movementscript.state = Movescript.State.Ground;
+        resetvaluesafterheal(0);
+    }
+    private void castresurrection()
+    {
+        if (healtarget == 2) resurrect(LoadCharmanager.Overallthirdchar.gameObject);
+        else if(healtarget == 3) resurrect(LoadCharmanager.Overallforthchar.gameObject);
+        healtarget = 0;
+        if(Statics.infight == true)
+        {
+            resetvaluesafterheal(Statics.infightresurrectcd);
+            Statics.infightresurrectcd++;
+        }
+        else resetvaluesafterheal(0);
+    }
+    private void resurrect(GameObject character)
+    {
+        if (character.TryGetComponent(out Playerhp playerhp))
+        {
+            if (playerhp.playerisdead == true)
+            {
+                playerhp.playerisresurrected();
+            }
+            else
+            {
+                float healamount = Mathf.Round(playerhp.maxhealth * (0.2f + (Statics.groupstonehealbonus * 0.01f)));
+                playerhp.addhealth(healamount);
+            }
+        }
     }
     IEnumerator wrongcd()
     {
@@ -339,6 +347,3 @@ public class Healingscript : MonoBehaviour
         }     
     }
 }
-
-//float basicheal = groupheal + Statics.charcurrentlvl;
-//float healamount = Mathf.Round(basicheal * (GetComponent<Attributecontroller>().overallstonehealbonus * 0.01f * basicheal));

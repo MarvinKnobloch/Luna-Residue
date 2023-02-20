@@ -60,30 +60,18 @@ public class Supportutilityfunctions
         {
             if (Vector3.Distance(ssm.transform.position, LoadCharmanager.Overallmainchar.transform.position) < 3)
             {
+                if (Statics.infight == true && Infightcontroller.infightenemylists.Count != 0)
+                {
+                    int enemycount = Infightcontroller.infightenemylists.Count;
+                    int newtarget = Random.Range(1, enemycount);            //enemycount + 1?
+                    ssm.currenttarget = Infightcontroller.infightenemylists[newtarget - 1].gameObject;
+                    ssm.attackrangecheck = ssm.currenttarget.GetComponent<CapsuleCollider>().radius + ssm.addedattackrangetocollider;
+                    ssm.switchtoweaponstate();
+                    return;
+                }
                 ssm.ChangeAnimationState(idlestate);
                 ssm.Meshagent.ResetPath();
-                if (Statics.infight == true)
-                {
-                    Collider[] colliders = Physics.OverlapSphere(LoadCharmanager.Overallmainchar.transform.position, 10, ssm.hitbox);
-                    foreach (Collider checkforenemys in colliders)
-                    {
-                        if (checkforenemys.GetComponentInChildren<Miniadd>())
-                        {
-                            continue;
-                        }
-                        else if (checkforenemys.GetComponentInParent<EnemyHP>())
-                        {
-                            ssm.currenttarget = checkforenemys.gameObject;
-                            if (ssm.currenttarget.GetComponentInParent<CapsuleCollider>())                                            //gegner muss ein Capuslecollider haben
-                            {
-                                ssm.attackrangecheck = (float)(ssm.currenttarget.GetComponentInParent<CapsuleCollider>().radius + ssm.addedattackrangetocollider);
-                                ssm.switchtoweaponstate();
-                                return;
-                            }
-                        }
-                    }
-                    ssm.resetcombattimer = 0;
-                }
+                ssm.resetcombattimer = 0;
             }
             else
             {

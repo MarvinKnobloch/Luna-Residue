@@ -31,7 +31,7 @@ public class Focustargetcontroller : MonoBehaviour
     {
         focustargetui.SetActive(true);
         enemyhpscript.focustargetuihptext += healthuiupdate;
-        nameandlvl.text = "LvL" + enemyhpscript._enemylvl + " " + enemyhpscript._enemyname;
+        nameandlvl.text = "LvL" + enemyhpscript.enemylvl + " " + enemyhpscript.enemyname;
         LockonuiHPtext.text = "HP " + enemyhpscript.currenthealth + " / " + enemyhpscript.maxhealth;
         healthuiupdate(enemyhpscript.currenthealth, enemyhpscript.maxhealth);
         if(enemyhpscript.enemydebuffcd == true)

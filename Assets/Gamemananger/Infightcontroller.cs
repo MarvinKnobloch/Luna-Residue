@@ -13,10 +13,7 @@ public class Infightcontroller : MonoBehaviour
 
     public static float teammatesdespawntime = 5;
 
-    public static event Action setsupporttarget;
-
     public float spezialtimer;
-    private bool spezialtimerisrunning;
 
 
     private void Start()
@@ -34,22 +31,23 @@ public class Infightcontroller : MonoBehaviour
             Statics.currentenemyspecialcd = Statics.enemyspecialcd;
             instance.StopCoroutine("enemyspezialcd");
             infightimage.SetActive(false);
-            if (LoadCharmanager.Overallthirdchar != null)                               
+            instance.Invoke("disablechars", teammatesdespawntime);
+            if(LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == true)
             {
-                instance.Invoke("disablethirdchar", teammatesdespawntime);
+                LoadCharmanager.Overallmainchar.GetComponent<Movescript>().resurrected();
             }
-            if (LoadCharmanager.Overallforthchar != null)
-            {
-                instance.Invoke("disableforthchar", teammatesdespawntime);
-            }
+            GlobalCD.stopsupportresurrectioncd();
         }
         else
         {
             GameObject mainchar = LoadCharmanager.Overallmainchar;
-            setsupporttarget?.Invoke();
             if (Statics.infight == false)
             {
+                Statics.infightresurrectcd = Statics.presetresurrectcd;
+                Statics.supportcanresurrect = false;
+                Statics.oneplayerisdead = false;
                 Statics.infight = true;
+                instance.StopCoroutine("healalliesafterfight");
                 instance.StartCoroutine("enemyspezialcd");
             }
             infightimage.SetActive(true);
@@ -66,25 +64,64 @@ public class Infightcontroller : MonoBehaviour
             }
         }
     }
-    public void disablethirdchar()
+    private void disablechars()
     {
-        LoadCharmanager.Overallthirdchar.SetActive(false);
-    }
-    public void disableforthchar()
-    {
-        LoadCharmanager.Overallforthchar.SetActive(false);
+        StartCoroutine("healalliesafterfight");
+        if (LoadCharmanager.Overallthirdchar != null)
+        {
+            if (LoadCharmanager.Overallthirdchar.TryGetComponent(out Playerhp playerhp))
+            {
+                playerhp.playerisdead = false;
+                playerhp.addhealth(Mathf.Round(Statics.charmaxhealth[Statics.currentthirdchar] * 0.1f));
+            }
+            LoadCharmanager.Overallthirdchar.SetActive(false);
+        }
+        if (LoadCharmanager.Overallforthchar != null)
+        {
+            if (LoadCharmanager.Overallforthchar.TryGetComponent(out Playerhp playerhp))
+            {
+                playerhp.playerisdead = false;
+                playerhp.addhealth(Mathf.Round(Statics.charmaxhealth[Statics.currentforthchar] * 0.1f));
+            }
+            LoadCharmanager.Overallforthchar.SetActive(false);
+        }
     }
     IEnumerator enemyspezialcd()
     {
         while (true)
         {
             yield return new WaitForSeconds(Statics.currentenemyspecialcd);
-            int enemycount = infightenemylists.Count;
-            //Debug.Log(Statics.currentenemyspecialcd);
-            int enemyonlist = UnityEngine.Random.Range(1, enemycount +1);
-            if (infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>())                        //inChildren weil ich momentan desn collider auf die liste setzte
+            if(LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == false)
             {
-                infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>().spezialattack = true;
+                int enemycount = infightenemylists.Count;
+                int enemyonlist = UnityEngine.Random.Range(1, enemycount + 1);
+                if (infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>())
+                {
+                    infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>().spezialattack = true;
+                }
+            }
+        }
+    }
+    IEnumerator healalliesafterfight()
+    {
+        Playerhp charhp = LoadCharmanager.Overallmainchar.GetComponent<Playerhp>();
+        int maxticks = 0;
+        while (true)
+        {
+            yield return new WaitForSeconds(2);
+            maxticks++;
+            charhp.addhealth(Mathf.Round(Statics.charmaxhealth[Statics.currentfirstchar] * 0.1f));
+            if (LoadCharmanager.Overallthirdchar != null)
+            {
+                LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().addhealth(Mathf.Round(Statics.charmaxhealth[Statics.currentthirdchar] * 0.11f));
+            }
+            if (LoadCharmanager.Overallforthchar != null)
+            {
+                LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().addhealth(Mathf.Round(Statics.charmaxhealth[Statics.currentforthchar] * 0.11f));
+            }
+            if (maxticks >= 9)
+            {
+                StopCoroutine("healalliesafterfight");
             }
         }
     }

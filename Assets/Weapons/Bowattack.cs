@@ -108,6 +108,7 @@ public class Bowattack : MonoBehaviour
             {
                 case Attackstate.waitforattack:
                     waitforattackinput();
+                    bowhookshotinput();
                     break;
                 case Attackstate.attack1:
                     attack1input();
@@ -128,52 +129,39 @@ public class Bowattack : MonoBehaviour
                     break;
                 case Attackstate.weaponswitch:
                     shotweaponswitcharrow();                                //gleicher input, damit ich nicht noch mehr schreiben muss
-                    break;              
+                    break;
                 default:
                     break;
             }
-            if (LoadCharmanager.disableattackbuttons == false)
+            if (controlls.Player.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false)
             {
-                if (Statics.dazestunstart == true)                                //reset alles values bei stun
-                {
-                    Statics.dazestunstart = false;
-                    Statics.playeriframes = false;
-                    resetvalues();
-                    movementscript.Charrig.enabled = false;
-                }
-                if (controlls.Player.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false)
-                {
-                    movementscript.state = Movescript.State.Beforedash;                  //damit man beim angreifen noch die Richtung bestimmen kann
-                    Statics.dash = true;
-                    Statics.playeriframes = true;
-                    resetvalues();
-                    GlobalCD.startdashcd();
-                    movementscript.graviti = 0;
-                    Invoke("dash", 0.05f);                                             //damit man beim angreifen noch die Richtung bestimmen kann
-                }
-                if (Movescript.lockontarget != null && controlls.Player.Attack4.WasPressedThisFrame() && Statics.otheraction == false)           // bowhookshot
-                {
-                    if (Vector3.Distance(transform.position, Movescript.lockontarget.position) > 2f)
-                    {
-                        movementscript.state = Movescript.State.Empty;
-                        attackestate = Attackstate.waitforattack;
-                        movementscript.graviti = 0f;
-                        Statics.otheraction = true;
-                        transform.rotation = Quaternion.LookRotation(Movescript.lockontarget.transform.position - transform.position, Vector3.up);
-                        movementscript.ChangeAnimationState(starthookstate);
-                    }
-                }
-                if (movementscript.state == Movescript.State.Ground)                               //out of Combat aim
-                {
-                    if (Statics.infight == false && controlls.Player.Attack4.WasPressedThisFrame() && Statics.otheraction == false)
-                    {
-                        Statics.otheraction = true;
-                        movementscript.ChangeAnimationState(chargestate);
-                        movementscript.switchtooutofcombataim();
-
-                    }
-                }
+                movementscript.state = Movescript.State.Beforedash;                  //damit man beim angreifen noch die Richtung bestimmen kann
+                Statics.dash = true;
+                Statics.playeriframes = true;
+                resetvalues();
+                root = true;
+                GlobalCD.startdashcd();
+                movementscript.graviti = 0;
+                Invoke("dash", 0.05f);                                             //damit man beim angreifen noch die Richtung bestimmen kann
             }
+            if (movementscript.state == Movescript.State.Ground)                               //out of Combat aim
+            {
+                if (Statics.infight == false && controlls.Player.Attack4.WasPressedThisFrame() && Statics.otheraction == false)
+                {
+                    Statics.otheraction = true;
+                    movementscript.ChangeAnimationState(chargestate);
+                    movementscript.switchtooutofcombataim();
+
+                }
+            }           
+        }
+        if (Statics.resetvaluesondeathorstun == true)                                //reset alles values bei stun
+        {
+            Statics.resetvaluesondeathorstun = false;
+            Statics.playeriframes = false;
+            resetvalues();
+            root = false;
+            movementscript.Charrig.enabled = false;
         }
     }
     private void waitforattackinput()                   //input für attackchainstart
@@ -325,6 +313,21 @@ public class Bowattack : MonoBehaviour
             }
         }
     }
+    private void bowhookshotinput()
+    {
+        if (Movescript.lockontarget != null && controlls.Player.Attack4.WasPressedThisFrame() && Statics.otheraction == false)           // bowhookshot
+        {
+            if (Vector3.Distance(transform.position, Movescript.lockontarget.position) > 2f)
+            {
+                movementscript.state = Movescript.State.Empty;
+                attackestate = Attackstate.waitforattack;
+                movementscript.graviti = 0f;
+                Statics.otheraction = true;
+                transform.rotation = Quaternion.LookRotation(Movescript.lockontarget.transform.position - transform.position, Vector3.up);
+                movementscript.ChangeAnimationState(starthookstate);
+            }
+        }
+    }
     private void OnAnimatorMove()
     {
         if (root == true)
@@ -349,7 +352,6 @@ public class Bowattack : MonoBehaviour
         playerarrow.SetActive(false);
         attackestate = Attackstate.waitforattack;
         Statics.otheraction = true;
-        root = true;
         CancelInvoke();
         healingscript.resethealvalues();
         eleAbilities.stopignorelayers();
@@ -470,6 +472,8 @@ public class Bowattack : MonoBehaviour
     private void startbowair3intoground()
     {
         root = true;
+        Physics.IgnoreLayerCollision(6, 6);             //player und enemy collision
+        Physics.IgnoreLayerCollision(8, 6);
         attackestate = Attackstate.groundattackchain;
         movementscript.playeraim.aimend();
         playerarrow.SetActive(false);
@@ -480,6 +484,8 @@ public class Bowattack : MonoBehaviour
     }
     private void bowairdownend()
     {
+        Physics.IgnoreLayerCollision(6, 6, false);
+        Physics.IgnoreLayerCollision(8, 6, false);
         root = false;
         if (readattackinput == false && movementscript.attackcombochain < 2)
         {

@@ -10,9 +10,9 @@ public class Enemymovement : MonoBehaviour
     public LayerMask Player;
     private Animator animator;
     [SerializeField] Enemyvalues enemyvalues;
-    [NonSerialized] public EnemyHP enemyhpscript;
+    [NonSerialized] public EnemyHP enemyhp;
 
-    public GameObject currenttarget;
+    [NonSerialized] public GameObject currenttarget;
 
     [NonSerialized] public float enemyresetrange = 55;
     [NonSerialized] public float checkforplayertimer;
@@ -21,17 +21,15 @@ public class Enemymovement : MonoBehaviour
     [NonSerialized] public float followplayerafterattack;
     [NonSerialized] public float chancetochangeposi = 33;
     [NonSerialized] public float checkforresettimer;
-    [NonSerialized] public float healticksafterreset = 0.75f;
+    [NonSerialized] public float healticksafterreset = 1;
     [NonSerialized] public float healticktimer;
     [NonSerialized] public float healtickamount;
 
     [SerializeField] private int enemylvl;
-    [SerializeField] private float basedmg;
+    private float basedmg;
     [NonSerialized] public float normalattackcd;
     [NonSerialized] public float normalattacktimer;
-    public bool spezialattack;
-
-    public bool gethit;
+    [NonSerialized] public bool spezialattack;
 
     [NonSerialized] public float patroltimer;
     [NonSerialized] public float patrolwaittimer = 5f;
@@ -42,6 +40,8 @@ public class Enemymovement : MonoBehaviour
     [NonSerialized] public Vector3 spawnpostion;
     [NonSerialized] public Vector3 patrolposi;
     [NonSerialized] public Vector3 posiafterattack;
+
+    const string attack1state = "Attack1";
 
     private Enemypatrol enemypatrol = new Enemypatrol();
     private Enemyattack enemyattack = new Enemyattack();
@@ -67,8 +67,8 @@ public class Enemymovement : MonoBehaviour
 
     private void Awake()
     {
-        enemyhpscript = GetComponent<EnemyHP>();
-        enemylvl = GetComponent<EnemyHP>()._enemylvl;   //weil ich noch zusätzliche lvl im enemyhp adden kann
+        enemyhp = GetComponent<EnemyHP>();
+        enemylvl = GetComponent<EnemyHP>().enemylvl;   //weil ich noch zusätzliche lvl im enemyhp adden kann
         Meshagent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
@@ -137,10 +137,18 @@ public class Enemymovement : MonoBehaviour
     public void triggerenemy() => enemypatrol.triggerenemy();       //ontriggerenter
     public void patrolend() => enemypatrol.patrolend();        //ontriggerexit
     public void checkforplayerinrange() => enemypatrol.checkforplayerinrange();
+    public void switchtoattackstate()
+    {
+        normalattacktimer = 0;
+        ChangeAnimationState(attack1state);
+        Meshagent.ResetPath();
+        state = State.isattacking;
+    }
     private void backtowaitforattack() => enemyattack.backtowaitforattack();         //wird mit der animation gecalled
     private void resetpath() => Meshagent.ResetPath();
     private void callemptystate() => state = State.empty;                          //wird mit der animation gecalled
     private void normalattackdmg() => currenttarget.GetComponent<Playerhp>().TakeDamage(basedmg);                    //wird mit der animation gecalled
+    public void enemydied() => enemyreset.enemydied();
     public void FaceTraget()
     {
         Vector3 direction = (currenttarget.transform.position - transform.position).normalized;                    // normalized wegen magnitude

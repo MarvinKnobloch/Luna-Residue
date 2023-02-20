@@ -90,30 +90,30 @@ public class Swordattack : MonoBehaviour
                 default:
                     break;
             }
-            if (LoadCharmanager.disableattackbuttons == false)
+
+            if (controlls.Player.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false)
             {
-                if (Statics.dazestunstart == true)                                //reset alles values bei stun
-                {
-                    Statics.dazestunstart = false;
-                    Statics.playeriframes = false;
-                    resetvalues();
-                    movementscript.Charrig.enabled = false;
-                    if (Statics.enemyspezialtimescale == false)                  //???????????
-                    {
-                        Time.timeScale = Statics.normalgamespeed;
-                        Time.fixedDeltaTime = Statics.normaltimedelta;
-                    }
-                }
-                if (controlls.Player.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false)
-                {
-                    movementscript.state = Movescript.State.Beforedash;                  //damit man beim angreifen noch die Richtung bestimmen kann
-                    Statics.dash = true;
-                    Statics.playeriframes = true;
-                    resetvalues();
-                    GlobalCD.startdashcd();
-                    movementscript.graviti = 0;
-                    Invoke("dash", 0.05f);                                             //damit man beim angreifen noch die Richtung bestimmen kann
-                }
+                movementscript.state = Movescript.State.Beforedash;                  //damit man beim angreifen noch die Richtung bestimmen kann
+                Statics.dash = true;
+                Statics.playeriframes = true;
+                resetvalues();
+                root = true;
+                GlobalCD.startdashcd();
+                movementscript.graviti = 0;
+                Invoke("dash", 0.05f);                                             //damit man beim angreifen noch die Richtung bestimmen kann
+            }
+        }
+        if (Statics.resetvaluesondeathorstun == true)
+        {
+            Statics.resetvaluesondeathorstun = false;
+            Statics.playeriframes = false;
+            resetvalues();
+            root = false;
+            movementscript.Charrig.enabled = false;
+            if (Statics.enemyspezialtimescale == false)                  //???????????
+            {
+                Time.timeScale = Statics.normalgamespeed;
+                Time.fixedDeltaTime = Statics.normaltimedelta;
             }
         }
     }
@@ -205,7 +205,6 @@ public class Swordattack : MonoBehaviour
     {
         attackestate = Attackstate.waitforattack;
         Statics.otheraction = true;
-        root = true;
         CancelInvoke();
         healingscript.resethealvalues();
         eleAbilities.stopignorelayers();
@@ -333,9 +332,13 @@ public class Swordattack : MonoBehaviour
     private void swordairdownroot()
     {
         root = true;
+        Physics.IgnoreLayerCollision(6, 6);             //player und enemy collision
+        Physics.IgnoreLayerCollision(8, 6);
     }
     private void swordairdownend()
     {
+        Physics.IgnoreLayerCollision(6, 6, false);
+        Physics.IgnoreLayerCollision(8, 6, false);
         root = false;
         if (readattackinput == false && movementscript.attackcombochain < 2)
         {

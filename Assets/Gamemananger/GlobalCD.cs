@@ -38,7 +38,7 @@ public class GlobalCD : MonoBehaviour
     {
         Statics.dashcdbool = false;
         Statics.charswitchbool = false;
-        Statics.healcdbool = true;
+        Statics.healcdbool = false;
         Statics.characterswitchbuff = 100;
         Statics.weaponswitchbuff = 100;
         Statics.otheraction = false;
@@ -51,16 +51,12 @@ public class GlobalCD : MonoBehaviour
         Statics.healmissingtime = 7f;
         Statics.dashcdmissingtime = Statics.dashcd;
         charswitchbuffimage.SetActive(false);
-        onswitchhealingcd();
     }
 
-    public static void starthealingcd()
+    public static void starthealingcd(int rescd)
     {
+        Statics.healcd = Statics.presethealcd + rescd;
         instance.StartCoroutine("healingcd");
-    }
-    public static void onswitchhealingcd()
-    {
-        instance.StartCoroutine("healingcdonchange");
     }
     public static void startdashcd()
     {
@@ -85,6 +81,14 @@ public class GlobalCD : MonoBehaviour
         instance.StartCoroutine("charswitchbuff");
         instance.StartCoroutine("charswitchcd");
     }
+    public static void startsupportresurrectioncd()
+    {
+        instance.StartCoroutine("supportresurrection");
+    }
+    public static void stopsupportresurrectioncd()
+    {
+        instance.StopCoroutine("supportresurrection");
+    }
     IEnumerator healingcd()
     {
         Statics.healcdbool = true;
@@ -102,24 +106,6 @@ public class GlobalCD : MonoBehaviour
                 healcdtext.text = "";
                 Statics.healcdbool = false;
                 StopCoroutine("healingcd");
-            }
-            yield return null;
-        }
-    }
-    IEnumerator healingcdonchange()
-    {
-        Statics.healcdbool = true;
-        while (true)
-        {
-            Statics.healmissingtime += Time.deltaTime;
-            healcdUI.fillAmount = Statics.healmissingtime / Statics.healcd;
-            healcdtext.text = Mathf.RoundToInt(Statics.healcd - Statics.healmissingtime).ToString();
-
-            if (Statics.healmissingtime >= Statics.healcd)
-            {
-                healcdtext.text = "";
-                Statics.healcdbool = false;
-                StopCoroutine("healingcdonchange");
             }
             yield return null;
         }
@@ -265,5 +251,12 @@ public class GlobalCD : MonoBehaviour
             }
             yield return null;
         }
+    }
+    IEnumerator supportresurrection()
+    {
+        int randomnumber = Random.Range(1, 3);
+        yield return new WaitForSeconds(Statics.infightresurrectcd + randomnumber);
+        Statics.supportcanresurrect = true;
+        StopCoroutine("supportresurrection()");
     }
 }

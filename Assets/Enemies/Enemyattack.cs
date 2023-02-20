@@ -10,7 +10,6 @@ public class Enemyattack
 
     const string idlestate = "Idle";
     const string runstate = "Run";
-    const string attack1state = "Attack1"; 
     const string spezialattackstate = "Spezial";
     public void gettomeleerange()                              //der enemy wartet bis er attackieren kann, danach geht er erst zum target
     {
@@ -22,17 +21,14 @@ public class Enemyattack
                 esm.ChangeAnimationState(runstate);
                 esm.Meshagent.SetDestination(esm.currenttarget.transform.position + esm.transform.forward * -2);
             }
-            else attack();
+            else
+            {
+                esm.switchtoattackstate();
+                return;
+            }
         }
         esm.FaceTraget();
         checkforspezialattack();
-    }
-    private void attack()
-    {
-        esm.normalattacktimer = 0;
-        esm.ChangeAnimationState(attack1state);
-        esm.state = Enemymovement.State.isattacking;
-        return;
     }
     public void backtowaitforattack()
     {
@@ -69,13 +65,6 @@ public class Enemyattack
     {
         esm.FaceTraget();
         esm.normalattacktimer += Time.deltaTime;
-        if (esm.normalattacktimer > esm.normalattackcd)
-        {
-            esm.normalattacktimer = 0;
-            esm.ChangeAnimationState(attack1state);
-            esm.state = Enemymovement.State.isattacking;
-            return;
-        }
         esm.followplayerafterattack += Time.deltaTime;
         if (esm.followplayerafterattack > 0.3f)
         {
@@ -89,30 +78,45 @@ public class Enemyattack
                         esm.ChangeAnimationState(runstate);
                         esm.Meshagent.SetDestination(newposi);
                     }
-                    else esm.ChangeAnimationState(idlestate);
+                    else
+                    {
+                        if (esm.normalattacktimer > esm.normalattackcd)
+                        {
+                            esm.switchtoattackstate();
+                            return;
+                        }
+                        else esm.ChangeAnimationState(idlestate);
+                    }
                 }
                 else
                 {
-                    if (Vector3.Distance(esm.transform.position, esm.currenttarget.transform.position + esm.transform.forward * -2) > esm.attackrange)
-                    {
-                        esm.ChangeAnimationState(runstate);
-                        esm.Meshagent.SetDestination(esm.currenttarget.transform.position + esm.transform.forward * -2);
-                    }
-                    else esm.ChangeAnimationState(idlestate);
+                    checkdistanceforattack();
                 }
             }
             else
             {
-                if (Vector3.Distance(esm.transform.position, esm.currenttarget.transform.position + esm.transform.forward * -2) > esm.attackrange)
-                {
-                    esm.ChangeAnimationState(runstate);
-                    esm.Meshagent.SetDestination(esm.currenttarget.transform.position + esm.transform.forward * -2);
-                }
-                else esm.ChangeAnimationState(idlestate);
+                checkdistanceforattack();
             }
             esm.followplayerafterattack = 0;
         }
         checkforspezialattack();
+    }
+    private void checkdistanceforattack()
+    {
+        if (Vector3.Distance(esm.transform.position, esm.currenttarget.transform.position + esm.transform.forward * -2) > esm.attackrange)
+        {
+            esm.ChangeAnimationState(runstate);
+            esm.Meshagent.SetDestination(esm.currenttarget.transform.position + esm.transform.forward * -2);
+        }
+        else
+        {
+            if (esm.normalattacktimer > esm.normalattackcd)
+            {
+                esm.switchtoattackstate();
+                return;
+            }
+            else esm.ChangeAnimationState(idlestate);
+        }
     }
     public void repositionafterattack()
     {

@@ -21,6 +21,7 @@ public class Movescript : MonoBehaviour
     private InputAction buttonmashhotkey;
 
     [NonSerialized] public Animator animator;
+    [NonSerialized] public Playerhp playerhp;
 
     public Transform CamTransform;
     public CinemachineFreeLook Cam1;
@@ -168,6 +169,7 @@ public class Movescript : MonoBehaviour
         charactercontroller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         healingscript = GetComponent<Healingscript>();
+        playerhp = GetComponent<Playerhp>();
         state = State.Air;
         starttime = Time.time;
         Statics.normalgamespeed = 1;
@@ -361,7 +363,6 @@ public class Movescript : MonoBehaviour
     {
         Physics.IgnoreLayerCollision(6, 6);
         Physics.IgnoreLayerCollision(8, 6);
-        //gravitation = normalgravition;
         state = State.Air;
     }
     public void switchtoemptystate()
@@ -399,8 +400,10 @@ public class Movescript : MonoBehaviour
         ChangeAnimationStateInstant(dazestate);
         state = State.Stun;
         Statics.dash = true;
-        Statics.dazestunstart = true;
+        Statics.resetvaluesondeathorstun = true;
     }
+    public void resurrected() => playerheal.resurrected();
+    private void playerstandup() => playerheal.playerstandup();
     public void switchtooutofcombataim()
     {
         CinemachinePOV Cam2pov = Cam2.GetCinemachineComponent<CinemachinePOV>();
@@ -418,7 +421,7 @@ public class Movescript : MonoBehaviour
         state = State.Buttonmashstun;
         dazeimage.SetActive(true);
         dazeimage.GetComponentInChildren<Text>().text = "Spam " + buttonmashhotkey.GetBindingDisplayString();
-        Statics.dazestunstart = true;
+        Statics.resetvaluesondeathorstun = true;
         Statics.dazecounter = 0;
         Statics.dazekicksneeded = buttonmashcount;
         Statics.dash = true;

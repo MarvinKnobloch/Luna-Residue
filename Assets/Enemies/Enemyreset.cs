@@ -9,6 +9,7 @@ public class Enemyreset
 
     const string idlestate = "Idle";
     const string runstate = "Run";
+    const string dyingstate = "Enemydying";
     public void checkforreset()
     {
         esm.checkforresettimer += Time.deltaTime;
@@ -17,9 +18,10 @@ public class Enemyreset
             if (Vector3.Distance(esm.spawnpostion, esm.transform.position) > esm.enemyresetrange)
             {
                 esm.healticktimer = 0f;
-                esm.gameObject.GetComponent<EnemyHP>().enemyhasreset();
+                esm.gameObject.GetComponent<EnemyHP>().resetplayerhits();
                 esm.spezialattack = false;
                 esm.ChangeAnimationState(runstate);
+                esm.healtickamount = esm.enemyhp.maxhealth * 0.02f;
                 esm.state = Enemymovement.State.resetheal;
                 if (Infightcontroller.infightenemylists.Contains(esm.transform.gameObject))
                 {
@@ -35,16 +37,16 @@ public class Enemyreset
         esm.healticktimer += Time.deltaTime;
         if (esm.healticktimer > esm.healticksafterreset)
         {
-            esm.enemyhpscript.enemyheal(esm.healtickamount);
+            esm.Meshagent.SetDestination(esm.spawnpostion);                      //würde schon überschrieben als ich es bei checkforreset gecalled habe
+            esm.enemyhp.enemyheal(esm.healtickamount);
             esm.healticktimer = 0f;
         }
-        esm.Meshagent.SetDestination(esm.spawnpostion);
         if (Vector3.Distance(esm.spawnpostion, esm.transform.position) < 2)
         {
             esm.currenttarget = LoadCharmanager.Overallmainchar;
             esm.Meshagent.ResetPath();
             esm.Meshagent.speed = esm.patrolspeed;
-            esm.healtickamount = esm.enemyhpscript.maxhealth / 100;              //call ich hier und nicht beim awake, weil es schonmal verbuggt war und der enemy nicht gehealt würden(weil noch keine maxhp gesetzt war????)
+            esm.healtickamount = esm.enemyhp.maxhealth * 0.05f;
             esm.ChangeAnimationState(idlestate);
             esm.state = Enemymovement.State.idleheal;
         }
@@ -54,9 +56,9 @@ public class Enemyreset
         esm.healticktimer += Time.deltaTime;
         if (esm.healticktimer > esm.healticksafterreset)
         {
-            esm.enemyhpscript.enemyheal(esm.healtickamount);
+            esm.enemyhp.enemyheal(esm.healtickamount);
             esm.healticktimer = 0f;
-            if (esm.enemyhpscript.currenthealth >= esm.enemyhpscript.maxhealth)
+            if (esm.enemyhp.currenthealth >= esm.enemyhp.maxhealth)
             {
                 esm.patroltimer = 0f;
                 esm.ChangeAnimationState(idlestate);
@@ -64,5 +66,10 @@ public class Enemyreset
             }
         }
         esm.checkforplayerinrange();
+    }
+    public void enemydied()
+    {
+        esm.ChangeAnimationState(dyingstate);
+        esm.state = Enemymovement.State.empty;
     }
 }
