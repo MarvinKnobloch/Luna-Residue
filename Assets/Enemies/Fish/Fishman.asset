@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fishman
   m_EditorClassIdentifier: 
   enemyname: Fishman
-  maxhealth: 20
+  maxhealth: 600
   enemylvl: 10
   movementspeed: 8
   attackdmg: 6

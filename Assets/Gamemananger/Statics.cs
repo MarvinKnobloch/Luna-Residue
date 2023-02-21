@@ -20,6 +20,10 @@ public class Statics
     public static float currentplayerrotationx, currentplayerrotationy, currentplayerrotationz, currentplayerrotationw;
     public static float savecamvalueX;
 
+    public static Vector3 gameoverposi;
+    public static Quaternion gameoverrota;
+    public static float gameovercam;
+
     //charvalues
     public static int currentactiveplayer;                //für hpanzeige
     public static int currentfirstchar = 0;
@@ -140,9 +144,9 @@ public class Statics
     public static float charcurrentexp = 0;
     public static float charrequiredexp = 52;
     public static string[] characternames = { "Maria", "Erika", "Kaja", "Yaku", "Arissa" };
-    public static float[] charbasichealth = { 100, 93, 9, 91, 95 };
-    public static float[] charcurrenthealth = { 100, 93, 9, 91, 95 };
-    public static float[] charmaxhealth = { 100, 93, 9, 91, 95 };
+    public static float[] charbasichealth = { 100, 93, 97, 93, 95 };
+    public static float[] charcurrenthealth = { 100, 93, 97, 93, 95 };
+    public static float[] charmaxhealth = { 100, 93, 97, 93, 95 };
     public static float[] chardefense = { 100, 100, 100, 100, 100 };
     public static float[] charattack = { 1, 1, 1, 1, 1 };
     public static float[] charcritchance = { 5, 5, 5, 5, 5 };

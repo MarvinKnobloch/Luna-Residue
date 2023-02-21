@@ -16,6 +16,6 @@ MonoBehaviour:
   maxhealth: 500
   enemylvl: 10
   movementspeed: 8
-  attackdmg: 5
+  attackdmg: 90
   attackspeed: 1.9
   enemysize: 1

@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using System;
 
 public class Playerhp : MonoBehaviour
@@ -14,6 +12,8 @@ public class Playerhp : MonoBehaviour
     public int playerhpuislot;
     [SerializeField] HealthUImanager healthUImanager;
     private Attributecontroller attributecontroller;
+
+    public static event Action triggergameover;
 
     const string dyingstate = "Dying";
 
@@ -99,10 +99,18 @@ public class Playerhp : MonoBehaviour
                 {
                     obj.GetComponent<EnemyHP>().newtargetonplayerdeath(playerhpuislot - 1);
                 }
-            }        
+            }
+            checkforgameover();
         }
         Statics.charcurrenthealth[charnumber] = health;
         healthUImanager.healthupdate(playerhpuislot, health, maxhealth);
+    }
+    private void checkforgameover()
+    {
+        if(LoadCharmanager.Overallmainchar.gameObject.GetComponent<Playerhp>().playerisdead == true && LoadCharmanager.Overallthirdchar.gameObject.GetComponent<Playerhp>().playerisdead == true && LoadCharmanager.Overallforthchar.gameObject.GetComponent<Playerhp>().playerisdead == true)
+        {
+            triggergameover?.Invoke();
+        }
     }
 }
 

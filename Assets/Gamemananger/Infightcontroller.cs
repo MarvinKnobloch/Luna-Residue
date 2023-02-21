@@ -12,9 +12,18 @@ public class Infightcontroller : MonoBehaviour
     public static List<GameObject> infightenemylists = new List<GameObject>();
 
     public static float teammatesdespawntime = 5;
-
     public float spezialtimer;
 
+    [SerializeField] private GameObject gameovercontroller;
+
+    private void OnEnable()
+    {
+        Playerhp.triggergameover += activategameovercontroller;
+    }
+    private void OnDisable()
+    {
+        Playerhp.triggergameover -= activategameovercontroller;
+    }
 
     private void Start()
     {
@@ -28,6 +37,9 @@ public class Infightcontroller : MonoBehaviour
         if (infightenemylists.Count == 0)
         {
             Statics.infight = false;
+            Statics.gameoverposi = LoadCharmanager.Overallmainchar.transform.position;
+            Statics.gameoverrota = LoadCharmanager.Overallmainchar.transform.rotation;
+            Statics.gameovercam = LoadCharmanager.savecamvalueX;
             Statics.currentenemyspecialcd = Statics.enemyspecialcd;
             instance.StopCoroutine("enemyspezialcd");
             infightimage.SetActive(false);
@@ -64,7 +76,7 @@ public class Infightcontroller : MonoBehaviour
             }
         }
     }
-    private void disablechars()
+    public void disablechars()
     {
         StartCoroutine("healalliesafterfight");
         if (LoadCharmanager.Overallthirdchar != null)
@@ -124,5 +136,17 @@ public class Infightcontroller : MonoBehaviour
                 StopCoroutine("healalliesafterfight");
             }
         }
+    }
+    public void gameover()
+    {
+        infightenemylists.Clear();
+        Statics.currentenemyspecialcd = Statics.enemyspecialcd;
+        Statics.infight = false;
+        instance.StopCoroutine("enemyspezialcd");
+        infightimage.SetActive(false);
+    }
+    public void activategameovercontroller()
+    {
+        gameovercontroller.SetActive(true);
     }
 }

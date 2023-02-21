@@ -111,6 +111,9 @@ public class LoadCharmanager : MonoBehaviour
         Overallmainchar.SetActive(true);
         Overallmainchar.transform.position = savemainposi;
         Overallmainchar.transform.rotation = savemainrota;
+        Statics.gameoverposi = savemainposi;
+        Statics.gameoverrota = savemainrota;
+        Statics.gameovercam = savecamvalueX;
         Overallsecondchar.SetActive(true);
         Overallmainchar.GetComponent<Playerhp>().playerhpuislot = 0;
         Overallsecondchar.GetComponent<Playerhp>().playerhpuislot = 1;
