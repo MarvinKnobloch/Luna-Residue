@@ -20,7 +20,7 @@ public class Statics
     public static float currentplayerrotationx, currentplayerrotationy, currentplayerrotationz, currentplayerrotationw;
     public static float savecamvalueX;
 
-    public static Vector3 gameoverposi;
+    public static Vector3 gameoverposi;                   //wird gesetzt wenn gegner stirbt und der count dann auf 0 droppt
     public static Quaternion gameoverrota;
     public static float gameovercam;
 

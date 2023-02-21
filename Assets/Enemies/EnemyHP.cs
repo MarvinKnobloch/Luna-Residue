@@ -149,6 +149,12 @@ public class EnemyHP : MonoBehaviour
             Infightcontroller.infightenemylists.Remove(transform.gameObject);
             int enemycount = Infightcontroller.infightenemylists.Count;
             Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
+            if(enemycount == 0)
+            {
+                Statics.gameoverposi = LoadCharmanager.Overallmainchar.transform.position;
+                Statics.gameoverrota = LoadCharmanager.Overallmainchar.transform.rotation;
+                Statics.gameovercam = LoadCharmanager.savecamvalueX;
+            }
             Infightcontroller.checkifinfight();
             supporttargetdied?.Invoke();
             enemymovement.enemydied();

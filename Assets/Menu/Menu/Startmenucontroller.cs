@@ -9,6 +9,8 @@ using System.IO;
 
 public class Startmenucontroller : MonoBehaviour
 {
+    [SerializeField] private GameObject Loadingscreen;
+    [SerializeField] private Image loadingscreenbar;
     [SerializeField] private GameObject[] buttons;
     [SerializeField] private GameObject loadgameobj;
     [SerializeField] private GameObject settingsobj;
@@ -28,9 +30,14 @@ public class Startmenucontroller : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         loadgamesettings();
         loadsaveslots();
+        if(PlayerPrefs.GetFloat("mousesensitivity") <= 0)
+        {
+            PlayerPrefs.SetFloat("mousesensitivity", 20);
+        }
     }
     private void OnEnable()
     {
+        Loadingscreen.SetActive(false);
         foreach (GameObject button in buttons)
         {
             button.GetComponent<Image>().color = notselectedcolor;
@@ -100,6 +107,9 @@ public class Startmenucontroller : MonoBehaviour
         Statics.weaponswitchbuff = 100;
         Statics.timer = false;
 
+        Statics.spellnumbers = new int[]{ -1, -1, -1, -1, -1, -1, -1, -1 };
+        Statics.spellcolors = new Color[8];
+
         Statics.stoneisactivated = new bool[24];
         Statics.charactersecondelement = new int[] { -1, -1, -1, -1, -1 };
         Statics.charactersecondelementcolor = new Color[] { new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255) };
@@ -131,9 +141,21 @@ public class Startmenucontroller : MonoBehaviour
         setitemsandinventory.resetitems();
         setitemsandinventory.resetinventorys();
         setstaticsnull.resetstatics();
-        SceneManager.LoadScene(1);
+        StartCoroutine("loadgameloadingscreen");
     }
 
+    IEnumerator loadgameloadingscreen()
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(1);
+        Loadingscreen.SetActive(true);
+
+        while (!operation.isDone)
+        {
+            float loadingbaramount = Mathf.Clamp01(operation.progress / 0.9f);
+            loadingscreenbar.fillAmount = loadingbaramount;
+            yield return null;
+        }
+    }
     public void loadgame()
     {
         loadgameobj.SetActive(true);

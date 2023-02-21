@@ -61,49 +61,51 @@ public class Playerhp : MonoBehaviour
     }
     private void handlehealth()
     {
-
-        if (health > maxhealth)
+        if(playerisdead == false)
         {
-            health = maxhealth;
-        }
-        if(health <= 0 && playerisdead == false)
-        {
-            playerisdead = true;
-            health = 0;
-            if (playerhpuislot == 0)           //0 ist immer mainchar
+            if (health > maxhealth)
             {
-                Statics.resetvaluesondeathorstun = true;
-                LoadCharmanager.disableattackbuttons = true;
-                gameObject.GetComponent<Movescript>().ChangeAnimationStateInstant(dyingstate);
-                gameObject.GetComponent<Movescript>().state = Movescript.State.Empty;
-                if (Statics.oneplayerisdead == false)
-                {
-                    Statics.oneplayerisdead = true;
-                    GlobalCD.startsupportresurrectioncd();
-                }
-                foreach (GameObject obj in Infightcontroller.infightenemylists)
-                {
-                    obj.GetComponent<EnemyHP>().newtargetonplayerdeath(playerhpuislot);
-                }
+                health = maxhealth;
             }
-            else
+            if (health <= 0)
             {
-                gameObject.GetComponent<Supportmovement>().ChangeAnimationStateInstant(dyingstate);                  //wenn ich die 2 sachen über eine funktion call werden sie manchmal überschrieben und dann wird die empty state überschrieben
-                gameObject.GetComponent<Supportmovement>().state = Supportmovement.State.empty;
-                if (Statics.oneplayerisdead == false)
+                playerisdead = true;
+                health = 0;
+                if (playerhpuislot == 0)           //0 ist immer mainchar
                 {
-                    Statics.oneplayerisdead = true;
-                    GlobalCD.startsupportresurrectioncd();
+                    Statics.resetvaluesondeathorstun = true;
+                    LoadCharmanager.disableattackbuttons = true;
+                    gameObject.GetComponent<Movescript>().ChangeAnimationStateInstant(dyingstate);
+                    gameObject.GetComponent<Movescript>().state = Movescript.State.Empty;
+                    if (Statics.oneplayerisdead == false)
+                    {
+                        Statics.oneplayerisdead = true;
+                        GlobalCD.startsupportresurrectioncd();
+                    }
+                    foreach (GameObject obj in Infightcontroller.infightenemylists)
+                    {
+                        obj.GetComponent<EnemyHP>().newtargetonplayerdeath(playerhpuislot);
+                    }
                 }
-                foreach (GameObject obj in Infightcontroller.infightenemylists)
+                else
                 {
-                    obj.GetComponent<EnemyHP>().newtargetonplayerdeath(playerhpuislot - 1);
+                    gameObject.GetComponent<Supportmovement>().ChangeAnimationStateInstant(dyingstate);                  //wenn ich die 2 sachen über eine funktion call werden sie manchmal überschrieben und dann wird die empty state überschrieben
+                    gameObject.GetComponent<Supportmovement>().state = Supportmovement.State.empty;
+                    if (Statics.oneplayerisdead == false)
+                    {
+                        Statics.oneplayerisdead = true;
+                        GlobalCD.startsupportresurrectioncd();
+                    }
+                    foreach (GameObject obj in Infightcontroller.infightenemylists)
+                    {
+                        obj.GetComponent<EnemyHP>().newtargetonplayerdeath(playerhpuislot - 1);
+                    }
                 }
+                checkforgameover();
             }
-            checkforgameover();
+            Statics.charcurrenthealth[charnumber] = health;
+            healthUImanager.healthupdate(playerhpuislot, health, maxhealth);
         }
-        Statics.charcurrenthealth[charnumber] = health;
-        healthUImanager.healthupdate(playerhpuislot, health, maxhealth);
     }
     private void checkforgameover()
     {

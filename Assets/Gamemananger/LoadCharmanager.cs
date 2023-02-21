@@ -34,21 +34,34 @@ public class LoadCharmanager : MonoBehaviour
     public static bool gameispaused;
     public static bool interaction;
 
+    [SerializeField] private LayerMask meleehitbox;
+
     public static event Action setweapons;
     public static event Action swordcontrollerupdate;
     public static event Action fistcontrollerupdate;
 
     private void Awake()
     {
-        Statics.otheraction = false;
         uiactionscontroller = GetComponent<Uiactionscontroller>();
         Steuerung = Keybindinputmanager.inputActions;
-        maingamevalues();
     }
 
     private void OnEnable()
     {
         Steuerung.Enable();
+        for (int i = 0; i < Statics.charcurrenthealth.Length; i++)
+        {
+            Statics.charcurrenthealth[i] = Statics.charmaxhealth[i];
+        }
+        maingamevalues();
+        Collider[] colliders = Physics.OverlapSphere(Overallmainchar.transform.position, 30, meleehitbox);
+        foreach (Collider checkforenemys in colliders)
+        {
+            if(checkforenemys.TryGetComponent(out EnemyHP enemyHP))
+            {
+                enemyHP.gameObject.SetActive(false);
+            }
+        }
     }
     void Update()
     {

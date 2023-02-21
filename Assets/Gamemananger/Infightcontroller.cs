@@ -37,9 +37,6 @@ public class Infightcontroller : MonoBehaviour
         if (infightenemylists.Count == 0)
         {
             Statics.infight = false;
-            Statics.gameoverposi = LoadCharmanager.Overallmainchar.transform.position;
-            Statics.gameoverrota = LoadCharmanager.Overallmainchar.transform.rotation;
-            Statics.gameovercam = LoadCharmanager.savecamvalueX;
             Statics.currentenemyspecialcd = Statics.enemyspecialcd;
             instance.StopCoroutine("enemyspezialcd");
             infightimage.SetActive(false);
