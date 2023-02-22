@@ -8,7 +8,7 @@ public class Statics
     
     //setting;
     public static int currentscreenmode;
-    public static float npcdialoguetextspeed = 0.02f;
+    public static float dialoguetextspeed = 0.02f;
 
     //gamevalues
     public static int currentgameslot = -1;

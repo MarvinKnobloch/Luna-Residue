@@ -9,6 +9,7 @@ public class Firstarea : MonoBehaviour
 
     public bool laserpuzzlecomplete;
     public bool boxpuzzlecomplete;
+    public bool attacktutorialcomplete;
     private void Awake()
     {
         areacontroller = GetComponent<Areacontroller>();

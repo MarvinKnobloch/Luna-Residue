@@ -33,26 +33,17 @@ public class Playerbow
     {
         if (psm.controlls.Player.Attack4.WasReleasedThisFrame())
         {
-            psm.Charrig.enabled = false;
-            psm.disableaimcam();
-            Statics.otheraction = false;
-            psm.switchtogroundstate();
+            disableaim();
         }
     }
     public void arrowfullcharge()
     {
-        if(psm.Cam2.gameObject.activeSelf == true)                 //Wenn man den Input im selben moment los lässt wie der call kommt wird die kamera deakiviert aber man komm trotzdem in die state
+        if (psm.Cam2.gameObject.activeSelf == true)                 //Wenn man den Input im selben moment los lässt wie der call kommt wird die kamera deakiviert aber man komm trotzdem in die state
         {
             psm.ChangeAnimationState(aimholdstate);
             psm.state = Movescript.State.Bowischarged;
         }
-        else
-        {
-            psm.Charrig.enabled = false;
-            psm.disableaimcam();
-            Statics.otheraction = false;
-            psm.switchtogroundstate();
-        }
+        else disableaim();
     }
 
 
@@ -71,13 +62,7 @@ public class Playerbow
             psm.state = Movescript.State.Bowcharge;
             psm.ChangeAnimationState(chargestate);
         }
-        else
-        {
-            psm.Charrig.enabled = false;
-            psm.disableaimcam();
-            Statics.otheraction = false;
-            psm.state = Movescript.State.Ground;
-        }
+        else disableaim();
     }
     public void bowhookshot()
     {
@@ -96,5 +81,12 @@ public class Playerbow
             psm.switchtoairstate();
             Statics.otheraction = false;
         }
+    }
+    public void disableaim()
+    {
+        psm.Charrig.enabled = false;
+        psm.disableaimcam();
+        Statics.otheraction = false;
+        psm.state = Movescript.State.Ground;
     }
 }

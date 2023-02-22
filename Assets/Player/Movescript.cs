@@ -415,6 +415,7 @@ public class Movescript : MonoBehaviour
     }
     private void bowoutofcombatfullcharged() => playerbow.arrowfullcharge();
     private void bowoutofcombatnextarrow() => playerbow.nextarrow();
+    public void disableaim() => playerbow.disableaim();
     public void switchtobuttonmashstun(int buttonmashcount)
     {
         ChangeAnimationStateInstant(dazestate);
