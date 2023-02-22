@@ -7,8 +7,6 @@ public class Statics
 
     
     //setting;
-    public static float mousesensitivity = 1;
-    public static float rangeweaponaimsensitivity = 1;
     public static int currentscreenmode;
     public static float npcdialoguetextspeed = 0.02f;
 

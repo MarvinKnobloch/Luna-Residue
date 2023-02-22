@@ -30,10 +30,8 @@ public class Startmenucontroller : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         loadgamesettings();
         loadsaveslots();
-        if(PlayerPrefs.GetFloat("mousesensitivity") <= 0)
-        {
-            PlayerPrefs.SetFloat("mousesensitivity", 20);
-        }
+        if(PlayerPrefs.GetFloat("mousesensitivity") <= 0) PlayerPrefs.SetFloat("mousesensitivity", 20);
+        if(PlayerPrefs.GetFloat("rangeweaponaimsensitivity") <= 0) PlayerPrefs.SetFloat("rangeweaponaimsensitivity", 20);
     }
     private void OnEnable()
     {

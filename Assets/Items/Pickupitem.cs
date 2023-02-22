@@ -9,6 +9,10 @@ public class Pickupitem : MonoBehaviour
     [SerializeField] private Inventorycontroller inventory;
     private bool pickuponce;
 
+    private void Awake()
+    {
+        GetComponent<SphereCollider>().radius = 1;
+    }
     private void OnEnable()
     {
         pickuponce = true;

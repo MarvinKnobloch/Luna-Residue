@@ -8,6 +8,10 @@ public class Matsitemcontroller : MonoBehaviour
     [SerializeField] private Inventorycontroller matsinventory;
     private bool pickuponce;
 
+    private void Awake()
+    {
+        GetComponent<SphereCollider>().radius = 1;
+    }
     private void OnEnable()
     {
         pickuponce = true;
