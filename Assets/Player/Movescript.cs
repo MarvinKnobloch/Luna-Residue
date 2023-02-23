@@ -352,12 +352,15 @@ public class Movescript : MonoBehaviour
     public void lockontargetswitch() => playerlockon.lookfortarget();
     public void switchtogroundstate()
     {
-        Physics.IgnoreLayerCollision(6, 6, false);
-        Physics.IgnoreLayerCollision(8, 6, false);
-        ChangeAnimationState(idlestate);
-        attackonceair = true;
-        graviti = -0.5f;
-        state = State.Ground;
+        if(playerhp.playerisdead == false)
+        {
+            Physics.IgnoreLayerCollision(6, 6, false);
+            Physics.IgnoreLayerCollision(8, 6, false);
+            ChangeAnimationState(idlestate);
+            attackonceair = true;
+            graviti = -0.5f;
+            state = State.Ground;
+        }
     }
     public void switchtoairstate()
     {
@@ -418,14 +421,17 @@ public class Movescript : MonoBehaviour
     public void disableaim() => playerbow.disableaim();
     public void switchtobuttonmashstun(int buttonmashcount)
     {
-        ChangeAnimationStateInstant(dazestate);
-        state = State.Buttonmashstun;
-        dazeimage.SetActive(true);
-        dazeimage.GetComponentInChildren<Text>().text = "Spam " + buttonmashhotkey.GetBindingDisplayString();
-        Statics.resetvaluesondeathorstun = true;
-        Statics.dazecounter = 0;
-        Statics.dazekicksneeded = buttonmashcount;
-        Statics.dash = true;
+        if(playerhp.playerisdead == false)
+        {
+            ChangeAnimationStateInstant(dazestate);
+            state = State.Buttonmashstun;
+            dazeimage.SetActive(true);
+            dazeimage.GetComponentInChildren<Text>().text = "Spam " + buttonmashhotkey.GetBindingDisplayString();
+            Statics.resetvaluesondeathorstun = true;
+            Statics.dazecounter = 0;
+            Statics.dazekicksneeded = buttonmashcount;
+            Statics.dash = true;
+        }
     }
     public void activatedmgtext(GameObject enemyhit, float dmg)
     {

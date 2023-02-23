@@ -67,11 +67,12 @@ public class EnemyHP : MonoBehaviour
         enemymovement = GetComponent<Enemymovement>();
         enemyheight = (capsulecollider.height * transform.localScale.y) + 0.4f;
         enemyname = enemyvalues.enemyname;
-        maxhealth = enemyvalues.maxhealth;
+        enemylvl = enemyvalues.enemylvl + addenemylvl;
+        maxhealth = Mathf.Round(enemyvalues.basehealth + (enemyvalues.basehealth / 10 * enemylvl));
         currenthealth = Mathf.Clamp(currenthealth, 0, maxhealth);
         currenthealth = maxhealth;
         sizeofenemy = enemyvalues.enemysize;
-        enemylvl = enemyvalues.enemylvl + addenemylvl;
+        enemymovement.basedmg = enemyvalues.basedmg + enemylvl;
         enemyfocusbargameobject = enemyfocusdebuffbar.transform.parent.gameObject;
     }
     private void OnEnable()
@@ -99,20 +100,22 @@ public class EnemyHP : MonoBehaviour
         }
         else
         {
-            if (dmgtype == 0) finaldmg = damage;
-            else if (dmgtype == 1) enemycalculatedmg.downdmg(damage);
-            else if (dmgtype == 2) enemycalculatedmg.middmg(damage);
-            else if (dmgtype == 3) enemycalculatedmg.updmg(damage);
-
-            currenthealth -= finaldmg;
-            var showtext = Instantiate(damagetext, transform.position, Quaternion.identity);
-            showtext.GetComponent<TextMeshPro>().text = finaldmg.ToString();
-            if (crit == true)
+            if (enemyisdead == false)
             {
-                showtext.GetComponent<TextMeshPro>().color = Color.red;
+                if (dmgtype == 0) finaldmg = damage;
+                else if (dmgtype == 1) enemycalculatedmg.downdmg(damage);
+                else if (dmgtype == 2) enemycalculatedmg.middmg(damage);
+                else if (dmgtype == 3) enemycalculatedmg.updmg(damage);
+                var showtext = Instantiate(damagetext, transform.position, Quaternion.identity);
+                showtext.GetComponent<TextMeshPro>().text = finaldmg.ToString();
+                if (crit == true)
+                {
+                    showtext.GetComponent<TextMeshPro>().color = Color.red;
+                }
+                currenthealth -= finaldmg;
+                afterdmgtaken();
             }
-            afterdmgtaken();
-        }
+        }    
     }
     public void takesupportdmg(float dmg)
     {
@@ -121,44 +124,47 @@ public class EnemyHP : MonoBehaviour
     }
     private void afterdmgtaken()
     {
-        if (currenthealth >= maxhealth)
+        if(enemyisdead == false)
         {
-            currenthealth = maxhealth;
-        }
-        if (gothealthbar == true)
-        {
-            float currenthealthpct = currenthealth / maxhealth;
-            healthpctchanged(currenthealthpct);
-        }
-        if (isfocus == true)
-        {
-            focustargetuihptext(currenthealth, maxhealth);
-        }
-        if (currenthealth <= 0 && enemyisdead == false)
-        {
-            enemyisdead = true;
-            currenthealth = 0;
-            removefromcanvas();
-            if (Movescript.lockontarget != null)
+            if (currenthealth >= maxhealth)
             {
-                unmarktarget();
-                focustargetuiend();
-                Movescript.availabletargets.Remove(GetComponent<Enemylockon>());
-                LoadCharmanager.Overallmainchar.GetComponent<Movescript>().lockontargetswitch();
+                currenthealth = maxhealth;
             }
-            Infightcontroller.infightenemylists.Remove(transform.gameObject);
-            int enemycount = Infightcontroller.infightenemylists.Count;
-            Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
-            if(enemycount == 0)
+            if (gothealthbar == true)
             {
-                Statics.gameoverposi = LoadCharmanager.Overallmainchar.transform.position;
-                Statics.gameoverrota = LoadCharmanager.Overallmainchar.transform.rotation;
-                Statics.gameovercam = LoadCharmanager.savecamvalueX;
+                float currenthealthpct = currenthealth / maxhealth;
+                healthpctchanged(currenthealthpct);
             }
-            Infightcontroller.checkifinfight();
-            supporttargetdied?.Invoke();
-            enemymovement.enemydied();
-            Invoke("enemydied", 3);
+            if (isfocus == true)
+            {
+                focustargetuihptext(currenthealth, maxhealth);
+            }
+            if (currenthealth <= 0)
+            {
+                enemyisdead = true;
+                currenthealth = 0;
+                removefromcanvas();
+                if (Movescript.lockontarget != null)
+                {
+                    unmarktarget();
+                    focustargetuiend();
+                    Movescript.availabletargets.Remove(GetComponent<Enemylockon>());
+                    LoadCharmanager.Overallmainchar.GetComponent<Movescript>().lockontargetswitch();
+                }
+                Infightcontroller.infightenemylists.Remove(transform.gameObject);
+                int enemycount = Infightcontroller.infightenemylists.Count;
+                Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
+                if (enemycount == 0)
+                {
+                    Statics.gameoverposi = LoadCharmanager.Overallmainchar.transform.position;
+                    Statics.gameoverrota = LoadCharmanager.Overallmainchar.transform.rotation;
+                    Statics.gameovercam = LoadCharmanager.savecamvalueX;
+                }
+                Infightcontroller.checkifinfight();
+                supporttargetdied?.Invoke();
+                enemymovement.enemydied();
+                Invoke("enemydied", 3);
+            }
         }
     }
     private void enemydied()

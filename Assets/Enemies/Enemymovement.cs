@@ -25,8 +25,7 @@ public class Enemymovement : MonoBehaviour
     [NonSerialized] public float healticktimer;
     [NonSerialized] public float healtickamount;
 
-    [SerializeField] private int enemylvl;
-    private float basedmg;
+    [NonSerialized] public float basedmg;                // wird bei enemyhp hab gesetzt nachdem das lvl berechnet wird
     [NonSerialized] public float normalattackcd;
     [NonSerialized] public float normalattacktimer;
     [NonSerialized] public bool spezialattack;
@@ -68,7 +67,6 @@ public class Enemymovement : MonoBehaviour
     private void Awake()
     {
         enemyhp = GetComponent<EnemyHP>();
-        enemylvl = GetComponent<EnemyHP>().enemylvl;   //weil ich noch zusätzliche lvl im enemyhp adden kann
         Meshagent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
@@ -78,7 +76,6 @@ public class Enemymovement : MonoBehaviour
 
         spawnpostion = transform.position;
 
-        basedmg = enemyvalues.attackdmg;
         normalnavspeed = enemyvalues.movementspeed;
         normalattackcd = enemyvalues.attackspeed;
     }

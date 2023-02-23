@@ -8,8 +8,6 @@ public class Playerstun
     
     public void stun()
     {
-        // die ganzen parameter werden im attackscript zurückgesetzt
-        //ChangeAnimationState(dazestate);
         psm.gravitation = psm.normalgravition;
         if (psm.charactercontroller.isGrounded)
         {
@@ -34,7 +32,7 @@ public class Playerstun
             psm.dazeimage.SetActive(false);
             Statics.dash = false;
             Statics.otheraction = false;
-            psm.state = Movescript.State.Ground;
+            psm.switchtogroundstate();
         }
     }
 }

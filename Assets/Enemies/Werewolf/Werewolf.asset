@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Werewolf
   m_EditorClassIdentifier: 
   enemyname: Werewolf
-  maxhealth: 1000
-  enemylvl: 11
+  basehealth: 314
+  enemylvl: 1
   movementspeed: 8
-  attackdmg: 13
+  basedmg: 8
   attackspeed: 1.9
   enemysize: 2

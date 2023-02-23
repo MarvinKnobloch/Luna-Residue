@@ -51,6 +51,7 @@ public class Enemypatrol
         {
             esm.patroltimer = 0f;
             esm.ChangeAnimationState(idlestate);
+            esm.Meshagent.ResetPath();
             esm.state = Enemymovement.State.waitfornextpatrolpoint;
         }
         else
@@ -62,6 +63,7 @@ public class Enemypatrol
     public void patrolend()
     {
         esm.ChangeAnimationState(idlestate);
+        esm.Meshagent.ResetPath();
         esm.state = Enemymovement.State.empty;
     }
     public void checkforplayerinrange()
