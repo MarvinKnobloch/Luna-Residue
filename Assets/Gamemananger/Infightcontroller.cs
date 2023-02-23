@@ -41,7 +41,8 @@ public class Infightcontroller : MonoBehaviour
             instance.StopCoroutine("enemyspezialcd");
             infightimage.SetActive(false);
             instance.Invoke("disablechars", teammatesdespawntime);
-            if(LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == true)
+            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().endlockon();
+            if (LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == true)
             {
                 LoadCharmanager.Overallmainchar.GetComponent<Movescript>().resurrected();
             }
@@ -56,6 +57,7 @@ public class Infightcontroller : MonoBehaviour
                 Statics.supportcanresurrect = false;
                 Statics.oneplayerisdead = false;
                 Statics.infight = true;
+                LoadCharmanager.Overallmainchar.GetComponent<Movescript>().autolockon();
                 instance.StopCoroutine("healalliesafterfight");
                 instance.StartCoroutine("enemyspezialcd");
             }

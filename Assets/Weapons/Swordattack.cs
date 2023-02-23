@@ -125,7 +125,7 @@ public class Swordattack : MonoBehaviour
         {
             if (controlls.Player.Attack1.WasPressedThisFrame() && basicattackcd > 0.5f && Statics.otheraction == false)
             {
-                movementscript.state = Movescript.State.Groundattack;
+                movementscript.state = Movescript.State.Meleegroundattack;
                 attackestate = Attackstate.attack1;
                 Statics.otheraction = true;
                 movementscript.ChangeAnimationState(groundbasic1state);
@@ -137,7 +137,7 @@ public class Swordattack : MonoBehaviour
         {
             if (controlls.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false && Statics.infight == true)
             {
-                movementscript.state = Movescript.State.Airattack;
+                movementscript.state = Movescript.State.Meleeirattack;
                 attackestate = Attackstate.attack1;
                 movementscript.graviti = 0f;
                 Statics.otheraction = true;
@@ -283,7 +283,7 @@ public class Swordattack : MonoBehaviour
     {
         movementscript.attackonceair = false;
         root = true;
-        movementscript.state = Movescript.State.Airattack;
+        movementscript.state = Movescript.State.Meleeirattack;
         movementscript.graviti = 0f;
     }
     private void swordgroundupend()
@@ -344,7 +344,7 @@ public class Swordattack : MonoBehaviour
         {
             attackestate = Attackstate.attack1;
             movementscript.graviti = -0.5f;
-            movementscript.state = Movescript.State.Groundattack;
+            movementscript.state = Movescript.State.Meleegroundattack;
             movementscript.ChangeAnimationState(groundbasic1state);
         }
         else groundattackchainend();
@@ -369,7 +369,7 @@ public class Swordattack : MonoBehaviour
         {
             Statics.otheraction = true;
             movementscript.graviti = 0;
-            movementscript.state = Movescript.State.Airattack;
+            movementscript.state = Movescript.State.Meleeirattack;
             movementscript.ChangeAnimationState(swordswitchstate);
         }
         else

@@ -92,13 +92,8 @@ public class Movescript : MonoBehaviour
     const string dazestate = "Daze";
 
     //Lockon
-    public LayerMask Lockonlayer;
-    public float lockonrange;
-    [NonSerialized] public bool Checkforenemy;
     public static Transform lockontarget;
-    [NonSerialized] public GameObject HealUI;
-    [NonSerialized] public Enemylockon Enemylistcollider;
-    public static List<Enemylockon> availabletargets = new List<Enemylockon>();
+     public GameObject focustargetui;
     [NonSerialized] public Transform targetbeforeswap;
 
     //Spells
@@ -135,8 +130,9 @@ public class Movescript : MonoBehaviour
         Bowcharge,
         Bowischarged,
         Bowwaitfornewcharge,
-        Groundattack,
-        Airattack,
+        Meleegroundattack,
+        Meleeirattack,
+        Rangegroundattack,
         Attackweaponaim,
         Bowweaponswitch,
         Bowhookshot,
@@ -161,7 +157,6 @@ public class Movescript : MonoBehaviour
 
     void Awake()
     {
-        lockonrange = Statics.playerlockonrange;
         Charrig.enabled = false;
         controlls = Keybindinputmanager.inputActions;
         controlls.Player.Movement.performed += Context => move = Context.ReadValue<Vector2>();
@@ -208,7 +203,7 @@ public class Movescript : MonoBehaviour
     {
         if(LoadCharmanager.interaction == false)
         {
-            playerlockon.charlockon();
+            playerlockon.whilelockon();
             switch (state)
             {
                 default:
@@ -252,15 +247,20 @@ public class Movescript : MonoBehaviour
                     playerstun.stun();
                     playerstun.breakstunwithbuttonmash();
                     break;
-                case State.Groundattack:
+                case State.Meleegroundattack:
                     playerattack.attackmovement();
                     playermovement.groundcheck();
                     playerlockon.attacklockonrotation();
                     break;
-                case State.Airattack:
+                case State.Meleeirattack:
                     playerattack.attackmovement();
                     playerlockon.attacklockonrotation();
                     playerattack.finalairmovement();
+                    break;
+                case State.Rangegroundattack:
+                    playerattack.inputattackmovement();
+                    playermovement.groundcheck();
+                    playerlockon.attacklockonrotation();
                     break;
                 case State.Bowcharge:
                     playeraim.aimplayerrotation();
@@ -279,11 +279,11 @@ public class Movescript : MonoBehaviour
                     break;
                 case State.Attackweaponaim:
                     playeraim.aimplayerrotation();
-                    playerattack.attackmovement();
+                    playerattack.inputattackmovement();
                     playerattack.finalairmovement();
                     break;
                 case State.Bowweaponswitch:
-                    playerattack.attackmovement();
+                    playerattack.inputattackmovement();
                     playerattack.finalairmovement();
                     break;
                 case State.Bowhookshot:
@@ -349,7 +349,9 @@ public class Movescript : MonoBehaviour
         animator.Play(newstate);
         currentstate = newstate;
     }
-    public void lockontargetswitch() => playerlockon.lookfortarget();
+    public void autolockon() => playerlockon.autolockon();
+    public void lockonfindclostesttarget() => playerlockon.lockonfindclostesttarget();
+    public void endlockon() => playerlockon.endlockon();
     public void switchtogroundstate()
     {
         if(playerhp.playerisdead == false)

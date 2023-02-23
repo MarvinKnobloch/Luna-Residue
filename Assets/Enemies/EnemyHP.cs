@@ -51,8 +51,8 @@ public class EnemyHP : MonoBehaviour
     public static event Action<EnemyHP> addhealthbar;
     public static event Action<EnemyHP> removehealthbar;
 
-    public static event Action<EnemyHP> setfocustargetui;
-    public static event Action<EnemyHP> deselectfocustargetui;
+    public static event Action<EnemyHP> setfocustarget;
+    public static event Action<EnemyHP> deselectfocustarget;
 
     public event Action<float> healthpctchanged;
     public event Action<float, float> focustargetuihptext;
@@ -144,13 +144,6 @@ public class EnemyHP : MonoBehaviour
                 enemyisdead = true;
                 currenthealth = 0;
                 removefromcanvas();
-                if (Movescript.lockontarget != null)
-                {
-                    unmarktarget();
-                    focustargetuiend();
-                    Movescript.availabletargets.Remove(GetComponent<Enemylockon>());
-                    LoadCharmanager.Overallmainchar.GetComponent<Movescript>().lockontargetswitch();
-                }
                 Infightcontroller.infightenemylists.Remove(transform.gameObject);
                 int enemycount = Infightcontroller.infightenemylists.Count;
                 Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
@@ -159,6 +152,12 @@ public class EnemyHP : MonoBehaviour
                     Statics.gameoverposi = LoadCharmanager.Overallmainchar.transform.position;
                     Statics.gameoverrota = LoadCharmanager.Overallmainchar.transform.rotation;
                     Statics.gameovercam = LoadCharmanager.savecamvalueX;
+                }
+                if (Movescript.lockontarget != null)
+                {
+                    unmarktarget();
+                    enemyisnotfocustarget();
+                    LoadCharmanager.Overallmainchar.GetComponent<Movescript>().lockonfindclostesttarget();
                 }
                 Infightcontroller.checkifinfight();
                 supporttargetdied?.Invoke();
@@ -281,20 +280,20 @@ public class EnemyHP : MonoBehaviour
     public void marktarget() => markcurrenttarget();
     public void unmarktarget() => unmarkcurrenttarget();
 
-    public void focustargetuistart()
+    public void enemyisfocustarget()
     {
         isfocus = true;
-        setfocustargetui(this);
+        setfocustarget(this);
         if(enemydebuffcd == true)
         {
             enemyfocusbargameobject.SetActive(true);
         }
     }
 
-    public void focustargetuiend()
+    public void enemyisnotfocustarget()
     {
         isfocus = false;
-        deselectfocustargetui(this);
+        deselectfocustarget(this);
     }
 
     public void tookdmgfrom(int player, int hitamount)

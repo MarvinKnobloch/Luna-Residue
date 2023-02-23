@@ -7,7 +7,7 @@ public class Aoearrow : MonoBehaviour
     public float arrowspeed;
     public float timetodestroy;
     private bool dmgonce;
-    public GameObject Arrowtarget;
+    public Vector3 arrowtarget;
     public LayerMask Layerhitbox;
     private float aoeradius;
     private int dmgtype;
@@ -39,10 +39,10 @@ public class Aoearrow : MonoBehaviour
 
     void Update()
     {
-        if (Arrowtarget != null)
+        if (arrowtarget != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Arrowtarget.transform.position + Vector3.up, arrowspeed * Time.deltaTime);
-            if (dmgonce == false && Vector3.Distance(transform.position, Arrowtarget.transform.position + Vector3.up) < 0.1f)
+            transform.position = Vector3.MoveTowards(transform.position, arrowtarget, arrowspeed * Time.deltaTime);
+            if (dmgonce == false && Vector3.Distance(transform.position, arrowtarget) < 0.1f)
             {
                 Checkhitbox();
                 dmgonce = true;
@@ -51,9 +51,9 @@ public class Aoearrow : MonoBehaviour
     }
     private void Checkhitbox()
     {
-        if (Arrowtarget != null)
+        if (arrowtarget != null)
         {
-            Collider[] cols = Physics.OverlapSphere(Arrowtarget.transform.position, aoeradius, Layerhitbox);
+            Collider[] cols = Physics.OverlapSphere(arrowtarget, aoeradius, Layerhitbox);
             foreach (Collider Enemyhit in cols)
             {
                 if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))

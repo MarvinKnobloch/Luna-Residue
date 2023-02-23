@@ -45,7 +45,6 @@ public class Statics
     public static float playerbasiccritchance = 5;
     public static float bowbasicmanarestore = 2;
     public static float bowendmanarestore = 5;
-    public static float playerlockonrange = 20;
 
     public static float healthperskillpoint = 25;
     public static float armorperskillpoint = 25;

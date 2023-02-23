@@ -171,7 +171,7 @@ public class Bowattack : MonoBehaviour
         {
             if (controlls.Player.Attack1.WasPressedThisFrame() && basicattackcd > 0.5f && Statics.otheraction == false)
             {
-                movementscript.state = Movescript.State.Groundattack;
+                movementscript.state = Movescript.State.Rangegroundattack;
                 attackestate = Attackstate.attack1;
                 Statics.otheraction = true;
                 movementscript.ChangeAnimationState(groundbasic1state);
@@ -479,7 +479,7 @@ public class Bowattack : MonoBehaviour
         playerarrow.SetActive(false);
         if (Movescript.lockontarget == null)
         {
-            movementscript.playerlockon.lookfortarget();
+            movementscript.lockonfindclostesttarget();
         }
     }
     private void bowairdownend()
@@ -491,7 +491,7 @@ public class Bowattack : MonoBehaviour
         {
             attackestate = Attackstate.attack1;
             movementscript.graviti = -0.5f;
-            movementscript.state = Movescript.State.Groundattack;
+            movementscript.state = Movescript.State.Rangegroundattack;
             movementscript.ChangeAnimationState(groundbasic1state);
         }
         else groundattackchainend();
@@ -561,10 +561,10 @@ public class Bowattack : MonoBehaviour
         {
             Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
             GameObject Arrow = Instantiate(singlearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Arrow.GetComponent<Singlearrow>().Arrowtarget = Movescript.lockontarget.gameObject;
-            Arrow.GetComponent<Singlearrow>().setarrowvalues(dmg, type);
-            //Singlegroundarrow arrowcontroller = Arrow.GetComponent<Singlegroundarrow>();
-            //arrowcontroller.Arrowtarget = null; // Movescript.lockontarget.gameObject;
+            Singlearrow arrowcontroller = Arrow.GetComponent<Singlearrow>();
+            arrowcontroller.arrowhitpoint = Movescript.lockontarget.gameObject.transform.position;
+            arrowcontroller.arrowtarget = Movescript.lockontarget.gameObject;
+            arrowcontroller.setarrowvalues(dmg, type);
             arrowfalse();
         }
     }
@@ -580,8 +580,9 @@ public class Bowattack : MonoBehaviour
         {
             Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
             GameObject Arrow = Instantiate(aoearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Arrow.GetComponent<Aoearrow>().Arrowtarget = Movescript.lockontarget.gameObject;
-            Arrow.GetComponent<Aoearrow>().setarrowvalues(dmg, radius, type);
+            Aoearrow arrowcontroller = Arrow.GetComponent<Aoearrow>();
+            arrowcontroller.arrowtarget = Movescript.lockontarget.gameObject.transform.position;
+            arrowcontroller.setarrowvalues(dmg, radius, type);
             arrowfalse();
         }
     }
@@ -593,12 +594,10 @@ public class Bowattack : MonoBehaviour
         {
             Vector3 arrowrotation = (hit.point - Arrowlaunchposi.position).normalized;
             GameObject Arrow = Instantiate(singlearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Arrow.GetComponent<Singlearrow>().Arrowtarget = hit.transform.gameObject;
-            Arrow.GetComponent<Singlearrow>().setarrowvalues(dmg, type);
-            //SingleAirarrow arrowcontroller = Arrow.GetComponent<SingleAirarrow>();
-            //arrowcontroller.arrowziel = hit.point;
-            //arrowcontroller.Arrowtarget = hit.transform;
-            //arrowcontroller.hit = true;
+            Singlearrow arrowcontroller = Arrow.GetComponent<Singlearrow>();
+            arrowcontroller.arrowhitpoint = hit.point;
+            arrowcontroller.arrowtarget = hit.transform.gameObject;
+            arrowcontroller.setarrowvalues(dmg, type);
         }
         else
         {
@@ -615,8 +614,9 @@ public class Bowattack : MonoBehaviour
         {
             Vector3 arrowrotation = (hit.point - Arrowlaunchposi.position).normalized;
             GameObject Arrow = Instantiate(aoearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Arrow.GetComponent<Aoearrow>().Arrowtarget = hit.transform.gameObject;
-            Arrow.GetComponent<Aoearrow>().setarrowvalues(dmg,radius, type);
+            Aoearrow arrowcontroller = Arrow.GetComponent<Aoearrow>();
+            arrowcontroller.arrowtarget = hit.point;
+            arrowcontroller.setarrowvalues(dmg,radius, type);
         }
         else
         {
@@ -633,7 +633,7 @@ public class Bowattack : MonoBehaviour
             Vector3 arrowrotation = (hit.point - Arrowlaunchposi.position).normalized;
             GameObject Arrow = GameObject.Instantiate(puzzlearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
             Puzzlearrow arrowcontroller = Arrow.GetComponent<Puzzlearrow>();
-            arrowcontroller.arrowziel = hit.point;
+            arrowcontroller.arrowtarget = hit.point;
             arrowcontroller.hit = true;
         }
     }

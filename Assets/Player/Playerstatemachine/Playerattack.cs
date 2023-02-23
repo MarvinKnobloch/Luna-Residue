@@ -8,6 +8,20 @@ public class Playerattack
 
     public void attackmovement()
     {
+        if (Movescript.lockontarget != null)
+        {
+            Vector3 endposi = Movescript.lockontarget.transform.position;
+            Vector3 distancetomove = endposi - psm.transform.position;
+            Vector3 movement = distancetomove.normalized * 30 * Time.deltaTime;
+            psm.velocity = movement;
+        }
+        else
+        {
+            psm.velocity = Vector3.zero;
+        }
+    }
+    public void inputattackmovement()
+    {
         float h = psm.move.x;                                                                         // Move Script
         float v = psm.move.y;
 
@@ -30,3 +44,5 @@ public class Playerattack
         psm.charactercontroller.Move(psm.velocity * Time.deltaTime);
     }
 }
+
+
