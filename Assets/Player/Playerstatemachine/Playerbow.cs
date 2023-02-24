@@ -33,7 +33,9 @@ public class Playerbow
     {
         if (psm.controlls.Player.Attack4.WasReleasedThisFrame())
         {
-            disableaim();
+            psm.disableaimcam();
+            Statics.otheraction = false;
+            psm.state = Movescript.State.Ground;
         }
     }
     public void arrowfullcharge()
@@ -41,9 +43,15 @@ public class Playerbow
         if (psm.Cam2.gameObject.activeSelf == true)                 //Wenn man den Input im selben moment los lässt wie der call kommt wird die kamera deakiviert aber man komm trotzdem in die state
         {
             psm.ChangeAnimationState(aimholdstate);
-            psm.state = Movescript.State.Bowischarged;
+            psm.state = Movescript.State.Outofcombatbowischarged;
         }
-        else disableaim();
+        else
+        {
+            psm.disableaimcam();
+            Statics.otheraction = false;
+            psm.state = Movescript.State.Ground;
+        }
+
     }
 
 
@@ -52,17 +60,22 @@ public class Playerbow
         if (psm.controlls.Player.Attack4.WasReleasedThisFrame())
         {
             psm.ChangeAnimationState(releasearrowstate);
-            psm.state = Movescript.State.Bowwaitfornewcharge;
+            psm.state = Movescript.State.Outofcombatbowwaitfornewcharge;
         }
     }
     public void nextarrow()
     {
         if (psm.controlls.Player.Attack4.IsPressed())
         {
-            psm.state = Movescript.State.Bowcharge;
+            psm.state = Movescript.State.Outofcombarbowcharge;
             psm.ChangeAnimationState(chargestate);
         }
-        else disableaim();
+        else     
+        {
+            psm.disableaimcam();
+            Statics.otheraction = false;
+            psm.state = Movescript.State.Ground;
+        }
     }
     public void bowhookshot()
     {
@@ -81,12 +94,5 @@ public class Playerbow
             psm.switchtoairstate();
             Statics.otheraction = false;
         }
-    }
-    public void disableaim()
-    {
-        psm.Charrig.enabled = false;
-        psm.disableaimcam();
-        Statics.otheraction = false;
-        psm.state = Movescript.State.Ground;
     }
 }

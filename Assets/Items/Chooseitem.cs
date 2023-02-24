@@ -73,8 +73,8 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
         else if (equipslot == 5)        //gloves = number5
         {
-            setitemandvalues(Statics.charcurrentgloves[selectedchar]);
-            Statics.charcurrentgloves[selectedchar] = itemvalues;
+            setitemandvalues(Statics.charcurrentbelt[selectedchar]);
+            Statics.charcurrentbelt[selectedchar] = itemvalues;
         }
         else if (equipslot == 6)        //legs = number6
         {
@@ -127,7 +127,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
         else if (Statics.currentequipmentbutton == 5)
         {
-            setstaticsslot(Statics.charcurrentgloves);
+            setstaticsslot(Statics.charcurrentbelt);
         }
         else if (Statics.currentequipmentbutton == 6)
         {
@@ -169,7 +169,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
         if (Statics.currentequipmentbutton == 5)
         {
-            setstaticslotadd(Statics.charcurrentgloves);
+            setstaticslotadd(Statics.charcurrentbelt);
         }
         if (Statics.currentequipmentbutton == 6)
         {
@@ -244,7 +244,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             }
             else if (Statics.currentequipmentbutton == 5)
             {
-                mouseenter(Statics.charcurrentgloves[selectedchar]);
+                mouseenter(Statics.charcurrentbelt[selectedchar]);
             }
             else if (Statics.currentequipmentbutton == 6)
             {

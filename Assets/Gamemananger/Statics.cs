@@ -168,7 +168,7 @@ public class Statics
     public static Itemcontroller[] charcurrentfist = new Itemcontroller[5];
     public static Itemcontroller[] charcurrenthead = new Itemcontroller[5];
     public static Itemcontroller[] charcurrentchest = new Itemcontroller[5];
-    public static Itemcontroller[] charcurrentgloves = new Itemcontroller[5];
+    public static Itemcontroller[] charcurrentbelt = new Itemcontroller[5];
     public static Itemcontroller[] charcurrentlegs = new Itemcontroller[5];
     public static Itemcontroller[] charcurrentshoes = new Itemcontroller[5];
     public static Itemcontroller[] charcurrentneckless = new Itemcontroller[5];

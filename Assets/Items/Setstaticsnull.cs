@@ -23,7 +23,7 @@ public class Setstaticsnull : MonoBehaviour
         setnullobject(Statics.charcurrentfist);
         setnullobject(Statics.charcurrenthead);
         setnullobject(Statics.charcurrentchest);
-        setnullobject(Statics.charcurrentgloves);
+        setnullobject(Statics.charcurrentbelt);
         setnullobject(Statics.charcurrentlegs);
         setnullobject(Statics.charcurrentshoes);
         setnullobject(Statics.charcurrentneckless);

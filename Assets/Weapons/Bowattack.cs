@@ -88,7 +88,7 @@ public class Bowattack : MonoBehaviour
         CancelInvoke();
         playerarrow.SetActive(false);
     }
-    private Attackstate attackestate;
+    [SerializeField] private Attackstate attackestate;
     enum Attackstate
     {
         waitforattack,
@@ -151,7 +151,6 @@ public class Bowattack : MonoBehaviour
                     Statics.otheraction = true;
                     movementscript.ChangeAnimationState(chargestate);
                     movementscript.switchtooutofcombataim();
-
                 }
             }           
         }
@@ -161,7 +160,6 @@ public class Bowattack : MonoBehaviour
             Statics.playeriframes = false;
             resetvalues();
             root = false;
-            movementscript.Charrig.enabled = false;
         }
     }
     private void waitforattackinput()                   //input für attackchainstart
@@ -179,7 +177,7 @@ public class Bowattack : MonoBehaviour
                 movementscript.attackcombochain = 0;
             }
         }
-        else if (movementscript.state == Movescript.State.Air)
+        else if (movementscript.state == Movescript.State.Air || movementscript.state == Movescript.State.Upwards)
         {
             if (controlls.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false)// && Statics.infight == true)
             {
@@ -443,19 +441,18 @@ public class Bowattack : MonoBehaviour
         {
             movementscript.switchtoattackaimstate();
             attackestate = Attackstate.bowairattack;
-            movementscript.ChangeAnimationStateInstant(bowairchargestate);
+            movementscript.ChangeAnimationState(bowairchargestate);
         }
     }
     private void airattackchainend()
     {
         readattackinput = false;
-        movementscript.switchtoairstate();
         attackestate = Attackstate.waitforattack;
         Statics.otheraction = false;
         movementscript.attackcombochain = 0;
         basicattackcd = 0;
         movementscript.disableaimcam();
-        playerarrow.SetActive(false);
+        movementscript.switchtoairstate();
     }
     private void bowaircharge() => movementscript.ChangeAnimationState(bowairchargestate);
 
@@ -475,12 +472,7 @@ public class Bowattack : MonoBehaviour
         Physics.IgnoreLayerCollision(6, 6);             //player und enemy collision
         Physics.IgnoreLayerCollision(8, 6);
         attackestate = Attackstate.groundattackchain;
-        movementscript.playeraim.aimend();
-        playerarrow.SetActive(false);
-        if (Movescript.lockontarget == null)
-        {
-            movementscript.lockonfindclostesttarget();
-        }
+        movementscript.disableaimcam();
     }
     private void bowairdownend()
     {
@@ -531,7 +523,6 @@ public class Bowattack : MonoBehaviour
     {
         Statics.otheraction = false;
         movementscript.disableaimcam();
-        playerarrow.SetActive(false);
         Time.timeScale = Statics.normalgamespeed;
         Time.fixedDeltaTime = Statics.normaltimedelta;
         movementscript.switchtoairstate();

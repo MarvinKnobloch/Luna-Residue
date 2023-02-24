@@ -65,7 +65,6 @@ public class Movescript : MonoBehaviour
 
     //Characterrig
     public MonoBehaviour Charrig;
-    public bool activaterig;
 
     //StatemachineScripts
     public Playermovement playermovement = new Playermovement();
@@ -127,9 +126,9 @@ public class Movescript : MonoBehaviour
         Heal,
         Stun,
         Buttonmashstun,
-        Bowcharge,
-        Bowischarged,
-        Bowwaitfornewcharge,
+        Outofcombarbowcharge,
+        Outofcombatbowischarged,
+        Outofcombatbowwaitfornewcharge,
         Meleegroundattack,
         Meleeirattack,
         Rangegroundattack,
@@ -262,21 +261,6 @@ public class Movescript : MonoBehaviour
                     playermovement.groundcheck();
                     playerlockon.attacklockonrotation();
                     break;
-                case State.Bowcharge:
-                    playeraim.aimplayerrotation();
-                    playerbow.chargearrow();
-                    playerbow.bowoutofcombataimmovement();
-                    playermovement.groundcheck();
-                    break;
-                case State.Bowischarged:
-                    playeraim.aimplayerrotation();
-                    playerbow.shootarrow();
-                    playerbow.bowoutofcombataimmovement();
-                    playermovement.groundcheck();
-                    break;
-                case State.Bowwaitfornewcharge:
-                    playerbow.bowoutofcombataimmovement();
-                    break;
                 case State.Attackweaponaim:
                     playeraim.aimplayerrotation();
                     playerattack.inputattackmovement();
@@ -288,6 +272,21 @@ public class Movescript : MonoBehaviour
                     break;
                 case State.Bowhookshot:
                     playerbow.bowhookshot();
+                    break;
+                case State.Outofcombarbowcharge:
+                    playeraim.aimplayerrotation();
+                    playerbow.chargearrow();
+                    playerbow.bowoutofcombataimmovement();
+                    playermovement.groundcheck();
+                    break;
+                case State.Outofcombatbowischarged:
+                    playeraim.aimplayerrotation();
+                    playerbow.shootarrow();
+                    playerbow.bowoutofcombataimmovement();
+                    playermovement.groundcheck();
+                    break;
+                case State.Outofcombatbowwaitfornewcharge:
+                    playerbow.bowoutofcombataimmovement();
                     break;
                 case State.Beforedash:           //damit man beim angreifen noch die Richtung bestimmen kann
                     playermovement.beforedashmovement();
@@ -375,26 +374,7 @@ public class Movescript : MonoBehaviour
         ChangeAnimationState(idlestate);
         state = State.Empty;
     }
-    public void switchtoattackaimstate()
-    {
-        CinemachinePOV Cam2pov = Cam2.GetCinemachineComponent<CinemachinePOV>();
-        Cam2pov.m_HorizontalRecentering.m_enabled = true;
-        playeraim.activateaimcam();
-        state = State.Attackweaponaim;
-        StartCoroutine(cam2recenteringdisable());
-    }
-    IEnumerator cam2recenteringdisable()                     //damit die cam2 bei aktivierung mit cam1 gleich gesetzt wird. Wenn Recentering aktiviert wird passt sich die 2. Cam sofort der rotation des spielers an.
-    {                                                        //die rotation des spielers ist beim wechsel der Kamera die richtung des Kamerabrains(der Char dreht sich richtung Kamera)
-        yield return new WaitForSeconds(0.2f);               //wenn Recentering nicht aktviert ist dreht die der Char nach dem wechsel sofort richtung 2. Cam die noch nicht die richtig position hat 
-        CinemachinePOV Cam2pov = Cam2.GetCinemachineComponent<CinemachinePOV>();             //sprich die 2. Cam recentert sich schneller als die Char rotation
-        Cam2pov.m_HorizontalRecentering.m_enabled = false;
-    }
-    public void disableaimcam()
-    {
-        Charprefabarrow.SetActive(false);
-        playeraim.aimend();
-        switchtoairstate();
-    }
+
     public void slowplayer(float slowmovementspeed)
     {
         movementspeed = slowmovementspeed;
@@ -409,18 +389,43 @@ public class Movescript : MonoBehaviour
     }
     public void resurrected() => playerheal.resurrected();
     private void playerstandup() => playerheal.playerstandup();
+    public void switchtoattackaimstate()
+    {
+        setaimcam();
+        state = State.Attackweaponaim;
+    }
     public void switchtooutofcombataim()
     {
+        setaimcam();
+        state = State.Outofcombarbowcharge;
+    }
+    private void setaimcam()
+    {
         CinemachinePOV Cam2pov = Cam2.GetCinemachineComponent<CinemachinePOV>();
+        Cam2pov.m_VerticalAxis.Value = 0;
         Cam2pov.m_HorizontalRecentering.m_enabled = true;
         playeraim.activateaimcam();
         StartCoroutine(cam2recenteringdisable());
-        Charrig.enabled = true;
-        state = State.Bowcharge;
+    }
+    IEnumerator cam2recenteringdisable()                     //damit die cam2 bei aktivierung mit cam1 gleich gesetzt wird. Wenn Recentering aktiviert wird passt sich die 2. Cam sofort der rotation des spielers an.
+    {                                                        //die rotation des spielers ist beim wechsel der Kamera die richtung des Kamerabrains(der Char dreht sich richtung Kamera)
+        yield return new WaitForSeconds(0.2f);               //wenn Recentering nicht aktviert ist dreht die der Char nach dem wechsel sofort richtung 2. Cam die noch nicht die richtig position hat 
+        CinemachinePOV Cam2pov = Cam2.GetCinemachineComponent<CinemachinePOV>();             //sprich die 2. Cam recentert sich schneller als die Char rotation
+        Cam2pov.m_HorizontalRecentering.m_enabled = false;
+        if(Cam2.gameObject.activeSelf == true)
+        {
+            Charrig.enabled = true;                     //wird erst hier gecalled weil die bowintoair animation probleme macht wenn der rig zu früh aktiviert wird
+        }
+    }
+    public void disableaimcam()
+    {
+        Charprefabarrow.SetActive(false);
+        Charrig.enabled = false;
+        mousetarget.SetActive(false);
+        Cam2.gameObject.SetActive(false);
     }
     private void bowoutofcombatfullcharged() => playerbow.arrowfullcharge();
     private void bowoutofcombatnextarrow() => playerbow.nextarrow();
-    public void disableaim() => playerbow.disableaim();
     public void switchtobuttonmashstun(int buttonmashcount)
     {
         if(playerhp.playerisdead == false)

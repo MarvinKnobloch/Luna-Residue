@@ -20,8 +20,7 @@ public class Tutorialcontroller : MonoBehaviour
         Cam2.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0;
         if (Cam2.gameObject.activeSelf == true)
         {
-            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().disableaim();
-            Cam2.gameObject.SetActive(false);
+            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().disableaimcam();
         }
         Time.timeScale = 0;
         LoadCharmanager.disableattackbuttons = true;
