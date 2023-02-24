@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6972f3ea0ae617b4ba7e8b2e19ed23e9, type: 3}
   m_Name: Mysticbelt
   m_EditorClassIdentifier: 
-  Uisprite: {fileID: 0}
+  Uisprite: {fileID: 21300000, guid: da09804303305f542a686824630e7269, type: 3}
   type: 6
   itemname: Mysticbelt
   inventoryslot: 0

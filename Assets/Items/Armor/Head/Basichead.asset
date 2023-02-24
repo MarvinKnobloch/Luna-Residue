@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb744567f2852f6429a90d4a125738ce, type: 3}
   m_Name: Basichead
   m_EditorClassIdentifier: 
-  Uisprite: {fileID: 21300000, guid: 995b0d02c8738854ba174f607a9bb682, type: 3}
+  Uisprite: {fileID: 21300000, guid: fd6e4fc32c78509458fc45ea4a478ba8, type: 3}
   type: 4
   itemname: Basichead
-  inventoryslot: 0
+  inventoryslot: 1
   itemshopcosts: 50
   description: 
   basestats:
@@ -28,15 +28,15 @@ MonoBehaviour:
   - 0
   - 2
   stats:
-  - 20
+  - 10
   - 0
   - 0
   - 0
   - 0
   - 0
   - 0
-  - 6
-  upgradelvl: 1
+  - 2
+  upgradelvl: 0
   maxupgradelvl: 1
   upgrades:
   - newstats:

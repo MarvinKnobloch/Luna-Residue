@@ -288,7 +288,7 @@ public class Bowattack : MonoBehaviour
             }
         }
     }
-    private void airattackchaininput()
+    /*private void airattackchaininput()
     {
         if (readattackinput == true && movementscript.attackcombochain < 2)
         {
@@ -299,7 +299,7 @@ public class Bowattack : MonoBehaviour
                 movementscript.ChangeAnimationStateInstant(bowairchargestate);
             }
         }
-    }
+    }*/
     private void shotweaponswitcharrow()
     {
         if (readattackinput == true)
@@ -384,6 +384,7 @@ public class Bowattack : MonoBehaviour
     }
     private void bowgroundbasicend()
     {
+        if (movementscript.state != Movescript.State.Rangegroundattack) return;
         if (readattackinput == true) groundattackchainend();
         else
         {
@@ -396,6 +397,7 @@ public class Bowattack : MonoBehaviour
     }
     private void bowgroundbasci2end()
     {
+        if (movementscript.state != Movescript.State.Rangegroundattack) return;
         if (readattackinput == true) groundattackchainend();
         else
         {
@@ -418,6 +420,7 @@ public class Bowattack : MonoBehaviour
     }
     private void bowstaygroundend()
     {
+        if (movementscript.state != Movescript.State.Rangegroundattack) return;
         if (readattackinput == false && movementscript.attackcombochain < 2)
         {
             attackestate = Attackstate.attack1;
@@ -427,14 +430,16 @@ public class Bowattack : MonoBehaviour
     }
     private void bowgrounduproot()
     {
+        if (movementscript.state != Movescript.State.Rangegroundattack) return;
         bowaircount = 0;
         movementscript.attackonceair = false;
         root = true;
-        movementscript.state = Movescript.State.Empty;
+        movementscript.state = Movescript.State.Attackweaponaim;
         movementscript.graviti = 0f;
     }
     private void bowgroundupend()
     {
+        if (movementscript.state != Movescript.State.Attackweaponaim) return;
         root = false;
         if (readattackinput == true) airattackchainend();
         else
@@ -454,20 +459,27 @@ public class Bowattack : MonoBehaviour
         movementscript.disableaimcam();
         movementscript.switchtoairstate();
     }
-    private void bowaircharge() => movementscript.ChangeAnimationState(bowairchargestate);
+    private void bowaircharge()
+    {
+        if (movementscript.state != Movescript.State.Attackweaponaim) return;
+        movementscript.ChangeAnimationState(bowairchargestate);
+    }
 
     private void bowairhold()
     {
+        if (movementscript.state != Movescript.State.Attackweaponaim) return;
         readattackinput = true;
         movementscript.ChangeAnimationState(bowairholdstate);
     }
     private void checkforaircombo()
     {
+        if (movementscript.state != Movescript.State.Attackweaponaim) return;
         if (movementscript.attackcombochain < 2) movementscript.ChangeAnimationState(bowairchargestate);
         else airattackchainend();
     }
     private void startbowair3intoground()
     {
+        if (movementscript.state != Movescript.State.Attackweaponaim) return;
         root = true;
         Physics.IgnoreLayerCollision(6, 6);             //player und enemy collision
         Physics.IgnoreLayerCollision(8, 6);
@@ -476,6 +488,7 @@ public class Bowattack : MonoBehaviour
     }
     private void bowairdownend()
     {
+        if (movementscript.state != Movescript.State.Attackweaponaim) return;
         Physics.IgnoreLayerCollision(6, 6, false);
         Physics.IgnoreLayerCollision(8, 6, false);
         root = false;
@@ -511,6 +524,7 @@ public class Bowattack : MonoBehaviour
     }
     private void bowswitchslowmotion()
     {
+        if (movementscript.state != Movescript.State.Bowweaponswitch) return;
         movementscript.switchtoattackaimstate();
         root = false;
         movementscript.ChangeAnimationState(slowmochargeup);
@@ -536,6 +550,7 @@ public class Bowattack : MonoBehaviour
     }
     private void slowmofastercharge()
     {
+        if (movementscript.state != Movescript.State.Attackweaponaim) return;
         movementscript.ChangeAnimationState(slowmofastcharge);
     }
     private void hookshotstart()

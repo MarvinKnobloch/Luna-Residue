@@ -130,7 +130,7 @@ public class Movescript : MonoBehaviour
         Outofcombatbowischarged,
         Outofcombatbowwaitfornewcharge,
         Meleegroundattack,
-        Meleeirattack,
+        Meleeairattack,
         Rangegroundattack,
         Attackweaponaim,
         Bowweaponswitch,
@@ -251,7 +251,7 @@ public class Movescript : MonoBehaviour
                     playermovement.groundcheck();
                     playerlockon.attacklockonrotation();
                     break;
-                case State.Meleeirattack:
+                case State.Meleeairattack:
                     playerattack.attackmovement();
                     playerlockon.attacklockonrotation();
                     playerattack.finalairmovement();

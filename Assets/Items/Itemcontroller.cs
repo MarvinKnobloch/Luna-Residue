@@ -14,7 +14,7 @@ public enum Itemtype
     Belt,
     Legs,
     Shoes,
-    Neckless,
+    Necklace,
     Ring,
 }
 public abstract class Itemcontroller : ScriptableObject

@@ -23,7 +23,7 @@ public class Pickupitem : MonoBehaviour
         {
             pickuponce = false;
             inventory.Addequipment(item, seconditem, 1);
-            transform.parent.gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 }

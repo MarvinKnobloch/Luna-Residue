@@ -13,7 +13,7 @@ public class Setitemsandinventory : MonoBehaviour
     [SerializeField] private Beltobject[] glovesitems;
     [SerializeField] private Legsobject[] legitems;
     [SerializeField] private Shoesobject[] shoesitems;
-    [SerializeField] private Necklessobject[] necklessitems;
+    [SerializeField] private Necklaceobject[] necklessitems;
     [SerializeField] private Ringobject[] ringitems;
     [SerializeField] private Craftingobject[] craftingitems;
 

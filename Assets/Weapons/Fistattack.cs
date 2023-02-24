@@ -142,7 +142,7 @@ public class Fistattack : MonoBehaviour
         {
             if (controlls.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false)// && Statics.infight == true)
             {
-                movementscript.state = Movescript.State.Meleeirattack;
+                movementscript.state = Movescript.State.Meleeairattack;
                 attackestate = Attackstate.attack1;
                 movementscript.graviti = 0f;
                 Statics.otheraction = true;
@@ -253,6 +253,7 @@ public class Fistattack : MonoBehaviour
     }
     private void fistgroundbasicend()
     {
+        if (movementscript.state != Movescript.State.Meleegroundattack) return;                   //sonst kommt der call von der animation noch durch obwohl schon die animation gewechselt würde
         if (readattackinput == true) fistgroundattackchainend();
         else
         {
@@ -265,6 +266,7 @@ public class Fistattack : MonoBehaviour
     }
     private void fistgroundbasic2end()
     {
+        if (movementscript.state != Movescript.State.Meleegroundattack) return;
         if (readattackinput == true) fistgroundattackchainend();
         else
         {
@@ -274,6 +276,7 @@ public class Fistattack : MonoBehaviour
     }
     private void fistgroundbasic3end()
     {
+        if (movementscript.state != Movescript.State.Meleegroundattack) return;
         if (readattackinput == true) fistgroundattackchainend();
         else
         {
@@ -296,6 +299,7 @@ public class Fistattack : MonoBehaviour
     }
     private void fiststaygroundend()
     {
+        if (movementscript.state != Movescript.State.Meleegroundattack) return;
         if (readattackinput == false && movementscript.attackcombochain < 2)
         {
             attackestate = Attackstate.attack1;
@@ -305,13 +309,15 @@ public class Fistattack : MonoBehaviour
     }
     private void fistgrounduproot()
     {
+        if (movementscript.state != Movescript.State.Meleegroundattack) return;
         movementscript.attackonceair = false;
         root = true;
-        movementscript.state = Movescript.State.Meleeirattack;
+        movementscript.state = Movescript.State.Meleeairattack;
         movementscript.graviti = 0f;
     }
     private void fistgroundupend()
     {
+        if (movementscript.state != Movescript.State.Meleeairattack) return;
         root = false;
         if (readattackinput == true) fistairattackchainend();
         else
@@ -332,6 +338,7 @@ public class Fistattack : MonoBehaviour
     }
     private void fistbasicairend()
     {
+        if (movementscript.state != Movescript.State.Meleeairattack) return;
         if (readattackinput == true) fistairattackchainend();
         else
         {
@@ -344,6 +351,7 @@ public class Fistattack : MonoBehaviour
     }
     private void fistairbasic2end()
     {
+        if (movementscript.state != Movescript.State.Meleeairattack) return;
         if (readattackinput == true) fistairattackchainend();
         else
         {
@@ -355,12 +363,14 @@ public class Fistattack : MonoBehaviour
     }
     private void fistairdownroot()
     {
+        if (movementscript.state != Movescript.State.Meleeairattack) return;
         root = true;
         Physics.IgnoreLayerCollision(6, 6);             //player und enemy collision
         Physics.IgnoreLayerCollision(8, 6);
     }
     private void fistairdownend()
     {
+        if (movementscript.state != Movescript.State.Meleeairattack) return;
         Physics.IgnoreLayerCollision(6, 6, false);
         Physics.IgnoreLayerCollision(8, 6, false);
         root = false;
@@ -375,6 +385,7 @@ public class Fistattack : MonoBehaviour
     }
     private void fiststayairend()
     {
+        if (movementscript.state != Movescript.State.Meleeairattack) return;
         if (readattackinput == false && movementscript.attackcombochain < 2)
         {
             attackestate = Attackstate.attack1;
@@ -393,7 +404,7 @@ public class Fistattack : MonoBehaviour
         {
             Statics.otheraction = true;
             movementscript.graviti = -5;
-            movementscript.state = Movescript.State.Meleeirattack;
+            movementscript.state = Movescript.State.Meleeairattack;
             movementscript.ChangeAnimationState(swordswitchstate);
         }
         else
@@ -403,6 +414,7 @@ public class Fistattack : MonoBehaviour
     }
     private void fistweaponswitchend()
     {
+        if (movementscript.state != Movescript.State.Meleeairattack) return;
         attackestate = Attackstate.waitforattack;
         movementscript.switchtogroundstate();
         Statics.otheraction = false;
