@@ -57,10 +57,10 @@ public class Loadmenucontroller : MonoBehaviour
     }
     public void opencommitload(int slot)
     {
-        if (Slotvaluesarray.slotisnotempty[slot] == true)
+        if (Slotvaluesarray.slotisnotempty[slot -1] == true)
         {
             commitloadobj.SetActive(true);
-            selectedslot = slot;
+            selectedslot = slot -1;
         }
         else
         {

@@ -134,6 +134,7 @@ public class Enemymovement : MonoBehaviour
     public void triggerenemy() => enemypatrol.triggerenemy();       //ontriggerenter
     public void patrolend() => enemypatrol.patrolend();        //ontriggerexit
     public void checkforplayerinrange() => enemypatrol.checkforplayerinrange();
+    public void enemygroupistriggered() => enemypatrol.enemygroupistriggered();
     public void switchtoattackstate()
     {
         normalattacktimer = 0;

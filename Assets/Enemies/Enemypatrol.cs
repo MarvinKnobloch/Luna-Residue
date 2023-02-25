@@ -84,11 +84,32 @@ public class Enemypatrol
                         Infightcontroller.checkifinfight();
                     }
                 }
+                if(esm.gameObject.TryGetComponent(out Enemygroup enemygroup))
+                {
+                    enemygroup.tiggerenemies();
+                }
                 esm.currenttarget = LoadCharmanager.Overallmainchar;
                 esm.Meshagent.speed = esm.normalnavspeed;
                 esm.normalattacktimer = esm.normalattackcd;
                 esm.state = Enemymovement.State.gettomeleerange;
             }
         }
+    }
+    public void enemygroupistriggered()
+    {
+        if (!Infightcontroller.infightenemylists.Contains(esm.transform.gameObject))
+        {
+            Infightcontroller.infightenemylists.Add(esm.transform.gameObject);
+            int enemycount = Infightcontroller.infightenemylists.Count;
+            Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
+            if (Infightcontroller.infightenemylists.Count == 1)
+            {
+                Infightcontroller.checkifinfight();
+            }
+        }
+        esm.currenttarget = LoadCharmanager.Overallmainchar;
+        esm.Meshagent.speed = esm.normalnavspeed;
+        esm.normalattacktimer = esm.normalattackcd;
+        esm.state = Enemymovement.State.gettomeleerange;
     }
 }

@@ -11,7 +11,6 @@ public class Movescript : MonoBehaviour
 {
     //Bugs:
     //bei jeglichen spells, wenn das target stirbt, ist das target dann nicht gleich null, weil eine neues traget gesucht wird, wenn eins vorhanden ist
-    //playerhits im enemyscript muss upgedatet werden, wenn man support chars angewählt/habgewählt werden        ??? muss playerhit überhaupt abgewählt werden wenn die chars deaktiviert werden
     //kamera nach dem lightport in spieler guck richtung?
 
     //Stormlightning flug animation hat sich am ende nicht verändert (zu der Zeit war der Char Toggle Active State = true)
@@ -200,7 +199,7 @@ public class Movescript : MonoBehaviour
 
     private void Update()
     {
-        if(LoadCharmanager.interaction == false)
+        if (LoadCharmanager.interaction == false)
         {
             playerlockon.whilelockon();
             switch (state)

@@ -105,7 +105,8 @@ public class Infightcontroller : MonoBehaviour
             if(LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == false)
             {
                 int enemycount = infightenemylists.Count;
-                int enemyonlist = UnityEngine.Random.Range(1, enemycount + 1);
+                int enemyonlist = UnityEngine.Random.Range(1, enemycount);          //enemycount + 1????
+                Debug.Log(enemyonlist + "enemyspezialcount");
                 if (infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>())
                 {
                     infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>().spezialattack = true;

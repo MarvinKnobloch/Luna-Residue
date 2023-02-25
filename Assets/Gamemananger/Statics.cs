@@ -11,14 +11,14 @@ public class Statics
     public static float dialoguetextspeed = 0.02f;
 
     //gamevalues
-    public static int currentgameslot = -1;
+    public static int currentgameslot = 0;                 //save slot 0 ist autosave
     public static string gamesavedate;
     public static string gamesavetime;
     public static float currentplayerposix, currentplayerposiy, currentplayerposiz;
     public static float currentplayerrotationx, currentplayerrotationy, currentplayerrotationz, currentplayerrotationw;
     public static float savecamvalueX;
 
-    public static Vector3 gameoverposi;                   //wird gesetzt wenn gegner stirbt und der count dann auf 0 droppt
+    public static Vector3 gameoverposi;                   //wird in enemyhp gesetzt weil die posi nur gespeichtert werden sollen wenn auch ein kampf gewonnen worden ist
     public static Quaternion gameoverrota;
     public static float gameovercam;
 

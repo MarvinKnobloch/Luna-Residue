@@ -69,10 +69,9 @@ public class Healtutorial : MonoBehaviour
     private void endtutorial()
     {
         readinputs = false;
-        firstarea.healtutorialcomplete = true;
         tutorialcontroller.endtutorial();
+        firstarea.healtutorialcomplete = true;
+        firstarea.autosave();
         gameObject.SetActive(false);
     }
-    //autolockon???
-    //vorwärtsmomentum beim attackieren
 }

@@ -6,9 +6,6 @@ using Cinemachine;
 using System;
 using UnityEngine.InputSystem;
 
-//beim equipslot wechsel werden die itemwerte/stats nicht upgedated
-//wenn bow ausgewechselt wird kommen animator fehlermeldungen
-//wenn nicht infight und man vom mob wegläuft, spawnen beim reset die teammates
 //elemenu spells beim charwechsel reseten?
 
 public class LoadCharmanager : MonoBehaviour
@@ -56,7 +53,7 @@ public class LoadCharmanager : MonoBehaviour
             Statics.charcurrenthealth[i] = Statics.charmaxhealth[i];
         }
         maingamevalues();
-        Collider[] colliders = Physics.OverlapSphere(Overallmainchar.transform.position, 30, meleehitbox);
+        Collider[] colliders = Physics.OverlapSphere(Overallmainchar.transform.position, 20, meleehitbox);
         foreach (Collider checkforenemys in colliders)
         {
             if(checkforenemys.TryGetComponent(out EnemyHP enemyHP))
@@ -122,10 +119,10 @@ public class LoadCharmanager : MonoBehaviour
         }
         Overallmainchar = allcharacters[Statics.currentfirstchar];
         Overallsecondchar = allcharacters[Statics.currentsecondchar];
-        Statics.currentactiveplayer = 0; 
-        Overallmainchar.SetActive(true);
+        Statics.currentactiveplayer = 0;
         Overallmainchar.transform.position = savemainposi;
         Overallmainchar.transform.rotation = savemainrota;
+        Overallmainchar.SetActive(true);
         Statics.gameoverposi = savemainposi;
         Statics.gameoverrota = savemainrota;
         Statics.gameovercam = savecamvalueX;

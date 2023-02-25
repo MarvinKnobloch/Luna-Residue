@@ -171,6 +171,10 @@ public class EnemyHP : MonoBehaviour
     private void enemydied()
     {
         gameObject.SetActive(false);
+        if(gameObject.TryGetComponent(out Enemyisrewardobject enemyisrewardobject))
+        {
+            enemyisrewardobject.checkforrewardcondition();
+        }
         dropitems();
     }
     public void enemyheal(float heal)

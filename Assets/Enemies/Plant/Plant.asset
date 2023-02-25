@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Plant
   m_EditorClassIdentifier: 
   enemyname: Plant
-  basehealth: 331
+  basehealth: 60
   enemylvl: 1
   movementspeed: 8
   basedmg: 8

@@ -70,6 +70,7 @@ public class Attacktutorial : MonoBehaviour
         readinputs = false;
         tutorialcontroller.endtutorial();
         firstarea.attacktutorialcomplete = true;
+        firstarea.autosave();
         gameObject.SetActive(false);
     }
 }

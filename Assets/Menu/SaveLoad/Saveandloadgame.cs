@@ -30,10 +30,10 @@ public class Saveandloadgame : MonoBehaviour
         string savepath = "/Statics" + slot + ".json";
         if (loadsaveinterface.savedata(savepath, convertstatics))
         {
-            Slotvaluesarray.slotisnotempty[slot] = true;
-            Slotvaluesarray.slotlvl[slot] = convertstatics.charcurrentlvl;
-            Slotvaluesarray.slotdate[slot] = convertstatics.gamesavedate;
-            Slotvaluesarray.slottime[slot] = convertstatics.gamesavetime;
+            Slotvaluesarray.slotisnotempty[slot -1] = true;
+            Slotvaluesarray.slotlvl[slot -1] = convertstatics.charcurrentlvl;
+            Slotvaluesarray.slotdate[slot -1] = convertstatics.gamesavedate;
+            Slotvaluesarray.slottime[slot -1] = convertstatics.gamesavetime;
         }
         else
         {
@@ -70,8 +70,8 @@ public class Saveandloadgame : MonoBehaviour
 
     public void loadgamedate()
     {
-        int slot = loadmenucontroller.selectedslot;
-        Statics.currentgameslot = loadmenucontroller.selectedslot;
+        int slot = loadmenucontroller.selectedslot + 1;
+        Statics.currentgameslot = slot;
         loadstaticdata(slot);
         if (convertstatics != null)
         {

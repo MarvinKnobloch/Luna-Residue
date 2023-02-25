@@ -16,7 +16,6 @@ public class Startmenucontroller : MonoBehaviour
     [SerializeField] private GameObject settingsobj;
     private Setitemsandinventory setitemsandinventory;
     private Setstaticsnull setstaticsnull;
-    //private Isaveload loadsaveinterface = new Saveloadgame();
     private Convertstatics convertstatics = new Convertstatics();
 
     public Color selectedcolor;
@@ -46,17 +45,18 @@ public class Startmenucontroller : MonoBehaviour
     {
         for (int i = 0; i < Slotvaluesarray.slotisnotempty.Length; i++)
         {
-            string loadpath = Application.persistentDataPath + "/Statics" + i + ".json";
+            int slot = i + 1;
+            string loadpath = Application.persistentDataPath + "/Statics" + slot + ".json";
             if (File.Exists(loadpath))
             {
                 string loaded_data = File.ReadAllText(loadpath);
                 convertstatics = JsonUtility.FromJson<Convertstatics>(loaded_data);
-                Debug.Log("Data Slot" + i + " exists");
+                Debug.Log("Data Slot" + slot + " exists");
                 saveslotvalues(i);
             }
             else
             {
-                Debug.Log("Data Slot" + i + " doesn't exist");
+                Debug.Log("Data Slot" + slot + " doesn't exist");
             }
         }
     }
@@ -73,6 +73,7 @@ public class Startmenucontroller : MonoBehaviour
     }
     public void newgame()
     {
+        Statics.currentgameslot = -1;             //damit bei new game nichts geladen wird
         Statics.currentfirstchar = 0;
         Statics.currentsecondchar = 1;
         Statics.currentthirdchar = 2;
