@@ -19,6 +19,7 @@ public class LoadCharmanager : MonoBehaviour
     private Uiactionscontroller uiactionscontroller;
     [SerializeField] private GameObject menu;
     [SerializeField] private GameObject menuoverview;
+    public static Expmanager expmanager;
 
     public GameObject[] allcharacters;
     public static GameObject Overallmainchar;
@@ -42,6 +43,7 @@ public class LoadCharmanager : MonoBehaviour
 
     private void Awake()
     {
+        expmanager = GetComponent<Expmanager>();
         uiactionscontroller = GetComponent<Uiactionscontroller>();
         Steuerung = Keybindinputmanager.inputActions;
     }

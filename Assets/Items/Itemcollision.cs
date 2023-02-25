@@ -5,6 +5,7 @@ using UnityEngine;
 public class Itemcollision : MonoBehaviour
 {
     private Rigidbody rb;
+    private int itemlaunch = 6;
 
     private void Awake()
     {
@@ -16,9 +17,9 @@ public class Itemcollision : MonoBehaviour
     private void OnEnable()
     {
         rb.isKinematic = false;
-        int randomx = Random.Range(-4, 4);
-        int randomz = Random.Range(-4, 4);
-        rb.velocity = new Vector3(randomx, 4, randomz);
+        int randomx = Random.Range(-itemlaunch, itemlaunch);
+        int randomz = Random.Range(-itemlaunch, itemlaunch);
+        rb.velocity = new Vector3(randomx, itemlaunch, randomz);
         StartCoroutine("disablemovement");
     }
     private void OnDisable()

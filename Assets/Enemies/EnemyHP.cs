@@ -39,7 +39,8 @@ public class EnemyHP : MonoBehaviour
     private bool enemyisdead;
     [NonSerialized] public bool dmgonce;                           // da ich zwei collider hab und dadurch 2mal dmg gemacht wird, wird es momentan mit einem bool gecheckt ( hab noch keine besser lösung gefunden
 
-    public Enemydrops[] itemdroplist;
+    private int golddropamount;
+    [SerializeField] private Enemydrops[] itemdroplist;
 
     [SerializeField] private int[] playerhits = { 0, 0, 0 };
     private int mosthits;
@@ -161,6 +162,7 @@ public class EnemyHP : MonoBehaviour
                 }
                 Infightcontroller.checkifinfight();
                 supporttargetdied?.Invoke();
+                LoadCharmanager.expmanager.gainexp(Mathf.Round(enemyvalues.expgain + (enemylvl * enemyvalues.expgain * 0.5f)));
                 enemymovement.enemydied();
                 Invoke("enemydied", 3);
             }
@@ -345,6 +347,12 @@ public class EnemyHP : MonoBehaviour
     }
     private void dropitems()
     {
+        if (enemyvalues.golddropamount <= 2) golddropamount = 3;
+        else golddropamount = enemyvalues.golddropamount;
+        golddropamount = UnityEngine.Random.Range(golddropamount - 2, golddropamount + 2);
+        GameObject enemygolddrop = Instantiate(enemyvalues.gold, transform.position, transform.rotation);
+        enemygolddrop.GetComponent<Golditemcontroller>().golddropamount = golddropamount * enemylvl;
+
         foreach (Enemydrops obj in itemdroplist)
         {
             int randomnumber = UnityEngine.Random.Range(0, 100);

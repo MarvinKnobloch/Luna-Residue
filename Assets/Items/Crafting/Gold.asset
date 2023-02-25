@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 583056300dcd49544a458c56807f47c8, type: 3}
-  m_Name: Money
+  m_Name: Gold
   m_EditorClassIdentifier: 
   Uisprite: {fileID: 0}
   type: 0
-  itemname: Money
+  itemname: Gold
   inventoryslot: 13
   itemshopcosts: 0
   description: 

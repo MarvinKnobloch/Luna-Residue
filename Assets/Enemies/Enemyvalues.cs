@@ -12,4 +12,7 @@ public class Enemyvalues : ScriptableObject
     public float basedmg;
     public float attackspeed;
     public int enemysize;
+    public GameObject gold;
+    public int golddropamount;
+    public int expgain;
 }
