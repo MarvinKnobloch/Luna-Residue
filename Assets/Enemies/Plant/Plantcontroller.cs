@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Plantcontroller : MonoBehaviour
 {
-    [SerializeField] private GameObject[] plantspheres;
+    public GameObject[] plantspheres;
 
     [SerializeField] private float basedmg;
     [SerializeField] private float sphereuptimer;
@@ -23,7 +23,10 @@ public class Plantcontroller : MonoBehaviour
         {
             if (sphere.activeSelf == true)
             {
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg);
+                if(Statics.infight == true)
+                {
+                    LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg);
+                }
                 sphere.SetActive(false);
             }
         }

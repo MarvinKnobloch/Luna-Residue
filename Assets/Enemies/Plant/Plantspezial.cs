@@ -7,10 +7,7 @@ public class Plantspezial : MonoBehaviour
 {
     public NavMeshAgent Meshagent;
 
-    [SerializeField] private GameObject plantcontroller;
-    [SerializeField] private GameObject sphere1;
-    [SerializeField] private GameObject sphere2;
-    [SerializeField] private GameObject sphere3;
+    [SerializeField] private Plantcontroller plantcontroller;
 
     private Vector3 spawn1;
     private Vector3 spawn2;
@@ -24,7 +21,7 @@ public class Plantspezial : MonoBehaviour
     }
     private void plantspezial()
     {
-        plantcontroller.SetActive(true);
+        plantcontroller.gameObject.SetActive(true);
         mainchar = LoadCharmanager.Overallmainchar.transform.position;
         mainchar.y = transform.position.y;
         spawn1 = mainchar + LoadCharmanager.Overallmainchar.transform.forward * 7 + Random.insideUnitSphere * 8;
@@ -34,16 +31,16 @@ public class Plantspezial : MonoBehaviour
         NavMeshHit hit1;
         NavMesh.Raycast(mainchar, spawn1, out hit1, NavMesh.AllAreas);
         spawn1 = hit1.position;
-        sphere1.transform.position = spawn1;
+        plantcontroller.plantspheres[0].transform.position = spawn1 + Vector3.up;
 
         NavMeshHit hit2;
         NavMesh.Raycast(mainchar, spawn2, out hit2, NavMesh.AllAreas);
         spawn2 = hit2.position;
-        sphere2.transform.position = spawn2;
+        plantcontroller.plantspheres[1].transform.position = spawn2 + Vector3.up;
 
         NavMeshHit hit3;
         NavMesh.Raycast(mainchar, spawn3, out hit3, NavMesh.AllAreas);
         spawn3 = hit3.position;
-        sphere3.transform.position = spawn3;
+        plantcontroller.plantspheres[2].transform.position = spawn3 + Vector3.up;
     }
 }
