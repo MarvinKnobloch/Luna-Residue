@@ -2,46 +2,75 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Chestreward : MonoBehaviour
+public class Chestreward : MonoBehaviour, Rewardinterface, Interactioninterface
 {
     [SerializeField] private Firstarea firstarea;
-
     [SerializeField] private GameObject closedchest;
     [SerializeField] private GameObject openchest;
-    public int rewardcount;
-    public int rewardcountneeded;
+    public int areachestnumber;
 
-    [SerializeField] private GameObject[] rewards;
+    private int rewardcount;
+    [SerializeField] private int rewardcountneeded;
+
+    private string chestlocked = "Locked";
+    private string chestopen = "Open Chest";
+    private string cheststatetext;
+    public string Interactiontext => cheststatetext;
 
     private void OnEnable()
     {
-
-        if(firstarea.startingzonechest == true)
+        StartCoroutine("currentcheststate");                          //ein frame delay damit die settings für die area vorher geladen werden
+    }
+    IEnumerator currentcheststate()
+    {
+        yield return null;
+        if (firstarea.startingzonechestisopen[areachestnumber] == true)
         {
             closedchest.SetActive(false);
             openchest.SetActive(true);
+            GetComponent<Detectinteractionobject>().enabled = false;
+            enabled = false;
+        }
+        else if (firstarea.startingzonechestcanopen[areachestnumber])
+        {
+            closedchest.SetActive(true);
+            cheststatetext = chestopen;
+            openchest.SetActive(false);
         }
         else
         {
             rewardcount = 0;
             closedchest.SetActive(true);
+            cheststatetext = chestlocked;
             openchest.SetActive(false);
         }
     }
     public void checkforreward()
     {
         rewardcount++;
-        if(rewardcount >= rewardcountneeded)
+        if (rewardcount >= rewardcountneeded)
         {
-            closedchest.SetActive(false);
-            openchest.SetActive(true);
-            firstarea.startingzonechest = true;
-            foreach (GameObject reward in rewards)
-            {
-                Instantiate(reward, transform.position + Vector3.up * 2, transform.rotation);
-            }
+            cheststatetext = chestopen;
+            firstarea.startingzonechestcanopen[areachestnumber] = true;
             firstarea.autosave();
         }
     }
 
+    public bool Interact(Closestinteraction interactor)
+    {
+        if(firstarea.startingzonechestcanopen[areachestnumber] == true)
+        {
+            if (firstarea.startingzonechestisopen[areachestnumber] == false)
+            {
+                Debug.Log("getitems");
+                closedchest.SetActive(false);
+                openchest.SetActive(true);
+                firstarea.startingzonechestisopen[areachestnumber] = true;
+                firstarea.autosave();
+                GetComponent<Detectinteractionobject>().enabled = false;
+                enabled = false;
+            }
+        }
+        return true;
+    }
 }

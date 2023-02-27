@@ -12,14 +12,23 @@ public class Firstarea : MonoBehaviour
     public bool boxpuzzlecomplete;
     public bool attacktutorialcomplete;
     public bool healtutorialcomplete;
-    public bool startingzonechest;
+
+    [SerializeField] private GameObject[] chests;
+    public bool[] startingzonechestcanopen;           //müss anzahl der chest sein
+    public bool[] startingzonechestisopen;
+    
     private void Awake()
     {
         areacontroller = GetComponent<Areacontroller>();
         areacontroller.areatosave = this;
         if(Statics.currentgameslot != -1)                             // -1 = new game damit nichts geladen wird
         {
+            Debug.Log("loadarea");
             loadmonobehaviour(Statics.currentgameslot, areacontroller.areaname, this);
+        }
+        for (int i = 0; i < chests.Length; i++)
+        {
+            chests[i].GetComponent<Chestreward>().areachestnumber = i;
         }
     }
     private void loadmonobehaviour(int slot, string filename, MonoBehaviour monobehaviour)            //bei gameload werden hier die fortschritte geladen
