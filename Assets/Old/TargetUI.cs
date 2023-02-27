@@ -19,13 +19,13 @@ public class TargetUI : MonoBehaviour
     //public float Lockonhealth;
     void Awake()
     {
-        EnemyHP.setfocustargetui += setfocus;
-        EnemyHP.deselectfocustargetui += removefocus;
+        EnemyHP.setfocustarget += setfocus;
+        EnemyHP.deselectfocustarget += removefocus;
     }
     private void OnDisable()
     {
-        EnemyHP.setfocustargetui -= setfocus;
-        EnemyHP.deselectfocustargetui -= removefocus;
+        EnemyHP.setfocustarget -= setfocus;
+        EnemyHP.deselectfocustarget -= removefocus;
     }
     private void setfocus(EnemyHP enemyhpscript)
     {

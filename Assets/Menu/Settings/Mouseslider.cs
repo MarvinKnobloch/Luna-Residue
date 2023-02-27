@@ -11,13 +11,14 @@ public class Mouseslider : MonoBehaviour
 
     private void OnEnable()
     {
-        slider.value = Statics.mousesensitivity * 50;
-        slidertext.text = "" + Statics.mousesensitivity * 50;
+        slider.value = PlayerPrefs.GetFloat("mousesensitivity");
+        slidertext.text = PlayerPrefs.GetFloat("mousesensitivity").ToString();
         slider.onValueChanged.AddListener(delegate { valuechange(); });
     }
     private void valuechange()
     {
-        Statics.mousesensitivity = slider.value / 50;
+        float slidervalue = slider.value;
+        PlayerPrefs.SetFloat("mousesensitivity", slidervalue);
         slidertext.text = slider.value.ToString();
     }
 }

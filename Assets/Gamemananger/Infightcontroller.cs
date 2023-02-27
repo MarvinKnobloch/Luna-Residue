@@ -12,9 +12,18 @@ public class Infightcontroller : MonoBehaviour
     public static List<GameObject> infightenemylists = new List<GameObject>();
 
     public static float teammatesdespawntime = 5;
-
     public float spezialtimer;
 
+    [SerializeField] private GameObject gameovercontroller;
+
+    private void OnEnable()
+    {
+        Playerhp.triggergameover += activategameovercontroller;
+    }
+    private void OnDisable()
+    {
+        Playerhp.triggergameover -= activategameovercontroller;
+    }
 
     private void Start()
     {
@@ -32,7 +41,8 @@ public class Infightcontroller : MonoBehaviour
             instance.StopCoroutine("enemyspezialcd");
             infightimage.SetActive(false);
             instance.Invoke("disablechars", teammatesdespawntime);
-            if(LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == true)
+            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().endlockon();
+            if (LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == true)
             {
                 LoadCharmanager.Overallmainchar.GetComponent<Movescript>().resurrected();
             }
@@ -47,6 +57,7 @@ public class Infightcontroller : MonoBehaviour
                 Statics.supportcanresurrect = false;
                 Statics.oneplayerisdead = false;
                 Statics.infight = true;
+                LoadCharmanager.Overallmainchar.GetComponent<Movescript>().autolockon();
                 instance.StopCoroutine("healalliesafterfight");
                 instance.StartCoroutine("enemyspezialcd");
             }
@@ -64,7 +75,7 @@ public class Infightcontroller : MonoBehaviour
             }
         }
     }
-    private void disablechars()
+    public void disablechars()
     {
         StartCoroutine("healalliesafterfight");
         if (LoadCharmanager.Overallthirdchar != null)
@@ -94,7 +105,8 @@ public class Infightcontroller : MonoBehaviour
             if(LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == false)
             {
                 int enemycount = infightenemylists.Count;
-                int enemyonlist = UnityEngine.Random.Range(1, enemycount + 1);
+                int enemyonlist = UnityEngine.Random.Range(1, enemycount);          //enemycount + 1????
+                Debug.Log(enemyonlist + "enemyspezialcount");
                 if (infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>())
                 {
                     infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>().spezialattack = true;
@@ -124,5 +136,17 @@ public class Infightcontroller : MonoBehaviour
                 StopCoroutine("healalliesafterfight");
             }
         }
+    }
+    public void gameover()
+    {
+        infightenemylists.Clear();
+        Statics.currentenemyspecialcd = Statics.enemyspecialcd;
+        Statics.infight = false;
+        instance.StopCoroutine("enemyspezialcd");
+        infightimage.SetActive(false);
+    }
+    public void activategameovercontroller()
+    {
+        gameovercontroller.SetActive(true);
     }
 }

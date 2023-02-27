@@ -27,9 +27,4 @@ public class Playeraim
         psm.mousetarget.SetActive(true);
         psm.Cam2.gameObject.SetActive(true);
     }
-    public void aimend()
-    {
-        psm.mousetarget.SetActive(false);
-        psm.Cam2.gameObject.SetActive(false);
-    }
 }

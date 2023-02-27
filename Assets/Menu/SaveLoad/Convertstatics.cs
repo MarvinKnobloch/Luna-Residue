@@ -45,7 +45,7 @@ public class Convertstatics
     public Itemcontroller[] currentfist;
     public Itemcontroller[] currenthead;
     public Itemcontroller[] currentchest;
-    public Itemcontroller[] currentgloves;
+    public Itemcontroller[] currentbelt;
     public Itemcontroller[] currentlegs;
     public Itemcontroller[] currentshoes;
     public Itemcontroller[] currentneckless;
@@ -126,7 +126,7 @@ public class Convertstatics
         currentfist = Statics.charcurrentfist;
         currenthead = Statics.charcurrenthead;
         currentchest = Statics.charcurrentchest;
-        currentgloves = Statics.charcurrentgloves;
+        currentbelt = Statics.charcurrentbelt;
         currentshoes = Statics.charcurrentshoes;
         currentlegs = Statics.charcurrentlegs;
         currentneckless = Statics.charcurrentneckless;
@@ -203,7 +203,7 @@ public class Convertstatics
         Statics.charcurrentfist = currentfist;
         Statics.charcurrenthead = currenthead;
         Statics.charcurrentchest = currentchest;
-        Statics.charcurrentgloves = currentgloves;
+        Statics.charcurrentbelt = currentbelt;
         Statics.charcurrentshoes = currentshoes;
         Statics.charcurrentlegs = currentlegs;
         Statics.charcurrentneckless = currentneckless;

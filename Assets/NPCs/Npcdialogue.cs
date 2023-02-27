@@ -81,7 +81,7 @@ public class Npcdialogue : MonoBehaviour
         foreach(char letter in dialogue[dialogueindex].ToCharArray())
         {
             dialoguetext.text += letter;
-            yield return new WaitForSeconds(Statics.npcdialoguetextspeed);
+            yield return new WaitForSeconds(Statics.dialoguetextspeed);
         }
         StopCoroutine(startdialogue());
     }

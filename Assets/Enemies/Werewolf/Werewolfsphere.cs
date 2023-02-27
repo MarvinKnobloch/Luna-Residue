@@ -22,12 +22,16 @@ public class Werewolfsphere : MonoBehaviour
     }*/
     private void dealdmg()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 5f, Aoetargets);
-        foreach (Collider target in colliders)
+        if(Statics.infight == true)
         {
-            if (target.gameObject == LoadCharmanager.Overallmainchar.gameObject)
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 5f, Aoetargets);
+            foreach (Collider target in colliders)
             {
-                target.GetComponent<Playerhp>().TakeDamage(basedmg);
+                if (target.gameObject == LoadCharmanager.Overallmainchar.gameObject)
+                {
+                    target.GetComponent<Playerhp>().TakeDamage(basedmg);
+                    break;
+                }
             }
         }
         LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();

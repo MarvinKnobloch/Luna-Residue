@@ -6,9 +6,6 @@ using Cinemachine;
 using System;
 using UnityEngine.InputSystem;
 
-//beim equipslot wechsel werden die itemwerte/stats nicht upgedated
-//wenn bow ausgewechselt wird kommen animator fehlermeldungen
-//wenn nicht infight und man vom mob wegläuft, spawnen beim reset die teammates
 //elemenu spells beim charwechsel reseten?
 
 public class LoadCharmanager : MonoBehaviour
@@ -19,6 +16,7 @@ public class LoadCharmanager : MonoBehaviour
     private Uiactionscontroller uiactionscontroller;
     [SerializeField] private GameObject menu;
     [SerializeField] private GameObject menuoverview;
+    public static Expmanager expmanager;
 
     public GameObject[] allcharacters;
     public static GameObject Overallmainchar;
@@ -26,13 +24,15 @@ public class LoadCharmanager : MonoBehaviour
     public GameObject[] teammates;
     public static GameObject Overallthirdchar;
     public static GameObject Overallforthchar;
-    public static Vector3 savemainposi = new Vector3(0,5,0);
-    public static Quaternion savemainrota;                                      //memorypuzzle(-40,25,685) //boxpuzzle(305,25,565) switchpuzzle(280,2,180)
-    public static float savecamvalueX;                                          //statuepuzzle(-200,2,340) //woods(255,20,435)  //watercave(-330,12,-40)  //lantern(-210,32,500)
+    public static Vector3 savemainposi = new Vector3(116, 17, 707);                         //(15,32,687);
+    public static Quaternion savemainrota;                                  
+    public static float savecamvalueX;                                          
 
     public static bool disableattackbuttons;
     public static bool gameispaused;
     public static bool interaction;
+
+    [SerializeField] private LayerMask meleehitbox;
 
     public static event Action setweapons;
     public static event Action swordcontrollerupdate;
@@ -40,15 +40,27 @@ public class LoadCharmanager : MonoBehaviour
 
     private void Awake()
     {
-        Statics.otheraction = false;
+        expmanager = GetComponent<Expmanager>();
         uiactionscontroller = GetComponent<Uiactionscontroller>();
         Steuerung = Keybindinputmanager.inputActions;
-        maingamevalues();
     }
 
     private void OnEnable()
     {
         Steuerung.Enable();
+        for (int i = 0; i < Statics.charcurrenthealth.Length; i++)
+        {
+            Statics.charcurrenthealth[i] = Statics.charmaxhealth[i];
+        }
+        maingamevalues();
+        Collider[] colliders = Physics.OverlapSphere(Overallmainchar.transform.position, 20, meleehitbox);
+        foreach (Collider checkforenemys in colliders)
+        {
+            if(checkforenemys.TryGetComponent(out EnemyHP enemyHP))
+            {
+                enemyHP.gameObject.SetActive(false);
+            }
+        }
     }
     void Update()
     {
@@ -107,10 +119,13 @@ public class LoadCharmanager : MonoBehaviour
         }
         Overallmainchar = allcharacters[Statics.currentfirstchar];
         Overallsecondchar = allcharacters[Statics.currentsecondchar];
-        Statics.currentactiveplayer = 0; 
-        Overallmainchar.SetActive(true);
+        Statics.currentactiveplayer = 0;
         Overallmainchar.transform.position = savemainposi;
         Overallmainchar.transform.rotation = savemainrota;
+        Overallmainchar.SetActive(true);
+        Statics.gameoverposi = savemainposi;
+        Statics.gameoverrota = savemainrota;
+        Statics.gameovercam = savecamvalueX;
         Overallsecondchar.SetActive(true);
         Overallmainchar.GetComponent<Playerhp>().playerhpuislot = 0;
         Overallsecondchar.GetComponent<Playerhp>().playerhpuislot = 1;
@@ -151,11 +166,11 @@ public class LoadCharmanager : MonoBehaviour
 
         Cam1.LookAt = Overallmainchar.transform;
         Cam1.Follow = Overallmainchar.transform;
-        Cam1.m_YAxis.m_MaxSpeed = 0.008f * Statics.mousesensitivity;
-        Cam1.m_XAxis.m_MaxSpeed = 0.6f * Statics.mousesensitivity;
+        Cam1.m_YAxis.m_MaxSpeed = 0.008f * PlayerPrefs.GetFloat("mousesensitivity") / 50;
+        Cam1.m_XAxis.m_MaxSpeed = 0.6f * PlayerPrefs.GetFloat("mousesensitivity") / 50;
         Cam1.m_XAxis.Value = savecamvalueX;
-        aimcam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0.2f * Statics.rangeweaponaimsensitivity;
-        aimcam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0.2f * Statics.rangeweaponaimsensitivity;
+        aimcam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0.2f * PlayerPrefs.GetFloat("rangeweaponaimsensitivity") / 50;
+        aimcam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0.2f * PlayerPrefs.GetFloat("rangeweaponaimsensitivity") / 50;
         aimcam.LookAt = Overallmainchar.transform;
         aimcam.Follow = Overallmainchar.transform;
 

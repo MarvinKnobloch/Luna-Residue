@@ -27,7 +27,7 @@ public class Npcshopcontroller : MonoBehaviour
     private string[] statstext = { "Health ", "Defense ", "Attack ", "Crit ", "Critchance ", "Weaponswitch ", "Charswitch ", "Basic " };
 
     [SerializeField] private GameObject[] itemtypeselectionbuttons;
-    private Itemtype[] itemtypes = { Itemtype.Sword, Itemtype.Bow, Itemtype.Fist, Itemtype.Head, Itemtype.Chest, Itemtype.Gloves, Itemtype.Legs, Itemtype.Shoes, Itemtype.Neckless, Itemtype.Ring };
+    private Itemtype[] itemtypes = { Itemtype.Sword, Itemtype.Bow, Itemtype.Fist, Itemtype.Head, Itemtype.Chest, Itemtype.Belt, Itemtype.Legs, Itemtype.Shoes, Itemtype.Necklace, Itemtype.Ring };
     private int currentitemtype;
     private List<Itemtype> listoftypes = new List<Itemtype>();
 

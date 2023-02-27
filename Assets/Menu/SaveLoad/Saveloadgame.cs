@@ -24,11 +24,6 @@ public class Saveloadgame : Isaveload
             string json_data = JsonUtility.ToJson(data);
             File.WriteAllText(path, json_data);
             return true;
-            /*
-            using FileStream stream = File.Create(path);
-            stream.Close();
-            File.WriteAllText(path, JsonConvert.SerializeObject(data));
-            return true;*/
         }
         catch (Exception e)
         {

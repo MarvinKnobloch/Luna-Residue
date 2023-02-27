@@ -39,7 +39,7 @@ public class Closestinteraction : MonoBehaviour
                 Interactioninterface interactable = closestinteraction.GetComponent<Interactioninterface>();
                 interactionfield.GetComponentInChildren<Text>().text = interactable.Interactiontext;
 
-                if (interactable !=null && Steuerung.Player.Interaction.WasPerformedThisFrame() && LoadCharmanager.gameispaused == false)
+                if (interactable !=null && Steuerung.Player.Interaction.WasPerformedThisFrame() && LoadCharmanager.gameispaused == false && Statics.infight == false)
                 {
                     interactable.Interact(this);
                 }

@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class Itemcollision : MonoBehaviour
 {
-    Rigidbody rb;
-    private void Start()
+    private Rigidbody rb;
+    private int itemlaunch = 6;
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        int randomx = Random.Range(-4, 4);
-        int randomz = Random.Range(-4, 4);
-        rb.velocity = new Vector3(randomx, 4, randomz);
         Physics.IgnoreLayerCollision(8, 12);
         Physics.IgnoreLayerCollision(11, 12);
         Physics.IgnoreLayerCollision(6, 12);
+    }
+    private void OnEnable()
+    {
+        rb.isKinematic = false;
+        int randomx = Random.Range(-itemlaunch, itemlaunch);
+        int randomz = Random.Range(-itemlaunch, itemlaunch);
+        rb.velocity = new Vector3(randomx, itemlaunch, randomz);
+        StartCoroutine("disablemovement");
+    }
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+    IEnumerator disablemovement()
+    {
+        yield return new WaitForSeconds(5);
+        rb.velocity = new Vector3(0, 0, 0);
+        rb.isKinematic = true;
     }
 }

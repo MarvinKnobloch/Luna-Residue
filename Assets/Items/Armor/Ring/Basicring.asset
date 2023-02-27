@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a86e7d1aee3d6a418975c5865ddd93e, type: 3}
   m_Name: Basicring
   m_EditorClassIdentifier: 
-  Uisprite: {fileID: 21300000, guid: dace7e6136d8cde4da1addd8c333e1b8, type: 3}
-  type: 11
+  Uisprite: {fileID: 21300000, guid: 970324311431c794ca338446ea889948, type: 3}
+  type: 10
   itemname: Basicring
   inventoryslot: 0
-  itemshopcosts: 111
+  itemshopcosts: 103
   description: 
   basestats:
   - 0
@@ -30,8 +30,8 @@ MonoBehaviour:
   stats:
   - 0
   - 0
-  - 1
   - 0
+  - 1
   - 0
   - 2
   - 0
@@ -42,11 +42,11 @@ MonoBehaviour:
   - newstats:
     - 0
     - 0
-    - 2
-    - 0
     - 0
     - 2
-    - 2
+    - 0
+    - 4
+    - 0
     - 0
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}

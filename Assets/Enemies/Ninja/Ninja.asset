@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ninja
   m_EditorClassIdentifier: 
   enemyname: Ninja
-  maxhealth: 10000
+  maxhealth: 30
   enemylvl: 10
   movementspeed: 8
   attackdmg: 7

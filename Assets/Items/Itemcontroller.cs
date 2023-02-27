@@ -11,10 +11,10 @@ public enum Itemtype
     Fist,
     Head,
     Chest,
-    Gloves,
+    Belt,
     Legs,
     Shoes,
-    Neckless,
+    Necklace,
     Ring,
 }
 public abstract class Itemcontroller : ScriptableObject

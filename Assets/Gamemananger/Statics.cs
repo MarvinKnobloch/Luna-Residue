@@ -7,18 +7,20 @@ public class Statics
 
     
     //setting;
-    public static float mousesensitivity = 1;
-    public static float rangeweaponaimsensitivity = 1;
     public static int currentscreenmode;
-    public static float npcdialoguetextspeed = 0.02f;
+    public static float dialoguetextspeed = 0.02f;
 
     //gamevalues
-    public static int currentgameslot = -1;
+    public static int currentgameslot = 0;                 //save slot 0 ist autosave
     public static string gamesavedate;
     public static string gamesavetime;
     public static float currentplayerposix, currentplayerposiy, currentplayerposiz;
     public static float currentplayerrotationx, currentplayerrotationy, currentplayerrotationz, currentplayerrotationw;
     public static float savecamvalueX;
+
+    public static Vector3 gameoverposi;                   //wird in enemyhp gesetzt weil die posi nur gespeichtert werden sollen wenn auch ein kampf gewonnen worden ist
+    public static Quaternion gameoverrota;
+    public static float gameovercam;
 
     //charvalues
     public static int currentactiveplayer;                //für hpanzeige
@@ -43,7 +45,6 @@ public class Statics
     public static float playerbasiccritchance = 5;
     public static float bowbasicmanarestore = 2;
     public static float bowendmanarestore = 5;
-    public static float playerlockonrange = 20;
 
     public static float healthperskillpoint = 25;
     public static float armorperskillpoint = 25;
@@ -140,9 +141,9 @@ public class Statics
     public static float charcurrentexp = 0;
     public static float charrequiredexp = 52;
     public static string[] characternames = { "Maria", "Erika", "Kaja", "Yaku", "Arissa" };
-    public static float[] charbasichealth = { 100, 93, 9, 91, 95 };
-    public static float[] charcurrenthealth = { 100, 93, 9, 91, 95 };
-    public static float[] charmaxhealth = { 100, 93, 9, 91, 95 };
+    public static float[] charbasichealth = { 100, 93, 97, 93, 95 };
+    public static float[] charcurrenthealth = { 100, 93, 97, 93, 95 };
+    public static float[] charmaxhealth = { 100, 93, 97, 93, 95 };
     public static float[] chardefense = { 100, 100, 100, 100, 100 };
     public static float[] charattack = { 1, 1, 1, 1, 1 };
     public static float[] charcritchance = { 5, 5, 5, 5, 5 };
@@ -167,7 +168,7 @@ public class Statics
     public static Itemcontroller[] charcurrentfist = new Itemcontroller[5];
     public static Itemcontroller[] charcurrenthead = new Itemcontroller[5];
     public static Itemcontroller[] charcurrentchest = new Itemcontroller[5];
-    public static Itemcontroller[] charcurrentgloves = new Itemcontroller[5];
+    public static Itemcontroller[] charcurrentbelt = new Itemcontroller[5];
     public static Itemcontroller[] charcurrentlegs = new Itemcontroller[5];
     public static Itemcontroller[] charcurrentshoes = new Itemcontroller[5];
     public static Itemcontroller[] charcurrentneckless = new Itemcontroller[5];

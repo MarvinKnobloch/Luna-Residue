@@ -19,17 +19,16 @@ public class Focustargetcontroller : MonoBehaviour
 
     void Awake()
     {
-        EnemyHP.setfocustargetui += setfocus;
-        EnemyHP.deselectfocustargetui += removefocus;
+        EnemyHP.setfocustarget += setfocus;
+        EnemyHP.deselectfocustarget += removefocus;
     }
     private void OnDisable()
     {
-        EnemyHP.setfocustargetui -= setfocus;
-        EnemyHP.deselectfocustargetui -= removefocus;
+        EnemyHP.setfocustarget -= setfocus;
+        EnemyHP.deselectfocustarget -= removefocus;
     }
     private void setfocus(EnemyHP enemyhpscript)
     {
-        focustargetui.SetActive(true);
         enemyhpscript.focustargetuihptext += healthuiupdate;
         nameandlvl.text = "LvL" + enemyhpscript.enemylvl + " " + enemyhpscript.enemyname;
         LockonuiHPtext.text = "HP " + enemyhpscript.currenthealth + " / " + enemyhpscript.maxhealth;
@@ -60,7 +59,6 @@ public class Focustargetcontroller : MonoBehaviour
     private void removefocus(EnemyHP enemyhpscript)
     {        
         enemyhpscript.focustargetuihptext -= healthuiupdate;
-        focustargetui.SetActive(false);
     }
     private void healthuiupdate(float currenthp, float maxhp)
     {

@@ -11,7 +11,6 @@ public class Movescript : MonoBehaviour
 {
     //Bugs:
     //bei jeglichen spells, wenn das target stirbt, ist das target dann nicht gleich null, weil eine neues traget gesucht wird, wenn eins vorhanden ist
-    //playerhits im enemyscript muss upgedatet werden, wenn man support chars angewählt/habgewählt werden        ??? muss playerhit überhaupt abgewählt werden wenn die chars deaktiviert werden
     //kamera nach dem lightport in spieler guck richtung?
 
     //Stormlightning flug animation hat sich am ende nicht verändert (zu der Zeit war der Char Toggle Active State = true)
@@ -65,7 +64,6 @@ public class Movescript : MonoBehaviour
 
     //Characterrig
     public MonoBehaviour Charrig;
-    public bool activaterig;
 
     //StatemachineScripts
     public Playermovement playermovement = new Playermovement();
@@ -92,13 +90,8 @@ public class Movescript : MonoBehaviour
     const string dazestate = "Daze";
 
     //Lockon
-    public LayerMask Lockonlayer;
-    public float lockonrange;
-    [NonSerialized] public bool Checkforenemy;
     public static Transform lockontarget;
-    [NonSerialized] public GameObject HealUI;
-    [NonSerialized] public Enemylockon Enemylistcollider;
-    public static List<Enemylockon> availabletargets = new List<Enemylockon>();
+     public GameObject focustargetui;
     [NonSerialized] public Transform targetbeforeswap;
 
     //Spells
@@ -132,11 +125,12 @@ public class Movescript : MonoBehaviour
         Heal,
         Stun,
         Buttonmashstun,
-        Bowcharge,
-        Bowischarged,
-        Bowwaitfornewcharge,
-        Groundattack,
-        Airattack,
+        Outofcombarbowcharge,
+        Outofcombatbowischarged,
+        Outofcombatbowwaitfornewcharge,
+        Meleegroundattack,
+        Meleeairattack,
+        Rangegroundattack,
         Attackweaponaim,
         Bowweaponswitch,
         Bowhookshot,
@@ -161,7 +155,6 @@ public class Movescript : MonoBehaviour
 
     void Awake()
     {
-        lockonrange = Statics.playerlockonrange;
         Charrig.enabled = false;
         controlls = Keybindinputmanager.inputActions;
         controlls.Player.Movement.performed += Context => move = Context.ReadValue<Vector2>();
@@ -206,9 +199,9 @@ public class Movescript : MonoBehaviour
 
     private void Update()
     {
-        if(LoadCharmanager.interaction == false)
+        if (LoadCharmanager.interaction == false)
         {
-            playerlockon.charlockon();
+            playerlockon.whilelockon();
             switch (state)
             {
                 default:
@@ -252,42 +245,47 @@ public class Movescript : MonoBehaviour
                     playerstun.stun();
                     playerstun.breakstunwithbuttonmash();
                     break;
-                case State.Groundattack:
+                case State.Meleegroundattack:
                     playerattack.attackmovement();
                     playermovement.groundcheck();
                     playerlockon.attacklockonrotation();
                     break;
-                case State.Airattack:
+                case State.Meleeairattack:
                     playerattack.attackmovement();
                     playerlockon.attacklockonrotation();
                     playerattack.finalairmovement();
                     break;
-                case State.Bowcharge:
+                case State.Rangegroundattack:
+                    playerattack.inputattackmovement();
+                    playermovement.groundcheck();
+                    playerlockon.attacklockonrotation();
+                    break;
+                case State.Attackweaponaim:
+                    playeraim.aimplayerrotation();
+                    playerattack.inputattackmovement();
+                    playerattack.finalairmovement();
+                    break;
+                case State.Bowweaponswitch:
+                    playerattack.inputattackmovement();
+                    playerattack.finalairmovement();
+                    break;
+                case State.Bowhookshot:
+                    playerbow.bowhookshot();
+                    break;
+                case State.Outofcombarbowcharge:
                     playeraim.aimplayerrotation();
                     playerbow.chargearrow();
                     playerbow.bowoutofcombataimmovement();
                     playermovement.groundcheck();
                     break;
-                case State.Bowischarged:
+                case State.Outofcombatbowischarged:
                     playeraim.aimplayerrotation();
                     playerbow.shootarrow();
                     playerbow.bowoutofcombataimmovement();
                     playermovement.groundcheck();
                     break;
-                case State.Bowwaitfornewcharge:
+                case State.Outofcombatbowwaitfornewcharge:
                     playerbow.bowoutofcombataimmovement();
-                    break;
-                case State.Attackweaponaim:
-                    playeraim.aimplayerrotation();
-                    playerattack.attackmovement();
-                    playerattack.finalairmovement();
-                    break;
-                case State.Bowweaponswitch:
-                    playerattack.attackmovement();
-                    playerattack.finalairmovement();
-                    break;
-                case State.Bowhookshot:
-                    playerbow.bowhookshot();
                     break;
                 case State.Beforedash:           //damit man beim angreifen noch die Richtung bestimmen kann
                     playermovement.beforedashmovement();
@@ -349,15 +347,20 @@ public class Movescript : MonoBehaviour
         animator.Play(newstate);
         currentstate = newstate;
     }
-    public void lockontargetswitch() => playerlockon.lookfortarget();
+    public void autolockon() => playerlockon.autolockon();
+    public void lockonfindclostesttarget() => playerlockon.lockonfindclostesttarget();
+    public void endlockon() => playerlockon.endlockon();
     public void switchtogroundstate()
     {
-        Physics.IgnoreLayerCollision(6, 6, false);
-        Physics.IgnoreLayerCollision(8, 6, false);
-        ChangeAnimationState(idlestate);
-        attackonceair = true;
-        graviti = -0.5f;
-        state = State.Ground;
+        if(playerhp.playerisdead == false)
+        {
+            Physics.IgnoreLayerCollision(6, 6, false);
+            Physics.IgnoreLayerCollision(8, 6, false);
+            ChangeAnimationState(idlestate);
+            attackonceair = true;
+            graviti = -0.5f;
+            state = State.Ground;
+        }
     }
     public void switchtoairstate()
     {
@@ -370,26 +373,7 @@ public class Movescript : MonoBehaviour
         ChangeAnimationState(idlestate);
         state = State.Empty;
     }
-    public void switchtoattackaimstate()
-    {
-        CinemachinePOV Cam2pov = Cam2.GetCinemachineComponent<CinemachinePOV>();
-        Cam2pov.m_HorizontalRecentering.m_enabled = true;
-        playeraim.activateaimcam();
-        state = State.Attackweaponaim;
-        StartCoroutine(cam2recenteringdisable());
-    }
-    IEnumerator cam2recenteringdisable()                     //damit die cam2 bei aktivierung mit cam1 gleich gesetzt wird. Wenn Recentering aktiviert wird passt sich die 2. Cam sofort der rotation des spielers an.
-    {                                                        //die rotation des spielers ist beim wechsel der Kamera die richtung des Kamerabrains(der Char dreht sich richtung Kamera)
-        yield return new WaitForSeconds(0.2f);               //wenn Recentering nicht aktviert ist dreht die der Char nach dem wechsel sofort richtung 2. Cam die noch nicht die richtig position hat 
-        CinemachinePOV Cam2pov = Cam2.GetCinemachineComponent<CinemachinePOV>();             //sprich die 2. Cam recentert sich schneller als die Char rotation
-        Cam2pov.m_HorizontalRecentering.m_enabled = false;
-    }
-    public void disableaimcam()
-    {
-        Charprefabarrow.SetActive(false);
-        playeraim.aimend();
-        switchtoairstate();
-    }
+
     public void slowplayer(float slowmovementspeed)
     {
         movementspeed = slowmovementspeed;
@@ -404,27 +388,56 @@ public class Movescript : MonoBehaviour
     }
     public void resurrected() => playerheal.resurrected();
     private void playerstandup() => playerheal.playerstandup();
+    public void switchtoattackaimstate()
+    {
+        setaimcam();
+        state = State.Attackweaponaim;
+    }
     public void switchtooutofcombataim()
     {
+        setaimcam();
+        state = State.Outofcombarbowcharge;
+    }
+    private void setaimcam()
+    {
         CinemachinePOV Cam2pov = Cam2.GetCinemachineComponent<CinemachinePOV>();
+        Cam2pov.m_VerticalAxis.Value = 0;
         Cam2pov.m_HorizontalRecentering.m_enabled = true;
         playeraim.activateaimcam();
         StartCoroutine(cam2recenteringdisable());
-        Charrig.enabled = true;
-        state = State.Bowcharge;
+    }
+    IEnumerator cam2recenteringdisable()                     //damit die cam2 bei aktivierung mit cam1 gleich gesetzt wird. Wenn Recentering aktiviert wird passt sich die 2. Cam sofort der rotation des spielers an.
+    {                                                        //die rotation des spielers ist beim wechsel der Kamera die richtung des Kamerabrains(der Char dreht sich richtung Kamera)
+        yield return new WaitForSeconds(0.2f);               //wenn Recentering nicht aktviert ist dreht die der Char nach dem wechsel sofort richtung 2. Cam die noch nicht die richtig position hat 
+        CinemachinePOV Cam2pov = Cam2.GetCinemachineComponent<CinemachinePOV>();             //sprich die 2. Cam recentert sich schneller als die Char rotation
+        Cam2pov.m_HorizontalRecentering.m_enabled = false;
+        if(Cam2.gameObject.activeSelf == true)
+        {
+            Charrig.enabled = true;                     //wird erst hier gecalled weil die bowintoair animation probleme macht wenn der rig zu früh aktiviert wird
+        }
+    }
+    public void disableaimcam()
+    {
+        Charprefabarrow.SetActive(false);
+        Charrig.enabled = false;
+        mousetarget.SetActive(false);
+        Cam2.gameObject.SetActive(false);
     }
     private void bowoutofcombatfullcharged() => playerbow.arrowfullcharge();
     private void bowoutofcombatnextarrow() => playerbow.nextarrow();
     public void switchtobuttonmashstun(int buttonmashcount)
     {
-        ChangeAnimationStateInstant(dazestate);
-        state = State.Buttonmashstun;
-        dazeimage.SetActive(true);
-        dazeimage.GetComponentInChildren<Text>().text = "Spam " + buttonmashhotkey.GetBindingDisplayString();
-        Statics.resetvaluesondeathorstun = true;
-        Statics.dazecounter = 0;
-        Statics.dazekicksneeded = buttonmashcount;
-        Statics.dash = true;
+        if(playerhp.playerisdead == false)
+        {
+            ChangeAnimationStateInstant(dazestate);
+            state = State.Buttonmashstun;
+            dazeimage.SetActive(true);
+            dazeimage.GetComponentInChildren<Text>().text = "Spam " + buttonmashhotkey.GetBindingDisplayString();
+            Statics.resetvaluesondeathorstun = true;
+            Statics.dazecounter = 0;
+            Statics.dazekicksneeded = buttonmashcount;
+            Statics.dash = true;
+        }
     }
     public void activatedmgtext(GameObject enemyhit, float dmg)
     {

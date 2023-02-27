@@ -13,10 +13,15 @@ public class Displayloot : MonoBehaviour
         {
             if (obj.activeSelf == false)
             {
+                obj.transform.SetAsFirstSibling();
                 obj.SetActive(true);
                 obj.GetComponentInChildren<Text>().text = itemname;
-                break;
+                return;
             }
         }
+        GameObject objifallactiv = lootslots[0].transform.parent.gameObject.GetComponent<Transform>().GetChild(4).gameObject;
+        objifallactiv.transform.SetAsFirstSibling();
+        objifallactiv.GetComponent<Disablelootdisplayslot>().reactivate();
+        objifallactiv.GetComponentInChildren<Text>().text = itemname;
     }
 }

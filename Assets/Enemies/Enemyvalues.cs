@@ -6,10 +6,13 @@ using UnityEngine;
 public class Enemyvalues : ScriptableObject
 {
     public string enemyname;
-    public float maxhealth;
+    public float basehealth;
     public int enemylvl;
     public float movementspeed;
-    public float attackdmg;
+    public float basedmg;
     public float attackspeed;
     public int enemysize;
+    public GameObject gold;
+    public int golddropamount;
+    public int expgain;
 }

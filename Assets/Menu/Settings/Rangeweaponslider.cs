@@ -11,13 +11,14 @@ public class Rangeweaponslider : MonoBehaviour
 
     private void OnEnable()
     {
-        slider.value = Statics.rangeweaponaimsensitivity * 50;
-        slidertext.text = "" + Statics.rangeweaponaimsensitivity * 50;
+        slider.value = PlayerPrefs.GetFloat("rangeweaponaimsensitivity");
+        slidertext.text = PlayerPrefs.GetFloat("rangeweaponaimsensitivity").ToString();
         slider.onValueChanged.AddListener(delegate { valuechange(); });
     }
     private void valuechange()
     {
-        Statics.rangeweaponaimsensitivity = slider.value / 50;
+        float slidervalue = slider.value;
+        PlayerPrefs.SetFloat("rangeweaponaimsensitivity", slidervalue);
         slidertext.text = slider.value.ToString();
     }
 }

@@ -127,15 +127,6 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Lockon"",
-                    ""type"": ""Button"",
-                    ""id"": ""4a01ab40-0f12-4388-8e03-d7d9a2da47ce"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Lockonchange"",
                     ""type"": ""Button"",
                     ""id"": ""0e3bf43a-319b-4d02-9ac4-5ca50ea389ef"",
@@ -399,19 +390,8 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""771d23de-c293-4501-8aae-24dbbc79eef6"",
-                    ""path"": ""<Keyboard>/OEM1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Lockon"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""a07ed982-f1d5-4794-a9f3-12bfb370068a"",
-                    ""path"": ""<Keyboard>/z"",
+                    ""path"": ""<Keyboard>/OEM1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -1111,7 +1091,6 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         m_Player_Charchange = m_Player.FindAction("Charchange", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_AimLook = m_Player.FindAction("AimLook", throwIfNotFound: true);
-        m_Player_Lockon = m_Player.FindAction("Lockon", throwIfNotFound: true);
         m_Player_Lockonchange = m_Player.FindAction("Lockonchange", throwIfNotFound: true);
         m_Player_Heal = m_Player.FindAction("Heal", throwIfNotFound: true);
         m_Player_Ability1 = m_Player.FindAction("Ability1", throwIfNotFound: true);
@@ -1229,7 +1208,6 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Charchange;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_AimLook;
-    private readonly InputAction m_Player_Lockon;
     private readonly InputAction m_Player_Lockonchange;
     private readonly InputAction m_Player_Heal;
     private readonly InputAction m_Player_Ability1;
@@ -1258,7 +1236,6 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         public InputAction @Charchange => m_Wrapper.m_Player_Charchange;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @AimLook => m_Wrapper.m_Player_AimLook;
-        public InputAction @Lockon => m_Wrapper.m_Player_Lockon;
         public InputAction @Lockonchange => m_Wrapper.m_Player_Lockonchange;
         public InputAction @Heal => m_Wrapper.m_Player_Heal;
         public InputAction @Ability1 => m_Wrapper.m_Player_Ability1;
@@ -1314,9 +1291,6 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @AimLook.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAimLook;
                 @AimLook.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAimLook;
                 @AimLook.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAimLook;
-                @Lockon.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockon;
-                @Lockon.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockon;
-                @Lockon.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockon;
                 @Lockonchange.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockonchange;
                 @Lockonchange.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockonchange;
                 @Lockonchange.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockonchange;
@@ -1393,9 +1367,6 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @AimLook.started += instance.OnAimLook;
                 @AimLook.performed += instance.OnAimLook;
                 @AimLook.canceled += instance.OnAimLook;
-                @Lockon.started += instance.OnLockon;
-                @Lockon.performed += instance.OnLockon;
-                @Lockon.canceled += instance.OnLockon;
                 @Lockonchange.started += instance.OnLockonchange;
                 @Lockonchange.performed += instance.OnLockonchange;
                 @Lockonchange.canceled += instance.OnLockonchange;
@@ -1769,7 +1740,6 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         void OnCharchange(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnAimLook(InputAction.CallbackContext context);
-        void OnLockon(InputAction.CallbackContext context);
         void OnLockonchange(InputAction.CallbackContext context);
         void OnHeal(InputAction.CallbackContext context);
         void OnAbility1(InputAction.CallbackContext context);

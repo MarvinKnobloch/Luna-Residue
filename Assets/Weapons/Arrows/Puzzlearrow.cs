@@ -8,7 +8,7 @@ public class Puzzlearrow : MonoBehaviour
     public float timetodestroy;
     [SerializeField] private BoxCollider boxCollider;
     private float disablecollidertime;
-    public Vector3 arrowziel { get; set; }
+    public Vector3 arrowtarget { get; set; }
     public bool hit { get; set; }
     public bool dmgonce;
 
@@ -21,12 +21,12 @@ public class Puzzlearrow : MonoBehaviour
 
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, arrowziel, arrowspeed * Time.deltaTime);
-        if (hit == false && Vector3.Distance(transform.position, arrowziel) < 0.1f)
+        transform.position = Vector3.MoveTowards(transform.position, arrowtarget, arrowspeed * Time.deltaTime);
+        if (hit == false && Vector3.Distance(transform.position, arrowtarget) < 0.1f)
         {
             Destroy(gameObject);
         }
-        if (hit == true && Vector3.Distance(transform.position, arrowziel) < 0.1f)
+        if (hit == true && Vector3.Distance(transform.position, arrowtarget) < 0.1f)
         {
             disablecollidertime += Time.deltaTime;
             if(disablecollidertime >= 0.1f)

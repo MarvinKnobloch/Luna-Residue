@@ -105,15 +105,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Lockon",
-                    "type": "Button",
-                    "id": "4a01ab40-0f12-4388-8e03-d7d9a2da47ce",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Lockonchange",
                     "type": "Button",
                     "id": "0e3bf43a-319b-4d02-9ac4-5ca50ea389ef",
@@ -377,19 +368,8 @@
                 },
                 {
                     "name": "",
-                    "id": "771d23de-c293-4501-8aae-24dbbc79eef6",
-                    "path": "<Keyboard>/OEM1",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Lockon",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "a07ed982-f1d5-4794-a9f3-12bfb370068a",
-                    "path": "<Keyboard>/z",
+                    "path": "<Keyboard>/OEM1",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

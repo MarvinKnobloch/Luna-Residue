@@ -19,7 +19,7 @@ public class Detectinteractionobject : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == LoadCharmanager.Overallmainchar)
+        if (other.gameObject == LoadCharmanager.Overallmainchar && enabled == true)                     //enabled == true, hatte schon das problem das die textbox aufgetaucht ist, obwohl das script deaktviert war
         {
             enableinteractionfield?.Invoke();
             if (Statics.interactionobjects.Contains(this.gameObject) == false)

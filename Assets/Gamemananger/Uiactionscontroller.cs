@@ -20,22 +20,22 @@ public class Uiactionscontroller : MonoBehaviour
     [SerializeField] private GameObject spell5;
     [SerializeField] private GameObject spell6;
 
-    private SpielerSteu Steuerung;
+    private SpielerSteu controlls;
 
     private void Start()
     {
-        Steuerung = Keybindinputmanager.inputActions;
+        controlls = Keybindinputmanager.inputActions;
 
-        dashtext.text = Steuerung.Player.Dash.GetBindingDisplayString();
-        healtext.text = Steuerung.Player.Heal.GetBindingDisplayString();
-        charswitchtext.text = Steuerung.Player.Charchange.GetBindingDisplayString();
-        spezialspelltext.text = Steuerung.Player.Spezial.GetBindingDisplayString();
-        weaponswitchtext.text = Steuerung.Player.Weaponchange.GetBindingDisplayString();
+        dashtext.text = controlls.Player.Dash.GetBindingDisplayString();
+        healtext.text = controlls.Player.Heal.GetBindingDisplayString();
+        charswitchtext.text = controlls.Player.Charchange.GetBindingDisplayString();
+        spezialspelltext.text = controlls.Player.Spezial.GetBindingDisplayString();
+        weaponswitchtext.text = controlls.Player.Weaponchange.GetBindingDisplayString();
 
-        spell1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Steuerung.Player.Ability1.GetBindingDisplayString();
-        spell2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Steuerung.Player.Ability2.GetBindingDisplayString();
-        spell3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Steuerung.Player.Ability3.GetBindingDisplayString();
-        spell4.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = Steuerung.Player.Ability4.GetBindingDisplayString();
+        spell1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = controlls.Player.Ability1.GetBindingDisplayString();
+        spell2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = controlls.Player.Ability2.GetBindingDisplayString();
+        spell3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = controlls.Player.Ability3.GetBindingDisplayString();
+        spell4.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = controlls.Player.Ability4.GetBindingDisplayString();
 
         if (Statics.currentactiveplayer == 0)
         {

@@ -125,7 +125,7 @@ public class Swordattack : MonoBehaviour
         {
             if (controlls.Player.Attack1.WasPressedThisFrame() && basicattackcd > 0.5f && Statics.otheraction == false)
             {
-                movementscript.state = Movescript.State.Groundattack;
+                movementscript.state = Movescript.State.Meleegroundattack;
                 attackestate = Attackstate.attack1;
                 Statics.otheraction = true;
                 movementscript.ChangeAnimationState(groundbasic1state);
@@ -137,7 +137,7 @@ public class Swordattack : MonoBehaviour
         {
             if (controlls.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false && Statics.infight == true)
             {
-                movementscript.state = Movescript.State.Airattack;
+                movementscript.state = Movescript.State.Meleeairattack;
                 attackestate = Attackstate.attack1;
                 movementscript.graviti = 0f;
                 Statics.otheraction = true;
@@ -238,6 +238,7 @@ public class Swordattack : MonoBehaviour
     }
     private void swordgroundbasicend()
     {
+        if (movementscript.state != Movescript.State.Meleegroundattack) return;                   //sonst kommt der call von der animation noch durch obwohl schon die animation gewechselt würde
         if (readattackinput == true) groundattackchainend();
         else
         {
@@ -250,6 +251,7 @@ public class Swordattack : MonoBehaviour
     }
     private void swordgroundbasci2end()
     {
+        if (movementscript.state != Movescript.State.Meleegroundattack) return;
         if (readattackinput == true) groundattackchainend();
         else
         {
@@ -272,6 +274,7 @@ public class Swordattack : MonoBehaviour
     }
     private void swordstaygroundend()
     {
+        if (movementscript.state != Movescript.State.Meleegroundattack) return;
         if (readattackinput == false && movementscript.attackcombochain < 2)
         {
             attackestate = Attackstate.attack1;
@@ -281,13 +284,15 @@ public class Swordattack : MonoBehaviour
     }
     private void swordgrounduproot()
     {
+        if (movementscript.state != Movescript.State.Meleegroundattack) return;
         movementscript.attackonceair = false;
         root = true;
-        movementscript.state = Movescript.State.Airattack;
+        movementscript.state = Movescript.State.Meleeairattack;
         movementscript.graviti = 0f;
     }
     private void swordgroundupend()
     {
+        if (movementscript.state != Movescript.State.Meleeairattack) return;
         root = false;
         if (readattackinput == true) airattackchainend();
         else
@@ -308,6 +313,7 @@ public class Swordattack : MonoBehaviour
     }
     private void swordbasicairend()
     {
+        if (movementscript.state != Movescript.State.Meleeairattack) return;
         if (readattackinput == true) airattackchainend();
         else
         {
@@ -320,6 +326,7 @@ public class Swordattack : MonoBehaviour
     }
     private void swordairbasic2end()
     {
+        if (movementscript.state != Movescript.State.Meleeairattack) return;
         if (readattackinput == true) airattackchainend();
         else
         {
@@ -331,12 +338,14 @@ public class Swordattack : MonoBehaviour
     }
     private void swordairdownroot()
     {
+        if (movementscript.state != Movescript.State.Meleeairattack) return;
         root = true;
         Physics.IgnoreLayerCollision(6, 6);             //player und enemy collision
         Physics.IgnoreLayerCollision(8, 6);
     }
     private void swordairdownend()
     {
+        if (movementscript.state != Movescript.State.Meleeairattack) return;
         Physics.IgnoreLayerCollision(6, 6, false);
         Physics.IgnoreLayerCollision(8, 6, false);
         root = false;
@@ -344,13 +353,14 @@ public class Swordattack : MonoBehaviour
         {
             attackestate = Attackstate.attack1;
             movementscript.graviti = -0.5f;
-            movementscript.state = Movescript.State.Groundattack;
+            movementscript.state = Movescript.State.Meleegroundattack;
             movementscript.ChangeAnimationState(groundbasic1state);
         }
         else groundattackchainend();
     }
     private void swordstayairend()
     {
+        if (movementscript.state != Movescript.State.Meleeairattack) return;
         if (readattackinput == false && movementscript.attackcombochain < 2)
         {
             attackestate = Attackstate.attack1;
@@ -369,7 +379,7 @@ public class Swordattack : MonoBehaviour
         {
             Statics.otheraction = true;
             movementscript.graviti = 0;
-            movementscript.state = Movescript.State.Airattack;
+            movementscript.state = Movescript.State.Meleeairattack;
             movementscript.ChangeAnimationState(swordswitchstate);
         }
         else
@@ -379,6 +389,7 @@ public class Swordattack : MonoBehaviour
     }
     private void swordweaponswitchend()
     {
+        if (movementscript.state != Movescript.State.Meleeairattack) return;
         attackestate = Attackstate.waitforattack;
         movementscript.switchtogroundstate();
         Statics.otheraction = false;

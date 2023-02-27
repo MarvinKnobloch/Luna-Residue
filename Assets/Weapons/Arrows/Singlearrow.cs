@@ -7,7 +7,8 @@ public class Singlearrow : MonoBehaviour
     public float arrowspeed;
     public float timetodestroy;
     private bool dmgonce;
-    public GameObject Arrowtarget;
+    public Vector3 arrowhitpoint;
+    public GameObject arrowtarget;
     private int dmgtype;
 
     private float overalldmg;
@@ -33,10 +34,10 @@ public class Singlearrow : MonoBehaviour
 
     void Update()
     {
-        if (Arrowtarget != null)
+        if (arrowtarget != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Arrowtarget.transform.position + Vector3.up, arrowspeed * Time.deltaTime);
-            if (dmgonce == false && Vector3.Distance(transform.position, Arrowtarget.transform.position + Vector3.up) < 0.1f)
+            transform.position = Vector3.MoveTowards(transform.position, arrowhitpoint, arrowspeed * Time.deltaTime);
+            if (dmgonce == false && Vector3.Distance(transform.position, arrowhitpoint) < 0.1f)
             {
                 Checkhitboxbasic();
                 dmgonce = true;
@@ -45,9 +46,9 @@ public class Singlearrow : MonoBehaviour
     }
     private void Checkhitboxbasic()
     {
-        if (Arrowtarget != null)
+        if (arrowtarget != null)
         {
-            if (Arrowtarget.TryGetComponent(out EnemyHP enemyscript))
+            if (arrowtarget.TryGetComponent(out EnemyHP enemyscript))
             {
                 enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
                 if (enemyscript.enemydebuffcd == true)

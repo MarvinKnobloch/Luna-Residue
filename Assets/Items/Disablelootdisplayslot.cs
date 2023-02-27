@@ -12,4 +12,9 @@ public class Disablelootdisplayslot : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+    public void reactivate()
+    {
+        CancelInvoke();
+        Invoke("toogleoff", 3);
+    }
 }

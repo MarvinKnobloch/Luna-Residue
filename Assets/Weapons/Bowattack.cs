@@ -88,7 +88,7 @@ public class Bowattack : MonoBehaviour
         CancelInvoke();
         playerarrow.SetActive(false);
     }
-    private Attackstate attackestate;
+    [SerializeField] private Attackstate attackestate;
     enum Attackstate
     {
         waitforattack,
@@ -151,7 +151,6 @@ public class Bowattack : MonoBehaviour
                     Statics.otheraction = true;
                     movementscript.ChangeAnimationState(chargestate);
                     movementscript.switchtooutofcombataim();
-
                 }
             }           
         }
@@ -161,7 +160,6 @@ public class Bowattack : MonoBehaviour
             Statics.playeriframes = false;
             resetvalues();
             root = false;
-            movementscript.Charrig.enabled = false;
         }
     }
     private void waitforattackinput()                   //input für attackchainstart
@@ -171,7 +169,7 @@ public class Bowattack : MonoBehaviour
         {
             if (controlls.Player.Attack1.WasPressedThisFrame() && basicattackcd > 0.5f && Statics.otheraction == false)
             {
-                movementscript.state = Movescript.State.Groundattack;
+                movementscript.state = Movescript.State.Rangegroundattack;
                 attackestate = Attackstate.attack1;
                 Statics.otheraction = true;
                 movementscript.ChangeAnimationState(groundbasic1state);
@@ -179,7 +177,7 @@ public class Bowattack : MonoBehaviour
                 movementscript.attackcombochain = 0;
             }
         }
-        else if (movementscript.state == Movescript.State.Air)
+        else if (movementscript.state == Movescript.State.Air || movementscript.state == Movescript.State.Upwards)
         {
             if (controlls.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false)// && Statics.infight == true)
             {
@@ -290,7 +288,7 @@ public class Bowattack : MonoBehaviour
             }
         }
     }
-    private void airattackchaininput()
+    /*private void airattackchaininput()
     {
         if (readattackinput == true && movementscript.attackcombochain < 2)
         {
@@ -301,7 +299,7 @@ public class Bowattack : MonoBehaviour
                 movementscript.ChangeAnimationStateInstant(bowairchargestate);
             }
         }
-    }
+    }*/
     private void shotweaponswitcharrow()
     {
         if (readattackinput == true)
@@ -386,6 +384,7 @@ public class Bowattack : MonoBehaviour
     }
     private void bowgroundbasicend()
     {
+        if (movementscript.state != Movescript.State.Rangegroundattack) return;
         if (readattackinput == true) groundattackchainend();
         else
         {
@@ -398,6 +397,7 @@ public class Bowattack : MonoBehaviour
     }
     private void bowgroundbasci2end()
     {
+        if (movementscript.state != Movescript.State.Rangegroundattack) return;
         if (readattackinput == true) groundattackchainend();
         else
         {
@@ -420,6 +420,7 @@ public class Bowattack : MonoBehaviour
     }
     private void bowstaygroundend()
     {
+        if (movementscript.state != Movescript.State.Rangegroundattack) return;
         if (readattackinput == false && movementscript.attackcombochain < 2)
         {
             attackestate = Attackstate.attack1;
@@ -429,61 +430,65 @@ public class Bowattack : MonoBehaviour
     }
     private void bowgrounduproot()
     {
+        if (movementscript.state != Movescript.State.Rangegroundattack) return;
         bowaircount = 0;
         movementscript.attackonceair = false;
         root = true;
-        movementscript.state = Movescript.State.Empty;
+        movementscript.state = Movescript.State.Attackweaponaim;
         movementscript.graviti = 0f;
     }
     private void bowgroundupend()
     {
+        if (movementscript.state != Movescript.State.Attackweaponaim) return;
         root = false;
         if (readattackinput == true) airattackchainend();
         else
         {
             movementscript.switchtoattackaimstate();
             attackestate = Attackstate.bowairattack;
-            movementscript.ChangeAnimationStateInstant(bowairchargestate);
+            movementscript.ChangeAnimationState(bowairchargestate);
         }
     }
     private void airattackchainend()
     {
         readattackinput = false;
-        movementscript.switchtoairstate();
         attackestate = Attackstate.waitforattack;
         Statics.otheraction = false;
         movementscript.attackcombochain = 0;
         basicattackcd = 0;
         movementscript.disableaimcam();
-        playerarrow.SetActive(false);
+        movementscript.switchtoairstate();
     }
-    private void bowaircharge() => movementscript.ChangeAnimationState(bowairchargestate);
+    private void bowaircharge()
+    {
+        if (movementscript.state != Movescript.State.Attackweaponaim) return;
+        movementscript.ChangeAnimationState(bowairchargestate);
+    }
 
     private void bowairhold()
     {
+        if (movementscript.state != Movescript.State.Attackweaponaim) return;
         readattackinput = true;
         movementscript.ChangeAnimationState(bowairholdstate);
     }
     private void checkforaircombo()
     {
+        if (movementscript.state != Movescript.State.Attackweaponaim) return;
         if (movementscript.attackcombochain < 2) movementscript.ChangeAnimationState(bowairchargestate);
         else airattackchainend();
     }
     private void startbowair3intoground()
     {
+        if (movementscript.state != Movescript.State.Attackweaponaim) return;
         root = true;
         Physics.IgnoreLayerCollision(6, 6);             //player und enemy collision
         Physics.IgnoreLayerCollision(8, 6);
         attackestate = Attackstate.groundattackchain;
-        movementscript.playeraim.aimend();
-        playerarrow.SetActive(false);
-        if (Movescript.lockontarget == null)
-        {
-            movementscript.playerlockon.lookfortarget();
-        }
+        movementscript.disableaimcam();
     }
     private void bowairdownend()
     {
+        if (movementscript.state != Movescript.State.Attackweaponaim) return;
         Physics.IgnoreLayerCollision(6, 6, false);
         Physics.IgnoreLayerCollision(8, 6, false);
         root = false;
@@ -491,7 +496,7 @@ public class Bowattack : MonoBehaviour
         {
             attackestate = Attackstate.attack1;
             movementscript.graviti = -0.5f;
-            movementscript.state = Movescript.State.Groundattack;
+            movementscript.state = Movescript.State.Rangegroundattack;
             movementscript.ChangeAnimationState(groundbasic1state);
         }
         else groundattackchainend();
@@ -519,6 +524,7 @@ public class Bowattack : MonoBehaviour
     }
     private void bowswitchslowmotion()
     {
+        if (movementscript.state != Movescript.State.Bowweaponswitch) return;
         movementscript.switchtoattackaimstate();
         root = false;
         movementscript.ChangeAnimationState(slowmochargeup);
@@ -531,7 +537,6 @@ public class Bowattack : MonoBehaviour
     {
         Statics.otheraction = false;
         movementscript.disableaimcam();
-        playerarrow.SetActive(false);
         Time.timeScale = Statics.normalgamespeed;
         Time.fixedDeltaTime = Statics.normaltimedelta;
         movementscript.switchtoairstate();
@@ -545,6 +550,7 @@ public class Bowattack : MonoBehaviour
     }
     private void slowmofastercharge()
     {
+        if (movementscript.state != Movescript.State.Attackweaponaim) return;
         movementscript.ChangeAnimationState(slowmofastcharge);
     }
     private void hookshotstart()
@@ -561,10 +567,10 @@ public class Bowattack : MonoBehaviour
         {
             Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
             GameObject Arrow = Instantiate(singlearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Arrow.GetComponent<Singlearrow>().Arrowtarget = Movescript.lockontarget.gameObject;
-            Arrow.GetComponent<Singlearrow>().setarrowvalues(dmg, type);
-            //Singlegroundarrow arrowcontroller = Arrow.GetComponent<Singlegroundarrow>();
-            //arrowcontroller.Arrowtarget = null; // Movescript.lockontarget.gameObject;
+            Singlearrow arrowcontroller = Arrow.GetComponent<Singlearrow>();
+            arrowcontroller.arrowhitpoint = Movescript.lockontarget.gameObject.transform.position;
+            arrowcontroller.arrowtarget = Movescript.lockontarget.gameObject;
+            arrowcontroller.setarrowvalues(dmg, type);
             arrowfalse();
         }
     }
@@ -580,8 +586,9 @@ public class Bowattack : MonoBehaviour
         {
             Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
             GameObject Arrow = Instantiate(aoearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Arrow.GetComponent<Aoearrow>().Arrowtarget = Movescript.lockontarget.gameObject;
-            Arrow.GetComponent<Aoearrow>().setarrowvalues(dmg, radius, type);
+            Aoearrow arrowcontroller = Arrow.GetComponent<Aoearrow>();
+            arrowcontroller.arrowtarget = Movescript.lockontarget.gameObject.transform.position;
+            arrowcontroller.setarrowvalues(dmg, radius, type);
             arrowfalse();
         }
     }
@@ -593,12 +600,10 @@ public class Bowattack : MonoBehaviour
         {
             Vector3 arrowrotation = (hit.point - Arrowlaunchposi.position).normalized;
             GameObject Arrow = Instantiate(singlearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Arrow.GetComponent<Singlearrow>().Arrowtarget = hit.transform.gameObject;
-            Arrow.GetComponent<Singlearrow>().setarrowvalues(dmg, type);
-            //SingleAirarrow arrowcontroller = Arrow.GetComponent<SingleAirarrow>();
-            //arrowcontroller.arrowziel = hit.point;
-            //arrowcontroller.Arrowtarget = hit.transform;
-            //arrowcontroller.hit = true;
+            Singlearrow arrowcontroller = Arrow.GetComponent<Singlearrow>();
+            arrowcontroller.arrowhitpoint = hit.point;
+            arrowcontroller.arrowtarget = hit.transform.gameObject;
+            arrowcontroller.setarrowvalues(dmg, type);
         }
         else
         {
@@ -615,8 +620,9 @@ public class Bowattack : MonoBehaviour
         {
             Vector3 arrowrotation = (hit.point - Arrowlaunchposi.position).normalized;
             GameObject Arrow = Instantiate(aoearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
-            Arrow.GetComponent<Aoearrow>().Arrowtarget = hit.transform.gameObject;
-            Arrow.GetComponent<Aoearrow>().setarrowvalues(dmg,radius, type);
+            Aoearrow arrowcontroller = Arrow.GetComponent<Aoearrow>();
+            arrowcontroller.arrowtarget = hit.point;
+            arrowcontroller.setarrowvalues(dmg,radius, type);
         }
         else
         {
@@ -633,7 +639,7 @@ public class Bowattack : MonoBehaviour
             Vector3 arrowrotation = (hit.point - Arrowlaunchposi.position).normalized;
             GameObject Arrow = GameObject.Instantiate(puzzlearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
             Puzzlearrow arrowcontroller = Arrow.GetComponent<Puzzlearrow>();
-            arrowcontroller.arrowziel = hit.point;
+            arrowcontroller.arrowtarget = hit.point;
             arrowcontroller.hit = true;
         }
     }

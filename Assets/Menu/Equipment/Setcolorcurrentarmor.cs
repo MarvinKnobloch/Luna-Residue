@@ -36,7 +36,7 @@ public class Setcolorcurrentarmor : MonoBehaviour, ISelectHandler
                 }
                 else if (Statics.currentequipmentbutton == 5)
                 {
-                    setcolor(Statics.charcurrentgloves[Statics.currentequipmentchar], obj);
+                    setcolor(Statics.charcurrentbelt[Statics.currentequipmentchar], obj);
                 }
                 else if (Statics.currentequipmentbutton == 6)
                 {

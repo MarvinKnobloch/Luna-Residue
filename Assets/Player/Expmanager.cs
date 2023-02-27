@@ -5,12 +5,7 @@ using UnityEngine.UI;
 
 public class Expmanager : MonoBehaviour
 {
-    public int charlvl;
-    public float currentexp;
-    public float requiredexp;
-
-    private SpielerSteu Steuerung;
-    [SerializeField] private Attributecontroller[] attributecontroller;
+    private SpielerSteu controlls;
     private HealthUImanager healthUImanager;
 
     public Image[] expbar;
@@ -25,62 +20,57 @@ public class Expmanager : MonoBehaviour
 
     void Awake()
     {
-        Steuerung = new SpielerSteu();
+        controlls = new SpielerSteu();
         healthUImanager = GetComponent<HealthUImanager>();
-        charlvl = Statics.charcurrentlvl;
-        currentexp = Statics.charcurrentexp;
-        requiredexp = Statics.charrequiredexp;
     }
     private void OnEnable()
     {
-        Steuerung.Enable();
-        //requiredexp = calculaterequiredexp();
+        controlls.Enable();
         updateexpbar();
     }
 
+#if UNITY_EDITOR
     void Update()
     {
-        if (Steuerung.Player.GButton.WasPerformedThisFrame())
+        if (controlls.Player.GButton.WasPerformedThisFrame())
         {
             gainexp(200);
         }
     }
-    public void updateexpbar()
+#endif
+    public void gainexp(float expgained)
     {
-        float levelprozent = currentexp / requiredexp;
-        foreach(Image bar in expbar)
-        {
-            float currentexpbar = bar.fillAmount;
-            if (currentexpbar < levelprozent)
-            {
-                bar.fillAmount = levelprozent;
-            }
-            if (currentexpbar > levelprozent)
-            {
-                bar.fillAmount = levelprozent;
-            }
-        }
-        if (currentexp >= requiredexp)
+        Statics.charcurrentexp += expgained;
+        updateexpbar();
+    }
+    private void updateexpbar()
+    {
+        if (Statics.charcurrentexp >= Statics.charrequiredexp)
         {
             levelup();
+            updateexpbar();
         }
         else
         {
-            Statics.charcurrentlvl = charlvl;
-            Statics.charcurrentexp = currentexp;
-            Statics.charrequiredexp = requiredexp;
+            float levelprozent = Statics.charcurrentexp / Statics.charrequiredexp;
+            foreach (Image bar in expbar)
+            {
+                float currentexpbar = bar.fillAmount;
+                if (currentexpbar < levelprozent)
+                {
+                    bar.fillAmount = levelprozent;
+                }
+                if (currentexpbar > levelprozent)
+                {
+                    bar.fillAmount = levelprozent;
+                }
+            }
         }
-
     }
-    public void gainexp(float expgained)
+    private void levelup()
     {
-        currentexp += expgained;
-        updateexpbar();
-    }
-    public void levelup()
-    {
-        charlvl++;
-        if(Statics.currentactiveplayer == 0)
+        Statics.charcurrentlvl++;
+        if (Statics.currentactiveplayer == 0)
         {
             checkforguard(Statics.currentfirstchar, 0);
             checkforguard(Statics.currentsecondchar, 1);
@@ -97,9 +87,8 @@ public class Expmanager : MonoBehaviour
         {
             bar.fillAmount = 0f;
         }
-        currentexp = Mathf.RoundToInt(currentexp - requiredexp);
-        requiredexp = calculaterequiredexp();
-        updateexpbar();
+        Statics.charcurrentexp = Mathf.RoundToInt(Statics.charcurrentexp - Statics.charrequiredexp);
+        Statics.charrequiredexp = calculaterequiredexp();
     }
     private void checkforguard(int charnumber, int charposi)
     {
@@ -115,7 +104,7 @@ public class Expmanager : MonoBehaviour
     private int calculaterequiredexp()                                       // formel ist aus einem Video
     {
         int expperlevel = 0;
-        for (int levelcycle = 1; levelcycle <= charlvl; levelcycle++)
+        for (int levelcycle = 1; levelcycle <= Statics.charcurrentlvl; levelcycle++)
         {
             expperlevel += (int)Mathf.Floor(levelcycle + flatexpnumber * Mathf.Pow(expmultiplier, levelcycle / expdivision));
         }

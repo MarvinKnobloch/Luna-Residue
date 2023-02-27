@@ -101,7 +101,7 @@ public class Equipcharselection : MonoBehaviour
         slotbuttontext[2].text = Statics.charcurrentfist[currentchar].itemname;
         slotbuttontext[3].text = Statics.charcurrenthead[currentchar].itemname;
         slotbuttontext[4].text = Statics.charcurrentchest[currentchar].itemname;
-        slotbuttontext[5].text = Statics.charcurrentgloves[currentchar].itemname;
+        slotbuttontext[5].text = Statics.charcurrentbelt[currentchar].itemname;
         slotbuttontext[6].text = Statics.charcurrentlegs[currentchar].itemname;
         slotbuttontext[7].text = Statics.charcurrentshoes[currentchar].itemname;
         slotbuttontext[8].text = Statics.charcurrentneckless[currentchar].itemname;
