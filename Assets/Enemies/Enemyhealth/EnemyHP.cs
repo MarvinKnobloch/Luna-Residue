@@ -40,7 +40,6 @@ public class EnemyHP : MonoBehaviour
     [NonSerialized] public bool dmgonce;                           // da ich zwei collider hab und dadurch 2mal dmg gemacht wird, wird es momentan mit einem bool gecheckt ( hab noch keine besser lösung gefunden
 
     private int golddropamount;
-    [SerializeField] private Enemydrops[] itemdroplist;
 
     [SerializeField] private int[] playerhits = { 0, 0, 0 };
     private int mosthits;
@@ -357,7 +356,7 @@ public class EnemyHP : MonoBehaviour
         GameObject enemygolddrop = Instantiate(enemyvalues.gold, transform.position + Vector3.up, transform.rotation);
         enemygolddrop.GetComponent<Golditemcontroller>().golddropamount = golddropamount * enemylvl;
 
-        foreach (Enemydrops obj in itemdroplist)
+        foreach (Enemydrops obj in enemyvalues.enemydrops)
         {
             int randomnumber = UnityEngine.Random.Range(0, 100);
             if (randomnumber <= obj.itemdropchance)
@@ -366,10 +365,4 @@ public class EnemyHP : MonoBehaviour
             }
         }
     }
-}
-[Serializable]
-public class Enemydrops
-{
-    [SerializeField] public GameObject itemtodrop;
-    [SerializeField] public int itemdropchance;
 }

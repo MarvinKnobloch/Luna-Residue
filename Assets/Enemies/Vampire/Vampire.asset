@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: Vampire
   m_EditorClassIdentifier: 
   enemyname: Vampire
-  maxhealth: 1000
-  enemylvl: 10
+  basehealth: 336
+  enemylvl: 1
   movementspeed: 8
-  attackdmg: 12
+  basedmg: 10
   attackspeed: 1.9
   enemysize: 2
+  gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}
+  golddropamount: 2
+  expgain: 12
+  enemydrops:
+  - itemtodrop: {fileID: 6737092273977564704, guid: 38fd54220fd463146aafc06fa5fcd2f7, type: 3}
+    itemdropchance: 5

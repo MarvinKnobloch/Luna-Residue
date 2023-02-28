@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Werewolf
   m_EditorClassIdentifier: 
   enemyname: Werewolf
-  basehealth: 60
+  basehealth: 314
   enemylvl: 1
   movementspeed: 8
   basedmg: 9
@@ -22,3 +22,6 @@ MonoBehaviour:
   gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}
   golddropamount: 4
   expgain: 10
+  enemydrops:
+  - itemtodrop: {fileID: 146544890995016924, guid: 6bf1d78623f09fc4dbe0a0f9a9260a59, type: 3}
+    itemdropchance: 10

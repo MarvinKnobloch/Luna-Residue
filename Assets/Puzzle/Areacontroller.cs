@@ -23,7 +23,6 @@ public class Areacontroller : MonoBehaviour
         areaobjectcontroller = GetComponent<Areaobjectcontroller>();
         if (Statics.currentgameslot != -1)                             // -1 = new game damit nichts geladen wird
         {
-            Debug.Log("loadarea");
             loadmonobehaviour(Statics.currentgameslot, areaname, this);
         }
         for (int i = 0; i <  areaobjectcontroller.enemychests.Length; i++)

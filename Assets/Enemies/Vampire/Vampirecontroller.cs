@@ -4,40 +4,54 @@ using UnityEngine;
 
 public class Vampirecontroller : MonoBehaviour
 {
-    [SerializeField] private GameObject spherespawn1;
-    [SerializeField] private GameObject spherespawn2;
+    [SerializeField] private GameObject vampirecircleobj;
     [SerializeField] private GameObject spezialendspawn;
+    [SerializeField] private Vampirecircle vampirecircle;
+    [SerializeField] private Vampirecube vampirecube;
+    [SerializeField] private LayerMask raycastlayer;
 
-    [SerializeField] private float spheredmg;
-    [SerializeField] private float spheredodgetime;
+    [SerializeField] private float circledmg;
+    [SerializeField] private float circledodgetime;
     [SerializeField] private float cubedmg;
     [SerializeField] private float cubedodgetime;
     private void Awake()
     {
-        spherespawn1.GetComponent<Vampiresphere>().basedmg = spheredmg;
-        spherespawn1.GetComponent<Vampiresphere>().explodetime = spheredodgetime;
-        spherespawn2.GetComponent<Vampiresphere>().basedmg = spheredmg;
-        spherespawn2.GetComponent<Vampiresphere>().explodetime = spheredodgetime;
-        spezialendspawn.GetComponent<Vampirecube>().basedmg = cubedmg;
-        spezialendspawn.GetComponent<Vampirecube>().explodetime = cubedodgetime;
+        vampirecircle.basedmg = circledmg;
+        vampirecircle.explodetime = circledodgetime;
+        vampirecube.basedmg = cubedmg;
+        vampirecube.explodetime = cubedodgetime;
     }
     private void OnEnable()
     {
-        spherespawn1.transform.position = LoadCharmanager.Overallmainchar.transform.position;
-        spherespawn1.SetActive(true);
+        if(Physics.Raycast(LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 0.5f, Vector3.down, out RaycastHit hit, 30, raycastlayer, QueryTriggerInteraction.Ignore))
+        {
+            vampirecircleobj.transform.position = hit.point;
+        }
+        else vampirecircleobj.transform.position = LoadCharmanager.Overallmainchar.transform.position;
+        vampirecircleobj.SetActive(true);
+        vampirecircle.overlapspherepoint = vampirecircleobj.transform.position;
         Invoke("spezialpart2", 1f);
-
     }
     private void spezialpart2()
     {
-        spherespawn2.transform.position = LoadCharmanager.Overallmainchar.transform.position;
-        spherespawn2.SetActive(true);
+        if (Physics.Raycast(LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 0.5f, Vector3.down, out RaycastHit hit, 30, raycastlayer, QueryTriggerInteraction.Ignore))
+        {
+            vampirecircleobj.transform.position = hit.point;
+        }
+        else vampirecircleobj.transform.position = LoadCharmanager.Overallmainchar.transform.position;
+        vampirecircleobj.SetActive(true);
+        vampirecircle.overlapspherepoint = vampirecircleobj.transform.position;
         Invoke("spezialpart3", 1f);
     }
     private void spezialpart3()
     {
-        spezialendspawn.transform.position = LoadCharmanager.Overallmainchar.transform.position;
-        spezialendspawn.transform.rotation = LoadCharmanager.Overallmainchar.transform.rotation;
+        if (Physics.Raycast(LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 0.5f, Vector3.down, out RaycastHit hit, 30, raycastlayer, QueryTriggerInteraction.Ignore))
+        {
+            spezialendspawn.transform.position = hit.point + Vector3.up * 0.3f;
+        }
+        else spezialendspawn.transform.position = LoadCharmanager.Overallmainchar.transform.position;
+        //spezialendspawn.transform.rotation = LoadCharmanager.Overallmainchar.transform.rotation;
         spezialendspawn.SetActive(true);
+        vampirecube.overlapboxpoint = spezialendspawn.transform.position;
     }
 }

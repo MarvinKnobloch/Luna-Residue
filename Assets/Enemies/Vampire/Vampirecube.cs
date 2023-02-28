@@ -9,30 +9,36 @@ public class Vampirecube : MonoBehaviour
     [SerializeField] private LayerMask Aoetargets;
     [NonSerialized] public float basedmg;
     [NonSerialized] public float explodetime;
+    [NonSerialized] public Vector3 overlapboxpoint;
     private void OnEnable()
     {
         Invoke("dealdmg", explodetime);
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawCube(transform.position, new Vector3(15f, 0.8f, 15f));
-    //}
+    /*private void OnDrawGizmos()
+    {
+        Gizmos.DrawCube(transform.position, new Vector3(10f, 0.8f, 10f));
+    }*/
     private void dealdmg()
     {
-        Collider[] colliders = Physics.OverlapBox(transform.position, new Vector3(16f, 0.8f, 16f), Quaternion.identity, Aoetargets);
+        Collider[] colliders = Physics.OverlapBox(overlapboxpoint, new Vector3(8f, 0.4f, 8f), Quaternion.identity, Aoetargets, QueryTriggerInteraction.Ignore);
         foreach (Collider target in colliders)
-            if (target.GetComponent<Playerhp>())
+        {
+            if (target.TryGetComponent(out Playerhp playerhp))
             {
-                if (target.GetComponent<Supportmovement>())
+                if (Statics.infight == true)
                 {
-                    target.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg / 3));
-                }
-                else
-                {
-                    target.GetComponent<Playerhp>().TakeDamage(basedmg);
+                    if (target.GetComponent<Supportmovement>())
+                    {
+                        playerhp.TakeDamage(Mathf.Round(basedmg / 3));
+                    }
+                    else
+                    {
+                        playerhp.TakeDamage(basedmg);
+                    }
                 }
             }
+        }
         vampirecontroller.SetActive(false);
         gameObject.SetActive(false);
     }
