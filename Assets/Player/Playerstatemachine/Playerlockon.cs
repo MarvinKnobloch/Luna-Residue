@@ -55,11 +55,7 @@ public class Playerlockon
                 float distancefromtarget = Vector3.Distance(psm.transform.position, Infightcontroller.infightenemylists[i].transform.position);
                 if (distancefromtarget < shortestDistance)
                 {
-                    if (psm.targetbeforeswap == Infightcontroller.infightenemylists[i])
-                    {
-                        continue;
-                    }
-                    else
+                    if (psm.targetbeforeswap.gameObject != Infightcontroller.infightenemylists[i])
                     {
                         Movescript.lockontarget = Infightcontroller.infightenemylists[i].gameObject.transform;
                         shortestDistance = distancefromtarget;

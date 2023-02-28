@@ -10,7 +10,7 @@ public class Tutorialcontroller : MonoBehaviour
     public TextMeshProUGUI tutorialtext;
     public CinemachineFreeLook Cam1;
     public CinemachineVirtualCamera Cam2;
-    public Firstarea firstarea;
+    public Areacontroller areacontroller;
 
     public void onenter()
     {

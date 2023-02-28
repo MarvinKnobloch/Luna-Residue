@@ -13,11 +13,13 @@ public class Movebridge : MonoBehaviour
     public float movebridgetimer;
     public Vector3 startposi;
     public Vector3 endposi;
-    [SerializeField] private Firstarea firstarea;
+    [SerializeField] private Areacontroller areacontroller;
+    private int puzzlenumber;
 
     private void Start()
     {
-        if(firstarea.boxpuzzlecomplete == true)
+        puzzlenumber = GetComponent<Areanumber>().areanumber;
+        if (areacontroller.puzzlecomplete[puzzlenumber] == true)
         {
             transform.position = endposi;
         }
@@ -44,10 +46,10 @@ public class Movebridge : MonoBehaviour
         }
         if(needcubes == cubesfinished)
         {
-            if(firstarea.boxpuzzlecomplete == false)
+            if(areacontroller.puzzlecomplete[puzzlenumber] == false)
             {
                 StartCoroutine("movebridge");
-                firstarea.boxpuzzlecomplete = true;
+                areacontroller.puzzlecomplete[puzzlenumber] = true;
             }
         }
     }

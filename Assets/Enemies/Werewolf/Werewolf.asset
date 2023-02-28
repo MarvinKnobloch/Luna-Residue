@@ -21,4 +21,4 @@ MonoBehaviour:
   enemysize: 2
   gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}
   golddropamount: 4
-  expgain: 13
+  expgain: 10

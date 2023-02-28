@@ -8,12 +8,14 @@ public class Attacktutorial : MonoBehaviour
 {
     private SpielerSteu controlls;
 
-    private Firstarea firstarea;
     private Tutorialcontroller tutorialcontroller;
+    private Areacontroller areacontroller;
     private int textindex;
     private string attack1action;
     private string attack2action;
     private string attack3action;
+
+    private int tutorialnumber;
 
     private bool readinputs;
     private void Start()
@@ -21,8 +23,9 @@ public class Attacktutorial : MonoBehaviour
         tutorialcontroller = GetComponentInParent<Tutorialcontroller>();
         controlls = Keybindinputmanager.inputActions;
         readinputs = false;
-        firstarea = tutorialcontroller.firstarea;
-        if (firstarea.attacktutorialcomplete == true)
+        areacontroller = tutorialcontroller.areacontroller;
+        tutorialnumber = GetComponent<Areanumber>().areanumber;
+        if (areacontroller.tutorialcomplete[tutorialnumber] == true)
         {
             gameObject.SetActive(false);
         }
@@ -45,7 +48,7 @@ public class Attacktutorial : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == LoadCharmanager.Overallmainchar && firstarea.attacktutorialcomplete == false)
+        if(other.gameObject == LoadCharmanager.Overallmainchar && areacontroller.tutorialcomplete[tutorialnumber] == false)
         {
             attack1action = controlls.Player.Attack1.GetBindingDisplayString();
             attack2action = controlls.Player.Attack2.GetBindingDisplayString();
@@ -69,8 +72,8 @@ public class Attacktutorial : MonoBehaviour
     {
         readinputs = false;
         tutorialcontroller.endtutorial();
-        firstarea.attacktutorialcomplete = true;
-        firstarea.autosave();
+        areacontroller.tutorialcomplete[tutorialnumber] = true;
+        areacontroller.autosave();
         gameObject.SetActive(false);
     }
 }

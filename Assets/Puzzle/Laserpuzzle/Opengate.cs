@@ -10,7 +10,9 @@ public class Opengate : MonoBehaviour
     [SerializeField] GameObject disablegreenlaser;
     [SerializeField] GameObject disableredlaser;
     [SerializeField] GameObject disablebluelaser;
-    [SerializeField] private Firstarea firstarea;
+
+    [SerializeField] private Areacontroller areacontroller;
+    private int puzzlenumber;
 
     public Vector3 gateisclosedposi;
     public Vector3 gateisopen;
@@ -21,8 +23,9 @@ public class Opengate : MonoBehaviour
 
     private void Start()
     {
+        puzzlenumber = GetComponent<Areanumber>().areanumber;
         controlls = Keybindinputmanager.inputActions;
-        if (firstarea.laserpuzzlecomplete == true)
+        if (areacontroller.puzzlecomplete[puzzlenumber] == true)
         {
             transform.position = gateisopen;
         }
@@ -31,10 +34,10 @@ public class Opengate : MonoBehaviour
     {
         if (controlls.Player.Dash.WasPerformedThisFrame())
         {
-            if (firstarea.laserpuzzlecomplete == false)
+            if (areacontroller.puzzlecomplete[puzzlenumber] == false)
             {
                 StartCoroutine("openthegate");
-                firstarea.laserpuzzlecomplete = true;
+                areacontroller.puzzlecomplete[puzzlenumber] = true;
             }
         }
     }
@@ -50,10 +53,10 @@ public class Opengate : MonoBehaviour
     {
         if (Greenend.GetComponent<Lasersuccsess>().laserdoeshit == true && Redend.GetComponent<Lasersuccsess>().laserdoeshit == true && Blueend.GetComponent<Lasersuccsess>().laserdoeshit == true)
         {
-            if(firstarea.laserpuzzlecomplete == false)
+            if(areacontroller.puzzlecomplete[puzzlenumber] == false)
             {
                 StartCoroutine("openthegate");
-                firstarea.laserpuzzlecomplete = true;
+                areacontroller.puzzlecomplete[puzzlenumber] = true;
             }
         }                
     }

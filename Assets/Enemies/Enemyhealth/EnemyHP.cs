@@ -354,7 +354,7 @@ public class EnemyHP : MonoBehaviour
         if (enemyvalues.golddropamount <= 2) golddropamount = 3;
         else golddropamount = enemyvalues.golddropamount;
         golddropamount = UnityEngine.Random.Range(golddropamount - 2, golddropamount + 2);
-        GameObject enemygolddrop = Instantiate(enemyvalues.gold, transform.position, transform.rotation);
+        GameObject enemygolddrop = Instantiate(enemyvalues.gold, transform.position + Vector3.up, transform.rotation);
         enemygolddrop.GetComponent<Golditemcontroller>().golddropamount = golddropamount * enemylvl;
 
         foreach (Enemydrops obj in itemdroplist)
@@ -362,7 +362,7 @@ public class EnemyHP : MonoBehaviour
             int randomnumber = UnityEngine.Random.Range(0, 100);
             if (randomnumber <= obj.itemdropchance)
             {
-                Instantiate(obj.itemtodrop, transform.position, transform.rotation);
+                Instantiate(obj.itemtodrop, transform.position + Vector3.up, transform.rotation);
             }
         }
     }

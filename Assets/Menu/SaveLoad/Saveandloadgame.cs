@@ -22,7 +22,7 @@ public class Saveandloadgame : MonoBehaviour
         savestatics(slot);
         if (areacontroller != null)
         {
-            savemonobehaviour(slot, "/" + areacontroller.areaname, areacontroller.areatosave);
+            savemonobehaviour(slot, "/" + areacontroller.areaname, areacontroller);
         }
     }
     private void savestatics(int slot)
