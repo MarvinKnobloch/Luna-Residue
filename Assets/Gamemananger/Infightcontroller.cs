@@ -112,7 +112,7 @@ public class Infightcontroller : MonoBehaviour
             yield return new WaitForSeconds(Statics.currentenemyspecialcd);
             if(LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == false)
             {
-                int enemyonlist = UnityEngine.Random.Range(1, infightenemylists.Count);          //enemycount + 1????
+                int enemyonlist = UnityEngine.Random.Range(1, infightenemylists.Count + 1);          //+ 1 weil random.range bei 1-2 immer nur 1 ausgibt
                 Debug.Log(infightenemylists.Count);
                 Debug.Log(enemyonlist + "enemyspezialcount");
                 if (infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>())

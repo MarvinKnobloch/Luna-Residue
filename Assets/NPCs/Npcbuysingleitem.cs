@@ -12,6 +12,7 @@ public class Npcbuysingleitem : MonoBehaviour
     [SerializeField] private GameObject buysingleitemwindow;
     [SerializeField] private TextMeshProUGUI itemtobuytext;
     [SerializeField] private TextMeshProUGUI itemcosttext;
+    [SerializeField] private TextMeshProUGUI goldamount;
     [SerializeField] private TextMeshProUGUI interaction;
     [SerializeField] private Image buybar;
 
@@ -60,13 +61,13 @@ public class Npcbuysingleitem : MonoBehaviour
                 canbuyitem = true;
             }
         }
-        interaction.text = string.Empty;
+        goldamount.text = "Gold: " + matsinventory.Container.Items[gold.inventoryslot - 1].amount.ToString();
         interaction.text = "Hold " + controlls.Equipmentmenu.Upgradeitem.GetBindingDisplayString() + " to buy item";
         buybar.gameObject.SetActive(false);
     }
     private void Update()
     {
-        if (controlls.Menusteuerung.Menuesc.WasPerformedThisFrame() || controlls.Menusteuerung.Leftclick.WasPerformedThisFrame())
+        if (controlls.Menusteuerung.Menuesc.WasPerformedThisFrame()) //|| controlls.Menusteuerung.Leftclick.WasPerformedThisFrame())
         {
             buysingleitemwindow.SetActive(false);
 
@@ -121,10 +122,17 @@ public class Npcbuysingleitem : MonoBehaviour
         areacontroller.npcdialoguestate[dialoguenumber]++;
         areacontroller.autosave();
         buysingleitemwindow.SetActive(false);
-        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtoairstate();
-        LoadCharmanager.disableattackbuttons = false;
-        LoadCharmanager.interaction = false;
         GetComponent<Npcupdatedialogue>().enabled = true;
+        if(TryGetComponent(out Npcafterinteraction npcafterinteraction))
+        {
+            npcafterinteraction.enabled = true;
+        }
+        else
+        {
+            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtoairstate();
+            LoadCharmanager.disableattackbuttons = false;
+            LoadCharmanager.interaction = false;
+        }
         enabled = false;
     }
 }

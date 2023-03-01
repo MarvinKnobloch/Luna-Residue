@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: Goblin
   m_EditorClassIdentifier: 
   enemyname: Goblin
-  maxhealth: 1000
-  enemylvl: 14
+  basehealth: 320
+  enemylvl: 1
   movementspeed: 8
-  attackdmg: 13
+  basedmg: 11
   attackspeed: 2
   enemysize: 0
+  gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}
+  golddropamount: 6
+  expgain: 8
+  enemydrops:
+  - itemtodrop: {fileID: 146544890995016924, guid: 99ff7de82307c3f41af2a115e306f653, type: 3}
+    itemdropchance: 10

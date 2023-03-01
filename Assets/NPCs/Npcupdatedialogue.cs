@@ -9,14 +9,13 @@ public class Npcupdatedialogue : MonoBehaviour
     [NonSerialized] public int dialoguenumber;
 
     private Npcdialogue npcdialogue;
-    [SerializeField] private int newnpcdialogueamount;
+    private int newnpcdialogueamount;
     [TextArea][SerializeField] private string[] newdialogue;
-    [SerializeField] private bool secondinteraction;
-    [SerializeField] private string secondinteractiontext;
     private void Awake()
     {
         npcdialogue = GetComponent<Npcdialogue>();
         dialoguenumber = GetComponent<Areanumber>().areanumber;
+        newnpcdialogueamount = newdialogue.Length;
     }
     private void OnEnable()
     {
@@ -32,8 +31,8 @@ public class Npcupdatedialogue : MonoBehaviour
             {
                 npcdialogue.dialogue[i] = newdialogue[i];
             }
-            npcdialogue.interaction = secondinteraction;
-            npcdialogue.interactiontext = secondinteractiontext;
+            npcdialogue.interaction = false;
+            npcdialogue.interactiontext = string.Empty;
         }
         enabled = false;
     }

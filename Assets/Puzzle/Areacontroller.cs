@@ -10,45 +10,53 @@ public class Areacontroller : MonoBehaviour
 
     [SerializeField] public string areaname;
 
-    public bool[] tutorialcomplete;
+    [NonSerialized] public bool[] tutorialcomplete;
 
-    public bool[] enemychestcanopen;           //muss anzahl der chest sein
-    public bool[] enemychestisopen;
+    [NonSerialized] public bool[] enemychestcanopen;           //muss anzahl der chest sein
+    [NonSerialized] public bool[] enemychestisopen;
 
-    public bool[] questcomplete;
+    [NonSerialized] public bool[] questcomplete;
 
-    public bool[] puzzlecomplete;
-    public bool[] gotpuzzlereward;
+    [NonSerialized] public bool[] puzzlecomplete;
+    [NonSerialized] public bool[] gotpuzzlereward;
 
-    public int[] npcdialoguestate;
+    [NonSerialized] public int[] npcdialoguestate;
 
     private void Awake()
     {
         areaobjectcontroller = GetComponent<Areaobjectcontroller>();
+        tutorialcomplete = new bool[areaobjectcontroller.settutorialnumber.Length];
+        enemychestcanopen = new bool[areaobjectcontroller.setenemychests.Length];
+        enemychestisopen = new bool[areaobjectcontroller.setenemychests.Length];
+        questcomplete = new bool[areaobjectcontroller.setquestnumber.Length];
+        puzzlecomplete = new bool[areaobjectcontroller.setpuzzlenumber.Length];
+        gotpuzzlereward = new bool[areaobjectcontroller.setpuzzlenumber.Length];
+        npcdialoguestate = new int[areaobjectcontroller.setdialoguenumber.Length];
+
         Statics.currentgameslot = -1;
         if (Statics.currentgameslot != -1)                             // -1 = new game damit nichts geladen wird
         {
             loadmonobehaviour(Statics.currentgameslot, areaname, this);
         }
-        for (int i = 0; i <  areaobjectcontroller.enemychests.Length; i++)
+        for (int i = 0; i <  areaobjectcontroller.setenemychests.Length; i++)
         {
-            areaobjectcontroller.enemychests[i].GetComponent<Chestreward>().areachestnumber = i;
+            areaobjectcontroller.setenemychests[i].GetComponent<Chestreward>().areachestnumber = i;
         }
         for (int i = 0; i < areaobjectcontroller.settutorialnumber.Length; i++)
         {
             areaobjectcontroller.settutorialnumber[i].areanumber = i;
         }
-        for (int i = 0; i < areaobjectcontroller.questnumber.Length; i++)
+        for (int i = 0; i < areaobjectcontroller.setquestnumber.Length; i++)
         {
-            areaobjectcontroller.questnumber[i].areanumber = i;
+            areaobjectcontroller.setquestnumber[i].areanumber = i;
         }
         for (int i = 0; i < areaobjectcontroller.setpuzzlenumber.Length; i++)
         {
             areaobjectcontroller.setpuzzlenumber[i].areanumber = i;
         }
-        for (int i = 0; i < areaobjectcontroller.dialoguenumber.Length; i++)
+        for (int i = 0; i < areaobjectcontroller.setdialoguenumber.Length; i++)
         {
-            areaobjectcontroller.dialoguenumber[i].areanumber = i;
+            areaobjectcontroller.setdialoguenumber[i].areanumber = i;
         }
     }
     private void loadmonobehaviour(int slot, string filename, MonoBehaviour monobehaviour)            //bei gameload werden hier die fortschritte geladen

@@ -5,8 +5,8 @@ using UnityEngine;
 public class Areaobjectcontroller : MonoBehaviour
 {
     public Areanumber[] settutorialnumber;
-    public GameObject[] enemychests;
-    public Areanumber[] questnumber;
+    public GameObject[] setenemychests;
+    public Areanumber[] setquestnumber;
     public Areanumber[] setpuzzlenumber;
-    public Areanumber[] dialoguenumber;
+    public Areanumber[] setdialoguenumber;
 }
