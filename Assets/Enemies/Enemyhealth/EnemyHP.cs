@@ -36,7 +36,7 @@ public class EnemyHP : MonoBehaviour
     [SerializeField] private Image enemyfocusdebuffbar;
 
     //public static bool enemygethit;
-    private bool enemyisdead;
+    [NonSerialized] public bool enemyisdead;
     [NonSerialized] public bool dmgonce;                           // da ich zwei collider hab und dadurch 2mal dmg gemacht wird, wird es momentan mit einem bool gecheckt ( hab noch keine besser lösung gefunden
 
     private int golddropamount;

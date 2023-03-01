@@ -15,12 +15,17 @@ public class Areacontroller : MonoBehaviour
     public bool[] enemychestcanopen;           //muss anzahl der chest sein
     public bool[] enemychestisopen;
 
+    public bool[] questcomplete;
+
     public bool[] puzzlecomplete;
     public bool[] gotpuzzlereward;
+
+    public int[] npcdialoguestate;
 
     private void Awake()
     {
         areaobjectcontroller = GetComponent<Areaobjectcontroller>();
+        Statics.currentgameslot = -1;
         if (Statics.currentgameslot != -1)                             // -1 = new game damit nichts geladen wird
         {
             loadmonobehaviour(Statics.currentgameslot, areaname, this);
@@ -33,9 +38,17 @@ public class Areacontroller : MonoBehaviour
         {
             areaobjectcontroller.settutorialnumber[i].areanumber = i;
         }
+        for (int i = 0; i < areaobjectcontroller.questnumber.Length; i++)
+        {
+            areaobjectcontroller.questnumber[i].areanumber = i;
+        }
         for (int i = 0; i < areaobjectcontroller.setpuzzlenumber.Length; i++)
         {
             areaobjectcontroller.setpuzzlenumber[i].areanumber = i;
+        }
+        for (int i = 0; i < areaobjectcontroller.dialoguenumber.Length; i++)
+        {
+            areaobjectcontroller.dialoguenumber[i].areanumber = i;
         }
     }
     private void loadmonobehaviour(int slot, string filename, MonoBehaviour monobehaviour)            //bei gameload werden hier die fortschritte geladen

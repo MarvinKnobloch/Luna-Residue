@@ -133,14 +133,14 @@ public class EleAbilities : MonoBehaviour
     }
     public void ignorelayers()
     {
-        Physics.IgnoreLayerCollision(6, 6);
+        Physics.IgnoreLayerCollision(11, 6);
         Physics.IgnoreLayerCollision(8, 6);
         Physics.IgnoreLayerCollision(15, 6);
     }
     public void stopignorelayers()
     {
         Physics.IgnoreLayerCollision(16, 6, false);            //wegen memorypuzzle
-        Physics.IgnoreLayerCollision(6, 6, false);
+        Physics.IgnoreLayerCollision(11, 6, false);
         Physics.IgnoreLayerCollision(8, 6, false);
         Physics.IgnoreLayerCollision(15, 6, false);
     }

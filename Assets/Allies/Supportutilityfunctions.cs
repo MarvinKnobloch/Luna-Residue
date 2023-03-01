@@ -42,15 +42,18 @@ public class Supportutilityfunctions
     }
     public void supportreset()
     {
-        ssm.resettimer += Time.deltaTime;
-        if (ssm.resettimer > 0.4f)
+        if (ssm.playerhp.playerisdead == false)
         {
-            if (Vector3.Distance(ssm.currenttarget.transform.position, LoadCharmanager.Overallmainchar.transform.position) > ssm.supportresetrange)
+            ssm.resettimer += Time.deltaTime;
+            if (ssm.resettimer > 0.4f)
             {
-                ssm.ChangeAnimationState(runstate);
-                ssm.state = Supportmovement.State.reset;
+                if (Vector3.Distance(ssm.currenttarget.transform.position, LoadCharmanager.Overallmainchar.transform.position) > ssm.supportresetrange)
+                {
+                    ssm.ChangeAnimationState(runstate);
+                    ssm.state = Supportmovement.State.reset;
+                }
+                ssm.resettimer = 0;
             }
-            ssm.resettimer = 0;
         }
     }
     public void resetcombat()

@@ -177,10 +177,11 @@ public class Bowattack : MonoBehaviour
                 movementscript.attackcombochain = 0;
             }
         }
-        else if (movementscript.state == Movescript.State.Air || movementscript.state == Movescript.State.Upwards)
+        else if (movementscript.airattackminheight == true)
         {
-            if (controlls.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false)// && Statics.infight == true)
+            if (controlls.Player.Attack1.WasPressedThisFrame() && movementscript.attackonceair == true && Statics.otheraction == false && Statics.infight == true)
             {
+                eleAbilities.stopignorelayers();
                 movementscript.switchtoattackaimstate();
                 attackestate = Attackstate.bowairattack;
                 movementscript.graviti = 0f;       
@@ -481,16 +482,14 @@ public class Bowattack : MonoBehaviour
     {
         if (movementscript.state != Movescript.State.Attackweaponaim) return;
         root = true;
-        Physics.IgnoreLayerCollision(6, 6);             //player und enemy collision
-        Physics.IgnoreLayerCollision(8, 6);
+        eleAbilities.ignorelayers();
         attackestate = Attackstate.groundattackchain;
         movementscript.disableaimcam();
     }
     private void bowairdownend()
     {
         if (movementscript.state != Movescript.State.Attackweaponaim) return;
-        Physics.IgnoreLayerCollision(6, 6, false);
-        Physics.IgnoreLayerCollision(8, 6, false);
+        eleAbilities.stopignorelayers();
         root = false;
         if (readattackinput == false && movementscript.attackcombochain < 2)
         {

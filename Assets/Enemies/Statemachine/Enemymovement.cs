@@ -147,7 +147,10 @@ public class Enemymovement : MonoBehaviour
         Meshagent.ResetPath();
         state = State.isattacking;
     }
-    private void backtowaitforattack() => enemyattack.backtowaitforattack();         //wird mit der animation gecalled
+    private void backtowaitforattack()
+    {
+        if(enemyhp.enemyisdead == false) enemyattack.backtowaitforattack();         //wird mit der animation gecalled
+    }
     private void resetpath() => Meshagent.ResetPath();
     private void callemptystate() => state = State.empty;                          //wird mit der animation gecalled
     private void normalattackdmg() => currenttarget.GetComponent<Playerhp>().TakeDamage(basedmg);                    //wird mit der animation gecalled

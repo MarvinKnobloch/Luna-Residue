@@ -354,7 +354,7 @@ public class Movescript : MonoBehaviour
     {
         if(playerhp.playerisdead == false)
         {
-            Physics.IgnoreLayerCollision(6, 6, false);
+            Physics.IgnoreLayerCollision(11, 6, false);
             Physics.IgnoreLayerCollision(8, 6, false);
             ChangeAnimationState(idlestate);
             attackonceair = true;
@@ -364,7 +364,7 @@ public class Movescript : MonoBehaviour
     }
     public void switchtoairstate()
     {
-        Physics.IgnoreLayerCollision(6, 6);
+        Physics.IgnoreLayerCollision(11, 6);
         Physics.IgnoreLayerCollision(8, 6);
         state = State.Air;
     }

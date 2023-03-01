@@ -133,10 +133,11 @@ public class Swordattack : MonoBehaviour
                 movementscript.attackcombochain = 0;
             }
         }
-        else if (movementscript.state == Movescript.State.Air)
+        else if (movementscript.airattackminheight == true)      //(movementscript.state == Movescript.State.Air || movementscript.state == Movescript.State.Upwards)
         {
-            if (controlls.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false && Statics.infight == true)
+            if (controlls.Player.Attack1.WasPressedThisFrame() && movementscript.attackonceair == true && Statics.otheraction == false && Statics.infight == true)
             {
+                eleAbilities.stopignorelayers();
                 movementscript.state = Movescript.State.Meleeairattack;
                 attackestate = Attackstate.attack1;
                 movementscript.graviti = 0f;
@@ -340,14 +341,12 @@ public class Swordattack : MonoBehaviour
     {
         if (movementscript.state != Movescript.State.Meleeairattack) return;
         root = true;
-        Physics.IgnoreLayerCollision(6, 6);             //player und enemy collision
-        Physics.IgnoreLayerCollision(8, 6);
+        eleAbilities.ignorelayers();
     }
     private void swordairdownend()
     {
         if (movementscript.state != Movescript.State.Meleeairattack) return;
-        Physics.IgnoreLayerCollision(6, 6, false);
-        Physics.IgnoreLayerCollision(8, 6, false);
+        eleAbilities.stopignorelayers();
         root = false;
         if (readattackinput == false && movementscript.attackcombochain < 2)
         {

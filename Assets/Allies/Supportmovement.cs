@@ -144,8 +144,11 @@ public class Supportmovement : MonoBehaviour
 
     public void switchtarget()
     {
-        state = State.empty;
-        supportchoosetarget.settarget();
+        if(playerhp.playerisdead == false)
+        {
+            state = State.empty;
+            supportchoosetarget.settarget();
+        }
     }
     public void switchtoweaponstate()
     {

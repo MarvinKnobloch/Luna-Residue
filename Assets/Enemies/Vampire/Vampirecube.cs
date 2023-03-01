@@ -21,7 +21,7 @@ public class Vampirecube : MonoBehaviour
     }*/
     private void dealdmg()
     {
-        Collider[] colliders = Physics.OverlapBox(overlapboxpoint, new Vector3(8f, 0.4f, 8f), Quaternion.identity, Aoetargets, QueryTriggerInteraction.Ignore);
+        Collider[] colliders = Physics.OverlapBox(overlapboxpoint, new Vector3(8f, 0.5f, 8f), Quaternion.identity, Aoetargets, QueryTriggerInteraction.Ignore);
         foreach (Collider target in colliders)
         {
             if (target.TryGetComponent(out Playerhp playerhp))
