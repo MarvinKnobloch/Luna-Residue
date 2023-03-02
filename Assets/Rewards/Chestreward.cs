@@ -46,15 +46,22 @@ public class Chestreward : MonoBehaviour, Rewardinterface, Interactioninterface
             openchest.SetActive(false);
         }
     }
-    public void checkforreward()
+    public void addrewardcount()
     {
         rewardcount++;
         if (rewardcount >= rewardcountneeded)
         {
-            cheststatetext = chestopen;
-            areacontroller.enemychestcanopen[areachestnumber] = true;
-            areacontroller.autosave();
+            if(areacontroller.enemychestcanopen[areachestnumber] == false)
+            {
+                cheststatetext = chestopen;
+                areacontroller.enemychestcanopen[areachestnumber] = true;
+                areacontroller.autosave();
+            }
         }
+    }
+    public void removerewardcount()
+    {
+        rewardcount--;
     }
 
     public bool Interact(Closestinteraction interactor)

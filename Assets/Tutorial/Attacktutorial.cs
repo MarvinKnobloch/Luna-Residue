@@ -34,7 +34,7 @@ public class Attacktutorial : MonoBehaviour
     {
         if (readinputs == true && controlls.Player.Interaction.WasPressedThisFrame())
         {
-            if (textindex != 4)
+            if (textindex != 3)
             {
                 tutorialcontroller.tutorialtext.text = string.Empty;
                 textindex++;
@@ -66,7 +66,6 @@ public class Attacktutorial : MonoBehaviour
         else if (textindex == 2) tutorialcontroller.tutorialtext.text = "Meanwhile the second attack you can choose to perform a downattack \"" + "<color=green>" + attack1action + "</color>" + "\", a midattack \""
                                                + "<color=green>" + attack2action + "</color>" + "\" or a upattack \"" + "<color=green>" + attack3action + "</color>" + "\".";
         else if (textindex == 3) tutorialcontroller.tutorialtext.text = "Its possible to perfrom this attackchain 2 times before you have to reset.";
-        else if (textindex == 4 ) tutorialcontroller.tutorialtext.text = "However, you will be able to extend this attackchains later in the game.";
     }
     private void endtutorial()
     {

@@ -26,7 +26,7 @@ public class Singlearrow : MonoBehaviour
     {
         dmgtype = type;
         Attributecontroller atb = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>();
-        overalldmg = Damagecalculation.calculateplayerdmgdone(dmg, atb.attack, atb.bowattack, atb.stoneclassbonusdmg);
+        overalldmg = Globalplayercalculations.calculateplayerdmgdone(dmg, atb.attack, atb.bowattack, atb.stoneclassbonusdmg);
         overalldmg = Mathf.Round(overalldmg * ((Statics.weaponswitchbuff + Statics.characterswitchbuff - 100f) / 100));
         overallcritchance = Statics.playerbasiccritchance + LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critchance;
         overallcritdmg = Mathf.Round(overalldmg * (LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critdmg / 100f) * ((Statics.weaponswitchbuff + Statics.characterswitchbuff - 100f) / 100));
@@ -77,7 +77,11 @@ public class Singlearrow : MonoBehaviour
             else
             {
                 Manamanager.manamanager.Managemana(Statics.bowendmanarestore);
-                LoadCharmanager.Overallmainchar.gameObject.GetComponent<Playerhp>().playerheal(7);
+                if (LoadCharmanager.Overallmainchar.gameObject.TryGetComponent(out Playerhp playerhp))
+                {
+                    float healing = Globalplayercalculations.calculateweaponheal(playerhp.maxhealth);
+                    playerhp.addhealth(healing);
+                }
             }
         }
     }

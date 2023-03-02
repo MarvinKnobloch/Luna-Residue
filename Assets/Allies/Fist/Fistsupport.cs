@@ -11,6 +11,8 @@ public class Fistsupport : MonoBehaviour
     private float basicfistdmg = 1;
     private float endfistdmg = 3;
 
+    private float weaponhealing;
+
     private float enddmgtodeal;
     private float basicdmgtodeal;
 
@@ -29,8 +31,10 @@ public class Fistsupport : MonoBehaviour
     }
     private void fistdmgupdate()
     {
-        basicdmgtodeal = Damagecalculation.calculateplayerdmgdone(basicfistdmg, attributecontroller.dmgfromallies, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
-        enddmgtodeal = Damagecalculation.calculateplayerdmgdone(endfistdmg, attributecontroller.dmgfromallies, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
+        basicdmgtodeal = Globalplayercalculations.calculateplayerdmgdone(basicfistdmg, attributecontroller.dmgfromallies, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
+        enddmgtodeal = Globalplayercalculations.calculateplayerdmgdone(endfistdmg, attributecontroller.dmgfromallies, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
+
+        weaponhealing = Globalplayercalculations.calculateweaponheal(attributecontroller.maxhealth);
     }
 
     private void firstfistattack()
@@ -44,7 +48,7 @@ public class Fistsupport : MonoBehaviour
     private void thirdfistattack()
     {
         dealdmg(rightfoot, 3f, enddmgtodeal);
-        hpscript.playerheal(4);            
+        hpscript.addhealth(weaponhealing);
     }
     private void dealdmg(GameObject dmgposi, float raduis, float dmg)
     {

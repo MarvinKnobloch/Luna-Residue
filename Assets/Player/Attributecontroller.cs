@@ -8,6 +8,7 @@ public class Attributecontroller : MonoBehaviour
     [SerializeField] private int charnumber;
     [SerializeField] private Playerhp playerhp;
 
+    [NonSerialized] public float maxhealth;
     [NonSerialized] public float attack;
     [NonSerialized] public float defense;
     [NonSerialized] public float critchance;
@@ -103,9 +104,10 @@ public class Attributecontroller : MonoBehaviour
     {
         playerhp.health = Statics.charcurrenthealth[charnumber];
         playerhp.maxhealth = Statics.charmaxhealth[charnumber];
+        maxhealth = Statics.charmaxhealth[charnumber];
 
         defense = Statics.chardefense[charnumber];
-        attack = Statics.charattack[charnumber];
+        attack = Statics.charattack[charnumber] + Statics.chardefense[charnumber] * (Statics.defenseconvertedtoattack * 0.01f);
         critchance = Statics.charcritchance[charnumber];
         critdmg = Statics.charcritdmg[charnumber];
         charswitchbuff = Statics.charswitchbuff[charnumber];

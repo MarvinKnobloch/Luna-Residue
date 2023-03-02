@@ -8,19 +8,19 @@ public class Areacontroller : MonoBehaviour
 {
     private Areaobjectcontroller areaobjectcontroller;
 
-    [SerializeField] public string areaname;
+    public string areaname;
 
-    [NonSerialized] public bool[] tutorialcomplete;
+    public bool[] tutorialcomplete;                        //die arrays müssen public(nicht Nonserialized) sein, sonst speichert json die daten nicht
 
-    [NonSerialized] public bool[] enemychestcanopen;           //muss anzahl der chest sein
-    [NonSerialized] public bool[] enemychestisopen;
+    public bool[] enemychestcanopen;
+    public bool[] enemychestisopen;
 
-    [NonSerialized] public bool[] questcomplete;
+    public bool[] questcomplete;
 
-    [NonSerialized] public bool[] puzzlecomplete;
-    [NonSerialized] public bool[] gotpuzzlereward;
+    public bool[] puzzlecomplete;
+    public bool[] gotpuzzlereward;
 
-    [NonSerialized] public int[] npcdialoguestate;
+    public int[] npcdialoguestate;
 
     private void Awake()
     {

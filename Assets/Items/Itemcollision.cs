@@ -10,7 +10,6 @@ public class Itemcollision : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        //ignore collision in Setitemandinventorys
     }
     private void OnEnable()
     {

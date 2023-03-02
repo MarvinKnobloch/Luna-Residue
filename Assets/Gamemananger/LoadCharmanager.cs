@@ -41,7 +41,6 @@ public class LoadCharmanager : MonoBehaviour
         expmanager = GetComponent<Expmanager>();
         uiactionscontroller = GetComponent<Uiactionscontroller>();
         Steuerung = Keybindinputmanager.inputActions;
-        Physics.IgnoreLayerCollision(17, 6);
     }
 
     private void OnEnable()

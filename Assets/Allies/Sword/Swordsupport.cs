@@ -10,6 +10,8 @@ public class Swordsupport : MonoBehaviour
     private float basicsworddmg = 1;
     private float endsworddmg = 3;
 
+    private float weaponhealing;
+
     private float enddmgtodeal;
     private float basicdmgtodeal;
 
@@ -27,8 +29,10 @@ public class Swordsupport : MonoBehaviour
     }
     private void sworddmgupdate()
     {
-        basicdmgtodeal = Damagecalculation.calculateplayerdmgdone(basicsworddmg, attributecontroller.dmgfromallies, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
-        enddmgtodeal = Damagecalculation.calculateplayerdmgdone(endsworddmg, attributecontroller.dmgfromallies, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
+        basicdmgtodeal = Globalplayercalculations.calculateplayerdmgdone(basicsworddmg, attributecontroller.dmgfromallies, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
+        enddmgtodeal = Globalplayercalculations.calculateplayerdmgdone(endsworddmg, attributecontroller.dmgfromallies, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
+
+        weaponhealing = Globalplayercalculations.calculateweaponheal(attributecontroller.maxhealth);
     }
 
     private void basicswordswing()
@@ -38,7 +42,7 @@ public class Swordsupport : MonoBehaviour
     private void endswordswing()
     {
         dealdmg(swordmid, 3f, enddmgtodeal);
-        hpscript.playerheal(4);
+        hpscript.addhealth(weaponhealing);
     }
     private void dealdmg(GameObject dmgposi, float raduis, float dmg)
     {

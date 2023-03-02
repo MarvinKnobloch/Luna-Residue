@@ -5,9 +5,10 @@ using System;
 
 public class Boxfinish : MonoBehaviour
 {
-    [SerializeField] private Boxpuzzlecomplete boxpuzzlecomplete;
     [SerializeField] private GameObject requiredcube;
     public Color finishcolor;
+
+    [SerializeField] private GameObject reward;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -22,12 +23,12 @@ public class Boxfinish : MonoBehaviour
         {
             CancelInvoke();
             requiredcube.GetComponent<Renderer>().material.color = Color.white;
-            boxpuzzlecomplete.removefinishcount();
+            reward.GetComponent<Rewardinterface>().removerewardcount();
         }
     }
     private void checkforposi()
     {
         requiredcube.GetComponent<Renderer>().material.color = finishcolor;
-        boxpuzzlecomplete.addfinishcount();
+        reward.GetComponent<Rewardinterface>().addrewardcount();
     }
 }

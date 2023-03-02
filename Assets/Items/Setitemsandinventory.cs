@@ -19,9 +19,6 @@ public class Setitemsandinventory : MonoBehaviour
 
     private void Awake()
     {
-        Physics.IgnoreLayerCollision(8, 12);
-        Physics.IgnoreLayerCollision(11, 12);
-        Physics.IgnoreLayerCollision(15, 12);
 /*#if UNITY_EDITOR
         resetitems();
         resetinventorys();

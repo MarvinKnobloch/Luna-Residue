@@ -20,13 +20,14 @@ public class Fistcontroller : MonoBehaviour
     private float overallbasicdmg;
     private float overallenddmg;
     private float overallair3middmg;
-    private float basicendheal = 5;
     private float overallcritchance;
     private float basicweaponswitchdmg;
 
     private bool crit;
 
     private float enemydebuffcrit;
+
+    private float weaponhealing;
 
     private float basicmanarestore = 2;
     private float endmanarestore = 5;
@@ -54,12 +55,14 @@ public class Fistcontroller : MonoBehaviour
     }
     public void fistdmgupdate()
     {
-        overallbasicdmg = Damagecalculation.calculateplayerdmgdone(chainbasicdmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
-        overallenddmg = Damagecalculation.calculateplayerdmgdone(chainenddmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
-        overallair3middmg = Damagecalculation.calculateplayerdmgdone(air3middmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
-        basicweaponswitchdmg = Damagecalculation.calculateplayerdmgdone(weaponswitchdmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
+        overallbasicdmg = Globalplayercalculations.calculateplayerdmgdone(chainbasicdmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
+        overallenddmg = Globalplayercalculations.calculateplayerdmgdone(chainenddmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
+        overallair3middmg = Globalplayercalculations.calculateplayerdmgdone(air3middmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
+        basicweaponswitchdmg = Globalplayercalculations.calculateplayerdmgdone(weaponswitchdmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
 
         overallcritchance = Statics.playerbasiccritchance + attributecontroller.critchance;
+
+        weaponhealing = Globalplayercalculations.calculateweaponheal(attributecontroller.maxhealth);
     }
 
     public void fistrighthandhitbox()
@@ -88,7 +91,7 @@ public class Fistcontroller : MonoBehaviour
     }
     public void Checkfistmidbodyhitbox()
     {
-        lookfordmgcollision(body.transform.position, 2, air3middmg, 2, endmanarestore);
+        lookfordmgcollision(body.transform.position, 2, overallair3middmg, 2, endmanarestore);
     }
     public void Checkfistupfeethitbox()
     {
@@ -148,7 +151,7 @@ public class Fistcontroller : MonoBehaviour
         }
         else
         {
-            spielerhp.playerheal(basicendheal);
+            spielerhp.addhealth(weaponhealing);
         }
     }
 

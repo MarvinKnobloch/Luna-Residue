@@ -46,9 +46,9 @@ public class Playerhp : MonoBehaviour
         health += Mathf.Round(heal + (Statics.groupstonehealbonus + attributecontroller.stoneclassbonusheal * 0.01f * heal));
         handlehealth();
     }
-    public void addhealth(float heal)
+    public void addhealth(float heal)           //weaponhealing + ressurect
     {
-        health += heal;
+        health += Mathf.Round(heal);
         handlehealth();
     }
     public void playerisresurrected()

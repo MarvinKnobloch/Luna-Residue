@@ -10,7 +10,7 @@ public class Skilltreescript : MonoBehaviour
     [SerializeField] private GameObject overview;
     [SerializeField] private GameObject skilltree;
 
-    private int skillpointsperlvl = 2;
+    private int skillpointsperlvl = 1;
 
     [SerializeField] private Image[] charselectionimage;
     [SerializeField] private int currentchar;
