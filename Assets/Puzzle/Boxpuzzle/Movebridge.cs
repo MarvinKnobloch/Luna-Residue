@@ -16,41 +16,17 @@ public class Movebridge : MonoBehaviour
     [SerializeField] private Areacontroller areacontroller;
     private int puzzlenumber;
 
-    private void Start()
+    private void OnEnable()
     {
         puzzlenumber = GetComponent<Areanumber>().areanumber;
         if (areacontroller.puzzlecomplete[puzzlenumber] == true)
         {
             transform.position = endposi;
         }
-    }
-    private void OnEnable()
-    {
-        Boxfinish.checkforbridge += bridge;
-    }
-    private void OnDisable()
-    {
-        Boxfinish.checkforbridge -= bridge;
-    }
-    private void bridge()
-    {
-        needcubes = 0;
-        cubesfinished = 0;
-        foreach(GameObject obj in Cubes)
+        else
         {
-            needcubes += 1;
-            if (obj.GetComponent<Boxfinish>().finish == true)
-            {
-                cubesfinished += 1;
-            }
-        }
-        if(needcubes == cubesfinished)
-        {
-            if(areacontroller.puzzlecomplete[puzzlenumber] == false)
-            {
-                StartCoroutine("movebridge");
-                areacontroller.puzzlecomplete[puzzlenumber] = true;
-            }
+            transform.position = startposi;
+            StartCoroutine("movebridge");
         }
     }
     IEnumerator movebridge()

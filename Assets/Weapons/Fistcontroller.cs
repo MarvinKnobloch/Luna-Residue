@@ -101,20 +101,12 @@ public class Fistcontroller : MonoBehaviour
     private void lookfordmgcollision(Vector3 hitposition, float hitrange, float damage, int dmgtype, float manarestore)
     {
         Collider[] cols = Physics.OverlapSphere(hitposition, hitrange, Layerhitbox);
-        foreach (Collider Enemyhit in cols)
+        foreach (Collider enemyhit in cols)
         {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
+            if (enemyhit.isTrigger)               //damit nur die meleehitbox getriggered wird
             {
-                enemyscript.dmgonce = false;
-            }
-        }
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                if (enemyscript.dmgonce == false)
+                if (enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
                 {
-                    enemyscript.dmgonce = true;
                     enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
                     calculatecritchance(enemyscript, damage);
                     enemyscript.takeplayerdamage(dmgdealed, dmgtype, crit);

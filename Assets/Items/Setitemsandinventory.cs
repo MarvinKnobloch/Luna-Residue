@@ -17,13 +17,17 @@ public class Setitemsandinventory : MonoBehaviour
     [SerializeField] private Ringobject[] ringitems;
     [SerializeField] private Craftingobject[] craftingitems;
 
-/*#if UNITY_EDITOR
     private void Awake()
     {
+        Physics.IgnoreLayerCollision(8, 12);
+        Physics.IgnoreLayerCollision(11, 12);
+        Physics.IgnoreLayerCollision(15, 12);
+/*#if UNITY_EDITOR
         resetitems();
         resetinventorys();
-    }
 #endif*/
+    }
+
     public void resetitems()
     {
         resetitemvalues(sworditems);

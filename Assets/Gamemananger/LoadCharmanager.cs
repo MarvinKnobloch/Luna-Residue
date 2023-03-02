@@ -22,7 +22,7 @@ public class LoadCharmanager : MonoBehaviour
     public GameObject[] teammates;
     public static GameObject Overallthirdchar;
     public static GameObject Overallforthchar;
-    public static Vector3 savemainposi = new Vector3(165,5, 590);          //new Vector3(116, 17, 707);                        new Vector3(15,32,687);
+    public static Vector3 savemainposi = new Vector3(100,5, 610);          //new Vector3(116, 17, 707);                        new Vector3(15,32,687);
     public static Quaternion savemainrota;                                  
     public static float savecamvalueX;                                          
 
@@ -41,6 +41,7 @@ public class LoadCharmanager : MonoBehaviour
         expmanager = GetComponent<Expmanager>();
         uiactionscontroller = GetComponent<Uiactionscontroller>();
         Steuerung = Keybindinputmanager.inputActions;
+        Physics.IgnoreLayerCollision(17, 6);
     }
 
     private void OnEnable()

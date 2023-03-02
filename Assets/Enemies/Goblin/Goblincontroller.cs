@@ -33,7 +33,6 @@ public class Goblincontroller : MonoBehaviour
     }
     private void spezial()
     {
-        Debug.Log(spherenumber);
         spheres[spherenumber].transform.position = LoadCharmanager.Overallmainchar.transform.position;
         spheres[spherenumber].SetActive(true);
         if (spherenumber >= 2) spherenumber = 0;
@@ -42,7 +41,6 @@ public class Goblincontroller : MonoBehaviour
         if(castnumber >= castsphereamount)
         {
             CancelInvoke();
-            Debug.Log("goblin end");
             gameObject.SetActive(false);
         }
     }

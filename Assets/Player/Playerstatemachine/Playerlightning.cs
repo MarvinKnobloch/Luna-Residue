@@ -98,28 +98,7 @@ public class Playerlightning
     }
     private void lightningdealdmg()
     {
-        Collider[] cols = Physics.OverlapSphere(psm.transform.position, 2f, psm.spellsdmglayer);
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                enemyscript.dmgonce = false;
-            }
-        }
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                if (enemyscript.dmgonce == false)
-                {
-                    float dmg = 7;
-                    enemyscript.dmgonce = true;
-                    enemyscript.takeplayerdamage(dmg, 0, false);
-                    //psm.activatedmgtext(Enemyhit.gameObject, dmg);
-                }
-
-            }
-        }
+        psm.eleAbilities.overlapssphereeledmg(psm.transform.gameObject, 2, 7);
     }
 }
 

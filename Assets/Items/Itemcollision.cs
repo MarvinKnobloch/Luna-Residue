@@ -10,9 +10,7 @@ public class Itemcollision : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        Physics.IgnoreLayerCollision(8, 12);
-        Physics.IgnoreLayerCollision(11, 12);
-        Physics.IgnoreLayerCollision(6, 12);
+        //ignore collision in Setitemandinventorys
     }
     private void OnEnable()
     {

@@ -68,6 +68,7 @@ public class Enemycalculatedmg
         if (enemyscript.enemyincreasebasicdmg == true)
         {
             enemyscript.finaldmg = Mathf.Round(dmg * (LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basicattributedmgbuff / 100));
+            //LoadCharmanager.Overallmainchar.GetComponent<Movescript>().attackcombochain = 1;
         }
         else
         {

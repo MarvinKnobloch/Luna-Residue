@@ -25,7 +25,7 @@ public class Enemymovement : MonoBehaviour
     [NonSerialized] public float healticktimer;
     [NonSerialized] public float healtickamount;
 
-    [NonSerialized] public float basedmg;                // wird bei enemyhp hab gesetzt nachdem das lvl berechnet wird
+    [NonSerialized] public float basedmg;                // wird bei enemyhp gesetzt nachdem das lvl berechnet wird
     [NonSerialized] public float normalattackcd;
     [NonSerialized] public float normalattacktimer;
     [NonSerialized] public bool spezialattack;

@@ -53,48 +53,32 @@ public class Aoearrow : MonoBehaviour
     {
         if (arrowtarget != null)
         {
-            Collider[] cols = Physics.OverlapSphere(arrowtarget, aoeradius, Layerhitbox);
+            Collider[] cols = Physics.OverlapSphere(arrowtarget, aoeradius, Layerhitbox, QueryTriggerInteraction.Ignore);
             foreach (Collider Enemyhit in cols)
             {
                 if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
                 {
-                    enemyscript.dmgonce = false;
-                }
-            }
-            foreach (Collider Enemyhit in cols)
-            {
-                if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-                {
-                    if (enemyscript.dmgonce == false)
+                    enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
+                    if (enemyscript.enemydebuffcd == true)
                     {
-                        enemyscript.dmgonce = true;
-                        enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
-                        if (enemyscript.enemydebuffcd == true)
-                        {
-                            enemydebuffcrit = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basicattributecritbuff;
-                        }
-                        else
-                        {
-                            enemydebuffcrit = 0;
-                        }
-                        if (Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
-                        {
-                            crit = true;
-                            enemyscript.takeplayerdamage(overallcritdmg, dmgtype, crit);
-                        }
-                        else
-                        {
-                            crit = false;
-                            enemyscript.takeplayerdamage(overalldmg, dmgtype, crit);
-                        }
+                        enemydebuffcrit = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basicattributecritbuff;
+                    }
+                    else
+                    {
+                        enemydebuffcrit = 0;
+                    }
+                    if (Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
+                    {
+                        crit = true;
+                        enemyscript.takeplayerdamage(overallcritdmg, dmgtype, crit);
+                    }
+                    else
+                    {
+                        crit = false;
+                        enemyscript.takeplayerdamage(overalldmg, dmgtype, crit);
                     }
                 }
             }
-            /*if (resetcombochain == true)
-            {
-                resetcombochain = false;
-                LoadCharmanager.Overallmainchar.GetComponent<Bowattack>().combochain--;
-            }*/
             if (cols.Length > 0)
             {
                 if (dmgtype == 0)

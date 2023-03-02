@@ -96,6 +96,7 @@ public class Movescript : MonoBehaviour
 
     //Spells
     public Healingscript healingscript;
+    public EleAbilities eleAbilities;
     public LayerMask spellsdmglayer;
     public GameObject damagetext;
     [NonSerialized] public Vector3 startpos;
@@ -163,6 +164,7 @@ public class Movescript : MonoBehaviour
         animator = GetComponent<Animator>();
         healingscript = GetComponent<Healingscript>();
         playerhp = GetComponent<Playerhp>();
+        eleAbilities = GetComponent<EleAbilities>();
         state = State.Air;
         starttime = Time.time;
         Statics.normalgamespeed = 1;

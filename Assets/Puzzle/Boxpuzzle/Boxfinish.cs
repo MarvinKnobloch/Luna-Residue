@@ -5,11 +5,10 @@ using System;
 
 public class Boxfinish : MonoBehaviour
 {
+    [SerializeField] private Boxpuzzlecomplete boxpuzzlecomplete;
     [SerializeField] private GameObject requiredcube;
     public Color finishcolor;
-    public bool finish;
 
-    public static event Action checkforbridge;
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject == requiredcube)
@@ -23,14 +22,12 @@ public class Boxfinish : MonoBehaviour
         {
             CancelInvoke();
             requiredcube.GetComponent<Renderer>().material.color = Color.white;
-            finish = false;
-            checkforbridge?.Invoke();
+            boxpuzzlecomplete.removefinishcount();
         }
     }
     private void checkforposi()
     {
         requiredcube.GetComponent<Renderer>().material.color = finishcolor;
-        finish = true;
-        checkforbridge?.Invoke();
+        boxpuzzlecomplete.addfinishcount();
     }
 }

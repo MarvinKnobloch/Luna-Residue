@@ -5,4 +5,5 @@ using UnityEngine;
 public class Boxmovecheck : MonoBehaviour
 {
     public bool moving;
+    public LayerMask boxraycastlayer;
 }

@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 2585313026676721040}
   - component: {fileID: 8558927419952717461}
   - component: {fileID: 6608450518688255048}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Basiclegs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -487,7 +487,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 34a6490ab048be74c86ea029fbce8f92, type: 2}
-  seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   inventory: {fileID: 11400000, guid: 13774127ac0964a4f9cdc819f7d144f3, type: 2}
 --- !u!1 &146544891048798260
 GameObject:
