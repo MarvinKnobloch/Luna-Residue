@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa0d64cb4c80b244dbef2367c99e7fa5, type: 3}
   m_Name: Basicsword
   m_EditorClassIdentifier: 
-  Uisprite: {fileID: 21300000, guid: 0e873578838a4fc4d846c6208e41f1da, type: 3}
+  Uisprite: {fileID: 21300000, guid: 5fd50594014b70e48bd6993443d46b32, type: 3}
   type: 1
   itemname: Basicsword
   inventoryslot: 0

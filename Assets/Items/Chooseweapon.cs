@@ -27,7 +27,7 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         if (itemvalues != null)
         {
             selectedchar = Statics.currentequipmentchar;
-            slotbuttontext.gameObject.GetComponent<TextMeshProUGUI>().text = GetComponentInChildren<Text>().text;
+            slotbuttontext.gameObject.GetComponent<TextMeshProUGUI>().text = GetComponentInChildren<TextMeshProUGUI>().text;
             setnewitem(Statics.currentequipmentbutton);
             statsupdate();
         }
@@ -42,7 +42,9 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         gridvalues.statsnumbers.text = string.Empty;
         gridvalues.statsnumbers.color = Color.white;
         gridvalues.statsnumbers.text = Statics.charmaxhealth[selectedchar] + "\n" +
+                            Mathf.Round(Statics.charmaxhealth[selectedchar] * Statics.healhealthbonuspercentage * 0.01f) + "\n" +
                             Statics.chardefense[selectedchar] + "\n" +
+                            Mathf.Round(Statics.chardefense[selectedchar] * Statics.defenseconvertedtoattack * 0.01f) + "\n" +
                             Statics.charattack[selectedchar] + "\n" +
                             Statics.charcritchance[selectedchar] + "%" + "\n" +
                             Statics.charcritdmg[selectedchar] + "%" + "\n" +

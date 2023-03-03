@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Weaponinventoryui : MonoBehaviour
 {
@@ -28,12 +29,12 @@ public class Weaponinventoryui : MonoBehaviour
             if (_slot.Value.amount > 0)
             {
                 _slot.Key.transform.GetComponent<Chooseweapon>().itemvalues = _slot.Value.item;
-                _slot.Key.transform.GetComponent<Image>().sprite = _slot.Value.item.Uisprite;
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Text>().text = _slot.Value.itemname.ToString();
+                _slot.Key.transform.GetChild(0).GetComponent<Image>().sprite = _slot.Value.item.Uisprite;
+                _slot.Key.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.itemname;
             }
             else
             {
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Text>().text = "???";
+                _slot.Key.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "???";
             }
         }
     }

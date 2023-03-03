@@ -31,7 +31,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if (itemvalues != null)
         {
             selectedchar = Statics.currentequipmentchar;
-            slotbuttontext.gameObject.GetComponent<TextMeshProUGUI>().text = GetComponentInChildren<Text>().text;
+            slotbuttontext.gameObject.GetComponent<TextMeshProUGUI>().text = GetComponentInChildren<TextMeshProUGUI>().text;
             setnewitem(Statics.currentequipmentbutton);
             statsupdate();
         }
