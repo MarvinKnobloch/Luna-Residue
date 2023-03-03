@@ -153,7 +153,8 @@ public class Attributecontroller : MonoBehaviour
     }
     public void alliesdmg()
     {
-        dmgfromallies = attack + (critchance - 4) + ((critdmg - 148) / Statics.critdmgperskillpoint) + ((Statics.charweaponbuff[charnumber] - 97) / Statics.weaponswitchbuffperskillpoint) + ((charswitchbuff - 97) / Statics.charswitchbuffperskillpoint) + ((basicattributedmgbuff - 146) / Statics.basicbuffdmgperskillpoint);
+        float basicdmg = 5;
+        dmgfromallies = basicdmg + attack + (critchance - Statics.playerbasiccritchance) + ((critdmg - 150) / Statics.critdmgperskillpoint) + ((Statics.charweaponbuff[charnumber] - 100) / Statics.weaponswitchbuffperskillpoint) + ((charswitchbuff - 100) / Statics.charswitchbuffperskillpoint) + (basicattributedmgbuff / Statics.basicbuffdmgperskillpoint);
         dmgfromallies = dmgfromallies * 0.5f;                  //durch 2 teilen weil es sonst zu viel ist
-    }                                                          // durch die minus zahlen ergibt jeder wert bei spielstart 1
+    }
 }

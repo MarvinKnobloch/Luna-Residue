@@ -61,18 +61,18 @@ public class Enemycalculatedmg
             enemyscript.enemydebuffstart();
             LoadCharmanager.Overallmainchar.GetComponent<Movescript>().attackcombochain = 0;
         }
-        enemyscript.finaldmg = Mathf.Round(dmg * 85 / 100);
+        enemyscript.finaldmg = Mathf.Round(dmg * ((85 + LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basicattributedmgbuff) / 100));
     }
     private void weakpointcalculation(float dmg)
     {
         if (enemyscript.enemyincreasebasicdmg == true)
         {
-            enemyscript.finaldmg = Mathf.Round(dmg * (LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basicattributedmgbuff / 100));
+            enemyscript.finaldmg = Mathf.Round(dmg * ((150 + LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basicattributedmgbuff) / 100));
             //LoadCharmanager.Overallmainchar.GetComponent<Movescript>().attackcombochain = 1;
         }
         else
         {
-            enemyscript.finaldmg = Mathf.Round(dmg * 50 / 100);
+            enemyscript.finaldmg = Mathf.Round(dmg * ((50 + LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basicattributedmgbuff) / 100));
         }
     }
 }

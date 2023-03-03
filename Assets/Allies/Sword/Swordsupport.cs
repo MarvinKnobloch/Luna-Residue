@@ -16,12 +16,12 @@ public class Swordsupport : MonoBehaviour
     private float basicdmgtodeal;
 
     private Attributecontroller attributecontroller;
-    private Playerhp hpscript;
+    private Playerhp playerhp;
 
     private void Awake()
     {
         attributecontroller = GetComponent<Attributecontroller>();
-        hpscript = GetComponent<Playerhp>();
+        playerhp = GetComponent<Playerhp>();
     }
     private void OnEnable()
     {
@@ -42,7 +42,7 @@ public class Swordsupport : MonoBehaviour
     private void endswordswing()
     {
         dealdmg(swordmid, 3f, enddmgtodeal);
-        hpscript.addhealth(weaponhealing);
+        playerhp.addhealth(weaponhealing);
     }
     private void dealdmg(GameObject dmgposi, float raduis, float dmg)
     {

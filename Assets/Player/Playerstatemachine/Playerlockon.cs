@@ -6,6 +6,7 @@ public class Playerlockon
 {
     public Movescript psm;
 
+    //wenn man aus der range der healthbar läuft wird sie deaktiviert obwohl man noch infight ist, danach ist die focus anzeige + mark/unmark target verbugt
     public void whilelockon()
     {
         if (Statics.infight == true)
