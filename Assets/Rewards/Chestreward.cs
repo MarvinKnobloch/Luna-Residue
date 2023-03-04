@@ -9,7 +9,7 @@ public class Chestreward : MonoBehaviour, Rewardinterface, Interactioninterface
     [SerializeField] private GameObject openchest;
     public int areachestnumber;
 
-    private int rewardcount;
+    public int rewardcount;
     [SerializeField] private int rewardcountneeded;
     [SerializeField] Itemsinchest[] rewards;
 
