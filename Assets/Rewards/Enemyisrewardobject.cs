@@ -8,6 +8,6 @@ public class Enemyisrewardobject : MonoBehaviour
 
     public void checkforrewardcondition()
     {
-        reward.GetComponent<Rewardinterface>().checkforreward();
+        reward.GetComponent<Rewardinterface>().addrewardcount();
     }
 }

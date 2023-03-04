@@ -13451,9 +13451,9 @@ MonoBehaviour:
   chestitems:
   - {fileID: 11400000, guid: 926b8daac2862ab40876b06cad7e1733, type: 2}
   - {fileID: 11400000, guid: 5fb93356bba4e664eb2de690b365e8ce, type: 2}
-  glovesitems:
-  - {fileID: 11400000, guid: b16dda3e67b0e3d40922eeb2f19c90f9, type: 2}
-  - {fileID: 11400000, guid: 679d841505f3da44b843bb22ab50584e, type: 2}
+  beltitems:
+  - {fileID: 11400000, guid: c2bca3ba23aa2034b9dd9e309a586790, type: 2}
+  - {fileID: 11400000, guid: 217948d8399ef3448b2147b4abbbcc3c, type: 2}
   legitems:
   - {fileID: 11400000, guid: 34a6490ab048be74c86ea029fbce8f92, type: 2}
   - {fileID: 11400000, guid: 384467f1252160841903dbf3f2b124e1, type: 2}
@@ -15989,7 +15989,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ^4
+  m_Text: 4
 --- !u!222 &1090655474
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17168,7 +17168,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: T
+  m_Text: ^T
 --- !u!222 &1168719226
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -25389,7 +25389,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ^4
+  m_Text: 4
 --- !u!222 &1716787518
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -27027,7 +27027,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ^4
+  m_Text: 4
 --- !u!222 &1839061144
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -41,26 +41,6 @@ public class Playerfire
     }
     public void firedashdmg()
     {
-        Collider[] cols = Physics.OverlapSphere(psm.transform.position, 2f, psm.spellsdmglayer);
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                enemyscript.dmgonce = false;
-            }
-        }
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                if (enemyscript.dmgonce == false)
-                {
-                    enemyscript.dmgonce = true;
-                    int dmgdealed = 5;
-                    enemyscript.takeplayerdamage(dmgdealed, 0, false);
-                    //psm.activatedmgtext(Enemyhit.gameObject, dmgdealed);
-                }
-            }
-        }
+        psm.eleAbilities.overlapssphereeledmg(psm.transform.gameObject, 2, 5);
     }
 }

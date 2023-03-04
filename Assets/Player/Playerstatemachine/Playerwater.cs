@@ -45,7 +45,7 @@ public class Playerwater
     {
         if (Movescript.lockontarget != null)
         {
-            dealwaterdmg(Movescript.lockontarget.position, 2, 7);
+            dealwaterdmg(Movescript.lockontarget.gameObject, 2, 7);
         }
     }
     public void waterintoair()
@@ -61,7 +61,7 @@ public class Playerwater
     }
     public void waterintoairdmg()
     {
-        dealwaterdmg(psm.transform.position, 4, 7);
+        dealwaterdmg(psm.transform.gameObject, 4, 7);
     }
     public void startwaterkick()
     {
@@ -78,7 +78,7 @@ public class Playerwater
             psm.transform.rotation = Quaternion.LookRotation(Movescript.lockontarget.transform.position - psm.transform.position, Vector3.up);
             if (Vector3.Distance(psm.transform.position, Movescript.lockontarget.position) < 3f)
             {
-                dealwaterdmg(psm.transform.position, 4, 10);
+                dealwaterdmg(psm.transform.gameObject, 4, 10);
                 Vector3 lookPos = Movescript.lockontarget.transform.position - psm.transform.position;
                 lookPos.y = 0;
                 psm.transform.rotation = Quaternion.LookRotation(lookPos);
@@ -87,29 +87,9 @@ public class Playerwater
         }
         else psm.Abilitiesend();
     }
-    public void dealwaterdmg(Vector3 hitposi, float size, float dmg)
+    public void dealwaterdmg(GameObject hitposi, float size, float dmg)
     {
-        Collider[] cols = Physics.OverlapSphere(hitposi, size, psm.spellsdmglayer);
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                enemyscript.dmgonce = false;
-            }
-        }
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                if (enemyscript.dmgonce == false)
-                {
-                    enemyscript.dmgonce = true;
-                    enemyscript.takeplayerdamage(dmg, 0 ,false);
-                    //psm.activatedmgtext(Enemyhit.gameObject, dmg);
-                }
-
-            }
-        }
+        psm.eleAbilities.overlapssphereeledmg(hitposi, size, dmg);
     }
 
 }

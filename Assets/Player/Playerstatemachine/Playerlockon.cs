@@ -6,6 +6,7 @@ public class Playerlockon
 {
     public Movescript psm;
 
+    //wenn man aus der range der healthbar läuft wird sie deaktiviert obwohl man noch infight ist, danach ist die focus anzeige + mark/unmark target verbugt
     public void whilelockon()
     {
         if (Statics.infight == true)
@@ -55,11 +56,7 @@ public class Playerlockon
                 float distancefromtarget = Vector3.Distance(psm.transform.position, Infightcontroller.infightenemylists[i].transform.position);
                 if (distancefromtarget < shortestDistance)
                 {
-                    if (psm.targetbeforeswap == Infightcontroller.infightenemylists[i])
-                    {
-                        continue;
-                    }
-                    else
+                    if (psm.targetbeforeswap.gameObject != Infightcontroller.infightenemylists[i])
                     {
                         Movescript.lockontarget = Infightcontroller.infightenemylists[i].gameObject.transform;
                         shortestDistance = distancefromtarget;

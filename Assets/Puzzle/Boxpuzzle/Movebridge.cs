@@ -13,42 +13,20 @@ public class Movebridge : MonoBehaviour
     public float movebridgetimer;
     public Vector3 startposi;
     public Vector3 endposi;
-    [SerializeField] private Firstarea firstarea;
+    [SerializeField] private Areacontroller areacontroller;
+    private int puzzlenumber;
 
-    private void Start()
+    private void OnEnable()
     {
-        if(firstarea.boxpuzzlecomplete == true)
+        puzzlenumber = GetComponent<Areanumber>().areanumber;
+        if (areacontroller.puzzlecomplete[puzzlenumber] == true)
         {
             transform.position = endposi;
         }
-    }
-    private void OnEnable()
-    {
-        Boxfinish.checkforbridge += bridge;
-    }
-    private void OnDisable()
-    {
-        Boxfinish.checkforbridge -= bridge;
-    }
-    private void bridge()
-    {
-        needcubes = 0;
-        cubesfinished = 0;
-        foreach(GameObject obj in Cubes)
+        else
         {
-            needcubes += 1;
-            if (obj.GetComponent<Boxfinish>().finish == true)
-            {
-                cubesfinished += 1;
-            }
-        }
-        if(needcubes == cubesfinished)
-        {
-            if(firstarea.boxpuzzlecomplete == false)
-            {
-                StartCoroutine("movebridge");
-                firstarea.boxpuzzlecomplete = true;
-            }
+            transform.position = startposi;
+            StartCoroutine("movebridge");
         }
     }
     IEnumerator movebridge()

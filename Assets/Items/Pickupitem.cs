@@ -5,7 +5,6 @@ using UnityEngine;
 public class Pickupitem : MonoBehaviour
 {
     [SerializeField] private Itemcontroller item;
-    [SerializeField] private Itemcontroller seconditem;
     [SerializeField] private Inventorycontroller inventory;
     private bool pickuponce;
 
@@ -22,7 +21,7 @@ public class Pickupitem : MonoBehaviour
         if (other.gameObject == LoadCharmanager.Overallmainchar.gameObject && pickuponce == true)
         {
             pickuponce = false;
-            inventory.Addequipment(item, seconditem, 1);
+            inventory.Addequipment(item, item.seconditem, 1);
             gameObject.SetActive(false);
         }
     }

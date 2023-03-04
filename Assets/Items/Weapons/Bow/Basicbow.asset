@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fa93c9492e2de24186cf539133be63c, type: 3}
   m_Name: Basicbow
   m_EditorClassIdentifier: 
-  Uisprite: {fileID: 21300000, guid: 9a7c8d500b9ea3f4e8ad1c729649de2d, type: 3}
+  Uisprite: {fileID: 21300000, guid: 5d7061fc7da05ce44add317708ec7215, type: 3}
   type: 2
   itemname: Basicbow
-  inventoryslot: 1
+  inventoryslot: 0
   itemshopcosts: 60
+  seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
   basestats:
   - 0

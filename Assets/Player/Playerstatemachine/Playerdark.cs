@@ -29,27 +29,7 @@ public class Playerdark
 
         if (Physics.SphereCast(psm.spherecastcollider.bounds.center, psm.spherecastcollider.radius, Vector3.down, out RaycastHit groundhit, 1.1f))
         {
-            Collider[] cols = Physics.OverlapSphere(psm.transform.position, 2f, psm.spellsdmglayer);
-            foreach (Collider Enemyhit in cols)
-            {
-                if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-                {
-                    enemyscript.dmgonce = false;
-                }
-            }
-            foreach (Collider Enemyhit in cols)
-            {
-                if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-                {
-                    if (enemyscript.dmgonce == false)
-                    {
-                        float dmg = 13;
-                        enemyscript.dmgonce = true;
-                        enemyscript.takeplayerdamage(dmg, 0, false);
-                        //psm.activatedmgtext(Enemyhit.gameObject, dmg);
-                    }
-                }
-            }
+            psm.eleAbilities.overlapssphereeledmg(psm.transform.gameObject, 2f, 13);
             psm.state = Movescript.State.Ground;
             Statics.otheraction = false;
         }

@@ -10,16 +10,18 @@ public class Swordsupport : MonoBehaviour
     private float basicsworddmg = 1;
     private float endsworddmg = 3;
 
+    private float weaponhealing;
+
     private float enddmgtodeal;
     private float basicdmgtodeal;
 
     private Attributecontroller attributecontroller;
-    private Playerhp hpscript;
+    private Playerhp playerhp;
 
     private void Awake()
     {
         attributecontroller = GetComponent<Attributecontroller>();
-        hpscript = GetComponent<Playerhp>();
+        playerhp = GetComponent<Playerhp>();
     }
     private void OnEnable()
     {
@@ -27,67 +29,41 @@ public class Swordsupport : MonoBehaviour
     }
     private void sworddmgupdate()
     {
-        basicdmgtodeal = Damagecalculation.calculateplayerdmgdone(basicsworddmg, attributecontroller.dmgfromallies, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
-        enddmgtodeal = Damagecalculation.calculateplayerdmgdone(endsworddmg, attributecontroller.dmgfromallies, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
+        basicdmgtodeal = Globalplayercalculations.calculateplayerdmgdone(basicsworddmg, attributecontroller.dmgfromallies, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
+        enddmgtodeal = Globalplayercalculations.calculateplayerdmgdone(endsworddmg, attributecontroller.dmgfromallies, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
+
+        weaponhealing = Globalplayercalculations.calculateweaponheal(attributecontroller.maxhealth);
     }
 
     private void basicswordswing()
     {
-
-        Collider[] cols = Physics.OverlapSphere(swordmid.transform.position, 3f, enemylayer);
-        foreach (Collider Enemyhit in cols)
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                enemyscript.dmgonce = false;
-                if (gameObject == LoadCharmanager.Overallthirdchar)
-                {
-                    enemyscript.tookdmgfrom(3, Statics.thirdchartookdmgformamount);
-                }
-                if (gameObject == LoadCharmanager.Overallforthchar)
-                {
-                    enemyscript.tookdmgfrom(4, Statics.forthchartookdmgformamount);
-                }
-            }
-
-        foreach (Collider Enemyhit in cols)
-
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                if (enemyscript.dmgonce == false)
-                {
-                    enemyscript.dmgonce = true;
-                    enemyscript.takesupportdmg(basicdmgtodeal);
-                }
-            }
+        dealdmg(swordmid, 3f, basicdmgtodeal);
     }
     private void endswordswing()
     {
-        hpscript.playerheal(4);
-        Collider[] cols = Physics.OverlapSphere(swordmid.transform.position, 3f, enemylayer);
-
-        foreach (Collider Enemyhit in cols)
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
+        dealdmg(swordmid, 3f, enddmgtodeal);
+        playerhp.addhealth(weaponhealing);
+    }
+    private void dealdmg(GameObject dmgposi, float raduis, float dmg)
+    {
+        Collider[] cols = Physics.OverlapSphere(dmgposi.transform.position, raduis, enemylayer);
+        foreach (Collider enemyhit in cols)
+        {
+            if (enemyhit.isTrigger)
             {
-                enemyscript.dmgonce = false;
-                if (gameObject == LoadCharmanager.Overallthirdchar)
+                if (enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
                 {
-                    enemyscript.tookdmgfrom(3, Statics.thirdchartookdmgformamount);
-                }
-                if (gameObject == LoadCharmanager.Overallforthchar)
-                {
-                    enemyscript.tookdmgfrom(4, Statics.forthchartookdmgformamount);
+                    enemyscript.takesupportdmg(dmg);
+                    if (gameObject == LoadCharmanager.Overallthirdchar)
+                    {
+                        enemyscript.tookdmgfrom(3, Statics.thirdchartookdmgformamount);
+                    }
+                    else if (gameObject == LoadCharmanager.Overallforthchar)
+                    {
+                        enemyscript.tookdmgfrom(4, Statics.forthchartookdmgformamount);
+                    }
                 }
             }
-
-        foreach (Collider Enemyhit in cols)
-
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                if (enemyscript.dmgonce == false)
-                {
-                    enemyscript.dmgonce = true;
-                    enemyscript.takesupportdmg(enddmgtodeal);
-                }
-            }
+        }
     }
 }

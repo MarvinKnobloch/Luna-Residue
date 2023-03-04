@@ -20,8 +20,11 @@ public class Fishmancolliderdmg : MonoBehaviour
     {
         if (other.gameObject == LoadCharmanager.Overallmainchar && dealdmgonce == false)
         {
-            dealdmgonce = true;
-            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg);
+            if(Statics.infight == true)
+            {
+                dealdmgonce = true;
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg);
+            }
         }
     }
     IEnumerator turnoff()

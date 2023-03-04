@@ -10,8 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8584220551162653890}
   - component: {fileID: 8584220551162653902}
+  - component: {fileID: 5929750620775628155}
   - component: {fileID: 8584220551162653901}
   - component: {fileID: 6906739699240576439}
+  - component: {fileID: 997909773900716143}
   m_Layer: 12
   m_Name: Copperbow
   m_TagString: Untagged
@@ -50,8 +52,8 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 0
   m_CollisionDetection: 3
---- !u!135 &8584220551162653901
-SphereCollider:
+--- !u!65 &5929750620775628155
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -61,7 +63,20 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Size: {x: 0.8, y: 0.8, z: 0.8}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &8584220551162653901
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8584220551162653891}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6906739699240576439
 MonoBehaviour:
@@ -75,6 +90,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b7e21aea067da74494d1788ae6f5ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &997909773900716143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8584220551162653891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd3317f5b71bea64389686667c3702fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 09142d55d20d73749a97b89475cfbef6, type: 2}
+  inventory: {fileID: 11400000, guid: ce84528fcac987c45bbc7a40d37adb24, type: 2}
 --- !u!1 &8584220551303932212
 GameObject:
   m_ObjectHideFlags: 0
@@ -86,8 +115,6 @@ GameObject:
   - component: {fileID: 8584220551303932219}
   - component: {fileID: 8584220551303932217}
   - component: {fileID: 8584220551303932218}
-  - component: {fileID: 6470737875883600452}
-  - component: {fileID: 3337836032578873753}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -158,31 +185,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &6470737875883600452
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8584220551303932212}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 11
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3337836032578873753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8584220551303932212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd3317f5b71bea64389686667c3702fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 09142d55d20d73749a97b89475cfbef6, type: 2}
-  seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
-  inventory: {fileID: 11400000, guid: ce84528fcac987c45bbc7a40d37adb24, type: 2}

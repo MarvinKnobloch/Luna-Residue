@@ -31,7 +31,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if (itemvalues != null)
         {
             selectedchar = Statics.currentequipmentchar;
-            slotbuttontext.gameObject.GetComponent<TextMeshProUGUI>().text = GetComponentInChildren<Text>().text;
+            slotbuttontext.gameObject.GetComponent<TextMeshProUGUI>().text = GetComponentInChildren<TextMeshProUGUI>().text;
             setnewitem(Statics.currentequipmentbutton);
             statsupdate();
         }
@@ -42,7 +42,9 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         statsnumbers.text = string.Empty;
         statsnumbers.color = Color.white;
         statsnumbers.text = Statics.charmaxhealth[selectedchar] + "\n" +
+                            Mathf.Round(Statics.charmaxhealth[selectedchar] * Statics.healhealthbonuspercentage * 0.01f) + "\n" +
                             Statics.chardefense[selectedchar] + "\n" +
+                            Mathf.Round(Statics.chardefense[selectedchar] * Statics.defenseconvertedtoattack * 0.01f) + "\n" +
                             Statics.charattack[selectedchar] + "\n" +
                             Statics.charcritchance[selectedchar] + "%" + "\n" +
                             Statics.charcritdmg[selectedchar] + "%" + "\n" +
@@ -271,7 +273,9 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     private void mouseenter(Itemcontroller slot)
     {
         ontriggerflatstats(slot, 0, Statics.charmaxhealth[selectedchar]);
+        healbonus(slot, 0, Statics.charmaxhealth[selectedchar]);
         ontriggerflatstats(slot, 1, Statics.chardefense[selectedchar]);
+        defensebonus(slot, 1, Statics.chardefense[selectedchar]);
         ontriggerflatstats(slot, 2, Statics.charattack[selectedchar]);
         ontriggerpercentage(slot, 3, Statics.charcritchance[selectedchar]);
         ontriggerpercentage(slot, 4, Statics.charcritdmg[selectedchar]);
@@ -322,6 +326,44 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         {
             statsnumbers.text += currentstatvalue + "sec" + "\n";
+        }
+    }
+    private void healbonus(Itemcontroller equipeditem, int itemstat, float currentstatvalue)
+    {
+        float currentstats = Mathf.Round(currentstatvalue * Statics.healhealthbonuspercentage * 0.01f);
+        float newstats = Mathf.Round((currentstatvalue + itemvalues.stats[itemstat]) * Statics.healhealthbonuspercentage * 0.01f);
+        float oldstats = Mathf.Round((currentstatvalue + equipeditem.stats[itemstat]) * Statics.healhealthbonuspercentage * 0.01f);
+        float difference = newstats - oldstats;
+        if (newstats > oldstats)
+        {
+            statsnumbers.text += "<color=green>" + "( +" + difference + " ) " + (difference + currentstats) + "</color>" + "\n";
+        }
+        else if (newstats < oldstats)
+        {
+            statsnumbers.text += "<color=red>" + "( " + difference + " ) " + (difference + currentstats) + "</color>" + "\n";
+        }
+        else
+        {
+            statsnumbers.text += Mathf.Round(Statics.charmaxhealth[selectedchar] * Statics.healhealthbonuspercentage * 0.01f) + "\n";
+        }
+    }
+    private void defensebonus(Itemcontroller equipeditem, int itemstat, float currentstatvalue)
+    {
+        float currentstats = Mathf.Round(currentstatvalue * Statics.defenseconvertedtoattack * 0.01f);
+        float newstats = Mathf.Round((currentstatvalue + itemvalues.stats[itemstat]) * Statics.defenseconvertedtoattack * 0.01f);
+        float oldstats = Mathf.Round((currentstatvalue + equipeditem.stats[itemstat]) * Statics.defenseconvertedtoattack * 0.01f);
+        float difference = newstats - oldstats;
+        if (newstats > oldstats)
+        {
+            statsnumbers.text += "<color=green>" + "( +" + difference + " ) " + (difference + currentstats) + "</color>" + "\n";
+        }
+        else if (newstats < oldstats)
+        {
+            statsnumbers.text += "<color=red>" + "( " + difference + " ) " + (difference + currentstats) + "</color>" + "\n";
+        }
+        else
+        {
+            statsnumbers.text += Mathf.Round(Statics.chardefense[selectedchar] * Statics.defenseconvertedtoattack * 0.01f) + "\n";
         }
     }
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)

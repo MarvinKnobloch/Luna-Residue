@@ -81,7 +81,9 @@ public class Equipcharselection : MonoBehaviour
         statsnumbers.text = string.Empty;
         statsnumbers.color = Color.white;
         statsnumbers.text = Statics.charmaxhealth[currentchar] + "\n" +
+                            Mathf.Round(Statics.charmaxhealth[currentchar] * Statics.healhealthbonuspercentage * 0.01f) + "\n" +
                             Statics.chardefense[currentchar] + "\n" +
+                            Mathf.Round(Statics.chardefense[currentchar] * Statics.defenseconvertedtoattack * 0.01f) + "\n" +
                             Statics.charattack[currentchar] + "\n" +
                             Statics.charcritchance[currentchar] + "%" + "\n" +
                             Statics.charcritdmg[currentchar] + "%" + "\n" +

@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Blockleft : MonoBehaviour, Interactioninterface
 {
-    public LayerMask layer;
-    public GameObject cube;
+    private LayerMask layer;
+    private GameObject cube;
 
     [SerializeField] private string actiontext = "Push";
     public string Interactiontext => actiontext;
     private void Awake()
     {
         cube = transform.parent.gameObject;
-        layer = LayerMask.GetMask("Terrain");
+        layer = GetComponentInParent<Boxmovecheck>().boxraycastlayer;
     }
     public bool Interact(Closestinteraction interactor)
     {

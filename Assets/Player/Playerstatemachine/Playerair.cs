@@ -38,7 +38,7 @@ public class Playerair
     public void minheightforairattack()
     {
         Ray ray = new Ray(psm.transform.position + Vector3.up * 0.3f, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, 0.8f))
+        if (Physics.Raycast(ray, out RaycastHit hit, 1f))
         {
             psm.airattackminheight = false;
         }

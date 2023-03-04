@@ -1,20 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
 using UnityEngine.InputSystem;
 
 public class Healtutorial : MonoBehaviour
 {
     private SpielerSteu controlls;
 
-    private Firstarea firstarea;
     private Tutorialcontroller tutorialcontroller;
+    private Areacontroller areacontroller;
     private int textindex;
     private string heal;
     private string player1target;
     private string player2target;
     private string player3target;
+
+    private int tutorialnumber;
 
     private bool readinputs;
 
@@ -23,8 +24,9 @@ public class Healtutorial : MonoBehaviour
         tutorialcontroller = GetComponentInParent<Tutorialcontroller>();
         controlls = Keybindinputmanager.inputActions;
         readinputs = false;
-        firstarea = tutorialcontroller.firstarea;
-        if (firstarea.healtutorialcomplete == true)
+        areacontroller = tutorialcontroller.areacontroller;
+        tutorialnumber = GetComponent<Areanumber>().areanumber;
+        if (areacontroller.tutorialcomplete[tutorialnumber] == true)
         {
             gameObject.SetActive(false);
         }
@@ -47,7 +49,7 @@ public class Healtutorial : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == LoadCharmanager.Overallmainchar && firstarea.healtutorialcomplete == false)
+        if (other.gameObject == LoadCharmanager.Overallmainchar && areacontroller.tutorialcomplete[tutorialnumber] == false)
         {
             heal = controlls.Player.Heal.GetBindingDisplayString();
             player1target = controlls.SpielerHeal.Target1.GetBindingDisplayString();
@@ -70,8 +72,8 @@ public class Healtutorial : MonoBehaviour
     {
         readinputs = false;
         tutorialcontroller.endtutorial();
-        firstarea.healtutorialcomplete = true;
-        firstarea.autosave();
+        areacontroller.tutorialcomplete[tutorialnumber] = true;
+        areacontroller.autosave();
         gameObject.SetActive(false);
     }
 }

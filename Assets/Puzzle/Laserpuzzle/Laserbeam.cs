@@ -13,10 +13,15 @@ public class Laserbeam : MonoBehaviour
     [SerializeField] Material goalmaterial;
     [SerializeField] private LayerMask mirrorlayer;
 
+    private Laserpuzzlefinish laserpuzzlefinish;
+    private MeshRenderer meshRenderer;
+
     void Start()
     {
         renderline = GetComponent<LineRenderer>();
         renderline.SetPosition(0, startpoint.position);
+        laserpuzzlefinish = endgoal.GetComponent<Laserpuzzlefinish>();
+        meshRenderer = endgoal.GetComponent<MeshRenderer>();
     }
     private void OnDisable()
     {
@@ -42,13 +47,13 @@ public class Laserbeam : MonoBehaviour
 
                 if (laserhit.transform == endgoal.transform)
                 {
-                    endgoal.GetComponent<MeshRenderer>().material.color = goalmaterial.color;
-                    endgoal.GetComponent<Lasersuccsess>().laserupdate();
+                    meshRenderer.material.color = goalmaterial.color;
+                    laserpuzzlefinish.laserupdate();
                 }
                 else
                 {
-                    endgoal.GetComponent<MeshRenderer>().material.color = Color.white;
-                    endgoal.GetComponent<Lasersuccsess>().laserdoeshit = false;
+                    meshRenderer.material.color = Color.white;
+                    laserpuzzlefinish.laserdoesnthit();
                 }
 
                 if (laserhit.transform.CompareTag(Mirror) == false)

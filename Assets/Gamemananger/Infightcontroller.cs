@@ -77,12 +77,15 @@ public class Infightcontroller : MonoBehaviour
     }
     public void disablechars()
     {
-        StartCoroutine("healalliesafterfight");
         if (LoadCharmanager.Overallthirdchar != null)
         {
             if (LoadCharmanager.Overallthirdchar.TryGetComponent(out Playerhp playerhp))
             {
-                playerhp.playerisdead = false;
+                if(playerhp.playerisdead == true)
+                {
+                    playerhp.playerisdead = false;
+                    playerhp.health = 1;
+                }
                 playerhp.addhealth(Mathf.Round(Statics.charmaxhealth[Statics.currentthirdchar] * 0.1f));
             }
             LoadCharmanager.Overallthirdchar.SetActive(false);
@@ -91,11 +94,16 @@ public class Infightcontroller : MonoBehaviour
         {
             if (LoadCharmanager.Overallforthchar.TryGetComponent(out Playerhp playerhp))
             {
-                playerhp.playerisdead = false;
+                if (playerhp.playerisdead == true)
+                {
+                    playerhp.playerisdead = false;
+                    playerhp.health = 1;
+                }
                 playerhp.addhealth(Mathf.Round(Statics.charmaxhealth[Statics.currentforthchar] * 0.1f));
             }
             LoadCharmanager.Overallforthchar.SetActive(false);
         }
+        StartCoroutine("healalliesafterfight");
     }
     IEnumerator enemyspezialcd()
     {
@@ -104,9 +112,7 @@ public class Infightcontroller : MonoBehaviour
             yield return new WaitForSeconds(Statics.currentenemyspecialcd);
             if(LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == false)
             {
-                int enemycount = infightenemylists.Count;
-                int enemyonlist = UnityEngine.Random.Range(1, enemycount);          //enemycount + 1????
-                Debug.Log(enemyonlist + "enemyspezialcount");
+                int enemyonlist = UnityEngine.Random.Range(1, infightenemylists.Count + 1);          //+ 1 weil random.range bei 1-2 immer nur 1 ausgibt
                 if (infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>())
                 {
                     infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>().spezialattack = true;

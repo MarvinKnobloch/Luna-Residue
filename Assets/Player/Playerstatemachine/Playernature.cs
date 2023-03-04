@@ -47,28 +47,7 @@ public class Playernature
             lookPos.y = 0;
             psm.transform.rotation = Quaternion.LookRotation(lookPos);
 
-            Collider[] cols = Physics.OverlapSphere(Movescript.lockontarget.position, 3f, psm.spellsdmglayer);
-            foreach (Collider Enemyhit in cols)
-            {
-                if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-                {
-                    enemyscript.dmgonce = false;
-                }
-            }
-            foreach (Collider Enemyhit in cols)
-            {
-                if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-                {
-                    if (enemyscript.dmgonce == false)
-                    {
-                        float dmg = 10;
-                        enemyscript.dmgonce = true;
-                        enemyscript.takeplayerdamage(dmg, 0, false);
-                        //psm.activatedmgtext(Enemyhit.gameObject, dmg);
-                    }
-
-                }
-            }
+            psm.eleAbilities.overlapssphereeledmg(Movescript.lockontarget.gameObject, 3, 10);
             psm.Abilitiesend();
         }
     }

@@ -133,16 +133,27 @@ public class EleAbilities : MonoBehaviour
     }
     public void ignorelayers()
     {
-        Physics.IgnoreLayerCollision(6, 6);
+        Physics.IgnoreLayerCollision(11, 6);
         Physics.IgnoreLayerCollision(8, 6);
         Physics.IgnoreLayerCollision(15, 6);
     }
     public void stopignorelayers()
     {
         Physics.IgnoreLayerCollision(16, 6, false);            //wegen memorypuzzle
-        Physics.IgnoreLayerCollision(6, 6, false);
+        Physics.IgnoreLayerCollision(11, 6, false);
         Physics.IgnoreLayerCollision(8, 6, false);
         Physics.IgnoreLayerCollision(15, 6, false);
+    }
+    public void overlapssphereeledmg(GameObject dmgposi, float radius, float dmg)
+    {
+        Collider[] cols = Physics.OverlapSphere(dmgposi.transform.position, radius, Layerhitbox, QueryTriggerInteraction.Ignore);
+        foreach (Collider Enemyhit in cols)
+        {
+            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
+            {
+                enemyscript.takeplayerdamage(dmg, 0, false);
+            }
+        }
     }
     private void fire1()
     {
@@ -574,26 +585,7 @@ public class EleAbilities : MonoBehaviour
     }
     private void icelancedmg()
     {
-        Collider[] cols = Physics.OverlapSphere(Movescript.lockontarget.position, 2f, Layerhitbox);
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                enemyscript.dmgonce = false;
-            }
-        }
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                if (enemyscript.dmgonce == false)
-                {
-                    float dmg = 10;
-                    enemyscript.dmgonce = true;
-                    enemyscript.takeplayerdamage(dmg, 0, false);
-                }
-            }
-        }
+        overlapssphereeledmg(Movescript.lockontarget.gameObject, 2, 10);
     }
     public void icelanceiscanceled()
     {
@@ -694,29 +686,7 @@ public class EleAbilities : MonoBehaviour
     }
     private void ligthbackstabdmg()
     {
-        {
-            Collider[] cols = Physics.OverlapSphere(transform.position, 3f, Layerhitbox);
-            foreach (Collider Enemyhit in cols)
-            {
-                if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-                {
-                    enemyscript.dmgonce = false;
-                }
-            }
-            foreach (Collider Enemyhit in cols)
-            {
-                if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-                {
-                    if (enemyscript.dmgonce == false)
-                    {
-                        enemyscript.dmgonce = true;
-                        float dmg = 10;
-                        enemyscript.takeplayerdamage(dmg, 0, false);
-                    }
-
-                }
-            }
-        }
+        overlapssphereeledmg(transform.gameObject, 3, 10);    
     }
     private void light2()
     {

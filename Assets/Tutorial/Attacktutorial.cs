@@ -8,12 +8,14 @@ public class Attacktutorial : MonoBehaviour
 {
     private SpielerSteu controlls;
 
-    private Firstarea firstarea;
     private Tutorialcontroller tutorialcontroller;
+    private Areacontroller areacontroller;
     private int textindex;
     private string attack1action;
     private string attack2action;
     private string attack3action;
+
+    private int tutorialnumber;
 
     private bool readinputs;
     private void Start()
@@ -21,8 +23,9 @@ public class Attacktutorial : MonoBehaviour
         tutorialcontroller = GetComponentInParent<Tutorialcontroller>();
         controlls = Keybindinputmanager.inputActions;
         readinputs = false;
-        firstarea = tutorialcontroller.firstarea;
-        if (firstarea.attacktutorialcomplete == true)
+        areacontroller = tutorialcontroller.areacontroller;
+        tutorialnumber = GetComponent<Areanumber>().areanumber;
+        if (areacontroller.tutorialcomplete[tutorialnumber] == true)
         {
             gameObject.SetActive(false);
         }
@@ -31,7 +34,7 @@ public class Attacktutorial : MonoBehaviour
     {
         if (readinputs == true && controlls.Player.Interaction.WasPressedThisFrame())
         {
-            if (textindex != 4)
+            if (textindex != 3)
             {
                 tutorialcontroller.tutorialtext.text = string.Empty;
                 textindex++;
@@ -45,7 +48,7 @@ public class Attacktutorial : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == LoadCharmanager.Overallmainchar && firstarea.attacktutorialcomplete == false)
+        if(other.gameObject == LoadCharmanager.Overallmainchar && areacontroller.tutorialcomplete[tutorialnumber] == false)
         {
             attack1action = controlls.Player.Attack1.GetBindingDisplayString();
             attack2action = controlls.Player.Attack2.GetBindingDisplayString();
@@ -63,14 +66,13 @@ public class Attacktutorial : MonoBehaviour
         else if (textindex == 2) tutorialcontroller.tutorialtext.text = "Meanwhile the second attack you can choose to perform a downattack \"" + "<color=green>" + attack1action + "</color>" + "\", a midattack \""
                                                + "<color=green>" + attack2action + "</color>" + "\" or a upattack \"" + "<color=green>" + attack3action + "</color>" + "\".";
         else if (textindex == 3) tutorialcontroller.tutorialtext.text = "Its possible to perfrom this attackchain 2 times before you have to reset.";
-        else if (textindex == 4 ) tutorialcontroller.tutorialtext.text = "However, you will be able to extend this attackchains later in the game.";
     }
     private void endtutorial()
     {
         readinputs = false;
         tutorialcontroller.endtutorial();
-        firstarea.attacktutorialcomplete = true;
-        firstarea.autosave();
+        areacontroller.tutorialcomplete[tutorialnumber] = true;
+        areacontroller.autosave();
         gameObject.SetActive(false);
     }
 }

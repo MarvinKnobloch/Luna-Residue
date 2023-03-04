@@ -8,7 +8,7 @@ public class Mirror : MonoBehaviour, Interactioninterface
     public string Interactiontext => actiontext;
     public bool Interact(Closestinteraction interactor)
     {
-        this.transform.Rotate(0, 90, 0, Space.Self);
+        transform.Rotate(0, 90, 0, Space.Self);
         return true;
     }
 }

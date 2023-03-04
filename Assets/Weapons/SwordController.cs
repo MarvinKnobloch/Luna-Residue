@@ -15,13 +15,13 @@ public class SwordController : MonoBehaviour
 
     private float overallbasicdmg;
     private float overallenddmg;
-    private float basicendheal = 5;
     private float overallcritchance;
     private float basicweaponswitchdmg;
+    private float dmgdealed;
 
     private float basicmanarestore = 2;
     private float endmanarestore = 5;
-    private float dmgdealed;
+    private float weaponhealing = 5;
 
     private bool crit;
 
@@ -51,11 +51,13 @@ public class SwordController : MonoBehaviour
     }
     private void sworddmgupdate()
     {
-        overallbasicdmg = Damagecalculation.calculateplayerdmgdone(chainbasicdmg, attributecontroller.attack, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
-        overallenddmg = Damagecalculation.calculateplayerdmgdone(chainenddmg, attributecontroller.attack, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
-        basicweaponswitchdmg = Damagecalculation.calculateplayerdmgdone(weaponswitchdmg, attributecontroller.attack, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
+        overallbasicdmg = Globalplayercalculations.calculateplayerdmgdone(chainbasicdmg, attributecontroller.attack, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
+        overallenddmg = Globalplayercalculations.calculateplayerdmgdone(chainenddmg, attributecontroller.attack, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
+        basicweaponswitchdmg = Globalplayercalculations.calculateplayerdmgdone(weaponswitchdmg, attributecontroller.attack, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
 
         overallcritchance = Statics.playerbasiccritchance + attributecontroller.critchance;
+
+        weaponhealing = Globalplayercalculations.calculateweaponheal(attributecontroller.maxhealth);
     }
 
     public void Checkswordbasichitbox()
@@ -81,20 +83,12 @@ public class SwordController : MonoBehaviour
     private void lookfordmgcollision(Vector3 hitposition, float hitrange, float damage, int dmgtype, float manarestore)
     {
         Collider[] cols = Physics.OverlapSphere(hitposition, hitrange, Layerhitbox);
-        foreach (Collider Enemyhit in cols)
+        foreach (Collider enemyhit in cols)
         {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
+            if (enemyhit.isTrigger)               //damit nur die meleehitbox getriggered wird
             {
-                enemyscript.dmgonce = false;
-            }
-        }
-        foreach (Collider Enemyhit in cols)
-        {
-            if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
-            {
-                if (enemyscript.dmgonce == false)
+                if (enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
                 {
-                    enemyscript.dmgonce = true;
                     enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
                     calculatecritchance(enemyscript, damage);
                     enemyscript.takeplayerdamage(dmgdealed, dmgtype, crit);
@@ -136,7 +130,7 @@ public class SwordController : MonoBehaviour
         }
         else
         {
-            spielerhp.playerheal(basicendheal);
+            spielerhp.addhealth(weaponhealing);
         }
     }
 }

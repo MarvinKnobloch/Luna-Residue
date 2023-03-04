@@ -36,11 +36,9 @@ public class EnemyHP : MonoBehaviour
     [SerializeField] private Image enemyfocusdebuffbar;
 
     //public static bool enemygethit;
-    private bool enemyisdead;
-    [NonSerialized] public bool dmgonce;                           // da ich zwei collider hab und dadurch 2mal dmg gemacht wird, wird es momentan mit einem bool gecheckt ( hab noch keine besser lösung gefunden
+    [NonSerialized] public bool enemyisdead;
 
     private int golddropamount;
-    [SerializeField] private Enemydrops[] itemdroplist;
 
     [SerializeField] private int[] playerhits = { 0, 0, 0 };
     private int mosthits;
@@ -353,23 +351,17 @@ public class EnemyHP : MonoBehaviour
     {
         if (enemyvalues.golddropamount <= 2) golddropamount = 3;
         else golddropamount = enemyvalues.golddropamount;
-        golddropamount = UnityEngine.Random.Range(golddropamount - 2, golddropamount + 2);
-        GameObject enemygolddrop = Instantiate(enemyvalues.gold, transform.position, transform.rotation);
-        enemygolddrop.GetComponent<Golditemcontroller>().golddropamount = golddropamount * enemylvl;
+        golddropamount = golddropamount * enemylvl + UnityEngine.Random.Range(-2, 2);
+        GameObject enemygolddrop = Instantiate(enemyvalues.gold, transform.position + Vector3.up, transform.rotation);
+        enemygolddrop.GetComponent<Golditemcontroller>().golddropamount = golddropamount;
 
-        foreach (Enemydrops obj in itemdroplist)
+        foreach (Enemydrops obj in enemyvalues.enemydrops)
         {
             int randomnumber = UnityEngine.Random.Range(0, 100);
             if (randomnumber <= obj.itemdropchance)
             {
-                Instantiate(obj.itemtodrop, transform.position, transform.rotation);
+                Instantiate(obj.itemtodrop, transform.position + Vector3.up, transform.rotation);
             }
         }
     }
-}
-[Serializable]
-public class Enemydrops
-{
-    [SerializeField] public GameObject itemtodrop;
-    [SerializeField] public int itemdropchance;
 }

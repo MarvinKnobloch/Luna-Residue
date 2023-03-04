@@ -46,14 +46,19 @@ public class Statics
     public static float bowbasicmanarestore = 2;
     public static float bowendmanarestore = 5;
 
+    public static float basicweaponheal = 3;
+    public static float weaponbonushealhealthpercentage = 2;
+    public static float healhealthbonuspercentage = 4;
+
     public static float healthperskillpoint = 25;
     public static float armorperskillpoint = 25;
+    public static float defenseconvertedtoattack = 1;
     public static float attackperskillpoint = 1;
     public static float critchanceperskillpoint = 1;
     public static float critdmgperskillpoint = 2;
-    public static float weaponswitchbuffperskillpoint = 3;
+    public static float weaponswitchbuffperskillpoint = 2;
     public static float charswitchbuffperskillpoint = 3;
-    public static float basicbuffdmgperskillpoint = 4;
+    public static int basicbuffdmgperskillpoint = 2;
 
     public static int presetresurrectcd = 5;
     public static int presethealcd = 3;
@@ -153,7 +158,7 @@ public class Statics
     public static float[] charswitchbuff = { 100, 100, 100, 100, 100 };
     public static float[] charswitchbuffduration = { 5, 5, 5, 5, 5 };
     public static float[] charbasiccritbuff = { 1, 1, 1, 1, 1 };
-    public static float[] charbasicdmgbuff = { 150, 150, 150, 150, 150 };
+    public static float[] charbasicdmgbuff = { 0, 0, 0, 0, 0 };
 
     //equiptment
     public static int currentequipmentchar;

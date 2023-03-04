@@ -23,9 +23,10 @@ public class Playerheal
     public void resurrected()
     {
         psm.ChangeAnimationState(playerstandupstate);
+        psm.playerhp.playerisdead = false;
+        psm.playerhp.health = 1;                             //falls der char minushp hat
         float reshealth = Mathf.Round(psm.playerhp.maxhealth * (0.2f + (Statics.groupstonehealbonus * 0.01f)));
         psm.playerhp.addhealth(reshealth);
-        psm.playerhp.GetComponent<Playerhp>().playerisdead = false;
     }
     public void playerstandup()
     {

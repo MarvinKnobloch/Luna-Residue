@@ -8,6 +8,7 @@ public class Attributecontroller : MonoBehaviour
     [SerializeField] private int charnumber;
     [SerializeField] private Playerhp playerhp;
 
+    [NonSerialized] public float maxhealth;
     [NonSerialized] public float attack;
     [NonSerialized] public float defense;
     [NonSerialized] public float critchance;
@@ -103,9 +104,10 @@ public class Attributecontroller : MonoBehaviour
     {
         playerhp.health = Statics.charcurrenthealth[charnumber];
         playerhp.maxhealth = Statics.charmaxhealth[charnumber];
+        maxhealth = Statics.charmaxhealth[charnumber];
 
         defense = Statics.chardefense[charnumber];
-        attack = Statics.charattack[charnumber];
+        attack = Statics.charattack[charnumber] + Statics.chardefense[charnumber] * (Statics.defenseconvertedtoattack * 0.01f);
         critchance = Statics.charcritchance[charnumber];
         critdmg = Statics.charcritdmg[charnumber];
         charswitchbuff = Statics.charswitchbuff[charnumber];
@@ -151,7 +153,8 @@ public class Attributecontroller : MonoBehaviour
     }
     public void alliesdmg()
     {
-        dmgfromallies = attack + (critchance - 4) + ((critdmg - 148) / Statics.critdmgperskillpoint) + ((Statics.charweaponbuff[charnumber] - 97) / Statics.weaponswitchbuffperskillpoint) + ((charswitchbuff - 97) / Statics.charswitchbuffperskillpoint) + ((basicattributedmgbuff - 146) / Statics.basicbuffdmgperskillpoint);
+        float basicdmg = 5;
+        dmgfromallies = basicdmg + attack + (critchance - Statics.playerbasiccritchance) + ((critdmg - 150) / Statics.critdmgperskillpoint) + ((Statics.charweaponbuff[charnumber] - 100) / Statics.weaponswitchbuffperskillpoint) + ((charswitchbuff - 100) / Statics.charswitchbuffperskillpoint) + (basicattributedmgbuff / Statics.basicbuffdmgperskillpoint);
         dmgfromallies = dmgfromallies * 0.5f;                  //durch 2 teilen weil es sonst zu viel ist
-    }                                                          // durch die minus zahlen ergibt jeder wert bei spielstart 1
+    }
 }

@@ -10,11 +10,11 @@ public class Skilltreescript : MonoBehaviour
     [SerializeField] private GameObject overview;
     [SerializeField] private GameObject skilltree;
 
-    private int skillpointsperlvl = 2;
+    private int skillpointsperlvl = 1;
 
     [SerializeField] private Image[] charselectionimage;
     [SerializeField] private int currentchar;
-
+    
     public Text skillpointtext;
     public Text nametext;
     public Text healthbuttonnumber;
@@ -26,17 +26,19 @@ public class Skilltreescript : MonoBehaviour
     public Text charbuttonnumber;
     public Text basicbuttonnumber;
 
-    public Text statshealth;
-    public Text statsdefense;
-    public Text statsattack;
-    public Text statscritchance;
-    public Text statscritdmg;
-    public Text statsweaponbuff;
-    public Text statsweaponbuffduration;
-    public Text statscharbuff;
-    public Text statscharbuffduration;
-    public Text statsbasiccrit;
-    public Text statsbasicbuffdmg;
+    [SerializeField] private TextMeshProUGUI statshealth;
+    [SerializeField] private TextMeshProUGUI healingbonus;
+    [SerializeField] private TextMeshProUGUI statsdefense;
+    [SerializeField] private TextMeshProUGUI defensetoattack;
+    [SerializeField] private TextMeshProUGUI statsattack;
+    [SerializeField] private TextMeshProUGUI statscritchance;
+    [SerializeField] private TextMeshProUGUI statscritdmg;
+    [SerializeField] private TextMeshProUGUI statsweaponbuff;
+    [SerializeField] private TextMeshProUGUI statsweaponbuffduration;
+    [SerializeField] private TextMeshProUGUI statscharbuff;
+    [SerializeField] private TextMeshProUGUI statscharbuffduration;
+    [SerializeField] private TextMeshProUGUI statsbasicbuffdmg;
+    [SerializeField] private TextMeshProUGUI statsbasiccrit;
 
 
     private void Awake()
@@ -132,17 +134,19 @@ public class Skilltreescript : MonoBehaviour
         weaponbuttonnumber.text = "" + Statics.charweaponskillpoints[currentchar];
         charbuttonnumber.text = "" + Statics.charcharswitchskillpoints[currentchar];
         basicbuttonnumber.text = "" + Statics.charbasicskillpoints[currentchar];
-        statshealth.text = Statics.charcurrenthealth[currentchar] + "/ " + Statics.charmaxhealth[currentchar];
-        statsdefense.text = Statics.chardefense[currentchar] + "";
-        statsattack.text = Statics.charattack[currentchar] + "";
-        statscritchance.text = Statics.charcritchance[currentchar] + "%";
-        statscritdmg.text = Statics.charcritdmg[currentchar] + "%";
-        statsweaponbuff.text = Statics.charweaponbuff[currentchar] - 100 + "%";
-        statsweaponbuffduration.text = Statics.charweaponbuffduration[currentchar] + "sec";
-        statscharbuff.text = Statics.charswitchbuff[currentchar] - 100 + "%";
-        statscharbuffduration.text = Statics.charswitchbuffduration[currentchar] + "sec";
-        statsbasiccrit.text = Statics.charbasiccritbuff[currentchar] + "%";
-        statsbasicbuffdmg.text = Statics.charbasicdmgbuff[currentchar] + "%";
+        statshealth.text = Mathf.Round(Statics.charcurrenthealth[currentchar]) + "/ " + Mathf.Round(Statics.charmaxhealth[currentchar]);
+        healingbonus.text = Mathf.Round(Statics.charmaxhealth[currentchar] * Statics.healhealthbonuspercentage * 0.01f).ToString();
+        statsdefense.text = Mathf.Round(Statics.chardefense[currentchar]).ToString();
+        defensetoattack.text = Mathf.Round(Statics.chardefense[currentchar] * Statics.defenseconvertedtoattack * 0.01f).ToString();
+        statsattack.text = Mathf.Round(Statics.charattack[currentchar]).ToString();
+        statscritchance.text = Mathf.Round(Statics.charcritchance[currentchar]) + "%";
+        statscritdmg.text = Mathf.Round(Statics.charcritdmg[currentchar]) + "%";
+        statsweaponbuff.text = Mathf.Round(Statics.charweaponbuff[currentchar] - 100) + "%";
+        statsweaponbuffduration.text = string.Format("{0:#.0}", Statics.charweaponbuffduration[currentchar]) + "sec";
+        statscharbuff.text = Mathf.Round(Statics.charswitchbuff[currentchar] - 100) + "%";
+        statscharbuffduration.text = string.Format("{0:#.0}", Statics.charswitchbuffduration[currentchar]) + "sec";
+        statsbasicbuffdmg.text = Mathf.Round(Statics.charbasicdmgbuff[currentchar]) + "%";
+        statsbasiccrit.text = string.Format("{0:#.0}", Statics.charbasiccritbuff[currentchar]) + "%";
     }
 
     public void plusbutton()
@@ -173,8 +177,7 @@ public class Skilltreescript : MonoBehaviour
             {
                 Statics.charcurrenthealth[currentchar] = Statics.charmaxhealth[currentchar];
             }
-            statshealth.text = Statics.charcurrenthealth[currentchar] + "/ " + Statics.charmaxhealth[currentchar];
-            healthbuttonnumber.text = "" + Statics.charhealthskillpoints[currentchar];
+            healthtext();
             plusbutton();
         }
     }
@@ -188,10 +191,15 @@ public class Skilltreescript : MonoBehaviour
             {
                 Statics.charcurrenthealth[currentchar] = Statics.charmaxhealth[currentchar];
             }
-            statshealth.text = Statics.charcurrenthealth[currentchar] + "/ " + Statics.charmaxhealth[currentchar];
-            healthbuttonnumber.text = "" + Statics.charhealthskillpoints[currentchar];                   
+            healthtext(); 
             minusbutton();
         }
+    }
+    private void healthtext()
+    {
+        statshealth.text = Mathf.Round(Statics.charcurrenthealth[currentchar]) + "/ " + Mathf.Round(Statics.charmaxhealth[currentchar]);
+        healingbonus.text = Mathf.Round(Statics.charmaxhealth[currentchar] * Statics.healhealthbonuspercentage * 0.01f).ToString();
+        healthbuttonnumber.text = "" + Statics.charhealthskillpoints[currentchar];
     }
     public void defensenumberplus()
     {
@@ -201,6 +209,7 @@ public class Skilltreescript : MonoBehaviour
             Statics.chardefense[currentchar] += Statics.armorperskillpoint;
             statsdefense.text = Statics.chardefense[currentchar] + "";
             defensebuttonnumber.text = "" + Statics.chardefenseskillpoints[currentchar];
+            defensetext();
             plusbutton();
         }
     }
@@ -210,10 +219,15 @@ public class Skilltreescript : MonoBehaviour
         {
             Statics.chardefenseskillpoints[currentchar] -= 1;
             Statics.chardefense[currentchar] -= Statics.armorperskillpoint;
-            statsdefense.text = Statics.chardefense[currentchar] + "";
-            defensebuttonnumber.text = "" + Statics.chardefenseskillpoints[currentchar];
+            defensetext();
             minusbutton();
         }
+    }
+    private void defensetext()
+    {
+        statsdefense.text = Statics.chardefense[currentchar] + "";
+        defensetoattack.text = Mathf.Round(Statics.chardefense[currentchar] * Statics.defenseconvertedtoattack * 0.01f).ToString();
+        defensebuttonnumber.text = Statics.chardefenseskillpoints[currentchar].ToString();
     }
     public void attacknumberplus()
     {
@@ -221,8 +235,7 @@ public class Skilltreescript : MonoBehaviour
         {
             Statics.charattackskillpoints[currentchar] += 1;
             Statics.charattack[currentchar] += Statics.attackperskillpoint;
-            statsattack.text = Statics.charattack[currentchar] + "";
-            attackbuttonnumber.text = "" + Statics.charattackskillpoints[currentchar];
+            attacktext();
             plusbutton();
         }
     }
@@ -232,10 +245,14 @@ public class Skilltreescript : MonoBehaviour
         {
             Statics.charattackskillpoints[currentchar] -= 1;
             Statics.charattack[currentchar] -= Statics.attackperskillpoint;
-            statsattack.text = Statics.charattack[currentchar] + "";
-            attackbuttonnumber.text = "" + Statics.charattackskillpoints[currentchar];
+            attacktext();
             minusbutton();
         }
+    }
+    private void attacktext()
+    {
+        statsattack.text = Mathf.Round(Statics.charattack[currentchar]) + "";
+        attackbuttonnumber.text = Statics.charattackskillpoints[currentchar].ToString();
     }
     public void critchancenumberplus()
     {
@@ -243,8 +260,7 @@ public class Skilltreescript : MonoBehaviour
         {
             Statics.charcritchanceskillpoints[currentchar] += 1;
             Statics.charcritchance[currentchar] += Statics.critchanceperskillpoint;
-            statscritchance.text = Statics.charcritchance[currentchar] + "%";
-            critchancebuttonnumber.text = "" + Statics.charcritchanceskillpoints[currentchar];
+            critchancetext();
             plusbutton();
         }
     }
@@ -254,10 +270,14 @@ public class Skilltreescript : MonoBehaviour
         {
             Statics.charcritchanceskillpoints[currentchar] -= 1;
             Statics.charcritchance[currentchar] -= Statics.critchanceperskillpoint;
-            statscritchance.text = Statics.charcritchance[currentchar] + "%";
-            critchancebuttonnumber.text = "" + Statics.charcritchanceskillpoints[currentchar];
+            critchancetext();
             minusbutton();
         }
+    }
+    private void critchancetext()
+    {
+        statscritchance.text = Mathf.Round(Statics.charcritchance[currentchar]) + "%";
+        critchancebuttonnumber.text = Statics.charcritchanceskillpoints[currentchar].ToString();
     }
     public void critdmgnumberplus()
     {
@@ -265,8 +285,7 @@ public class Skilltreescript : MonoBehaviour
         {
             Statics.charcritdmgskillpoints[currentchar] += 1;
             Statics.charcritdmg[currentchar] += Statics.critdmgperskillpoint;
-            statscritdmg.text = Statics.charcritdmg[currentchar] + "%";
-            critdmgbuttonnumber.text = "" + Statics.charcritdmgskillpoints[currentchar];
+            critdmgtext();
             plusbutton();
         }
     }
@@ -276,10 +295,14 @@ public class Skilltreescript : MonoBehaviour
         {
             Statics.charcritdmgskillpoints[currentchar] -= 1;
             Statics.charcritdmg[currentchar] -= Statics.critdmgperskillpoint;
-            statscritdmg.text = Statics.charcritdmg[currentchar] + "%";
-            critdmgbuttonnumber.text = "" + Statics.charcritdmgskillpoints[currentchar];
+            critdmgtext();
             minusbutton();
         }
+    }
+    private void critdmgtext()
+    {
+        statscritdmg.text = Mathf.Round(Statics.charcritdmg[currentchar]) + "%";
+        critdmgbuttonnumber.text = Statics.charcritdmgskillpoints[currentchar].ToString();
     }
     public void weaponnumberplus()
     {
@@ -288,9 +311,7 @@ public class Skilltreescript : MonoBehaviour
             Statics.charweaponskillpoints[currentchar] += 1;
             Statics.charweaponbuff[currentchar] += Statics.weaponswitchbuffperskillpoint;
             Statics.charweaponbuffduration[currentchar] += 0.05f;
-            statsweaponbuff.text = Statics.charweaponbuff[currentchar] - 100 + "%";
-            statsweaponbuffduration.text = Statics.charweaponbuffduration[currentchar].ToString("F2") + "sec";
-            weaponbuttonnumber.text = "" + Statics.charweaponskillpoints[currentchar];
+            weapontext();
             plusbutton();
         }
     }
@@ -301,11 +322,15 @@ public class Skilltreescript : MonoBehaviour
             Statics.charweaponskillpoints[currentchar] -= 1;
             Statics.charweaponbuff[currentchar] -= Statics.weaponswitchbuffperskillpoint;
             Statics.charweaponbuffduration[currentchar] -= 0.05f;
-            statsweaponbuff.text = Statics.charweaponbuff[currentchar] - 100 + "%";
-            statsweaponbuffduration.text = Statics.charweaponbuffduration[currentchar].ToString("F2") + "sec";
-            weaponbuttonnumber.text = "" + Statics.charweaponskillpoints[currentchar];
+            weapontext();
             minusbutton();
         }
+    }
+    private void weapontext()
+    {
+        statsweaponbuff.text = Mathf.Round(Statics.charweaponbuff[currentchar] - 100) + "%";
+        statsweaponbuffduration.text = string.Format("{0:#.0}", Statics.charweaponbuffduration[currentchar]) + "sec";
+        weaponbuttonnumber.text = Statics.charweaponskillpoints[currentchar].ToString();
     }
     public void charnumberplus()
     {
@@ -314,9 +339,7 @@ public class Skilltreescript : MonoBehaviour
             Statics.charcharswitchskillpoints[currentchar] += 1;
             Statics.charswitchbuff[currentchar] += Statics.charswitchbuffperskillpoint;
             Statics.charswitchbuffduration[currentchar] += 0.05f;
-            statscharbuff.text = Statics.charswitchbuff[currentchar] - 100 + "%";
-            statscharbuffduration.text = Statics.charswitchbuffduration[currentchar].ToString("F2") + "sec";
-            charbuttonnumber.text = "" + Statics.charcharswitchskillpoints[currentchar];
+            chartext();
             plusbutton();
         }
     }
@@ -328,22 +351,24 @@ public class Skilltreescript : MonoBehaviour
             Statics.charcharswitchskillpoints[currentchar] -= 1;
             Statics.charswitchbuff[currentchar] -= Statics.charswitchbuffperskillpoint;
             Statics.charswitchbuffduration[currentchar] -= 0.05f;
-            statscharbuff.text = Statics.charswitchbuff[currentchar] - 100 + "%";
-            statscharbuffduration.text = Statics.charswitchbuffduration[currentchar].ToString("F2") + "sec";
-            charbuttonnumber.text = "" + Statics.charcharswitchskillpoints[currentchar];
+            chartext();
             minusbutton();
         }
+    }
+    private void chartext()
+    {
+        statscharbuff.text = Mathf.Round(Statics.charswitchbuff[currentchar] - 100) + "%";
+        statscharbuffduration.text = string.Format("{0:#.0}", Statics.charswitchbuffduration[currentchar]) + "sec";
+        charbuttonnumber.text = Statics.charcharswitchskillpoints[currentchar].ToString();
     }
     public void basicnumberplus()
     {
         if (Statics.charskillpoints[currentchar] > 0)
         {
             Statics.charbasicskillpoints[currentchar] += 1;
-            Statics.charbasiccritbuff[currentchar] += 1;
+            Statics.charbasiccritbuff[currentchar] += 0.5f;
             Statics.charbasicdmgbuff[currentchar] += Statics.basicbuffdmgperskillpoint;
-            statsbasiccrit.text = Statics.charbasiccritbuff[currentchar] + "%";
-            statsbasicbuffdmg.text = Statics.charbasicdmgbuff[currentchar] + "%";
-            basicbuttonnumber.text = "" + Statics.charbasicskillpoints[currentchar];
+            basictext();
             plusbutton();
         }
     }
@@ -352,12 +377,16 @@ public class Skilltreescript : MonoBehaviour
         if (Statics.charbasicskillpoints[currentchar] > 0)
         {
             Statics.charbasicskillpoints[currentchar] -= 1;
-            Statics.charbasiccritbuff[currentchar] -= 1;
+            Statics.charbasiccritbuff[currentchar] -= 0.5f;
             Statics.charbasicdmgbuff[currentchar] -= Statics.basicbuffdmgperskillpoint;
-            statsbasiccrit.text = Statics.charbasiccritbuff[currentchar] + "%";
-            statsbasicbuffdmg.text = Statics.charbasicdmgbuff[currentchar] + "%";
-            basicbuttonnumber.text = "" + Statics.charbasicskillpoints[currentchar];
+            basictext();
             minusbutton();
         }
+    }
+    private void basictext()
+    {
+        statsbasicbuffdmg.text = Mathf.Round(Statics.charbasicdmgbuff[currentchar]) + "%";
+        statsbasiccrit.text = string.Format("{0:#.0}", Statics.charbasiccritbuff[currentchar]) + "%";      
+        basicbuttonnumber.text = Statics.charbasicskillpoints[currentchar].ToString();
     }
 }

@@ -96,6 +96,7 @@ public class Movescript : MonoBehaviour
 
     //Spells
     public Healingscript healingscript;
+    public EleAbilities eleAbilities;
     public LayerMask spellsdmglayer;
     public GameObject damagetext;
     [NonSerialized] public Vector3 startpos;
@@ -163,6 +164,7 @@ public class Movescript : MonoBehaviour
         animator = GetComponent<Animator>();
         healingscript = GetComponent<Healingscript>();
         playerhp = GetComponent<Playerhp>();
+        eleAbilities = GetComponent<EleAbilities>();
         state = State.Air;
         starttime = Time.time;
         Statics.normalgamespeed = 1;
@@ -354,7 +356,7 @@ public class Movescript : MonoBehaviour
     {
         if(playerhp.playerisdead == false)
         {
-            Physics.IgnoreLayerCollision(6, 6, false);
+            Physics.IgnoreLayerCollision(11, 6, false);
             Physics.IgnoreLayerCollision(8, 6, false);
             ChangeAnimationState(idlestate);
             attackonceair = true;
@@ -364,7 +366,7 @@ public class Movescript : MonoBehaviour
     }
     public void switchtoairstate()
     {
-        Physics.IgnoreLayerCollision(6, 6);
+        Physics.IgnoreLayerCollision(11, 6);
         Physics.IgnoreLayerCollision(8, 6);
         state = State.Air;
     }

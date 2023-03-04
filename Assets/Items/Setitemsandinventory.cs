@@ -10,20 +10,21 @@ public class Setitemsandinventory : MonoBehaviour
     [SerializeField] private Fistobject[] fistitems;
     [SerializeField] private Headobject[] headitems;
     [SerializeField] private Chestobject[] chestitems;
-    [SerializeField] private Beltobject[] glovesitems;
+    [SerializeField] private Beltobject[] beltitems;
     [SerializeField] private Legsobject[] legitems;
     [SerializeField] private Shoesobject[] shoesitems;
     [SerializeField] private Necklaceobject[] necklessitems;
     [SerializeField] private Ringobject[] ringitems;
     [SerializeField] private Craftingobject[] craftingitems;
 
-/*#if UNITY_EDITOR
     private void Awake()
     {
+/*#if UNITY_EDITOR
         resetitems();
         resetinventorys();
-    }
 #endif*/
+    }
+
     public void resetitems()
     {
         resetitemvalues(sworditems);
@@ -31,7 +32,7 @@ public class Setitemsandinventory : MonoBehaviour
         resetitemvalues(fistitems);
         resetitemvalues(headitems);
         resetitemvalues(chestitems);
-        resetitemvalues(glovesitems);
+        resetitemvalues(beltitems);
         resetitemvalues(legitems);
         resetitemvalues(shoesitems);
         resetitemvalues(necklessitems);

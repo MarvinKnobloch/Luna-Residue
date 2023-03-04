@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface Rewardinterface
 {
-    public void checkforreward();
-
+    public void addrewardcount();
+    public void removerewardcount();
 }

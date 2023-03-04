@@ -15,7 +15,6 @@ public class Npcshop : MonoBehaviour
     }
     private void OnEnable()
     {
-
         cam.gameObject.SetActive(false);
         Time.timeScale = 0f;
         npcshopui.GetComponent<Npcshopcontroller>().npcshopitems.Clear();

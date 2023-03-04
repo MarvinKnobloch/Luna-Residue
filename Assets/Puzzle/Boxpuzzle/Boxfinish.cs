@@ -7,9 +7,9 @@ public class Boxfinish : MonoBehaviour
 {
     [SerializeField] private GameObject requiredcube;
     public Color finishcolor;
-    public bool finish;
 
-    public static event Action checkforbridge;
+    [SerializeField] private GameObject reward;
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject == requiredcube)
@@ -23,14 +23,12 @@ public class Boxfinish : MonoBehaviour
         {
             CancelInvoke();
             requiredcube.GetComponent<Renderer>().material.color = Color.white;
-            finish = false;
-            checkforbridge?.Invoke();
+            reward.GetComponent<Rewardinterface>().removerewardcount();
         }
     }
     private void checkforposi()
     {
         requiredcube.GetComponent<Renderer>().material.color = finishcolor;
-        finish = true;
-        checkforbridge?.Invoke();
+        reward.GetComponent<Rewardinterface>().addrewardcount();
     }
 }

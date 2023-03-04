@@ -11,12 +11,12 @@ public class Npcdialogue : MonoBehaviour
 
     [SerializeField] private GameObject npcdialogueui;
     [SerializeField] private TextMeshProUGUI dialoguetext;
-    [TextArea] [SerializeField] private string[] dialogue;
+    [TextArea] [SerializeField] public string[] dialogue;
     private int dialogueindex;
 
-    [SerializeField] private bool interaction;
+    public bool interaction;
     [SerializeField] private TextMeshProUGUI npcinteraction;
-    [SerializeField] private string interactiontext;
+    public string interactiontext;
     [SerializeField] private MonoBehaviour interactionscript;
 
     private string interactionhotkeyname;

@@ -138,10 +138,11 @@ public class Fistattack : MonoBehaviour
                 movementscript.attackcombochain = 0;
             }
         }
-        else if (movementscript.state == Movescript.State.Air)
+        else if (movementscript.airattackminheight == true)
         {
-            if (controlls.Player.Attack1.WasPressedThisFrame() && movementscript.airattackminheight == true && movementscript.attackonceair == true && Statics.otheraction == false)// && Statics.infight == true)
+            if (controlls.Player.Attack1.WasPressedThisFrame() && movementscript.attackonceair == true && Statics.otheraction == false)// && Statics.infight == true)
             {
+                eleAbilities.stopignorelayers();
                 movementscript.state = Movescript.State.Meleeairattack;
                 attackestate = Attackstate.attack1;
                 movementscript.graviti = 0f;
@@ -365,14 +366,12 @@ public class Fistattack : MonoBehaviour
     {
         if (movementscript.state != Movescript.State.Meleeairattack) return;
         root = true;
-        Physics.IgnoreLayerCollision(6, 6);             //player und enemy collision
-        Physics.IgnoreLayerCollision(8, 6);
+        eleAbilities.ignorelayers();
     }
     private void fistairdownend()
     {
         if (movementscript.state != Movescript.State.Meleeairattack) return;
-        Physics.IgnoreLayerCollision(6, 6, false);
-        Physics.IgnoreLayerCollision(8, 6, false);
+        eleAbilities.stopignorelayers();
         root = false;
         if (readattackinput == false && movementscript.attackcombochain < 2)
         {
