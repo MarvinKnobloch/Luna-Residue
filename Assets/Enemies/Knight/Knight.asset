@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: Knight
   m_EditorClassIdentifier: 
   enemyname: Knight
-  maxhealth: 1000
-  enemylvl: 12
+  basehealth: 329
+  enemylvl: 1
   movementspeed: 8
-  attackdmg: 12
-  attackspeed: 2
+  basedmg: 11
+  attackspeed: 2.2
   enemysize: 2
+  gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}
+  golddropamount: 3
+  expgain: 12
+  enemydrops:
+  - itemtodrop: {fileID: 146544890995016924, guid: a4d08ba99059ae54fbbd079e96b0a165, type: 3}
+    itemdropchance: 10

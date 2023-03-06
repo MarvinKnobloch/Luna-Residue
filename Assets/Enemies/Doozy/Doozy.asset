@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: Doozy
   m_EditorClassIdentifier: 
   enemyname: Doozy
-  maxhealth: 700
-  enemylvl: 11
+  basehealth: 324
+  enemylvl: 1
   movementspeed: 8
-  attackdmg: 11
+  basedmg: 10
   attackspeed: 2.1
   enemysize: 0
+  gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}
+  golddropamount: 4
+  expgain: 11
+  enemydrops:
+  - itemtodrop: {fileID: 146544890995016924, guid: d78053eb3815f3e43b685936e4a33cea, type: 3}
+    itemdropchance: 10

@@ -9,6 +9,7 @@ namespace setplattforms
         string Interactioninterface.Interactiontext => "Start";
 
         [SerializeField] private GameObject nextpillar;
+        [SerializeField] private GameObject reward;
         [SerializeField] private GameObject startcollider;
 
         [SerializeField] private GameObject[] currentplattforms;
@@ -30,7 +31,6 @@ namespace setplattforms
 
         [SerializeField] private GameObject[] portals;
         [SerializeField] private GameObject[] portalendposi;
-
 
         public bool Interact(Closestinteraction interactor)
         {
@@ -134,8 +134,15 @@ namespace setplattforms
             {
                 form.GetComponent<Renderer>().material.color = Color.black;
             }
+            if(reward != null)
+            {
+                reward.GetComponent<Rewardinterface>().addrewardcount();
+            }
+            else
+            {
+                nextpillar.SetActive(true);
+            }
             gameObject.SetActive(false);
-            nextpillar.SetActive(true);
         }
         private void resetpillars()
         {
