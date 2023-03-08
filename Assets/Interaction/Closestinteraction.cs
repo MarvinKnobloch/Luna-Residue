@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using UnityEngine.UI;
+using TMPro;
 
 public class Closestinteraction : MonoBehaviour
 {
@@ -12,6 +12,7 @@ public class Closestinteraction : MonoBehaviour
     private SpielerSteu Steuerung;
 
     [SerializeField] private GameObject interactionfield;
+    [SerializeField] private TextMeshProUGUI interactiontext;
 
     private void Awake()
     {
@@ -37,7 +38,7 @@ public class Closestinteraction : MonoBehaviour
             if (closestinteraction != null)
             {
                 Interactioninterface interactable = closestinteraction.GetComponent<Interactioninterface>();
-                interactionfield.GetComponentInChildren<Text>().text = interactable.Interactiontext;
+                interactiontext.text = interactable.Interactiontext;
 
                 if (interactable !=null && Steuerung.Player.Interaction.WasPerformedThisFrame() && LoadCharmanager.gameispaused == false && Statics.infight == false && LoadCharmanager.interaction == false)
                 {

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Insertitem : MonoBehaviour, Interactioninterface
 {
+    [SerializeField] private Areacontroller areacontroller;
+    public int areapuzzlenumber;
+
     [SerializeField] private GameObject activateobject;
 
     [SerializeField] private string interactiontext;
@@ -11,26 +14,40 @@ public class Insertitem : MonoBehaviour, Interactioninterface
     [SerializeField] private Itemcontroller neededitem;
     [SerializeField] private int neededitemamount;
 
-    public string Interactiontext => text();
-    public string text()
+    public string Interactiontext => textupdate();
+    public string textupdate()
     {
+        string text;
         if(neededitem.inventoryslot == 0)
         {
-            string text = interactiontext + " " + 0 + "/" + neededitemamount + " " + neededitem.name;
-            return text;
+            text = interactiontext + " " + 0 + "/" + neededitemamount + " " + neededitem.name;
         }
         else
         {
-            string text = interactiontext + " " + inventory.Container.Items[neededitem.inventoryslot].amount
+            if(inventory.Container.Items[neededitem.inventoryslot].amount >= neededitemamount)
+            {
+                text = interactiontext + " " + "<color=green>" + inventory.Container.Items[neededitem.inventoryslot].amount + "</color>"
                    + "/" + neededitemamount + " " + neededitem.name;
-            return text;
+            }
+            else
+            {
+                text = interactiontext + " " + "<color=red>" + inventory.Container.Items[neededitem.inventoryslot].amount + "</color>"
+                              + "/" + neededitemamount + " " + neededitem.name;
+            }           
         }
+        return text;
     }
     public bool Interact(Closestinteraction interactor)
     {
-        if(inventory.Container.Items[neededitem.inventoryslot].amount >= neededitemamount)
+        if (areacontroller.enemychestisopen[areapuzzlenumber] == false)
         {
-            activateobject.SetActive(true);
+            if (inventory.Container.Items[neededitem.inventoryslot].amount >= neededitemamount)
+            {
+                inventory.Container.Items[neededitem.inventoryslot].amount -= neededitemamount;
+                activateobject.SetActive(true);
+                areacontroller.enemychestcanopen[areapuzzlenumber] = true;
+                areacontroller.autosave();
+            }
         }
         return true;
     }
