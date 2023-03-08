@@ -18,7 +18,8 @@ public class Healingscript : MonoBehaviour
     private bool readinputs;
     public InputAction[] hotkeys;
     public Text[] buttons;
-    public Text[] WASD;
+    private string[] healhotkeys = new string[4];
+    //public Text[] WASD;
     public Image[] buttonimage;
     public int[] randomkeys;
     private int currentinput;
@@ -63,10 +64,10 @@ public class Healingscript : MonoBehaviour
 
     private void Start()
     {
-        WASD[0].text = controlls.SpielerHeal.Randomhotkey1.GetBindingDisplayString();
-        WASD[1].text = controlls.SpielerHeal.Randomhotkey2.GetBindingDisplayString();
-        WASD[2].text = controlls.SpielerHeal.Randomhotkey3.GetBindingDisplayString();
-        WASD[3].text = controlls.SpielerHeal.Randomhotkey4.GetBindingDisplayString();
+        healhotkeys[0] = controlls.SpielerHeal.Randomhotkey1.GetBindingDisplayString();
+        healhotkeys[1] = controlls.SpielerHeal.Randomhotkey2.GetBindingDisplayString();
+        healhotkeys[2] = controlls.SpielerHeal.Randomhotkey3.GetBindingDisplayString();
+        healhotkeys[3] = controlls.SpielerHeal.Randomhotkey4.GetBindingDisplayString();
         hotkeys[0] = controlls.SpielerHeal.Randomhotkey1;
         hotkeys[1] = controlls.SpielerHeal.Randomhotkey2;
         hotkeys[2] = controlls.SpielerHeal.Randomhotkey3;
@@ -197,9 +198,9 @@ public class Healingscript : MonoBehaviour
         randomkeys[0] = Random.Range(0, hotkeys.Length);                           // bei 1, 4 geht es nur von 1 bis 3, wieso auch immer
         randomkeys[1] = Random.Range(0, hotkeys.Length);
         randomkeys[2] = Random.Range(0, hotkeys.Length);
-        buttons[0].text = WASD[randomkeys[0]].text;
-        buttons[1].text = WASD[randomkeys[1]].text;
-        buttons[2].text = WASD[randomkeys[2]].text;
+        buttons[0].text = healhotkeys[randomkeys[0]];
+        buttons[1].text = healhotkeys[randomkeys[1]];
+        buttons[2].text = healhotkeys[randomkeys[2]];
         if (attributecontroller.ishealerclassroll == true)
         {
             buttonimage[3].gameObject.SetActive(true);
@@ -219,10 +220,10 @@ public class Healingscript : MonoBehaviour
             randomkeys[4] = Random.Range(0, hotkeys.Length);
             randomkeys[5] = Random.Range(0, hotkeys.Length);
             randomkeys[6] = Random.Range(0, hotkeys.Length);
-            buttons[3].text = WASD[randomkeys[3]].text;
-            buttons[4].text = WASD[randomkeys[4]].text;
-            buttons[5].text = WASD[randomkeys[5]].text;
-            buttons[6].text = WASD[randomkeys[6]].text;
+            buttons[3].text = healhotkeys[randomkeys[3]];
+            buttons[4].text = healhotkeys[randomkeys[4]];
+            buttons[5].text = healhotkeys[randomkeys[5]];
+            buttons[6].text = healhotkeys[randomkeys[6]];
         }
         else
         {

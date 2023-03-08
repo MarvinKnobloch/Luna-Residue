@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Expmanager : MonoBehaviour
 {
     private SpielerSteu controlls;
     private HealthUImanager healthUImanager;
 
-    public Image[] expbar;
+    [SerializeField] private Image expbar;
+    [SerializeField] private TextMeshProUGUI exptext;
 
     [Range(1f, 300f)]
     public float flatexpnumber = 200;                                     // erhöht die benötigte exp für jedes lvl gleich, um so niederiger die zahl um so weniger exp braucht man zum lvln
@@ -52,20 +54,18 @@ public class Expmanager : MonoBehaviour
         }
         else
         {
-            float levelprozent = Statics.charcurrentexp / Statics.charrequiredexp;
-            foreach (Image bar in expbar)
+            float levelpercentage = Statics.charcurrentexp / Statics.charrequiredexp;
+            float currentexp = expbar.fillAmount;
+            if (currentexp < levelpercentage)
             {
-                float currentexpbar = bar.fillAmount;
-                if (currentexpbar < levelprozent)
-                {
-                    bar.fillAmount = levelprozent;
-                }
-                if (currentexpbar > levelprozent)
-                {
-                    bar.fillAmount = levelprozent;
-                }
+                expbar.fillAmount = levelpercentage;
             }
-        }
+            if (currentexp > levelpercentage)
+            {
+                expbar.fillAmount = levelpercentage;
+            }
+            exptext.text = "Group Level " + Statics.charcurrentlvl;
+        }      
     }
     private void levelup()
     {
@@ -83,10 +83,7 @@ public class Expmanager : MonoBehaviour
         checkforguard(Statics.currentthirdchar, 2);
         checkforguard(Statics.currentforthchar, 3);
 
-        foreach (Image bar in expbar)
-        {
-            bar.fillAmount = 0f;
-        }
+        expbar.fillAmount = 0f;
         Statics.charcurrentexp = Mathf.RoundToInt(Statics.charcurrentexp - Statics.charrequiredexp);
         Statics.charrequiredexp = calculaterequiredexp();
     }
