@@ -22,7 +22,7 @@ public class LoadCharmanager : MonoBehaviour
     public GameObject[] teammates;
     public static GameObject Overallthirdchar;
     public static GameObject Overallforthchar;
-    public static Vector3 savemainposi = new Vector3(15, 32, 687); //new Vector3(-51,23, 380);          //new Vector3(116, 17, 707);        new Vector3(15,32,687);
+    public static Vector3 savemainposi = new Vector3(-20,38, 420);          //new Vector3(116, 17, 707);        new Vector3(15,32,687);
     public static Quaternion savemainrota;                                  
     public static float savecamvalueX;                                          
 
@@ -177,7 +177,7 @@ public class LoadCharmanager : MonoBehaviour
         classandstatsupdate(Statics.currentsecondchar, allcharacters);
         classandstatsupdate(Statics.currentthirdchar, teammates);
         classandstatsupdate(Statics.currentforthchar, teammates);
-        GetComponent<HealthUImanager>().sethealthbars();
+        GetComponent<Healthuimanager>().sethealthbars();
 
         setweapons?.Invoke();
 

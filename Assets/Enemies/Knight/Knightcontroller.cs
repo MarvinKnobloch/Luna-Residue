@@ -16,8 +16,8 @@ public class Knightcontroller : MonoBehaviour
     {
         foreach (GameObject wave in waves)
         {
-            wave.GetComponent<Wavescript>().basedmg = wavedmg;
-            wave.GetComponent<Wavescript>().speed = wavespeed;
+            wave.GetComponent<Knightwavecontroller>().basedmg = wavedmg;
+            wave.GetComponent<Knightwavecontroller>().speed = wavespeed;
         }
     }
     private void OnEnable()
@@ -31,20 +31,20 @@ public class Knightcontroller : MonoBehaviour
         Ray nachunten = new Ray(LoadCharmanager.Overallmainchar.transform.position, Vector3.down * 10);
         if (Physics.Raycast(nachunten, out hit))
         {
-            maincharposi.y = hit.point.y;
+            maincharposi.y = hit.point.y + 1;
         }
         waves[0].transform.position = maincharposi + LoadCharmanager.Overallmainchar.transform.forward * 20;
         waves[0].transform.rotation = LoadCharmanager.Overallmainchar.transform.rotation;
-        waves[0].GetComponent<Wavescript>().endposi = maincharposi + LoadCharmanager.Overallmainchar.transform.forward * -20;
+        waves[0].GetComponent<Knightwavecontroller>().endposi = maincharposi + LoadCharmanager.Overallmainchar.transform.forward * -20;
         waves[1].transform.position = maincharposi + LoadCharmanager.Overallmainchar.transform.forward * -20;
         waves[1].transform.rotation = LoadCharmanager.Overallmainchar.transform.rotation;
-        waves[1].GetComponent<Wavescript>().endposi = maincharposi + LoadCharmanager.Overallmainchar.transform.forward * 20;
+        waves[1].GetComponent<Knightwavecontroller>().endposi = maincharposi + LoadCharmanager.Overallmainchar.transform.forward * 20;
         waves[2].transform.position = maincharposi + LoadCharmanager.Overallmainchar.transform.right * 20;
         waves[2].transform.rotation = LoadCharmanager.Overallmainchar.transform.rotation;
-        waves[2].GetComponent<Wavescript>().endposi = maincharposi + LoadCharmanager.Overallmainchar.transform.right * -20;
+        waves[2].GetComponent<Knightwavecontroller>().endposi = maincharposi + LoadCharmanager.Overallmainchar.transform.right * -20;
         waves[3].transform.position = maincharposi + LoadCharmanager.Overallmainchar.transform.right * -20;
         waves[3].transform.rotation = LoadCharmanager.Overallmainchar.transform.rotation;
-        waves[3].GetComponent<Wavescript>().endposi = maincharposi + LoadCharmanager.Overallmainchar.transform.right * 20;
+        waves[3].GetComponent<Knightwavecontroller>().endposi = maincharposi + LoadCharmanager.Overallmainchar.transform.right * 20;
         Invoke("wave1", 0.5f);
     }
     private void wave1()
@@ -72,7 +72,7 @@ public class Knightcontroller : MonoBehaviour
         {
             nextwave++;
         }
-        Invoke("wave3", 1f);
+        Invoke("wave4", 1f);
     }
     private void wave3()
     {
@@ -95,8 +95,6 @@ public class Knightcontroller : MonoBehaviour
     private void turnoff()
     {
         LoadCharmanager.Overallmainchar.GetComponent<Movescript>().movementspeed = Statics.playermovementspeed;
-        Statics.resetvaluesondeathorstun = false;
-        Statics.otheraction = false;
         Statics.dash = false;
         gameObject.SetActive(false);
     }

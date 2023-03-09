@@ -58,12 +58,12 @@ public class Doozycontroller : MonoBehaviour
         Mouseactivate.enablemouse();
         LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtostun();
         Statics.enemyspezialtimescale = true;
-        Time.timeScale = 0.5f;
-        Time.fixedDeltaTime = Statics.normaltimedelta * 0.5f;
+        Time.timeScale = 0.3f;
+        Time.fixedDeltaTime = Statics.normaltimedelta * 0.3f;
         maincam.m_YAxis.m_MaxSpeed = 0;
         maincam.m_XAxis.m_MaxSpeed = 0;
         secondgrid.SetActive(true);
-        Invoke("dealdmg", 3.5f);
+        Invoke("dealdmg", 2f);
     }
     public void fail()
     {
@@ -71,7 +71,7 @@ public class Doozycontroller : MonoBehaviour
         Invoke("dealdmg", 0.4f);
     }
     private void dealdmg()
-    {
+    {       
         LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
         dmgcount = 5 - memoryclicknumber;
         LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(dmgcount * basedmg);

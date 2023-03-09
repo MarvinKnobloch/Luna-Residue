@@ -95,7 +95,6 @@ public class Healingscript : MonoBehaviour
     {
         if (Statics.healcdbool == false && LoadCharmanager.disableattackbuttons == false)
         {
-            //if (movementscript.amBoden == true)
             if (readinputs == true)
             {
                 if (Input.anyKeyDown && failinputbool == false)

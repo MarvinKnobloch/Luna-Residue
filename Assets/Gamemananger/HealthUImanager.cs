@@ -5,16 +5,15 @@ using UnityEngine.UI;
 using TMPro;
 
 
-public class HealthUImanager : MonoBehaviour
+public class Healthuimanager : MonoBehaviour
 {
     [SerializeField] internal Expmanager handlesecondexp;
 
     private int[] chars = new int[4];
     [SerializeField] private GameObject[] playerui;
-    [SerializeField] private Text[] playernames;
+    [SerializeField] private TextMeshProUGUI[] playernames;
     [SerializeField] private Image[] healthbars;
     [SerializeField] private TextMeshProUGUI[] healthtexts;
-    [SerializeField] private Image[] expbars;
 
     public void sethealthbars()
     {

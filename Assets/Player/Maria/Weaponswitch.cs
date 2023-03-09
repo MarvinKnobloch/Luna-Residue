@@ -13,12 +13,15 @@ public class Weaponswitch : MonoBehaviour
     [SerializeField] private MonoBehaviour[] weaponscripts;
     [SerializeField] private RuntimeAnimatorController[] weaponanimation;
 
+    private Movescript movescript;
+
     private int firstweapon;
     private int secondweapon;
     private bool mainweaponactiv;
     void Awake()
     {
         animator = GetComponent<Animator>();
+        movescript = GetComponent<Movescript>();
         controlls = Keybindinputmanager.inputActions;
     }
     private void OnEnable()
@@ -36,6 +39,7 @@ public class Weaponswitch : MonoBehaviour
         {
             if (controlls.Player.Weaponchange.WasPerformedThisFrame() && Statics.otheraction == false && Statics.weapsonswitchbool == false)
             {
+                movescript.checkforcamstate();
                 Statics.otheraction = true;
                 if (mainweaponactiv == true)
                 {
@@ -62,6 +66,7 @@ public class Weaponswitch : MonoBehaviour
         GlobalCD.startweaponswitchcd();
         GlobalCD.startweaponswitchbuff(charnumber);
         Statics.otheraction = false;
+        movescript.state = Movescript.State.Air;
     }
     private void spawnsecondweapon()
     {
@@ -76,6 +81,7 @@ public class Weaponswitch : MonoBehaviour
         GlobalCD.startweaponswitchcd();
         GlobalCD.startweaponswitchbuff(charnumber); 
         Statics.otheraction = false;
+        movescript.state = Movescript.State.Air;
     }
 
 

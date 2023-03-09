@@ -46,7 +46,7 @@ public class Charswitch : MonoBehaviour
     private void switchtosecondchar()
     {
         switchvalues();
-        GetComponent<HealthUImanager>().switchtosecond();
+        GetComponent<Healthuimanager>().switchtosecond();
         GlobalCD.currentcharswitchchar = Statics.currentsecondchar;
         GlobalCD.startcharswitch();
         ability1.color = Statics.spellcolors[3];
@@ -65,7 +65,7 @@ public class Charswitch : MonoBehaviour
     private void switchtomainchar()
     {
         switchvalues();
-        GetComponent<HealthUImanager>().switchtomain();
+        GetComponent<Healthuimanager>().switchtomain();
         GlobalCD.currentcharswitchchar = Statics.currentfirstchar;
         GlobalCD.startcharswitch();
         ability1.color = Statics.spellcolors[0];

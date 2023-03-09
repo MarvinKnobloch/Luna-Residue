@@ -10,7 +10,7 @@ public class Playerhp : MonoBehaviour
     public float maxhealth;
     [NonSerialized] public bool playerisdead;
     public int playerhpuislot;
-    [SerializeField] HealthUImanager healthUImanager;
+    [SerializeField] Healthuimanager healthUImanager;
     private Attributecontroller attributecontroller;
 
     public static event Action triggergameover;

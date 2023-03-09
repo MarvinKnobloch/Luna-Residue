@@ -7,7 +7,7 @@ using TMPro;
 public class Expmanager : MonoBehaviour
 {
     private SpielerSteu controlls;
-    private HealthUImanager healthUImanager;
+    private Healthuimanager healthUImanager;
 
     [SerializeField] private Image expbar;
     [SerializeField] private TextMeshProUGUI exptext;
@@ -23,7 +23,7 @@ public class Expmanager : MonoBehaviour
     void Awake()
     {
         controlls = new SpielerSteu();
-        healthUImanager = GetComponent<HealthUImanager>();
+        healthUImanager = GetComponent<Healthuimanager>();
     }
     private void OnEnable()
     {

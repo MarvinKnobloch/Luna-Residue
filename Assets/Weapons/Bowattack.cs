@@ -216,6 +216,7 @@ public class Bowattack : MonoBehaviour
                     shotairbasicarrow();
                     movementscript.ChangeAnimationStateInstant(bowairreleasestate);
                     readattackinput = false;
+                    Statics.otheraction = true;
                 }
             }
             else
@@ -225,6 +226,7 @@ public class Bowattack : MonoBehaviour
                     movementscript.attackcombochain++;
                     movementscript.ChangeAnimationState(airdownstate);
                     readattackinput = false;
+                    Statics.otheraction = true;
                 }
                 else if (controlls.Player.Attack2.WasPressedThisFrame())
                 {
@@ -233,6 +235,7 @@ public class Bowattack : MonoBehaviour
                     shotairmidarrow();
                     movementscript.ChangeAnimationState(airmidstate);
                     readattackinput = false;
+                    Statics.otheraction = true;
                 }
                 else if (controlls.Player.Attack3.WasPressedThisFrame())
                 {
@@ -241,6 +244,7 @@ public class Bowattack : MonoBehaviour
                     shotairuparrow();
                     movementscript.ChangeAnimationState(airupstate);
                     readattackinput = false;
+                    Statics.otheraction = true;
                 }
             }
         }
@@ -289,18 +293,6 @@ public class Bowattack : MonoBehaviour
             }
         }
     }
-    /*private void airattackchaininput()
-    {
-        if (readattackinput == true && movementscript.attackcombochain < 2)
-        {
-            if (controlls.Player.Attack1.WasPressedThisFrame())
-            {
-                attackestate = Attackstate.bowairattack;
-                readattackinput = false;
-                movementscript.ChangeAnimationStateInstant(bowairchargestate);
-            }
-        }
-    }*/
     private void shotweaponswitcharrow()
     {
         if (readattackinput == true)
@@ -464,6 +456,7 @@ public class Bowattack : MonoBehaviour
     {
         if (movementscript.state != Movescript.State.Attackweaponaim) return;
         movementscript.ChangeAnimationState(bowairchargestate);
+        Statics.otheraction = false;
     }
 
     private void bowairhold()
@@ -475,7 +468,11 @@ public class Bowattack : MonoBehaviour
     private void checkforaircombo()
     {
         if (movementscript.state != Movescript.State.Attackweaponaim) return;
-        if (movementscript.attackcombochain < 2) movementscript.ChangeAnimationState(bowairchargestate);
+        if (movementscript.attackcombochain < 2)
+        {
+            movementscript.ChangeAnimationState(bowairchargestate);
+            Statics.otheraction = false;
+        }
         else airattackchainend();
     }
     private void startbowair3intoground()

@@ -379,14 +379,17 @@ public class Movescript : MonoBehaviour
     public void slowplayer(float slowmovementspeed)
     {
         movementspeed = slowmovementspeed;
-        state = State.Ground;
+        //state = State.Ground;
     }
     public void switchtostun()
     {
-        ChangeAnimationStateInstant(dazestate);
-        state = State.Stun;
-        Statics.dash = true;
-        Statics.resetvaluesondeathorstun = true;
+        if (playerhp.playerisdead == false)
+        {
+            ChangeAnimationStateInstant(dazestate);
+            state = State.Stun;
+            Statics.dash = true;
+            Statics.resetvaluesondeathorstun = true;
+        }
     }
     public void resurrected() => playerheal.resurrected();
     private void playerstandup() => playerheal.playerstandup();
@@ -424,6 +427,13 @@ public class Movescript : MonoBehaviour
         Charrig.enabled = false;
         mousetarget.SetActive(false);
         Cam2.gameObject.SetActive(false);
+    }
+    public void checkforcamstate()
+    {
+        if (Cam2.gameObject.activeSelf == true)
+        {
+            disableaimcam();
+        }
     }
     private void bowoutofcombatfullcharged() => playerbow.arrowfullcharge();
     private void bowoutofcombatnextarrow() => playerbow.nextarrow();
