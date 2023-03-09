@@ -74,21 +74,25 @@ public class Enemypatrol
             esm.checkforplayertimer = 0;
             if (Vector3.Distance(esm.transform.position, LoadCharmanager.Overallmainchar.transform.position) < esm.aggrorangecheck)
             {
-                if (!Infightcontroller.infightenemylists.Contains(esm.transform.gameObject))
+                NavMeshPath path = new NavMeshPath();
+                if (esm.Meshagent.CalculatePath(LoadCharmanager.Overallmainchar.transform.position, path))
                 {
-                    Infightcontroller.infightenemylists.Add(esm.transform.gameObject);
-                    int enemycount = Infightcontroller.infightenemylists.Count;
-                    Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
-                    if (Infightcontroller.infightenemylists.Count == 1)
+                    if (!Infightcontroller.infightenemylists.Contains(esm.transform.gameObject))
                     {
-                        Infightcontroller.checkifinfight();
+                        Infightcontroller.infightenemylists.Add(esm.transform.gameObject);
+                        int enemycount = Infightcontroller.infightenemylists.Count;
+                        Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
+                        if (Infightcontroller.infightenemylists.Count == 1)
+                        {
+                            Infightcontroller.checkifinfight();
+                        }
+                        triggerotherenemiesinrange();
                     }
-                    triggerotherenemiesinrange();
+                    esm.currenttarget = LoadCharmanager.Overallmainchar;
+                    esm.Meshagent.speed = esm.normalnavspeed;
+                    esm.normalattacktimer = esm.normalattackcd;
+                    esm.state = Enemymovement.State.gettomeleerange;
                 }
-                esm.currenttarget = LoadCharmanager.Overallmainchar;
-                esm.Meshagent.speed = esm.normalnavspeed;
-                esm.normalattacktimer = esm.normalattackcd;
-                esm.state = Enemymovement.State.gettomeleerange;
             }
         }
     }

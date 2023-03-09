@@ -17,38 +17,49 @@ public class Insertitem : MonoBehaviour, Interactioninterface
     public string Interactiontext => textupdate();
     public string textupdate()
     {
-        string text;
-        if(neededitem.inventoryslot == 0)
+        if (areacontroller.questcomplete[areapuzzlenumber] == false)
         {
-            text = interactiontext + " " + 0 + "/" + neededitemamount + " " + neededitem.name;
-        }
-        else
-        {
-            if(inventory.Container.Items[neededitem.inventoryslot].amount >= neededitemamount)
+            string text;
+            if (neededitem.inventoryslot == 0)
             {
-                text = interactiontext + " " + "<color=green>" + inventory.Container.Items[neededitem.inventoryslot].amount + "</color>"
-                   + "/" + neededitemamount + " " + neededitem.name;
+                text = interactiontext + " " + "<color=red>" + "0" + "</color>" + "/" + neededitemamount + " " + neededitem.name;
             }
             else
             {
-                text = interactiontext + " " + "<color=red>" + inventory.Container.Items[neededitem.inventoryslot].amount + "</color>"
-                              + "/" + neededitemamount + " " + neededitem.name;
-            }           
+                if (inventory.Container.Items[neededitem.inventoryslot].amount >= neededitemamount)
+                {
+                    text = interactiontext + " " + "<color=green>" + inventory.Container.Items[neededitem.inventoryslot].amount + "</color>"
+                       + "/" + neededitemamount + " " + neededitem.name;
+                }
+                else
+                {
+                    text = interactiontext + " " + "<color=red>" + inventory.Container.Items[neededitem.inventoryslot].amount + "</color>"
+                                  + "/" + neededitemamount + " " + neededitem.name;
+                }
+            }
+            return text;
         }
-        return text;
+        else return "";
     }
     public bool Interact(Closestinteraction interactor)
     {
-        if (areacontroller.enemychestisopen[areapuzzlenumber] == false)
+        if (neededitem.inventoryslot == 0)
         {
-            if (inventory.Container.Items[neededitem.inventoryslot].amount >= neededitemamount)
-            {
-                inventory.Container.Items[neededitem.inventoryslot].amount -= neededitemamount;
-                activateobject.SetActive(true);
-                areacontroller.enemychestcanopen[areapuzzlenumber] = true;
-                areacontroller.autosave();
-            }
+            return true;
         }
-        return true;
+        else
+        {
+            if (areacontroller.questcomplete[areapuzzlenumber] == false)
+            {
+                if (inventory.Container.Items[neededitem.inventoryslot].amount >= neededitemamount)
+                {
+                    inventory.Container.Items[neededitem.inventoryslot].amount -= neededitemamount;
+                    activateobject.SetActive(true);
+                    areacontroller.questcomplete[areapuzzlenumber] = true;
+                    areacontroller.autosave();
+                }
+            }
+            return true;
+        }
     }
 }

@@ -7,7 +7,6 @@ public class Knightspezial : MonoBehaviour
     [SerializeField] private GameObject knightcontroller;
 
     const string spezial2attackstate = "Spezial2";
-    const string slowdazestate = "Slowdaze";
 
     private void secondani()
     {
@@ -16,8 +15,6 @@ public class Knightspezial : MonoBehaviour
     private void knightspezial()
     {
         knightcontroller.SetActive(true);
-        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().slowplayer(4);
-        Statics.resetvaluesondeathorstun = true;
         Statics.dash = true;
     }
 }

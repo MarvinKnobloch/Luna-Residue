@@ -12,6 +12,7 @@ public class Infightcontroller : MonoBehaviour
     public static List<GameObject> infightenemylists = new List<GameObject>();
 
     public static float teammatesdespawntime = 5;
+    //private int maxhealticks;
     public float spezialtimer;
 
     [SerializeField] private GameObject gameovercontroller;
@@ -75,42 +76,12 @@ public class Infightcontroller : MonoBehaviour
             }
         }
     }
-    public void disablechars()
-    {
-        if (LoadCharmanager.Overallthirdchar != null)
-        {
-            if (LoadCharmanager.Overallthirdchar.TryGetComponent(out Playerhp playerhp))
-            {
-                if(playerhp.playerisdead == true)
-                {
-                    playerhp.playerisdead = false;
-                    playerhp.health = 1;
-                }
-                playerhp.addhealth(Mathf.Round(Statics.charmaxhealth[Statics.currentthirdchar] * 0.1f));
-            }
-            LoadCharmanager.Overallthirdchar.SetActive(false);
-        }
-        if (LoadCharmanager.Overallforthchar != null)
-        {
-            if (LoadCharmanager.Overallforthchar.TryGetComponent(out Playerhp playerhp))
-            {
-                if (playerhp.playerisdead == true)
-                {
-                    playerhp.playerisdead = false;
-                    playerhp.health = 1;
-                }
-                playerhp.addhealth(Mathf.Round(Statics.charmaxhealth[Statics.currentforthchar] * 0.1f));
-            }
-            LoadCharmanager.Overallforthchar.SetActive(false);
-        }
-        StartCoroutine("healalliesafterfight");
-    }
     IEnumerator enemyspezialcd()
     {
         while (true)
         {
             yield return new WaitForSeconds(Statics.currentenemyspecialcd);
-            if(LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == false)
+            if (LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == false)
             {
                 int enemyonlist = UnityEngine.Random.Range(1, infightenemylists.Count + 1);          //+ 1 weil random.range bei 1-2 immer nur 1 ausgibt
                 if (infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>())
@@ -120,15 +91,42 @@ public class Infightcontroller : MonoBehaviour
             }
         }
     }
+    public void disablechars()
+    {
+        rescharsafterfight(LoadCharmanager.Overallsecondchar, Statics.currentsecondchar);
+        rescharsafterfight(LoadCharmanager.Overallthirdchar, Statics.currentthirdchar);
+        rescharsafterfight(LoadCharmanager.Overallforthchar, Statics.currentforthchar);
+        if (LoadCharmanager.Overallthirdchar != null) LoadCharmanager.Overallthirdchar.SetActive(false);
+        if (LoadCharmanager.Overallforthchar != null) LoadCharmanager.Overallforthchar.SetActive(false);
+        StartCoroutine("healalliesafterfight");
+    }
+    private void rescharsafterfight(GameObject character, int slot)
+    {
+        if (character != null)
+        {
+            if (character.TryGetComponent(out Playerhp playerhp))
+            {
+                if (playerhp.playerisdead == true)
+                {
+                    playerhp.playerisdead = false;
+                    playerhp.health = 1;
+                }
+                playerhp.addhealth(Mathf.Round(Statics.charmaxhealth[slot] * 0.1f));
+            }
+        }
+    }
     IEnumerator healalliesafterfight()
     {
-        Playerhp charhp = LoadCharmanager.Overallmainchar.GetComponent<Playerhp>();
         int maxticks = 0;
         while (true)
         {
             yield return new WaitForSeconds(2);
             maxticks++;
-            charhp.addhealth(Mathf.Round(Statics.charmaxhealth[Statics.currentfirstchar] * 0.1f));
+            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().addhealth(Mathf.Round(Statics.charmaxhealth[Statics.currentfirstchar] * 0.1f));
+            if(LoadCharmanager.Overallsecondchar != null)
+            {
+                LoadCharmanager.Overallsecondchar.GetComponent<Playerhp>().addhealth(Mathf.Round(Statics.charmaxhealth[Statics.currentsecondchar] * 0.11f));
+            }
             if (LoadCharmanager.Overallthirdchar != null)
             {
                 LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().addhealth(Mathf.Round(Statics.charmaxhealth[Statics.currentthirdchar] * 0.11f));

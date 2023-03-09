@@ -13,7 +13,7 @@ public class Knightwavecollision : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == LoadCharmanager.Overallmainchar)
+        if (other.gameObject == LoadCharmanager.Overallmainchar && Statics.infight == true)
         {
             LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg);
         }

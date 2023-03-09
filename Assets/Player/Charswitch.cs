@@ -45,40 +45,46 @@ public class Charswitch : MonoBehaviour
     }
     private void switchtosecondchar()
     {
-        switchvalues();
-        GetComponent<Healthuimanager>().switchtosecond();
-        GlobalCD.currentcharswitchchar = Statics.currentsecondchar;
-        GlobalCD.startcharswitch();
-        ability1.color = Statics.spellcolors[3];
-        ability2.color = Statics.spellcolors[4];
-        if(Statics.characterclassroll[Statics.currentsecondchar] == 1)
+        if(LoadCharmanager.Overallsecondchar != null && LoadCharmanager.Overallsecondchar.GetComponent<Playerhp>().playerisdead == false)
         {
-            Statics.playertookdmgfromamount = 2;
-        }
-        else
-        {
-            Statics.playertookdmgfromamount = 1;
-        }
-        Statics.currentactiveplayer = 1;                                                     
+            switchvalues();
+            GetComponent<Healthuimanager>().switchtosecond();
+            GlobalCD.currentcharswitchchar = Statics.currentsecondchar;
+            GlobalCD.startcharswitch();
+            ability1.color = Statics.spellcolors[3];
+            ability2.color = Statics.spellcolors[4];
+            if (Statics.characterclassroll[Statics.currentsecondchar] == 1)
+            {
+                Statics.playertookdmgfromamount = 2;
+            }
+            else
+            {
+                Statics.playertookdmgfromamount = 1;
+            }
+            Statics.currentactiveplayer = 1;
+        }                                                  
     }
 
     private void switchtomainchar()
     {
-        switchvalues();
-        GetComponent<Healthuimanager>().switchtomain();
-        GlobalCD.currentcharswitchchar = Statics.currentfirstchar;
-        GlobalCD.startcharswitch();
-        ability1.color = Statics.spellcolors[0];
-        ability2.color = Statics.spellcolors[1];
-        if (Statics.characterclassroll[Statics.currentfirstchar] == 1)
+        if (LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == false)
         {
-            Statics.playertookdmgfromamount = 2;
+            switchvalues();
+            GetComponent<Healthuimanager>().switchtomain();
+            GlobalCD.currentcharswitchchar = Statics.currentfirstchar;
+            GlobalCD.startcharswitch();
+            ability1.color = Statics.spellcolors[0];
+            ability2.color = Statics.spellcolors[1];
+            if (Statics.characterclassroll[Statics.currentfirstchar] == 1)
+            {
+                Statics.playertookdmgfromamount = 2;
+            }
+            else
+            {
+                Statics.playertookdmgfromamount = 1;
+            }
+            Statics.currentactiveplayer = 0;
         }
-        else
-        {
-            Statics.playertookdmgfromamount = 1;
-        }
-        Statics.currentactiveplayer = 0;
     }
     private void switchvalues()
     {
@@ -96,6 +102,7 @@ public class Charswitch : MonoBehaviour
         aimcam.LookAt = LoadCharmanager.Overallmainchar.transform;
         aimcam.Follow = LoadCharmanager.Overallmainchar.transform;
         LoadCharmanager.Overallmainchar.gameObject.GetComponent<Playerhp>().playerhpuislot = 0;
+        LoadCharmanager.Overallsecondchar.gameObject.GetComponent<Playerhp>().playerhpuislot = 1;
         manacontroller.Managemana(5);
     }
 }

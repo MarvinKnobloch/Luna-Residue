@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Knightcontroller : MonoBehaviour
 {
-    private Vector3 maincharposi;
+    private Vector3 waveposi;
+    [SerializeField] private GameObject wavezero;
     [SerializeField] private GameObject[] waves;
-    private int nextwave;
+    private int firstwave;
+    private int secondwave;
+    [SerializeField] private LayerMask waveraydonwlayer;
 
     [SerializeField] private float wavedmg;
     [SerializeField] private float wavespeed;
@@ -14,6 +17,8 @@ public class Knightcontroller : MonoBehaviour
 
     private void Awake()
     {
+        wavezero.GetComponent<Knightwavecontroller>().basedmg = wavedmg;
+        wavezero.GetComponent<Knightwavecontroller>().speed = wavespeed / 2;
         foreach (GameObject wave in waves)
         {
             wave.GetComponent<Knightwavecontroller>().basedmg = wavedmg;
@@ -26,71 +31,49 @@ public class Knightcontroller : MonoBehaviour
         {
             wave.SetActive(false);
         }
-        maincharposi = LoadCharmanager.Overallmainchar.transform.position;
-        RaycastHit hit;
-        Ray nachunten = new Ray(LoadCharmanager.Overallmainchar.transform.position, Vector3.down * 10);
-        if (Physics.Raycast(nachunten, out hit))
+        waveposi = LoadCharmanager.Overallmainchar.transform.position;
+        if (Physics.Raycast(LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 0.5f, Vector3.down, out RaycastHit hit, 20, waveraydonwlayer, QueryTriggerInteraction.Ignore))
         {
-            maincharposi.y = hit.point.y + 1;
+            waveposi.y = hit.point.y - 0.5f;
         }
-        waves[0].transform.position = maincharposi + LoadCharmanager.Overallmainchar.transform.forward * 20;
-        waves[0].transform.rotation = LoadCharmanager.Overallmainchar.transform.rotation;
-        waves[0].GetComponent<Knightwavecontroller>().endposi = maincharposi + LoadCharmanager.Overallmainchar.transform.forward * -20;
-        waves[1].transform.position = maincharposi + LoadCharmanager.Overallmainchar.transform.forward * -20;
-        waves[1].transform.rotation = LoadCharmanager.Overallmainchar.transform.rotation;
-        waves[1].GetComponent<Knightwavecontroller>().endposi = maincharposi + LoadCharmanager.Overallmainchar.transform.forward * 20;
-        waves[2].transform.position = maincharposi + LoadCharmanager.Overallmainchar.transform.right * 20;
-        waves[2].transform.rotation = LoadCharmanager.Overallmainchar.transform.rotation;
-        waves[2].GetComponent<Knightwavecontroller>().endposi = maincharposi + LoadCharmanager.Overallmainchar.transform.right * -20;
-        waves[3].transform.position = maincharposi + LoadCharmanager.Overallmainchar.transform.right * -20;
-        waves[3].transform.rotation = LoadCharmanager.Overallmainchar.transform.rotation;
-        waves[3].GetComponent<Knightwavecontroller>().endposi = maincharposi + LoadCharmanager.Overallmainchar.transform.right * 20;
-        Invoke("wave1", 0.5f);
+        float waveroation = Random.Range(0, 360);
+        wavezero.transform.rotation = Quaternion.Euler(90, waveroation, 0);
+        wavezero.transform.position = LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 10;
+        wavezero.GetComponent<Knightwavecontroller>().endposi = LoadCharmanager.Overallmainchar.transform.position + Vector3.up * -10;
+        waves[0].transform.position = waveposi + Vector3.right * 20;
+        waves[0].GetComponent<Knightwavecontroller>().endposi = waveposi + Vector3.right * -20;
+        waves[1].transform.position = waveposi + Vector3.forward * 20;
+        waves[1].GetComponent<Knightwavecontroller>().endposi = waveposi + Vector3.forward * -20;
+        waves[2].transform.position = waveposi + Vector3.right * -20;
+        waves[2].GetComponent<Knightwavecontroller>().endposi = waveposi + Vector3.right * 20;
+        waves[3].transform.position = waveposi + Vector3.forward * -20;
+        waves[3].GetComponent<Knightwavecontroller>().endposi = waveposi + Vector3.forward * 20;
+        Invoke("wave0", 0.1f);
+    }
+    private void wave0()
+    {
+        wavezero.SetActive(true);
+        Invoke("wave1", 1.5f);
     }
     private void wave1()
     {
-        nextwave = Random.Range(0, 3);
-        waves[nextwave].SetActive(true);
-        if (nextwave >= 3)
-        {
-            nextwave = 0;
-        }
-        else
-        {
-            nextwave++;
-        }
-        Invoke("wave2", 1f);
+        firstwave = Random.Range(0, 4);
+        waves[firstwave].SetActive(true);
+        Invoke("wave2", 1.5f);
     }
     private void wave2()
     {
-        waves[nextwave].SetActive(true);
-        if (nextwave >= 3)
-        {
-            nextwave = 0;
-        }
-        else
-        {
-            nextwave++;
-        }
-        Invoke("wave4", 1f);
+        getwavenumber();
+        waves[secondwave].SetActive(true);
+        Invoke("turnoff", 3f);
     }
-    private void wave3()
+    private void getwavenumber()
     {
-        waves[nextwave].SetActive(true);
-        if (nextwave >= 3)
+        secondwave = Random.Range(0, 4);
+        if(secondwave == firstwave)
         {
-            nextwave = 0;
+            getwavenumber();
         }
-        else
-        {
-            nextwave++;
-        }
-        Invoke("wave4", 1f);
-    }
-    private void wave4()
-    {
-        waves[nextwave].SetActive(true);
-        Invoke("turnoff", 2f);
     }
     private void turnoff()
     {

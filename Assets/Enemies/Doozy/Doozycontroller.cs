@@ -27,7 +27,7 @@ public class Doozycontroller : MonoBehaviour
         canclick = true;
         memoryclicknumber = 1;
         choosenumber = 1;
-        Invoke("turnofffirstgrid", 2f);
+        Invoke("turnofffirstgrid", 3f);
         foreach (GameObject obj in numbers)
         {
             obj.transform.SetAsLastSibling();
@@ -51,7 +51,7 @@ public class Doozycontroller : MonoBehaviour
     private void turnofffirstgrid()
     {
         firstgrid.SetActive(false);
-        Invoke("turnonsecondgrid", 5f);
+        Invoke("turnonsecondgrid", 4f);
     }
     private void turnonsecondgrid()
     {
@@ -74,7 +74,10 @@ public class Doozycontroller : MonoBehaviour
     {       
         LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
         dmgcount = 5 - memoryclicknumber;
-        LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(dmgcount * basedmg);
+        if(Statics.infight == true)
+        {
+            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(dmgcount * basedmg);
+        }
         turnoff();
     }
     public void success()

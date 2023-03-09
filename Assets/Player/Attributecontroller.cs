@@ -154,9 +154,7 @@ public class Attributecontroller : MonoBehaviour
     public void alliesdmg()
     {
         float basicdmg = 5;
-        Debug.Log(attack);
         dmgfromallies = basicdmg + attack + (critchance - Statics.playerbasiccritchance) + ((critdmg - 150) / Statics.critdmgperskillpoint) + ((Statics.charweaponbuff[charnumber] - 100) / Statics.weaponswitchbuffperskillpoint) + ((charswitchbuff - 100) / Statics.charswitchbuffperskillpoint) + (basicattributedmgbuff / Statics.basicbuffdmgperskillpoint);
         dmgfromallies = dmgfromallies * 0.5f;                  //durch 2 teilen weil es sonst zu viel ist
-        Debug.Log(dmgfromallies);
     }
 }
