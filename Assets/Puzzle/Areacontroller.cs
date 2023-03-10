@@ -33,7 +33,7 @@ public class Areacontroller : MonoBehaviour
         gotpuzzlereward = new bool[areaobjectcontroller.setpuzzlenumber.Length];
         npcdialoguestate = new int[areaobjectcontroller.setdialoguenumber.Length];
 
-        Statics.currentgameslot = -1;
+        //Statics.currentgameslot = -1;
         if (Statics.currentgameslot != -1)                             // -1 = new game damit nichts geladen wird
         {
             loadmonobehaviour(Statics.currentgameslot, areaname, this);

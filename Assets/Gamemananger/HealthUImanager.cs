@@ -4,11 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-
 public class Healthuimanager : MonoBehaviour
 {
-    [SerializeField] internal Expmanager handlesecondexp;
-
     private int[] chars = new int[4];
     [SerializeField] private GameObject[] playerui;
     [SerializeField] private TextMeshProUGUI[] playernames;
@@ -23,7 +20,7 @@ public class Healthuimanager : MonoBehaviour
         chars[3] = Statics.currentforthchar;
         for (int i = 0; i < chars.Length; i++)
         {
-            if(chars[i] != -1)
+            if (chars[i] != -1)
             {
                 playerui[i].SetActive(true);
                 playernames[i].text = Statics.characternames[chars[i]];
