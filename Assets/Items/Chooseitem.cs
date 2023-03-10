@@ -160,7 +160,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     public void upgradeequipeditems()
     {
-        transform.GetChild(2).GetComponentInChildren<Text>().text = itemvalues.upgradelvl.ToString();
+        transform.GetChild(3).GetComponentInChildren<Text>().text = itemvalues.upgradelvl.ToString();
         if (Statics.currentequipmentbutton == 3)
         {
             setstaticslotadd(Statics.charcurrenthead);

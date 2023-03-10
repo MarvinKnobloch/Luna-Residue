@@ -22,18 +22,19 @@ public class Insertitem : MonoBehaviour, Interactioninterface
             string text;
             if (neededitem.inventoryslot == 0)
             {
+                Debug.Log("noitem");
                 text = interactiontext + " " + "<color=red>" + "0" + "</color>" + "/" + neededitemamount + " " + neededitem.name;
             }
             else
             {
-                if (inventory.Container.Items[neededitem.inventoryslot].amount >= neededitemamount)
+                if (inventory.Container.Items[neededitem.inventoryslot - 1].amount >= neededitemamount)
                 {
-                    text = interactiontext + " " + "<color=green>" + inventory.Container.Items[neededitem.inventoryslot].amount + "</color>"
+                    text = interactiontext + " " + "<color=green>" + inventory.Container.Items[neededitem.inventoryslot - 1].amount + "</color>"
                        + "/" + neededitemamount + " " + neededitem.name;
                 }
                 else
                 {
-                    text = interactiontext + " " + "<color=red>" + inventory.Container.Items[neededitem.inventoryslot].amount + "</color>"
+                    text = interactiontext + " " + "<color=red>" + inventory.Container.Items[neededitem.inventoryslot - 1].amount + "</color>"
                                   + "/" + neededitemamount + " " + neededitem.name;
                 }
             }
@@ -51,9 +52,9 @@ public class Insertitem : MonoBehaviour, Interactioninterface
         {
             if (areacontroller.questcomplete[areapuzzlenumber] == false)
             {
-                if (inventory.Container.Items[neededitem.inventoryslot].amount >= neededitemamount)
+                if (inventory.Container.Items[neededitem.inventoryslot -1 ].amount >= neededitemamount)
                 {
-                    inventory.Container.Items[neededitem.inventoryslot].amount -= neededitemamount;
+                    inventory.Container.Items[neededitem.inventoryslot -1 ].amount -= neededitemamount;
                     activateobject.SetActive(true);
                     areacontroller.questcomplete[areapuzzlenumber] = true;
                     areacontroller.autosave();

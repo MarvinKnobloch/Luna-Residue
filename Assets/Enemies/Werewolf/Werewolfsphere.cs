@@ -22,7 +22,9 @@ public class Werewolfsphere : MonoBehaviour
     }*/
     private void dealdmg()
     {
-        if(Statics.infight == true)
+        werewolfcontroller.SetActive(false);
+        gameObject.SetActive(false);
+        if (Statics.infight == true)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, 5f, Aoetargets);
             foreach (Collider target in colliders)
@@ -34,10 +36,13 @@ public class Werewolfsphere : MonoBehaviour
                 }
             }
         }
-        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
-        Statics.dash = false;
-        Statics.otheraction = false;
-        dazeimage.SetActive(false);
+        if(LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state == Movescript.State.Buttonmashstun)
+        {
+            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
+            Statics.dash = false;
+            Statics.otheraction = false;
+            dazeimage.SetActive(false);
+        }
         werewolfcontroller.SetActive(false);
         gameObject.SetActive(false);
     }

@@ -95,7 +95,7 @@ public class Startmenucontroller : MonoBehaviour
         Statics.charswitchbuff = new float[] { 100, 100, 100, 100, 100 };
         Statics.charswitchbuffduration = new float[] { 5, 5, 5, 5, 5 };
         Statics.charbasiccritbuff = new float[] { 1, 1, 1, 1, 1 };
-        Statics.charbasicdmgbuff = new float[] { 150, 150, 150, 150, 150 };
+        Statics.charbasicdmgbuff = new float[] { 0, 0, 0, 0, 0 };
 
         //resetgameplaystatics
         Statics.healcdbool = false;
