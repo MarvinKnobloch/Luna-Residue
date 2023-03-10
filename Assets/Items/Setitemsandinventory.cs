@@ -17,6 +17,17 @@ public class Setitemsandinventory : MonoBehaviour
     [SerializeField] private Ringobject[] ringitems;
     [SerializeField] private Craftingobject[] craftingitems;
 
+    [SerializeField] private Itemcontroller startingsword;
+    [SerializeField] private Itemcontroller startingbow;
+    [SerializeField] private Itemcontroller startingfist;
+    [SerializeField] private Itemcontroller startinghead;
+    [SerializeField] private Itemcontroller startingchest;
+    [SerializeField] private Itemcontroller startingbelt;
+    [SerializeField] private Itemcontroller startinglegs;
+    [SerializeField] private Itemcontroller startingshoes;
+    [SerializeField] private Itemcontroller startingneckless;
+    [SerializeField] private Itemcontroller startingring;
+
     private void Awake()
     {
 /*#if UNITY_EDITOR
@@ -89,6 +100,83 @@ public class Setitemsandinventory : MonoBehaviour
                     continue;
                 }
             }
+        }
+    }
+    public void setstartitems()
+    {
+        for (int i = 0; i < Statics.characternames.Length; i++)
+        {
+            Statics.charswordattack[i] = startingsword.stats[2];
+            Statics.charcurrentsword[i] = startingsword;
+        }
+        for (int i = 0; i < Statics.characternames.Length; i++)
+        {
+            Statics.charbowattack[i] = startingbow.stats[2];
+            Statics.charcurrentbow[i] = startingbow;
+        }
+        for (int i = 0; i < Statics.characternames.Length; i++)
+        {
+            Statics.charfistattack[i] = startingfist.stats[2];
+            Statics.charcurrentfist[i] = startingfist;
+        }
+        for (int i = 0; i < Statics.characternames.Length; i++)
+        {
+            setitemandvalues(startinghead, i);
+            Statics.charcurrenthead[i] = startinghead;
+        }
+        for (int i = 0; i < Statics.characternames.Length; i++)
+        {
+            setitemandvalues(startingchest, i);
+            Statics.charcurrentchest[i] = startingchest;
+        }
+        for (int i = 0; i < Statics.characternames.Length; i++)
+        {
+            setitemandvalues(startingbelt, i);
+            Statics.charcurrentbelt[i] = startingbelt;
+        }
+        for (int i = 0; i < Statics.characternames.Length; i++)
+        {
+            setitemandvalues(startinglegs, i);
+            Statics.charcurrentlegs[i] = startinglegs;
+        }
+        for (int i = 0; i < Statics.characternames.Length; i++)
+        {
+            setitemandvalues(startingshoes, i);
+            Statics.charcurrentshoes[i] = startingshoes;
+        }
+        for (int i = 0; i < Statics.characternames.Length; i++)
+        {
+            setitemandvalues(startingneckless, i);
+            Statics.charcurrentnecklace[i] = startingneckless;
+        }
+        for (int i = 0; i < Statics.characternames.Length; i++)
+        {
+            setitemandvalues(startingring, i);
+            Statics.charcurrentring[i] = startingring;
+        }
+        inventorys[1].addstartequiptment(startingsword);
+        inventorys[2].addstartequiptment(startingbow);
+        inventorys[3].addstartequiptment(startingfist);
+        inventorys[4].addstartequiptment(startinghead);
+        inventorys[5].addstartequiptment(startingchest);
+        inventorys[6].addstartequiptment(startingbelt);
+        inventorys[7].addstartequiptment(startinglegs);
+        inventorys[8].addstartequiptment(startingshoes);
+        inventorys[9].addstartequiptment(startingneckless);
+        inventorys[10].addstartequiptment(startingring);
+    }
+    private void setitemandvalues(Itemcontroller item, int character)
+    {
+        if(item != null)
+        {
+            Statics.charmaxhealth[character] += item.stats[0];
+            Statics.chardefense[character] += item.stats[1];
+            Statics.charattack[character] += item.stats[2];
+            Statics.charcritchance[character] += item.stats[3];
+            Statics.charcritdmg[character] += item.stats[4];
+            Statics.charweaponbuff[character] += item.stats[5];
+            Statics.charswitchbuff[character] += item.stats[6];
+            Statics.charbasicdmgbuff[character] += item.stats[7];
         }
     }
 }

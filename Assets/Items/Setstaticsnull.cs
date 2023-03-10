@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Setstaticsnull : MonoBehaviour
 {
-    [SerializeField] private Itemcontroller nullobject;
+    //[SerializeField] private Itemcontroller nullobject;
 
 /*#if UNITY_EDITOR
     private void Awake()
@@ -12,7 +12,7 @@ public class Setstaticsnull : MonoBehaviour
         resetequipment();
     }
 #endif*/
-    public void resetstatics()
+    /*public void equipmentstatics()
     {
         resetequipment();
     }
@@ -38,5 +38,5 @@ public class Setstaticsnull : MonoBehaviour
                 staticslot[i] = nullobject;
             }
         }
-    }
+    }*/
 }

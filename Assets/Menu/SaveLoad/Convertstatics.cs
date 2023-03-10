@@ -129,7 +129,7 @@ public class Convertstatics
         currentbelt = Statics.charcurrentbelt;
         currentshoes = Statics.charcurrentshoes;
         currentlegs = Statics.charcurrentlegs;
-        currentneckless = Statics.charcurrentneckless;
+        currentneckless = Statics.charcurrentnecklace;
         currentring = Statics.charcurrentring;
 
         charspendedskillpoints = Statics.charspendedskillpoints;
@@ -206,7 +206,7 @@ public class Convertstatics
         Statics.charcurrentbelt = currentbelt;
         Statics.charcurrentshoes = currentshoes;
         Statics.charcurrentlegs = currentlegs;
-        Statics.charcurrentneckless = currentneckless;
+        Statics.charcurrentnecklace = currentneckless;
         Statics.charcurrentring = currentring;
 
         Statics.charspendedskillpoints = charspendedskillpoints;

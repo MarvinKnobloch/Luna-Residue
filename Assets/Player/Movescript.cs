@@ -83,6 +83,7 @@ public class Movescript : MonoBehaviour
     private Playerlightning playerlightning = new Playerlightning();
     private Playerdark playerdark = new Playerdark();
     private Playerearth playerearth = new Playerearth();
+    private Playerutility playerutility = new Playerutility();
 
     //animationstate
     public string currentstate;
@@ -151,6 +152,7 @@ public class Movescript : MonoBehaviour
         Endlightning,
         Darkportalend,
         Earthslide,
+        Gatheritem,
         Empty,
     }
 
@@ -187,6 +189,7 @@ public class Movescript : MonoBehaviour
         playerearth.psm = this;
         playeraim.psm = this;
         playerbow.psm = this;
+        playerutility.psm = this;
     }
     private void OnEnable()
     {
@@ -331,6 +334,8 @@ public class Movescript : MonoBehaviour
                 case State.Earthslide:
                     playerearth.earthslidestart();
                     break;
+                case State.Gatheritem:
+                    break;
                 case State.Empty:
                     break;
             }
@@ -473,6 +478,8 @@ public class Movescript : MonoBehaviour
         switchtoairstate();
     }
     public void pushplayerup(float amount) => playerair.pushplayerupwards(amount);
+    public void gahteritem(GameObject gatherobject) => playerutility.gatheritem(gatherobject);
+
 }
 
 

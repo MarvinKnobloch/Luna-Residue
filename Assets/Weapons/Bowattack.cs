@@ -342,6 +342,7 @@ public class Bowattack : MonoBehaviour
         movementscript.gravitation = movementscript.normalgravition;
         playerarrow.SetActive(false);
         attackestate = Attackstate.waitforattack;
+        LoadCharmanager.interaction = false;
         Statics.otheraction = true;
         CancelInvoke();
         healingscript.resethealvalues();

@@ -205,6 +205,7 @@ public class Swordattack : MonoBehaviour
     private void resetvalues()
     {
         attackestate = Attackstate.waitforattack;
+        LoadCharmanager.interaction = false;
         Statics.otheraction = true;
         CancelInvoke();
         healingscript.resethealvalues();

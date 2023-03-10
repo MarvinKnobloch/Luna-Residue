@@ -87,9 +87,9 @@ public class Equipcharselection : MonoBehaviour
                             Statics.charattack[currentchar] + "\n" +
                             Statics.charcritchance[currentchar] + "%" + "\n" +
                             Statics.charcritdmg[currentchar] + "%" + "\n" +
-                            (Statics.charweaponbuff[currentchar] - 100) + "%" + "\n" +
+                            (Statics.charweaponbuff[currentchar]) + "%" + "\n" +
                             Statics.charweaponbuffduration[currentchar] + "sec" + "\n" +
-                            (Statics.charswitchbuff[currentchar] - 100) + "%" + "\n" +
+                            (Statics.charswitchbuff[currentchar]) + "%" + "\n" +
                             Statics.charswitchbuffduration[currentchar] + "sec" + "\n" +
                             Statics.charbasiccritbuff[currentchar] + "%" + "\n" +
                             Statics.charbasicdmgbuff[currentchar] + "%";
@@ -98,7 +98,6 @@ public class Equipcharselection : MonoBehaviour
         bowdmg.text = Statics.charbowattack[currentchar].ToString();
         fistdmg.text = Statics.charfistattack[currentchar].ToString();
 
-        slotbuttontext[0].text = Statics.charcurrentsword[currentchar].itemname;
         slotbuttontext[1].text = Statics.charcurrentbow[currentchar].itemname;
         slotbuttontext[2].text = Statics.charcurrentfist[currentchar].itemname;
         slotbuttontext[3].text = Statics.charcurrenthead[currentchar].itemname;
@@ -106,7 +105,7 @@ public class Equipcharselection : MonoBehaviour
         slotbuttontext[5].text = Statics.charcurrentbelt[currentchar].itemname;
         slotbuttontext[6].text = Statics.charcurrentlegs[currentchar].itemname;
         slotbuttontext[7].text = Statics.charcurrentshoes[currentchar].itemname;
-        slotbuttontext[8].text = Statics.charcurrentneckless[currentchar].itemname;
+        slotbuttontext[8].text = Statics.charcurrentnecklace[currentchar].itemname;
         slotbuttontext[9].text = Statics.charcurrentring[currentchar].itemname;
 
         foreach (GameObject obj in charbuttons)

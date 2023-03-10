@@ -44,8 +44,15 @@ public class Inventorycontroller : ScriptableObject
         else
         {
             setfirstemptyslot(item, 1);
-            LoadCharmanager.Overallmainchar.GetComponent<Displayloot>().displayloot(item.name.ToString());
+            if(LoadCharmanager.Overallmainchar.TryGetComponent(out Displayloot displayloot))
+            {
+                displayloot.displayloot(item.name.ToString());
+            }
         }
+    }
+    public void addstartequiptment(Itemcontroller item)
+    {
+        setfirstemptyslot(item, 1);
     }
     public Inventoryslot setfirstemptyslot(Itemcontroller item, int amount)
     {

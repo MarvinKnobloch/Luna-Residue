@@ -117,8 +117,8 @@ public class Saveandloadgame : MonoBehaviour
         Statics.dashcdbool = false;
         Statics.weapsonswitchbool = false;
         Statics.charswitchbool = false;
-        Statics.characterswitchbuff = 100;
-        Statics.weaponswitchbuff = 100;
+        Statics.characterswitchbuff = 0;
+        Statics.weaponswitchbuff = 0;
         Statics.timer = false;
     }
     /*private void loadmonobehaviour(int slot, string filename, MonoBehaviour monobehaviour)

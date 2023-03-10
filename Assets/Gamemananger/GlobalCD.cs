@@ -39,8 +39,6 @@ public class GlobalCD : MonoBehaviour
         Statics.dashcdbool = false;
         Statics.charswitchbool = false;
         Statics.healcdbool = false;
-        Statics.characterswitchbuff = 100;
-        Statics.weaponswitchbuff = 100;
         Statics.otheraction = false;
         instance = this;
         healcdtext.text = "";
@@ -191,7 +189,7 @@ public class GlobalCD : MonoBehaviour
 
             if (Statics.weaponswitchbuffmissingtime <= 0)
             {
-                Statics.weaponswitchbuff = 100;
+                Statics.weaponswitchbuff = 0;
                 weaponswitchbuffimage.SetActive(false);
                 StopCoroutine("weaponswitchbuff");
             }
@@ -244,7 +242,7 @@ public class GlobalCD : MonoBehaviour
 
             if (Statics.charswitchbuffmissingtime <= 0)
             {
-                Statics.characterswitchbuff = 100;
+                Statics.characterswitchbuff = 0;
                 charswitchbuffimage.SetActive(false);
                 charswitchbuffisrunning = false;
                 StopCoroutine("charswitchbuff");

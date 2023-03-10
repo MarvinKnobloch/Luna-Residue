@@ -83,16 +83,16 @@ public class Startmenucontroller : MonoBehaviour
         Statics.charcurrentexp = 0;
         Statics.charrequiredexp = 52;
 
-        Statics.charbasichealth = new float[] { 100, 93, 97, 91, 95 };
-        Statics.charcurrenthealth = new float[] { 100, 93, 97, 91, 95 };
-        Statics.charmaxhealth = new float[] { 100, 93, 97, 91, 95 };
-        Statics.chardefense = new float[] { 100, 100, 100, 100, 100 };
-        Statics.charattack = new float[] { 1, 1, 1, 1, 1 };
+        Statics.charbasichealth = new float[] { 80, 73, 77, 73, 75 };
+        Statics.charcurrenthealth = new float[] { 80, 73, 77, 73, 75 };
+        Statics.charmaxhealth = new float[] { 80, 73, 77, 73, 75 };
+        Statics.chardefense = new float[] { 60, 60, 60, 60, 60 };
+        Statics.charattack = new float[] { 0, 0, 0, 0, 0 };
         Statics.charcritchance = new float[] { 5, 5, 5, 5, 5 };
         Statics.charcritdmg = new float[] { 150, 150, 150, 150, 150 };
-        Statics.charweaponbuff = new float[] { 100, 100, 100, 100, 100 };
+        Statics.charweaponbuff = new float[] { 0, 0, 0, 0, 0 };
         Statics.charweaponbuffduration = new float[] { 5, 5, 5, 5, 5 };
-        Statics.charswitchbuff = new float[] { 100, 100, 100, 100, 100 };
+        Statics.charswitchbuff = new float[] { 0, 0, 0, 0, 0 };
         Statics.charswitchbuffduration = new float[] { 5, 5, 5, 5, 5 };
         Statics.charbasiccritbuff = new float[] { 1, 1, 1, 1, 1 };
         Statics.charbasicdmgbuff = new float[] { 0, 0, 0, 0, 0 };
@@ -102,8 +102,8 @@ public class Startmenucontroller : MonoBehaviour
         Statics.dashcdbool = false;
         Statics.weapsonswitchbool = false;
         Statics.charswitchbool = false;
-        Statics.characterswitchbuff = 100;
-        Statics.weaponswitchbuff = 100;
+        Statics.characterswitchbuff = 0;
+        Statics.weaponswitchbuff = 0;
         Statics.timer = false;
 
         Statics.spellnumbers = new int[]{ -1, -1, -1, -1, -1, -1, -1, -1 };
@@ -137,9 +137,21 @@ public class Startmenucontroller : MonoBehaviour
             Statics.charbasicskillpoints[i] = 0;
         }
 
+        Statics.charcurrentsword = new Itemcontroller[5];
+        Statics.charcurrentbow = new Itemcontroller[5];
+        Statics.charcurrentfist = new Itemcontroller[5];
+        Statics.charcurrenthead = new Itemcontroller[5];
+        Statics.charcurrentchest = new Itemcontroller[5];
+        Statics.charcurrentbelt = new Itemcontroller[5];
+        Statics.charcurrentlegs = new Itemcontroller[5];
+        Statics.charcurrentshoes = new Itemcontroller[5];
+        Statics.charcurrentnecklace = new Itemcontroller[5];
+        Statics.charcurrentring = new Itemcontroller[5];
+
         setitemsandinventory.resetitems();
         setitemsandinventory.resetinventorys();
-        setstaticsnull.resetstatics();
+        setitemsandinventory.setstartitems();
+        //setstaticsnull.equipmentstatics();
         StartCoroutine("loadgameloadingscreen");
     }
 

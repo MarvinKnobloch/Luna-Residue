@@ -48,7 +48,7 @@ public class Setcolorcurrentarmor : MonoBehaviour, ISelectHandler
                 }
                 else if (Statics.currentequipmentbutton == 8)
                 {
-                    setcolor(Statics.charcurrentneckless[Statics.currentequipmentchar], obj);
+                    setcolor(Statics.charcurrentnecklace[Statics.currentequipmentchar], obj);
                 }
                 else if (Statics.currentequipmentbutton == 9)
                 {

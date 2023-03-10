@@ -10,6 +10,11 @@ public class Globalplayercalculations
         dmg += Mathf.Round((Statics.groupstonedmgbonus + stoneclassbonus) * 0.01f * dmg);
         return dmg;
     }
+    public static float calculateweaponcharbuff(float dmg)
+    {
+        float enddmg = (Statics.weaponswitchbuff + Statics.characterswitchbuff) / 100 * dmg;
+        return enddmg;
+    }
     public static float calculateweaponheal(float health)
     {
         float healing = Mathf.Round(Statics.basicweaponheal + (health * Statics.weaponbonushealhealthpercentage * 0.01f));

@@ -15,15 +15,15 @@ MonoBehaviour:
   Uisprite: {fileID: 21300000, guid: 970324311431c794ca338446ea889948, type: 3}
   type: 10
   itemname: Basicring
-  inventoryslot: 0
+  inventoryslot: 2
   itemshopcosts: 103
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
   basestats:
   - 0
   - 0
-  - 1
   - 0
+  - 1
   - 0
   - 2
   - 0
@@ -31,8 +31,8 @@ MonoBehaviour:
   stats:
   - 0
   - 0
-  - 1
   - 0
+  - 1
   - 0
   - 2
   - 0

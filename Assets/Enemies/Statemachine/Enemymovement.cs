@@ -34,6 +34,8 @@ public class Enemymovement : MonoBehaviour
     [NonSerialized] public float patrolwaittimer = 5f;
     [NonSerialized] public float patrolspeed = 2f;
     [NonSerialized] public int enemeytriggerrange = 15;
+
+    public LayerMask checkforplayerlayer;
     public LayerMask meleehitboxlayer;
 
     [NonSerialized] public float normalnavspeed;
@@ -80,8 +82,9 @@ public class Enemymovement : MonoBehaviour
 
         normalnavspeed = enemyvalues.movementspeed;
         normalattackcd = enemyvalues.attackspeed;
-        
-        int layerAsLayerMask = (1 << 8);
+
+        checkforplayerlayer =  1 << 6 | 1 << 9 | 1 << 13;
+        int layerAsLayerMask = 1 << 8;
         meleehitboxlayer = layerAsLayerMask;
     }
     private void OnEnable()

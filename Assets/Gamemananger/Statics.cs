@@ -50,7 +50,7 @@ public class Statics
     public static float weaponbonushealhealthpercentage = 2;
     public static float healhealthbonuspercentage = 4;
 
-    public static float healthperskillpoint = 25;
+    public static float healthperskillpoint = 20;
     public static float armorperskillpoint = 25;
     public static float defenseconvertedtoattack = 1;
     public static float attackperskillpoint = 1;
@@ -83,14 +83,14 @@ public class Statics
     public static float weaponswitchmissingtime;
     public static bool weapsonswitchbool; 
 
-    public static float weaponswitchbuff = 100f;
+    public static float weaponswitchbuff = 0;
     public static float weaponswitchbuffmissingtime;
 
     public static float charswitchcd = 5f;
     public static float charswitchmissingtime;
     public static bool charswitchbool;
 
-    public static float characterswitchbuff = 100f;
+    public static float characterswitchbuff = 0;
     public static float charswitchbuffmissingtime;
 
 
@@ -145,16 +145,16 @@ public class Statics
     public static float charcurrentexp = 0;
     public static float charrequiredexp = 52;
     public static string[] characternames = { "Maria", "Erika", "Kaja", "Yaku", "Arissa" };
-    public static float[] charbasichealth = { 100, 93, 97, 93, 95 };
-    public static float[] charcurrenthealth = { 100, 93, 97, 93, 95 };
-    public static float[] charmaxhealth = { 100, 93, 97, 93, 95 };
-    public static float[] chardefense = { 100, 100, 100, 100, 100 };
-    public static float[] charattack = { 1, 1, 1, 1, 1 };
+    public static float[] charbasichealth = { 80, 73, 77, 73, 75 };
+    public static float[] charcurrenthealth = { 80, 73, 77, 73, 75 };
+    public static float[] charmaxhealth = { 80, 73, 77, 73, 75 };
+    public static float[] chardefense = { 60, 60, 60, 60, 60 };
+    public static float[] charattack = { 0, 0, 0, 0, 0 };
     public static float[] charcritchance = { 5, 5, 5, 5, 5 };
     public static float[] charcritdmg = { 150, 150, 150, 150, 150 };
-    public static float[] charweaponbuff = { 100, 100, 100, 100, 100 };
+    public static float[] charweaponbuff = { 0, 0, 0, 0, 0 };
     public static float[] charweaponbuffduration = { 5, 5, 5, 5, 5 };
-    public static float[] charswitchbuff = { 100, 100, 100, 100, 100 };
+    public static float[] charswitchbuff = { 0, 0, 0, 0, 0 };
     public static float[] charswitchbuffduration = { 5, 5, 5, 5, 5 };
     public static float[] charbasiccritbuff = { 1, 1, 1, 1, 1 };
     public static float[] charbasicdmgbuff = { 0, 0, 0, 0, 0 };
@@ -175,7 +175,7 @@ public class Statics
     public static Itemcontroller[] charcurrentbelt = new Itemcontroller[5];
     public static Itemcontroller[] charcurrentlegs = new Itemcontroller[5];
     public static Itemcontroller[] charcurrentshoes = new Itemcontroller[5];
-    public static Itemcontroller[] charcurrentneckless = new Itemcontroller[5];
+    public static Itemcontroller[] charcurrentnecklace = new Itemcontroller[5];
     public static Itemcontroller[] charcurrentring = new Itemcontroller[5];
 
     //skillpoints

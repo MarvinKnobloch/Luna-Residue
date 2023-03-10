@@ -48,9 +48,9 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                             Statics.charattack[selectedchar] + "\n" +
                             Statics.charcritchance[selectedchar] + "%" + "\n" +
                             Statics.charcritdmg[selectedchar] + "%" + "\n" +
-                            (Statics.charweaponbuff[selectedchar] - 100) + "%" + "\n" +
+                            (Statics.charweaponbuff[selectedchar]) + "%" + "\n" +
                             Statics.charweaponbuffduration[selectedchar] + "sec" + "\n" +
-                            (Statics.charswitchbuff[selectedchar] - 100) + "%" + "\n" +
+                            (Statics.charswitchbuff[selectedchar]) + "%" + "\n" +
                             Statics.charswitchbuffduration[selectedchar] + "sec" + "\n" +
                             Statics.charbasiccritbuff[selectedchar] + "%" + "\n" +
                             Statics.charbasicdmgbuff[selectedchar] + "%";
@@ -90,8 +90,8 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
         else if (equipslot == 8)        //neckless = number8
         {
-            setitemandvalues(Statics.charcurrentneckless[selectedchar]);
-            Statics.charcurrentneckless[selectedchar] = itemvalues;
+            setitemandvalues(Statics.charcurrentnecklace[selectedchar]);
+            Statics.charcurrentnecklace[selectedchar] = itemvalues;
         }
         else if (equipslot == 9)        //ring = number9
         {
@@ -141,7 +141,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
         else if (Statics.currentequipmentbutton == 8)
         {
-            setstaticsslot(Statics.charcurrentneckless);
+            setstaticsslot(Statics.charcurrentnecklace);
         }
         else if (Statics.currentequipmentbutton == 8)
         {
@@ -183,7 +183,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
         if (Statics.currentequipmentbutton == 8)
         {
-            setstaticslotadd(Statics.charcurrentneckless);
+            setstaticslotadd(Statics.charcurrentnecklace);
         }
         if (Statics.currentequipmentbutton == 9)
         {
@@ -258,7 +258,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             }
             else if (Statics.currentequipmentbutton == 8)
             {
-                mouseenter(Statics.charcurrentneckless[selectedchar]);
+                mouseenter(Statics.charcurrentnecklace[selectedchar]);
             }
             else if (Statics.currentequipmentbutton == 9)
             {
@@ -279,9 +279,9 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         ontriggerflatstats(slot, 2, Statics.charattack[selectedchar]);
         ontriggerpercentage(slot, 3, Statics.charcritchance[selectedchar]);
         ontriggerpercentage(slot, 4, Statics.charcritdmg[selectedchar]);
-        ontriggerpercentage(slot, 5, Statics.charweaponbuff[selectedchar] - 100);
+        ontriggerpercentage(slot, 5, Statics.charweaponbuff[selectedchar]);
         ontriggerduration(Statics.charweaponbuffduration[selectedchar]);
-        ontriggerpercentage(slot, 6, Statics.charswitchbuff[selectedchar] - 100);
+        ontriggerpercentage(slot, 6, Statics.charswitchbuff[selectedchar]);
         ontriggerduration(Statics.charswitchbuffduration[selectedchar]);
         ontriggerbasiccritpercentage(Statics.charbasiccritbuff[selectedchar]);
         ontriggerpercentage(slot, 7, Statics.charbasicdmgbuff[selectedchar]);
