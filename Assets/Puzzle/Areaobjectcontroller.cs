@@ -9,4 +9,5 @@ public class Areaobjectcontroller : MonoBehaviour
     public Areanumber[] setquestnumber;
     public Areanumber[] setpuzzlenumber;
     public Areanumber[] setdialoguenumber;
+    public Areanumber[] setgahteringnumber;
 }

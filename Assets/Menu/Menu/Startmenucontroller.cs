@@ -79,6 +79,8 @@ public class Startmenucontroller : MonoBehaviour
         Statics.currentthirdchar = 2;
         Statics.currentforthchar = 3;
 
+        Statics.elementalmenuisactiv = false;
+
         Statics.charcurrentlvl = 1;
         Statics.charcurrentexp = 0;
         Statics.charrequiredexp = 52;

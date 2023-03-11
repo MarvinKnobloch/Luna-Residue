@@ -19,7 +19,6 @@ public class Healingscript : MonoBehaviour
     public InputAction[] hotkeys;
     public Text[] buttons;
     private string[] healhotkeys = new string[4];
-    //public Text[] WASD;
     public Image[] buttonimage;
     public int[] randomkeys;
     private int currentinput;
@@ -37,12 +36,12 @@ public class Healingscript : MonoBehaviour
 
     public bool singlehealcast;
     private int singlehealbuttonamount = 2;
-    private float singleheal = 16;
+    private float singleheal = 20;
     private float finalsingleheal;
 
     public bool grouphealcast;
     private int grouphealbuttonamount = 4;
-    private float groupheal = 8;
+    private float groupheal = 12;
     private float finalgroupheal;
 
     public bool resurrectioncast;

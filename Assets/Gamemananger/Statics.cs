@@ -22,6 +22,8 @@ public class Statics
     public static Quaternion gameoverrota;
     public static float gameovercam;
 
+    public static bool elementalmenuisactiv;
+
     //charvalues
     public static int currentactiveplayer;                //für hpanzeige
     public static int currentfirstchar = 0;
@@ -60,8 +62,8 @@ public class Statics
     public static float charswitchbuffperskillpoint = 3;
     public static int basicbuffdmgperskillpoint = 2;
 
-    public static int presetresurrectcd = 5;
-    public static int presethealcd = 3;
+    public static int presetresurrectcd = 4;
+    public static int presethealcd = 4;
 
     //gameplaystatics
     public static bool otheraction;
@@ -74,19 +76,19 @@ public class Statics
     public static float healmissingtime = 10f;
     public static bool healcdbool;
 
-    public static float dashcd = 4f;
+    public static float dashcd = 6f;
     public static float dashcdmissingtime;
-    public static float dashcost = 2f;
+    public static float dashcost = 3f;
     public static bool dashcdbool;
 
-    public static float weaponswitchcd = 2f;
+    public static float weaponswitchcd = 7f;
     public static float weaponswitchmissingtime;
     public static bool weapsonswitchbool; 
 
     public static float weaponswitchbuff = 0;
     public static float weaponswitchbuffmissingtime;
 
-    public static float charswitchcd = 5f;
+    public static float charswitchcd = 7f;
     public static float charswitchmissingtime;
     public static bool charswitchbool;
 

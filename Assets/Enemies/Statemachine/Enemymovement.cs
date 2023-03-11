@@ -44,6 +44,7 @@ public class Enemymovement : MonoBehaviour
     [NonSerialized] public Vector3 patrolposi;
     [NonSerialized] public Vector3 posiafterattack;
 
+    const string idlestate = "Idle";
     const string attack1state = "Attack1";
 
     private Enemypatrol enemypatrol = new Enemypatrol();
@@ -91,10 +92,13 @@ public class Enemymovement : MonoBehaviour
     {
         currentstate = null;
         state = State.empty;
+        Meshagent.ResetPath();
+        ChangeAnimationState(idlestate);
         currenttarget = LoadCharmanager.Overallmainchar;
         checkforresettimer = 0;
         checkforplayertimer = 0;
         followplayerafterattack = 0;
+        triggerenemy();
     }
 
     void Update()
@@ -140,7 +144,6 @@ public class Enemymovement : MonoBehaviour
         }
     }
     public void triggerenemy() => enemypatrol.triggerenemy();       //ontriggerenter
-    public void patrolend() => enemypatrol.patrolend();        //ontriggerexit
     public void checkforplayerinrange() => enemypatrol.checkforplayerinrange();
     public void enemyinrangeistriggered() => enemypatrol.enemyinrangeistriggered();
     public void switchtoattackstate()

@@ -60,12 +60,6 @@ public class Enemypatrol
             esm.Meshagent.SetDestination(esm.patrolposi);
         }
     }
-    public void patrolend()
-    {
-        esm.ChangeAnimationState(idlestate);
-        esm.Meshagent.ResetPath();
-        esm.state = Enemymovement.State.empty;
-    }
     public void checkforplayerinrange()
     {
         esm.checkforplayertimer += Time.deltaTime;

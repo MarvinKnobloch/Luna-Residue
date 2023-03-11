@@ -10,7 +10,7 @@ public class Housecontroller : MonoBehaviour
     public TextMeshProUGUI numbertext;
     public bool finish;
 
-    public GameObject lanternfinish;
+    public GameObject reward;
 
     private void OnEnable()
     {
@@ -25,13 +25,13 @@ public class Housecontroller : MonoBehaviour
          if(neededlantern == 0)
          {
              finish = true;
-             lanternfinish.GetComponent<Lanternfinish>().checkforfinish();
+            reward.GetComponent<Rewardinterface>().addrewardcount();
          }
          if(neededlantern < 0)
          {
              if(finish == true)
              {
-                 lanternfinish.GetComponent<Lanternfinish>().removelanternfromfinish();
+                reward.GetComponent<Rewardinterface>().removerewardcount();
              }
              finish = false;
          }
@@ -43,16 +43,16 @@ public class Housecontroller : MonoBehaviour
          if(neededlantern == 0)
          {
              finish = true;
-             lanternfinish.GetComponent<Lanternfinish>().checkforfinish();
-         }
+             reward.GetComponent<Rewardinterface>().addrewardcount();
+        }
 
-         if(neededlantern != 0)
-         {
-             if(finish == true)
-             {
-                 lanternfinish.GetComponent<Lanternfinish>().removelanternfromfinish();
-             }
-             finish = false;
-         }
+        if (neededlantern != 0)
+        {
+            if (finish == true)
+            {
+                reward.GetComponent<Rewardinterface>().removerewardcount();
+            }
+            finish = false;
+        }
     }
 }

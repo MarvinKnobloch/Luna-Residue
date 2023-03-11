@@ -18,6 +18,8 @@ public class Convertstatics
     public int thirdchar;
     public int forthchar;
 
+    public bool elementalmenuisactiv;
+
     public Color[] charactersecondelementcolor;
     public float[] charbasichealth;
     public float[] charcurrenthealth;
@@ -99,6 +101,8 @@ public class Convertstatics
         thirdchar = Statics.currentthirdchar;
         forthchar = Statics.currentforthchar;
 
+        elementalmenuisactiv = Statics.elementalmenuisactiv;
+
         firstweapon = Statics.firstweapon;
         secondweapon = Statics.secondweapon;
 
@@ -177,6 +181,8 @@ public class Convertstatics
         Statics.currentsecondchar = secondchar;
         Statics.currentthirdchar = thirdchar;
         Statics.currentforthchar = forthchar;
+
+        Statics.elementalmenuisactiv = elementalmenuisactiv;
 
         Statics.firstweapon = firstweapon;
         Statics.secondweapon = secondweapon;

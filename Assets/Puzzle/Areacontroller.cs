@@ -22,6 +22,8 @@ public class Areacontroller : MonoBehaviour
 
     public int[] npcdialoguestate;
 
+    public bool[] gotgatheritem;
+
     private void Awake()
     {
         areaobjectcontroller = GetComponent<Areaobjectcontroller>();
@@ -32,6 +34,7 @@ public class Areacontroller : MonoBehaviour
         puzzlecomplete = new bool[areaobjectcontroller.setpuzzlenumber.Length];
         gotpuzzlereward = new bool[areaobjectcontroller.setpuzzlenumber.Length];
         npcdialoguestate = new int[areaobjectcontroller.setdialoguenumber.Length];
+        gotgatheritem = new bool[areaobjectcontroller.setgahteringnumber.Length];
 
         //Statics.currentgameslot = -1;
         if (Statics.currentgameslot != -1)                             // -1 = new game damit nichts geladen wird
@@ -57,6 +60,10 @@ public class Areacontroller : MonoBehaviour
         for (int i = 0; i < areaobjectcontroller.setdialoguenumber.Length; i++)
         {
             areaobjectcontroller.setdialoguenumber[i].areanumber = i;
+        }
+        for (int i = 0; i < areaobjectcontroller.setgahteringnumber.Length; i++)
+        {
+            areaobjectcontroller.setgahteringnumber[i].areanumber = i;
         }
     }
     private void loadmonobehaviour(int slot, string filename, MonoBehaviour monobehaviour)            //bei gameload werden hier die fortschritte geladen

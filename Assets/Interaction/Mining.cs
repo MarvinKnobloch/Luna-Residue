@@ -11,11 +11,23 @@ public class Mining : MonoBehaviour, Interactioninterface
     [SerializeField] private int itemamount;
     [SerializeField] private float collecttime;
 
+    [SerializeField] private Areacontroller areacontroller;
+    public int gahteringnumber;
+
     public string Interactiontext => text;
 
     private void OnEnable()
     {
         CancelInvoke();
+        StartCoroutine("currentgatherstate");
+    }
+    IEnumerator currentgatherstate()
+    {
+        yield return null;
+        if (areacontroller.gotgatheritem[gahteringnumber] == true)
+        {
+            gameObject.SetActive(false);
+        }
     }
     public bool Interact(Closestinteraction interactor)
     {
@@ -30,6 +42,7 @@ public class Mining : MonoBehaviour, Interactioninterface
         LoadCharmanager.interaction = false;
         if (LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state == Movescript.State.Gatheritem)
         {
+            areacontroller.gotgatheritem[gahteringnumber] = true;
             inventory.Additem(item, itemamount);
             gameObject.SetActive(false);
         }

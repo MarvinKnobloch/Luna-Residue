@@ -7,10 +7,7 @@ public class Elementaltutorial : MonoBehaviour
     private SpielerSteu controlls;
 
     private Tutorialcontroller tutorialcontroller;
-    private Areacontroller areacontroller;
     private int textindex;
-
-    private int tutorialnumber;
 
     private bool readinputs;
     private void Start()
@@ -18,9 +15,7 @@ public class Elementaltutorial : MonoBehaviour
         tutorialcontroller = GetComponentInParent<Tutorialcontroller>();
         controlls = Keybindinputmanager.inputActions;
         readinputs = false;
-        areacontroller = tutorialcontroller.areacontroller;
-        tutorialnumber = GetComponent<Areanumber>().areanumber;
-        if (areacontroller.tutorialcomplete[tutorialnumber] == true)
+        if (Statics.elementalmenuisactiv == true)
         {
             gameObject.SetActive(false);
         }
@@ -43,7 +38,7 @@ public class Elementaltutorial : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == LoadCharmanager.Overallmainchar && areacontroller.tutorialcomplete[tutorialnumber] == false)
+        if (other.gameObject == LoadCharmanager.Overallmainchar && Statics.elementalmenuisactiv == false)
         {
             tutorialcontroller.onenter();
             textindex = 0;
@@ -70,10 +65,9 @@ public class Elementaltutorial : MonoBehaviour
     }
     private void endtutorial()
     {
+        Statics.elementalmenuisactiv = true;
         readinputs = false;
         tutorialcontroller.endtutorial();
-        areacontroller.tutorialcomplete[tutorialnumber] = true;
-        areacontroller.autosave();
         gameObject.SetActive(false);
     }
 }
