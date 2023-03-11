@@ -5,7 +5,7 @@ using UnityEngine;
 public class Insertitem : MonoBehaviour, Interactioninterface
 {
     [SerializeField] private Areacontroller areacontroller;
-    public int areapuzzlenumber;
+    public int areaquestnumber;
 
     [SerializeField] private GameObject activateobject;
 
@@ -14,10 +14,14 @@ public class Insertitem : MonoBehaviour, Interactioninterface
     [SerializeField] private Itemcontroller neededitem;
     [SerializeField] private int neededitemamount;
 
+    private void Start()
+    {
+        areaquestnumber = GetComponent<Areanumber>().areanumber;
+    }
     public string Interactiontext => textupdate();
     public string textupdate()
     {
-        if (areacontroller.questcomplete[areapuzzlenumber] == false)
+        if (areacontroller.questcomplete[areaquestnumber] == false)
         {
             string text;
             if (neededitem.inventoryslot == 0)
@@ -50,13 +54,13 @@ public class Insertitem : MonoBehaviour, Interactioninterface
         }
         else
         {
-            if (areacontroller.questcomplete[areapuzzlenumber] == false)
+            if (areacontroller.questcomplete[areaquestnumber] == false)
             {
                 if (inventory.Container.Items[neededitem.inventoryslot -1 ].amount >= neededitemamount)
                 {
                     inventory.Container.Items[neededitem.inventoryslot -1 ].amount -= neededitemamount;
                     activateobject.SetActive(true);
-                    areacontroller.questcomplete[areapuzzlenumber] = true;
+                    areacontroller.questcomplete[areaquestnumber] = true;
                     areacontroller.autosave();
                 }
             }

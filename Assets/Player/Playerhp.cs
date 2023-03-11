@@ -41,6 +41,13 @@ public class Playerhp : MonoBehaviour
         health -= dmgtodeal;
         handlehealth();
     }
+    public void addhealthwithtext(float heal)
+    {
+        health += Mathf.Round(heal);
+        Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, heal, Color.green);
+        handlehealth();
+    }
+
     public void addhealth(float heal)
     {
         health += Mathf.Round(heal);

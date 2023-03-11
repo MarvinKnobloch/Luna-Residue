@@ -289,23 +289,23 @@ public class Healingscript : MonoBehaviour
 
     private void castsingleheal()
     {
-        if(healtarget == 1) LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().addhealth(finalsingleheal);
-        else if(healtarget == 2) LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().addhealth(finalsingleheal);
-        else if (healtarget == 3) LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().addhealth(finalsingleheal);
+        if(healtarget == 1) LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().addhealthwithtext(finalsingleheal);
+        else if(healtarget == 2) LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().addhealthwithtext(finalsingleheal);
+        else if (healtarget == 3) LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().addhealthwithtext(finalsingleheal);
         healtarget = 0;
         resetvaluesafterheal(0);
     }
 
     private void castgroupheal()
     {
-        LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().addhealth(finalgroupheal);
+        LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().addhealthwithtext(finalgroupheal);
         if (LoadCharmanager.Overallthirdchar != null)
         {
-            LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().addhealth(finalgroupheal);
+            LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().addhealthwithtext(finalgroupheal);
         }
         if (LoadCharmanager.Overallforthchar != null)
         {
-            LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().addhealth(finalgroupheal);
+            LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().addhealthwithtext(finalgroupheal);
         }
         resetvaluesafterheal(0);
     }
@@ -332,7 +332,7 @@ public class Healingscript : MonoBehaviour
             else
             {
                 float healamount = Mathf.Round(playerhp.maxhealth * (0.2f + (Statics.groupstonehealbonus * 0.01f)));
-                playerhp.addhealth(healamount);
+                playerhp.addhealthwithtext(healamount);
             }
         }
     }

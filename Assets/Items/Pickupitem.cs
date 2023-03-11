@@ -22,7 +22,7 @@ public class Pickupitem : MonoBehaviour
         {
             pickuponce = false;
             inventory.Addequipment(item, item.seconditem, 1);
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 }

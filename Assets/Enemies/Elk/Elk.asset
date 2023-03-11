@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: Elk
   m_EditorClassIdentifier: 
   enemyname: Elk
-  maxhealth: 200
+  basehealth: 333
   enemylvl: 8
   movementspeed: 8
-  attackdmg: 13
+  basedmg: 10
   attackspeed: 2
   enemysize: 2
+  gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}
+  golddropamount: 3
+  expgain: 11
+  enemydrops:
+  - itemtodrop: {fileID: 6737092273977564704, guid: 1c959d47499eb764481a949e5557ab77, type: 3}
+    itemdropchance: 10

@@ -32,11 +32,17 @@ public class Chestreward : MonoBehaviour, Rewardinterface, Interactioninterface
             GetComponent<Detectinteractionobject>().enabled = false;
             enabled = false;
         }
-        else if (areacontroller.enemychestcanopen[areachestnumber])
+        else if (areacontroller.enemychestcanopen[areachestnumber] == true)
         {
             closedchest.SetActive(true);
             cheststatetext = chestopen;
             openchest.SetActive(false);
+        }
+        else if(areacontroller.enemychestcanopen[areachestnumber] == false && rewardcountneeded == 0)
+        {
+            cheststatetext = chestopen;
+            areacontroller.enemychestcanopen[areachestnumber] = true;
+            areacontroller.autosave();
         }
         else
         {

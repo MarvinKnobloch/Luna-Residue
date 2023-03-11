@@ -16,6 +16,10 @@ public class Mining : MonoBehaviour, Interactioninterface
 
     public string Interactiontext => text;
 
+    private void Start()
+    {
+        gahteringnumber = GetComponent<Areanumber>().areanumber;
+    }
     private void OnEnable()
     {
         CancelInvoke();

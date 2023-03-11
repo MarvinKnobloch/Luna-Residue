@@ -21,20 +21,20 @@ MonoBehaviour:
   description: 
   basestats:
   - 0
-  - 0
-  - 0
-  - 1
+  - 20
   - 0
   - 2
+  - 0
+  - 0
   - 0
   - 0
   stats:
   - 0
-  - 0
-  - 0
-  - 1
+  - 20
   - 0
   - 2
+  - 0
+  - 0
   - 0
   - 0
   upgradelvl: 0
@@ -42,11 +42,11 @@ MonoBehaviour:
   upgrades:
   - newstats:
     - 0
-    - 0
-    - 0
-    - 2
+    - 40
     - 0
     - 4
+    - 0
+    - 0
     - 0
     - 0
     Upgrademats:

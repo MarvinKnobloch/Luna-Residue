@@ -22,7 +22,7 @@ public class Matsitemcontroller : MonoBehaviour
         {
             pickuponce = false;
             matsinventory.Additem(item, 1);
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 }

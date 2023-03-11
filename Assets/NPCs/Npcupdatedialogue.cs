@@ -14,8 +14,11 @@ public class Npcupdatedialogue : MonoBehaviour
     private void Awake()
     {
         npcdialogue = GetComponent<Npcdialogue>();
-        dialoguenumber = GetComponent<Areanumber>().areanumber;
         newnpcdialogueamount = newdialogue.Length;
+    }
+    private void Start()
+    {
+        dialoguenumber = GetComponent<Areanumber>().areanumber;
     }
     private void OnEnable()
     {

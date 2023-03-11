@@ -10,7 +10,6 @@ public class EnemyHP : MonoBehaviour
     [SerializeField] private Enemyvalues enemyvalues;
     private Enemycalculatedmg enemycalculatedmg = new Enemycalculatedmg();
     private Enemymovement enemymovement;
-    public GameObject damagetext;
 
     [NonSerialized] public string enemyname;
     public float currenthealth;
@@ -105,12 +104,8 @@ public class EnemyHP : MonoBehaviour
                 else if (dmgtype == 1) enemycalculatedmg.downdmg(damage);
                 else if (dmgtype == 2) enemycalculatedmg.middmg(damage);
                 else if (dmgtype == 3) enemycalculatedmg.updmg(damage);
-                var showtext = Instantiate(damagetext, transform.position, Quaternion.identity);
-                showtext.GetComponent<TextMeshPro>().text = finaldmg.ToString();
-                if (crit == true)
-                {
-                    showtext.GetComponent<TextMeshPro>().color = Color.red;
-                }
+                if (crit == true) Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, finaldmg, Color.red);
+                else Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, finaldmg, Color.yellow);
                 currenthealth -= finaldmg;
                 afterdmgtaken();
             }

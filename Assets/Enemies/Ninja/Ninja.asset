@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: Ninja
   m_EditorClassIdentifier: 
   enemyname: Ninja
-  maxhealth: 30
-  enemylvl: 10
+  basehealth: 322
+  enemylvl: 1
   movementspeed: 8
-  attackdmg: 7
+  basedmg: 7
   attackspeed: 1.5
   enemysize: 1
+  gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}
+  golddropamount: 5
+  expgain: 9
+  enemydrops:
+  - itemtodrop: {fileID: 6737092273977564704, guid: 00b38d45c459e974caa3db64bf8cef7a, type: 3}
+    itemdropchance: 5

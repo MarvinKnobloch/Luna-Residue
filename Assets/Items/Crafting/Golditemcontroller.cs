@@ -24,7 +24,7 @@ public class Golditemcontroller : MonoBehaviour
         {
             pickuponce = false;
             matsinventory.Additem(item, golddropamount);
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 }

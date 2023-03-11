@@ -10,6 +10,8 @@ public class Elementaltutorial : MonoBehaviour
     private int textindex;
 
     private bool readinputs;
+
+    [SerializeField] private GameObject elementalstonechest;
     private void Start()
     {
         tutorialcontroller = GetComponentInParent<Tutorialcontroller>();
@@ -67,6 +69,7 @@ public class Elementaltutorial : MonoBehaviour
     {
         Statics.elementalmenuisactiv = true;
         readinputs = false;
+        elementalstonechest.GetComponent<Rewardinterface>().addrewardcount();
         tutorialcontroller.endtutorial();
         gameObject.SetActive(false);
     }
