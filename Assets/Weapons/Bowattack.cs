@@ -76,6 +76,7 @@ public class Bowattack : MonoBehaviour
     {
         controlls.Enable();
         root = false;
+        Statics.dash = false;
         movementscript.currentstate = null;
         basicattackcd = 1f;
         bowaircount = 0;

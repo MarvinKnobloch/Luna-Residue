@@ -18,12 +18,12 @@ public class Fishmancolliderdmg : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == LoadCharmanager.Overallmainchar && dealdmgonce == false)
+        if (Statics.infight == true)
         {
-            if(Statics.infight == true)
+            if (other.gameObject == LoadCharmanager.Overallmainchar && dealdmgonce == false)
             {
                 dealdmgonce = true;
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg);
+                other.GetComponent<Playerhp>().TakeDamage(basedmg + Globalplayercalculations.calculateenemyspezialdmg());
             }
         }
     }

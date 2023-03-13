@@ -76,7 +76,7 @@ public class Doozycontroller : MonoBehaviour
         dmgcount = 5 - memoryclicknumber;
         if(Statics.infight == true)
         {
-            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(dmgcount * basedmg);
+            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(dmgcount * basedmg + Globalplayercalculations.calculateenemyspezialdmg());
         }
         turnoff();
     }

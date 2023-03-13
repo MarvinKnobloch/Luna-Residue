@@ -21,14 +21,11 @@ public class Plantcontroller : MonoBehaviour
     {
         foreach (GameObject sphere in plantspheres)
         {
-            if (sphere.activeSelf == true)
+            if (sphere.activeSelf == true && Statics.infight == true)
             {
-                if(Statics.infight == true)
-                {
-                    LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg);
-                }
-                sphere.SetActive(false);
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg + Globalplayercalculations.calculateenemyspezialdmg());
             }
+            sphere.SetActive(false);
         }
         gameObject.SetActive(false);
     }

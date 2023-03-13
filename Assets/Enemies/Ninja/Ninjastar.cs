@@ -33,10 +33,13 @@ public class Ninjastar : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == LoadCharmanager.Overallmainchar)
+        if(Statics.infight == true)
         {
-            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg);
-            gameObject.SetActive(false);
+            if (other.gameObject == LoadCharmanager.Overallmainchar)
+            {
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg + (Globalplayercalculations.calculateenemyspezialdmg() / 2));
+                gameObject.SetActive(false);
+            }
         }
     }
 }

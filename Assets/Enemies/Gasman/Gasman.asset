@@ -13,10 +13,15 @@ MonoBehaviour:
   m_Name: Gasman
   m_EditorClassIdentifier: 
   enemyname: Gasman
-  maxhealth: 5000
-  enemylvl: 7
+  basehealth: 333
+  enemylvl: 1
   movementspeed: 8
-  attackdmg: 10
-  attackspeed: 2
-  spezialdmg: 0
+  basedmg: 11
+  attackspeed: 2.1
   enemysize: 1
+  gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}
+  golddropamount: 3
+  expgain: 11
+  enemydrops:
+  - itemtodrop: {fileID: 6737092273977564704, guid: 1c959d47499eb764481a949e5557ab77, type: 3}
+    itemdropchance: 8

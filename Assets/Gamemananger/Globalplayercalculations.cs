@@ -26,4 +26,9 @@ public class Globalplayercalculations
         float healing = Mathf.Round(basicheal + healthbonusheal + (Statics.groupstonehealbonus + playerstonebonus) * 0.01f * basicheal);
         return healing;
     }
+    public static float calculateenemyspezialdmg()
+    {
+        float dmg = Statics.charcurrentlvl;
+        return dmg;
+    }
 }

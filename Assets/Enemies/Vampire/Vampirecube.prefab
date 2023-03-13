@@ -109,6 +109,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vampirecontroller: {fileID: 0}
-  Aoetargets:
+  target:
     serializedVersion: 2
-    m_Bits: 2112
+    m_Bits: 64

@@ -5,29 +5,22 @@ using System;
 
 public class Elkconedmg : MonoBehaviour
 {
-    [SerializeField] private GameObject elkcontroller;
+    [SerializeField] private Elkcontroller elkcontroller;
     [NonSerialized] public float basedmg;
-    private bool timerstart;
+    private bool dmgonce;
     private void OnEnable()
     {
-        timerstart = false;
+        StartCoroutine(oneframe());
+        dmgonce = false;
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (timerstart == false)
+        if(Statics.infight == true && dmgonce == false)
         {
-            timerstart = true;
-            StartCoroutine(oneframe());
-        }
-        if (other.gameObject.GetComponent<Playerhp>())
-        {
-            if (other.GetComponent<Supportmovement>())
+            if (other.gameObject == LoadCharmanager.Overallmainchar.gameObject)
             {
-                other.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg / 3));
-            }
-            else
-            {
-                other.GetComponent<Playerhp>().TakeDamage(basedmg);
+                dmgonce = true;
+                other.GetComponent<Playerhp>().TakeDamage(basedmg + Globalplayercalculations.calculateenemyspezialdmg());
             }
         }
     }
@@ -35,7 +28,7 @@ public class Elkconedmg : MonoBehaviour
     {
         yield return null;
         StopAllCoroutines();
-        elkcontroller.GetComponent<Elkcontroller>().conedisable();
+        elkcontroller.conedisable();
         gameObject.SetActive(false);
     }
 }

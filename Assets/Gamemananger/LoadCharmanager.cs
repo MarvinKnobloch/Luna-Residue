@@ -62,7 +62,7 @@ public class LoadCharmanager : MonoBehaviour
     }
     void Update()
     {
-        if (Statics.infight == false && interaction == false && Steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame() && Statics.otheraction == false)
+        if (Steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame() && Statics.infight == false && interaction == false && Statics.otheraction == false)
         {
             if (gameispaused == false)
             {
@@ -200,13 +200,23 @@ public class LoadCharmanager : MonoBehaviour
         {
             Overallforthchar.SetActive(false);
         }
-        gameispaused = false;
-        disableattackbuttons = false;
-        menu.SetActive(false);
         Time.timeScale = Statics.normalgamespeed;
         Time.fixedDeltaTime = Statics.normaltimedelta;
+        if(menu.activeSelf == true) StartCoroutine("waitbecausecollision");
+        else
+        {
+            disableattackbuttons = false;
+            gameispaused = false;
+        }
+        menu.SetActive(false);
         Cam1.gameObject.SetActive(true);
         Mouseactivate.disablemouse();
+    }
+    IEnumerator waitbecausecollision()
+    {
+        yield return null;
+        disableattackbuttons = false;
+        gameispaused = false;             //wenn gameispaused = true, wird die collision nicht getriggert
     }
     private void classandstatsupdate(int charnumber, GameObject[] playerorsupport)
     {

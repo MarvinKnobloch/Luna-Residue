@@ -10,7 +10,7 @@ public class Werewolfsphere : MonoBehaviour
     [NonSerialized] public float basedmg;
     [NonSerialized] public float explodetime;
 
-    [SerializeField] private LayerMask Aoetargets;
+    [SerializeField] private LayerMask targets;
 
     private void OnEnable()
     {
@@ -26,12 +26,12 @@ public class Werewolfsphere : MonoBehaviour
         gameObject.SetActive(false);
         if (Statics.infight == true)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, 5f, Aoetargets);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 5f, targets, QueryTriggerInteraction.Ignore);
             foreach (Collider target in colliders)
             {
                 if (target.gameObject == LoadCharmanager.Overallmainchar.gameObject)
                 {
-                    target.GetComponent<Playerhp>().TakeDamage(basedmg);
+                    target.GetComponent<Playerhp>().TakeDamage(basedmg + Globalplayercalculations.calculateenemyspezialdmg());
                     break;
                 }
             }
@@ -41,8 +41,8 @@ public class Werewolfsphere : MonoBehaviour
             LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
             Statics.dash = false;
             Statics.otheraction = false;
-            dazeimage.SetActive(false);
         }
+        dazeimage.SetActive(false);
         werewolfcontroller.SetActive(false);
         gameObject.SetActive(false);
     }

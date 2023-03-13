@@ -20,14 +20,15 @@ public class Vampirecircle : MonoBehaviour
     }*/
     private void dealdmg()
     {
-        Collider[] colliders = Physics.OverlapSphere(overlapspherepoint, 3f, player, QueryTriggerInteraction.Ignore);
-        foreach (Collider target in colliders)
+        if (Statics.infight == true)
         {
-            if (target.TryGetComponent(out Playerhp playerhp))
+            Collider[] colliders = Physics.OverlapSphere(overlapspherepoint, 3f, player, QueryTriggerInteraction.Ignore);
+            foreach (Collider target in colliders)
             {
-                if (Statics.infight == true)
+                if (target.gameObject == LoadCharmanager.Overallmainchar.gameObject)
                 {
-                    playerhp.TakeDamage(basedmg);
+                    target.GetComponent<Playerhp>().TakeDamage(basedmg + (Globalplayercalculations.calculateenemyspezialdmg() / 2));
+                    break;
                 }
             }
         }

@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Activateobjects : MonoBehaviour
+public class Activateenemycollider : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == LoadCharmanager.Overallmainchar)
+        if (other.gameObject == LoadCharmanager.Overallmainchar && LoadCharmanager.gameispaused == false)
         {
             foreach(Transform obj in gameObject.transform)
             {
@@ -16,7 +16,7 @@ public class Activateobjects : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == LoadCharmanager.Overallmainchar)
+        if (other.gameObject == LoadCharmanager.Overallmainchar && LoadCharmanager.gameispaused == false)
         {
             foreach (Transform obj in gameObject.transform)
             {

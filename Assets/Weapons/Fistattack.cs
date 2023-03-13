@@ -51,6 +51,7 @@ public class Fistattack : MonoBehaviour
     {
         controlls.Enable();
         root = false;
+        Statics.dash = false;
         movementscript.currentstate = null;
         basicattackcd = 1f;
         fistcontroller.enabled = true;

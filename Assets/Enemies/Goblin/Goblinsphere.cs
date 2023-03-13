@@ -8,7 +8,7 @@ public class Goblinsphere : MonoBehaviour
     [NonSerialized] public float basedmg;
     [NonSerialized] public float timetoexplode;
 
-    [SerializeField] private LayerMask Aoetargets;
+    [SerializeField] private LayerMask targets;
     private void OnEnable()
     {
         Invoke("dealdmg", timetoexplode);
@@ -19,21 +19,15 @@ public class Goblinsphere : MonoBehaviour
     }
     private void dealdmg()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 1.25f, Aoetargets,QueryTriggerInteraction.Ignore);
-        foreach (Collider target in colliders)
+        if (Statics.infight == true)
         {
-            if (target.TryGetComponent(out Playerhp playerhp))
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 1.25f, targets, QueryTriggerInteraction.Ignore);
+            foreach (Collider target in colliders)
             {
-                if (Statics.infight == true)
+                if (target.gameObject == LoadCharmanager.Overallmainchar.gameObject)
                 {
-                    if (target.GetComponent<Supportmovement>())
-                    {
-                        playerhp.TakeDamage(Mathf.Round(basedmg / 3));
-                    }
-                    else
-                    {
-                        playerhp.TakeDamage(basedmg);
-                    }
+                    target.GetComponent<Playerhp>().TakeDamage(basedmg + (Globalplayercalculations.calculateenemyspezialdmg() / 5));
+                    break;
                 }
             }
         }
