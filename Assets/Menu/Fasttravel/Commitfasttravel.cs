@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class Commitfasttravel : MonoBehaviour
 {
@@ -32,8 +33,8 @@ public class Commitfasttravel : MonoBehaviour
             enemys.GetComponent<Enemyhealthbar>().removehealthbar();
         }
         LoadCharmanager.savemainposi = fasttravelpoint;
-        LoadCharmanager.Overallmainchar.gameObject.GetComponent<Movescript>().switchtoairstate();
-        loadcharmananger.GetComponent<LoadCharmanager>().loadonfastravel();
+        SceneManager.LoadScene(1);
+        //loadcharmananger.GetComponent<LoadCharmanager>().loadonfastravel();
         gameObject.SetActive(false);
 
     }

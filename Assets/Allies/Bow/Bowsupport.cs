@@ -16,6 +16,8 @@ public class Bowsupport : MonoBehaviour
     private float endarrowdmg = 3;
     private float enddmgtodeal;
 
+    private bool preventdoublehealandthreat;
+
     private Attributecontroller attributecontroller;
     private Playerhp hpscript;
     private Supportmovement supportmovescript;
@@ -35,7 +37,6 @@ public class Bowsupport : MonoBehaviour
     private void bowdmgupdate()
     {
         basicdmgtodeal = Globalplayercalculations.calculatesupportdmg(basicarrowdmg, attributecontroller.dmgfromallies, attributecontroller.bowattack, attributecontroller.stoneclassbonusdmg);
-        Debug.Log(basicdmgtodeal);
         enddmgtodeal = Globalplayercalculations.calculatesupportdmg(endarrowdmg, attributecontroller.dmgfromallies, attributecontroller.bowattack, attributecontroller.stoneclassbonusdmg);
 
         weaponhealing = Globalplayercalculations.calculateweaponheal(attributecontroller.maxhealth);
@@ -59,6 +60,7 @@ public class Bowsupport : MonoBehaviour
             {
                 supportmovescript.currenttarget.gameObject.GetComponent<EnemyHP>().tookdmgfrom(4, Statics.forthchartookdmgformamount);
             }
+            preventdoublehealandthreat = true;
         }
     }
     private void shotendarrow()
@@ -71,14 +73,18 @@ public class Bowsupport : MonoBehaviour
             arrowcontroller.Arrowtarget = supportmovescript.currenttarget.transform;
             arrowcontroller.basicdmgtodeal = enddmgtodeal;
 
-            hpscript.addhealth(weaponhealing * 0.5f);
-            if (gameObject == LoadCharmanager.Overallthirdchar)
+            if(preventdoublehealandthreat == true)
             {
-                supportmovescript.currenttarget.gameObject.GetComponent<EnemyHP>().tookdmgfrom(3, Statics.thirdchartookdmgformamount);
-            }
-            if (gameObject == LoadCharmanager.Overallforthchar)
-            {
-                supportmovescript.currenttarget.gameObject.GetComponent<EnemyHP>().tookdmgfrom(4, Statics.forthchartookdmgformamount);
+                preventdoublehealandthreat = false;
+                hpscript.addhealth(weaponhealing);
+                if (gameObject == LoadCharmanager.Overallthirdchar)
+                {
+                    supportmovescript.currenttarget.gameObject.GetComponent<EnemyHP>().tookdmgfrom(3, Statics.thirdchartookdmgformamount);
+                }
+                if (gameObject == LoadCharmanager.Overallforthchar)
+                {
+                    supportmovescript.currenttarget.gameObject.GetComponent<EnemyHP>().tookdmgfrom(4, Statics.forthchartookdmgformamount);
+                }
             }
         }
     }

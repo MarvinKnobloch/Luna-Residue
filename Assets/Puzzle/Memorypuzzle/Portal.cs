@@ -9,9 +9,11 @@ public class Portal : MonoBehaviour
     {
         if (other.gameObject == LoadCharmanager.Overallmainchar.gameObject)
         {
-            LoadCharmanager.Overallmainchar.GetComponent<CharacterController>().enabled = false;
+            //LoadCharmanager.Overallmainchar.GetComponent<CharacterController>().enabled = false;
+            other.gameObject.SetActive(false);
             other.gameObject.transform.position = portalend.transform.position;
-            LoadCharmanager.Overallmainchar.GetComponent<CharacterController>().enabled = true;
+            other.gameObject.SetActive(true);
+            //LoadCharmanager.Overallmainchar.GetComponent<CharacterController>().enabled = true;
             LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtoairstate();
         }
     }
