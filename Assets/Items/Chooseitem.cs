@@ -143,8 +143,9 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             setstaticsslot(Statics.charcurrentnecklace);
         }
-        else if (Statics.currentequipmentbutton == 8)
+        else if (Statics.currentequipmentbutton == 9)
         {
+            Debug.Log("ring");
             setstaticsslot(Statics.charcurrentring);
         }
     }
@@ -154,6 +155,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             if (itemvalues == staticslotitem[i])
             {
+                Debug.Log("sameitem" + i);
                 subtractstatsbeforeupgrade(i);
             }
         }
@@ -232,6 +234,10 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             gridvalues.upgradeuitextcontroller.item = itemvalues;
             gridvalues.upgradeuitextcontroller.chooseitem = this;
             gridvalues.upgradeui.SetActive(true);
+
+            gridvalues.sworddmg.text = Statics.charswordattack[selectedchar].ToString();
+            gridvalues.bowdmg.text = Statics.charbowattack[selectedchar].ToString();
+            gridvalues.fistdmg.text = Statics.charfistattack[selectedchar].ToString();
 
             statsnumbers.text = string.Empty;
             statsnumbers.color = Color.white;
@@ -331,14 +337,13 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     private void healbonus(Itemcontroller equipeditem, int itemstat, float currentstatvalue)
     {
         float currentstats = Mathf.Round(currentstatvalue * Statics.healhealthbonuspercentage * 0.01f);
-        float newstats = Mathf.Round((currentstatvalue + itemvalues.stats[itemstat]) * Statics.healhealthbonuspercentage * 0.01f);
-        float oldstats = Mathf.Round((currentstatvalue + equipeditem.stats[itemstat]) * Statics.healhealthbonuspercentage * 0.01f);
-        float difference = newstats - oldstats;
-        if (newstats > oldstats)
+        float newstats = Mathf.Round((currentstatvalue + itemvalues.stats[itemstat] - equipeditem.stats[itemstat]) * Statics.healhealthbonuspercentage * 0.01f);
+        float difference = newstats - currentstats;
+        if (newstats > currentstats)
         {
             statsnumbers.text += "<color=green>" + "( +" + difference + " ) " + (difference + currentstats) + "</color>" + "\n";
         }
-        else if (newstats < oldstats)
+        else if (newstats < currentstats)
         {
             statsnumbers.text += "<color=red>" + "( " + difference + " ) " + (difference + currentstats) + "</color>" + "\n";
         }
@@ -350,14 +355,13 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     private void defensebonus(Itemcontroller equipeditem, int itemstat, float currentstatvalue)
     {
         float currentstats = Mathf.Round(currentstatvalue * Statics.defenseconvertedtoattack * 0.01f);
-        float newstats = Mathf.Round((currentstatvalue + itemvalues.stats[itemstat]) * Statics.defenseconvertedtoattack * 0.01f);
-        float oldstats = Mathf.Round((currentstatvalue + equipeditem.stats[itemstat]) * Statics.defenseconvertedtoattack * 0.01f);
-        float difference = newstats - oldstats;
-        if (newstats > oldstats)
+        float newstats = Mathf.Round((currentstatvalue + itemvalues.stats[itemstat] - equipeditem.stats[itemstat]) * Statics.defenseconvertedtoattack * 0.01f);
+        float difference = newstats - currentstats;
+        if (newstats > currentstats)
         {
             statsnumbers.text += "<color=green>" + "( +" + difference + " ) " + (difference + currentstats) + "</color>" + "\n";
         }
-        else if (newstats < oldstats)
+        else if (newstats < currentstats)
         {
             statsnumbers.text += "<color=red>" + "( " + difference + " ) " + (difference + currentstats) + "</color>" + "\n";
         }

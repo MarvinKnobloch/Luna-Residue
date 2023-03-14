@@ -51,14 +51,6 @@ public class LoadCharmanager : MonoBehaviour
             Statics.charcurrenthealth[i] = Statics.charmaxhealth[i];
         }
         maingamevalues();
-        Collider[] colliders = Physics.OverlapSphere(Overallmainchar.transform.position, 20, meleehitbox);
-        foreach (Collider checkforenemys in colliders)
-        {
-            if(checkforenemys.TryGetComponent(out EnemyHP enemyHP))
-            {
-                enemyHP.gameObject.SetActive(false);
-            }
-        }
     }
     void Update()
     {

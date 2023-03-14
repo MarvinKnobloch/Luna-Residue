@@ -35,10 +35,6 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
     private void statsupdate()
     {
-        gridvalues.sworddmg.text = Statics.charswordattack[selectedchar].ToString();
-        gridvalues.bowdmg.text = Statics.charbowattack[selectedchar].ToString();
-        gridvalues.fistdmg.text = Statics.charfistattack[selectedchar].ToString();
-
         gridvalues.statsnumbers.text = string.Empty;
         gridvalues.statsnumbers.color = Color.white;
         gridvalues.statsnumbers.text = Statics.charmaxhealth[selectedchar] + "\n" +
@@ -48,12 +44,16 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                             Statics.charattack[selectedchar] + "\n" +
                             Statics.charcritchance[selectedchar] + "%" + "\n" +
                             Statics.charcritdmg[selectedchar] + "%" + "\n" +
-                            (Statics.charweaponbuff[selectedchar] - 100) + "%" + "\n" +
+                            (Statics.charweaponbuff[selectedchar]) + "%" + "\n" +
                             Statics.charweaponbuffduration[selectedchar] + "sec" + "\n" +
-                            (Statics.charswitchbuff[selectedchar] - 100) + "%" + "\n" +
+                            (Statics.charswitchbuff[selectedchar]) + "%" + "\n" +
                             Statics.charswitchbuffduration[selectedchar] + "sec" + "\n" +
                             Statics.charbasiccritbuff[selectedchar] + "%" + "\n" +
                             Statics.charbasicdmgbuff[selectedchar] + "%";
+
+        gridvalues.sworddmg.text = Statics.charswordattack[selectedchar].ToString();
+        gridvalues.bowdmg.text = Statics.charbowattack[selectedchar].ToString();
+        gridvalues.fistdmg.text = Statics.charfistattack[selectedchar].ToString();
     }
     private void setnewitem(int equipslot)
     {
@@ -81,12 +81,11 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         if (itemvalues != null)
         {
             selectedchar = Statics.currentequipmentchar;
-
+            statsupdate();
             if (Statics.currentequipmentbutton == 0)
             {
                 ontriggerstats(Statics.charcurrentsword[selectedchar], gridvalues.sworddmg);
             }
-
             else if (Statics.currentequipmentbutton == 1)
             {
                 ontriggerstats(Statics.charcurrentbow[selectedchar], gridvalues.bowdmg);

@@ -72,6 +72,11 @@ public class EnemyHP : MonoBehaviour
         sizeofenemy = enemyvalues.enemysize;
         enemymovement.basedmg = Globalplayercalculations.calculateenemydmg(enemyvalues.basedmg, enemylvl);
         enemyfocusbargameobject = enemyfocusdebuffbar.transform.parent.gameObject;
+
+        if(Vector3.Distance(LoadCharmanager.Overallmainchar.transform.position, transform.position) < 20)
+        {
+            gameObject.SetActive(false);
+        }
     }
     private void OnEnable()
     {

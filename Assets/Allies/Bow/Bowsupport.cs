@@ -7,13 +7,13 @@ public class Bowsupport : MonoBehaviour
     
     public Transform Arrowlaunchposi;
     public GameObject basicarrow;
-    public float basicarrowdmg = 1;
+    private float basicarrowdmg = 1;
     private float basicdmgtodeal;
 
     private float weaponhealing;
 
     public GameObject endarrow;
-    public float endarrowdmg = 1;
+    private float endarrowdmg = 3;
     private float enddmgtodeal;
 
     private Attributecontroller attributecontroller;
@@ -34,8 +34,9 @@ public class Bowsupport : MonoBehaviour
 
     private void bowdmgupdate()
     {
-        basicdmgtodeal = Globalplayercalculations.calculateplayerdmgdone(basicarrowdmg, attributecontroller.dmgfromallies, attributecontroller.bowattack, attributecontroller.stoneclassbonusdmg);
-        enddmgtodeal = Globalplayercalculations.calculateplayerdmgdone(endarrowdmg, attributecontroller.dmgfromallies, attributecontroller.bowattack, attributecontroller.stoneclassbonusdmg);
+        basicdmgtodeal = Globalplayercalculations.calculatesupportdmg(basicarrowdmg, attributecontroller.dmgfromallies, attributecontroller.bowattack, attributecontroller.stoneclassbonusdmg);
+        Debug.Log(basicdmgtodeal);
+        enddmgtodeal = Globalplayercalculations.calculatesupportdmg(endarrowdmg, attributecontroller.dmgfromallies, attributecontroller.bowattack, attributecontroller.stoneclassbonusdmg);
 
         weaponhealing = Globalplayercalculations.calculateweaponheal(attributecontroller.maxhealth);
     }
@@ -70,7 +71,7 @@ public class Bowsupport : MonoBehaviour
             arrowcontroller.Arrowtarget = supportmovescript.currenttarget.transform;
             arrowcontroller.basicdmgtodeal = enddmgtodeal;
 
-            hpscript.addhealth(weaponhealing);
+            hpscript.addhealth(weaponhealing * 0.5f);
             if (gameObject == LoadCharmanager.Overallthirdchar)
             {
                 supportmovescript.currenttarget.gameObject.GetComponent<EnemyHP>().tookdmgfrom(3, Statics.thirdchartookdmgformamount);

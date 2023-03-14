@@ -33,8 +33,8 @@ public class Fistsupport : MonoBehaviour
     }
     private void fistdmgupdate()
     {
-        basicdmgtodeal = Globalplayercalculations.calculateplayerdmgdone(basicfistdmg, attributecontroller.dmgfromallies, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
-        enddmgtodeal = Globalplayercalculations.calculateplayerdmgdone(endfistdmg, attributecontroller.dmgfromallies, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
+        basicdmgtodeal = Globalplayercalculations.calculatesupportdmg(basicfistdmg, attributecontroller.dmgfromallies, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
+        enddmgtodeal = Globalplayercalculations.calculatesupportdmg(endfistdmg, attributecontroller.dmgfromallies, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
 
         weaponhealing = Globalplayercalculations.calculateweaponheal(attributecontroller.maxhealth);
     }
