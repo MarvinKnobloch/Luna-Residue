@@ -57,7 +57,11 @@ public class Setitemsandinventory : MonoBehaviour
         {
             items[i].inventoryslot = 0;
             items[i].upgradelvl = 0;
-            items[i].stats = items[i].basestats;
+            for (int t = 0; t < items[i].stats.Length; t++)
+            {
+                items[i].stats[t] = items[i].basestats[t];
+            }
+            //items[i].stats = items[i].basestats;                synrchonisiert die beiden arrays???????(wenn ich stats umändere, werden die basestats auch geändert)
         }
     }
     public void resetinventorys()

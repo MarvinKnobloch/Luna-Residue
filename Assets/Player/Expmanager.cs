@@ -13,7 +13,7 @@ public class Expmanager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI exptext;
 
     [Range(1f, 300f)]
-    public float flatexpnumber = 200;                                     // erhöht die benötigte exp für jedes lvl gleich, um so niederiger die zahl um so weniger exp braucht man zum lvln
+    public float flatexpnumber = 220;                                     // erhöht die benötigte exp für jedes lvl gleich, um so niederiger die zahl um so weniger exp braucht man zum lvln
     [Range(2f, 4f)]
     public float expmultiplier = 2;                                       // je höher die zahl um so steiler die kurve
     [Range(7f, 14f)]
@@ -36,7 +36,7 @@ public class Expmanager : MonoBehaviour
     {
         if (controlls.Player.GButton.WasPerformedThisFrame())
         {
-            gainexp(200);
+            gainexp(50);
         }
     }
 #endif

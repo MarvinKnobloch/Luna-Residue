@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyname: Elk
   basehealth: 333
-  enemylvl: 8
+  enemylvl: 1
   movementspeed: 8
   basedmg: 10
   attackspeed: 2

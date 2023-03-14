@@ -31,4 +31,15 @@ public class Globalplayercalculations
         float dmg = Statics.charcurrentlvl;
         return dmg;
     }
+    public static float calculateenemydmg(float basedmg, int enemylvl)
+    {
+        float dmg;
+        dmg = basedmg + (enemylvl * Statics.enemydmgmultiplier);
+        /*if(enemylvl >= 6)
+        {
+            dmg = basedmg + (enemylvl * Statics.enemydmgmultiplier);
+        }
+        else dmg = basedmg + enemylvl;*/
+        return dmg;
+    }
 }

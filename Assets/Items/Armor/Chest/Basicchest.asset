@@ -15,12 +15,12 @@ MonoBehaviour:
   Uisprite: {fileID: 21300000, guid: 2f1eaeeaad36ee5469eff7ff158f37ba, type: 3}
   type: 5
   itemname: Basichest
-  inventoryslot: 2
+  inventoryslot: 0
   itemshopcosts: 100
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
   basestats:
-  - 20
+  - 15
   - 0
   - 0
   - 0
@@ -29,7 +29,7 @@ MonoBehaviour:
   - 0
   - 0
   stats:
-  - 20
+  - 15
   - 0
   - 0
   - 0
@@ -41,7 +41,7 @@ MonoBehaviour:
   maxupgradelvl: 1
   upgrades:
   - newstats:
-    - 20
+    - 25
     - 0
     - 0
     - 0

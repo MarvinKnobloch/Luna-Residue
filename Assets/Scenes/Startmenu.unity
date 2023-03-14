@@ -3306,7 +3306,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Esc
+  m_Text: "^\e"
 --- !u!222 &277638274
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13450,24 +13450,31 @@ MonoBehaviour:
   headitems:
   - {fileID: 11400000, guid: 947a2c09834ead84aab8523907aa0c8b, type: 2}
   - {fileID: 11400000, guid: 43f764551917a8845a7d36e833c3ced9, type: 2}
+  - {fileID: 11400000, guid: c7e532a41992f3e4691642845f73874a, type: 2}
   chestitems:
   - {fileID: 11400000, guid: 926b8daac2862ab40876b06cad7e1733, type: 2}
   - {fileID: 11400000, guid: 5fb93356bba4e664eb2de690b365e8ce, type: 2}
+  - {fileID: 11400000, guid: 2803dcaf6b4f54e49a2d6a7ad64e850d, type: 2}
   beltitems:
   - {fileID: 11400000, guid: c2bca3ba23aa2034b9dd9e309a586790, type: 2}
   - {fileID: 11400000, guid: 217948d8399ef3448b2147b4abbbcc3c, type: 2}
+  - {fileID: 11400000, guid: 4754d88163875514c94bd5458bb79a69, type: 2}
   legitems:
   - {fileID: 11400000, guid: 34a6490ab048be74c86ea029fbce8f92, type: 2}
   - {fileID: 11400000, guid: 384467f1252160841903dbf3f2b124e1, type: 2}
+  - {fileID: 11400000, guid: b99865f771ade5a4b9a282b027da78d6, type: 2}
   shoesitems:
   - {fileID: 11400000, guid: 0549e7603c39c0c4c93e57df167980eb, type: 2}
   - {fileID: 11400000, guid: be8f00b23af756d4e9888e3e3d5f86d9, type: 2}
+  - {fileID: 11400000, guid: bff8b2a4568a5c8459171573659391b2, type: 2}
   necklessitems:
-  - {fileID: 11400000, guid: f6dac265e35b45245aa78d9ea5c6db86, type: 2}
-  - {fileID: 11400000, guid: 36f6e1537a9c3674c92de3f7734c1a43, type: 2}
+  - {fileID: 11400000, guid: 8536799bcd35d374aa349209acc51d2b, type: 2}
+  - {fileID: 11400000, guid: 31fb043f09e6a084fa99f4bab6e8d57f, type: 2}
+  - {fileID: 11400000, guid: 766d9a871f94c524a9f4a1e168b86bb6, type: 2}
   ringitems:
   - {fileID: 11400000, guid: b6280d59b038f2343b7fe6ef8b52a3bb, type: 2}
   - {fileID: 11400000, guid: 2715349855285884b9d9fee7569c063e, type: 2}
+  - {fileID: 11400000, guid: 2a7ce5a872cfb0a4eabcf7fbf75a4759, type: 2}
   craftingitems:
   - {fileID: 11400000, guid: aca73481126d62d418b60468c6629c06, type: 2}
   - {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
@@ -29436,7 +29443,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ^S
+  m_Text: S
 --- !u!222 &1937776740
 CanvasRenderer:
   m_ObjectHideFlags: 0

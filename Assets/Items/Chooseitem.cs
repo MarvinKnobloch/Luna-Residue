@@ -158,6 +158,17 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             }
         }
     }
+    private void subtractstatsbeforeupgrade(int currentchar)
+    {
+        Statics.charmaxhealth[currentchar] -= itemvalues.stats[0];
+        Statics.chardefense[currentchar] -= itemvalues.stats[1];
+        Statics.charattack[currentchar] -= itemvalues.stats[2];
+        Statics.charcritchance[currentchar] -= itemvalues.stats[3];
+        Statics.charcritdmg[currentchar] -= itemvalues.stats[4];
+        Statics.charweaponbuff[currentchar] -= itemvalues.stats[5];
+        Statics.charswitchbuff[currentchar] -= itemvalues.stats[6];
+        Statics.charbasicdmgbuff[currentchar] -= itemvalues.stats[7];
+    }
     public void upgradeequipeditems()
     {
         transform.GetChild(3).GetComponentInChildren<Text>().text = itemvalues.upgradelvl.ToString();
@@ -200,17 +211,6 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 addstatsafterupgrade(i);
             }
         }
-    }
-    private void subtractstatsbeforeupgrade(int currentchar)
-    {
-        Statics.charmaxhealth[currentchar] -= itemvalues.stats[0];
-        Statics.chardefense[currentchar] -= itemvalues.stats[1];
-        Statics.charattack[currentchar] -= itemvalues.stats[2];
-        Statics.charcritchance[currentchar] -= itemvalues.stats[3];
-        Statics.charcritdmg[currentchar] -= itemvalues.stats[4];
-        Statics.charweaponbuff[currentchar] -= itemvalues.stats[5];
-        Statics.charswitchbuff[currentchar] -= itemvalues.stats[6];
-        Statics.charbasicdmgbuff[currentchar] -= itemvalues.stats[7];
     }
     private void addstatsafterupgrade(int currentchar)
     {

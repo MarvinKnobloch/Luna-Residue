@@ -16,11 +16,13 @@ public class Fistsupport : MonoBehaviour
     private float enddmgtodeal;
     private float basicdmgtodeal;
 
+    private Supportmovement supportmovement;
     private Attributecontroller attributecontroller;
     private Playerhp hpscript;
 
     private void Awake()
     {
+        supportmovement = GetComponent<Supportmovement>();
         attributecontroller = GetComponent<Attributecontroller>();
         hpscript = GetComponent<Playerhp>();
     }
@@ -39,11 +41,13 @@ public class Fistsupport : MonoBehaviour
 
     private void firstfistattack()
     {
-        dealdmg(righthand, 2f, basicdmgtodeal);
+        supportmovement.currenttarget.GetComponent<EnemyHP>().takesupportdmg(basicdmgtodeal);
+        //dealdmg(righthand, 2f, basicdmgtodeal);
     }
     private void secondfistattack()
     {
-        dealdmg(rightfoot, 3f, basicdmgtodeal);
+        supportmovement.currenttarget.GetComponent<EnemyHP>().takesupportdmg(basicdmgtodeal);
+        //dealdmg(rightfoot, 3f, basicdmgtodeal);
     }
     private void thirdfistattack()
     {

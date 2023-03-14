@@ -15,8 +15,9 @@ MonoBehaviour:
   Uisprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
   type: 0
   itemname: Copperore
-  inventoryslot: 1
+  inventoryslot: 0
   itemshopcosts: 0
+  seconditem: {fileID: 0}
   description: Upgrade Equipment
   basestats: []
   stats: []

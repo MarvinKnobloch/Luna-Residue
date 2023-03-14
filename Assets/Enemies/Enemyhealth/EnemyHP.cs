@@ -70,7 +70,7 @@ public class EnemyHP : MonoBehaviour
         currenthealth = Mathf.Clamp(currenthealth, 0, maxhealth);
         currenthealth = maxhealth;
         sizeofenemy = enemyvalues.enemysize;
-        enemymovement.basedmg = enemyvalues.basedmg + enemylvl;
+        enemymovement.basedmg = Globalplayercalculations.calculateenemydmg(enemyvalues.basedmg, enemylvl);
         enemyfocusbargameobject = enemyfocusdebuffbar.transform.parent.gameObject;
     }
     private void OnEnable()
@@ -346,7 +346,7 @@ public class EnemyHP : MonoBehaviour
     {
         if (enemyvalues.golddropamount <= 2) golddropamount = 3;
         else golddropamount = enemyvalues.golddropamount;
-        golddropamount = golddropamount * enemylvl + UnityEngine.Random.Range(-2, 2);
+        golddropamount = Mathf.RoundToInt(golddropamount * (enemylvl * 0.5f) + UnityEngine.Random.Range(0, Mathf.RoundToInt(enemylvl * 0.5f)));
         GameObject enemygolddrop = Instantiate(enemyvalues.gold, transform.position + Vector3.up, transform.rotation);
         enemygolddrop.GetComponent<Golditemcontroller>().golddropamount = golddropamount;
 

@@ -114,6 +114,7 @@ public class Statics
     public static float enemyspecialcd = 13;
     public static float currentenemyspecialcd = 13;
     public static float enemydebufftime = 8;
+    public static float enemydmgmultiplier = 1.5f;
 
     public static float dazecounter;
     public static float dazekicksneeded;
@@ -145,7 +146,7 @@ public class Statics
     //playerstats
     public static int charcurrentlvl = 1;
     public static float charcurrentexp = 0;
-    public static float charrequiredexp = 52;
+    public static float charrequiredexp = 70;
     public static string[] characternames = { "Maria", "Erika", "Kaja", "Yaku", "Arissa" };
     public static float[] charbasichealth = { 80, 73, 77, 73, 75 };
     public static float[] charcurrenthealth = { 80, 73, 77, 73, 75 };

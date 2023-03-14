@@ -83,7 +83,7 @@ public class Startmenucontroller : MonoBehaviour
 
         Statics.charcurrentlvl = 1;
         Statics.charcurrentexp = 0;
-        Statics.charrequiredexp = 52;
+        Statics.charrequiredexp = 70;
 
         Statics.charbasichealth = new float[] { 80, 73, 77, 73, 75 };
         Statics.charcurrenthealth = new float[] { 80, 73, 77, 73, 75 };

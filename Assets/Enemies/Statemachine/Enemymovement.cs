@@ -25,7 +25,7 @@ public class Enemymovement : MonoBehaviour
     [NonSerialized] public float healticktimer;
     [NonSerialized] public float healtickamount;
 
-    [NonSerialized] public float basedmg;                // wird bei enemyhp gesetzt nachdem das lvl berechnet wird
+    [NonSerialized] public float basedmg;                //wird in enemyhp gesetzt
     [NonSerialized] public float normalattackcd;
     [NonSerialized] public float normalattacktimer;
     [NonSerialized] public bool spezialattack;
@@ -143,7 +143,10 @@ public class Enemymovement : MonoBehaviour
                 break;
         }
     }
-    public void triggerenemy() => enemypatrol.triggerenemy();       //ontriggerenter
+    public void triggerenemy()
+    {
+        enemypatrol.triggerenemy();       //ontriggerenter
+    }
     public void checkforplayerinrange() => enemypatrol.checkforplayerinrange();
     public void enemyinrangeistriggered() => enemypatrol.enemyinrangeistriggered();
     public void switchtoattackstate()

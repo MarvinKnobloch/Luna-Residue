@@ -15,13 +15,11 @@ public class Menucharcontroller : MonoBehaviour
     [SerializeField] private TextMeshProUGUI charstats;
     [SerializeField] private Sprite[] images;
 
-    private bool weapongridopen;
     private int firstweapon;
     private int secondweapon;
 
     private void OnEnable()
     {
-        weapongridopen = false;
         weapongrid1.SetActive(false);
         weapongrid2.SetActive(false);
         firstweapon = Statics.firstweapon[charnumber];
@@ -36,15 +34,17 @@ public class Menucharcontroller : MonoBehaviour
     }
     public void openweapongrid(GameObject grid)
     {
-        if (weapongridopen == false)
+        if(grid.activeSelf == true)
         {
-            grid.SetActive(true);
-            weapongridopen = true;
+            grid.SetActive(false);
         }
         else
         {
-            grid.SetActive(false);
-            weapongridopen = false;
+            foreach (GameObject obj in gameObject.GetComponentInParent<Closeweapongrids>().weaponselectiongrids)
+            {
+                obj.SetActive(false);
+            }
+            grid.SetActive(true);
         }
     }
     public void setmainweapon(int newweaponnumber)
@@ -60,8 +60,6 @@ public class Menucharcontroller : MonoBehaviour
         weaponslot1.gameObject.GetComponent<Image>().sprite = images[firstweapon];
         weapongrid1.SetActive(false);
         weapongrid2.SetActive(false);
-        weapongridopen = false;
-
     }
 
     public void setsecondweapon(int newweaponnumber)
@@ -77,6 +75,5 @@ public class Menucharcontroller : MonoBehaviour
         weaponslot2.gameObject.GetComponent<Image>().sprite = images[secondweapon];
         weapongrid1.SetActive(false);
         weapongrid2.SetActive(false);
-        weapongridopen = false;
     }
 }

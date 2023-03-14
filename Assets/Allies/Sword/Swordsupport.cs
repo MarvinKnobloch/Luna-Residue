@@ -15,11 +15,13 @@ public class Swordsupport : MonoBehaviour
     private float enddmgtodeal;
     private float basicdmgtodeal;
 
+    private Supportmovement supportmovement;
     private Attributecontroller attributecontroller;
     private Playerhp playerhp;
 
     private void Awake()
     {
+        supportmovement = GetComponent<Supportmovement>();
         attributecontroller = GetComponent<Attributecontroller>();
         playerhp = GetComponent<Playerhp>();
     }
@@ -37,7 +39,8 @@ public class Swordsupport : MonoBehaviour
 
     private void basicswordswing()
     {
-        dealdmg(swordmid, 3f, basicdmgtodeal);
+        supportmovement.currenttarget.GetComponent<EnemyHP>().takesupportdmg(basicdmgtodeal);
+        //dealdmg(swordmid, 3f, basicdmgtodeal);
     }
     private void endswordswing()
     {
