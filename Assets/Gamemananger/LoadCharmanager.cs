@@ -166,10 +166,12 @@ public class LoadCharmanager : MonoBehaviour
         aimcam.Follow = Overallmainchar.transform;
 
 
-        classandstatsupdate(Statics.currentfirstchar, allcharacters);                   // bonus hp von guard wird im elemenu beim auswählen des stones gesetzt
-        classandstatsupdate(Statics.currentsecondchar, allcharacters);
-        classandstatsupdate(Statics.currentthirdchar, teammates);
-        classandstatsupdate(Statics.currentforthchar, teammates);
+        classandstatsupdate(Statics.currentfirstchar, allcharacters, 0);                   // bonus hp von guard wird im elemenu beim auswählen des stones gesetzt
+        classandstatsupdate(Statics.currentsecondchar, allcharacters, 1);
+        classandstatsupdate(Statics.currentthirdchar, teammates, 2);
+        classandstatsupdate(Statics.currentforthchar, teammates, 3);
+        Statics.playertookdmgfromamount = Statics.tookdmgfromamount[0];
+
         GetComponent<Healthuimanager>().sethealthbars();
 
         setweapons?.Invoke();
@@ -211,7 +213,7 @@ public class LoadCharmanager : MonoBehaviour
         disableattackbuttons = false;
         gameispaused = false;             //wenn gameispaused = true, wird die collision nicht getriggert
     }
-    private void classandstatsupdate(int charnumber, GameObject[] playerorsupport)
+    private void classandstatsupdate(int charnumber, GameObject[] playerorsupport, int threatslot)
     {
         if(charnumber != -1)
         {
@@ -222,6 +224,7 @@ public class LoadCharmanager : MonoBehaviour
                     atbcontroller.isdmgclassroll = true;
                     atbcontroller.isguardclassroll = false;
                     atbcontroller.ishealerclassroll = false;
+                    Statics.tookdmgfromamount[threatslot] = 1;
                     atbcontroller.classrollupdate();
                 }
             }
@@ -232,6 +235,7 @@ public class LoadCharmanager : MonoBehaviour
                     atbcontroller.isdmgclassroll = false;
                     atbcontroller.isguardclassroll = true;
                     atbcontroller.ishealerclassroll = false;
+                    Statics.tookdmgfromamount[threatslot] = 2;
                     atbcontroller.classrollupdate();
                 }
             }
@@ -242,6 +246,7 @@ public class LoadCharmanager : MonoBehaviour
                     atbcontroller.isdmgclassroll = false;
                     atbcontroller.isguardclassroll = false;
                     atbcontroller.ishealerclassroll = true;
+                    Statics.tookdmgfromamount[threatslot] = 1;
                     atbcontroller.classrollupdate();
                 }
             }
@@ -252,6 +257,7 @@ public class LoadCharmanager : MonoBehaviour
                     atbcontroller.isdmgclassroll = false;
                     atbcontroller.isguardclassroll = false;
                     atbcontroller.ishealerclassroll = false;
+                    Statics.tookdmgfromamount[threatslot] = 1;
                     atbcontroller.classrollupdate();
                 }
             }

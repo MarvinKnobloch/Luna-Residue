@@ -47,28 +47,24 @@ public class Attributecontroller : MonoBehaviour
             }
             stoneclassbonusheal = 0;
             stoneclassdmgreduction = 0;
-            Statics.playertookdmgfromamount = 1;
         }
         else if (isguardclassroll)
         {
             checkforsupportdmgbuff();
             stoneclassbonusheal = 0;
             stoneclassdmgreduction = Statics.groupstonedefensebonus / 2;
-            Statics.playertookdmgfromamount = 2;
         }
         else if (ishealerclassroll)
         {
             checkforsupportdmgbuff();
             stoneclassbonusheal = Statics.groupstonehealbonus / 2;
             stoneclassdmgreduction = 0;
-            Statics.playertookdmgfromamount = 1;
         }
         else
         {
             checkforsupportdmgbuff();
             stoneclassbonusheal = 0;
             stoneclassdmgreduction = 0;
-            Statics.playertookdmgfromamount = 1;
         }
         updateattributes();
     }

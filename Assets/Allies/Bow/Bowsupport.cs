@@ -54,11 +54,11 @@ public class Bowsupport : MonoBehaviour
 
             if (gameObject == LoadCharmanager.Overallthirdchar)
             {
-                supportmovescript.currenttarget.gameObject.GetComponent<EnemyHP>().tookdmgfrom(3, Statics.thirdchartookdmgformamount);
+                supportmovescript.currenttarget.gameObject.GetComponent<EnemyHP>().tookdmgfrom(3, Statics.tookdmgfromamount[2]);
             }
             if (gameObject == LoadCharmanager.Overallforthchar)
             {
-                supportmovescript.currenttarget.gameObject.GetComponent<EnemyHP>().tookdmgfrom(4, Statics.forthchartookdmgformamount);
+                supportmovescript.currenttarget.gameObject.GetComponent<EnemyHP>().tookdmgfrom(4, Statics.tookdmgfromamount[3]);
             }
             preventdoublehealandthreat = true;
         }
@@ -79,11 +79,11 @@ public class Bowsupport : MonoBehaviour
                 hpscript.addhealth(weaponhealing);
                 if (gameObject == LoadCharmanager.Overallthirdchar)
                 {
-                    supportmovescript.currenttarget.gameObject.GetComponent<EnemyHP>().tookdmgfrom(3, Statics.thirdchartookdmgformamount);
+                    supportmovescript.currenttarget.gameObject.GetComponent<EnemyHP>().tookdmgfrom(3, Statics.tookdmgfromamount[2]);
                 }
                 if (gameObject == LoadCharmanager.Overallforthchar)
                 {
-                    supportmovescript.currenttarget.gameObject.GetComponent<EnemyHP>().tookdmgfrom(4, Statics.forthchartookdmgformamount);
+                    supportmovescript.currenttarget.gameObject.GetComponent<EnemyHP>().tookdmgfrom(4, Statics.tookdmgfromamount[3]);
                 }
             }
         }

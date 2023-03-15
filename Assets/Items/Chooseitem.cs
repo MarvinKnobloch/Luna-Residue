@@ -155,7 +155,6 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             if (itemvalues == staticslotitem[i])
             {
-                Debug.Log("sameitem" + i);
                 subtractstatsbeforeupgrade(i);
             }
         }

@@ -30,7 +30,6 @@ public class Detectinteractionobject : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("exit");
         if (other.gameObject == LoadCharmanager.Overallmainchar)
         {
             Statics.interactionobjects.Remove(this.gameObject);

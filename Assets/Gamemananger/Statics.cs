@@ -103,9 +103,8 @@ public class Statics
 
     //infight
     public static bool infight;
-    public static int playertookdmgfromamount = 1;                  //wird beim charchange geändert
-    public static int thirdchartookdmgformamount = 1;
-    public static int forthchartookdmgformamount = 1;
+    public static int playertookdmgfromamount = 1;                  // wird im charmanangergesetzt/wird beim charchange geändert
+    public static int[] tookdmgfromamount = { 1, 1, 1, 1 };
     public static bool oneplayerisdead;
     public static int infightresurrectcd;                           //wird im infightcontroller zurückgesetzt
     public static bool supportcanresurrect;

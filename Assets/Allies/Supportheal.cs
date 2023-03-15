@@ -101,8 +101,8 @@ public class Supportheal
     public void supportresurrected()
     {
         ssm.ChangeAnimationState(supportstandupstate);
+        ssm.playerhp.playerisdead = false;
         float reshealth = Mathf.Round(ssm.playerhp.maxhealth * (0.2f + (Statics.groupstonehealbonus * 0.01f)));
         ssm.playerhp.addhealth(reshealth);
-        ssm.playerhp.playerisdead = false;
     }
 }

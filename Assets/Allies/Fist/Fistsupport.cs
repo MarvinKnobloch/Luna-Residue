@@ -41,12 +41,40 @@ public class Fistsupport : MonoBehaviour
 
     private void firstfistattack()
     {
-        supportmovement.currenttarget.GetComponent<EnemyHP>().takesupportdmg(basicdmgtodeal);
+        if (supportmovement.currenttarget != null)
+        {
+            if (supportmovement.currenttarget.TryGetComponent(out EnemyHP enemyscript))
+            {
+                enemyscript.takesupportdmg(basicdmgtodeal);
+                if (gameObject == LoadCharmanager.Overallthirdchar)
+                {
+                    enemyscript.tookdmgfrom(3, Statics.tookdmgfromamount[2]);
+                }
+                else if (gameObject == LoadCharmanager.Overallforthchar)
+                {
+                    enemyscript.tookdmgfrom(4, Statics.tookdmgfromamount[3]);
+                }
+            }
+        }
         //dealdmg(righthand, 2f, basicdmgtodeal);
     }
     private void secondfistattack()
     {
-        supportmovement.currenttarget.GetComponent<EnemyHP>().takesupportdmg(basicdmgtodeal);
+        if (supportmovement.currenttarget != null)
+        {
+            if (supportmovement.currenttarget.TryGetComponent(out EnemyHP enemyscript))
+            {
+                enemyscript.takesupportdmg(basicdmgtodeal);
+                if (gameObject == LoadCharmanager.Overallthirdchar)
+                {
+                    enemyscript.tookdmgfrom(3, Statics.tookdmgfromamount[2]);
+                }
+                else if (gameObject == LoadCharmanager.Overallforthchar)
+                {
+                    enemyscript.tookdmgfrom(4, Statics.tookdmgfromamount[3]);
+                }
+            }
+        }
         //dealdmg(rightfoot, 3f, basicdmgtodeal);
     }
     private void thirdfistattack()
@@ -66,11 +94,11 @@ public class Fistsupport : MonoBehaviour
                     enemyscript.takesupportdmg(dmg);
                     if (gameObject == LoadCharmanager.Overallthirdchar)
                     {
-                        enemyscript.tookdmgfrom(3, Statics.thirdchartookdmgformamount);
+                        enemyscript.tookdmgfrom(3, Statics.tookdmgfromamount[2]);
                     }
                     else if (gameObject == LoadCharmanager.Overallforthchar)
                     {
-                        enemyscript.tookdmgfrom(4, Statics.forthchartookdmgformamount);
+                        enemyscript.tookdmgfrom(4, Statics.tookdmgfromamount[3]);
                     }
                 }
             }

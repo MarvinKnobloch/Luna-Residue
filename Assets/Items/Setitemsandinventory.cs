@@ -89,7 +89,7 @@ public class Setitemsandinventory : MonoBehaviour
         {
             for (int t = 0; t < inventorys[i].Container.Items.Length; t++)
             {
-                if (inventorys[i].Container.Items[t].amount != 0)
+                if (inventorys[i].Container.Items[t].inventoryposi != 0)
                 {
                     Itemcontroller item = inventorys[i].Container.Items[t].item;
                     item.inventoryslot = inventorys[i].Container.Items[t].inventoryposi;

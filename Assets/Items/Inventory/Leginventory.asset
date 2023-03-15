@@ -16,15 +16,15 @@ MonoBehaviour:
   Container:
     savepathname: Legsinventory
     Items:
-    - item: {fileID: 0}
-      amount: 0
-      itemname: 
-      inventoryposi: 0
+    - item: {fileID: 11400000, guid: 384467f1252160841903dbf3f2b124e1, type: 2}
+      amount: 1
+      itemname: Mysticlegs
+      inventoryposi: 1
       itemlvl: 0
-    - item: {fileID: 0}
-      amount: 0
-      itemname: 
-      inventoryposi: 0
+    - item: {fileID: 11400000, guid: 34a6490ab048be74c86ea029fbce8f92, type: 2}
+      amount: 1
+      itemname: Basiclegs
+      inventoryposi: 2
       itemlvl: 0
     - item: {fileID: 0}
       amount: 0

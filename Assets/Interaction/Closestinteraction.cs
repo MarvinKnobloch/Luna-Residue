@@ -24,11 +24,13 @@ public class Closestinteraction : MonoBehaviour
         Steuerung.Enable();
         Detectinteractionobject.enableinteractionfield += enableactionfield;
         Detectinteractionobject.disableinteractionfield += disableactionfield;
+        Portal.disableinteractionfield += disableactionfield;
     }
     private void OnDisable()
     {
         Detectinteractionobject.enableinteractionfield -= enableactionfield;
         Detectinteractionobject.disableinteractionfield -= disableactionfield;
+        Portal.disableinteractionfield -= disableactionfield;
     }
     void Update()
     {
