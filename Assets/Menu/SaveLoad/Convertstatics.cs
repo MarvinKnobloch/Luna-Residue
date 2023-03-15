@@ -42,16 +42,16 @@ public class Convertstatics
     public float[] charbowattack;
     public float[] charfistattack;
 
-    public Itemcontroller[] currentsword;
-    public Itemcontroller[] currentbow;
-    public Itemcontroller[] currentfist;
-    public Itemcontroller[] currenthead;
-    public Itemcontroller[] currentchest;
-    public Itemcontroller[] currentbelt;
-    public Itemcontroller[] currentlegs;
-    public Itemcontroller[] currentshoes;
-    public Itemcontroller[] currentneckless;
-    public Itemcontroller[] currentring;
+    public int[] swordid = new int[5];
+    public int[] bowid = new int[5];
+    public int[] fistid = new int[5];
+    public int[] headid = new int[5];
+    public int[] chestid = new int[5];
+    public int[] beltid = new int[5];
+    public int[] legsid = new int[5];
+    public int[] shoesid = new int[5];
+    public int[] necklaceid = new int[5];
+    public int[] ringid = new int[5];
 
     public int[] charspendedskillpoints;
     public int[] charskillpoints;
@@ -125,16 +125,16 @@ public class Convertstatics
         charbowattack = Statics.charbowattack;
         charfistattack = Statics.charfistattack;
 
-        currentsword = Statics.charcurrentsword;
-        currentbow = Statics.charcurrentbow;
-        currentfist = Statics.charcurrentfist;
-        currenthead = Statics.charcurrenthead;
-        currentchest = Statics.charcurrentchest;
-        currentbelt = Statics.charcurrentbelt;
-        currentshoes = Statics.charcurrentshoes;
-        currentlegs = Statics.charcurrentlegs;
-        currentneckless = Statics.charcurrentnecklace;
-        currentring = Statics.charcurrentring;
+        setids(swordid, Statics.charcurrentsword);
+        setids(bowid, Statics.charcurrentbow);
+        setids(fistid, Statics.charcurrentfist);
+        setids(headid, Statics.charcurrenthead);
+        setids(chestid, Statics.charcurrentchest);
+        setids(beltid, Statics.charcurrentbelt);
+        setids(legsid, Statics.charcurrentlegs);
+        setids(shoesid, Statics.charcurrentshoes);
+        setids(necklaceid, Statics.charcurrentnecklace);
+        setids(ringid, Statics.charcurrentring);
 
         charspendedskillpoints = Statics.charspendedskillpoints;
         charskillpoints = Statics.charskillpoints;
@@ -162,6 +162,13 @@ public class Convertstatics
         groupstonedmgbonus = Statics.groupstonedmgbonus;
     }
 
+    private void setids(int[] idslot, Itemcontroller[] staticitem)
+    {
+        for (int i = 0; i < staticitem.Length; i++)
+        {
+            idslot[i] = staticitem[i].itemid;
+        }
+    }
     public void setstaticsafterload()
     {
         LoadCharmanager.savemainposi = playerposition;
@@ -204,16 +211,16 @@ public class Convertstatics
         Statics.charbowattack = charbowattack;
         Statics.charfistattack = charfistattack;
 
-        Statics.charcurrentsword = currentsword;
-        Statics.charcurrentbow = currentbow;
-        Statics.charcurrentfist = currentfist;
-        Statics.charcurrenthead = currenthead;
-        Statics.charcurrentchest = currentchest;
-        Statics.charcurrentbelt = currentbelt;
-        Statics.charcurrentshoes = currentshoes;
-        Statics.charcurrentlegs = currentlegs;
-        Statics.charcurrentnecklace = currentneckless;
-        Statics.charcurrentring = currentring;
+        Statics.swordid = swordid;
+        Statics.bowid = bowid;
+        Statics.fistid = fistid;
+        Statics.headid = headid;
+        Statics.chestid = chestid;
+        Statics.beltid = beltid;
+        Statics.legsid = legsid;
+        Statics.shoesid = shoesid;
+        Statics.necklaceid = necklaceid;
+        Statics.ringid = ringid;
 
         Statics.charspendedskillpoints = charspendedskillpoints;
         Statics.charskillpoints = charskillpoints;

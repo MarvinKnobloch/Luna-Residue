@@ -81,6 +81,7 @@ public class Saveandloadgame : MonoBehaviour
         loadinventorys(slot);
         setitemsandinventory.resetitems();
         setitemsandinventory.updateitemsininventory();
+        setitemsandinventory.setequipeditemsafterload();
         resetgameplaystatics();
     }
     private void loadstaticdata(int slot)

@@ -73,7 +73,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             setitemandvalues(Statics.charcurrentchest[selectedchar]);
             Statics.charcurrentchest[selectedchar] = itemvalues;
         }
-        else if (equipslot == 5)        //gloves = number5
+        else if (equipslot == 5)        //belt = number5
         {
             setitemandvalues(Statics.charcurrentbelt[selectedchar]);
             Statics.charcurrentbelt[selectedchar] = itemvalues;

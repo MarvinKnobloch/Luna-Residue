@@ -14,17 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Uisprite: {fileID: 0}
   type: 0
+  itemid: 4
   itemname: Silverore
+  inventoryslot: 0
+  itemshopcosts: 0
+  seconditem: {fileID: 0}
   description: 
-  health: 0
-  defense: 0
-  attack: 0
-  critchance: 0
-  critdmg: 0
-  weaponswitch: 0
-  charswitch: 0
-  basic: 0
-  stats: 
+  basestats: []
+  stats: []
   upgradelvl: 0
   maxupgradelvl: 0
   upgrades: []

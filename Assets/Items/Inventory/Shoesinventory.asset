@@ -16,142 +16,170 @@ MonoBehaviour:
   Container:
     savepathname: Shoesinventory
     Items:
+    - item: {fileID: 11400000, guid: be8f00b23af756d4e9888e3e3d5f86d9, type: 2}
+      itemid: 1
+      amount: 1
+      itemname: Mysticshoes
+      inventoryposi: 1
+      itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
-      amount: 0
-      itemname: 
-      inventoryposi: 0
-      itemlvl: 0
-    - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0

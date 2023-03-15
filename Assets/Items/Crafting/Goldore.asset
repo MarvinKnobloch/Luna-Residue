@@ -14,8 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Uisprite: {fileID: 0}
   type: 0
+  itemid: 5
   itemname: Goldore
   inventoryslot: 0
+  itemshopcosts: 0
+  seconditem: {fileID: 0}
   description: 
   basestats: []
   stats: []

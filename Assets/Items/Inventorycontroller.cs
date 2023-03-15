@@ -93,6 +93,7 @@ public class Inventory
 public class Inventoryslot
 {
     public Itemcontroller item;
+    public int itemid;
     public int amount;
     public string itemname;
     public int inventoryposi;
@@ -102,11 +103,12 @@ public class Inventoryslot
         item = _item;
         amount = _amount;
     }
-    public void slotupdate(Itemcontroller _item, int _amount)
+    public void slotupdate(Itemcontroller addeditem, int addedamount)
     {
-        item = _item;
-        amount = _amount;
-        itemname = item.name.ToString();       
+        itemid = addeditem.itemid;
+        item = addeditem;
+        amount = addedamount;
+        itemname = addeditem.name.ToString();       
     }
 
     public void Addamount(int value)

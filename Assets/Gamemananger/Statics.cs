@@ -169,6 +169,17 @@ public class Statics
     public static float[] charbowattack = new float[5];
     public static float[] charfistattack = new float[5];
 
+    public static int[] swordid = new int[5];
+    public static int[] bowid = new int[5];
+    public static int[] fistid = new int[5];
+    public static int[] headid = new int[5];
+    public static int[] chestid = new int[5];
+    public static int[] beltid = new int[5];
+    public static int[] legsid = new int[5];
+    public static int[] shoesid = new int[5];
+    public static int[] necklaceid = new int[5];
+    public static int[] ringid = new int[5];
+
     public static Itemcontroller[] charcurrentsword = new Itemcontroller[5];
     public static Itemcontroller[] charcurrentbow = new Itemcontroller[5];
     public static Itemcontroller[] charcurrentfist = new Itemcontroller[5];

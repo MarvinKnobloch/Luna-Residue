@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Uisprite: {fileID: 0}
   type: 0
+  itemid: 15
   itemname: Ancient Relic
   inventoryslot: 0
   itemshopcosts: 0

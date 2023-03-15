@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Uisprite: {fileID: 0}
   type: 0
+  itemid: 8
   itemname: Watercore
+  inventoryslot: 0
+  itemshopcosts: 0
+  seconditem: {fileID: 0}
   description: 
   basestats: []
   stats: []

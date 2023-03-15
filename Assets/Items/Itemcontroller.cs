@@ -21,6 +21,7 @@ public abstract class Itemcontroller : ScriptableObject
 {
     public Sprite Uisprite;
     public Itemtype type;
+    public int itemid;
     public string itemname;
     public int inventoryslot;
     public int itemshopcosts;

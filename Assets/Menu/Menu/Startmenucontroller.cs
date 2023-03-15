@@ -150,6 +150,17 @@ public class Startmenucontroller : MonoBehaviour
         Statics.charcurrentnecklace = new Itemcontroller[5];
         Statics.charcurrentring = new Itemcontroller[5];
 
+        Statics.swordid = new int[5] { 1, 1, 1, 1, 1 };
+        Statics.bowid = new int[5] { 1, 1, 1, 1, 1 };
+        Statics.fistid = new int[5] { 1, 1, 1, 1, 1 };
+        Statics.headid = new int[5] { 1, 1, 1, 1, 1 };
+        Statics.chestid = new int[5] { 1, 1, 1, 1, 1 };
+        Statics.beltid = new int[5] { 1, 1, 1, 1, 1 };
+        Statics.legsid = new int[5] { 1, 1, 1, 1, 1 };
+        Statics.shoesid = new int[5] { 1, 1, 1, 1, 1 };
+        Statics.necklaceid = new int[5] { 1, 1, 1, 1, 1 };
+        Statics.ringid = new int[5] { 1, 1, 1, 1, 1 };
+
         setitemsandinventory.resetitems();
         setitemsandinventory.resetinventorys();
         setitemsandinventory.setstartitems();
