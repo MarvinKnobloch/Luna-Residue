@@ -20,10 +20,8 @@ public class Golditemcontroller : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log(LoadCharmanager.Overallmainchar.gameObject);
         if (other.gameObject == LoadCharmanager.Overallmainchar && pickuponce == true)
         {
-            Debug.Log("pickup");
             pickuponce = false;
             matsinventory.Additem(item, golddropamount);
             Destroy(gameObject);

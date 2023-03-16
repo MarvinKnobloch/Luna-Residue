@@ -12,8 +12,8 @@ public class Doozycontroller : MonoBehaviour
 
     [SerializeField] private CinemachineFreeLook maincam;
 
-    public static int memoryclicknumber;
-    public static bool canclick;
+    public int memoryclicknumber;
+    public bool canclick;
     private int activnumber;
     private int choosenumber;
 

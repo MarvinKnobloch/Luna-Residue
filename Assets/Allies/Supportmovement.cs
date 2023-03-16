@@ -36,7 +36,7 @@ public class Supportmovement : MonoBehaviour
     [NonSerialized] public float healtimer;
     [NonSerialized] public float additverandomhealtimer;
     [SerializeField] public GameObject healpotion;
-    private int basicpotionheal = 8;
+    private int basicpotionheal = 12;
 
     public GameObject resurrecttraget;
 

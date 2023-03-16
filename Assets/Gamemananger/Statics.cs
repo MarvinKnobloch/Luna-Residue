@@ -113,7 +113,7 @@ public class Statics
     public static float enemyspecialcd = 13;
     public static float currentenemyspecialcd = 13;
     public static float enemydebufftime = 8;
-    public static float enemydmgmultiplier = 1.7f;
+    public static float enemydmgmultiplier = 1.5f;
 
     public static float dazecounter;
     public static float dazekicksneeded;
@@ -140,7 +140,8 @@ public class Statics
     public static float groupstonedmgbonus = 0;
 
     public static float guardbonushpeachlvl = 8;
-    public static float alliegrouphealspawntime = 8;
+    public static float alliegrouphealspawntime = 9;
+    public static float alliegrouphealdespawntime = 5;
 
     //playerstats
     public static int charcurrentlvl = 1;

@@ -124,7 +124,7 @@ public class Healingscript : MonoBehaviour
                     {
                         healtarget = 3;
                         movementscript.ChangeAnimationState(singlehealend);
-                    }
+                    }             
                 }
                 if (grouphealcast == true)
                 {

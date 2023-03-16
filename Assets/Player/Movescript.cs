@@ -479,6 +479,7 @@ public class Movescript : MonoBehaviour
     }
     public void pushplayerup(float amount) => playerair.pushplayerupwards(amount);
     public void gahteritem(GameObject gatherobject) => playerutility.gatheritem(gatherobject);
+    public void spawnallies() => playerutility.spawnallies();
 
 }
 

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Statueforward : MonoBehaviour, Interactioninterface
 {
-    public LayerMask layer;
+    private LayerMask layer;
     public GameObject[] Statues;
 
     [SerializeField] private string actiontext = "Move";
     public string Interactiontext => actiontext;
     private void Awake()
     {
-        layer = LayerMask.GetMask("Terrain");
+        layer = GetComponentInParent<Statuecontroller>().statueraylayer;
     }
     public bool Interact(Closestinteraction interactor)
     {

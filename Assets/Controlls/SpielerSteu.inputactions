@@ -195,15 +195,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Openequipentmenu",
-                    "type": "Button",
-                    "id": "4eb3e4d1-eada-4488-b850-7952513ac173",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Test",
                     "type": "Button",
                     "id": "1722e75e-32c6-47cc-a1c2-4a520f3831e4",
@@ -216,6 +207,24 @@
                     "name": "Setsupporttarget",
                     "type": "Button",
                     "id": "03b1f235-1179-4bc0-9f03-db8477917772",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Thirdchartarget",
+                    "type": "Button",
+                    "id": "c05697ba-a1fe-45dc-b719-f0dcb184ce3a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Forthchartarget",
+                    "type": "Button",
+                    "id": "4eb3e4d1-eada-4488-b850-7952513ac173",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -500,17 +509,6 @@
                 },
                 {
                     "name": "",
-                    "id": "bbec5637-9f83-4bf0-876c-f833a43690f7",
-                    "path": "<Keyboard>/f2",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Openequipentmenu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "81217e88-ccf8-45b2-89cf-637740eb203d",
                     "path": "<Keyboard>/m",
                     "interactions": "",
@@ -523,11 +521,33 @@
                 {
                     "name": "",
                     "id": "570dfaf3-1933-4461-ba8e-45851458db7c",
-                    "path": "<Keyboard>/f1",
+                    "path": "<Keyboard>/5",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Setsupporttarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "783775fc-abd9-4b9f-b486-59960ce9184f",
+                    "path": "<Keyboard>/f1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Thirdchartarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bbec5637-9f83-4bf0-876c-f833a43690f7",
+                    "path": "<Keyboard>/f2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Forthchartarget",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

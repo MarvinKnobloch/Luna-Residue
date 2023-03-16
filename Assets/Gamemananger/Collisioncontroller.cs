@@ -13,5 +13,6 @@ public class Collisioncontroller : MonoBehaviour
         Physics.IgnoreLayerCollision(8, 12);
         Physics.IgnoreLayerCollision(11, 12);
         Physics.IgnoreLayerCollision(15, 12);
+        Physics.IgnoreLayerCollision(17, 12);
     }
 }

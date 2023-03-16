@@ -47,6 +47,7 @@ public class Mining : MonoBehaviour, Interactioninterface
         if (LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state == Movescript.State.Gatheritem)
         {
             areacontroller.gotgatheritem[gahteringnumber] = true;
+            areacontroller.autosave();
             inventory.Additem(item, itemamount);
             gameObject.SetActive(false);
         }

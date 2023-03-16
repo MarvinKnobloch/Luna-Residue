@@ -15,6 +15,8 @@ public class Playerlockon
             {
                 if (psm.controlls.Player.Lockonchange.WasPerformedThisFrame()) changetarget();
                 if (psm.controlls.Player.Setsupporttarget.WasPerformedThisFrame()) setsupporttargets();
+                if (psm.controlls.Player.Thirdchartarget.WasPerformedThisFrame()) setthirdchartartget();
+                if (psm.controlls.Player.Forthchartarget.WasPerformedThisFrame()) setthirdchartartget();
             }
         }
     }
@@ -97,7 +99,20 @@ public class Playerlockon
         if (LoadCharmanager.Overallforthchar != null)
         {
             LoadCharmanager.Overallforthchar.GetComponent<Supportmovement>().playerfocustarget();
+        }      
+    }
+    private void setthirdchartartget()
+    {
+        if (LoadCharmanager.Overallthirdchar != null)
+        {
+            LoadCharmanager.Overallthirdchar.GetComponent<Supportmovement>().playerfocustarget();
         }
-        
+    }
+    private void setforthchartarget()
+    {
+        if (LoadCharmanager.Overallthirdchar != null)
+        {
+            LoadCharmanager.Overallthirdchar.GetComponent<Supportmovement>().playerfocustarget();
+        }
     }
 }

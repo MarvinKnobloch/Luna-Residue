@@ -5,11 +5,9 @@ using System;
 
 public class Statuefinish : MonoBehaviour
 {
+    [SerializeField] private GameObject Reward;
+
     private Color greencolor;
-    public static event Action finish;
-    public static event Action notfinish;
-
-
     private void Awake()
     {
         ColorUtility.TryParseHtmlString("#2C6536", out greencolor);
@@ -19,7 +17,7 @@ public class Statuefinish : MonoBehaviour
         if (other.gameObject.CompareTag("Statue"))
         {
             other.gameObject.GetComponent<Renderer>().material.color = greencolor;
-            finish?.Invoke();
+            Reward.GetComponent<Rewardinterface>().addrewardcount();
         }
     }
     private void OnTriggerExit(Collider other)
@@ -27,7 +25,7 @@ public class Statuefinish : MonoBehaviour
         if (other.gameObject.CompareTag("Statue"))
         {
             other.gameObject.GetComponent<Renderer>().material.color = Color.white;
-            notfinish?.Invoke();
+            Reward.GetComponent<Rewardinterface>().removerewardcount();
         }
     }
 }

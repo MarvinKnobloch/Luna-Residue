@@ -11,7 +11,7 @@ public class Statueleft : MonoBehaviour, Interactioninterface
     public string Interactiontext => actiontext;
     private void Awake()
     {
-        layer = LayerMask.GetMask("Terrain");
+        layer = GetComponentInParent<Statuecontroller>().statueraylayer;
     }
     public bool Interact(Closestinteraction interactor)
     {

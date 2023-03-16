@@ -58,22 +58,13 @@ public class Infightcontroller : MonoBehaviour
                 Statics.supportcanresurrect = false;
                 Statics.oneplayerisdead = false;
                 Statics.infight = true;
-                LoadCharmanager.Overallmainchar.GetComponent<Movescript>().autolockon();
                 instance.StopCoroutine("healalliesafterfight");
                 instance.StartCoroutine("enemyspezialcd");
+                LoadCharmanager.Overallmainchar.GetComponent<Movescript>().autolockon();
+                LoadCharmanager.Overallmainchar.GetComponent<Movescript>().spawnallies();
             }
             infightimage.SetActive(true);
             instance.CancelInvoke();                        //unterbricht den Allie despawn wenn man wieder infight kommmt
-            if (LoadCharmanager.Overallthirdchar !=null && LoadCharmanager.Overallthirdchar.activeSelf == false)                              
-            {
-                LoadCharmanager.Overallthirdchar.transform.position = mainchar.transform.position + mainchar.transform.forward * -1 + mainchar.transform.right * -1;
-                LoadCharmanager.Overallthirdchar.SetActive(true);
-            }
-            if (LoadCharmanager.Overallforthchar != null && LoadCharmanager.Overallforthchar.activeSelf == false)
-            {
-                LoadCharmanager.Overallforthchar.transform.position = mainchar.transform.position + mainchar.transform.forward * -1 + mainchar.transform.right * 1;
-                LoadCharmanager.Overallforthchar.SetActive(true);
-            }
         }
     }
     IEnumerator enemyspezialcd()

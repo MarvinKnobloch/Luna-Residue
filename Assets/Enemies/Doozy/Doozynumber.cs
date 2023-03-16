@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Doozynumber : MonoBehaviour
 {
-    [SerializeField] private GameObject doozycontroller;
+    [SerializeField] private Doozycontroller doozycontroller;
     public int setnumber;
 
     private void OnDisable()
@@ -16,20 +16,20 @@ public class Doozynumber : MonoBehaviour
     }
     public void confirm()
     {
-        if(Doozycontroller.canclick == true)
+        if(doozycontroller.canclick == true)
         {
-            if (setnumber == Doozycontroller.memoryclicknumber)
+            if (setnumber == doozycontroller.memoryclicknumber)
             {
-                Doozycontroller.memoryclicknumber++;
+                doozycontroller.memoryclicknumber++;
                 gameObject.GetComponent<Image>().color = Color.green;
-                if (Doozycontroller.memoryclicknumber == 5)
+                if (doozycontroller.memoryclicknumber == 5)
                 {
-                    doozycontroller.GetComponent<Doozycontroller>().success();
+                    doozycontroller.success();
                 }
             }
             else
             {
-                Doozycontroller.canclick = false;
+                doozycontroller.canclick = false;
                 gameObject.GetComponent<Image>().color = Color.red;
                 doozycontroller.GetComponent<Doozycontroller>().fail();
             }
