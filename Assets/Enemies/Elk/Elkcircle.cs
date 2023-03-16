@@ -12,12 +12,13 @@ public class Elkcircle : MonoBehaviour
     {
         if (Statics.infight == true)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, 6f, targets);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 6f, targets, QueryTriggerInteraction.Ignore);
             foreach (Collider target in colliders)
             {
                 if (target.gameObject == LoadCharmanager.Overallmainchar.gameObject)
                 {
                     target.GetComponent<Playerhp>().TakeDamage(basedmg + Globalplayercalculations.calculateenemyspezialdmg());
+                    break;
                 }
             }
         }

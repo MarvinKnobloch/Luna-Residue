@@ -63,7 +63,7 @@ public class Statics
     public static int basicbuffdmgperskillpoint = 2;
 
     public static int presetresurrectcd = 4;
-    public static int presethealcd = 4;
+    public static int presethealcd = 5;
 
     //gameplaystatics
     public static bool otheraction;
@@ -113,7 +113,7 @@ public class Statics
     public static float enemyspecialcd = 13;
     public static float currentenemyspecialcd = 13;
     public static float enemydebufftime = 8;
-    public static float enemydmgmultiplier = 1.5f;
+    public static float enemydmgmultiplier = 1.7f;
 
     public static float dazecounter;
     public static float dazekicksneeded;
@@ -139,7 +139,7 @@ public class Statics
     public static float groupstonedefensebonus = 0;
     public static float groupstonedmgbonus = 0;
 
-    public static float guardbonushpeachlvl = 10;
+    public static float guardbonushpeachlvl = 8;
     public static float alliegrouphealspawntime = 8;
 
     //playerstats

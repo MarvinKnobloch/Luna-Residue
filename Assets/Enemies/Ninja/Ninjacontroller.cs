@@ -33,7 +33,7 @@ public class Ninjacontroller : MonoBehaviour
         NavMeshHit hit1;
         NavMesh.Raycast(startpoint, spawn, out hit1, NavMesh.AllAreas);
         spawn = hit1.position;
-        savezone.transform.position = spawn;
+        savezone.transform.position = spawn + Vector3.up;
         savezone.SetActive(true);
 
         currentstar = 0;

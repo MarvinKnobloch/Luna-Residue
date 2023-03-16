@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 1
   itemid: 2
   itemname: Basicsword
-  inventoryslot: 0
+  inventoryslot: 2
   itemshopcosts: 0
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 

@@ -17,7 +17,7 @@ public class Matsitemcontroller : MonoBehaviour
         pickuponce = true;
     }
     public void OnTriggerEnter(Collider other)
-    {
+    {     
         if(other.gameObject == LoadCharmanager.Overallmainchar && pickuponce == true)
         {
             pickuponce = false;

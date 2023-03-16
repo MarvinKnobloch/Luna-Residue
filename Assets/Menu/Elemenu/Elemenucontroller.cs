@@ -254,6 +254,7 @@ public class Elemenucontroller : MonoBehaviour
         else if (stoneclassroll != 1 && Statics.characterclassroll[charstaticint] == 1)  //falls der char vorher guard war
         {
             Statics.charmaxhealth[charstaticint] -= Statics.charcurrentlvl * Statics.guardbonushpeachlvl;
+            Statics.charcurrenthealth[charstaticint] -= Statics.charcurrentlvl * Statics.guardbonushpeachlvl;
         }
 
         foreach (GameObject spell in selectablespells)
@@ -279,6 +280,7 @@ public class Elemenucontroller : MonoBehaviour
         else if (stoneclassroll != 1 && Statics.characterclassroll[charstaticint] == 1)  //falls der char vorher guard war
         {
             Statics.charmaxhealth[charstaticint] -= Statics.charcurrentlvl * Statics.guardbonushpeachlvl;
+            Statics.charcurrenthealth[charstaticint] -= Statics.charcurrentlvl * Statics.guardbonushpeachlvl;
         }
 
         foreach (GameObject spell in selectablespells)

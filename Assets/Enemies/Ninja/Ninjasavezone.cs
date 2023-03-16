@@ -8,24 +8,27 @@ public class Ninjasavezone : MonoBehaviour
     private bool issavezone;
     [SerializeField] private Color startcolor;
     [SerializeField] private Color savecolor;
-    private Material material;
+    [SerializeField] private float switchtosavezonetimer;
+    private float turnofftimer;
+    private MeshRenderer meshRenderer;
 
     private void Awake()
     {
-        material = GetComponent<Material>();
+        meshRenderer = GetComponent<MeshRenderer>();
+        turnofftimer = 6 - switchtosavezonetimer;
     }
 
     private void OnEnable()
     {
-        material.color = startcolor;
+        meshRenderer.material.color = startcolor;
         issavezone = false;
-        Invoke("switchsavezone", 3f);
+        Invoke("switchsavezone", switchtosavezonetimer);
     }
     private void switchsavezone()
     {
-        material.color = savecolor;
+        meshRenderer.material.color = savecolor;
         issavezone = true;
-        Invoke("turnoff", 3f);
+        Invoke("turnoff", turnofftimer);
     }
     private void turnoff()
     {

@@ -21,7 +21,7 @@ MonoBehaviour:
       amount: 1
       itemname: Mystichead
       inventoryposi: 1
-      itemlvl: 1
+      itemlvl: 2
     - item: {fileID: 11400000, guid: 947a2c09834ead84aab8523907aa0c8b, type: 2}
       itemid: 2
       amount: 1

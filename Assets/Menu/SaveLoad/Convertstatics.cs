@@ -166,7 +166,10 @@ public class Convertstatics
     {
         for (int i = 0; i < staticitem.Length; i++)
         {
-            idslot[i] = staticitem[i].itemid;
+            if (staticitem[i] != null)
+            {
+                idslot[i] = staticitem[i].itemid;
+            }
         }
     }
     public void setstaticsafterload()

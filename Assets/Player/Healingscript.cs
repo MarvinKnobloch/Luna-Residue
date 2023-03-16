@@ -36,12 +36,12 @@ public class Healingscript : MonoBehaviour
 
     public bool singlehealcast;
     private int singlehealbuttonamount = 2;
-    private float singleheal = 20;
+    private float singleheal = 24;
     private float finalsingleheal;
 
     public bool grouphealcast;
     private int grouphealbuttonamount = 4;
-    private float groupheal = 12;
+    private float groupheal = 14;
     private float finalgroupheal;
 
     public bool resurrectioncast;

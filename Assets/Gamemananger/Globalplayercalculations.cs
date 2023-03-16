@@ -14,7 +14,7 @@ public class Globalplayercalculations
     {
         float dmg = Mathf.Round(basicdmg + attackdmg + weapondmg);
         dmg += Mathf.Round((Statics.groupstonedmgbonus + stoneclassbonus) * 0.01f * dmg);
-        dmg = Mathf.Round(dmg * 0.33f);      //durch 3 teilen sonst zu viel dmg
+        dmg = Mathf.Round(dmg * 0.25f);      //durch 3 teilen sonst zu viel dmg
         return dmg;
     }
     public static float calculateweaponcharbuff(float dmg)
@@ -41,12 +41,7 @@ public class Globalplayercalculations
     public static float calculateenemydmg(float basedmg, int enemylvl)
     {
         float dmg;
-        dmg = basedmg + (enemylvl * Statics.enemydmgmultiplier);
-        /*if(enemylvl >= 6)
-        {
-            dmg = basedmg + (enemylvl * Statics.enemydmgmultiplier);
-        }
-        else dmg = basedmg + enemylvl;*/
+        dmg = Mathf.Round(basedmg + (enemylvl * Statics.enemydmgmultiplier));
         return dmg;
     }
 }

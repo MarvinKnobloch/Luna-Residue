@@ -153,9 +153,13 @@ public class Setitemsandinventory : MonoBehaviour
     {
         for (int i = 0; i < staticid.Length; i++)
         {
-            if (staticid[i] == inventory.Container.Items[i].itemid)
+            for (int t = 0; t < inventory.Container.Items.Length; t++)
             {
-                staticslot[i] = inventory.Container.Items[i].item;
+                if (inventory.Container.Items[t].itemid == staticid[i])
+                {
+                    staticslot[i] = inventory.Container.Items[t].item;
+                    break;
+                }
             }
         }
     }

@@ -22,11 +22,11 @@ MonoBehaviour:
       itemname: Mysticshoes
       inventoryposi: 1
       itemlvl: 0
-    - item: {fileID: 0}
-      itemid: 0
-      amount: 0
-      itemname: 
-      inventoryposi: 0
+    - item: {fileID: 11400000, guid: 0549e7603c39c0c4c93e57df167980eb, type: 2}
+      itemid: 2
+      amount: 1
+      itemname: Basicshoes
+      inventoryposi: 2
       itemlvl: 0
     - item: {fileID: 0}
       itemid: 0

@@ -22,11 +22,11 @@ MonoBehaviour:
       itemname: Mysticneck
       inventoryposi: 1
       itemlvl: 0
-    - item: {fileID: 0}
-      itemid: 0
-      amount: 0
-      itemname: 
-      inventoryposi: 0
+    - item: {fileID: 11400000, guid: 8536799bcd35d374aa349209acc51d2b, type: 2}
+      itemid: 2
+      amount: 1
+      itemname: Basicneck
+      inventoryposi: 2
       itemlvl: 0
     - item: {fileID: 0}
       itemid: 0

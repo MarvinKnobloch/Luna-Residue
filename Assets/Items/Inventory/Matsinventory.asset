@@ -17,161 +17,193 @@ MonoBehaviour:
     savepathname: Craftinginventory
     Items:
     - item: {fileID: 11400000, guid: aca73481126d62d418b60468c6629c06, type: 2}
-      amount: 552
+      itemid: 1
+      amount: 17
       itemname: Gold
       inventoryposi: 1
       itemlvl: 0
-    - item: {fileID: 11400000, guid: 73c80dfb09adfee499cd17b195fcdd02, type: 2}
-      amount: 6
-      itemname: Naturecore
+    - item: {fileID: 11400000, guid: 867ad472d96907c44b05073ab90369ee, type: 2}
+      itemid: 6
+      amount: 5
+      itemname: Elementalstone
       inventoryposi: 2
       itemlvl: 0
-    - item: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
+    - item: {fileID: 11400000, guid: 854e2bfbee57e02478c30ba0b022b324, type: 2}
+      itemid: 15
       amount: 1
-      itemname: Copperore
+      itemname: Ancient Relic
       inventoryposi: 3
       itemlvl: 0
-    - item: {fileID: 11400000, guid: 0960a2238d03d57408bfdd8ee4cca568, type: 2}
-      amount: 2
-      itemname: Watercore
+    - item: {fileID: 11400000, guid: 7f503194a85088b4ea9653ceab96c95b, type: 2}
+      itemid: 11
+      amount: 1
+      itemname: Lightcore
       inventoryposi: 4
       itemlvl: 0
     - item: {fileID: 11400000, guid: 2c5d719e8a0ad9c45b36bd0837b32e08, type: 2}
-      amount: 0
+      itemid: 7
+      amount: 2
       itemname: Firecore
       inventoryposi: 5
       itemlvl: 0
-    - item: {fileID: 11400000, guid: 853f0ce448216094c9a1be91aa072b19, type: 2}
-      amount: 1
-      itemname: Darkcore
+    - item: {fileID: 11400000, guid: 0960a2238d03d57408bfdd8ee4cca568, type: 2}
+      itemid: 8
+      amount: 2
+      itemname: Watercore
       inventoryposi: 6
       itemlvl: 0
-    - item: {fileID: 11400000, guid: 854e2bfbee57e02478c30ba0b022b324, type: 2}
+    - item: {fileID: 11400000, guid: 73c80dfb09adfee499cd17b195fcdd02, type: 2}
+      itemid: 9
       amount: 1
-      itemname: Ancient Relic
+      itemname: Naturecore
       inventoryposi: 7
       itemlvl: 0
-    - item: {fileID: 11400000, guid: 867ad472d96907c44b05073ab90369ee, type: 2}
-      amount: 1
-      itemname: Elementalstone
+    - item: {fileID: 11400000, guid: 853f0ce448216094c9a1be91aa072b19, type: 2}
+      itemid: 13
+      amount: 2
+      itemname: Darkcore
       inventoryposi: 8
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0
       itemlvl: 0
     - item: {fileID: 0}
+      itemid: 0
       amount: 0
       itemname: 
       inventoryposi: 0

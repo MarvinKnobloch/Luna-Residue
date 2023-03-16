@@ -15,6 +15,5 @@ public class Knightspezial : MonoBehaviour
     private void knightspezial()
     {
         knightcontroller.SetActive(true);
-        Statics.dash = true;
     }
 }
