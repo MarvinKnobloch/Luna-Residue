@@ -346,6 +346,10 @@ public class EnemyHP : MonoBehaviour
     public void playerisresurrected(int player)
     {
         playerhits[player] = mosthits - 10;
+        if(playerhits[player] < 1)
+        {
+            playerhits[player] = 1;
+        }
     }
     private void dropitems()
     {

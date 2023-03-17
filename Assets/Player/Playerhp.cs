@@ -55,11 +55,22 @@ public class Playerhp : MonoBehaviour
     }
     public void playerisresurrected()
     {
-        gameObject.GetComponent<Supportmovement>().supportresurrected();
-        foreach (GameObject obj in Infightcontroller.infightenemylists)
+        if(playerhpuislot == 0)
         {
-            obj.GetComponent<EnemyHP>().playerisresurrected(playerhpuislot - 1);
-        }      
+            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().resurrected();
+            foreach (GameObject obj in Infightcontroller.infightenemylists)
+            {
+                obj.GetComponent<EnemyHP>().playerisresurrected(playerhpuislot);
+            }
+        }
+        else
+        {
+            gameObject.GetComponent<Supportmovement>().supportresurrected();
+            foreach (GameObject obj in Infightcontroller.infightenemylists)
+            {
+                obj.GetComponent<EnemyHP>().playerisresurrected(playerhpuislot - 1);
+            }
+        }     
     }
     private void handlehealth()
     {

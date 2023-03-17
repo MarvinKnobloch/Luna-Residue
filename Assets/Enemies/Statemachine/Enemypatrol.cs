@@ -71,7 +71,7 @@ public class Enemypatrol
                 NavMeshPath path = new NavMeshPath();
                 if (esm.Meshagent.CalculatePath(LoadCharmanager.Overallmainchar.transform.position, path))
                 {
-                    if (Physics.Linecast(esm.transform.position + Vector3.up, LoadCharmanager.Overallmainchar.transform.position, esm.checkforplayerlayer, QueryTriggerInteraction.Ignore))
+                    if (Physics.Linecast(esm.transform.position + Vector3.up, LoadCharmanager.Overallmainchar.transform.position + Vector3.up, esm.checkforplayerlayer, QueryTriggerInteraction.Ignore) == false)
                     {
                         if (!Infightcontroller.infightenemylists.Contains(esm.transform.gameObject))
                         {

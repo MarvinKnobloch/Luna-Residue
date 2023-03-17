@@ -37,7 +37,6 @@ public class Areacontroller : MonoBehaviour
         gotgatheritem = new bool[areaobjectcontroller.setgahteringnumber.Length];
 
         //Statics.currentgameslot = -1;
-        //Debug.Log(Statics.currentgameslot);
         if (Statics.currentgameslot != -1)                             // -1 = new game damit nichts geladen wird
         {
             loadmonobehaviour(Statics.currentgameslot, areaname, this);

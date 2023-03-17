@@ -79,14 +79,7 @@ public class Supportheal
     public void resurrect()
     {
         Statics.infightresurrectcd++;
-        if (ssm.resurrecttraget == LoadCharmanager.Overallmainchar)
-        {
-            ssm.resurrecttraget.GetComponent<Movescript>().resurrected();
-        }
-        else
-        {
-            ssm.resurrecttraget.GetComponent<Supportmovement>().supportresurrected();
-        }
+        ssm.resurrecttraget.GetComponent<Playerhp>().playerisresurrected();
 
         if (LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == true || LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().playerisdead == true || LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().playerisdead == true)
         {

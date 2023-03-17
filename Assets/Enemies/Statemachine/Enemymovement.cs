@@ -84,7 +84,7 @@ public class Enemymovement : MonoBehaviour
         normalnavspeed = enemyvalues.movementspeed;
         normalattackcd = enemyvalues.attackspeed;
 
-        checkforplayerlayer =  1 << 6 | 1 << 9 | 1 << 13;
+        checkforplayerlayer =  1 << 9 | 1 << 13;
         int layerAsLayerMask = 1 << 8;
         meleehitboxlayer = layerAsLayerMask;
     }
