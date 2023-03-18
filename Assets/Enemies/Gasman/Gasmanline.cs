@@ -6,44 +6,107 @@ public class Gasmanline : MonoBehaviour
 {
     public LineRenderer line;
     [SerializeField] private Transform pillar;
-    [SerializeField] private Transform righttarget;
-    [SerializeField] private Transform wrongtarget;
-    [SerializeField] private GameObject gasmancontroller;
+    [SerializeField] private GameObject target1;
+    [SerializeField] private GameObject target2;
+    [SerializeField] private Gasmancontroller gasmancontroller;
+
+    [SerializeField] private Gasmanline otherline;
+    public bool hitting1;
+    public bool hitting2;
 
     public LayerMask layer;
+
+    private Vector3 startpoint;
+    private Vector3 endpoint;
+
+    [SerializeField] private Color greencolor;
 
     private void Start()
     {
         line.positionCount = 2;
     }
+    private void OnEnable()
+    {
+        startpoint = pillar.position;
+    }
     private void Update()
     {
-        RaycastHit hit;
-        if (Physics.Linecast(pillar.position + Vector3.up, LoadCharmanager.Overallmainchar.transform.position + Vector3.up, out hit, layer))
-        {
-            if (hit.collider.gameObject == righttarget.gameObject)
-            {
-                if (righttarget.GetComponent<Gasmantarget>().lasercomplete == false)
-                {
-                    gasmancontroller.GetComponent<Gasmancontroller>().checktargets();
-                }
+        endpoint = LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 1.5f;
+        Vector3 endpointoffset = endpoint - startpoint;
+        line.SetPosition(0, startpoint);
+        line.SetPosition(1, endpointoffset * 3 + startpoint);
 
-                righttarget.GetComponent<Renderer>().material.color = pillar.GetComponent<Renderer>().material.color;
-                righttarget.GetComponent<Gasmantarget>().lasercomplete = true;
-                righttarget.GetComponent<Gasmantarget>().laserfail = false;
-            }
-            if (hit.collider.gameObject == wrongtarget.gameObject)
+        RaycastHit hit;
+        if (Physics.Linecast(startpoint, endpointoffset * 3 + startpoint, out hit, layer) == false)
+        {
+            hitting1 = false;
+            hitting2 = false;
+            if (otherline.hitting1 == false)
             {
-                if (wrongtarget.GetComponent<Gasmantarget>().lasercomplete == true)
+                if (gasmancontroller.target1activate == true)
                 {
-                    gasmancontroller.GetComponent<Gasmancontroller>().targetscomplete -= 1;
+                    gasmancontroller.target1activate = false;
+                    CancelInvoke("activatetarget1");
+                    if (gasmancontroller.target1complete == true)
+                    {
+                        gasmancontroller.target1complete = false;
+                        target1.GetComponent<Renderer>().material.color = Color.white;
+                    }
                 }
-                wrongtarget.GetComponent<Renderer>().material.color = pillar.GetComponent<Renderer>().material.color;
-                wrongtarget.GetComponent<Gasmantarget>().lasercomplete = false;
-                wrongtarget.GetComponent<Gasmantarget>().dealdmg();
+            }
+
+            if (otherline.hitting2 == false)
+            {
+                if (gasmancontroller.target2activate == true)
+                {
+                    gasmancontroller.target2activate = false;
+                    CancelInvoke("activatetarget2");
+                    if (gasmancontroller.target2complete == true)
+                    {
+                        gasmancontroller.target2complete = false;
+                        target2.GetComponent<Renderer>().material.color = Color.white;
+                    }
+                }
             }
         }
-        line.SetPosition(0, pillar.position + Vector3.up);
-        line.SetPosition(1, LoadCharmanager.Overallmainchar.transform.position + Vector3.up);
+        else
+        {
+            if (hit.collider.gameObject == target1)
+            {
+                hitting1 = true;
+                if (gasmancontroller.target1activate == false)
+                {
+                    gasmancontroller.target1activate = true;
+                    Invoke("activatetarget1", 0.5f);
+                }
+            }
+            else
+            {
+                hitting1 = false;
+            }
+
+            if (hit.collider.gameObject == target2)
+            {
+                hitting2 = true;
+                if (gasmancontroller.target2activate == false)
+                {
+                    gasmancontroller.target2activate = true;
+                    Invoke("activatetarget2", 0.5f);
+                }
+            }
+            else hitting2 = false;
+        }
+    }
+    private void activatetarget1()
+    {
+        gasmancontroller.target1complete = true;
+        target1.GetComponent<Renderer>().material.color = Color.green;
+        gasmancontroller.checkforcomplete();
+    }
+    private void activatetarget2()
+    {
+        gasmancontroller.target2complete = true;
+        target2.GetComponent<Renderer>().material.color = Color.green;
+        gasmancontroller.checkforcomplete();
     }
 }

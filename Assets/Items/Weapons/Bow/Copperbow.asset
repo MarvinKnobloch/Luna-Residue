@@ -16,8 +16,8 @@ MonoBehaviour:
   type: 2
   itemid: 3
   itemname: Copperbow
-  inventoryslot: 0
-  itemshopcosts: 90
+  inventoryslot: 3
+  itemshopcosts: 500
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
   basestats:
