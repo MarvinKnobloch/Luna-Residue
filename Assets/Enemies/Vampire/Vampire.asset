@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyname: Vampire
   basehealth: 336
   enemylvl: 1
-  movementspeed: 8
+  movementspeed: 10
   basedmg: 10
   attackspeed: 1.9
   enemysize: 2

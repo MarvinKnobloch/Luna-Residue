@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyname: Mathman
   basehealth: 321
-  enemylvl: 9
-  movementspeed: 8
+  enemylvl: 0
+  movementspeed: 10
   basedmg: 8
   attackspeed: 1.7
   enemysize: 1
   gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}
-  golddropamount: 4
-  expgain: 10
+  golddropamount: 3
+  expgain: 11
   enemydrops:
   - itemtodrop: {fileID: 6737092273977564704, guid: 38fa020329d09eb4fb72e9e2d373d58c, type: 3}
     itemdropchance: 5

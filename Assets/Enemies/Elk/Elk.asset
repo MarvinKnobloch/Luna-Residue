@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyname: Elk
   basehealth: 333
   enemylvl: 1
-  movementspeed: 8
+  movementspeed: 10
   basedmg: 10
   attackspeed: 2
   enemysize: 2

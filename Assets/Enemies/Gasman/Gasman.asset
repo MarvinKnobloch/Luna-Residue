@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Gasman
   m_EditorClassIdentifier: 
   enemyname: Gasman
-  basehealth: 3330
+  basehealth: 333
   enemylvl: 1
-  movementspeed: 8
-  basedmg: -11
+  movementspeed: 10
+  basedmg: 11
   attackspeed: 2.1
   enemysize: 1
   gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}

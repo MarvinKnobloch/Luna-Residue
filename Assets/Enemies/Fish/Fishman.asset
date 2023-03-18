@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyname: Fishman
   basehealth: 322
   enemylvl: 1
-  movementspeed: 8
+  movementspeed: 10
   basedmg: 8
   attackspeed: 1.5
   enemysize: 1

@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: Battlemonk
   m_EditorClassIdentifier: 
   enemyname: Battlemonk
-  maxhealth: 500
+  basehealth: 0
   enemylvl: 10
-  movementspeed: 8
-  attackdmg: 90
+  movementspeed: 10
+  basedmg: 0
   attackspeed: 1.9
   enemysize: 1
+  gold: {fileID: 0}
+  golddropamount: 0
+  expgain: 0
+  enemydrops: []

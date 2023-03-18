@@ -112,7 +112,14 @@ public class Fistcontroller : MonoBehaviour
                 {
                     enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
                     calculatecritchance(enemyscript, damage);
-                    enemyscript.takeplayerdamage(dmgdealed, dmgtype, crit);
+                    if (enemyhit.gameObject == Movescript.lockontarget.gameObject)
+                    {
+                        enemyscript.takeplayerdamage(dmgdealed, dmgtype, crit);
+                    }
+                    else
+                    {
+                        enemyscript.takeplayerdamage(Mathf.Round(dmgdealed / Statics.cleavedamagereduction), dmgtype, crit);
+                    }
                 }
             }
         }

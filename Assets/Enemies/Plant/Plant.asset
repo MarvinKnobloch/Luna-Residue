@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyname: Plant
   basehealth: 327
   enemylvl: 1
-  movementspeed: 8
+  movementspeed: 10
   basedmg: 8
   attackspeed: 1.7
   enemysize: 0

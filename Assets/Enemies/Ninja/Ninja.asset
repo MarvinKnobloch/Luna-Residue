@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyname: Ninja
   basehealth: 322
   enemylvl: 1
-  movementspeed: 8
+  movementspeed: 10
   basedmg: 7
   attackspeed: 1.5
   enemysize: 1

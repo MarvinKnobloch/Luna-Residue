@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: Paladin
   m_EditorClassIdentifier: 
   enemyname: Paladin
-  maxhealth: 1500
+  basehealth: 0
   enemylvl: 10
-  movementspeed: 8
-  attackdmg: 9
+  movementspeed: 10
+  basedmg: 0
   attackspeed: 1.7
   enemysize: 1
+  gold: {fileID: 0}
+  golddropamount: 0
+  expgain: 0
+  enemydrops: []

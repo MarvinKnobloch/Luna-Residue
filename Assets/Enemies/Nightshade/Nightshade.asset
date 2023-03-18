@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: Nightshade
   m_EditorClassIdentifier: 
   enemyname: Nightshade
-  maxhealth: 3000
-  enemylvl: 13
-  movementspeed: 8
-  attackdmg: 14
+  basehealth: 329
+  enemylvl: 0
+  movementspeed: 10
+  basedmg: 11
   attackspeed: 2.1
   enemysize: 2
+  gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}
+  golddropamount: 3
+  expgain: 12
+  enemydrops:
+  - itemtodrop: {fileID: 146544890995016924, guid: b9fb9aa471282e14cade523ca5c1afb7, type: 3}
+    itemdropchance: 10
