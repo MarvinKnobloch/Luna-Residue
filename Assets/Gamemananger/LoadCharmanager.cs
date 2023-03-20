@@ -22,7 +22,7 @@ public class LoadCharmanager : MonoBehaviour
     public GameObject[] teammates;
     public static GameObject Overallthirdchar;
     public static GameObject Overallforthchar;
-    public static Vector3 savemainposi = new Vector3(0, 5, 0);      //new Vector3(-20,38, 420);          //new Vector3(116, 17, 707);        new Vector3(15,32,687);
+    public static Vector3 savemainposi = new Vector3(15, 32, 687);      //new Vector3(-20,38, 420);          //new Vector3(116, 17, 707);        new Vector3(15,32,687);
     public static Quaternion savemainrota;                                  
     public static float savecamvalueX;                                          
 
@@ -66,6 +66,7 @@ public class LoadCharmanager : MonoBehaviour
                 {
                     mates.gameObject.SetActive(false);
                 }
+                Statics.donttriggerenemies = true;
                 gameispaused = true;
                 Time.timeScale = 0f;
                 Cam1.gameObject.SetActive(false);
@@ -204,8 +205,9 @@ public class LoadCharmanager : MonoBehaviour
         else
         {
             disableattackbuttons = false;
-            gameispaused = false;
+            Statics.donttriggerenemies = false;
         }
+        gameispaused = false;
         menu.SetActive(false);
         Cam1.gameObject.SetActive(true);
         Mouseactivate.disablemouse();
@@ -214,7 +216,7 @@ public class LoadCharmanager : MonoBehaviour
     {
         yield return null;
         disableattackbuttons = false;
-        gameispaused = false;             //wenn gameispaused = true, wird die collision nicht getriggert
+        Statics.donttriggerenemies = false;
     }
     private void classandstatsupdate(int charnumber, GameObject[] playerorsupport, int threatslot)
     {

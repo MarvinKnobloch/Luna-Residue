@@ -6,7 +6,9 @@ using System;
 
 public class Towercontroller : MonoBehaviour
 {
-    private GameObject enemyroot;
+    private Nightshadecontroller nightshadecontroller;
+
+    private GameObject enemy;
     [SerializeField] private GameObject goal;
     [SerializeField] private GameObject timerUI;
     [SerializeField] private Text timertext;
@@ -17,8 +19,13 @@ public class Towercontroller : MonoBehaviour
     private float towertimer;
     public bool dealdmg;
 
+    private void Awake()
+    {
+        nightshadecontroller = GetComponentInParent<Nightshadecontroller>();
+    }
     private void OnEnable()
     {
+        StopAllCoroutines();
         timerUI.SetActive(true);
         dealdmg = true;
         goal.SetActive(true);
@@ -32,22 +39,36 @@ public class Towercontroller : MonoBehaviour
         timertext.text = string.Format("{0:00}:{1:00}", seconds, milliseconds);
         if (towertimer < 0)
         {
-            if (dealdmg == true)
+            if (dealdmg == true && Statics.infight == true)
             {
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg);
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg + Globalplayercalculations.calculateenemyspezialdmg());
             }
-            timerUI.SetActive(false);
-            LoadCharmanager.Overallmainchar.transform.parent = null;
-            gameObject.SetActive(false);
+            towerdisable();
         }
     }
-
-    public void setenemy(GameObject nigthshade)
+    private void towerdisable()
     {
-        enemyroot = nigthshade;
+        timerUI.SetActive(false);
+        LoadCharmanager.Overallmainchar.transform.parent = null;
+        gameObject.SetActive(false);
+        nightshadecontroller.gameObject.SetActive(false);
     }
+
     public void dealdmgtoenemyroot()
     {
-        enemyroot.GetComponent<EnemyHP>().takeplayerdamage(completiondmg, 0, false);
+        if(enemy.activeSelf == true)
+        {
+            enemy.GetComponent<EnemyHP>().takeplayerdamage(completiondmg, 0, false);
+        }
+        StartCoroutine("waitfortowerdisable");
+    }
+    IEnumerator waitfortowerdisable()
+    {
+        yield return new WaitForSeconds(0.5f);
+        towerdisable();
+    }
+    public void setenemy(GameObject nigthshade)
+    {
+        enemy = nigthshade;
     }
 }

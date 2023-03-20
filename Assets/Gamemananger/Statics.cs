@@ -21,6 +21,7 @@ public class Statics
     public static Vector3 gameoverposi;                   //wird in enemyhp gesetzt weil die posi nur gespeichtert werden sollen wenn auch ein kampf gewonnen worden ist
     public static Quaternion gameoverrota;
     public static float gameovercam;
+    public static bool donttriggerenemies;
 
     public static bool elementalmenuisactiv;
 
@@ -82,14 +83,14 @@ public class Statics
     public static float dashcost = 3f;
     public static bool dashcdbool;
 
-    public static float weaponswitchcd = 7f;
+    public static float weaponswitchcd = 9;
     public static float weaponswitchmissingtime;
     public static bool weapsonswitchbool; 
 
     public static float weaponswitchbuff = 0;
     public static float weaponswitchbuffmissingtime;
 
-    public static float charswitchcd = 7f;
+    public static float charswitchcd = 9;
     public static float charswitchmissingtime;
     public static bool charswitchbool;
 

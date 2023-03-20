@@ -6,7 +6,7 @@ public class Activateenemycollider : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == LoadCharmanager.Overallmainchar && LoadCharmanager.gameispaused == false)
+        if (other.gameObject == LoadCharmanager.Overallmainchar && Statics.donttriggerenemies == false)
         {
             foreach(Transform obj in gameObject.transform)
             {
@@ -16,7 +16,7 @@ public class Activateenemycollider : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == LoadCharmanager.Overallmainchar && LoadCharmanager.gameispaused == false)
+        if (other.gameObject == LoadCharmanager.Overallmainchar && Statics.donttriggerenemies == false)
         {
             foreach (Transform obj in gameObject.transform)
             {

@@ -60,7 +60,10 @@ public class Mathcommit : MonoBehaviour
             }
             else
             {
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1)));
+                if (Statics.infight == true)
+                {
+                    LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1) + Globalplayercalculations.calculateenemyspezialdmg()));
+                }
                 solutionUI.color = Color.red;
                 LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
                 Statics.otheraction = false;
@@ -75,7 +78,10 @@ public class Mathcommit : MonoBehaviour
         }
         else
         {
-            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1)));
+            if (Statics.infight == true)
+            {
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1) + Globalplayercalculations.calculateenemyspezialdmg()));
+            }
             solutionUI.color = Color.red;
             LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
             Statics.otheraction = false;
@@ -100,7 +106,10 @@ public class Mathcommit : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(2.5f);
-            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1)));
+            if(Statics.infight == true)
+            {
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1) + Globalplayercalculations.calculateenemyspezialdmg()));
+            }
             solution.text = "";
             LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
             Statics.otheraction = false;

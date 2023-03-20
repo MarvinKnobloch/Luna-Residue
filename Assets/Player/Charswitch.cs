@@ -80,6 +80,7 @@ public class Charswitch : MonoBehaviour
     }
     private void switchvalues()
     {
+        Statics.donttriggerenemies = true;
         Time.timeScale = Statics.normalgamespeed;
         Time.fixedDeltaTime = Statics.normaltimedelta;
         LoadCharmanager.Overallsecondchar.transform.position = LoadCharmanager.Overallmainchar.transform.position;
@@ -89,6 +90,16 @@ public class Charswitch : MonoBehaviour
         LoadCharmanager.Overallmainchar = LoadCharmanager.Overallsecondchar;
         LoadCharmanager.Overallmainchar.SetActive(true);
         LoadCharmanager.Overallsecondchar = Savechar;
+        foreach (GameObject enemy in Infightcontroller.infightenemylists)
+        {
+            if(enemy.TryGetComponent(out Enemymovement enemymovement))
+            {
+                if(enemymovement.currenttarget == LoadCharmanager.Overallsecondchar)
+                {
+                    enemymovement.currenttarget = LoadCharmanager.Overallmainchar;
+                }
+            }
+        }
         Cam1.LookAt = LoadCharmanager.Overallmainchar.transform;
         Cam1.Follow = LoadCharmanager.Overallmainchar.transform;
         aimcam.LookAt = LoadCharmanager.Overallmainchar.transform;
@@ -97,10 +108,17 @@ public class Charswitch : MonoBehaviour
         LoadCharmanager.Overallsecondchar.gameObject.GetComponent<Playerhp>().playerhpuislot = 1;
         LoadCharmanager.Overallmainchar.gameObject.GetComponent<Weaponswitch>().imageupdateaftercharswitch();
         manacontroller.Managemana(5);
+        StartCoroutine("triggerenemiesdisable");
     }
     public void setcharswitchimageafterload()
     {
         charuiimage.sprite = charimages[Statics.currentsecondchar];
+    }
+
+    IEnumerator triggerenemiesdisable()
+    {
+        yield return null;
+        Statics.donttriggerenemies = false;
     }
 }
 

@@ -97,7 +97,7 @@ public class SwordController : MonoBehaviour
                     }
                     else
                     {
-                        enemyscript.takeplayerdamage(dmgdealed / Statics.cleavedamagereduction, dmgtype, crit);
+                        enemyscript.takeplayerdamage(Mathf.Round(dmgdealed / Statics.cleavedamagereduction), dmgtype, crit);
                     }
                 }
             }
