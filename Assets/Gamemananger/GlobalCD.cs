@@ -2,38 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GlobalCD : MonoBehaviour
 {
     static MonoBehaviour instance;
-    public Image healcdUI;
-    public Text healcdtext;
 
-    public Image dashcdUI;
-    public Text dashcdtext;
-
+    [SerializeField] private Image dashcdUI;
+    [SerializeField] private TextMeshProUGUI dashcdtext;
     private float resetdashtime;
+
+    [SerializeField] private Image healcdUI;
+    [SerializeField] private TextMeshProUGUI healcdtext;
+
+    [SerializeField] private Image weaponswitchcdimage;
+    [SerializeField] private TextMeshProUGUI weaponswitchcdtext;
+    [SerializeField] private Image weaponbuffdurationîmage;
+    [SerializeField] private Text weaponbuffdurationtext;
+
+    [SerializeField] private Image charswitchcdîmage;
+    [SerializeField] private TextMeshProUGUI charswitchcdtext;
+    [SerializeField] private Image charbuffdurationimage;
+    [SerializeField] private Text charbuffdurationtext;
+
     public static int currentweaponswitchchar;
     public static int currentcharswitchchar;
 
-    public Image weaponswitchcdUI;
-    public Text weaponswitchtext;
-
-    public Image weaponswitchbuffUI;
-    public Text weaponswitchbufftext;
 
     [SerializeField] private GameObject weaponswitchbuffimage;
     [SerializeField] private GameObject charswitchbuffimage;
-    public Image charwechselbuffUI;
-    public Text charwechselbufftext;
-    public Image charwechselcdUI;
-    public Text charwechseltext;
 
     private bool dashcounterisrunning;
     private bool charswitchbuffisrunning;
 
     private float currentmissingweaponbufftime;
     private float currentmissingcharbufftime;
+
     void Awake()
     {
         Statics.dashcdbool = false;
@@ -43,9 +47,9 @@ public class GlobalCD : MonoBehaviour
         instance = this;
         healcdtext.text = "";
         dashcdtext.text = "";
-        weaponswitchtext.text = "";
-        weaponswitchbufftext.text = "";
-        charwechseltext.text = "";
+        weaponswitchcdtext.text = "";
+        weaponbuffdurationtext.text = "";
+        charswitchcdtext.text = "";
         Statics.healmissingtime = 7f;
         Statics.dashcdmissingtime = Statics.dashcd;
         charswitchbuffimage.SetActive(false);
@@ -157,19 +161,19 @@ public class GlobalCD : MonoBehaviour
     IEnumerator weaponcd()
     {
         Statics.weapsonswitchbool = true;
-        weaponswitchcdUI.fillAmount = 0;
+        weaponswitchcdimage.fillAmount = 0;
         Statics.weaponswitchmissingtime = 0;
 
         while (true)
         {
             Statics.weaponswitchmissingtime += Time.deltaTime;
-            weaponswitchcdUI.fillAmount = Statics.weaponswitchmissingtime / Statics.weaponswitchcd;
-            weaponswitchtext.text = Mathf.RoundToInt(Statics.weaponswitchcd - Statics.weaponswitchmissingtime).ToString();
+            weaponswitchcdimage.fillAmount = Statics.weaponswitchmissingtime / Statics.weaponswitchcd;
+            weaponswitchcdtext.text = Mathf.RoundToInt(Statics.weaponswitchcd - Statics.weaponswitchmissingtime).ToString();
 
             if (Statics.weaponswitchmissingtime >= Statics.weaponswitchcd)
             {
                 Statics.weapsonswitchbool = false;
-                weaponswitchtext.text = "";
+                weaponswitchcdtext.text = "";
                 StopCoroutine("weaponcd");
             }
             yield return null;
@@ -184,8 +188,8 @@ public class GlobalCD : MonoBehaviour
         while (true)
         {
             Statics.weaponswitchbuffmissingtime -= Time.deltaTime;
-            weaponswitchbuffUI.fillAmount = Statics.weaponswitchbuffmissingtime / currentmissingweaponbufftime;
-            weaponswitchbufftext.text = Mathf.RoundToInt(Statics.weaponswitchbuffmissingtime).ToString();
+            weaponbuffdurationîmage.fillAmount = Statics.weaponswitchbuffmissingtime / currentmissingweaponbufftime;
+            weaponbuffdurationtext.text = Mathf.RoundToInt(Statics.weaponswitchbuffmissingtime).ToString();
 
             if (Statics.weaponswitchbuffmissingtime <= 0)
             {
@@ -199,21 +203,21 @@ public class GlobalCD : MonoBehaviour
     IEnumerator charswitchcd()         // wird im Main/Secondcharwechsel gecalled
     {
         Statics.charswitchbool = true;
-        charwechselcdUI.fillAmount = 0;
+        charswitchcdîmage.fillAmount = 0;
         Statics.charswitchmissingtime = 0;
 
         Statics.characterswitchbuff = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().charswitchbuff;
-        charwechselbuffUI.fillAmount = 0;
+        charbuffdurationimage.fillAmount = 0;
         while (true)
         {
             Statics.charswitchmissingtime += Time.deltaTime;
-            charwechselcdUI.fillAmount = Statics.charswitchmissingtime / Statics.charswitchcd;
-            charwechseltext.text = Mathf.RoundToInt(Statics.charswitchcd - Statics.charswitchmissingtime).ToString();
+            charswitchcdîmage.fillAmount = Statics.charswitchmissingtime / Statics.charswitchcd;
+            charswitchcdtext.text = Mathf.RoundToInt(Statics.charswitchcd - Statics.charswitchmissingtime).ToString();
 
             if (Statics.charswitchmissingtime >= Statics.charswitchcd)
             {
                 Statics.charswitchbool = false;
-                charwechseltext.text = "";
+                charswitchcdtext.text = "";
                 StopCoroutine("charswitchcd");
             }
             yield return null;
@@ -237,8 +241,8 @@ public class GlobalCD : MonoBehaviour
         while (true)
         {
             Statics.charswitchbuffmissingtime -= Time.deltaTime;
-            charwechselbuffUI.fillAmount = Statics.charswitchbuffmissingtime / currentmissingcharbufftime;
-            charwechselbufftext.text = Mathf.RoundToInt(Statics.charswitchbuffmissingtime).ToString();
+            charbuffdurationimage.fillAmount = Statics.charswitchbuffmissingtime / currentmissingcharbufftime;
+            charbuffdurationtext.text = Mathf.RoundToInt(Statics.charswitchbuffmissingtime).ToString();
 
             if (Statics.charswitchbuffmissingtime <= 0)
             {

@@ -9,6 +9,10 @@ public class Charswitch : MonoBehaviour
     private SpielerSteu Steuerung;
     [SerializeField] private CinemachineFreeLook Cam1;
     [SerializeField] private CinemachineVirtualCamera aimcam;
+
+    [SerializeField] private Image charuiimage;
+    [SerializeField] private Sprite[] charimages;
+
     public Image ability1;
     public Image ability2;
 
@@ -55,6 +59,7 @@ public class Charswitch : MonoBehaviour
             ability2.color = Statics.spellcolors[4];
             Statics.playertookdmgfromamount = Statics.tookdmgfromamount[1];
             Statics.currentactiveplayer = 1;
+            charuiimage.sprite = charimages[Statics.currentfirstchar];
         }                                                  
     }
 
@@ -70,6 +75,7 @@ public class Charswitch : MonoBehaviour
             ability2.color = Statics.spellcolors[1];
             Statics.playertookdmgfromamount = Statics.tookdmgfromamount[0];
             Statics.currentactiveplayer = 0;
+            charuiimage.sprite = charimages[Statics.currentsecondchar];
         }
     }
     private void switchvalues()
@@ -89,7 +95,12 @@ public class Charswitch : MonoBehaviour
         aimcam.Follow = LoadCharmanager.Overallmainchar.transform;
         LoadCharmanager.Overallmainchar.gameObject.GetComponent<Playerhp>().playerhpuislot = 0;
         LoadCharmanager.Overallsecondchar.gameObject.GetComponent<Playerhp>().playerhpuislot = 1;
+        LoadCharmanager.Overallmainchar.gameObject.GetComponent<Weaponswitch>().imageupdateaftercharswitch();
         manacontroller.Managemana(5);
+    }
+    public void setcharswitchimageafterload()
+    {
+        charuiimage.sprite = charimages[Statics.currentsecondchar];
     }
 }
 

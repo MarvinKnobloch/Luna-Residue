@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Weaponswitch : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class Weaponswitch : MonoBehaviour
     [SerializeField] private GameObject[] allweapons;
     [SerializeField] private MonoBehaviour[] weaponscripts;
     [SerializeField] private RuntimeAnimatorController[] weaponanimation;
+    [SerializeField] private Sprite[] weaponimages;
+    [SerializeField] private Image weaponimage;
 
     private Movescript movescript;
 
@@ -67,6 +70,7 @@ public class Weaponswitch : MonoBehaviour
         GlobalCD.startweaponswitchbuff(charnumber);
         Statics.otheraction = false;
         movescript.state = Movescript.State.Air;
+        weaponimage.sprite = weaponimages[Statics.secondweapon[Statics.currentactiveplayer]];
     }
     private void spawnsecondweapon()
     {
@@ -82,6 +86,7 @@ public class Weaponswitch : MonoBehaviour
         GlobalCD.startweaponswitchbuff(charnumber); 
         Statics.otheraction = false;
         movescript.state = Movescript.State.Air;
+        weaponimage.sprite = weaponimages[Statics.firstweapon[Statics.currentactiveplayer]];
     }
 
 
@@ -97,16 +102,19 @@ public class Weaponswitch : MonoBehaviour
         {
             weapon.SetActive(false);
         }
-        GlobalCD.startweaponswitchcd();
         mainweaponactiv = true;
         allweapons[firstweapon].SetActive(true);
         animator.runtimeAnimatorController = weaponanimation[firstweapon];
         weaponscripts[firstweapon].enabled = true;
+        weaponimage.sprite = weaponimages[Statics.secondweapon[Statics.currentactiveplayer]];
+    }
+    public void resetmainweaponactiv()
+    {
+        mainweaponactiv = true;
+    }
+    public void imageupdateaftercharswitch()
+    {
+        if (mainweaponactiv == true) weaponimage.sprite = weaponimages[Statics.firstweapon[Statics.currentactiveplayer]];
+        else weaponimage.sprite = weaponimages[Statics.secondweapon[Statics.currentactiveplayer]];
     }
 }
-
-/*if (Statics.healmissingtime > 9f)
-{
-    Statics.healmissingtime = 9f;
-    GlobalCD.onswitchhealingcd();
-}*/
