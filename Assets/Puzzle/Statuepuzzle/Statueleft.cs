@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Statueleft : MonoBehaviour, Interactioninterface
 {
-    public LayerMask layer;
+    private LayerMask layer;
     public GameObject[] Statues;
 
     [SerializeField] private string actiontext = "Move";

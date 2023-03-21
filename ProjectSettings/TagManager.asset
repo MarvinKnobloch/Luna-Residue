@@ -20,7 +20,7 @@ TagManager:
   - Player
   - Schwertbox
   - Meleehitbox
-  - "Geb\xE4ude"
+  - Buildings
   - IgnoreRaycast
   - Allies
   - Items
