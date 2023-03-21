@@ -236,9 +236,9 @@ public class Fistattack : MonoBehaviour
     private void fistdashend()
     {
         root = false;
+        GlobalCD.startresetdash();
         Statics.playeriframes = false;
         Statics.otheraction = false;
-        GlobalCD.startresetdash();
         movementscript.switchtoairstate();
     }
     private void setinputtotrue()

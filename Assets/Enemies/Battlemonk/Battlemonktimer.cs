@@ -12,8 +12,8 @@ public class Battlemonktimer : MonoBehaviour
     private void OnEnable()
     {
         timertext.color = Color.red;
-        timer = 6f;
-        Invoke("dealdmg", 5.3f);
+        timer = 5.9f;
+        Invoke("dealdmg", 5.4f);
     }
     private void Update()
     {
@@ -34,9 +34,12 @@ public class Battlemonktimer : MonoBehaviour
     }
     private void dealdmg()
     {
-        if(Statics.dash == false)
+        if(Statics.infight == true)
         {
-            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg);
+            if (Statics.dash == false && Statics.bonusiframes == false)
+            {
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg + Globalplayercalculations.calculateenemyspezialdmg());
+            }
         }
     }
 }

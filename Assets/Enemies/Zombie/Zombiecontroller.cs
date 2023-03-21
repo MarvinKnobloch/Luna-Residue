@@ -1,38 +1,72 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Zombiecontroller : MonoBehaviour
 {
-    [SerializeField] private GameObject[] zombies;
+    [SerializeField] private GameObject[] jumppad;
+    [SerializeField] private GameObject[] balls;
+    [SerializeField] private LayerMask balllayer;
 
-    [SerializeField] private float zombiedmg;
-    [SerializeField] private float howclosezombiehastowalk;
-    [SerializeField] private float zombiespeed;
+    [SerializeField] private float balldmg;
+    [SerializeField] private float collecttime;
 
+    public Vector3 enemyposi;
 
-    private void Awake()
-    {
-        foreach (GameObject zombie in zombies)
-        {
-            zombie.GetComponent<Minizombiecontroller>().basedmg = zombiedmg;
-            zombie.GetComponent<Minizombiecontroller>().range = howclosezombiehastowalk;
-            zombie.GetComponent<Minizombiecontroller>().zombiemovementspeed = zombiespeed;
-        }
-    }
+    private Vector3 spawn1;
+    private Vector3 spawn2;
+    private Vector3 ballspawn;
+
     private void OnEnable()
     {
-        foreach (GameObject zombie in zombies)
+        spawn1 = enemyposi + LoadCharmanager.Overallmainchar.transform.forward * 5 + Random.insideUnitSphere * 7;
+        spawn2 = enemyposi + LoadCharmanager.Overallmainchar.transform.forward * -5 + Random.insideUnitSphere * 7;
+
+        NavMeshHit hit1;
+        NavMesh.Raycast(enemyposi, spawn1, out hit1, NavMesh.AllAreas);
+        spawn1 = hit1.position;
+        jumppad[0].transform.position = spawn1;
+
+        NavMeshHit hit2;
+        NavMesh.Raycast(enemyposi, spawn2, out hit2, NavMesh.AllAreas);
+        spawn2 = hit2.position;
+        jumppad[1].transform.position = spawn2 + Vector3.up * 0.5f;
+
+        foreach (GameObject pad in jumppad)
         {
-            zombie.SetActive(true);
+            pad.SetActive(true);
         }
-        Invoke("turnoff", 12f);
+
+        ballspawn = enemyposi + Vector3.up * 11;
+        foreach (GameObject ball in balls)
+        {
+            Vector3 spawn = ballspawn;
+            spawn.x += Random.Range(-8, 8);
+            spawn.z += Random.Range(-8, 8);
+            spawn.y += Random.Range(-3, 3);
+            if(Physics.Linecast(ballspawn, spawn, out RaycastHit hit, balllayer, QueryTriggerInteraction.Ignore))
+            {
+                ball.transform.position = hit.point;
+            }
+            else
+            {
+                ball.transform.position = spawn;
+            }
+            ball.SetActive(true);
+        }
+
+        Invoke("turnoff", collecttime);
     }
     private void turnoff()
     {
-        foreach (GameObject zombie in zombies)
+        foreach (GameObject ball in balls)
         {
-            zombie.SetActive(false);
+            if(ball.activeSelf == true && Statics.infight == true)
+            {
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(balldmg + Globalplayercalculations.calculateenemyspezialdmg());
+                ball.SetActive(false);
+            }
         }
         gameObject.SetActive(false);
     }

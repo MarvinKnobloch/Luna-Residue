@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: Battlemonk
   m_EditorClassIdentifier: 
   enemyname: Battlemonk
-  basehealth: 0
-  enemylvl: 10
+  basehealth: 327
+  enemylvl: 0
   movementspeed: 10
-  basedmg: 0
+  basedmg: 10
   attackspeed: 1.9
   enemysize: 1
-  gold: {fileID: 0}
-  golddropamount: 0
-  expgain: 0
-  enemydrops: []
+  gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}
+  golddropamount: 4
+  expgain: 10
+  enemydrops:
+  - itemtodrop: {fileID: 146544890995016924, guid: 54de7d9d0e0e64b4aaffaf7ac558065d, type: 3}
+    itemdropchance: 10

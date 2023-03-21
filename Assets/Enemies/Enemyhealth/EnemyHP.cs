@@ -70,7 +70,7 @@ public class EnemyHP : MonoBehaviour
         currenthealth = Mathf.Clamp(currenthealth, 0, maxhealth);
         currenthealth = maxhealth;
         sizeofenemy = enemyvalues.enemysize;
-        enemymovement.basedmg = Globalplayercalculations.calculateenemydmg(enemyvalues.basedmg, enemylvl);
+        if(enemymovement != null) enemymovement.basedmg = Globalplayercalculations.calculateenemydmg(enemyvalues.basedmg, enemylvl);             //wegen minidadd
         enemyfocusbargameobject = enemyfocusdebuffbar.transform.parent.gameObject;
 
         if (Vector3.Distance(LoadCharmanager.Overallmainchar.transform.position, transform.position) < 20)

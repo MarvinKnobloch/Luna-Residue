@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: Zombie
   m_EditorClassIdentifier: 
   enemyname: Zombie
-  basehealth: 328
+  basehealth: 3280
   enemylvl: 0
   movementspeed: 10
-  basedmg: 9
+  basedmg: -9
   attackspeed: 1.7
   enemysize: 0
   gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}
   golddropamount: 5
   expgain: 9
-  enemydrops: []
+  enemydrops:
+  - itemtodrop: {fileID: 146544890995016924, guid: ef584e0d39d1005488fb78b788c07dfc, type: 3}
+    itemdropchance: 10

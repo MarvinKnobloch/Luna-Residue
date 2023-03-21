@@ -34,7 +34,7 @@ public class Fishmancontroller : MonoBehaviour
     private void dealfirstdmg()
     {
         dmgcollider.SetActive(true);
-        Invoke("spezialpart2", 1.5f);
+        Invoke("spezialpart2", 1.3f);
     }
     private void spezialpart2()
     {

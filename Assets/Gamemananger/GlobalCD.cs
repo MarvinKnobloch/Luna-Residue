@@ -146,6 +146,7 @@ public class GlobalCD : MonoBehaviour
     }
     IEnumerator resetdash()
     {
+        Statics.bonusiframes = true;
         resetdashtime = 0;
         while (true)
         {
@@ -153,10 +154,16 @@ public class GlobalCD : MonoBehaviour
             if(resetdashtime >= 0.15)
             {
                 Statics.dash = false;
+                StartCoroutine("bonusiframes");
                 StopCoroutine("resetdash");
             }
             yield return null;
         }
+    }
+    IEnumerator bonusiframes()                   //bonusiframes sind für battlemonk, kann man vll auch noch wo anderst einsetzten
+    {
+        yield return new WaitForSeconds(0.05f);
+        Statics.bonusiframes = false;
     }
     IEnumerator weaponcd()
     {

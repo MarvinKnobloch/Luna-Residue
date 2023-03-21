@@ -358,9 +358,9 @@ public class Bowattack : MonoBehaviour
     private void bowdashend()
     {
         root = false;
+        GlobalCD.startresetdash();
         Statics.playeriframes = false;
         Statics.otheraction = false;
-        GlobalCD.startresetdash();
         movementscript.switchtoairstate();
     }
     private void setinputtotrue()

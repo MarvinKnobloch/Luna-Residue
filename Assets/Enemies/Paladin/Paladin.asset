@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: Paladin
   m_EditorClassIdentifier: 
   enemyname: Paladin
-  basehealth: 0
-  enemylvl: 10
+  basehealth: 3300
+  enemylvl: 0
   movementspeed: 10
-  basedmg: 0
+  basedmg: -9
   attackspeed: 1.7
   enemysize: 1
-  gold: {fileID: 0}
-  golddropamount: 0
-  expgain: 0
-  enemydrops: []
+  gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}
+  golddropamount: 3
+  expgain: 11
+  enemydrops:
+  - itemtodrop: {fileID: 6737092273977564704, guid: 38fa020329d09eb4fb72e9e2d373d58c, type: 3}
+    itemdropchance: 5

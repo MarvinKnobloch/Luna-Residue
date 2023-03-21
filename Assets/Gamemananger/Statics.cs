@@ -72,6 +72,7 @@ public class Statics
     public static bool stopmovenandrotation;
     public static bool dash;
     public static bool playeriframes;
+    public static bool bonusiframes;
 
     //playercds
     public static float healcd;
