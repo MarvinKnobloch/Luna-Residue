@@ -17,7 +17,7 @@ MonoBehaviour:
   itemid: 2
   itemname: Basicring
   inventoryslot: 2
-  itemshopcosts: 103
+  itemshopcosts: 150
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
   basestats:
@@ -45,7 +45,7 @@ MonoBehaviour:
     - 0
     - 40
     - 0
-    - 4
+    - 3
     - 0
     - 0
     - 0

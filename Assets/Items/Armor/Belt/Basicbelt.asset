@@ -17,7 +17,7 @@ MonoBehaviour:
   itemid: 2
   itemname: Basicbelt
   inventoryslot: 1
-  itemshopcosts: 87
+  itemshopcosts: 110
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
   basestats:
@@ -25,7 +25,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 3
+  - 4
   - 0
   - 0
   - 0
@@ -34,7 +34,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 3
+  - 4
   - 0
   - 0
   - 0
@@ -46,7 +46,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 6
+    - 8
     - 0
     - 0
     - 0

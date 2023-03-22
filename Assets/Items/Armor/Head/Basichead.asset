@@ -37,7 +37,7 @@ MonoBehaviour:
   - 2
   - 0
   - 0
-  - 0
+  - 2
   upgradelvl: 0
   maxupgradelvl: 1
   upgrades:
@@ -49,7 +49,7 @@ MonoBehaviour:
     - 4
     - 0
     - 0
-    - 4
+    - 2
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
       costs: 3

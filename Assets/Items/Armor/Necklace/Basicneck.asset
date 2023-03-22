@@ -17,24 +17,24 @@ MonoBehaviour:
   itemid: 2
   itemname: Basicneck
   inventoryslot: 0
-  itemshopcosts: 150
+  itemshopcosts: 125
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
   basestats:
   - 0
   - 0
-  - 1
-  - 1
   - 0
+  - 1
+  - 4
   - 0
   - 0
   - 0
   stats:
   - 0
   - 0
-  - 1
-  - 1
   - 0
+  - 1
+  - 4
   - 0
   - 0
   - 0
@@ -44,12 +44,12 @@ MonoBehaviour:
   - newstats:
     - 0
     - 0
-    - 1
+    - 0
     - 2
-    - 2
+    - 6
     - 0
     - 0
     - 0
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
-      costs: 2
+      costs: 3
