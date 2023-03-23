@@ -10155,7 +10155,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ^3
+  m_Text: 3
 --- !u!222 &738240797
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13161,7 +13161,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ^3
+  m_Text: 3
 --- !u!222 &859085477
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13276,7 +13276,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ^3
+  m_Text: 3
 --- !u!222 &880745185
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13471,14 +13471,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 947a2c09834ead84aab8523907aa0c8b, type: 2}
   - {fileID: 11400000, guid: 43f764551917a8845a7d36e833c3ced9, type: 2}
   - {fileID: 11400000, guid: c7e532a41992f3e4691642845f73874a, type: 2}
+  - {fileID: 11400000, guid: 0550a1efdd95f8b43a774f9c0531a5b2, type: 2}
   chestitems:
   - {fileID: 11400000, guid: 926b8daac2862ab40876b06cad7e1733, type: 2}
   - {fileID: 11400000, guid: 5fb93356bba4e664eb2de690b365e8ce, type: 2}
   - {fileID: 11400000, guid: 2803dcaf6b4f54e49a2d6a7ad64e850d, type: 2}
+  - {fileID: 11400000, guid: 3a17182a37a13404ea2b0e344d41c215, type: 2}
   beltitems:
   - {fileID: 11400000, guid: c2bca3ba23aa2034b9dd9e309a586790, type: 2}
   - {fileID: 11400000, guid: 217948d8399ef3448b2147b4abbbcc3c, type: 2}
   - {fileID: 11400000, guid: 4754d88163875514c94bd5458bb79a69, type: 2}
+  - {fileID: 11400000, guid: 0008fb479fb7b2d448695ed256ddcb96, type: 2}
   legitems:
   - {fileID: 11400000, guid: 34a6490ab048be74c86ea029fbce8f92, type: 2}
   - {fileID: 11400000, guid: 384467f1252160841903dbf3f2b124e1, type: 2}
@@ -13487,14 +13490,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0549e7603c39c0c4c93e57df167980eb, type: 2}
   - {fileID: 11400000, guid: be8f00b23af756d4e9888e3e3d5f86d9, type: 2}
   - {fileID: 11400000, guid: bff8b2a4568a5c8459171573659391b2, type: 2}
+  - {fileID: 11400000, guid: 87fe4a2b5f4bcd84aacf225e3588f2ff, type: 2}
   necklessitems:
   - {fileID: 11400000, guid: 8536799bcd35d374aa349209acc51d2b, type: 2}
   - {fileID: 11400000, guid: 31fb043f09e6a084fa99f4bab6e8d57f, type: 2}
   - {fileID: 11400000, guid: 766d9a871f94c524a9f4a1e168b86bb6, type: 2}
+  - {fileID: 11400000, guid: 021c09c6f02ad2840abca0f6a4832b1e, type: 2}
   ringitems:
   - {fileID: 11400000, guid: b6280d59b038f2343b7fe6ef8b52a3bb, type: 2}
   - {fileID: 11400000, guid: 2715349855285884b9d9fee7569c063e, type: 2}
   - {fileID: 11400000, guid: 2a7ce5a872cfb0a4eabcf7fbf75a4759, type: 2}
+  - {fileID: 11400000, guid: 9309fd910604da84f819efd8968c6bb4, type: 2}
   startingsword: {fileID: 11400000, guid: 3ab9c5262cd93e840bcaf63f2f0793f0, type: 2}
   startingbow: {fileID: 11400000, guid: 60de7e18acbe2d24b94c921cf9a44c44, type: 2}
   startingfist: {fileID: 11400000, guid: 12cf4c75ea874414091d6dfab89a7601, type: 2}
@@ -28849,7 +28855,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: D
+  m_Text: ^D
 --- !u!222 &1914594260
 CanvasRenderer:
   m_ObjectHideFlags: 0

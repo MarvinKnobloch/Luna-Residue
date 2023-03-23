@@ -40,4 +40,9 @@ public class Puzzlerewardisportal : MonoBehaviour, Rewardinterface
     {
         return;
     }
+
+    public void resetrewardcount()
+    {
+        return;
+    }
 }

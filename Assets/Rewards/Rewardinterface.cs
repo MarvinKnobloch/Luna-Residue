@@ -6,4 +6,7 @@ public interface Rewardinterface
 {
     public void addrewardcount();
     public void removerewardcount();
+
+    public void resetrewardcount();
+
 }

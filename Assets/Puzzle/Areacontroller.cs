@@ -8,6 +8,9 @@ public class Areacontroller : MonoBehaviour
 {
     private Areaobjectcontroller areaobjectcontroller;
 
+    private Isaveload loadsaveinterface = new Saveloadgame();
+    private Convertareadata convertareadata = new Convertareadata();                   //beim laden werden die daten zwischen gelagert und dann convertiert, damit ich die arraylength patchen kann
+                                                                                       //areacontroller und convertarea data sollten die gleichen Variablen beinhalten, sonst treten vll fehler beim laden auf
     public string areaname;
 
     public bool[] tutorialcomplete;                        //die arrays müssen public(nicht Nonserialized) sein, sonst speichert json die daten nicht
@@ -36,10 +39,18 @@ public class Areacontroller : MonoBehaviour
         npcdialoguestate = new int[areaobjectcontroller.setdialoguenumber.Length];
         gotgatheritem = new bool[areaobjectcontroller.setgahteringnumber.Length];
 
-        //Statics.currentgameslot = -1;
         if (Statics.currentgameslot != -1)                             // -1 = new game damit nichts geladen wird
         {
-            loadmonobehaviour(Statics.currentgameslot, areaname, this);
+            loaddata(Statics.currentgameslot, areaname);                         //bei gameload werden hier die fortschritte geladen
+            if (convertareadata != null)
+            {
+                convertareadata.loadareadata(this);
+            }
+
+            if (Statics.currentgameslot != 0)                                      // hier werden die geladen forschritten in den autosave slot gespeichert
+            {
+                autosave();
+            }
         }
         for (int i = 0; i <  areaobjectcontroller.setenemychests.Length; i++)
         {
@@ -66,18 +77,16 @@ public class Areacontroller : MonoBehaviour
             areaobjectcontroller.setgahteringnumber[i].areanumber = i;
         }
     }
-    private void loadmonobehaviour(int slot, string filename, MonoBehaviour monobehaviour)            //bei gameload werden hier die fortschritte geladen
+    private void loaddata(int slot, string filename)                  
     {
-        var filePath = Path.Combine(Application.persistentDataPath, filename + slot + ".json");
-        if (File.Exists(filePath))
+        string loadpath = "/" + filename + slot + ".json";
+        try
         {
-            var json = File.ReadAllText(filePath);
-            JsonUtility.FromJsonOverwrite(json, monobehaviour);
+            convertareadata = loadsaveinterface.loaddata<Convertareadata>(loadpath);
         }
-
-        if (Statics.currentgameslot != 0)                                      // hier werden die geladen forschritten in den autosave slot gespeichert
+        catch (Exception e)
         {
-            autosave();
+            Debug.LogError($"error Could not load data {e.Message} {e.StackTrace}");
         }
     }
 
@@ -107,3 +116,18 @@ public class Areacontroller : MonoBehaviour
         }
     }
 }
+
+/*private void loadmonobehaviour(int slot, string filename, MonoBehaviour monobehaviour)            //bei gameload werden hier die fortschritte geladen
+{
+    var filePath = Path.Combine(Application.persistentDataPath, filename + slot + ".json");
+    if (File.Exists(filePath))
+    {
+        var json = File.ReadAllText(filePath);
+        JsonUtility.FromJsonOverwrite(json, monobehaviour);
+    }
+
+    if (Statics.currentgameslot != 0)
+    {
+        autosave();
+    }
+}*/

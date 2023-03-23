@@ -12,10 +12,13 @@ public class Targetsactivate : MonoBehaviour, Interactioninterface
     public float overalltime;
     public Text timetext;
     public GameObject timeUI;
+
+    [SerializeField] private GameObject finishtarget;
     public bool Interact(Closestinteraction interactor)
     {
         if(Statics.timer == false)
         {
+            finishtarget.GetComponent<Rewardinterface>().resetrewardcount();
             timeUI.SetActive(true);
             Statics.timer = true;
             StartCoroutine("starttimer");
@@ -32,10 +35,6 @@ public class Targetsactivate : MonoBehaviour, Interactioninterface
             foreach (GameObject obj in targets)
             {
                 obj.SetActive(false);
-            }
-            if (this.gameObject.GetComponent<Resettargets>())
-            {
-                gameObject.GetComponent<Resettargets>().resettarget();
             }
         }
         return true;
@@ -61,10 +60,6 @@ public class Targetsactivate : MonoBehaviour, Interactioninterface
                 timetext.text = "0";
                 Statics.timer = false;
                 remainingtime = 0;
-                if (this.gameObject.GetComponent<Resettargets>())
-                {
-                    gameObject.GetComponent<Resettargets>().resettarget();
-                }
                 foreach (GameObject obj in targets)
                 {
                     obj.SetActive(false);

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Shottargets : MonoBehaviour
 { 
-    public GameObject gate;
+    public GameObject reward;
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Puzzlearrow"))
         {
-            gate.GetComponent<Targetgate>().checkforopening();
+            reward.GetComponent<Rewardinterface>().addrewardcount();
             gameObject.SetActive(false);
         }
     }

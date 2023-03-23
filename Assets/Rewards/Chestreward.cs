@@ -97,6 +97,11 @@ public class Chestreward : MonoBehaviour, Rewardinterface, Interactioninterface
         }
         return true;
     }
+
+    public void resetrewardcount()
+    {
+        rewardcount = 0;
+    }
 }
 
 [System.Serializable]
