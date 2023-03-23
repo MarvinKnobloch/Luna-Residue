@@ -22,7 +22,15 @@ public class Convertareadata
 
     public void loadareadata(Areacontroller areacontroller)
     {
-        for (int i = 0; i < tutorialcomplete.Length; i++)
+        overridedata(tutorialcomplete, areacontroller.tutorialcomplete);
+        overridedata(enemychestcanopen, areacontroller.enemychestcanopen);
+        overridedata(enemychestisopen, areacontroller.enemychestisopen);
+        overridedata(questcomplete, areacontroller.questcomplete);
+        overridedata(puzzlecomplete, areacontroller.puzzlecomplete);
+        overridedata(gotpuzzlereward, areacontroller.gotpuzzlereward);
+        overridedata(npcdialoguestate, areacontroller.npcdialoguestate);
+        overridedata(gotgatheritem, areacontroller.gotgatheritem);
+        /*for (int i = 0; i < tutorialcomplete.Length; i++)
         {
             areacontroller.tutorialcomplete[i] = tutorialcomplete[i];
         }
@@ -60,6 +68,30 @@ public class Convertareadata
         for (int i = 0; i < gotgatheritem.Length; i++)
         {
             areacontroller.gotgatheritem[i] = gotgatheritem[i];
+        }*/
+    }
+    private void overridedata<T>(T[] savedataarray, T[] areaarray)
+    {
+        for (int i = 0; i < savedataarray.Length; i++)
+        {
+            areaarray[i] = savedataarray[i];
         }
     }
 }
+
+/*
+if (savedataarray.Length <= areaarray.Length)           // zum rauspatchen, funktioniert aber nicht, wenn was rausgenommen wird, verschiebt sich dann die completed check anstatt das es rausgenommen wird. 
+        {
+            for (int i = 0; i < savedataarray.Length; i++)
+            {
+                areaarray[i] = savedataarray[i];
+            }
+        }
+        else
+        {
+            for (int i = 0; i < areaarray.Length; i++)
+            {
+                areaarray[i] = savedataarray[i];
+            }
+        }
+*/

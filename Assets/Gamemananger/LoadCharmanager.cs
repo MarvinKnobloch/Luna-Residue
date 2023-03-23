@@ -29,6 +29,7 @@ public class LoadCharmanager : MonoBehaviour
     public static bool disableattackbuttons;
     public static bool gameispaused;
     public static bool interaction;
+    public static bool cantsavehere;
 
     [SerializeField] private LayerMask meleehitbox;
 
@@ -41,6 +42,7 @@ public class LoadCharmanager : MonoBehaviour
         expmanager = GetComponent<Expmanager>();
         uiactionscontroller = GetComponent<Uiactionscontroller>();
         Steuerung = Keybindinputmanager.inputActions;
+        cantsavehere = false;
     }
 
     private void OnEnable()

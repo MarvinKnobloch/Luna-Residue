@@ -12,7 +12,7 @@ public class Npcshopselectitem : MonoBehaviour, ISelectHandler
     public Itemcontroller merchantitem;
     public bool canbuy;
     public Image buyitembar;
-    private string[] statstext = { "Health ", "Defense ", "Attack ", "Crit ", "Critchance ", "Weaponswitch ", "Charswitch ", "Basic " };
+    private string[] statstext = { "Health ", "Defense ", "Attack ", "Critchance ", "Critdamage ", "Weaponswitch ", "Charswitch ", "Basic " };
     public void OnSelect(BaseEventData eventData)
     {
         npcshopstatscontroller.currentselecteditem = gameObject;

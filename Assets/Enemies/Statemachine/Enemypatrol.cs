@@ -77,7 +77,7 @@ public class Enemypatrol
                         {
                             Infightcontroller.infightenemylists.Add(esm.transform.gameObject);
                             int enemycount = Infightcontroller.infightenemylists.Count;
-                            Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
+                            Statics.currentenemyspecialcd = Statics.enemyspecialcd + (enemycount * 2);
                             if (Infightcontroller.infightenemylists.Count == 1)
                             {
                                 Infightcontroller.checkifinfight();

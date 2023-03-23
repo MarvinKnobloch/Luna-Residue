@@ -24,7 +24,7 @@ public class Npcshopcontroller : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI newstats;
     [SerializeField] private TextMeshProUGUI ownitemstats;
-    private string[] statstext = { "Health ", "Defense ", "Attack ", "Crit ", "Critchance ", "Weaponswitch ", "Charswitch ", "Basic " };
+    private string[] statstext = { "Health ", "Defense ", "Attack ", "Critchance ", "Critdamage ", "Weaponswitch ", "Charswitch ", "Basic " };
 
     [SerializeField] private GameObject[] itemtypeselectionbuttons;
     private Itemtype[] itemtypes = { Itemtype.Sword, Itemtype.Bow, Itemtype.Fist, Itemtype.Head, Itemtype.Chest, Itemtype.Belt, Itemtype.Legs, Itemtype.Shoes, Itemtype.Necklace, Itemtype.Ring };
@@ -107,7 +107,6 @@ public class Npcshopcontroller : MonoBehaviour
             else
             {
                 itemtypeselectionbuttons[currentitemtype].GetComponent<Image>().color = Color.green;
-                currentslotdisplay.text = itemtypeselectionbuttons[currentitemtype].GetComponentInChildren<TextMeshProUGUI>().text;
                 break;
             }
         }
@@ -133,7 +132,6 @@ public class Npcshopcontroller : MonoBehaviour
             else
             {
                 itemtypeselectionbuttons[currentitemtype].GetComponent<Image>().color = Color.green;
-                currentslotdisplay.text = itemtypeselectionbuttons[currentitemtype].GetComponentInChildren<TextMeshProUGUI>().text;
                 break;
             }
         }
@@ -201,7 +199,6 @@ public class Npcshopcontroller : MonoBehaviour
             {
                 currentitemtype = i;
                 itemtypeselectionbuttons[currentitemtype].GetComponent<Image>().color = Color.green;
-                currentslotdisplay.text = itemtypeselectionbuttons[currentitemtype].GetComponentInChildren<TextMeshProUGUI>().text;
                 return;
             }
             else continue;
@@ -242,7 +239,9 @@ public class Npcshopcontroller : MonoBehaviour
             {
                 GameObject obj = playeritemsui.transform.GetChild(i).gameObject;
                 obj.SetActive(true);
-                obj.GetComponentInChildren<TextMeshProUGUI>().text = inventorys[currentitemtype].Container.Items[i].itemname;
+                obj.transform.GetChild(0).GetComponent<Image>().sprite = inventorys[currentitemtype].Container.Items[i].item.Uisprite;
+                obj.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = inventorys[currentitemtype].Container.Items[i].itemname;
+                obj.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = inventorys[currentitemtype].Container.Items[i].itemlvl.ToString();
                 obj.GetComponent<Npcplayerinventoryslot>().item = inventorys[currentitemtype].Container.Items[i].item;
             }
         }
@@ -271,7 +270,6 @@ public class Npcshopcontroller : MonoBehaviour
         itemtypeselectionbuttons[currentitemtype].GetComponent<Image>().color = Color.white;
         currentitemtype = itemtype;
         itemtypeselectionbuttons[currentitemtype].GetComponent<Image>().color = Color.green;
-        currentslotdisplay.text = itemtypeselectionbuttons[currentitemtype].GetComponentInChildren<TextMeshProUGUI>().text;
         displayitemtyp();
     }
     private bool checkformoney()

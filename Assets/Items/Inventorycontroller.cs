@@ -95,7 +95,7 @@ public class Inventoryslot
     public Itemcontroller item;
     public int itemid;
     public int amount;
-    public string itemname;
+    public string itemname;               //itemname ist vielleicht unnötig, hab ich benutzt um die items beim laden zu suchen(macht jetzt die item id)
     public int inventoryposi;
     public int itemlvl;
     public Inventoryslot(Itemcontroller _item, int _amount)

@@ -54,7 +54,7 @@ public class Charswitch : MonoBehaviour
             switchvalues();
             GetComponent<Healthuimanager>().switchtosecond();
             GlobalCD.currentcharswitchchar = Statics.currentsecondchar;
-            GlobalCD.startcharswitch();
+            GlobalCD.startcharswitch();                                            //hier wird auch der weaponcd zurückgesetzt
             ability1.color = Statics.spellcolors[3];
             ability2.color = Statics.spellcolors[4];
             Statics.playertookdmgfromamount = Statics.tookdmgfromamount[1];

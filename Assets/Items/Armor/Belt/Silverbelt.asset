@@ -43,7 +43,7 @@ MonoBehaviour:
   upgrades:
   - newstats:
     - 0
-    - 100
+    - 80
     - 0
     - 0
     - 0

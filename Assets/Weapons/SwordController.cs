@@ -82,29 +82,32 @@ public class SwordController : MonoBehaviour
     }
     private void lookfordmgcollision(Vector3 hitposition, float hitrange, float damage, int dmgtype, float manarestore)
     {
-        Collider[] cols = Physics.OverlapSphere(hitposition, hitrange, Layerhitbox);
-        foreach (Collider enemyhit in cols)
+        if(Statics.infight == true)
         {
-            if (enemyhit.isTrigger)               //damit nur die meleehitbox getriggered wird
+            Collider[] cols = Physics.OverlapSphere(hitposition, hitrange, Layerhitbox);
+            foreach (Collider enemyhit in cols)
             {
-                if (enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
+                if (enemyhit.isTrigger)               //damit nur die meleehitbox getriggered wird
                 {
-                    enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
-                    calculatecritchance(enemyscript, damage);
-                    if (enemyhit.gameObject == Movescript.lockontarget.gameObject)
+                    if (enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
                     {
-                        enemyscript.takeplayerdamage(dmgdealed, dmgtype, crit);
-                    }
-                    else
-                    {
-                        enemyscript.takeplayerdamage(Mathf.Round(dmgdealed / Statics.cleavedamagereduction), dmgtype, crit);
+                        enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
+                        calculatecritchance(enemyscript, damage);
+                        if (enemyhit.gameObject == Movescript.lockontarget.gameObject)
+                        {
+                            enemyscript.takeplayerdamage(dmgdealed, dmgtype, crit);
+                        }
+                        else
+                        {
+                            enemyscript.takeplayerdamage(Mathf.Round(dmgdealed / Statics.cleavedamagereduction), dmgtype, crit);
+                        }
                     }
                 }
             }
-        }
-        if (cols.Length > 0)
-        {
-            healandmana(dmgtype, manarestore);
+            if (cols.Length > 0)
+            {
+                healandmana(dmgtype, manarestore);
+            }
         }
     }
     private void calculatecritchance(EnemyHP enemyscript, float dmg)

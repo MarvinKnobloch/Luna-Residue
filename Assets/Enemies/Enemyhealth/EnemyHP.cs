@@ -145,7 +145,7 @@ public class EnemyHP : MonoBehaviour
                 removefromcanvas();
                 Infightcontroller.infightenemylists.Remove(transform.gameObject);
                 int enemycount = Infightcontroller.infightenemylists.Count;
-                Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
+                Statics.currentenemyspecialcd = Statics.enemyspecialcd + (enemycount * 2);
                 if (enemycount == 0)
                 {
                     Statics.gameoverposi = LoadCharmanager.Overallmainchar.transform.position;

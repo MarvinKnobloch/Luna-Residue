@@ -20,7 +20,7 @@ public class GlobalCD : MonoBehaviour
     [SerializeField] private Image weaponbuffdurationîmage;
     [SerializeField] private Text weaponbuffdurationtext;
 
-    [SerializeField] private Image charswitchcdîmage;
+    [SerializeField] private Image charswitchcdimage;
     [SerializeField] private TextMeshProUGUI charswitchcdtext;
     [SerializeField] private Image charbuffdurationimage;
     [SerializeField] private Text charbuffdurationtext;
@@ -80,6 +80,7 @@ public class GlobalCD : MonoBehaviour
     }
     public static void startcharswitch()
     {
+        instance.StopCoroutine("weaponcd");
         instance.StartCoroutine("charswitchbuff");
         instance.StartCoroutine("charswitchcd");
     }
@@ -207,10 +208,15 @@ public class GlobalCD : MonoBehaviour
             yield return null;
         }
     }
+
     IEnumerator charswitchcd()         // wird im Main/Secondcharwechsel gecalled
     {
+        Statics.weapsonswitchbool = false;
+        weaponswitchcdimage.fillAmount = 1;
+        weaponswitchcdtext.text = "";
+
         Statics.charswitchbool = true;
-        charswitchcdîmage.fillAmount = 0;
+        charswitchcdimage.fillAmount = 0;
         Statics.charswitchmissingtime = 0;
 
         Statics.characterswitchbuff = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().charswitchbuff;
@@ -218,7 +224,7 @@ public class GlobalCD : MonoBehaviour
         while (true)
         {
             Statics.charswitchmissingtime += Time.deltaTime;
-            charswitchcdîmage.fillAmount = Statics.charswitchmissingtime / Statics.charswitchcd;
+            charswitchcdimage.fillAmount = Statics.charswitchmissingtime / Statics.charswitchcd;
             charswitchcdtext.text = Mathf.RoundToInt(Statics.charswitchcd - Statics.charswitchmissingtime).ToString();
 
             if (Statics.charswitchmissingtime >= Statics.charswitchcd)
