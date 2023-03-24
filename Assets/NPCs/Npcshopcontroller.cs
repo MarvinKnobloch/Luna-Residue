@@ -22,12 +22,13 @@ public class Npcshopcontroller : MonoBehaviour
     public GameObject currentselecteditem;
 
 
+    [SerializeField] private TextMeshProUGUI newitemheader;
     [SerializeField] private TextMeshProUGUI newstats;
     [SerializeField] private TextMeshProUGUI ownitemstats;
     private string[] statstext = { "Health ", "Defense ", "Attack ", "Critchance ", "Critdamage ", "Weaponswitch ", "Charswitch ", "Basic " };
 
     [SerializeField] private GameObject[] itemtypeselectionbuttons;
-    private Itemtype[] itemtypes = { Itemtype.Sword, Itemtype.Bow, Itemtype.Fist, Itemtype.Head, Itemtype.Chest, Itemtype.Belt, Itemtype.Legs, Itemtype.Shoes, Itemtype.Necklace, Itemtype.Ring };
+    private Itemtype[] itemtypes = { Itemtype.Sword, Itemtype.Bow, Itemtype.Fist, Itemtype.Head, Itemtype.Belt, Itemtype.Chest, Itemtype.Legs, Itemtype.Shoes, Itemtype.Necklace, Itemtype.Ring };
     private int currentitemtype;
     private List<Itemtype> listoftypes = new List<Itemtype>();
 
@@ -155,6 +156,7 @@ public class Npcshopcontroller : MonoBehaviour
             }
             obj.GetComponent<Npcshopselectitem>().npcshopstatscontroller = this;
             obj.GetComponent<Npcshopselectitem>().merchantitem = npcshopitems[i];
+            obj.GetComponent<Npcshopselectitem>().newitemheader = newitemheader;
             obj.GetComponent<Npcshopselectitem>().newstats = newstats;
             instaniateditems.Add(obj);
         }

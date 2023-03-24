@@ -7,11 +7,13 @@ using UnityEngine.EventSystems;
 public class Npcplayerinventoryslot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Itemcontroller item;
+    [SerializeField] private TextMeshProUGUI itemheader;
     [SerializeField] private TextMeshProUGUI ownitemstats;
-    private string[] statstext = { "Health ", "Defense ", "Attack ", "Crit ", "Critchance ", "Weaponswitch ", "Charswitch ", "Basic " };
+    private string[] statstext = { "Health ", "Defense ", "Attack ", "Critchance ", "Critdamage ", "Weaponswitch ", "Charswitch ", "Basic " };
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        itemheader.text = item.name + " (max lvl" + item.maxupgradelvl + ")";
         ownitemstats.text = string.Empty;
         for (int i = 0; i < statstext.Length; i++)
         {
@@ -32,6 +34,7 @@ public class Npcplayerinventoryslot : MonoBehaviour, IPointerEnterHandler, IPoin
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        itemheader.text = string.Empty;
         ownitemstats.text = string.Empty;
         for (int i = 0; i < statstext.Length; i++)
         {

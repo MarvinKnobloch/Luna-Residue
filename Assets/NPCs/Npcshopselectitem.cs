@@ -5,8 +5,9 @@ using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Npcshopselectitem : MonoBehaviour, ISelectHandler
+public class Npcshopselectitem : MonoBehaviour, ISelectHandler                     //instantiate shop item benutzt dieses script
 {
+    public TextMeshProUGUI newitemheader;
     public TextMeshProUGUI newstats;
     public Npcshopcontroller npcshopstatscontroller;
     public Itemcontroller merchantitem;
@@ -21,6 +22,7 @@ public class Npcshopselectitem : MonoBehaviour, ISelectHandler
 
     public void statsupdate()
     {
+        newitemheader.text = merchantitem.itemname + " (max lvl" + merchantitem.maxupgradelvl + ")";
         newstats.text = string.Empty;
         for (int i = 0; i < statstext.Length; i++)
         {
