@@ -8,7 +8,8 @@ public class Gameovercontroller : MonoBehaviour
 {
     [SerializeField] private Infightcontroller infightcontroller;
     [SerializeField] private CanvasGroup gameover;
-    [SerializeField] private float gameoverfadeinspeed;
+    [SerializeField] private float gameovertime;
+    private float gameovertimer;
 
     [SerializeField] private GameObject Loadingscreen;
     [SerializeField] private Image loadingscreenbar;
@@ -20,22 +21,19 @@ public class Gameovercontroller : MonoBehaviour
     }
     IEnumerator gameoverfade()
     {
-        yield return new WaitForSeconds(0.01f);
-        gameover.alpha += gameoverfadeinspeed * Time.deltaTime;
-        if(gameover.alpha > 0.8f)
+        while(gameover.alpha < 0.8f)
         {
-            StopCoroutine("gameoverfade");
-            LoadCharmanager.savemainposi = Statics.gameoverposi;
-            LoadCharmanager.savemainrota = Statics.gameoverrota;
-            LoadCharmanager.savecamvalueX = Statics.savecamvalueX;
-            infightcontroller.gameover();
-            StartCoroutine("loadingscreen");
-            gameObject.SetActive(false);
+            gameovertimer += Time.deltaTime;
+            gameover.alpha = gameovertimer / gameovertime;
+            yield return null;
         }
-        else
-        {
-            StartCoroutine("gameoverfade");
-        }
+        StopCoroutine("gameoverfade");
+        LoadCharmanager.savemainposi = Statics.gameoverposi;
+        LoadCharmanager.savemainrota = Statics.gameoverrota;
+        LoadCharmanager.savecamvalueX = Statics.savecamvalueX;
+        infightcontroller.gameover();
+        StartCoroutine("loadingscreen");
+        gameObject.SetActive(false);
     }
     IEnumerator loadingscreen()
     {

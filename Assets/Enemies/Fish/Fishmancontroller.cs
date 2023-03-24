@@ -19,10 +19,13 @@ public class Fishmancontroller : MonoBehaviour
     private void OnEnable()
     {
         LoadCharmanager.Overallmainchar.GetComponent<Movescript>().movementspeed = playermovementspeedslow;
-        fishmancircle.transform.position = LoadCharmanager.Overallmainchar.transform.position;
-        fishmancircle.transform.parent = LoadCharmanager.Overallmainchar.transform;
+        LoadCharmanager.Overallsecondchar.GetComponent<Movescript>().movementspeed = playermovementspeedslow;
         fishmancircle.SetActive(true);
         Invoke("spezialpart1", 1.5f);
+    }
+    private void Update()
+    {
+        fishmancircle.transform.position = LoadCharmanager.Overallmainchar.transform.position;
     }
     private void spezialpart1()
     {
@@ -51,7 +54,7 @@ public class Fishmancontroller : MonoBehaviour
     private void fishmanspezialend()
     {
         LoadCharmanager.Overallmainchar.GetComponent<Movescript>().movementspeed = Statics.playermovementspeed;
-        fishmancircle.transform.parent = showspezial.transform.parent;
+        LoadCharmanager.Overallsecondchar.GetComponent<Movescript>().movementspeed = Statics.playermovementspeed;
         fishmancircle.SetActive(false);
         gameObject.SetActive(false);
     }

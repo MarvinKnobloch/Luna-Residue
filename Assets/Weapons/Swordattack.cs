@@ -111,7 +111,7 @@ public class Swordattack : MonoBehaviour
             resetvalues();
             root = false;
             movementscript.Charrig.enabled = false;
-            if (Statics.enemyspezialtimescale == false)                  //???????????
+            if (Statics.enemyspezialtimescale == false)
             {
                 Time.timeScale = Statics.normalgamespeed;
                 Time.fixedDeltaTime = Statics.normaltimedelta;

@@ -22,17 +22,6 @@ public class Moveobjectafterfinish : MonoBehaviour, Rewardinterface
         puzzlenumber = GetComponent<Areanumber>().areanumber;
         controlls = Keybindinputmanager.inputActions;
     }
-    private void Update()
-    {
-        if (controlls.Player.Dash.WasPerformedThisFrame())
-        {
-            if (areacontroller.puzzlecomplete[puzzlenumber] == false)
-            {
-                StartCoroutine("openthegate");
-                areacontroller.puzzlecomplete[puzzlenumber] = true;
-            }
-        }
-    }
     private void OnEnable()
     {
         StopAllCoroutines();

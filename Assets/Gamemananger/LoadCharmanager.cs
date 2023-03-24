@@ -54,6 +54,20 @@ public class LoadCharmanager : MonoBehaviour
         }
         maingamevalues();
     }
+    private void Start()
+    {
+        resetvalues();                                                   //falls der kampf vorbei ist bei noch spezialattacks getriggert werden und man dann ins menu geht(menu open sollte nicht möglich sein aber zur sicherheit)
+        Statics.gameoverposi = savemainposi;
+        Statics.gameoverrota = savemainrota;
+        Statics.gameovercam = savecamvalueX;
+    }
+    private void resetvalues()
+    {
+        Statics.dash = false;
+        Statics.enemyspezialtimescale = false;
+        Overallmainchar.GetComponent<Movescript>().movementspeed = Statics.playermovementspeed;
+        Overallsecondchar.GetComponent<Movescript>().movementspeed = Statics.playermovementspeed;
+    }
     void Update()
     {
         if (Steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame() && Statics.infight == false && interaction == false && Statics.otheraction == false)
@@ -117,9 +131,6 @@ public class LoadCharmanager : MonoBehaviour
         Overallmainchar.transform.position = savemainposi;
         Overallmainchar.transform.rotation = savemainrota;
         Overallmainchar.SetActive(true);
-        Statics.gameoverposi = savemainposi;
-        Statics.gameoverrota = savemainrota;
-        Statics.gameovercam = savecamvalueX;
         Overallsecondchar.SetActive(true);
         Overallmainchar.GetComponent<Playerhp>().playerhpuislot = 0;
         Overallsecondchar.GetComponent<Playerhp>().playerhpuislot = 1;

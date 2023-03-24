@@ -13,6 +13,8 @@ public class Playerhp : MonoBehaviour
     [SerializeField] private Healthuimanager healthUImanager;
     private Attributecontroller attributecontroller;
 
+    public static event Action playergameover;
+    public static event Action removeplayergameover;
     public static event Action triggergameover;
 
     const string dyingstate = "Dying";
@@ -58,6 +60,7 @@ public class Playerhp : MonoBehaviour
         if(playerhpuislot == 0)
         {
             LoadCharmanager.Overallmainchar.GetComponent<Movescript>().resurrected();
+            removeplayergameover?.Invoke();
             foreach (GameObject obj in Infightcontroller.infightenemylists)
             {
                 obj.GetComponent<EnemyHP>().playerisresurrected(playerhpuislot);
@@ -99,6 +102,7 @@ public class Playerhp : MonoBehaviour
                     {
                         obj.GetComponent<EnemyHP>().newtargetonplayerdeath(playerhpuislot);
                     }
+                    playergameover?.Invoke();
                 }
                 else
                 {

@@ -8,6 +8,8 @@ public class Attributecontroller : MonoBehaviour
     [SerializeField] private int charnumber;
     [SerializeField] private Playerhp playerhp;
 
+    [SerializeField] private float testingbonusattack;
+
     [NonSerialized] public float maxhealth;
     [NonSerialized] public float attack;
     [NonSerialized] public float defense;
@@ -104,6 +106,9 @@ public class Attributecontroller : MonoBehaviour
 
         defense = Statics.chardefense[charnumber];
         attack = Statics.charattack[charnumber] + Statics.chardefense[charnumber] * (Statics.defenseconvertedtoattack * 0.01f);
+#if UNITY_EDITOR
+        attack += testingbonusattack;
+#endif
         critchance = Statics.charcritchance[charnumber];
         critdmg = Statics.charcritdmg[charnumber];
         charswitchbuff = Statics.charswitchbuff[charnumber];

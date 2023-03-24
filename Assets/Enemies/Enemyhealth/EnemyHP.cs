@@ -66,11 +66,9 @@ public class EnemyHP : MonoBehaviour
         enemyheight = (capsulecollider.height * transform.localScale.y) + 0.4f;
         enemyname = enemyvalues.enemyname;
         enemylvl = enemyvalues.enemylvl + addenemylvl;
-        maxhealth = Mathf.Round(enemyvalues.basehealth + (enemyvalues.basehealth / 10 * enemylvl));
-        currenthealth = Mathf.Clamp(currenthealth, 0, maxhealth);
-        currenthealth = maxhealth;
         sizeofenemy = enemyvalues.enemysize;
-        if(enemymovement != null) enemymovement.basedmg = Globalplayercalculations.calculateenemydmg(enemyvalues.basedmg, enemylvl);             //wegen minidadd
+        maxhealth = Mathf.Round(enemyvalues.basehealth + (enemyvalues.basehealth / 10 * enemylvl));
+        enemymovement.basedmg = Globalplayercalculations.calculateenemydmg(enemyvalues.basedmg, enemylvl);
         enemyfocusbargameobject = enemyfocusdebuffbar.transform.parent.gameObject;
 
         if (Vector3.Distance(LoadCharmanager.Overallmainchar.transform.position, transform.position) < 20)
@@ -90,6 +88,7 @@ public class EnemyHP : MonoBehaviour
         {
             playerhits[i] = 0;
         }
+        resetdebuff();
     }
     public void takeplayerdamage(float damage, int dmgtype , bool crit)                                               
     {
@@ -148,7 +147,7 @@ public class EnemyHP : MonoBehaviour
                 Statics.currentenemyspecialcd = Statics.enemyspecialcd + (enemycount * 2);
                 if (enemycount == 0)
                 {
-                    Statics.gameoverposi = LoadCharmanager.Overallmainchar.transform.position;
+                    Statics.gameoverposi = GetComponent<Enemymovement>().spawnpostion;
                     Statics.gameoverrota = LoadCharmanager.Overallmainchar.transform.rotation;
                     Statics.gameovercam = LoadCharmanager.savecamvalueX;
                 }
@@ -212,7 +211,8 @@ public class EnemyHP : MonoBehaviour
     }
     IEnumerator enemydebuff()
     {
-        debufftimer = Statics.enemydebufftime;
+        float debufftime = (float)Math.Round(UnityEngine.Random.Range(0.1f, 2.0f) + Statics.enemydebufftime, 1);
+        debufftimer = debufftime;
         if(gothealthbar == true)
         {
             healthbar.debuffUI.SetActive(true);
@@ -227,11 +227,11 @@ public class EnemyHP : MonoBehaviour
             debufftimer -= Time.deltaTime;
             if (gothealthbar == true)
             {
-                healthbar.debuffbar.fillAmount = debufftimer / Statics.enemydebufftime;
+                healthbar.debuffbar.fillAmount = debufftimer / debufftime;
             }
             if (isfocus == true)
             {
-                enemyfocusdebuffbar.fillAmount = debufftimer / Statics.enemydebufftime;
+                enemyfocusdebuffbar.fillAmount = debufftimer / debufftime;
                 enemyfocusdebuffbar.color = Color.blue;
             }
 
@@ -280,6 +280,13 @@ public class EnemyHP : MonoBehaviour
             }
             yield return null;
         }
+    }
+    private void resetdebuff()
+    {
+        StopCoroutine("enemydebuff");
+        StopCoroutine("enemydebuffcdstart");
+        enemyincreasebasicdmg = false;
+        enemydebuffcd = false;
     }
     public void marktarget() => markcurrenttarget();
     public void unmarktarget() => unmarkcurrenttarget();

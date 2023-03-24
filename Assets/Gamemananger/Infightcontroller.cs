@@ -15,14 +15,19 @@ public class Infightcontroller : MonoBehaviour
     //private int maxhealticks;
     public float spezialtimer;
 
+    [SerializeField] private GameObject playergameover;
     [SerializeField] private GameObject gameovercontroller;
 
     private void OnEnable()
     {
+        Playerhp.playergameover += activateplayergameover;
+        Playerhp.removeplayergameover += disableplayergameover;
         Playerhp.triggergameover += activategameovercontroller;
     }
     private void OnDisable()
     {
+        Playerhp.playergameover -= activateplayergameover;
+        Playerhp.removeplayergameover -= disableplayergameover;
         Playerhp.triggergameover -= activategameovercontroller;
     }
 
@@ -39,6 +44,7 @@ public class Infightcontroller : MonoBehaviour
         {
             Statics.infight = false;
             Statics.currentenemyspecialcd = Statics.enemyspecialcd;
+            instance.StopCoroutine("firstenemyspezialcd");
             instance.StopCoroutine("enemyspezialcd");
             infightimage.SetActive(false);
             instance.Invoke("disablechars", teammatesdespawntime);
@@ -51,7 +57,6 @@ public class Infightcontroller : MonoBehaviour
         }
         else
         {
-            GameObject mainchar = LoadCharmanager.Overallmainchar;
             if (Statics.infight == false)
             {
                 Statics.infightresurrectcd = Statics.presetresurrectcd;
@@ -59,12 +64,26 @@ public class Infightcontroller : MonoBehaviour
                 Statics.oneplayerisdead = false;
                 Statics.infight = true;
                 instance.StopCoroutine("healalliesafterfight");
-                instance.StartCoroutine("enemyspezialcd");
+                instance.StartCoroutine("firstenemyspezialcd");
                 LoadCharmanager.Overallmainchar.GetComponent<Movescript>().autolockon();
                 LoadCharmanager.Overallmainchar.GetComponent<Movescript>().spawnallies();
             }
             infightimage.SetActive(true);
             instance.CancelInvoke();                        //unterbricht den Allie despawn wenn man wieder infight kommmt
+        }
+    }
+    IEnumerator firstenemyspezialcd()
+    {
+        int firstcd = UnityEngine.Random.Range(3, (int)Statics.currentenemyspecialcd);
+        yield return new WaitForSeconds(firstcd);
+        instance.StartCoroutine("enemyspezialcd");
+        if (LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == false)
+        {
+            int enemyonlist = UnityEngine.Random.Range(1, infightenemylists.Count + 1);          //+ 1 weil random.range bei 1-2 immer nur 1 ausgibt
+            if (infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>())
+            {
+                infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>().spezialattack = true;
+            }
         }
     }
     IEnumerator enemyspezialcd()
@@ -74,7 +93,7 @@ public class Infightcontroller : MonoBehaviour
             yield return new WaitForSeconds(Statics.currentenemyspecialcd);
             if (LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == false)
             {
-                int enemyonlist = UnityEngine.Random.Range(1, infightenemylists.Count + 1);          //+ 1 weil random.range bei 1-2 immer nur 1 ausgibt
+                int enemyonlist = UnityEngine.Random.Range(1, infightenemylists.Count + 1);          //+ 1 weil random.range bei int die höchste zahl nicht nimmt
                 if (infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>())
                 {
                     infightenemylists[enemyonlist - 1].GetComponent<Enemymovement>().spezialattack = true;
@@ -140,6 +159,8 @@ public class Infightcontroller : MonoBehaviour
         instance.StopCoroutine("enemyspezialcd");
         infightimage.SetActive(false);
     }
+    public void activateplayergameover() => playergameover.SetActive(true);
+    public void disableplayergameover() => playergameover.SetActive(false);
     public void activategameovercontroller()
     {
         gameovercontroller.SetActive(true);

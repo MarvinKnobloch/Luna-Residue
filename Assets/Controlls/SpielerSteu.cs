@@ -632,6 +632,15 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Space"",
+                    ""type"": ""Button"",
+                    ""id"": ""a6f8f556-9189-4f9d-ac3c-8d52efa4ff92"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -698,6 +707,17 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Menucharselectionright"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""71ff4456-d020-4f78-b73e-162fd6541ba9"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Space"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1133,6 +1153,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         m_Menusteuerung_Menuesc = m_Menusteuerung.FindAction("Menuesc", throwIfNotFound: true);
         m_Menusteuerung_Menucharselectionleft = m_Menusteuerung.FindAction("Menucharselectionleft", throwIfNotFound: true);
         m_Menusteuerung_Menucharselectionright = m_Menusteuerung.FindAction("Menucharselectionright", throwIfNotFound: true);
+        m_Menusteuerung_Space = m_Menusteuerung.FindAction("Space", throwIfNotFound: true);
         // SpielerHeal
         m_SpielerHeal = asset.FindActionMap("SpielerHeal", throwIfNotFound: true);
         m_SpielerHeal_Target1 = m_SpielerHeal.FindAction("Target1", throwIfNotFound: true);
@@ -1449,6 +1470,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
     private readonly InputAction m_Menusteuerung_Menuesc;
     private readonly InputAction m_Menusteuerung_Menucharselectionleft;
     private readonly InputAction m_Menusteuerung_Menucharselectionright;
+    private readonly InputAction m_Menusteuerung_Space;
     public struct MenusteuerungActions
     {
         private @SpielerSteu m_Wrapper;
@@ -1459,6 +1481,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         public InputAction @Menuesc => m_Wrapper.m_Menusteuerung_Menuesc;
         public InputAction @Menucharselectionleft => m_Wrapper.m_Menusteuerung_Menucharselectionleft;
         public InputAction @Menucharselectionright => m_Wrapper.m_Menusteuerung_Menucharselectionright;
+        public InputAction @Space => m_Wrapper.m_Menusteuerung_Space;
         public InputActionMap Get() { return m_Wrapper.m_Menusteuerung; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1486,6 +1509,9 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @Menucharselectionright.started -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnMenucharselectionright;
                 @Menucharselectionright.performed -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnMenucharselectionright;
                 @Menucharselectionright.canceled -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnMenucharselectionright;
+                @Space.started -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnSpace;
+                @Space.performed -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnSpace;
+                @Space.canceled -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnSpace;
             }
             m_Wrapper.m_MenusteuerungActionsCallbackInterface = instance;
             if (instance != null)
@@ -1508,6 +1534,9 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @Menucharselectionright.started += instance.OnMenucharselectionright;
                 @Menucharselectionright.performed += instance.OnMenucharselectionright;
                 @Menucharselectionright.canceled += instance.OnMenucharselectionright;
+                @Space.started += instance.OnSpace;
+                @Space.performed += instance.OnSpace;
+                @Space.canceled += instance.OnSpace;
             }
         }
     }
@@ -1792,6 +1821,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         void OnMenuesc(InputAction.CallbackContext context);
         void OnMenucharselectionleft(InputAction.CallbackContext context);
         void OnMenucharselectionright(InputAction.CallbackContext context);
+        void OnSpace(InputAction.CallbackContext context);
     }
     public interface ISpielerHealActions
     {

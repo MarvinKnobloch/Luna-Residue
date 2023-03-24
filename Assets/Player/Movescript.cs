@@ -446,14 +446,14 @@ public class Movescript : MonoBehaviour
     {
         if(playerhp.playerisdead == false)
         {
+            Statics.dash = true;
+            Statics.resetvaluesondeathorstun = true;
+            Statics.dazecounter = 0;
+            Statics.dazekicksneeded = buttonmashcount;
             ChangeAnimationStateInstant(dazestate);
             state = State.Buttonmashstun;
             dazeimage.SetActive(true);
             dazeimage.GetComponentInChildren<Text>().text = "Spam " + buttonmashhotkey.GetBindingDisplayString();
-            Statics.resetvaluesondeathorstun = true;
-            Statics.dazecounter = 0;
-            Statics.dazekicksneeded = buttonmashcount;
-            Statics.dash = true;
         }
     }
     public void activatedmgtext(GameObject enemyhit, float dmg)

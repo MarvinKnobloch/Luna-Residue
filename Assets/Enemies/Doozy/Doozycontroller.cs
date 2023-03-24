@@ -56,8 +56,8 @@ public class Doozycontroller : MonoBehaviour
     private void turnonsecondgrid()
     {
         Mouseactivate.enablemouse();
-        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtostun();
         Statics.enemyspezialtimescale = true;
+        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtostun();
         Time.timeScale = 0.3f;
         Time.fixedDeltaTime = Statics.normaltimedelta * 0.3f;
         maincam.m_YAxis.m_MaxSpeed = 0;

@@ -17,8 +17,6 @@ public class Mathcommit : MonoBehaviour
     [NonSerialized] public float basedmg;
     [NonSerialized] public float answertime;
 
-    private bool changetime;
-
     private void Awake()
     {
         maincam.GetComponent<CinemachineFreeLook>();
@@ -27,7 +25,11 @@ public class Mathcommit : MonoBehaviour
     {
         maincam.m_YAxis.m_MaxSpeed = 0;
         maincam.m_XAxis.m_MaxSpeed = 0;
-        changetime = false;
+
+        Statics.enemyspezialtimescale = true;
+        Time.timeScale = 0.3f;
+        Time.fixedDeltaTime = Statics.normaltimedelta * 0.3f;
+
         timer = answertime;
         StartCoroutine("mathtimer");
         Mouseactivate.enablemouse();
@@ -35,12 +37,6 @@ public class Mathcommit : MonoBehaviour
     private void Update()
     {
         timer -= Time.deltaTime;
-        if (changetime == false)
-        {
-            changetime = true;
-            Time.timeScale = 0.3f;
-            Time.fixedDeltaTime = Statics.normaltimedelta * 0.3f;
-        }
     }
     public void commitnumber()
     {
@@ -50,13 +46,7 @@ public class Mathcommit : MonoBehaviour
             if (answer == mathmancontroller.GetComponent<Mathmancontroller>().rightanswer)
             {
                 solutionUI.color = Color.green;
-                LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
-                Statics.otheraction = false;
-                Statics.dash = false;
-                Time.timeScale = Statics.normalgamespeed;
-                Time.fixedDeltaTime = Statics.normaltimedelta;
-                maincam.m_YAxis.m_MaxSpeed = 0.008f;
-                maincam.m_XAxis.m_MaxSpeed = 0.6f;
+                resetvalues();
             }
             else
             {
@@ -65,13 +55,7 @@ public class Mathcommit : MonoBehaviour
                     LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1) + Globalplayercalculations.calculateenemyspezialdmg()));
                 }
                 solutionUI.color = Color.red;
-                LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
-                Statics.otheraction = false;
-                Statics.dash = false;
-                Time.timeScale = Statics.normalgamespeed;
-                Time.fixedDeltaTime = Statics.normaltimedelta;
-                maincam.m_YAxis.m_MaxSpeed = 0.008f;
-                maincam.m_XAxis.m_MaxSpeed = 0.6f;
+                resetvalues();
             }
             Invoke("turnoffUI", 0.3f);
             StopAllCoroutines();
@@ -83,13 +67,7 @@ public class Mathcommit : MonoBehaviour
                 LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1) + Globalplayercalculations.calculateenemyspezialdmg()));
             }
             solutionUI.color = Color.red;
-            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
-            Statics.otheraction = false;
-            Statics.dash = false;
-            Time.timeScale = Statics.normalgamespeed;
-            Time.fixedDeltaTime = Statics.normaltimedelta;
-            maincam.m_YAxis.m_MaxSpeed = 0.008f;
-            maincam.m_XAxis.m_MaxSpeed = 0.6f;
+            resetvalues();
             Invoke("turnoffUI", 0.3f);
             StopAllCoroutines();
         }
@@ -111,14 +89,19 @@ public class Mathcommit : MonoBehaviour
                 LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1) + Globalplayercalculations.calculateenemyspezialdmg()));
             }
             solution.text = "";
-            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
-            Statics.otheraction = false;
-            Statics.dash = false;
-            Time.timeScale = Statics.normalgamespeed;
-            Time.fixedDeltaTime = Statics.normaltimedelta;
-            maincam.m_YAxis.m_MaxSpeed = 0.008f;
-            maincam.m_XAxis.m_MaxSpeed = 0.6f;
+            resetvalues();
             mathmancontroller.SetActive(false);
         }
+    }
+    private void resetvalues()
+    {
+        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
+        Statics.enemyspezialtimescale = false;
+        Statics.otheraction = false;
+        Statics.dash = false;
+        Time.timeScale = Statics.normalgamespeed;
+        Time.fixedDeltaTime = Statics.normaltimedelta;
+        maincam.m_YAxis.m_MaxSpeed = 0.008f;
+        maincam.m_XAxis.m_MaxSpeed = 0.6f;
     }
 }

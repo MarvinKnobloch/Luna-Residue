@@ -114,7 +114,7 @@ public class Weaponswitch : MonoBehaviour
     }
     public void imageupdateaftercharswitch()
     {
-        if (mainweaponactiv == true) weaponimage.sprite = weaponimages[Statics.firstweapon[Statics.currentactiveplayer]];
-        else weaponimage.sprite = weaponimages[Statics.secondweapon[Statics.currentactiveplayer]];
+        if (mainweaponactiv == true) weaponimage.sprite = weaponimages[Statics.secondweapon[Statics.currentactiveplayer]];
+        else weaponimage.sprite = weaponimages[Statics.firstweapon[Statics.currentactiveplayer]];
     }
 }
