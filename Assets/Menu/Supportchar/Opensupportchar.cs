@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Opensupportchar : MonoBehaviour
 {
+    [SerializeField] private GameObject menuoverview;
     public GameObject thirdcharselection;
     public bool thirdcharselectionactive;
     public GameObject[] thirdselectionslots;
@@ -24,6 +25,7 @@ public class Opensupportchar : MonoBehaviour
     {
         if(thirdcharselectionactive == false)
         {
+            menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen = true;
             thirdcharselectionactive = true;
             thirdcharselection.SetActive(true);
             forthcharselectionactive = false;
@@ -35,6 +37,7 @@ public class Opensupportchar : MonoBehaviour
         }
         else
         {
+            menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen = false;
             thirdcharselectionactive = false;
             thirdcharselection.SetActive(false);
         }
@@ -43,6 +46,7 @@ public class Opensupportchar : MonoBehaviour
     {
         if(forthcharselectionactive == false)
         {
+            menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen = true;
             forthcharselectionactive = true;
             forthcharselection.SetActive(true);
             thirdcharselectionactive = false;
@@ -55,6 +59,7 @@ public class Opensupportchar : MonoBehaviour
         }
         else
         {
+            menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen = false;
             forthcharselectionactive = false;
             forthcharselection.SetActive(false);
         }

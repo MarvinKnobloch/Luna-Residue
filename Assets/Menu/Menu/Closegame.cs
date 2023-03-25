@@ -8,4 +8,8 @@ public class Closegame : MonoBehaviour
     {
         Application.Quit();
     }
+    public void dontclosegame()
+    {
+        gameObject.SetActive(false);
+    }
 }

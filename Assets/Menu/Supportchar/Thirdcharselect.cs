@@ -13,6 +13,8 @@ public class Thirdcharselect : MonoBehaviour
 
     public int selectetdCharacter;
 
+    [SerializeField] private GameObject menuoverview;
+
     private void OnEnable()
     {
         if (Statics.currentthirdchar != -1)
@@ -33,6 +35,7 @@ public class Thirdcharselect : MonoBehaviour
             Statics.currentthirdchar = -1;
             thirdchartext.text = "empty";
             charselection.SetActive(false);
+            menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen = false;
         }
         else
         {
@@ -43,6 +46,7 @@ public class Thirdcharselect : MonoBehaviour
                 thirdchartext.text = buttontext[newCharacter].text;
                 Statics.currentthirdchar = selectetdCharacter;
                 charselection.SetActive(false);
+                menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen = false;
             }
             else
             {
@@ -50,6 +54,7 @@ public class Thirdcharselect : MonoBehaviour
                 thirdchartext.text = buttontext[newCharacter].text;
                 Statics.currentthirdchar = selectetdCharacter;
                 charselection.SetActive(false);
+                menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen = false;
             }
         }
 

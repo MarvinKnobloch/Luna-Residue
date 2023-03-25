@@ -13,6 +13,8 @@ public class Forthcharselect : MonoBehaviour
 
     public int selectetdCharacter;
 
+    [SerializeField] private GameObject menuoverview;
+
     private void OnEnable()
     {
         if (Statics.currentforthchar != -1)
@@ -33,6 +35,7 @@ public class Forthcharselect : MonoBehaviour
             Statics.currentforthchar = -1;
             forthchartext.text = "empty";
             charselection.SetActive(false);
+            menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen = false;
         }
         else
         {
@@ -43,6 +46,7 @@ public class Forthcharselect : MonoBehaviour
                 forthchartext.text = buttontext[newCharacter].text;
                 Statics.currentforthchar = selectetdCharacter;
                 charselection.SetActive(false);
+                menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen = false;
             }
             else
             {
@@ -50,6 +54,7 @@ public class Forthcharselect : MonoBehaviour
                 forthchartext.text = buttontext[newCharacter].text;
                 Statics.currentforthchar = selectetdCharacter;
                 charselection.SetActive(false);
+                menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen = false;
             }
         }
     }

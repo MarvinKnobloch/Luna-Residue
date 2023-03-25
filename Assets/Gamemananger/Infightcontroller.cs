@@ -51,6 +51,7 @@ public class Infightcontroller : MonoBehaviour
             LoadCharmanager.Overallmainchar.GetComponent<Movescript>().endlockon();
             if (LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == true)
             {
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().disableplayergameoverui();
                 LoadCharmanager.Overallmainchar.GetComponent<Movescript>().resurrected();
             }
             GlobalCD.stopsupportresurrectioncd();

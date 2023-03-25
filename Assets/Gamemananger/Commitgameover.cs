@@ -10,7 +10,7 @@ public class Commitgameover : MonoBehaviour
     [SerializeField] private Image commitbar;
 
     private SpielerSteu controlls;
-    private float committime = 2;
+    private float committime = 1.5f;
     private float committimer;
 
     private void Awake()

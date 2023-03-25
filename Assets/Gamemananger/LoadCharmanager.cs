@@ -92,7 +92,7 @@ public class LoadCharmanager : MonoBehaviour
             }
             else
             {
-                if (Menucontroller.inoverview == true)
+                if (Menucontroller.inoverview == true && menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen == false)
                 {
                     maingamevalues();
                 }
