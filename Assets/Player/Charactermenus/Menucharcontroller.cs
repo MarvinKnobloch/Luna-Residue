@@ -6,22 +6,21 @@ using TMPro;
 
 public class Menucharcontroller : MonoBehaviour
 {
+
     [SerializeField] private int charnumber;
 
     [SerializeField] private GameObject weaponslot1;
     [SerializeField] private GameObject weaponslot2;
-    [SerializeField] private GameObject weapongrid1;
-    [SerializeField] private GameObject weapongrid2;
     [SerializeField] private TextMeshProUGUI charstats;
     [SerializeField] private Sprite[] images;
 
     private int firstweapon;
     private int secondweapon;
 
+    [SerializeField] private Menucontroller menucontroller;
+
     private void OnEnable()
     {
-        weapongrid1.SetActive(false);
-        weapongrid2.SetActive(false);
         firstweapon = Statics.firstweapon[charnumber];
         secondweapon = Statics.secondweapon[charnumber];
         weaponslot1.gameObject.GetComponent<Image>().sprite = images[firstweapon];
@@ -36,14 +35,13 @@ public class Menucharcontroller : MonoBehaviour
     {
         if(grid.activeSelf == true)
         {
+            menucontroller.somethinginmenuisopen = false;
             grid.SetActive(false);
         }
         else
         {
-            foreach (GameObject obj in gameObject.GetComponentInParent<Closeweapongrids>().weaponselectiongrids)
-            {
-                obj.SetActive(false);
-            }
+            menucontroller.closeallselections();
+            menucontroller.somethinginmenuisopen = true;
             grid.SetActive(true);
         }
     }
@@ -58,8 +56,9 @@ public class Menucharcontroller : MonoBehaviour
         firstweapon = newweaponnumber;
         Statics.firstweapon[charnumber] = firstweapon;
         weaponslot1.gameObject.GetComponent<Image>().sprite = images[firstweapon];
-        weapongrid1.SetActive(false);
-        weapongrid2.SetActive(false);
+        menucontroller.closeallselections();
+        menucontroller.somethinginmenuisopen = false;
+
     }
 
     public void setsecondweapon(int newweaponnumber)
@@ -73,7 +72,8 @@ public class Menucharcontroller : MonoBehaviour
         secondweapon = newweaponnumber;
         Statics.secondweapon[charnumber] = secondweapon;
         weaponslot2.gameObject.GetComponent<Image>().sprite = images[secondweapon];
-        weapongrid1.SetActive(false);
-        weapongrid2.SetActive(false);
+        menucontroller.closeallselections();
+        menucontroller.somethinginmenuisopen = false;
+
     }
 }

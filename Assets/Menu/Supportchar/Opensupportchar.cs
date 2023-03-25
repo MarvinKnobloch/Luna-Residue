@@ -5,6 +5,7 @@ using UnityEngine;
 public class Opensupportchar : MonoBehaviour
 {
     [SerializeField] private GameObject menuoverview;
+    private Menucontroller menucontroller;
     public GameObject thirdcharselection;
     public bool thirdcharselectionactive;
     public GameObject[] thirdselectionslots;
@@ -13,6 +14,10 @@ public class Opensupportchar : MonoBehaviour
     public bool forthcharselectionactive;
     public GameObject[] forthselectionslots;
 
+    private void Awake()
+    {
+        menucontroller = menuoverview.GetComponent<Menucontroller>();
+    }
     private void OnEnable()
     {
         thirdcharselectionactive = false;
@@ -25,11 +30,11 @@ public class Opensupportchar : MonoBehaviour
     {
         if(thirdcharselectionactive == false)
         {
-            menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen = true;
+            menucontroller.closeallselections();
+            menucontroller.somethinginmenuisopen = true;
             thirdcharselectionactive = true;
             thirdcharselection.SetActive(true);
             forthcharselectionactive = false;
-            forthcharselection.SetActive(false);
             foreach (GameObject slot in thirdselectionslots)
             {
                 slot.SetActive(true);
@@ -37,7 +42,7 @@ public class Opensupportchar : MonoBehaviour
         }
         else
         {
-            menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen = false;
+            menucontroller.somethinginmenuisopen = false;
             thirdcharselectionactive = false;
             thirdcharselection.SetActive(false);
         }
@@ -46,11 +51,11 @@ public class Opensupportchar : MonoBehaviour
     {
         if(forthcharselectionactive == false)
         {
-            menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen = true;
+            menucontroller.closeallselections();
+            menucontroller.somethinginmenuisopen = true;
             forthcharselectionactive = true;
             forthcharselection.SetActive(true);
             thirdcharselectionactive = false;
-            thirdcharselection.SetActive(false);
 
             foreach (GameObject slot in forthselectionslots)
             {
@@ -59,7 +64,7 @@ public class Opensupportchar : MonoBehaviour
         }
         else
         {
-            menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen = false;
+            menucontroller.somethinginmenuisopen = false;
             forthcharselectionactive = false;
             forthcharselection.SetActive(false);
         }

@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class Openselectedmenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private GameObject menuoverview;
+    private Menucontroller menucontroller;
     [SerializeField] private GameObject menu;
 
     [SerializeField] private string uimessage;
@@ -16,8 +17,9 @@ public class Openselectedmenu : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     private void Awake()
     {
-        selectedcolor = menuoverview.GetComponent<Menucontroller>().selectedcolor;
-        notselectedcolor = menuoverview.GetComponent<Menucontroller>().notselectedcolor;
+        menucontroller = menuoverview.GetComponent<Menucontroller>();
+        selectedcolor = menucontroller.selectedcolor;
+        notselectedcolor = menucontroller.notselectedcolor;
     }
     private void OnEnable()
     {
@@ -46,7 +48,7 @@ public class Openselectedmenu : MonoBehaviour, IPointerEnterHandler, IPointerExi
         }
         else
         {
-            menuoverview.GetComponent<Menucontroller>().cantopensavegame(uimessage);
+            menucontroller.cantopenuimessage(uimessage);
         }
     }
     public void opensavegamemenu()
@@ -58,19 +60,20 @@ public class Openselectedmenu : MonoBehaviour, IPointerEnterHandler, IPointerExi
         }
         else
         {
-            menuoverview.GetComponent<Menucontroller>().cantopensavegame(uimessage);
+            menucontroller.cantopenuimessage(uimessage);
         }
     }
     public void closegame()
     {
         if(menu.activeSelf == false)
         {
-            menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen = true;
+            menucontroller.closeallselections();
+            menucontroller.somethinginmenuisopen = true;
             menu.SetActive(true);
         }
         else
         {
-            menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen = false;
+            menucontroller.somethinginmenuisopen = false;
             menu.SetActive(false);
         }
     }

@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class Enemymovement : MonoBehaviour
 {
     public NavMeshAgent Meshagent;
+    public NavMeshPath path;
     public LayerMask Player;
     private Animator animator;
     [SerializeField] Enemyvalues enemyvalues;
@@ -75,6 +76,7 @@ public class Enemymovement : MonoBehaviour
         Meshagent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
+        path = new NavMeshPath();
         enemypatrol.esm = this;
         enemyattack.esm = this;
         enemyreset.esm = this;
@@ -85,8 +87,7 @@ public class Enemymovement : MonoBehaviour
         normalattackcd = enemyvalues.attackspeed;
 
         checkforplayerlayer =  1 << 9 | 1 << 13;
-        int layerAsLayerMask = 1 << 8;
-        meleehitboxlayer = layerAsLayerMask;
+        meleehitboxlayer = 1 << 8;
     }
     private void OnEnable()
     {

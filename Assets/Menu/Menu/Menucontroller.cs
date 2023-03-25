@@ -42,7 +42,7 @@ public class Menucontroller : MonoBehaviour
 
     private void Update()
     {
-        if(controlls.Menusteuerung.Menuesc.WasPerformedThisFrame() && somethinginmenuisopen == true)
+        if (controlls.Menusteuerung.Menuesc.WasPerformedThisFrame() && somethinginmenuisopen == true)
         {
             somethinginmenuisopen = false;
             foreach (GameObject obj in closegameobjectswithesc)
@@ -55,9 +55,9 @@ public class Menucontroller : MonoBehaviour
     {
         inoverview = false;
     }
-    public void cantopensavegame(string message)
+    public void cantopenuimessage(string message)
     {
-        if(uimessage.gameObject.activeSelf == true)
+        if (uimessage.gameObject.activeSelf == true)
         {
             uimessage.GetComponent<Menuuimessage>().resettimer();
             uimessage.GetComponentInChildren<TextMeshProUGUI>().text = message;
@@ -68,5 +68,12 @@ public class Menucontroller : MonoBehaviour
             uimessage.SetActive(true);
         }
 
+    }
+    public void closeallselections()
+    {
+        foreach (GameObject obj in closegameobjectswithesc)
+        {
+            obj.SetActive(false);
+        }
     }
 }
