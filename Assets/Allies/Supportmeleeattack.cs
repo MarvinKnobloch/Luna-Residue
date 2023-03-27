@@ -8,6 +8,8 @@ public class Supportmeleeattack
     public Supportmovement ssm;
     private float sideposition;
 
+    private bool ismovingrotation;
+
     const string idlestate = "Idle";
     const string runstate = "Run";
     const string attack1state = "Attack1";
@@ -18,7 +20,6 @@ public class Supportmeleeattack
         if (ssm.currenttarget != null)
         {
             ssm.supportreset();
-            ssm.FaceTraget();
             ssm.attacktimer += Time.deltaTime;
             if(ssm.attacktimer > ssm.attackcd)
             {
@@ -34,6 +35,7 @@ public class Supportmeleeattack
                     ssm.Meshagent.ResetPath();
                 }
             }
+            else ssm.FaceTraget();
         }
         else
         {
@@ -45,7 +47,6 @@ public class Supportmeleeattack
         if (ssm.currenttarget != null)
         {
             ssm.supportreset();
-            ssm.FaceTraget();
             ssm.attacktimer += Time.deltaTime;
             if (ssm.attacktimer > ssm.attackcd)
             {
@@ -62,22 +63,33 @@ public class Supportmeleeattack
                     Vector3 newposi = ssm.currenttarget.transform.position + ssm.currenttarget.transform.forward * -2 + ssm.currenttarget.transform.right * sideposition;
                     if (Vector3.Distance(ssm.transform.position, newposi) > ssm.attackrangecheck)
                     {
+                        ismovingrotation = true;
                         ssm.ChangeAnimationState(runstate);
                         ssm.Meshagent.SetDestination(newposi);
                     }
-                    else ssm.ChangeAnimationState(idlestate);
+                    else 
+                    {
+                        ismovingrotation = false;
+                        ssm.ChangeAnimationState(idlestate); 
+                    }
                 }
                 else
                 {
                     if (Vector3.Distance(ssm.transform.position, ssm.currenttarget.transform.position + ssm.transform.forward * -2) > ssm.attackrangecheck)
                     {
+                        ismovingrotation = true;
                         ssm.ChangeAnimationState(runstate);
                         ssm.Meshagent.SetDestination(ssm.currenttarget.transform.position + ssm.transform.forward * -2);
                     }
-                    else ssm.ChangeAnimationState(idlestate);
+                    else
+                    {
+                        ismovingrotation = false;
+                        ssm.ChangeAnimationState(idlestate);
+                    }
                     ssm.followenemytimer = 0;
                 }
             }
+            if(ismovingrotation == false) ssm.FaceTraget();
         }
         else
         {

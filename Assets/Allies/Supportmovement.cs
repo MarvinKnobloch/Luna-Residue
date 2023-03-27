@@ -56,9 +56,9 @@ public class Supportmovement : MonoBehaviour
         waitforattackcd,
         waitforrangeattackcd,
         waitformeleeattack,
-        waitforrangeattack,
         attackstate,
         changeposiafterattack,
+        changeposiafterrangeattack,
         castheal,
         resurrect,
         reset,
@@ -114,16 +114,16 @@ public class Supportmovement : MonoBehaviour
                 supportheal.checkforresurrect();
                 supportheal.supporthealing();
                 break;
-            case State.waitforrangeattack:
-                supportrangeattack.waitingforrangeattack();
-                supportheal.checkforresurrect();
-                supportheal.supporthealing();
-                break;
             case State.attackstate:
                 supportutilityfunctions.attackstate();
                 break;
             case State.changeposiafterattack:
                 supportutilityfunctions.repositionafterattack();
+                break;
+            case State.changeposiafterrangeattack:
+                supportrangeattack.posiafterrangeattack();
+                supportheal.checkforresurrect();
+                supportheal.supporthealing();
                 break;
             case State.castheal:
                 break;

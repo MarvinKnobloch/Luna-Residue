@@ -7,6 +7,8 @@ public class Supportrangeattack
 {
     public Supportmovement ssm;
 
+    private Vector3 rangenewposi;
+
     const string idlestate = "Idle";
     const string runstate = "Run";
     const string attack1state = "Attack1";
@@ -18,7 +20,6 @@ public class Supportrangeattack
         if (ssm.currenttarget != null)
         {
             ssm.supportreset();
-            ssm.FaceTraget();
             ssm.attacktimer += Time.deltaTime;
             if (ssm.attacktimer > ssm.attackcd)
             {
@@ -34,62 +35,9 @@ public class Supportrangeattack
                     ssm.Meshagent.ResetPath();
                 }
             }
-        }
-        else
-        {
-            ssm.switchtarget();
-        }
-    }
-    public void waitingforrangeattack()
-    {
-        if (ssm.currenttarget != null)
-        {
-            ssm.supportreset();
-            ssm.attacktimer += Time.deltaTime;
-            if (ssm.attacktimer > ssm.attackcd)
-            {
-                ssm.state = Supportmovement.State.attackstate;
-                ssm.ChangeAnimationState(attack1state);
-                ssm.Meshagent.ResetPath();
-            }
             else
             {
-                if (ssm.gameObject != ssm.currenttarget.GetComponentInParent<Enemymovement>().currenttarget)                          //wenn der rangesupport das target vom target ist, bewegt er sich nicht
-                {
-                    Vector3 rangenewposi = ssm.currenttarget.transform.position + ssm.currenttarget.transform.forward * -14;
-                    rangenewposi.y = ssm.transform.position.y;
-                    NavMeshHit hit;
-                    bool blocked;
-                    blocked = NavMesh.Raycast(ssm.transform.position, rangenewposi, out hit, NavMesh.AllAreas);
-                    if (blocked == true)
-                    {
-                        ssm.Meshagent.SetDestination(hit.position);
-                        ssm.ChangeAnimationState(runstate);
-                        if (Vector3.Distance(ssm.transform.position, hit.position) <= 2)
-                        {
-                            ssm.FaceTraget();
-                            ssm.ChangeAnimationState(idlestate);
-                            ssm.Meshagent.ResetPath();
-                        }
-                    }
-                    else if (Vector3.Distance(ssm.transform.position, rangenewposi) < 10)
-                    {
-                        ssm.FaceTraget();
-                        ssm.ChangeAnimationState(idlestate);
-                        ssm.Meshagent.ResetPath();
-                    }
-                    else
-                    {
-                        ssm.Meshagent.SetDestination(rangenewposi);
-                        ssm.ChangeAnimationState(runstate);
-                    }
-                }
-                else
-                {
-                    ssm.FaceTraget();
-                    ssm.ChangeAnimationState(idlestate);
-                    ssm.Meshagent.ResetPath();
-                }
+                ssm.FaceTraget();
             }
         }
         else
@@ -139,9 +87,70 @@ public class Supportrangeattack
             }
             else
             {
-                ssm.ChangeAnimationState(idlestate);
-                ssm.state = Supportmovement.State.waitforrangeattack;           //wenn nach dem attacken keine neue posi gesucht wird folgt der enemy dem target
+                movebehindtartget();
             }
+        }
+    }
+    public void movebehindtartget()
+    {
+        if (ssm.currenttarget != null)
+        {
+            ssm.supportreset();
+            if (ssm.gameObject != ssm.currenttarget.GetComponentInParent<Enemymovement>().currenttarget)                          //wenn der rangesupport das target vom target ist, bewegt er sich nicht
+            {
+                rangenewposi = ssm.currenttarget.transform.position + ssm.currenttarget.transform.forward * -10;
+                rangenewposi.y = ssm.transform.position.y;
+                NavMeshHit hit;
+                bool blocked;
+                blocked = NavMesh.Raycast(ssm.transform.position, rangenewposi, out hit, NavMesh.AllAreas);
+                if (blocked == true)
+                {
+                    rangenewposi = hit.position;
+                    ssm.Meshagent.SetDestination(rangenewposi);
+                    ssm.ChangeAnimationState(runstate);
+                    ssm.state = Supportmovement.State.changeposiafterrangeattack;
+                }
+                else
+                {
+                    ssm.Meshagent.SetDestination(rangenewposi);
+                    ssm.ChangeAnimationState(runstate);
+                    ssm.state = Supportmovement.State.changeposiafterrangeattack;
+                }
+            }
+            else
+            {
+                ssm.Meshagent.ResetPath();
+                ssm.ChangeAnimationState(idlestate);
+                ssm.state = Supportmovement.State.waitforrangeattackcd;
+            }
+        }
+        else
+        {
+            ssm.switchtarget();
+        }
+    }
+    public void posiafterrangeattack()
+    {
+        if (ssm.currenttarget != null)
+        {
+            ssm.supportreset();
+            ssm.attacktimer += Time.deltaTime;
+            if (ssm.attacktimer > ssm.attackcd)
+            {
+                ssm.state = Supportmovement.State.attackstate;
+                ssm.ChangeAnimationState(attack1state);
+                ssm.Meshagent.ResetPath();
+            }
+            else if (Vector3.Distance(ssm.transform.position, rangenewposi) < 4)
+            {
+                ssm.Meshagent.ResetPath();
+                ssm.ChangeAnimationState(idlestate);
+                ssm.state = Supportmovement.State.waitforrangeattackcd;
+            }
+        }
+        else
+        {
+            ssm.switchtarget();
         }
     }
     private void attackrangecheck(string state)

@@ -8,6 +8,8 @@ public class Enemyattack
     public Enemymovement esm;
     private float sideposition;
 
+    private bool ismovingrotation;
+
     const string idlestate = "Idle";
     const string runstate = "Run";
     const string spezialattackstate = "Spezial";
@@ -42,7 +44,10 @@ public class Enemyattack
                 esm.followplayerafterattack = 0;
             }
         }
-        esm.FaceTraget();
+        else
+        {
+            esm.FaceTraget();
+        }
         checkforspezialattack();
     }
     public void backtowaitforattack()
@@ -94,13 +99,13 @@ public class Enemyattack
     }
     private void switchtowaitforattack()
     {
+        ismovingrotation = false;
         esm.ChangeAnimationState(idlestate);
         sideposition = Random.Range(-2f, 2f);
         esm.state = Enemymovement.State.waitforattacks;
     }
     public void waitingforattacks()             //wenn nach dem attacken keine neue posi gesucht wird folgt der enemy dem target
-    {
-        esm.FaceTraget();
+    {    
         esm.normalattacktimer += Time.deltaTime;
         esm.followplayerafterattack += Time.deltaTime;
         if (esm.followplayerafterattack > 0.3f)
@@ -112,6 +117,7 @@ public class Enemyattack
                     Vector3 newposi = esm.currenttarget.transform.position + esm.currenttarget.transform.forward * -2 + esm.currenttarget.transform.right * sideposition;
                     if (Vector3.Distance(esm.transform.position, newposi) > esm.attackrange)
                     {
+                        ismovingrotation = true;
                         esm.ChangeAnimationState(runstate);
                         esm.Meshagent.SetDestination(newposi);
                     }
@@ -122,7 +128,11 @@ public class Enemyattack
                             esm.switchtoattackstate();
                             return;
                         }
-                        else esm.ChangeAnimationState(idlestate);
+                        else
+                        {
+                            esm.ChangeAnimationState(idlestate);
+                            ismovingrotation = false;
+                        }
                     }
                 }
                 else
@@ -136,6 +146,7 @@ public class Enemyattack
             }
             esm.followplayerafterattack = 0;
         }
+        if (ismovingrotation == false) esm.FaceTraget();
         checkforspezialattack();
     }
     private void maincharistarget()
@@ -151,11 +162,16 @@ public class Enemyattack
                     esm.switchtoattackstate();
                     return;
                 }
-                else esm.ChangeAnimationState(idlestate);
+                else
+                {
+                    ismovingrotation = false;
+                    esm.ChangeAnimationState(idlestate);
+                }
             }
 
             else if (Vector3.Distance(esm.transform.position, esm.currenttarget.transform.position + esm.transform.forward * -2) > esm.attackrange)
             {
+                ismovingrotation = true;
                 esm.ChangeAnimationState(runstate);
                 esm.Meshagent.SetDestination(esm.currenttarget.transform.position + esm.transform.forward * -2);
             }
@@ -166,7 +182,11 @@ public class Enemyattack
                     esm.switchtoattackstate();
                     return;
                 }
-                else esm.ChangeAnimationState(idlestate);
+                else
+                {
+                    ismovingrotation = false;
+                    esm.ChangeAnimationState(idlestate);
+                }
             }
         }
         else
@@ -177,13 +197,19 @@ public class Enemyattack
                 esm.switchtoattackstate();
                 return;
             }
-            else esm.ChangeAnimationState(idlestate);
+            else
+            {
+                ismovingrotation = false;
+                esm.ChangeAnimationState(idlestate);
+            }
+                
         }
     }
     private void supportistarget()
     {
         if (Vector3.Distance(esm.transform.position, esm.currenttarget.transform.position + esm.transform.forward * -2) > esm.attackrange)
         {
+            ismovingrotation = true;
             esm.ChangeAnimationState(runstate);
             esm.Meshagent.SetDestination(esm.currenttarget.transform.position + esm.transform.forward * -2);
         }
@@ -194,7 +220,11 @@ public class Enemyattack
                 esm.switchtoattackstate();
                 return;
             }
-            else esm.ChangeAnimationState(idlestate);
+            else 
+            {
+                ismovingrotation = false;
+                esm.ChangeAnimationState(idlestate);
+            }
         }        
     }
     public void repositionafterattack()

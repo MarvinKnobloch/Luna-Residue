@@ -68,8 +68,8 @@ public class Enemypatrol
             esm.checkforplayertimer = 0;
             if (Vector3.Distance(esm.transform.position, LoadCharmanager.Overallmainchar.transform.position) < esm.aggrorangecheck)
             {
-                NavMeshPath path = new NavMeshPath();
-                if (esm.Meshagent.CalculatePath(LoadCharmanager.Overallmainchar.transform.position, path))
+                esm.Meshagent.CalculatePath(LoadCharmanager.Overallmainchar.transform.position, esm.path);
+                if (esm.path.status == NavMeshPathStatus.PathComplete)
                 {
                     if (Physics.Linecast(esm.transform.position + Vector3.up, LoadCharmanager.Overallmainchar.transform.position + Vector3.up, esm.checkforplayerlayer, QueryTriggerInteraction.Ignore) == false)
                     {
@@ -93,6 +93,17 @@ public class Enemypatrol
             }
         }
     }
+    private void triggerotherenemiesinrange()
+    {
+        Collider[] colliders = Physics.OverlapSphere(esm.transform.position, esm.enemeytriggerrange, esm.meleehitboxlayer, QueryTriggerInteraction.Ignore);
+        foreach (Collider obj in colliders)
+        {
+            if (obj.gameObject.TryGetComponent(out Enemymovement enemymovement))
+            {
+                enemymovement.enemyinrangeistriggered();
+            }
+        }
+    }
     public void enemyinrangeistriggered()
     {
         if (!Infightcontroller.infightenemylists.Contains(esm.transform.gameObject))
@@ -110,18 +121,5 @@ public class Enemypatrol
         esm.Meshagent.speed = esm.normalnavspeed;
         esm.normalattacktimer = esm.normalattackcd;
         esm.state = Enemymovement.State.gettomeleerange;
-    }
-
-    private void triggerotherenemiesinrange()
-    {
-        Collider[] colliders = Physics.OverlapSphere(esm.transform.position, esm.enemeytriggerrange, esm.meleehitboxlayer, QueryTriggerInteraction.Ignore);
-        foreach (Collider obj in colliders)
-        {
-           if (obj.gameObject.TryGetComponent(out Enemymovement enemymovement))
-            {
-                enemymovement.enemyinrangeistriggered();
-            }
-        }
-
     }
 }

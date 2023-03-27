@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Werewolf
   m_EditorClassIdentifier: 
   enemyname: Werewolf
-  basehealth: 314
+  basehealth: 3140
   enemylvl: 1
   movementspeed: 10
   basedmg: -10
