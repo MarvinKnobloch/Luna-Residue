@@ -8,17 +8,20 @@ public class Startmenubuttoncontroller : MonoBehaviour, IPointerEnterHandler, IP
 {
     [SerializeField] private Startmenucontroller startmenucontroller;
 
+    private AudioSource audioSource;
     private Color selectedcolor;
     private Color notselectedcolor;
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         selectedcolor = startmenucontroller.selectedcolor;
         notselectedcolor = startmenucontroller.notselectedcolor;
     }
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
         GetComponent<Image>().color = selectedcolor;
+        audioSource.Play();
     }
 
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)

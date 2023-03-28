@@ -195,7 +195,6 @@ public class EnemyHP : MonoBehaviour
     {
         gothealthbar = true;
         addhealthbar(this);     //erstellt eine neu Healthbar mit verbindung zum Enemyhpscript;
-
     }
     public void removefromcanvas()
     {
@@ -289,8 +288,10 @@ public class EnemyHP : MonoBehaviour
         enemydebuffcd = false;
     }
     public void marktarget() => markcurrenttarget();
-    public void unmarktarget() => unmarkcurrenttarget();
-
+    public void unmarktarget()
+    {
+        if (gothealthbar == true) unmarkcurrenttarget();
+    }
     public void enemyisfocustarget()
     {
         isfocus = true;
