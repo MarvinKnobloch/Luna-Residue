@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.IO;
-//using Newtonsoft.Json;
+using UnityEngine.Audio;
 
 public class Startmenucontroller : MonoBehaviour
 {
@@ -15,22 +15,55 @@ public class Startmenucontroller : MonoBehaviour
     [SerializeField] private GameObject loadgameobj;
     [SerializeField] private GameObject settingsobj;
     private Setitemsandinventory setitemsandinventory;
-    private Setstaticsnull setstaticsnull;
     private Convertstatics convertstatics = new Convertstatics();
 
     public Color selectedcolor;
     public Color notselectedcolor;
 
+    [SerializeField] private AudioMixer audiomixer;
+    [SerializeField] private string gamevolume;
+    [SerializeField] private string musicvolume;
+    [SerializeField] private string soundeffecsvolume;
+
     private void Awake()
     {
         setitemsandinventory = GetComponent<Setitemsandinventory>();
-        setstaticsnull = GetComponent<Setstaticsnull>();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         loadgamesettings();
         loadsaveslots();
         if(PlayerPrefs.GetFloat("mousesensitivity") <= 0) PlayerPrefs.SetFloat("mousesensitivity", 20);
         if(PlayerPrefs.GetFloat("rangeweaponaimsensitivity") <= 0) PlayerPrefs.SetFloat("rangeweaponaimsensitivity", 20);
+    }
+    private void Start()
+    {
+        if (PlayerPrefs.GetInt("audiohasbeenchange") == 0)
+        {
+            PlayerPrefs.SetFloat(gamevolume, -16);
+            audiomixer.SetFloat(gamevolume, PlayerPrefs.GetFloat(gamevolume));
+            PlayerPrefs.SetFloat(musicvolume, -8);
+            audiomixer.SetFloat(musicvolume, PlayerPrefs.GetFloat(musicvolume));
+            PlayerPrefs.SetFloat(soundeffecsvolume, 0);
+            audiomixer.SetFloat(soundeffecsvolume, PlayerPrefs.GetFloat(soundeffecsvolume));
+        }
+        else
+        {
+            setvolume(gamevolume);
+            setvolume(musicvolume);
+            setvolume(soundeffecsvolume);
+        }
+    }
+    private void setvolume(string volumename)
+    {
+        audiomixer.SetFloat(volumename, PlayerPrefs.GetFloat(volumename));
+        bool gotvalue = audiomixer.GetFloat(volumename, out float soundvalue);
+        if (gotvalue == true)
+        {
+            if (soundvalue > 0)
+            {
+                audiomixer.SetFloat(volumename, 0);
+            }
+        }
     }
     private void OnEnable()
     {

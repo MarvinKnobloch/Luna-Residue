@@ -26,12 +26,22 @@ public class Audioslider : MonoBehaviour
             slider.value = soundvalue;
             float textvalue = (soundvalue + 80) * 1.25f;
             slidertext.text = Mathf.Round(textvalue).ToString();
-
         }
     }
     public void valuechange(float slidervalue)
     {
+        PlayerPrefs.SetInt("audiohasbeenchange", 1);
         audiomixer.SetFloat(gamevalue, slidervalue);
+        bool gotvalue = audiomixer.GetFloat(gamevalue, out float soundvalue);            //verhindert das der audiomixer mehr als 0db haben kann
+        if (gotvalue == true)
+        {
+            if (soundvalue > 0)
+            {
+                Debug.Log(soundvalue);
+                audiomixer.SetFloat(gamevalue, 0);
+            }
+        }
+        PlayerPrefs.SetFloat(gamevalue, slidervalue);
         float textvalue = (slidervalue + 80) * 1.25f;
         slidertext.text = Mathf.Round(textvalue).ToString();
     }
