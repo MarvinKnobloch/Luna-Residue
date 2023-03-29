@@ -115,7 +115,7 @@ public class Enemyattack
                 if (esm.currenttarget.gameObject.GetComponent<Supportmovement>().currenttarget != esm.gameObject)
                 {
                     Vector3 newposi = esm.currenttarget.transform.position + esm.currenttarget.transform.forward * -2 + esm.currenttarget.transform.right * sideposition;
-                    if (Vector3.Distance(esm.transform.position, newposi) > esm.attackrange)
+                    if (Vector3.Distance(esm.transform.position, newposi) > esm.attackrange + 2)        // +2 weil der gegner sich ab und zu im kreis dreht(der enemy kann die seitenposi nicht erreichen weil das traget sich mitdreht)
                     {
                         ismovingrotation = true;
                         esm.ChangeAnimationState(runstate);

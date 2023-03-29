@@ -26,7 +26,7 @@ public class Enemyreset
                 if (Infightcontroller.infightenemylists.Contains(esm.transform.gameObject))
                 {
                     Infightcontroller.infightenemylists.Remove(esm.transform.gameObject);
-                    Infightcontroller.checkifinfight();
+                    Infightcontroller.instance.checkifinfight();
                 }
             }
             esm.checkforresettimer = 0f;

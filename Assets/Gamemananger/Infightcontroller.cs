@@ -5,19 +5,30 @@ using System;
 
 public class Infightcontroller : MonoBehaviour
 {
-    static MonoBehaviour instance;
+    public static Infightcontroller instance;
 
-    public GameObject setinfightimage;
-    public static GameObject infightimage;
+    [SerializeField] GameObject infightimage;
     public static List<GameObject> infightenemylists = new List<GameObject>();
 
     public static float teammatesdespawntime = 5;
-    //private int maxhealticks;
     public float spezialtimer;
 
     [SerializeField] private GameObject playergameover;
     [SerializeField] private GameObject gameovercontroller;
 
+    [SerializeField] private AudioClip battle1;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
     private void OnEnable()
     {
         Playerhp.playergameover += activateplayergameover;
@@ -33,15 +44,14 @@ public class Infightcontroller : MonoBehaviour
 
     private void Start()
     {
-        instance = this;
-        infightimage = setinfightimage;
-        checkifinfight();
+        //checkifinfight();                   //ausgeblendet wegen musik call, weiß auch für was der funktions call ist
         instance.CancelInvoke();
     }
-    public static void checkifinfight()
+    public void checkifinfight()
     {
         if (infightenemylists.Count == 0)
         {
+            StartCoroutine(Musiccontroller.instance.fadeoutvolume());
             Statics.infight = false;
             Statics.currentenemyspecialcd = Statics.enemyspecialcd;
             instance.StopCoroutine("firstenemyspezialcd");
@@ -60,6 +70,8 @@ public class Infightcontroller : MonoBehaviour
         {
             if (Statics.infight == false)
             {
+                Musiccontroller.instance.savelastplayedsong();
+                Musiccontroller.instance.setclip(battle1);
                 Statics.infightresurrectcd = Statics.presetresurrectcd;
                 Statics.supportcanresurrect = false;
                 Statics.oneplayerisdead = false;

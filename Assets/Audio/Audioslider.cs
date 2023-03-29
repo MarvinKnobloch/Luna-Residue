@@ -12,7 +12,7 @@ public class Audioslider : MonoBehaviour
     private Slider slider;
 
     [SerializeField] private TextMeshProUGUI slidertext;
-
+    [SerializeField] private AudioSource audioSource;
 
     private void Awake()
     {
@@ -24,7 +24,7 @@ public class Audioslider : MonoBehaviour
         if(gotvalue == true)
         {
             slider.value = soundvalue;
-            float textvalue = (soundvalue + 80) * 1.25f;
+            float textvalue = (soundvalue + 50) * 2f;
             slidertext.text = Mathf.Round(textvalue).ToString();
         }
     }
@@ -42,7 +42,11 @@ public class Audioslider : MonoBehaviour
             }
         }
         PlayerPrefs.SetFloat(gamevalue, slidervalue);
-        float textvalue = (slidervalue + 80) * 1.25f;
+        float textvalue = (slidervalue + 50) * 2f;
         slidertext.text = Mathf.Round(textvalue).ToString();
+    }
+    public void playsoundeffect(float slidervalue)
+    {
+        audioSource.Play();
     }
 }

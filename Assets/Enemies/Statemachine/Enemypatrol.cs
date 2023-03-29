@@ -80,7 +80,7 @@ public class Enemypatrol
                             Statics.currentenemyspecialcd = Statics.enemyspecialcd + (enemycount * 2);
                             if (Infightcontroller.infightenemylists.Count == 1)
                             {
-                                Infightcontroller.checkifinfight();
+                                Infightcontroller.instance.checkifinfight();
                             }
                             triggerotherenemiesinrange();
                         }
@@ -113,7 +113,7 @@ public class Enemypatrol
             Statics.currentenemyspecialcd = Statics.enemyspecialcd + enemycount;
             if (Infightcontroller.infightenemylists.Count == 1)
             {
-                Infightcontroller.checkifinfight();
+                Infightcontroller.instance.checkifinfight();
             }
             //triggerotherenemiesinrange();
         }

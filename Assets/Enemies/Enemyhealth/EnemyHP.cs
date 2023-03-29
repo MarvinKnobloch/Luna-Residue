@@ -157,7 +157,7 @@ public class EnemyHP : MonoBehaviour
                     enemyisnotfocustarget();
                     LoadCharmanager.Overallmainchar.GetComponent<Movescript>().lockonfindclostesttarget();
                 }
-                Infightcontroller.checkifinfight();
+                Infightcontroller.instance.checkifinfight();
                 supporttargetdied?.Invoke();
                 LoadCharmanager.expmanager.gainexp(Mathf.Round(enemyvalues.expgain + (enemylvl * enemyvalues.expgain * 0.5f)));
                 enemymovement.enemydied();

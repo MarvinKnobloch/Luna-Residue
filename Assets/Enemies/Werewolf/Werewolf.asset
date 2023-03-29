@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Werewolf
   m_EditorClassIdentifier: 
   enemyname: Werewolf
-  basehealth: 3140
+  basehealth: 50
   enemylvl: 1
   movementspeed: 10
-  basedmg: -10
+  basedmg: 10
   attackspeed: 1.9
   enemysize: 2
   gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}
