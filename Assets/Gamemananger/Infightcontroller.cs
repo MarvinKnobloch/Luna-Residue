@@ -51,7 +51,7 @@ public class Infightcontroller : MonoBehaviour
     {
         if (infightenemylists.Count == 0)
         {
-            StartCoroutine(Musiccontroller.instance.fadeoutvolume());
+            Musiccontroller.instance.startfadeout(Musiccontroller.instance.currentzonemusic, Musiccontroller.instance.currentzonemusictime, 2, 3);
             Statics.infight = false;
             Statics.currentenemyspecialcd = Statics.enemyspecialcd;
             instance.StopCoroutine("firstenemyspezialcd");
@@ -70,8 +70,8 @@ public class Infightcontroller : MonoBehaviour
         {
             if (Statics.infight == false)
             {
-                Musiccontroller.instance.savelastplayedsong();
-                Musiccontroller.instance.setclip(battle1);
+                Musiccontroller.instance.savezonemusictime();
+                Musiccontroller.instance.startfadeout(battle1, 0, 0.5f, 1.5f);
                 Statics.infightresurrectcd = Statics.presetresurrectcd;
                 Statics.supportcanresurrect = false;
                 Statics.oneplayerisdead = false;

@@ -9,7 +9,7 @@ public class Setmusic : MonoBehaviour
     {
         if(Musiccontroller.instance != null)
         {
-            Musiccontroller.instance.setclip(audioclip);
+            Musiccontroller.instance.setcurrentzonemusic(audioclip);
         }
     }
 }
