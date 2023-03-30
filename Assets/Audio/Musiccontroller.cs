@@ -7,6 +7,9 @@ public class Musiccontroller : MonoBehaviour
     public static Musiccontroller instance;
     [SerializeField] private AudioSource audiosource;
 
+    [SerializeField] private AudioClip normalbattle;
+    [SerializeField] private AudioClip spezialbattle;
+
     public AudioClip currentzonemusic;
     public float currentzonemusictime;
 
@@ -127,6 +130,25 @@ public class Musiccontroller : MonoBehaviour
         if (Statics.infight == false)
         {
             startfadeout(currentzonemusic, musicstartpoint, 1, 3);
+        }
+    }
+    public void enemynormalbattle()
+    {
+        if(Statics.infight == false)
+        {
+            savezonemusictime();
+            startfadeout(normalbattle, 0, 0.5f, 1.5f);
+        }
+    }
+    public void spezialbattlemusic()
+    {
+        if (Statics.infight == false)
+        {
+            savezonemusictime();
+        }
+        if(currentzonemusic != spezialbattle)
+        {
+            startfadeout(spezialbattle, 0, 0.5f, 1.5f);
         }
     }
 }

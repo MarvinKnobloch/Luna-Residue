@@ -70,8 +70,6 @@ public class Infightcontroller : MonoBehaviour
         {
             if (Statics.infight == false)
             {
-                Musiccontroller.instance.savezonemusictime();
-                Musiccontroller.instance.startfadeout(battle1, 0, 0.5f, 1.5f);
                 Statics.infightresurrectcd = Statics.presetresurrectcd;
                 Statics.supportcanresurrect = false;
                 Statics.oneplayerisdead = false;

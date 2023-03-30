@@ -12371,7 +12371,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: <
+  m_Text: ^<
 --- !u!222 &778100428
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -26768,6 +26768,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audiosource: {fileID: 1627018868}
+  normalbattle: {fileID: 8300000, guid: 752832458c3706647a80561c5d09445f, type: 3}
+  spezialbattle: {fileID: 8300000, guid: 32701fe7e8489cb45aa359927e2af1ea, type: 3}
+  currentzonemusic: {fileID: 0}
+  currentzonemusictime: 0
+  oldzonemusic: {fileID: 0}
+  zoneentertime: 0
+  oldzonemusictimer: 0
 --- !u!1 &1629242379
 GameObject:
   m_ObjectHideFlags: 0
@@ -32577,7 +32584,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ^S
+  m_Text: S
 --- !u!222 &1937776740
 CanvasRenderer:
   m_ObjectHideFlags: 0

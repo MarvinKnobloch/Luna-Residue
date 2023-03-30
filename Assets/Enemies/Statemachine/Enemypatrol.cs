@@ -75,6 +75,12 @@ public class Enemypatrol
                     {
                         if (!Infightcontroller.infightenemylists.Contains(esm.transform.gameObject))
                         {
+                            if (esm.gameObject.GetComponent<Enemyisrewardobject>())
+                            {
+                                Musiccontroller.instance.spezialbattlemusic();
+                            }
+                            else Musiccontroller.instance.enemynormalbattle();
+
                             Infightcontroller.infightenemylists.Add(esm.transform.gameObject);
                             int enemycount = Infightcontroller.infightenemylists.Count;
                             Statics.currentenemyspecialcd = Statics.enemyspecialcd + (enemycount * 2);
