@@ -64,6 +64,11 @@ public class Bowattack : MonoBehaviour
     public LayerMask weaponswitchlayer;
     private float slowmopercentage = 0.3f;
 
+    //audio
+    private AudioSource audiosource;
+    [SerializeField] private AudioClip firstarrowsound;
+    [SerializeField] private AudioClip secondarrowsound;
+
     void Awake()
     {
         controlls = Keybindinputmanager.inputActions;
@@ -71,6 +76,7 @@ public class Bowattack : MonoBehaviour
         movementscript = GetComponent<Movescript>();
         healingscript = GetComponent<Healingscript>();
         eleAbilities = GetComponent<EleAbilities>();
+        audiosource = GetComponent<AudioSource>();
     }
     private void OnEnable()
     {
@@ -170,6 +176,7 @@ public class Bowattack : MonoBehaviour
         {
             if (controlls.Player.Attack1.WasPressedThisFrame() && basicattackcd > 0.5f && Statics.otheraction == false)
             {
+                audiosource.clip = firstarrowsound;
                 movementscript.state = Movescript.State.Rangegroundattack;
                 attackestate = Attackstate.attack1;
                 Statics.otheraction = true;
@@ -200,7 +207,7 @@ public class Bowattack : MonoBehaviour
         if (readattackinput == true)
         {
             if (controlls.Player.Attack2.WasPressedThisFrame())
-            { 
+            {
                 readattackinput = false; 
             }
         }
@@ -383,6 +390,7 @@ public class Bowattack : MonoBehaviour
         if (readattackinput == true) groundattackchainend();
         else
         {
+            audiosource.clip = secondarrowsound;
             down = false;
             mid = false;
             up = false;
@@ -561,6 +569,7 @@ public class Bowattack : MonoBehaviour
 
     private void shotsinglearrow(float dmg, int type)
     {
+        audiosource.Play();
         if (Movescript.lockontarget != null)
         {
             Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
