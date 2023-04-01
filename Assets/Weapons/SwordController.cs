@@ -33,14 +33,11 @@ public class SwordController : MonoBehaviour
     private Attributecontroller attributecontroller;
     private Playerhp spielerhp;
 
-    private AudioSource audiosource;
-
     private void Awake()
     {
         attributecontroller = GetComponent<Attributecontroller>();
         manacontroller = charmanager.GetComponent<Manamanager>();
         spielerhp = GetComponent<Playerhp>();
-        audiosource = GetComponent<AudioSource>();
     }
     private void OnEnable()
     {

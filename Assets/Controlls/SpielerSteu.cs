@@ -226,7 +226,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Setsupporttarget"",
+                    ""name"": ""Setalliestarget"",
                     ""type"": ""Button"",
                     ""id"": ""03b1f235-1179-4bc0-9f03-db8477917772"",
                     ""expectedControlType"": ""Button"",
@@ -235,7 +235,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Thirdchartarget"",
+                    ""name"": ""Character3target"",
                     ""type"": ""Button"",
                     ""id"": ""c05697ba-a1fe-45dc-b719-f0dcb184ce3a"",
                     ""expectedControlType"": ""Button"",
@@ -244,7 +244,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Forthchartarget"",
+                    ""name"": ""Character4target"",
                     ""type"": ""Button"",
                     ""id"": ""4eb3e4d1-eada-4488-b850-7952513ac173"",
                     ""expectedControlType"": ""Button"",
@@ -547,7 +547,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Setsupporttarget"",
+                    ""action"": ""Setalliestarget"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -558,7 +558,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Thirdchartarget"",
+                    ""action"": ""Character3target"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -569,7 +569,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Forthchartarget"",
+                    ""action"": ""Character4target"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1142,9 +1142,9 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         m_Player_GButton = m_Player.FindAction("G Button", throwIfNotFound: true);
         m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
         m_Player_Test = m_Player.FindAction("Test", throwIfNotFound: true);
-        m_Player_Setsupporttarget = m_Player.FindAction("Setsupporttarget", throwIfNotFound: true);
-        m_Player_Thirdchartarget = m_Player.FindAction("Thirdchartarget", throwIfNotFound: true);
-        m_Player_Forthchartarget = m_Player.FindAction("Forthchartarget", throwIfNotFound: true);
+        m_Player_Setalliestarget = m_Player.FindAction("Setalliestarget", throwIfNotFound: true);
+        m_Player_Character3target = m_Player.FindAction("Character3target", throwIfNotFound: true);
+        m_Player_Character4target = m_Player.FindAction("Character4target", throwIfNotFound: true);
         // Menusteuerung
         m_Menusteuerung = asset.FindActionMap("Menusteuerung", throwIfNotFound: true);
         m_Menusteuerung_Leftclick = m_Menusteuerung.FindAction("Leftclick", throwIfNotFound: true);
@@ -1261,9 +1261,9 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_GButton;
     private readonly InputAction m_Player_Interaction;
     private readonly InputAction m_Player_Test;
-    private readonly InputAction m_Player_Setsupporttarget;
-    private readonly InputAction m_Player_Thirdchartarget;
-    private readonly InputAction m_Player_Forthchartarget;
+    private readonly InputAction m_Player_Setalliestarget;
+    private readonly InputAction m_Player_Character3target;
+    private readonly InputAction m_Player_Character4target;
     public struct PlayerActions
     {
         private @SpielerSteu m_Wrapper;
@@ -1290,9 +1290,9 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         public InputAction @GButton => m_Wrapper.m_Player_GButton;
         public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
         public InputAction @Test => m_Wrapper.m_Player_Test;
-        public InputAction @Setsupporttarget => m_Wrapper.m_Player_Setsupporttarget;
-        public InputAction @Thirdchartarget => m_Wrapper.m_Player_Thirdchartarget;
-        public InputAction @Forthchartarget => m_Wrapper.m_Player_Forthchartarget;
+        public InputAction @Setalliestarget => m_Wrapper.m_Player_Setalliestarget;
+        public InputAction @Character3target => m_Wrapper.m_Player_Character3target;
+        public InputAction @Character4target => m_Wrapper.m_Player_Character4target;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1368,15 +1368,15 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @Test.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
                 @Test.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
                 @Test.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
-                @Setsupporttarget.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSetsupporttarget;
-                @Setsupporttarget.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSetsupporttarget;
-                @Setsupporttarget.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSetsupporttarget;
-                @Thirdchartarget.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThirdchartarget;
-                @Thirdchartarget.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThirdchartarget;
-                @Thirdchartarget.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThirdchartarget;
-                @Forthchartarget.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnForthchartarget;
-                @Forthchartarget.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnForthchartarget;
-                @Forthchartarget.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnForthchartarget;
+                @Setalliestarget.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSetalliestarget;
+                @Setalliestarget.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSetalliestarget;
+                @Setalliestarget.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSetalliestarget;
+                @Character3target.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCharacter3target;
+                @Character3target.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCharacter3target;
+                @Character3target.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCharacter3target;
+                @Character4target.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCharacter4target;
+                @Character4target.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCharacter4target;
+                @Character4target.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCharacter4target;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1447,15 +1447,15 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @Test.started += instance.OnTest;
                 @Test.performed += instance.OnTest;
                 @Test.canceled += instance.OnTest;
-                @Setsupporttarget.started += instance.OnSetsupporttarget;
-                @Setsupporttarget.performed += instance.OnSetsupporttarget;
-                @Setsupporttarget.canceled += instance.OnSetsupporttarget;
-                @Thirdchartarget.started += instance.OnThirdchartarget;
-                @Thirdchartarget.performed += instance.OnThirdchartarget;
-                @Thirdchartarget.canceled += instance.OnThirdchartarget;
-                @Forthchartarget.started += instance.OnForthchartarget;
-                @Forthchartarget.performed += instance.OnForthchartarget;
-                @Forthchartarget.canceled += instance.OnForthchartarget;
+                @Setalliestarget.started += instance.OnSetalliestarget;
+                @Setalliestarget.performed += instance.OnSetalliestarget;
+                @Setalliestarget.canceled += instance.OnSetalliestarget;
+                @Character3target.started += instance.OnCharacter3target;
+                @Character3target.performed += instance.OnCharacter3target;
+                @Character3target.canceled += instance.OnCharacter3target;
+                @Character4target.started += instance.OnCharacter4target;
+                @Character4target.performed += instance.OnCharacter4target;
+                @Character4target.canceled += instance.OnCharacter4target;
             }
         }
     }
@@ -1809,9 +1809,9 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         void OnGButton(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
         void OnTest(InputAction.CallbackContext context);
-        void OnSetsupporttarget(InputAction.CallbackContext context);
-        void OnThirdchartarget(InputAction.CallbackContext context);
-        void OnForthchartarget(InputAction.CallbackContext context);
+        void OnSetalliestarget(InputAction.CallbackContext context);
+        void OnCharacter3target(InputAction.CallbackContext context);
+        void OnCharacter4target(InputAction.CallbackContext context);
     }
     public interface IMenusteuerungActions
     {

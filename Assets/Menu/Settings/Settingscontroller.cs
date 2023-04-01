@@ -11,6 +11,8 @@ public class Settingscontroller : MonoBehaviour
     private int currentbutton;
     private SpielerSteu steuerung;
 
+    [SerializeField] private Menusoundcontroller menusoundcontroller;
+
     public Color selectedcolor;
     public Color notselectedcolor;
     private void Awake()
@@ -35,6 +37,7 @@ public class Settingscontroller : MonoBehaviour
     {
         if (steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame())
         {
+            menusoundcontroller.playmenubuttonsound();
             buttons[currentbutton].GetComponent<Settingsbuttoncontroller>().buttonobjclose();
             menuobj.SetActive(true);
             gameObject.SetActive(false);

@@ -20,6 +20,8 @@ public class Startmenucontroller : MonoBehaviour
     public Color selectedcolor;
     public Color notselectedcolor;
 
+    [SerializeField] private Menusoundcontroller menusoundcontroller;
+
     [SerializeField] private AudioMixer audiomixer;
     [SerializeField] private string gamevolume;
     [SerializeField] private string musicvolume;
@@ -48,22 +50,30 @@ public class Startmenucontroller : MonoBehaviour
         }
         else
         {
-            setvolume(gamevolume);
-            setvolume(musicvolume);
-            setvolume(soundeffecsvolume);
+            setvolume(gamevolume, 0);
+            setvolume(musicvolume, 0);
+            setvolume(soundeffecsvolume, 10);
         }
     }
-    private void setvolume(string volumename)
+    private void setvolume(string volumename, float maxdb)
     {
-        audiomixer.SetFloat(volumename, PlayerPrefs.GetFloat(volumename));
-        bool gotvalue = audiomixer.GetFloat(volumename, out float soundvalue);
-        if (gotvalue == true)
+        if (PlayerPrefs.GetFloat(volumename + "ismuted") == 1)
         {
-            if (soundvalue > 0)
+            audiomixer.SetFloat(volumename, -80);
+        }
+        else
+        {
+            audiomixer.SetFloat(volumename, PlayerPrefs.GetFloat(volumename));
+            bool gotvalue = audiomixer.GetFloat(volumename, out float soundvalue);
+            if (gotvalue == true)
             {
-                audiomixer.SetFloat(volumename, 0);
+                if (soundvalue > maxdb)
+                {
+                    audiomixer.SetFloat(volumename, maxdb);
+                }
             }
         }
+
     }
     private void OnEnable()
     {
@@ -106,6 +116,7 @@ public class Startmenucontroller : MonoBehaviour
     }
     public void newgame()
     {
+        menusoundcontroller.playmenubuttonsound();
         Statics.currentgameslot = -1;             //damit bei new game nichts geladen wird
         Statics.currentfirstchar = 0;
         Statics.currentsecondchar = 1;
@@ -215,6 +226,7 @@ public class Startmenucontroller : MonoBehaviour
     }
     public void loadgame()
     {
+        menusoundcontroller.playmenubuttonsound();
         loadgameobj.SetActive(true);
         gameObject.SetActive(false);
     }

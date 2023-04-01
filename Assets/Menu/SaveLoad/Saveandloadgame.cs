@@ -4,10 +4,13 @@ using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
 using System.IO;
-
+using UnityEngine.UI;
 
 public class Saveandloadgame : MonoBehaviour
 {
+    [SerializeField] private GameObject Loadingscreen;
+    [SerializeField] private Image loadingscreenbar;
+
     private Isaveload loadsaveinterface = new Saveloadgame();
     [SerializeField] private Loadmenucontroller loadmenucontroller;
 
@@ -30,10 +33,10 @@ public class Saveandloadgame : MonoBehaviour
         string savepath = "/Statics" + slot + ".json";
         if (loadsaveinterface.savedata(savepath, convertstatics))
         {
-            Slotvaluesarray.slotisnotempty[slot -1] = true;
-            Slotvaluesarray.slotlvl[slot -1] = convertstatics.charcurrentlvl;
-            Slotvaluesarray.slotdate[slot -1] = convertstatics.gamesavedate;
-            Slotvaluesarray.slottime[slot -1] = convertstatics.gamesavetime;
+            Slotvaluesarray.slotisnotempty[slot - 1] = true;
+            Slotvaluesarray.slotlvl[slot - 1] = convertstatics.charcurrentlvl;
+            Slotvaluesarray.slotdate[slot - 1] = convertstatics.gamesavedate;
+            Slotvaluesarray.slottime[slot - 1] = convertstatics.gamesavetime;
         }
         else
         {
@@ -77,7 +80,7 @@ public class Saveandloadgame : MonoBehaviour
         {
             convertstatics.setstaticsafterload();
         }
-        SceneManager.LoadScene(1);
+        StartCoroutine(loadgameloadingscreen());
         loadinventorys(slot);
         setitemsandinventory.resetitems();
         setitemsandinventory.updateitemsininventory();
@@ -94,6 +97,18 @@ public class Saveandloadgame : MonoBehaviour
         catch (Exception e)
         {
             Debug.LogError($"error Could not load data {e.Message} {e.StackTrace}");
+        }
+    }
+    IEnumerator loadgameloadingscreen()
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(1);
+        Loadingscreen.SetActive(true);
+
+        while (!operation.isDone)
+        {
+            float loadingbaramount = Mathf.Clamp01(operation.progress / 0.9f);
+            loadingscreenbar.fillAmount = loadingbaramount;
+            yield return null;
         }
     }
     private void loadinventorys(int slot)
@@ -122,6 +137,7 @@ public class Saveandloadgame : MonoBehaviour
         Statics.weaponswitchbuff = 0;
         Statics.timer = false;
     }
+}
     /*private void loadmonobehaviour(int slot, string filename, MonoBehaviour monobehaviour)
     {
         var filePath = Path.Combine(Application.persistentDataPath, filename + slot + ".json");
@@ -136,4 +152,4 @@ public class Saveandloadgame : MonoBehaviour
             Debug.Log("doesnt exist");
         }
     }*/
-}
+

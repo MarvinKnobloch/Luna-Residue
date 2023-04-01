@@ -14,9 +14,9 @@ public class Playerlockon
             if (Movescript.lockontarget != null)
             {
                 if (psm.controlls.Player.Lockonchange.WasPerformedThisFrame()) changetarget();
-                if (psm.controlls.Player.Setsupporttarget.WasPerformedThisFrame()) setsupporttargets();
-                if (psm.controlls.Player.Thirdchartarget.WasPerformedThisFrame()) setthirdchartartget();
-                if (psm.controlls.Player.Forthchartarget.WasPerformedThisFrame()) setthirdchartartget();
+                if (psm.controlls.Player.Setalliestarget.WasPerformedThisFrame()) setsupporttargets();
+                if (psm.controlls.Player.Character3target.WasPerformedThisFrame()) setthirdchartartget();
+                if (psm.controlls.Player.Character4target.WasPerformedThisFrame()) setthirdchartartget();
             }
         }
     }

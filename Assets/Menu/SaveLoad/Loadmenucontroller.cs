@@ -14,6 +14,8 @@ public class Loadmenucontroller : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] savedate;
     public int selectedslot;
 
+    [SerializeField] private Menusoundcontroller menusoundcontroller;
+
     private void Awake()
     {
         steuerung = Keybindinputmanager.inputActions;
@@ -28,11 +30,13 @@ public class Loadmenucontroller : MonoBehaviour
     {
         if (steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame() && commitloadobj.activeSelf == false)
         {
+            menusoundcontroller.playmenubuttonsound();
             menuobj.SetActive(true);
             gameObject.SetActive(false);
         }
         if (steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame() && commitloadobj.activeSelf == true)
         {
+            menusoundcontroller.playmenubuttonsound();
             closecommitload();
         }
     }
@@ -61,6 +65,7 @@ public class Loadmenucontroller : MonoBehaviour
         {
             commitloadobj.SetActive(true);
             selectedslot = slot -1;
+            menusoundcontroller.playmenubuttonsound();
         }
         else
         {

@@ -5,16 +5,12 @@ using UnityEngine;
 public class Settingsbuttoncontroller : MonoBehaviour
 {
     [SerializeField] private GameObject openbuttonobj;
-    private AudioSource audioSource;
+    [SerializeField] private Menusoundcontroller menusoundcontroller;
 
-    private void Awake()
-    {
-        audioSource = GetComponent<AudioSource>();
-    }
     public void buttonobjopen()
     {
         openbuttonobj.SetActive(true);
-        audioSource.Play();
+        menusoundcontroller.playmenubuttonsound();
     }
     public void buttonobjclose()
     {

@@ -38,10 +38,7 @@ public class Swordattack : MonoBehaviour
     public LayerMask weaponswitchlayer;
 
     //audio
-    private AudioSource audiosource;
-    [SerializeField] private AudioClip firstswordsound;
-    [SerializeField] private AudioClip secondswordsound;
-    [SerializeField] private AudioClip thirdswordsound;
+    [SerializeField] private Playersounds playersounds;
 
     void Awake()
     {
@@ -51,7 +48,6 @@ public class Swordattack : MonoBehaviour
         swordcontroller = GetComponent<SwordController>();
         healingscript = GetComponent<Healingscript>();
         eleAbilities = GetComponent<EleAbilities>();
-        audiosource = GetComponent<AudioSource>();
     }
     private void OnEnable()
     {
@@ -133,8 +129,7 @@ public class Swordattack : MonoBehaviour
         {
             if (controlls.Player.Attack1.WasPressedThisFrame() && basicattackcd > 0.5f && Statics.otheraction == false)
             {
-                audiosource.clip = firstswordsound;
-                audiosource.Play();
+                playersounds.playsword1();
                 movementscript.state = Movescript.State.Meleegroundattack;
                 attackestate = Attackstate.attack1;
                 Statics.otheraction = true;
@@ -254,8 +249,7 @@ public class Swordattack : MonoBehaviour
         if (readattackinput == true) groundattackchainend();
         else
         {
-            audiosource.clip = secondswordsound;
-            audiosource.Play();
+            playersounds.playsword2();
             down = false;
             mid = false;
             up = false;
@@ -269,8 +263,7 @@ public class Swordattack : MonoBehaviour
         if (readattackinput == true) groundattackchainend();
         else
         {
-            audiosource.clip = thirdswordsound;
-            audiosource.Play();
+            playersounds.playsword3();
             if (down == true)
             {
                 attackestate = Attackstate.attackchain;
@@ -293,8 +286,7 @@ public class Swordattack : MonoBehaviour
         if (movementscript.state != Movescript.State.Meleegroundattack) return;
         if (readattackinput == false && movementscript.attackcombochain < 2)
         {
-            audiosource.clip = firstswordsound;
-            audiosource.Play();
+            playersounds.playsword1();
             attackestate = Attackstate.attack1;
             movementscript.ChangeAnimationState(groundbasic1state);
         }
@@ -315,8 +307,7 @@ public class Swordattack : MonoBehaviour
         if (readattackinput == true) airattackchainend();
         else
         {
-            audiosource.clip = firstswordsound;
-            audiosource.Play();
+            playersounds.playsword1();
             attackestate = Attackstate.attack1;
             movementscript.ChangeAnimationState(airbasic1state);
         }
@@ -337,8 +328,7 @@ public class Swordattack : MonoBehaviour
         if (readattackinput == true) airattackchainend();
         else
         {
-            audiosource.clip = thirdswordsound;
-            audiosource.Play();
+            playersounds.playsword3();
             down = false;
             mid = false;
             up = false;
@@ -352,8 +342,7 @@ public class Swordattack : MonoBehaviour
         if (readattackinput == true) airattackchainend();
         else
         {
-            audiosource.clip = secondswordsound;
-            audiosource.Play();
+            playersounds.playsword2();
             attackestate = Attackstate.attackchain;
             if (down) movementscript.ChangeAnimationState(airdownstate);
             else if (mid) movementscript.ChangeAnimationState(airmidstate);
@@ -373,8 +362,7 @@ public class Swordattack : MonoBehaviour
         root = false;
         if (readattackinput == false && movementscript.attackcombochain < 2)
         {
-            audiosource.clip = firstswordsound;
-            audiosource.Play();
+            playersounds.playsword1();
             attackestate = Attackstate.attack1;
             movementscript.graviti = -0.5f;
             movementscript.state = Movescript.State.Meleegroundattack;
@@ -387,8 +375,7 @@ public class Swordattack : MonoBehaviour
         if (movementscript.state != Movescript.State.Meleeairattack) return;
         if (readattackinput == false && movementscript.attackcombochain < 2)
         {
-            audiosource.clip = firstswordsound;
-            audiosource.Play();
+            playersounds.playsword1();
             attackestate = Attackstate.attack1;
             movementscript.ChangeAnimationState(airbasic1state);
         }
@@ -403,8 +390,7 @@ public class Swordattack : MonoBehaviour
     {
         if (Physics.CheckSphere(transform.position, checkforenemyonswitchrange, weaponswitchlayer))
         {
-            audiosource.clip = thirdswordsound;
-            audiosource.Play();
+            playersounds.playsword3();
             Statics.otheraction = true;
             movementscript.graviti = 0;
             movementscript.state = Movescript.State.Meleeairattack;

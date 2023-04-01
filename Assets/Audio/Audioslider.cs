@@ -12,7 +12,7 @@ public class Audioslider : MonoBehaviour
     private Slider slider;
 
     [SerializeField] private TextMeshProUGUI slidertext;
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private Menusoundcontroller menusoundcontroller;
 
     private void Awake()
     {
@@ -20,33 +20,78 @@ public class Audioslider : MonoBehaviour
     }
     private void OnEnable()
     {
-        bool gotvalue = audiomixer.GetFloat(gamevalue, out float soundvalue);
-        if(gotvalue == true)
-        {
-            slider.value = soundvalue;
-            float textvalue = (soundvalue + 50) * 2f;
-            slidertext.text = Mathf.Round(textvalue).ToString();
-        }
+        float soundvalue = PlayerPrefs.GetFloat(gamevalue);
+        slider.value = soundvalue;
+        float textvalue;
+        if (gamevalue != "soundeffectsvolume") textvalue = (soundvalue + 50) * 2f;
+        else textvalue = (soundvalue + 40) * 2f;
+        slidertext.text = Mathf.Round(textvalue).ToString();
     }
     public void valuechange(float slidervalue)
     {
         PlayerPrefs.SetInt("audiohasbeenchange", 1);
-        audiomixer.SetFloat(gamevalue, slidervalue);
-        bool gotvalue = audiomixer.GetFloat(gamevalue, out float soundvalue);            //verhindert das der audiomixer mehr als 0db haben kann
-        if (gotvalue == true)
+        if (PlayerPrefs.GetFloat(gamevalue + "ismuted") == 0)
         {
-            if (soundvalue > 0)
+            audiomixer.SetFloat(gamevalue, slidervalue);
+            bool gotvalue = audiomixer.GetFloat(gamevalue, out float soundvalue);            //verhindert das der audiomixer mehr als 0db haben kann
+            if (gotvalue == true)
             {
-                Debug.Log(soundvalue);
-                audiomixer.SetFloat(gamevalue, 0);
+                if (soundvalue > 0)
+                {
+                    Debug.Log(soundvalue);
+                    audiomixer.SetFloat(gamevalue, 0);
+                }
             }
         }
         PlayerPrefs.SetFloat(gamevalue, slidervalue);
         float textvalue = (slidervalue + 50) * 2f;
         slidertext.text = Mathf.Round(textvalue).ToString();
     }
-    public void playsoundeffect(float slidervalue)
+    public void soundeffectvaluechange(float slidervalue)
     {
-        audioSource.Play();
+        PlayerPrefs.SetInt("audiohasbeenchange", 1);
+        if (PlayerPrefs.GetFloat(gamevalue + "ismuted") == 0)
+        {
+            audiomixer.SetFloat(gamevalue, slidervalue);
+            bool gotvalue = audiomixer.GetFloat(gamevalue, out float soundvalue);            //verhindert das der audiomixer mehr als 10db haben kann
+            if (gotvalue == true)
+            {
+                if (soundvalue > 10)
+                {
+                    Debug.Log(soundvalue);
+                    audiomixer.SetFloat(gamevalue, 10);
+                }
+            }
+            menusoundcontroller.playmenubuttonsound();
+        }     
+        PlayerPrefs.SetFloat(gamevalue, slidervalue);
+        float textvalue = (slidervalue + 40) * 2f;
+        slidertext.text = Mathf.Round(textvalue).ToString();
+    }
+
+    public void changesoundstate()
+    {
+        PlayerPrefs.SetInt("audiohasbeenchange", 1);
+        if (PlayerPrefs.GetFloat(gamevalue + "ismuted") == 0)
+        {
+            PlayerPrefs.SetFloat(gamevalue + "ismuted", 1);
+            audiomixer.SetFloat(gamevalue, -80);
+        }
+            
+        else
+        {
+            PlayerPrefs.SetFloat(gamevalue + "ismuted", 0);
+            audiomixer.SetFloat(gamevalue, PlayerPrefs.GetFloat(gamevalue));
+            bool gotvalue = audiomixer.GetFloat(gamevalue, out float soundvalue);            //verhindert das der audiomixer mehr als 10db haben kann
+            if (gotvalue == true)
+            {
+                if (soundvalue > 10)
+                {
+                    Debug.Log(soundvalue);
+                    audiomixer.SetFloat(gamevalue, 10);
+                }
+            }
+        }
+            
     }
 }
