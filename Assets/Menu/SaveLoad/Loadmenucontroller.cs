@@ -35,8 +35,7 @@ public class Loadmenucontroller : MonoBehaviour
             gameObject.SetActive(false);
         }
         if (steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame() && commitloadobj.activeSelf == true)
-        {
-            menusoundcontroller.playmenubuttonsound();
+        {         
             closecommitload();
         }
     }
@@ -64,7 +63,8 @@ public class Loadmenucontroller : MonoBehaviour
         if (Slotvaluesarray.slotisnotempty[slot -1] == true)
         {
             commitloadobj.SetActive(true);
-            selectedslot = slot -1;
+            commitloadobj.GetComponentInChildren<TextMeshProUGUI>().text = "Load Game? (Slot " + slot + ")";
+            selectedslot = slot;
             menusoundcontroller.playmenubuttonsound();
         }
         else
@@ -76,5 +76,6 @@ public class Loadmenucontroller : MonoBehaviour
     {
         commitloadobj.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
+        menusoundcontroller.playmenubuttonsound();
     }
 }

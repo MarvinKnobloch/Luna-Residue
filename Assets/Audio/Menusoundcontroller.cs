@@ -6,6 +6,7 @@ public class Menusoundcontroller : MonoBehaviour
 {
     private AudioSource audiosource;
     [SerializeField] private AudioClip menubuttonsound;
+    [SerializeField] private AudioClip menubuttonsound2;
     private void Awake()
     {
         audiosource = GetComponent<AudioSource>();
@@ -21,6 +22,20 @@ public class Menusoundcontroller : MonoBehaviour
         {
             audiosource = GetComponent<AudioSource>();
             audiosource.clip = menubuttonsound;
+            audiosource.Play();
+        }
+    }
+    public void playmenubuttonsound2()
+    {
+        if (audiosource != null)               //falls der awake call zu spät kommt
+        {
+            audiosource.clip = menubuttonsound2;
+            audiosource.Play();
+        }
+        else
+        {
+            audiosource = GetComponent<AudioSource>();
+            audiosource.clip = menubuttonsound2;
             audiosource.Play();
         }
     }

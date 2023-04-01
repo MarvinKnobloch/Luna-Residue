@@ -12,14 +12,16 @@ public class Saveandloadgame : MonoBehaviour
     [SerializeField] private Image loadingscreenbar;
 
     private Isaveload loadsaveinterface = new Saveloadgame();
+    [SerializeField] private Savemenucontroller savemenucontroller;
     [SerializeField] private Loadmenucontroller loadmenucontroller;
 
     private Convertstatics convertstatics = new Convertstatics();
     [SerializeField] private Setitemsandinventory setitemsandinventory;
     [SerializeField] private Areacontroller areacontroller;
 
-    public void savegamedata(int slot)
+    public void savegamedata()
     {
+        int slot = savemenucontroller.selectedslot ;
         saveinventorys(slot);
         convertstatics.savestaticsinscript();
         savestatics(slot);
@@ -73,7 +75,7 @@ public class Saveandloadgame : MonoBehaviour
 
     public void loadgamedate()
     {
-        int slot = loadmenucontroller.selectedslot + 1;
+        int slot = loadmenucontroller.selectedslot;
         Statics.currentgameslot = slot;
         loadstaticdata(slot);
         if (convertstatics != null)

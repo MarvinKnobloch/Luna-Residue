@@ -9,6 +9,8 @@ public class Fasttravelcontroller : MonoBehaviour
     private SpielerSteu steuerung;
     [SerializeField] private GameObject menuoverview;
     [SerializeField] private GameObject commitfasttravel;
+
+    [SerializeField] private Menusoundcontroller menusoundcontroller;
     private void Awake()
     {
         steuerung = Keybindinputmanager.inputActions;
@@ -23,6 +25,7 @@ public class Fasttravelcontroller : MonoBehaviour
         {
             menuoverview.SetActive(true);
             gameObject.SetActive(false);
+            menusoundcontroller.playmenubuttonsound();
         }
     }
 }

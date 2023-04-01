@@ -6,6 +6,7 @@ public class Openfasttravelcommit : MonoBehaviour
 {
     public Vector3 setfasttravelpoint;
     private GameObject commitfasttravelobj;
+
     private void Awake()
     {
         commitfasttravelobj = GetComponentInParent<Fasttravelpoints>().fasttravelcommit;

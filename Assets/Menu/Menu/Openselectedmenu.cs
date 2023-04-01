@@ -15,6 +15,8 @@ public class Openselectedmenu : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private Color selectedcolor;
     private Color notselectedcolor;
 
+    [SerializeField] private Menusoundcontroller menusoundcontroller;
+
     private void Awake()
     {
         menucontroller = menuoverview.GetComponent<Menucontroller>();
@@ -38,6 +40,7 @@ public class Openselectedmenu : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         menu.SetActive(true);
         menuoverview.SetActive(false);
+        menusoundcontroller.playmenubuttonsound();
     }
     public void openelemenu()
     {
@@ -50,6 +53,7 @@ public class Openselectedmenu : MonoBehaviour, IPointerEnterHandler, IPointerExi
         {
             menucontroller.cantopenuimessage(uimessage);
         }
+        menusoundcontroller.playmenubuttonsound();
     }
     public void opensavegamemenu()
     {
@@ -62,6 +66,7 @@ public class Openselectedmenu : MonoBehaviour, IPointerEnterHandler, IPointerExi
         {
             menucontroller.cantopenuimessage(uimessage);
         }
+        menusoundcontroller.playmenubuttonsound();
     }
     public void closegame()
     {
@@ -76,5 +81,6 @@ public class Openselectedmenu : MonoBehaviour, IPointerEnterHandler, IPointerExi
             menucontroller.somethinginmenuisopen = false;
             menu.SetActive(false);
         }
+        menusoundcontroller.playmenubuttonsound();
     }
 }

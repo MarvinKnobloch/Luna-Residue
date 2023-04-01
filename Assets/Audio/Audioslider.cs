@@ -13,6 +13,7 @@ public class Audioslider : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI slidertext;
     [SerializeField] private Menusoundcontroller menusoundcontroller;
+    [SerializeField] private Image mutecheck;
 
     private void Awake()
     {
@@ -26,6 +27,9 @@ public class Audioslider : MonoBehaviour
         if (gamevalue != "soundeffectsvolume") textvalue = (soundvalue + 50) * 2f;
         else textvalue = (soundvalue + 40) * 2f;
         slidertext.text = Mathf.Round(textvalue).ToString();
+        if (PlayerPrefs.GetFloat(gamevalue + "ismuted") == 0) mutecheck.gameObject.SetActive(true);
+        else mutecheck.gameObject.SetActive(false);
+
     }
     public void valuechange(float slidervalue)
     {
@@ -76,6 +80,7 @@ public class Audioslider : MonoBehaviour
         {
             PlayerPrefs.SetFloat(gamevalue + "ismuted", 1);
             audiomixer.SetFloat(gamevalue, -80);
+            mutecheck.gameObject.SetActive(false);
         }
             
         else
@@ -91,6 +96,7 @@ public class Audioslider : MonoBehaviour
                     audiomixer.SetFloat(gamevalue, 10);
                 }
             }
+            mutecheck.gameObject.SetActive(true);
         }
             
     }

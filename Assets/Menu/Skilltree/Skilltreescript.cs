@@ -40,6 +40,7 @@ public class Skilltreescript : MonoBehaviour
     [SerializeField] private TextMeshProUGUI statsbasicbuffdmg;
     [SerializeField] private TextMeshProUGUI statsbasiccrit;
 
+    [SerializeField] private Menusoundcontroller menusoundcontroller;
 
     private void Awake()
     {
@@ -51,14 +52,17 @@ public class Skilltreescript : MonoBehaviour
         if (Steuerung.Menusteuerung.Menucharselectionleft.WasPerformedThisFrame())
         {
             selectionbackward();
+            menusoundcontroller.playmenubuttonsound();
         }
         if (Steuerung.Menusteuerung.Menucharselectionright.WasPerformedThisFrame())
         {
             selectionforward();
+            menusoundcontroller.playmenubuttonsound();
         }
         if (Steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame())
         {
             closeskilltree();
+            menusoundcontroller.playmenubuttonsound();
         }
     }
     private void OnEnable()
@@ -82,6 +86,7 @@ public class Skilltreescript : MonoBehaviour
         this.currentchar = currentchar;           // falls man mit click den char auswählt
         nametext.text = Statics.characternames[this.currentchar] + " LvL" + Statics.charcurrentlvl;
         settextandpoints();
+        menusoundcontroller.playmenubuttonsound();
     }
 
     private void selectionforward() 
@@ -153,13 +158,14 @@ public class Skilltreescript : MonoBehaviour
     {
         Statics.charspendedskillpoints[currentchar] += 1;
         updateunspendpoint();
+        menusoundcontroller.playmenubuttonsound();
     }
 
     public void minusbutton()
     {
         Statics.charspendedskillpoints[currentchar] -= 1;
-
         updateunspendpoint();
+        menusoundcontroller.playmenubuttonsound();
     }
     public void updateunspendpoint()
     {
