@@ -13,6 +13,8 @@ public class Convertstatics
     public string gamesavedate;
     public string gamesavetime;
 
+    public int currentzonemusicint;
+
     public int firstchar;
     public int secondchar;
     public int thirdchar;
@@ -91,6 +93,8 @@ public class Convertstatics
         camvalueX = LoadCharmanager.savecamvalueX;
         gamesavedate = System.DateTime.UtcNow.ToString("dd MMMM, yyyy");
         gamesavetime = System.DateTime.UtcNow.ToString("HH:mm");
+
+        currentzonemusicint = Statics.currentzonemusicint;
 
         charcurrentlvl = Statics.charcurrentlvl;
         charcurrentexp = Statics.charcurrentexp;
@@ -185,6 +189,8 @@ public class Convertstatics
         charcurrentlvl = Statics.charcurrentlvl;
         charcurrentexp = Statics.charcurrentexp;
         charrequiredexp = Statics.charrequiredexp;
+
+        Statics.currentzonemusicint = currentzonemusicint;
 
         Statics.currentactiveplayer = 0;
         Statics.currentfirstchar = firstchar;

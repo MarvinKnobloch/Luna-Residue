@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class Zonemusiccollider : MonoBehaviour
 {
-    [SerializeField] private AudioClip music;
+    [SerializeField] private int zonemusicint;
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == LoadCharmanager.Overallmainchar.gameObject && Musiccontroller.instance.currentzonemusic != music)
+        if (other.gameObject == LoadCharmanager.Overallmainchar.gameObject && Statics.currentzonemusicint != zonemusicint)
         {
-            if(Musiccontroller.instance.oldzonemusic != music)
+            if(Musiccontroller.instance.oldsongint != zonemusicint)
             {
-                Musiccontroller.instance.enternewzone(music);              
+                Musiccontroller.instance.enternewzone(zonemusicint);              
             }
             else
             {
-                Musiccontroller.instance.enteroldzone(music);
+                Musiccontroller.instance.enteroldzone(zonemusicint);
             }
         }
     }

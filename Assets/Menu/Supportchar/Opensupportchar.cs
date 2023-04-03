@@ -46,6 +46,7 @@ public class Opensupportchar : MonoBehaviour
             thirdcharselectionactive = false;
             thirdcharselection.SetActive(false);
         }
+        menucontroller.menusoundcontroller.playmenubuttonsound();
     }
     public void openforthcharselection()
     {
@@ -68,5 +69,6 @@ public class Opensupportchar : MonoBehaviour
             forthcharselectionactive = false;
             forthcharselection.SetActive(false);
         }
+        menucontroller.menusoundcontroller.playmenubuttonsound();
     }
 }

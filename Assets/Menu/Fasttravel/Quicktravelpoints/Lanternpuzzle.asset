@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Lanternpuzzle
   m_EditorClassIdentifier: 
   travelpointname: Lanternpuzzle
-  travelcordinates: {x: -210, y: 32, z: 500}
+  travelcordinates: {x: -122, y: 33, z: 510}

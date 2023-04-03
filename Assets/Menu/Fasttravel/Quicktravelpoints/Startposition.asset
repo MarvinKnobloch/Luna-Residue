@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Startposition
   m_EditorClassIdentifier: 
   travelpointname: Startposition
-  travelcordinates: {x: 15, y: 32, z: 687}
+  travelcordinates: {x: 15, y: 34, z: 687}

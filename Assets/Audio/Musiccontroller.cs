@@ -6,10 +6,9 @@ public class Musiccontroller : MonoBehaviour
 {
     public static Musiccontroller instance;
     [SerializeField] private AudioSource audiosource;
-
-    [SerializeField] private AudioClip normalbattle;
-    [SerializeField] private AudioClip spezialbattle;
-
+    public AudioClip[] allzonesongs;
+    public int oldsongint;
+    
     public AudioClip currentzonemusic;
     public float currentzonemusictime;
 
@@ -17,7 +16,8 @@ public class Musiccontroller : MonoBehaviour
     public float zoneentertime;
     public float oldzonemusictimer;
 
-
+    [SerializeField] private AudioClip normalbattle;
+    [SerializeField] private AudioClip spezialbattle;
     private void Awake()
     {
         if(instance == null)
@@ -33,12 +33,13 @@ public class Musiccontroller : MonoBehaviour
         audiosource = GetComponent<AudioSource>();
     }
 
-    public void setcurrentzonemusic(AudioClip song)
+    public void setcurrentzonemusic(int songint)
     {
-        if (currentzonemusic != song)
+        if (currentzonemusic != allzonesongs[songint])
         {
-            currentzonemusic = song;
-            audiosource.clip = currentzonemusic;
+            Statics.currentzonemusicint = songint;
+            currentzonemusic = allzonesongs[songint];
+            audiosource.clip = allzonesongs[songint];
             if (oldzonemusic == currentzonemusic)
             {
                 float timedifference = Mathf.Abs(Time.time - zoneentertime);
@@ -61,12 +62,12 @@ public class Musiccontroller : MonoBehaviour
     {
         currentzonemusictime = audiosource.time;
     }
-    public void startfadeout(AudioClip nextclip, float cliptime, float fadeoutspeed, float fadeinspeed)
+    public void startfadeout(AudioClip song, float cliptime, float fadeoutspeed, float fadeinspeed)
     {
         StopAllCoroutines();
-        StartCoroutine(fadeoutvolume(nextclip, cliptime, fadeoutspeed, fadeinspeed));
+        StartCoroutine(fadeoutvolume(song, cliptime, fadeoutspeed, fadeinspeed));
     }
-    public IEnumerator fadeoutvolume(AudioClip nextclip, float cliptime, float fadeoutspeed, float fadeinspeed)
+    public IEnumerator fadeoutvolume(AudioClip song, float cliptime, float fadeoutspeed, float fadeinspeed)
     {
         float duration = fadeoutspeed;
         float currentTime = 0;
@@ -78,7 +79,7 @@ public class Musiccontroller : MonoBehaviour
             audiosource.volume = Mathf.Lerp(start, targetVolume, currentTime / duration);
             yield return null;
         }
-        audiosource.clip = nextclip;
+        audiosource.clip = song;
         audiosource.time = cliptime;
         audiosource.Play();
         StartCoroutine(fadeinvolume(fadeinspeed));
@@ -99,18 +100,20 @@ public class Musiccontroller : MonoBehaviour
         yield break;
     }
 
-    public void enternewzone(AudioClip music)
+    public void enternewzone(int songint)
     {
+        oldsongint = Statics.currentzonemusicint;
         oldzonemusic = currentzonemusic;
         oldzonemusictimer = audiosource.time;
         zoneentertime = Time.time;
-        currentzonemusic = music;
+        Statics.currentzonemusicint = songint;
+        currentzonemusic = allzonesongs[songint];
         if (Statics.infight == false)
         {
-            startfadeout(currentzonemusic, 0, 1, 3);
+            startfadeout(allzonesongs[songint], 0, 1, 3);
         }
     }
-    public void enteroldzone(AudioClip music)
+    public void enteroldzone(int songint)
     {
         float musicstartpoint;
         float timedifference = Mathf.Abs(Time.time - zoneentertime);
@@ -122,14 +125,16 @@ public class Musiccontroller : MonoBehaviour
         {
             musicstartpoint = oldzonemusictimer;
         }
+        oldsongint = Statics.currentzonemusicint;
         oldzonemusic = currentzonemusic;
         oldzonemusictimer = audiosource.time;
         zoneentertime = Time.time;
-        currentzonemusic = music;
+        Statics.currentzonemusicint = songint;
+        currentzonemusic = allzonesongs[songint];
 
         if (Statics.infight == false)
         {
-            startfadeout(currentzonemusic, musicstartpoint, 1, 3);
+            startfadeout(allzonesongs[songint], musicstartpoint, 1, 3);
         }
     }
     public void enemynormalbattle()

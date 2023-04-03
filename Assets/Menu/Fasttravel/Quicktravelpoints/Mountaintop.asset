@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Mountaintop
   m_EditorClassIdentifier: 
   travelpointname: Mountaintop
-  travelcordinates: {x: -20, y: 130, z: 360}
+  travelcordinates: {x: -19, y: 128, z: 352}

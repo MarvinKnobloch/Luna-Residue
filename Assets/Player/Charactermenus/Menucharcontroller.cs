@@ -44,6 +44,7 @@ public class Menucharcontroller : MonoBehaviour
             menucontroller.somethinginmenuisopen = true;
             grid.SetActive(true);
         }
+        menucontroller.menusoundcontroller.playmenubuttonsound();
     }
     public void setmainweapon(int newweaponnumber)
     {
@@ -58,7 +59,7 @@ public class Menucharcontroller : MonoBehaviour
         weaponslot1.gameObject.GetComponent<Image>().sprite = images[firstweapon];
         menucontroller.closeallselections();
         menucontroller.somethinginmenuisopen = false;
-
+        menucontroller.menusoundcontroller.playmenubuttonsound();
     }
 
     public void setsecondweapon(int newweaponnumber)
@@ -74,6 +75,6 @@ public class Menucharcontroller : MonoBehaviour
         weaponslot2.gameObject.GetComponent<Image>().sprite = images[secondweapon];
         menucontroller.closeallselections();
         menucontroller.somethinginmenuisopen = false;
-
+        menucontroller.menusoundcontroller.playmenubuttonsound();
     }
 }

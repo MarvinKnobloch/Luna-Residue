@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Memorypuzzle
   m_EditorClassIdentifier: 
   travelpointname: Memorypuzzle
-  travelcordinates: {x: -40, y: 25, z: 685}
+  travelcordinates: {x: -40, y: 27, z: 689}

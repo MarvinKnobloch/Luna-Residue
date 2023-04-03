@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Switchpuzzle
   m_EditorClassIdentifier: 
   travelpointname: Switchpuzzle
-  travelcordinates: {x: 280, y: 2, z: 180}
+  travelcordinates: {x: 286, y: 6, z: 196}

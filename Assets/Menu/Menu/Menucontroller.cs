@@ -19,6 +19,7 @@ public class Menucontroller : MonoBehaviour
     public Color notselectedcolor;
 
     [SerializeField] private GameObject uimessage;
+    public Menusoundcontroller menusoundcontroller;
 
     private void Awake()
     {
@@ -49,6 +50,7 @@ public class Menucontroller : MonoBehaviour
             {
                 obj.SetActive(false);
             }
+            menusoundcontroller.playmenubuttonsound();
         }
     }
     private void OnDisable()

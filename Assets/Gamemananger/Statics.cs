@@ -25,6 +25,8 @@ public class Statics
 
     public static bool elementalmenuisactiv;
 
+    public static int currentzonemusicint;
+
     //charvalues
     public static int currentactiveplayer;                //für hpanzeige
     public static int currentfirstchar = 0;

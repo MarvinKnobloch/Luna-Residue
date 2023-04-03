@@ -18,6 +18,7 @@ public class Selectcharcontroller : MonoBehaviour
     [SerializeField] private Text forthchartext;
 
     private SpielerSteu Steuerung;
+    [SerializeField] private Menusoundcontroller menusoundcontroller;
 
     private void Awake()
     {
@@ -49,6 +50,7 @@ public class Selectcharcontroller : MonoBehaviour
         thirdandforthchar(newcharacter, firstchar);
         firstchar = newcharacter;
         Statics.currentfirstchar = firstchar;
+        menusoundcontroller.playmenubuttonsound();
     }
     private void firstsameassecond()
     {
@@ -69,6 +71,7 @@ public class Selectcharcontroller : MonoBehaviour
         thirdandforthchar(newcharacter, secondchar);
         secondchar = newcharacter;
         Statics.currentsecondchar = secondchar;
+        menusoundcontroller.playmenubuttonsound();
     } 
     private void secondsameasfirst()
     {

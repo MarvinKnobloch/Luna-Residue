@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Targetsinthewoods
   m_EditorClassIdentifier: 
   travelpointname: Targetinthewoods
-  travelcordinates: {x: 255, y: 20, z: 435}
+  travelcordinates: {x: 255, y: 14, z: 427}

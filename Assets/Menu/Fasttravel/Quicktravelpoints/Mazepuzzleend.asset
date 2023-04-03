@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Mazepuzzleend
   m_EditorClassIdentifier: 
   travelpointname: Mazepuzzleend
-  travelcordinates: {x: -246, y: 32, z: 467}
+  travelcordinates: {x: -244, y: 31, z: 465}

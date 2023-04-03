@@ -14,7 +14,12 @@ public class Thirdcharselect : MonoBehaviour
     public int selectetdCharacter;
 
     [SerializeField] private GameObject menuoverview;
+    private Menucontroller menucontroller;
 
+    private void Awake()
+    {
+        menucontroller = menuoverview.GetComponent<Menucontroller>();
+    }
     private void OnEnable()
     {
         if (Statics.currentthirdchar != -1)
@@ -57,6 +62,7 @@ public class Thirdcharselect : MonoBehaviour
                 menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen = false;
             }
         }
+        menucontroller.menusoundcontroller.playmenubuttonsound();
 
     }
     public void samethirdcharfalse()

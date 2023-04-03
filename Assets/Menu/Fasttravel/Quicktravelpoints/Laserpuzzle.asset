@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Laserpuzzle
   m_EditorClassIdentifier: 
   travelpointname: Laserpuzzle
-  travelcordinates: {x: 300, y: 50, z: 95}
+  travelcordinates: {x: 294, y: 51, z: 92}
