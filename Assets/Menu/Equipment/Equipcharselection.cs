@@ -22,6 +22,7 @@ public class Equipcharselection : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] slotbuttontext;
     [SerializeField] private GameObject[] charbuttons;
 
+    [SerializeField] private Menusoundcontroller menusoundcontroller;
     private void Awake()
     {
         Steuerung = Keybindinputmanager.inputActions;
@@ -75,6 +76,7 @@ public class Equipcharselection : MonoBehaviour
         nametext.text = Statics.characternames[Statics.currentequipmentchar] + " LvL" + Statics.charcurrentlvl;
         settextandimage(Statics.currentequipmentchar);
         setselectedbutton();
+        menusoundcontroller.playmenubuttonsound();
     }
     private void settextandimage(int currentchar)
     {

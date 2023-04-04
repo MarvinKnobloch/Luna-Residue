@@ -11,4 +11,10 @@ public class Dragspellcontroller : MonoBehaviour
     public static int checkforcorrectslot;
 
     public static GameObject currentspellslot;
+
+    public Menusoundcontroller menusoundcontroller;
+    private void OnEnable()
+    {
+        menusoundcontroller.playmenubuttonsound();
+    }
 }

@@ -23,6 +23,7 @@ public class Dropspell : MonoBehaviour, IDropHandler
                 GetComponent<Image>().color = dragimage.GetComponent<Image>().color;
                 GetComponentInChildren<TextMeshProUGUI>().text = dragimage.GetComponentInChildren<TextMeshProUGUI>().text;
                 GetComponent<Setspells>().setspell(dragimage.GetComponent<Dragspellcontroller>().spellnumber, dragimage.GetComponent<Image>().color, dragimage.GetComponentInChildren<TextMeshProUGUI>().text);
+                dragimage.GetComponent<Dragspellcontroller>().menusoundcontroller.playmenubuttonsound();
             }
         }
 
@@ -33,6 +34,7 @@ public class Dropspell : MonoBehaviour, IDropHandler
                 GetComponent<Image>().color = dragimage.GetComponent<Image>().color;
                 GetComponentInChildren<TextMeshProUGUI>().text = dragimage.GetComponentInChildren<TextMeshProUGUI>().text;
                 GetComponent<Setspells>().setspell(dragimage.GetComponent<Dragspellcontroller>().spellnumber, dragimage.GetComponent<Image>().color, dragimage.GetComponentInChildren<TextMeshProUGUI>().text);
+                dragimage.GetComponent<Dragspellcontroller>().menusoundcontroller.playmenubuttonsound();
             }
         }
     }

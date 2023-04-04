@@ -34,6 +34,7 @@ public class Upgradecontroller : MonoBehaviour
     private DateTime currentdate;
     private float seconds;
 
+    [SerializeField] private Menusoundcontroller menusoundcontroller;
     private void Awake()
     {
         Steuerung = Keybindinputmanager.inputActions;
@@ -44,8 +45,10 @@ public class Upgradecontroller : MonoBehaviour
     }
     private void OnEnable()
     {
+        StopAllCoroutines();
         upgradetext.text = "hold " + upgradehotkey.GetBindingDisplayString() + " to Upgrade";
         upgradeimage.fillAmount = 0;
+        starttimer = false;
     }
     private void Update()
     {
@@ -99,7 +102,7 @@ public class Upgradecontroller : MonoBehaviour
         itemtextcontroller.valuesupdate();
         resetonpointenterlayer.SetActive(true);
         inventorys[Statics.currentequipmentbutton -3].Container.Items[itemtoupgrade.inventoryslot -1].itemlvl++;                    //-3 weil die waffeninventory nicht dabei sind / -1 weil array
-        //inventory itemlvl muss noch upgedated werden
+        menusoundcontroller.playmenubuttonsound();
     }
     private void removemats()
     {

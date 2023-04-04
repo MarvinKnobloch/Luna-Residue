@@ -22,6 +22,14 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         slotbuttontext = gameObject.GetComponentInParent<Gridvalues>().slottext;
         slotbutton = gameObject.GetComponentInParent<Gridvalues>().slotbutton;
     }
+    private void OnEnable()
+    {
+        if(itemvalues != null)
+        {
+            gameObject.GetComponent<Button>().enabled = true;
+        }
+        else gameObject.GetComponent<Button>().enabled = false;
+    }
     public void setweapon()
     {
         if (itemvalues != null)
@@ -30,8 +38,8 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             slotbuttontext.gameObject.GetComponent<TextMeshProUGUI>().text = GetComponentInChildren<TextMeshProUGUI>().text;
             setnewitem(Statics.currentequipmentbutton);
             statsupdate();
-        }
-        EventSystem.current.SetSelectedGameObject(slotbutton);                            //beim onselect call wird die selectfarbe gesetzt
+            EventSystem.current.SetSelectedGameObject(slotbutton);                            //beim onselect call wird die selectfarbe gesetzt + der sound gespielt
+        }     
     }
     private void statsupdate()
     {

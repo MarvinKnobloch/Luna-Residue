@@ -21,6 +21,7 @@ public class Statics
     public static Vector3 gameoverposi;                   //wird in enemyhp gesetzt weil die posi nur gespeichtert werden sollen wenn auch ein kampf gewonnen worden ist
     public static Quaternion gameoverrota;
     public static float gameovercam;
+    public static int aftergameovermusic;
     public static bool donttriggerenemies;
 
     public static bool elementalmenuisactiv;

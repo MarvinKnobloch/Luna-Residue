@@ -46,6 +46,8 @@ public class Awakecontroller : MonoBehaviour
     public int maxawakening;
     public Awakestone[] awake;
 
+    [SerializeField] private Menusoundcontroller menusoundcontroller;
+
     private void Awake()
     {
         Steuerung = Keybindinputmanager.inputActions;
@@ -54,7 +56,7 @@ public class Awakecontroller : MonoBehaviour
     }
     private void OnEnable()
     {
-        awakeimage.fillAmount = 0;
+        awakecancel();
         elementalstonetextupdate();
         bonusdmg.text = "Bonusdmg (" + Statics.groupstonedmgbonus + "%)";
         bonusdmgreduction.text = "Dmgreduction (" + Statics.groupstonedefensebonus + "%)";
@@ -110,6 +112,7 @@ public class Awakecontroller : MonoBehaviour
         awakelvl++;
         elementalstonetextupdate();
         starttimer = false;
+        menusoundcontroller.playmenubuttonsound();
     }
 
     public void elementalstonetextupdate()

@@ -35,6 +35,7 @@ public class Elemenucontroller : MonoBehaviour
     [NonSerialized] public Color stonecolor;
     [NonSerialized] public string stonetext;
 
+    [SerializeField] private Menusoundcontroller menusoundcontroller;
     void Awake()
     {
         controlls = Keybindinputmanager.inputActions;
@@ -145,6 +146,7 @@ public class Elemenucontroller : MonoBehaviour
         {
             overview.SetActive(true);
             elemenu.SetActive(false);
+            menusoundcontroller.playmenubuttonsound();
         }
     }
     public void choosecharbuttonpress(int slot)
@@ -178,6 +180,7 @@ public class Elemenucontroller : MonoBehaviour
             }
             charselectionimage[charslot].SetActive(true);
             currentelemenuchar = charslot;
+            menusoundcontroller.playmenubuttonsound();
         }
     }
     public void choosethirdandforthchar(int charslot, int charstaticint, int othercharstaticint)
@@ -212,6 +215,7 @@ public class Elemenucontroller : MonoBehaviour
             }
             charselectionimage[charslot].SetActive(true);
             currentelemenuchar = charslot;
+            menusoundcontroller.playmenubuttonsound();
         }
     }
     
@@ -240,6 +244,7 @@ public class Elemenucontroller : MonoBehaviour
             setstonethirdandforthchar(forthchar, thirdchar);
             Statics.characterclassroll[forthchar] = stoneclassroll;
         }
+        menusoundcontroller.playmenubuttonsound();
     }
     private void setstonefirstandsecondchar(int charstaticint)
     {

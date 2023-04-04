@@ -13,6 +13,8 @@ public class Equipmentmenucontroller : MonoBehaviour
     [SerializeField] private GameObject swordgrid;
     [SerializeField] private GameObject swordbutton;
 
+    [SerializeField] private Menusoundcontroller menusoundcontroller;
+
     private void Awake()
     {
         controlls = Keybindinputmanager.inputActions;
@@ -34,6 +36,7 @@ public class Equipmentmenucontroller : MonoBehaviour
         {
             overview.SetActive(true);
             equipmentmenu.SetActive(false);
+            menusoundcontroller.playmenubuttonsound();
         }
     }
     public void switchgrid(GameObject selectedgrid)
@@ -43,5 +46,6 @@ public class Equipmentmenucontroller : MonoBehaviour
             grids.SetActive(false);
         }
         selectedgrid.SetActive(true);
+        menusoundcontroller.playmenubuttonsound();
     }
 }

@@ -150,6 +150,7 @@ public class EnemyHP : MonoBehaviour
                     Statics.gameoverposi = GetComponent<Enemymovement>().spawnpostion;
                     Statics.gameoverrota = LoadCharmanager.Overallmainchar.transform.rotation;
                     Statics.gameovercam = LoadCharmanager.savecamvalueX;
+                    Statics.aftergameovermusic = Statics.currentzonemusicint;
                 }
                 if (Movescript.lockontarget != null)
                 {

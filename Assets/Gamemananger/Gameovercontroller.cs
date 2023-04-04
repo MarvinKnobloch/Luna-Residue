@@ -31,6 +31,8 @@ public class Gameovercontroller : MonoBehaviour
         LoadCharmanager.savemainposi = Statics.gameoverposi;
         LoadCharmanager.savemainrota = Statics.gameoverrota;
         LoadCharmanager.savecamvalueX = Statics.savecamvalueX;
+        Statics.currentzonemusicint = Statics.aftergameovermusic;
+        Musiccontroller.instance.currentzonemusic = null;
         infightcontroller.gameover();
         StartCoroutine("loadingscreen");
         gameObject.SetActive(false);

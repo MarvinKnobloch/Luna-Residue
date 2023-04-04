@@ -23,8 +23,8 @@ public class LoadCharmanager : MonoBehaviour
     public static GameObject Overallthirdchar;
     public static GameObject Overallforthchar;
     public static Vector3 savemainposi = new Vector3(15, 32, 687);      //new Vector3(-20,38, 420);          //new Vector3(116, 17, 707);        new Vector3(15,32,687);
-    public static Quaternion savemainrota;                                  
-    public static float savecamvalueX;                                          
+    public static Quaternion savemainrota;
+    public static float savecamvalueX;
 
     public static bool disableattackbuttons;
     public static bool gameispaused;
@@ -60,6 +60,11 @@ public class LoadCharmanager : MonoBehaviour
         Statics.gameoverposi = savemainposi;
         Statics.gameoverrota = savemainrota;
         Statics.gameovercam = savecamvalueX;
+        Invoke("setgameovermusic", 0.1f);                            //damit auch der collider mit der neuen musik bei start/fasttravel getriggert worden ist
+    }
+    private void setgameovermusic()
+    {
+        Statics.aftergameovermusic = Statics.currentzonemusicint;
     }
     private void resetvalues()
     {
@@ -171,7 +176,7 @@ public class LoadCharmanager : MonoBehaviour
 
         Cam1.LookAt = Overallmainchar.transform;
         Cam1.Follow = Overallmainchar.transform;
-        Cam1.m_YAxis.m_MaxSpeed = 0.008f * PlayerPrefs.GetFloat("mousesensitivity") / 50;
+        Cam1.m_YAxis.m_MaxSpeed = 0.004f * PlayerPrefs.GetFloat("mousesensitivity") / 50;
         Cam1.m_XAxis.m_MaxSpeed = 0.6f * PlayerPrefs.GetFloat("mousesensitivity") / 50;
         Cam1.m_XAxis.Value = savecamvalueX;
         aimcam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0.2f * PlayerPrefs.GetFloat("rangeweaponaimsensitivity") / 50;
