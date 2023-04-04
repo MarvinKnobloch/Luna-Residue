@@ -20,7 +20,7 @@ public class Musiccontroller : MonoBehaviour
     [SerializeField] private AudioClip spezialbattle;
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
@@ -31,6 +31,7 @@ public class Musiccontroller : MonoBehaviour
             return;
         }
         audiosource = GetComponent<AudioSource>();
+        StopAllCoroutines();
     }
 
     public void setcurrentzonemusic(int songint)
@@ -79,10 +80,13 @@ public class Musiccontroller : MonoBehaviour
             audiosource.volume = Mathf.Lerp(start, targetVolume, currentTime / duration);
             yield return null;
         }
-        audiosource.clip = song;
-        audiosource.time = cliptime;
-        audiosource.Play();
-        StartCoroutine(fadeinvolume(fadeinspeed));
+        if(song != null)
+        {
+            audiosource.clip = song;
+            audiosource.time = cliptime;
+            audiosource.Play();
+            StartCoroutine(fadeinvolume(fadeinspeed));
+        }
         yield break;
     }
     public IEnumerator fadeinvolume(float fadeinspeed)
@@ -99,7 +103,20 @@ public class Musiccontroller : MonoBehaviour
         }
         yield break;
     }
-
+    public IEnumerator gameoverfadeout(float fadeoutspeed)
+    {
+        float duration = fadeoutspeed;
+        float currentTime = 0;
+        float start = audiosource.volume;
+        float targetVolume = 0;
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            audiosource.volume = Mathf.Lerp(start, targetVolume, currentTime / duration);
+            yield return null;
+        }
+        StopCoroutine("gameoverfadeout");
+    }
     public void enternewzone(int songint)
     {
         oldsongint = Statics.currentzonemusicint;

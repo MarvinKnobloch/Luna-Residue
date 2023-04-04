@@ -21,6 +21,7 @@ public class Gameovercontroller : MonoBehaviour
     }
     IEnumerator gameoverfade()
     {
+        StartCoroutine(Musiccontroller.instance.gameoverfadeout(gameovertime - 1));
         while(gameover.alpha < 0.8f)
         {
             gameovertimer += Time.deltaTime;
