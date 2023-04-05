@@ -34,7 +34,6 @@ public class Swordattack : MonoBehaviour
     const string dashstate = "Sworddash";
 
     //weaponswitch
-    private float checkforenemyonswitchrange = 3f;
     public LayerMask weaponswitchlayer;
 
     //audio
@@ -388,7 +387,7 @@ public class Swordattack : MonoBehaviour
     }
     private void swordweaponswitch()
     {
-        if (Physics.CheckSphere(transform.position, checkforenemyonswitchrange, weaponswitchlayer))
+        if (Physics.CheckSphere(transform.position, Statics.weaponswitchattackrange, weaponswitchlayer))
         {
             playersounds.playsword3();
             Statics.otheraction = true;

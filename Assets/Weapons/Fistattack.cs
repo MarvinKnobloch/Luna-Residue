@@ -35,7 +35,6 @@ public class Fistattack : MonoBehaviour
     const string dashstate = "Fistdash";
 
     //weaponswitch
-    private float checkforenemyonswitchrange = 3f;
     public LayerMask weaponswitchlayer;
 
     void Awake()
@@ -401,7 +400,7 @@ public class Fistattack : MonoBehaviour
     }
     private void fistweaponswitch()
     {
-        if (Physics.CheckSphere(transform.position, checkforenemyonswitchrange, weaponswitchlayer))
+        if (Physics.CheckSphere(transform.position, Statics.weaponswitchattackrange, weaponswitchlayer))
         {
             Statics.otheraction = true;
             movementscript.graviti = -5;

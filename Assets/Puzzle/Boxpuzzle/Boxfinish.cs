@@ -7,9 +7,14 @@ public class Boxfinish : MonoBehaviour
 {
     [SerializeField] private GameObject requiredcube;
     public Color finishcolor;
+    private bool isfinished;
 
     [SerializeField] private GameObject reward;
 
+    private void OnEnable()
+    {
+        isfinished = false;
+    }
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject == requiredcube)
@@ -23,11 +28,15 @@ public class Boxfinish : MonoBehaviour
         {
             CancelInvoke();
             requiredcube.GetComponent<Renderer>().material.color = Color.white;
-            reward.GetComponent<Rewardinterface>().removerewardcount();
+            if(isfinished == true)
+            {
+                reward.GetComponent<Rewardinterface>().removerewardcount();
+            }
         }
     }
     private void checkforposi()
     {
+        isfinished = true;
         requiredcube.GetComponent<Renderer>().material.color = finishcolor;
         reward.GetComponent<Rewardinterface>().addrewardcount();
     }

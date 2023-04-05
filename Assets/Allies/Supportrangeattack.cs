@@ -101,28 +101,30 @@ public class Supportrangeattack
                 rangenewposi = ssm.currenttarget.transform.position + ssm.currenttarget.transform.forward * -10;
                 rangenewposi.y = ssm.transform.position.y;
                 NavMeshHit hit;
-                bool blocked;
-                blocked = NavMesh.Raycast(ssm.transform.position, rangenewposi, out hit, NavMesh.AllAreas);
-                if (blocked == true)
+                bool isblocked = NavMesh.Raycast(ssm.transform.position, rangenewposi, out hit, NavMesh.AllAreas);
+                if (isblocked == true)
                 {
                     rangenewposi = hit.position;
                     ssm.Meshagent.SetDestination(rangenewposi);
                     ssm.ChangeAnimationState(runstate);
-                    ssm.state = Supportmovement.State.changeposiafterrangeattack;
+                    ssm.state = Supportmovement.State.changeposiafterrangeattack;                       //wenn nach dem attacken eine neue posi gesucht wird bleibt der char an der posi stehen bis er attacken kann
                 }
                 else
                 {
+                    NavMeshHit closetstpoint;
+                    NavMesh.SamplePosition(rangenewposi, out closetstpoint, 20, NavMesh.AllAreas);
+                    rangenewposi = closetstpoint.position;
                     ssm.Meshagent.SetDestination(rangenewposi);
                     ssm.ChangeAnimationState(runstate);
                     ssm.state = Supportmovement.State.changeposiafterrangeattack;
                 }
-            }
-            else
-            {
-                ssm.Meshagent.ResetPath();
-                ssm.ChangeAnimationState(idlestate);
-                ssm.state = Supportmovement.State.waitforrangeattackcd;
-            }
+            } 
+        else
+        {
+            ssm.Meshagent.ResetPath();
+            ssm.ChangeAnimationState(idlestate);
+            ssm.state = Supportmovement.State.waitforrangeattackcd;
+        }
         }
         else
         {

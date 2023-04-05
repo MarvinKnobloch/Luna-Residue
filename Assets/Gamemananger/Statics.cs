@@ -73,6 +73,7 @@ public class Statics
     //gameplaystatics
     public static bool otheraction;
     public static bool stopmovenandrotation;
+    public static float weaponswitchattackrange = 4;
     public static bool dash;
     public static bool playeriframes;
     public static bool bonusiframes;

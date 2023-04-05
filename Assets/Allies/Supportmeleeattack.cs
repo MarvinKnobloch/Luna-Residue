@@ -119,9 +119,8 @@ public class Supportmeleeattack
                 ssm.posiafterattack = ssm.currenttarget.transform.position + Random.insideUnitSphere * 5;
                 ssm.posiafterattack.y = ssm.transform.position.y;
                 NavMeshHit hit;
-                bool blocked;
-                blocked = NavMesh.Raycast(ssm.transform.position, ssm.posiafterattack, out hit, NavMesh.AllAreas);
-                if (blocked == true)
+                bool isblocked = NavMesh.Raycast(ssm.transform.position, ssm.posiafterattack, out hit, NavMesh.AllAreas);
+                if (isblocked == true)
                 {
                     ssm.posiafterattack = hit.position;
                     ssm.Meshagent.SetDestination(ssm.posiafterattack);
@@ -130,6 +129,9 @@ public class Supportmeleeattack
                 }
                 else
                 {
+                    NavMeshHit closetstpoint;
+                    NavMesh.SamplePosition(ssm.posiafterattack, out closetstpoint, 20, NavMesh.AllAreas);
+                    ssm.posiafterattack = closetstpoint.position;
                     ssm.Meshagent.SetDestination(ssm.posiafterattack);
                     ssm.ChangeAnimationState(runstate);
                     ssm.state = Supportmovement.State.changeposiafterattack;
@@ -141,6 +143,23 @@ public class Supportmeleeattack
                 sideposition = Random.Range(-2f, 2f);
                 ssm.state = Supportmovement.State.waitformeleeattack;           //wenn nach dem attacken keine neue posi gesucht wird folgt der enemy dem target
             }
+        }
+    }
+    public void repositionafterattack()
+    {
+        if (ssm.currenttarget != null)
+        {
+            ssm.supportreset();
+            if (Vector3.Distance(ssm.transform.position, ssm.posiafterattack) <= 2)
+            {
+                ssm.Meshagent.ResetPath();
+                ssm.ChangeAnimationState(idlestate);
+                ssm.switchtoweaponstate();
+            }
+        }
+        else
+        {
+            ssm.switchtarget();
         }
     }
     private void attackrangecheck(string state)

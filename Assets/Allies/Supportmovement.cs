@@ -118,7 +118,7 @@ public class Supportmovement : MonoBehaviour
                 supportutilityfunctions.attackstate();
                 break;
             case State.changeposiafterattack:
-                supportutilityfunctions.repositionafterattack();
+                supportmeleeattack.repositionafterattack();
                 break;
             case State.changeposiafterrangeattack:
                 supportrangeattack.posiafterrangeattack();

@@ -60,7 +60,6 @@ public class Bowattack : MonoBehaviour
     const string chargestate = "Chargearrow";
 
     //weaponswitch
-    private float checkforenemyonswitchrange = 4f;
     public LayerMask weaponswitchlayer;
     private float slowmopercentage = 0.3f;
 
@@ -519,7 +518,7 @@ public class Bowattack : MonoBehaviour
     }
     private void bowweaponswitch()
     {
-        if (Physics.CheckSphere(transform.position, checkforenemyonswitchrange, weaponswitchlayer))
+        if (Physics.CheckSphere(transform.position, Statics.weaponswitchattackrange, weaponswitchlayer))
         {
             Statics.otheraction = true;
             movementscript.attackonceair = false;
