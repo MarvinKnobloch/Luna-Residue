@@ -10,4 +10,5 @@ public class Areaobjectcontroller : MonoBehaviour
     public Areanumber[] setpuzzlenumber;
     public Areanumber[] setdialoguenumber;
     public Areanumber[] setgahteringnumber;
+    public Areanumber[] fasttravelpoints;
 }

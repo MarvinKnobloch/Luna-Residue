@@ -194,8 +194,21 @@ public class EnemyHP : MonoBehaviour
     }
     public void addtocanvas()
     {
-        gothealthbar = true;
-        addhealthbar(this);     //erstellt eine neu Healthbar mit verbindung zum Enemyhpscript;
+        if(enemyisdead == false && gothealthbar == false)
+        {
+            gothealthbar = true;
+            addhealthbar(this);                    //erstellt eine neu Healthbar mit verbindung zum Enemyhpscript;
+            if (enemyincreasebasicdmg == true)
+            {
+                healthbar.debuffUI.SetActive(true);
+                healthbar.debuffbar.color = Color.blue;
+            }
+            else if (enemydebuffcd == true)
+            {
+                healthbar.debuffUI.SetActive(true);
+                healthbar.debuffbar.color = Color.yellow;
+            }
+        }
     }
     public void removefromcanvas()
     {

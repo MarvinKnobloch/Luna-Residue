@@ -58,7 +58,7 @@ public class Inventorycontroller : ScriptableObject
     {
         for (int i = 0; i < Container.Items.Length; i++)
         {
-            if (Container.Items[i].amount == 0)
+            if (Container.Items[i].inventoryposi == 0)
             {
                 Container.Items[i].slotupdate(item, amount);
                 Container.Items[i].inventoryposi = i + 1;
@@ -72,7 +72,7 @@ public class Inventorycontroller : ScriptableObject
     {
         for (int i = 0; i < matsinventory.Container.Items.Length; i++)
         {
-            if (matsinventory.Container.Items[i].amount == 0)
+            if (matsinventory.Container.Items[i].inventoryposi == 0)
             {
                 matsinventory.Container.Items[i].slotupdate(item, amount);
                 matsinventory.Container.Items[i].inventoryposi = i + 1;

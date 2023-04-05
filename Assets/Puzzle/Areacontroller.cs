@@ -27,6 +27,8 @@ public class Areacontroller : MonoBehaviour
 
     public bool[] gotgatheritem;
 
+    public bool[] gotfasttravelpoint;
+
     private void Awake()
     {
         areaobjectcontroller = GetComponent<Areaobjectcontroller>();
@@ -38,6 +40,7 @@ public class Areacontroller : MonoBehaviour
         gotpuzzlereward = new bool[areaobjectcontroller.setpuzzlenumber.Length];
         npcdialoguestate = new int[areaobjectcontroller.setdialoguenumber.Length];
         gotgatheritem = new bool[areaobjectcontroller.setgahteringnumber.Length];
+        gotfasttravelpoint = new bool[areaobjectcontroller.fasttravelpoints.Length];
 
         if (Statics.currentgameslot != -1)                             // -1 = new game damit nichts geladen wird
         {
@@ -75,6 +78,10 @@ public class Areacontroller : MonoBehaviour
         for (int i = 0; i < areaobjectcontroller.setgahteringnumber.Length; i++)
         {
             areaobjectcontroller.setgahteringnumber[i].areanumber = i;
+        }
+        for (int i = 0; i < areaobjectcontroller.fasttravelpoints.Length; i++)
+        {
+            areaobjectcontroller.fasttravelpoints[i].areanumber = i;
         }
     }
     private void loaddata(int slot, string filename)                  

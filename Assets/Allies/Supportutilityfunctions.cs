@@ -21,25 +21,6 @@ public class Supportutilityfunctions
             ssm.FaceTraget();
         }
     }
-    public void repositionafterattack()
-    {
-        if (ssm.currenttarget != null)
-        {
-            supportreset();
-            ssm.posiafterattack.y = ssm.transform.position.y;
-            ssm.Meshagent.SetDestination(ssm.posiafterattack);
-            if (Vector3.Distance(ssm.transform.position, ssm.posiafterattack) <= 2)
-            {
-                ssm.Meshagent.ResetPath();
-                ssm.ChangeAnimationState(idlestate);
-                ssm.switchtoweaponstate();
-            }
-        }
-        else
-        {
-            ssm.switchtarget();
-        }
-    }
     public void supportreset()
     {
         if (ssm.playerhp.playerisdead == false)

@@ -14,16 +14,6 @@ public class Activatebarcollider : MonoBehaviour
         if(other.gameObject == LoadCharmanager.Overallmainchar.gameObject)
         {
             enemyhpscript.addtocanvas();
-            if(enemyhpscript.enemyincreasebasicdmg == true)
-            {
-                enemyhpscript.healthbar.debuffUI.SetActive(true);
-                enemyhpscript.healthbar.debuffbar.color = Color.blue;
-            }
-            else if (enemyhpscript.enemydebuffcd == true)
-            {
-                enemyhpscript.healthbar.debuffUI.SetActive(true);
-                enemyhpscript.healthbar.debuffbar.color = Color.yellow;
-            }
         }
     }
     private void OnTriggerExit(Collider other)
