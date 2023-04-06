@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Watercave
   m_EditorClassIdentifier: 
   travelpointname: Watercave
-  travelcordinates: {x: -330, y: 3, z: -35}
+  travelcordinates: {x: -363, y: 13.7, z: -41}

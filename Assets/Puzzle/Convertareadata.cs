@@ -20,6 +20,8 @@ public class Convertareadata
 
     public bool[] gotgatheritem;
 
+    public bool[] gotfasttravelpoint;
+
     public void loadareadata(Areacontroller areacontroller)
     {
         overridedata(tutorialcomplete, areacontroller.tutorialcomplete);
@@ -30,51 +32,16 @@ public class Convertareadata
         overridedata(gotpuzzlereward, areacontroller.gotpuzzlereward);
         overridedata(npcdialoguestate, areacontroller.npcdialoguestate);
         overridedata(gotgatheritem, areacontroller.gotgatheritem);
-        /*for (int i = 0; i < tutorialcomplete.Length; i++)
-        {
-            areacontroller.tutorialcomplete[i] = tutorialcomplete[i];
-        }
-
-        for (int i = 0; i < enemychestcanopen.Length; i++)
-        {
-            areacontroller.enemychestcanopen[i] = enemychestcanopen[i];
-        }
-
-        for (int i = 0; i < enemychestisopen.Length; i++)
-        {
-            areacontroller.enemychestisopen[i] = enemychestisopen[i];
-        }
-
-        for (int i = 0; i < questcomplete.Length; i++)
-        {
-            areacontroller.questcomplete[i] = questcomplete[i];
-        }
-
-        for (int i = 0; i < puzzlecomplete.Length; i++)
-        {
-            areacontroller.puzzlecomplete[i] = puzzlecomplete[i];
-        }
-
-        for (int i = 0; i < gotpuzzlereward.Length; i++)
-        {
-            areacontroller.gotpuzzlereward[i] = gotpuzzlereward[i];
-        }
-
-        for (int i = 0; i < npcdialoguestate.Length; i++)
-        {
-            areacontroller.npcdialoguestate[i] = npcdialoguestate[i];
-        }
-
-        for (int i = 0; i < gotgatheritem.Length; i++)
-        {
-            areacontroller.gotgatheritem[i] = gotgatheritem[i];
-        }*/
+        overridedata(gotfasttravelpoint, areacontroller.gotfasttravelpoint);
     }
     private void overridedata<T>(T[] savedataarray, T[] areaarray)
     {
-        for (int i = 0; i < savedataarray.Length; i++)
+        if(savedataarray != null)
         {
-            areaarray[i] = savedataarray[i];
+            for (int i = 0; i < savedataarray.Length; i++)
+            {
+                areaarray[i] = savedataarray[i];
+            }
         }
     }
 }

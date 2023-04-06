@@ -138,6 +138,7 @@ public class Saveandloadgame : MonoBehaviour
         Statics.characterswitchbuff = 0;
         Statics.weaponswitchbuff = 0;
         Statics.timer = false;
+        Fasttravelpoints.travelpoints.Clear();
     }
 }
     /*private void loadmonobehaviour(int slot, string filename, MonoBehaviour monobehaviour)

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Pillarjumppuzzle
   m_EditorClassIdentifier: 
   travelpointname: Pillarjumppuzzle
-  travelcordinates: {x: -70, y: 3, z: 40}
+  travelcordinates: {x: -62, y: 3.8, z: 31}

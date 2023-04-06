@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Fasttravelpointunlock : MonoBehaviour
 {
     [SerializeField] private Areacontroller areacontroller;
     [SerializeField] Travelpointvalues travelpointvalue;
+    [SerializeField] private GameObject ingamemessage;
     public int fasttravelnumber;
 
     private void Start()
     {
-        Debug.Log("start");
         fasttravelnumber = GetComponent<Areanumber>().areanumber;
     }
     private void OnEnable()
@@ -20,7 +21,6 @@ public class Fasttravelpointunlock : MonoBehaviour
     IEnumerator currentstate()
     {
         yield return null;
-        Debug.Log("load");
         if (areacontroller.gotfasttravelpoint[fasttravelnumber] == true)
         {
             gameObject.transform.GetChild(0).gameObject.SetActive(true);
@@ -30,14 +30,18 @@ public class Fasttravelpointunlock : MonoBehaviour
     }
         private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == LoadCharmanager.Overallmainchar.gameObject && areacontroller.gotfasttravelpoint[fasttravelnumber] == false)
+        if(other.gameObject == LoadCharmanager.Overallmainchar.gameObject && areacontroller.gotfasttravelpoint[fasttravelnumber] == false && Statics.infight == false)
         {
             areacontroller.gotfasttravelpoint[fasttravelnumber] = true;
             gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            areacontroller.autosave();
+            if(ingamemessage.activeSelf == true) ingamemessage.GetComponent<Ingamemessagecontroller>().cancelfadeout();
+            else ingamemessage.SetActive(true);
+            ingamemessage.GetComponentInChildren<TextMeshProUGUI>().text = "New fasttravelpoint unlocked: " + "\n" + "(" + travelpointvalue.travelpointname + ")";
             addtravelpoint();
         }
     }
-    private void addtravelpoint()
+    public void addtravelpoint()
     {
         if (Fasttravelpoints.travelpoints.Contains(travelpointvalue) == false)
         {

@@ -152,6 +152,7 @@ public class Startmenucontroller : MonoBehaviour
         Statics.characterswitchbuff = 0;
         Statics.weaponswitchbuff = 0;
         Statics.timer = false;
+        Fasttravelpoints.travelpoints.Clear();
 
         Statics.spellnumbers = new int[]{ -1, -1, -1, -1, -1, -1, -1, -1 };
         Statics.spellcolors = new Color[8];

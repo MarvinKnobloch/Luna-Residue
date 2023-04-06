@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Mountainjumppuzzle
   m_EditorClassIdentifier: 
   travelpointname: Mountainjumppuzzle
-  travelcordinates: {x: -268, y: 24, z: 160}
+  travelcordinates: {x: -268, y: 23.8, z: 153}

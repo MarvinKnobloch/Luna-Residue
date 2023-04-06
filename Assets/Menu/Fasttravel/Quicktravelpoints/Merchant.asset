@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Merchant
   m_EditorClassIdentifier: 
   travelpointname: Merchant
-  travelcordinates: {x: -320, y: 17, z: 320}
+  travelcordinates: {x: -321, y: 18.8, z: 320}
