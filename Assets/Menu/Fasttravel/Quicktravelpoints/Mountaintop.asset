@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   travelpointname: Mountaintop
   travelcordinates: {x: -32, y: 129, z: 356}
+  fasttravelmapcordinates: {x: -45, y: 30}

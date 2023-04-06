@@ -10,8 +10,10 @@ public class Fasttravelpoints : MonoBehaviour
     private List<Travelpointvalues> instantiatepoints = new List<Travelpointvalues>();
 
     [SerializeField] private GameObject travelpointmenuprefab;
+    public GameObject mapimage;
     private void OnEnable()
     {
+        mapimage.SetActive(false);
         fasttravelcommit.SetActive(false);
         createtravelpointmenu();
     }
@@ -25,6 +27,7 @@ public class Fasttravelpoints : MonoBehaviour
                 var obj = Instantiate(travelpointmenuprefab, Vector3.zero, Quaternion.identity, transform);
                 obj.GetComponentInChildren<TextMeshProUGUI>().text = travelpoints[i].travelpointname;
                 obj.GetComponentInChildren<Openfasttravelcommit>().setfasttravelpoint = travelpoints[i].travelcordinates;
+                obj.GetComponentInChildren<Openfasttravelcommit>().setpointonmap = travelpoints[i].fasttravelmapcordinates;
             }
         }
     }

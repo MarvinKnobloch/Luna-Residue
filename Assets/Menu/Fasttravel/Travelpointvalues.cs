@@ -7,4 +7,5 @@ public class Travelpointvalues : ScriptableObject
 {
     public string travelpointname;
     public Vector3 travelcordinates;
+    public Vector2 fasttravelmapcordinates;
 }

@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   travelpointname: Mountainstart
   travelcordinates: {x: 158, y: 5.7, z: 570}
+  fasttravelmapcordinates: {x: 225, y: 290}
