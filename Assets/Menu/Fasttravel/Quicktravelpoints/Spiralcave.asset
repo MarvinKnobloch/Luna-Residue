@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   travelpointname: Spiralcave
   travelcordinates: {x: 319, y: 23.7, z: 572}
+  fasttravelmapcordinates: {x: 450, y: 290}
