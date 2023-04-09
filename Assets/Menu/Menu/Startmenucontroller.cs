@@ -124,7 +124,7 @@ public class Startmenucontroller : MonoBehaviour
         Statics.currentforthchar = 3;
 
         Statics.currentzonemusicint = 0;
-        Statics.elementalmenuisactiv = false;
+        Statics.elementalmenuunlocked = false;
 
         Statics.charcurrentlvl = 1;
         Statics.charcurrentexp = 0;

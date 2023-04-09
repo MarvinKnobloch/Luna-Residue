@@ -31,6 +31,7 @@ public class LoadCharmanager : MonoBehaviour
     public static bool interaction;
     public static bool cantsavehere;
 
+    [SerializeField] private GameObject map;
     [SerializeField] private LayerMask meleehitbox;
 
     public static event Action setweapons;
@@ -79,25 +80,29 @@ public class LoadCharmanager : MonoBehaviour
         {
             if (gameispaused == false)
             {
-                disableattackbuttons = true;
-                savemainposi = Overallmainchar.transform.position;
-                savemainrota = Overallmainchar.transform.rotation;
-                savecamvalueX = Cam1.m_XAxis.Value;
-                foreach (GameObject mates in teammates)
+                if(map.activeSelf == false)
                 {
-                    mates.gameObject.SetActive(false);
+                    disableattackbuttons = true;
+                    savemainposi = Overallmainchar.transform.position;
+                    savemainrota = Overallmainchar.transform.rotation;
+                    savecamvalueX = Cam1.m_XAxis.Value;
+                    foreach (GameObject mates in teammates)
+                    {
+                        mates.gameObject.SetActive(false);
+                    }
+                    Statics.donttriggerenemies = true;
+                    gameispaused = true;
+                    Time.timeScale = 0f;
+                    Cam1.gameObject.SetActive(false);
+                    map.SetActive(false);
+                    menu.SetActive(true);
+                    menuoverview.SetActive(true);
+                    Mouseactivate.enablemouse();
                 }
-                Statics.donttriggerenemies = true;
-                gameispaused = true;
-                Time.timeScale = 0f;
-                Cam1.gameObject.SetActive(false);
-                menu.SetActive(true);
-                menuoverview.SetActive(true);
-                Mouseactivate.enablemouse();
             }
             else
             {
-                if (Menucontroller.inoverview == true && menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen == false)
+                if (menuoverview.GetComponent<Menucontroller>().somethinginmenuisopen == false)
                 {
                     maingamevalues();
                 }

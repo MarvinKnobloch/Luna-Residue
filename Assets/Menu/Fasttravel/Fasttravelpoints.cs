@@ -32,7 +32,9 @@ public class Fasttravelpoints : MonoBehaviour
                 //obj.GetComponentInChildren<Openfasttravelcommit>().setfasttravelpoint = travelpoints[i].travelcordinates;
                 //obj.GetComponentInChildren<Openfasttravelcommit>().setpointonmap = travelpoints[i].fasttravelmapcordinates;
                 GameObject mapicon = Instantiate(fasttravelicon, Vector2.zero, Quaternion.identity, map.transform);
-                mapicon.GetComponent<RectTransform>().anchoredPosition = travelpoints[i].fasttravelmapcordinates;
+                float xposi = travelpoints[i].travelcordinates.x * 1.41f;
+                float zposi = (travelpoints[i].travelcordinates.z - 350) * 1.16f;
+                mapicon.GetComponent<RectTransform>().anchoredPosition = new Vector2(xposi, zposi);
                 mapicon.GetComponent<Openfasttravelcommit>().travelpoint = travelpoints[i];
             }
         }

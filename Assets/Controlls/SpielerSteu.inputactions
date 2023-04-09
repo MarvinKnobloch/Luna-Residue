@@ -195,7 +195,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Test",
+                    "name": "Map",
                     "type": "Button",
                     "id": "1722e75e-32c6-47cc-a1c2-4a520f3831e4",
                     "expectedControlType": "Button",
@@ -514,7 +514,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Test",
+                    "action": "Map",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

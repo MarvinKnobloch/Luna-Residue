@@ -23,8 +23,9 @@ public class Statics
     public static float gameovercam;
     public static int aftergameovermusic;
     public static bool donttriggerenemies;
+    public static bool somethingisopen;
 
-    public static bool elementalmenuisactiv;
+    public static bool elementalmenuunlocked;
 
     public static int currentzonemusicint;
 

@@ -44,7 +44,7 @@ public class Openselectedmenu : MonoBehaviour, IPointerEnterHandler, IPointerExi
     }
     public void openelemenu()
     {
-        if (Statics.elementalmenuisactiv == true)
+        if (Statics.elementalmenuunlocked == true)
         {
             menu.SetActive(true);
             menuoverview.SetActive(false);

@@ -17,7 +17,7 @@ public class Elementaltutorial : MonoBehaviour
         tutorialcontroller = GetComponentInParent<Tutorialcontroller>();
         controlls = Keybindinputmanager.inputActions;
         readinputs = false;
-        if (Statics.elementalmenuisactiv == true)
+        if (Statics.elementalmenuunlocked == true)
         {
             gameObject.SetActive(false);
         }
@@ -40,7 +40,7 @@ public class Elementaltutorial : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == LoadCharmanager.Overallmainchar && Statics.elementalmenuisactiv == false)
+        if (other.gameObject == LoadCharmanager.Overallmainchar && Statics.elementalmenuunlocked == false)
         {
             tutorialcontroller.onenter();
             textindex = 0;
@@ -67,7 +67,7 @@ public class Elementaltutorial : MonoBehaviour
     }
     private void endtutorial()
     {
-        Statics.elementalmenuisactiv = true;
+        Statics.elementalmenuunlocked = true;
         readinputs = false;
         elementalstonechest.GetComponent<Rewardinterface>().addrewardcount();
         tutorialcontroller.endtutorial();

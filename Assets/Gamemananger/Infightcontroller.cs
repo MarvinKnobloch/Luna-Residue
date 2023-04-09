@@ -13,6 +13,7 @@ public class Infightcontroller : MonoBehaviour
     public static float teammatesdespawntime = 5;
     public float spezialtimer;
 
+    [SerializeField] private GameObject map;
     [SerializeField] private GameObject playergameover;
     [SerializeField] private GameObject gameovercontroller;
 
@@ -74,6 +75,7 @@ public class Infightcontroller : MonoBehaviour
                 Statics.supportcanresurrect = false;
                 Statics.oneplayerisdead = false;
                 Statics.infight = true;
+                map.SetActive(false);
                 instance.StopCoroutine("healalliesafterfight");
                 instance.StartCoroutine("firstenemyspezialcd");
                 LoadCharmanager.Overallmainchar.GetComponent<Movescript>().autolockon();

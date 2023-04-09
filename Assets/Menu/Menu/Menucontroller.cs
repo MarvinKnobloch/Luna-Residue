@@ -8,7 +8,7 @@ public class Menucontroller : MonoBehaviour
 {
     private SpielerSteu controlls;
 
-    public static bool inoverview;
+    //public static bool inoverview;
     public GameObject fasttravelmenu;
     public TextMeshProUGUI elementalelmenutext;
 
@@ -28,7 +28,6 @@ public class Menucontroller : MonoBehaviour
     private void OnEnable()
     {
         uimessage.SetActive(false);
-        inoverview = true;
 
         somethinginmenuisopen = false;
         foreach (GameObject obj in closegameobjectswithesc)
@@ -37,7 +36,7 @@ public class Menucontroller : MonoBehaviour
         }
 
         fasttravelmenu.SetActive(false);                                                         //weil das Ui beim fasttravel commit nicht mehr geschlossen wird
-        if (Statics.elementalmenuisactiv == false) elementalelmenutext.color = Color.gray;
+        if (Statics.elementalmenuunlocked == false) elementalelmenutext.color = Color.gray;
         else elementalelmenutext.color = Color.white;
     }
 
@@ -55,7 +54,7 @@ public class Menucontroller : MonoBehaviour
     }
     private void OnDisable()
     {
-        inoverview = false;
+        somethinginmenuisopen = true;
     }
     public void cantopenuimessage(string message)
     {

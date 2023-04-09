@@ -217,7 +217,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Test"",
+                    ""name"": ""Map"",
                     ""type"": ""Button"",
                     ""id"": ""1722e75e-32c6-47cc-a1c2-4a520f3831e4"",
                     ""expectedControlType"": ""Button"",
@@ -536,7 +536,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Test"",
+                    ""action"": ""Map"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1141,7 +1141,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         m_Player_Spezial = m_Player.FindAction("Spezial", throwIfNotFound: true);
         m_Player_GButton = m_Player.FindAction("G Button", throwIfNotFound: true);
         m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
-        m_Player_Test = m_Player.FindAction("Test", throwIfNotFound: true);
+        m_Player_Map = m_Player.FindAction("Map", throwIfNotFound: true);
         m_Player_Setalliestarget = m_Player.FindAction("Setalliestarget", throwIfNotFound: true);
         m_Player_Character3target = m_Player.FindAction("Character3target", throwIfNotFound: true);
         m_Player_Character4target = m_Player.FindAction("Character4target", throwIfNotFound: true);
@@ -1260,7 +1260,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Spezial;
     private readonly InputAction m_Player_GButton;
     private readonly InputAction m_Player_Interaction;
-    private readonly InputAction m_Player_Test;
+    private readonly InputAction m_Player_Map;
     private readonly InputAction m_Player_Setalliestarget;
     private readonly InputAction m_Player_Character3target;
     private readonly InputAction m_Player_Character4target;
@@ -1289,7 +1289,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         public InputAction @Spezial => m_Wrapper.m_Player_Spezial;
         public InputAction @GButton => m_Wrapper.m_Player_GButton;
         public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
-        public InputAction @Test => m_Wrapper.m_Player_Test;
+        public InputAction @Map => m_Wrapper.m_Player_Map;
         public InputAction @Setalliestarget => m_Wrapper.m_Player_Setalliestarget;
         public InputAction @Character3target => m_Wrapper.m_Player_Character3target;
         public InputAction @Character4target => m_Wrapper.m_Player_Character4target;
@@ -1365,9 +1365,9 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @Interaction.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
                 @Interaction.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
                 @Interaction.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
-                @Test.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
-                @Test.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
-                @Test.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
+                @Map.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMap;
+                @Map.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMap;
+                @Map.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMap;
                 @Setalliestarget.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSetalliestarget;
                 @Setalliestarget.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSetalliestarget;
                 @Setalliestarget.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSetalliestarget;
@@ -1444,9 +1444,9 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @Interaction.started += instance.OnInteraction;
                 @Interaction.performed += instance.OnInteraction;
                 @Interaction.canceled += instance.OnInteraction;
-                @Test.started += instance.OnTest;
-                @Test.performed += instance.OnTest;
-                @Test.canceled += instance.OnTest;
+                @Map.started += instance.OnMap;
+                @Map.performed += instance.OnMap;
+                @Map.canceled += instance.OnMap;
                 @Setalliestarget.started += instance.OnSetalliestarget;
                 @Setalliestarget.performed += instance.OnSetalliestarget;
                 @Setalliestarget.canceled += instance.OnSetalliestarget;
@@ -1808,7 +1808,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         void OnSpezial(InputAction.CallbackContext context);
         void OnGButton(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
-        void OnTest(InputAction.CallbackContext context);
+        void OnMap(InputAction.CallbackContext context);
         void OnSetalliestarget(InputAction.CallbackContext context);
         void OnCharacter3target(InputAction.CallbackContext context);
         void OnCharacter4target(InputAction.CallbackContext context);

@@ -105,7 +105,7 @@ public class Convertstatics
         thirdchar = Statics.currentthirdchar;
         forthchar = Statics.currentforthchar;
 
-        elementalmenuisactiv = Statics.elementalmenuisactiv;
+        elementalmenuisactiv = Statics.elementalmenuunlocked;
 
         firstweapon = Statics.firstweapon;
         secondweapon = Statics.secondweapon;
@@ -198,7 +198,7 @@ public class Convertstatics
         Statics.currentthirdchar = thirdchar;
         Statics.currentforthchar = forthchar;
 
-        Statics.elementalmenuisactiv = elementalmenuisactiv;
+        Statics.elementalmenuunlocked = elementalmenuisactiv;
 
         Statics.firstweapon = firstweapon;
         Statics.secondweapon = secondweapon;
