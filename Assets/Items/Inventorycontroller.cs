@@ -14,13 +14,16 @@ public class Inventorycontroller : ScriptableObject
         if (item.inventoryslot != 0)
         {
             matsinventory.Container.Items[item.inventoryslot - 1].amount += amount;
-            loottext = amount + "x " + item.name;
+            loottext = "+" + amount + " " + item.name + " (" + matsinventory.Container.Items[item.inventoryslot - 1].amount + ")";
             LoadCharmanager.Overallmainchar.GetComponent<Displayloot>().displayloot(loottext);
         }
         else
         {
             setfirstemptyslot(item, amount);
-            LoadCharmanager.Overallmainchar.GetComponent<Displayloot>().displayloot(item.name.ToString());
+            if(LoadCharmanager.Overallmainchar != null)
+            {
+                LoadCharmanager.Overallmainchar.GetComponent<Displayloot>().displayloot(item.name.ToString());
+            }
         }
     }
 
@@ -30,13 +33,13 @@ public class Inventorycontroller : ScriptableObject
         {
             if(seconditem.inventoryslot != 0)
             {
-                matsinventory.Container.Items[item.inventoryslot - 1].amount += seconditemamount;
-                loottext = item.name + " convert to " + seconditemamount + "x " + seconditem.name;
+                matsinventory.Container.Items[seconditem.inventoryslot - 1].amount += seconditemamount;
+                loottext = item.name + " convert to +" + seconditemamount + " " + seconditem.name + " (" + matsinventory.Container.Items[seconditem.inventoryslot - 1].amount + ")";
                 LoadCharmanager.Overallmainchar.GetComponent<Displayloot>().displayloot(loottext);
             }
             else
             {
-                loottext = item.name + " convert to " + seconditemamount + "x " + seconditem.name;
+                loottext = item.name + " convert to +" + seconditemamount + " " + seconditem.name;
                 LoadCharmanager.Overallmainchar.GetComponent<Displayloot>().displayloot(loottext);
                 setfirstitemifconverted(seconditem, seconditemamount);
             }

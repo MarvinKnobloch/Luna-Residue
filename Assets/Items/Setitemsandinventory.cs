@@ -6,6 +6,7 @@ public class Setitemsandinventory : MonoBehaviour
 {
     [SerializeField] public Inventorycontroller[] inventorys;
     [SerializeField] private Craftingobject[] craftingitems;
+    [SerializeField] private Itemcontroller gold;
     [SerializeField] private Swordobject[] sworditems;
     [SerializeField] private Bowobject[] bowitems;
     [SerializeField] private Fistobject[] fistitems;
@@ -215,6 +216,7 @@ public class Setitemsandinventory : MonoBehaviour
             setitemandvalues(startingring, i);
             Statics.charcurrentring[i] = startingring;
         }
+        inventorys[0].Additem(gold, 1);
         inventorys[1].addstartequiptment(startingsword);
         inventorys[2].addstartequiptment(startingbow);
         inventorys[3].addstartequiptment(startingfist);

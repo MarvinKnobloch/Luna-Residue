@@ -14431,6 +14431,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 86d6d0ec3403b124f9a553e397d70f34, type: 2}
   - {fileID: 11400000, guid: 0960a2238d03d57408bfdd8ee4cca568, type: 2}
   - {fileID: 11400000, guid: 854e2bfbee57e02478c30ba0b022b324, type: 2}
+  gold: {fileID: 11400000, guid: aca73481126d62d418b60468c6629c06, type: 2}
   sworditems:
   - {fileID: 11400000, guid: 3ab9c5262cd93e840bcaf63f2f0793f0, type: 2}
   - {fileID: 11400000, guid: 5a98190f246b4c2429dbdfe77e8fa06c, type: 2}
@@ -24528,7 +24529,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Tabulator
+  m_Text: "^\t"
 --- !u!222 &1479916204
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -27447,13 +27448,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audiosource: {fileID: 1627018868}
-  normalbattle: {fileID: 8300000, guid: 752832458c3706647a80561c5d09445f, type: 3}
-  spezialbattle: {fileID: 8300000, guid: 32701fe7e8489cb45aa359927e2af1ea, type: 3}
+  allzonesongs: []
+  oldsongint: 0
   currentzonemusic: {fileID: 0}
   currentzonemusictime: 0
   oldzonemusic: {fileID: 0}
   zoneentertime: 0
   oldzonemusictimer: 0
+  normalbattle: {fileID: 8300000, guid: 752832458c3706647a80561c5d09445f, type: 3}
+  spezialbattle: {fileID: 8300000, guid: 32701fe7e8489cb45aa359927e2af1ea, type: 3}
 --- !u!1 &1629242379
 GameObject:
   m_ObjectHideFlags: 0
@@ -29412,6 +29415,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menubuttonsound: {fileID: 8300000, guid: 57d4f96710e5a9b4c9dedf2a5c4b8bc2, type: 3}
   menubuttonsound2: {fileID: 0}
+  menubuttonsuccess: {fileID: 0}
 --- !u!4 &1723024640
 Transform:
   m_ObjectHideFlags: 0
