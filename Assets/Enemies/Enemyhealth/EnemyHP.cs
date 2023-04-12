@@ -68,12 +68,15 @@ public class EnemyHP : MonoBehaviour
         enemylvl = enemyvalues.enemylvl + addenemylvl;
         sizeofenemy = enemyvalues.enemysize;
         maxhealth = Mathf.Round(enemyvalues.basehealth + (enemyvalues.basehealth / 10 * enemylvl));
-        enemymovement.basedmg = Globalplayercalculations.calculateenemydmg(enemyvalues.basedmg, enemylvl);
+        if(enemymovement != null) enemymovement.basedmg = Globalplayercalculations.calculateenemydmg(enemyvalues.basedmg, enemylvl);
         enemyfocusbargameobject = enemyfocusdebuffbar.transform.parent.gameObject;
 
-        if (Vector3.Distance(LoadCharmanager.Overallmainchar.transform.position, transform.position) < 20)
+        if(LoadCharmanager.Overallmainchar != null)
         {
-            gameObject.SetActive(false);
+            if (Vector3.Distance(LoadCharmanager.Overallmainchar.transform.position, transform.position) < 20)
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
     private void OnEnable()
@@ -90,30 +93,19 @@ public class EnemyHP : MonoBehaviour
         }
         resetdebuff();
     }
-    public void takeplayerdamage(float damage, int dmgtype , bool crit)                                               
+    public void takeplayerdamage(float damage, int dmgtype, bool crit)
     {
-        if (gameObject.GetComponent<Miniadd>())
+        if (enemyisdead == false)
         {
-            currenthealth -= damage;
-            if (currenthealth <= 0)
-            {
-                gameObject.SetActive(false);
-            }
+            if (dmgtype == 0) finaldmg = damage;
+            else if (dmgtype == 1) enemycalculatedmg.downdmg(damage);
+            else if (dmgtype == 2) enemycalculatedmg.middmg(damage);
+            else if (dmgtype == 3) enemycalculatedmg.updmg(damage);
+            if (crit == true) Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, finaldmg, Color.red);
+            else Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, finaldmg, Color.yellow);
+            currenthealth -= finaldmg;
+            afterdmgtaken();
         }
-        else
-        {
-            if (enemyisdead == false)
-            {
-                if (dmgtype == 0) finaldmg = damage;
-                else if (dmgtype == 1) enemycalculatedmg.downdmg(damage);
-                else if (dmgtype == 2) enemycalculatedmg.middmg(damage);
-                else if (dmgtype == 3) enemycalculatedmg.updmg(damage);
-                if (crit == true) Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, finaldmg, Color.red);
-                else Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, finaldmg, Color.yellow);
-                currenthealth -= finaldmg;
-                afterdmgtaken();
-            }
-        }    
     }
     public void takesupportdmg(float dmg)
     {
@@ -375,11 +367,14 @@ public class EnemyHP : MonoBehaviour
     }
     private void dropitems()
     {
-        if (enemyvalues.golddropamount <= 2) golddropamount = 3;
-        else golddropamount = enemyvalues.golddropamount;
-        golddropamount = Mathf.RoundToInt(golddropamount * (enemylvl * 0.5f) + UnityEngine.Random.Range(0, Mathf.RoundToInt(enemylvl * 0.5f)));
-        GameObject enemygolddrop = Instantiate(enemyvalues.gold, transform.position + Vector3.up, transform.rotation);
-        enemygolddrop.GetComponent<Golditemcontroller>().golddropamount = golddropamount;
+        if(enemyvalues.gold != null)
+        {
+            if (enemyvalues.golddropamount <= 2) golddropamount = 3;
+            else golddropamount = enemyvalues.golddropamount;
+            golddropamount = Mathf.RoundToInt(golddropamount * (enemylvl * 0.5f) + UnityEngine.Random.Range(0, Mathf.RoundToInt(enemylvl * 0.5f)));
+            GameObject enemygolddrop = Instantiate(enemyvalues.gold, transform.position + Vector3.up, transform.rotation);
+            enemygolddrop.GetComponent<Golditemcontroller>().golddropamount = golddropamount;
+        }
 
         foreach (Enemydrops obj in enemyvalues.enemydrops)
         {
