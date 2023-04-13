@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093db2275f89fbe4186b8aed6b1bb4b0, type: 3}
   m_Name: Tutorialbig
   m_EditorClassIdentifier: 
-  enemyname: Testenemy
-  basehealth: 5000
+  enemyname: Dummy
+  basehealth: 10000
   enemylvl: 1
   movementspeed: 10
   basedmg: 1

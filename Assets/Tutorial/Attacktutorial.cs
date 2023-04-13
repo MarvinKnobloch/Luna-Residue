@@ -9,32 +9,35 @@ public class Attacktutorial : MonoBehaviour
     private SpielerSteu controlls;
 
     private Tutorialcontroller tutorialcontroller;
-    private Areacontroller areacontroller;
+    private bool tutorialcomplete;
     private int textindex;
     private string attack1action;
     private string attack2action;
     private string attack3action;
 
-    private int tutorialnumber;
+    private bool tutorialstarted;
+    [SerializeField] private GameObject gate;
+    private Vector3 gatestartposi;
+    private Vector3 gateendposi;
+    private float movetime = 4f;
+    private float movetimer;
 
     private bool readinputs;
     private void Start()
     {
+        tutorialcomplete = false;
+        tutorialstarted = false;
+        gatestartposi = gate.transform.position;
+        gateendposi = gatestartposi + new Vector3(0, -10, 0);
         tutorialcontroller = GetComponentInParent<Tutorialcontroller>();
         controlls = Keybindinputmanager.inputActions;
         readinputs = false;
-        areacontroller = tutorialcontroller.areacontroller;
-        tutorialnumber = GetComponent<Areanumber>().areanumber;
-        if (areacontroller.tutorialcomplete[tutorialnumber] == true)
-        {
-            gameObject.SetActive(false);
-        }
     }
     private void Update()
     {
         if (readinputs == true && controlls.Player.Interaction.WasPressedThisFrame())
         {
-            if (textindex != 3)
+            if (textindex != 4)
             {
                 tutorialcontroller.tutorialtext.text = string.Empty;
                 textindex++;
@@ -45,10 +48,14 @@ public class Attacktutorial : MonoBehaviour
                 endtutorial();
             }
         }
+        if (tutorialstarted == true)
+        {
+            checkgate();
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == LoadCharmanager.Overallmainchar && areacontroller.tutorialcomplete[tutorialnumber] == false)
+        if(other.gameObject == LoadCharmanager.Overallmainchar && tutorialcomplete == false)
         {
             attack1action = controlls.Player.Attack1.GetBindingDisplayString();
             attack2action = controlls.Player.Attack2.GetBindingDisplayString();
@@ -61,18 +68,43 @@ public class Attacktutorial : MonoBehaviour
     }
     private void showtext()
     {
-        if(textindex == 0) tutorialcontroller.tutorialtext.text = "Press \"" + "<color=green>" + attack1action + "</color>" + "\" to perform an attack.";
-        else if(textindex == 1) tutorialcontroller.tutorialtext.text = "Meanwhile the first attack there is a small window to press \"" + "<color=green>" + attack2action + "</color>" + "\" to continue your attackchain.";
-        else if (textindex == 2) tutorialcontroller.tutorialtext.text = "Meanwhile the second attack you can choose to perform a downattack \"" + "<color=green>" + attack1action + "</color>" + "\", a midattack \""
-                                               + "<color=green>" + attack2action + "</color>" + "\" or a upattack \"" + "<color=green>" + attack3action + "</color>" + "\".";
-        else if (textindex == 3) tutorialcontroller.tutorialtext.text = "Its possible to perfrom this attackchain 2 times before you have to reset.";
+        if (textindex == 0) tutorialcontroller.tutorialtext.text = "Press \"" + "<color=green>" + attack1action + "</color>" + "\" to attack.";
+        else if (textindex == 1) tutorialcontroller.tutorialtext.text = "Meanwhile this attack there is a small window to press \"" + "<color=green>" + attack2action + "</color>" + "\" to continue your attackchain.";
+        else if (textindex == 2) tutorialcontroller.tutorialtext.text = "While performing your second attack press \"" + "<color=green>" + attack1action + "</color>" + "\" (downattack), \""
+                                                                      + "<color=green>" + attack2action + "</color>" + "\" (midattack) or \"" + "<color=green>"
+                                                                      + attack3action + "</color>" + "\" (upattack) to finish the chainattack.";
+        else if (textindex == 3) tutorialcontroller.tutorialtext.text = "Its possible to perform this attackchain 2 times before you have to reset.";
+        else if (textindex == 4) tutorialcontroller.tutorialtext.text = "Complete a attackchain to continue the tutorial";
     }
     private void endtutorial()
     {
+        tutorialstarted = true;
         readinputs = false;
         tutorialcontroller.endtutorial();
-        areacontroller.tutorialcomplete[tutorialnumber] = true;
-        areacontroller.autosave();
-        gameObject.SetActive(false);
+    }
+    private void checkgate()
+    {
+        if (LoadCharmanager.Overallmainchar.GetComponent<Movescript>().attackcombochain > 0)
+        {
+            tutorialstarted = false;
+            StartCoroutine(opengate());
+        }
+    }
+    IEnumerator opengate()
+    {
+        while (true)
+        {
+            movetimer += Time.deltaTime;
+            float gateopenpercantage = movetimer / movetime;
+            gate.transform.position = Vector3.Lerp(gatestartposi, gateendposi, gateopenpercantage);
+
+            if (movetimer >= movetime)
+            {
+                movetimer = 0;
+                StopCoroutine("opengate");
+                gameObject.SetActive(false);
+            }
+            yield return null;
+        }
     }
 }
