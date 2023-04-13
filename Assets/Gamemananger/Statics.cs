@@ -68,6 +68,9 @@ public class Statics
     public static float charswitchbuffperskillpoint = 3;
     public static int basicbuffdmgperskillpoint = 2;
 
+    public static float presetdashcd = 6;
+    public static float presetdashcost = 3;
+
     public static int presetresurrectcd = 4;
     public static int presethealcd = 5;
 

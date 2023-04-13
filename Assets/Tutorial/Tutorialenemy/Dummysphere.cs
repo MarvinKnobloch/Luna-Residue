@@ -27,7 +27,6 @@ public class Dummysphere : MonoBehaviour
         if (Statics.infight == true)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, 5f, targets, QueryTriggerInteraction.Ignore);
-            Debug.Log(colliders.Length);
             foreach (Collider target in colliders)
             {
                 if (target.gameObject == LoadCharmanager.Overallmainchar.gameObject)
@@ -38,9 +37,7 @@ public class Dummysphere : MonoBehaviour
             }
             if(colliders.Length == 0)
             {
-                Debug.Log("start count");
-                StartCoroutine(dummycontroller.killenemy());
-                StartCoroutine(dummycontroller.opengate());
+                dummycontroller.tutorialsuccess();
             }
             else dummycontroller.gameObject.SetActive(false);
         }

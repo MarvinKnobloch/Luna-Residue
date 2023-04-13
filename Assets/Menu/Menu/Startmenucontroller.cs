@@ -145,6 +145,9 @@ public class Startmenucontroller : MonoBehaviour
         Statics.charbasicdmgbuff = new float[] { 0, 0, 0, 0, 0 };
 
         //resetgameplaystatics
+        Statics.dashcd = Statics.presetdashcd;
+        Statics.dashcost = Statics.presetdashcost;
+        Statics.healcd = Statics.presethealcd;
         Statics.healcdbool = false;
         Statics.dashcdbool = false;
         Statics.weapsonswitchbool = false;

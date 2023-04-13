@@ -131,6 +131,9 @@ public class Saveandloadgame : MonoBehaviour
     }
     private void resetgameplaystatics()
     {
+        Statics.dashcd = Statics.presetdashcd;
+        Statics.dashcost = Statics.presetdashcost;
+        Statics.healcd = Statics.presethealcd;
         Statics.healcdbool = false;
         Statics.dashcdbool = false;
         Statics.weapsonswitchbool = false;

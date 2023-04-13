@@ -13,7 +13,7 @@ public class Dummyspezialcontroller : MonoBehaviour
     private Vector3 gatestartposi;
     private Vector3 gateendposi;
     private float movetime = 6f;
-    private float movetimer;
+    public float movetimer;
 
     [SerializeField] private EnemyHP enemyHP;
 
@@ -36,8 +36,14 @@ public class Dummyspezialcontroller : MonoBehaviour
         }
     }
 
-    public IEnumerator opengate()
+    public void tutorialsuccess()
     {
+        StartCoroutine(killenemy());
+        StartCoroutine(opengate());
+    }
+    IEnumerator opengate()
+    {
+        movetimer = 0;
         while (true)
         {
             movetimer += Time.deltaTime;
@@ -53,7 +59,7 @@ public class Dummyspezialcontroller : MonoBehaviour
             yield return null;
         }
     }
-    public IEnumerator killenemy()
+    IEnumerator killenemy()
     {
         yield return new WaitForSeconds(2);
         enemyHP.takesupportdmg(11000);
