@@ -20,7 +20,7 @@ public class Tutorialareacontroller : MonoBehaviour
         {
             areacontroller.tutorialcomplete[tutorialnumber] = true;
             areacontroller.autosave();
-            Invoke("areadisable", 0.5f);                             //weil fehlermeldung kam bei direkt disable???
+            Invoke("areadisable", 3f);                             //weil fehlermeldung kam bei direkt disable???
         }
     }
     private void areadisable()

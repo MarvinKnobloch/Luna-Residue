@@ -20,7 +20,7 @@ public class Mapcontroller : MonoBehaviour
     void Update()
     {
         updatetimer += Time.deltaTime;
-        if(updatetimer > 0.1f)
+        if(updatetimer > 0.05f)
         {  
             updatetimer = 0;
             float xposi = LoadCharmanager.Overallmainchar.transform.position.x * 1.41f;
