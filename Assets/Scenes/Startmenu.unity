@@ -18737,7 +18737,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: T
+  m_Text: ^T
 --- !u!222 &1168719226
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -24529,7 +24529,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "^\t"
+  m_Text: Tabulator
 --- !u!222 &1479916204
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -27456,7 +27456,7 @@ MonoBehaviour:
   zoneentertime: 0
   oldzonemusictimer: 0
   normalbattle: {fileID: 8300000, guid: 752832458c3706647a80561c5d09445f, type: 3}
-  spezialbattle: {fileID: 8300000, guid: 32701fe7e8489cb45aa359927e2af1ea, type: 3}
+  spezialbattle: {fileID: 8300000, guid: 5c0f0cd5a4c194c44be5cb64eaea5b99, type: 3}
 --- !u!1 &1629242379
 GameObject:
   m_ObjectHideFlags: 0

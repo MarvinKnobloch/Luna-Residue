@@ -172,7 +172,6 @@ public class Bowattack : MonoBehaviour
         {
             if (controlls.Player.Attack1.WasPressedThisFrame() && basicattackcd > 0.5f && Statics.otheraction == false)
             {
-                playersounds.loadbow1();
                 movementscript.state = Movescript.State.Rangegroundattack;
                 attackestate = Attackstate.attack1;
                 Statics.otheraction = true;
@@ -185,7 +184,6 @@ public class Bowattack : MonoBehaviour
         {
             if (controlls.Player.Attack1.WasPressedThisFrame() && movementscript.attackonceair == true && Statics.otheraction == false && Statics.infight == true)
             {
-                playersounds.loadbow1();
                 eleAbilities.stopignorelayers();
                 movementscript.switchtoattackaimstate();
                 attackestate = Attackstate.bowairattack;
@@ -226,7 +224,6 @@ public class Bowattack : MonoBehaviour
             }
             else
             {
-                playersounds.loadbow2();
                 if (controlls.Player.Attack1.WasPressedThisFrame())
                 {
                     movementscript.attackcombochain++;
@@ -316,7 +313,6 @@ public class Bowattack : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, Movescript.lockontarget.position) > 2f)
             {
-                playersounds.loadbow1();
                 movementscript.state = Movescript.State.Empty;
                 attackestate = Attackstate.waitforattack;
                 movementscript.graviti = 0f;
@@ -389,7 +385,6 @@ public class Bowattack : MonoBehaviour
         if (readattackinput == true) groundattackchainend();
         else
         {
-            playersounds.loadbow2();
             down = false;
             mid = false;
             up = false;
@@ -403,7 +398,6 @@ public class Bowattack : MonoBehaviour
         if (readattackinput == true) groundattackchainend();
         else
         {
-            playersounds.loadbow3();
             if (down == true)
             {
                 attackestate = Attackstate.groundattackchain;
@@ -426,7 +420,6 @@ public class Bowattack : MonoBehaviour
         if (movementscript.state != Movescript.State.Rangegroundattack) return;
         if (readattackinput == false && movementscript.attackcombochain < 2)
         {
-            playersounds.loadbow1();
             attackestate = Attackstate.attack1;
             movementscript.ChangeAnimationState(groundbasic1state);
         }
@@ -448,7 +441,6 @@ public class Bowattack : MonoBehaviour
         if (readattackinput == true) airattackchainend();
         else
         {
-            playersounds.loadbow1();
             movementscript.switchtoattackaimstate();
             attackestate = Attackstate.bowairattack;
             movementscript.ChangeAnimationState(bowairchargestate);
@@ -482,7 +474,6 @@ public class Bowattack : MonoBehaviour
         if (movementscript.state != Movescript.State.Attackweaponaim) return;
         if (movementscript.attackcombochain < 2)
         {
-            playersounds.loadbow1();
             movementscript.ChangeAnimationState(bowairchargestate);
             Statics.otheraction = false;
         }
@@ -503,7 +494,6 @@ public class Bowattack : MonoBehaviour
         root = false;
         if (readattackinput == false && movementscript.attackcombochain < 2)
         {
-            playersounds.loadbow1();
             attackestate = Attackstate.attack1;
             movementscript.graviti = -0.5f;
             movementscript.state = Movescript.State.Rangegroundattack;
@@ -546,7 +536,6 @@ public class Bowattack : MonoBehaviour
     private void bowweaponswitchattackend()
     {
         Statics.otheraction = false;
-        playersounds.loadbow1();
         movementscript.disableaimcam();
         Time.timeScale = Statics.normalgamespeed;
         Time.fixedDeltaTime = Statics.normaltimedelta;
@@ -574,7 +563,6 @@ public class Bowattack : MonoBehaviour
 
     private void shotsinglearrow(float dmg, int type)
     {
-        playersounds.playsound();
         if (Movescript.lockontarget != null)
         {
             Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
@@ -594,7 +582,6 @@ public class Bowattack : MonoBehaviour
 
     private void shotaoearrow(float dmg, int radius, int type)
     {
-        playersounds.playsound();
         if (Movescript.lockontarget != null)
         {
             Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
@@ -609,7 +596,6 @@ public class Bowattack : MonoBehaviour
 
     private void shotsinglearrowwhileaim(float dmg, int type)
     {
-        playersounds.playsound();
         if (Physics.Raycast(Camtransform.position, Camtransform.forward, out RaycastHit hit, Mathf.Infinity, Arrowraycastlayer, QueryTriggerInteraction.Ignore))
         {
             Vector3 arrowrotation = (hit.point - Arrowlaunchposi.position).normalized;
@@ -629,7 +615,6 @@ public class Bowattack : MonoBehaviour
 
     private void shotaoearrowwhileaim(float dmg, float radius, int type)
     {
-        playersounds.playsound();
         RaycastHit hit;
         if (Physics.Raycast(Camtransform.position, Camtransform.forward, out hit, Mathf.Infinity, Arrowraycastlayer, QueryTriggerInteraction.Ignore))
         {
@@ -658,5 +643,8 @@ public class Bowattack : MonoBehaviour
             arrowcontroller.hit = true;
         }
     }
+    private void playbowsound1() => playersounds.playbow1();
+    private void playbowsound2() => playersounds.playbow2();
+    private void playbowsound3() => playersounds.playbow3();
 
 }

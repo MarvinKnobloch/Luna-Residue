@@ -19,6 +19,7 @@ public class Charswitch : MonoBehaviour
     public GameObject charmanager;
     private Manamanager manacontroller;
 
+    [SerializeField] private Playersounds playersounds;
     void Awake()
     {
         manacontroller = charmanager.GetComponent<Manamanager>();
@@ -36,6 +37,7 @@ public class Charswitch : MonoBehaviour
         {
             if (Steuerung.Player.Charchange.WasPerformedThisFrame() && Statics.otheraction == false && Statics.charswitchbool == false)
             {
+                playersounds.playcharswitch();
                 if (Statics.currentactiveplayer == 0)
                 {
                     switchtosecondchar();

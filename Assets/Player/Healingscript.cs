@@ -52,6 +52,8 @@ public class Healingscript : MonoBehaviour
     const string grouphealend = "Grouphealend";
     const string resurrectstate = "Resurrect";
 
+    [SerializeField] private Playersounds playersounds;
+
     private void Awake()
     {
         movementscript = GetComponent<Movescript>();
@@ -92,7 +94,7 @@ public class Healingscript : MonoBehaviour
     }
     public void heal()
     {
-        if (Statics.healcdbool == false && LoadCharmanager.disableattackbuttons == false)
+        //if (Statics.healcdbool == false && LoadCharmanager.disableattackbuttons == false)
         {
             if (readinputs == true)
             {
@@ -112,16 +114,19 @@ public class Healingscript : MonoBehaviour
                 {
                     if (controlls.SpielerHeal.Target1.WasPerformedThisFrame())
                     {
+                        playersounds.playsingleheal();
                         healtarget = 1;
                         movementscript.ChangeAnimationState(singlehealend);
                     }
                     if (controlls.SpielerHeal.Target2.WasPerformedThisFrame() && LoadCharmanager.Overallthirdchar != null)
                     {
+                        playersounds.playsingleheal();
                         healtarget = 2;
                         movementscript.ChangeAnimationState(singlehealend);
                     }
                     if (controlls.SpielerHeal.Target3.WasPerformedThisFrame() && LoadCharmanager.Overallforthchar != null)
                     {
+                        playersounds.playsingleheal();
                         healtarget = 3;
                         movementscript.ChangeAnimationState(singlehealend);
                     }             
@@ -170,6 +175,7 @@ public class Healingscript : MonoBehaviour
     }
     public void resethealvalues()
     {
+        playersounds.stopsoundloop();
         strgwaspressed = false;
         readinputs = false;
         currentcombo = 0;

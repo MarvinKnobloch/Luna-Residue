@@ -90,6 +90,9 @@ public class Movescript : MonoBehaviour
     const string idlestate = "Idle";
     const string dazestate = "Daze";
 
+    //audio
+    public Playersounds playersounds;
+
     //Lockon
     public static Transform lockontarget;
      public GameObject focustargetui;
@@ -480,6 +483,8 @@ public class Movescript : MonoBehaviour
     public void pushplayerup(float amount) => playerair.pushplayerupwards(amount);
     public void gahteritem(GameObject gatherobject) => playerutility.gatheritem(gatherobject);
     public void spawnallies() => playerutility.spawnallies();
+    private void playdashsound() => playersounds.playdash();
+
 
 }
 
