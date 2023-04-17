@@ -106,6 +106,7 @@ public class SwordController : MonoBehaviour
             }
             if (cols.Length > 0)
             {
+                Weaponsounds.instance.playswordimpact();
                 healandmana(dmgtype, manarestore);
             }
         }

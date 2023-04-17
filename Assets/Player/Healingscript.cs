@@ -53,6 +53,7 @@ public class Healingscript : MonoBehaviour
     const string resurrectstate = "Resurrect";
 
     [SerializeField] private Playersounds playersounds;
+    [SerializeField] private Spellsounds spellsounds;
 
     private void Awake()
     {
@@ -114,19 +115,19 @@ public class Healingscript : MonoBehaviour
                 {
                     if (controlls.SpielerHeal.Target1.WasPerformedThisFrame())
                     {
-                        playersounds.playsingleheal();
+                        playersounds.playsinglehealstart();
                         healtarget = 1;
                         movementscript.ChangeAnimationState(singlehealend);
                     }
                     if (controlls.SpielerHeal.Target2.WasPerformedThisFrame() && LoadCharmanager.Overallthirdchar != null)
                     {
-                        playersounds.playsingleheal();
+                        playersounds.playsinglehealstart();
                         healtarget = 2;
                         movementscript.ChangeAnimationState(singlehealend);
                     }
                     if (controlls.SpielerHeal.Target3.WasPerformedThisFrame() && LoadCharmanager.Overallforthchar != null)
                     {
-                        playersounds.playsingleheal();
+                        playersounds.playsinglehealstart();
                         healtarget = 3;
                         movementscript.ChangeAnimationState(singlehealend);
                     }             
@@ -175,7 +176,6 @@ public class Healingscript : MonoBehaviour
     }
     public void resethealvalues()
     {
-        playersounds.stopsoundloop();
         strgwaspressed = false;
         readinputs = false;
         currentcombo = 0;
@@ -295,6 +295,8 @@ public class Healingscript : MonoBehaviour
 
     private void castsingleheal()
     {
+        playersounds.stopsound();
+        spellsounds.playsinglehealend();
         if(healtarget == 1) LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().addhealthwithtext(finalsingleheal);
         else if(healtarget == 2) LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().addhealthwithtext(finalsingleheal);
         else if (healtarget == 3) LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().addhealthwithtext(finalsingleheal);

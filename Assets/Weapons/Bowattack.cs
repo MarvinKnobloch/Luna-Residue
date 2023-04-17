@@ -65,7 +65,7 @@ public class Bowattack : MonoBehaviour
 
     //audio
     [SerializeField] private Playersounds playersounds;
-
+ 
     void Awake()
     {
         controlls = Keybindinputmanager.inputActions;
@@ -646,5 +646,4 @@ public class Bowattack : MonoBehaviour
     private void playbowsound1() => playersounds.playbow1();
     private void playbowsound2() => playersounds.playbow2();
     private void playbowsound3() => playersounds.playbow3();
-
 }

@@ -54,6 +54,7 @@ public class Aoearrow : MonoBehaviour
     {
         if (arrowtarget != null)
         {
+            Weaponsounds.instance.playarrowimpact();
             Collider[] cols = Physics.OverlapSphere(arrowtarget, aoeradius, Layerhitbox, QueryTriggerInteraction.Ignore);
             foreach (Collider Enemyhit in cols)
             {

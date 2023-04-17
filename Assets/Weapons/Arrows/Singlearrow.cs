@@ -49,6 +49,7 @@ public class Singlearrow : MonoBehaviour
     {
         if (arrowtarget != null)
         {
+            Weaponsounds.instance.playarrowimpact();
             if (arrowtarget.TryGetComponent(out EnemyHP enemyscript))
             {
                 enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);

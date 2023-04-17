@@ -6,11 +6,13 @@ public class Playersounds : MonoBehaviour
 {
     private AudioSource audiosource;
 
+    [SerializeField] private AudioClip footstep1;
+    [SerializeField] private AudioClip footstep2;
     [SerializeField] private AudioClip dash;
     [SerializeField] private AudioClip charswitch;
 
     [SerializeField] private AudioClip healingstate;
-    [SerializeField] private AudioClip singleheal;
+    [SerializeField] private AudioClip singlehealstart;
 
     [SerializeField] private AudioClip swordswing1;
     [SerializeField] private AudioClip swordswing2;
@@ -30,9 +32,11 @@ public class Playersounds : MonoBehaviour
         audiosource.Play();
     }
 
+    public void playfootstep1() => playsound(footstep1);
+    public void playfootstep2() => playsound(footstep2);
     public void playdash() => playsound(dash);
     public void playcharswitch() => playsound(charswitch);
-    public void playsingleheal() => playsound(singleheal);
+    public void playsinglehealstart() => playsound(singlehealstart);
     public void playsword1()
     {
         audiosource.clip = swordswing1;
@@ -64,18 +68,11 @@ public class Playersounds : MonoBehaviour
         audiosource.Play();
     }
 
-    public void playsoundwithloop(AudioClip newclip)
-    {
-        audiosource.loop = true;
-        audiosource.clip = newclip;
-        audiosource.Play();
-    }
-    public void stopsoundloop()
+    public void stopsound()
     {
         audiosource.loop = false;
         audiosource.clip = null;
     }
-    public void playhealingstate() => playsoundwithloop(healingstate);
 
 
 

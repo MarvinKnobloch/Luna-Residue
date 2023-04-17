@@ -483,6 +483,9 @@ public class Movescript : MonoBehaviour
     public void pushplayerup(float amount) => playerair.pushplayerupwards(amount);
     public void gahteritem(GameObject gatherobject) => playerutility.gatheritem(gatherobject);
     public void spawnallies() => playerutility.spawnallies();
+
+    private void playfootstep1() => playersounds.playfootstep1();
+    private void playfootstep2() => playersounds.playfootstep2();
     private void playdashsound() => playersounds.playdash();
 
 
