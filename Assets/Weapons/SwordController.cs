@@ -106,9 +106,17 @@ public class SwordController : MonoBehaviour
             }
             if (cols.Length > 0)
             {
-                Weaponsounds.instance.playswordimpact();
+                Weaponsounds.instance.setswordhit(dmgtype);
                 healandmana(dmgtype, manarestore);
             }
+            else
+            {
+                Weaponsounds.instance.setswordmiss(dmgtype);
+            }
+        }
+        else
+        {
+            Weaponsounds.instance.setswordmiss(dmgtype);
         }
     }
     private void calculatecritchance(EnemyHP enemyscript, float dmg)

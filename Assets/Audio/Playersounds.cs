@@ -26,51 +26,23 @@ public class Playersounds : MonoBehaviour
     {
         audiosource = GetComponent<AudioSource>();
     }
-    public void playsound(AudioClip newclip) 
+    public void playsound(AudioClip newclip, float volume) 
     {
         audiosource.clip = newclip;
+        audiosource.volume = volume;
         audiosource.Play();
     }
 
-    public void playfootstep1() => playsound(footstep1);
-    public void playfootstep2() => playsound(footstep2);
-    public void playdash() => playsound(dash);
-    public void playcharswitch() => playsound(charswitch);
-    public void playsinglehealstart() => playsound(singlehealstart);
-    public void playsword1()
-    {
-        audiosource.clip = swordswing1;
-        audiosource.Play();
-    }
-    public void playsword2()
-    {
-        audiosource.clip = swordswing2;
-        audiosource.Play();
-    }
-    public void playsword3()
-    {
-        audiosource.clip = swordswing3;
-        audiosource.Play();
-    }
-    public void playbow1()
-    {
-        audiosource.clip = bow1;
-        audiosource.Play();
-    }
-    public void playbow2()
-    {
-        audiosource.clip = bow2;
-        audiosource.Play();
-    }
-    public void playbow3()
-    {
-        audiosource.clip = bow3;
-        audiosource.Play();
-    }
-
+    public void playfootstep1() => playsound(footstep1, 0.2f);
+    public void playfootstep2() => playsound(footstep2, 0.2f);
+    public void playdash() => playsound(dash, 0.4f);
+    public void playcharswitch() => playsound(charswitch, 0.4f);
+    public void playsinglehealstart() => playsound(singlehealstart, 0.4f);
+    public void playbow1() => playsound(bow1, 0.4f);
+    public void playbow2() => playsound(bow2, 0.4f);
+    public void playbow3() => playsound(bow3, 0.4f);
     public void stopsound()
     {
-        audiosource.loop = false;
         audiosource.clip = null;
     }
 

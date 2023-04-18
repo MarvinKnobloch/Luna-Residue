@@ -184,4 +184,11 @@ public class Enemymovement : MonoBehaviour
         animator.CrossFadeInFixedTime(newstate, 0.1f);
         currentstate = newstate;
     }
+    public void playattacksound()
+    {
+        //if(gameObject == LoadCharmanager.Overallmainchar)
+        {
+            Enemysounds.instance.playplayergothit();
+        }
+    }
 }

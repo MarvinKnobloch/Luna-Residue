@@ -38,7 +38,6 @@ public class Playerhp : MonoBehaviour
         {
             return;
         }
-
         float dmgtodeal = Mathf.Round(damage - ((Statics.groupstonedefensebonus + attributecontroller.stoneclassdmgreduction + (attributecontroller.defense / 40)) * 0.01f * damage));
         health -= dmgtodeal;
         handlehealth();

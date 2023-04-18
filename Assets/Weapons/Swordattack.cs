@@ -397,7 +397,4 @@ public class Swordattack : MonoBehaviour
         movementscript.switchtogroundstate();
         Statics.otheraction = false;
     }
-    private void playswordsound1()  => playersounds.playsword1();
-    private void playswordsound2() => playersounds.playsword2();
-    private void playswordsound3() => playersounds.playsword3();
 }
