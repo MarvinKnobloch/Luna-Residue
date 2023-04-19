@@ -6,8 +6,11 @@ using UnityEngine.UI;
 public class Mathmanspezial : MonoBehaviour
 {
     [SerializeField] private GameObject mathmancontroller;
-
-    const string dazestate = "Daze";
+    private Enemyspezialsound enemyspezialsound;
+    private void Awake()
+    {
+        enemyspezialsound = mathmancontroller.GetComponentInParent<Enemyspezialsound>();
+    }
     private void mathspezial()
     {
         if (Statics.dash == false)
@@ -15,5 +18,9 @@ public class Mathmanspezial : MonoBehaviour
             LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtostun();
             mathmancontroller.SetActive(true);
         }
+    }
+    private void mathmanspezialaudio()
+    {
+        enemyspezialsound.playmathmanspezial();
     }
 }

@@ -29,6 +29,5 @@ public class Elkconedmg : MonoBehaviour
         yield return null;
         StopAllCoroutines();
         elkcontroller.conedisable();
-        gameObject.SetActive(false);
     }
 }
