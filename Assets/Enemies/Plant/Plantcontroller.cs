@@ -5,19 +5,19 @@ using UnityEngine.AI;
 
 public class Plantcontroller : MonoBehaviour
 {
-    public GameObject[] plantspheres;
+    public GameObject[] plantmushrooms;
     private Vector3[] spawns = new Vector3[3];
     public Vector3 enemyposi;
 
     [SerializeField] private float basedmg;
-    [SerializeField] private float sphereuptimer;
+    [SerializeField] private float mushroomuptimer;
 
-    private Color redcolor;
+    private Color greencolor;
 
     private void Awake()
     {
-        ColorUtility.TryParseHtmlString("#B72020", out redcolor);
-        redcolor.a = 0.6f;
+        ColorUtility.TryParseHtmlString("#2BFF00", out greencolor);
+        plantmushrooms[0].GetComponent<MeshRenderer>().material.color = greencolor;
     }
     private void OnEnable()
     {
@@ -27,32 +27,32 @@ public class Plantcontroller : MonoBehaviour
 
         setspawnpoints();
 
-        plantspheres[0].GetComponent<Plantsphere>().isactivsphere = true;
-        plantspheres[1].GetComponent<MeshRenderer>().material.color = redcolor;
-        plantspheres[2].GetComponent<MeshRenderer>().material.color = redcolor;
-        Invoke("dealdmg", sphereuptimer);
+        plantmushrooms[0].GetComponent<Plantmushroom>().isactivmushroom = true;
+        plantmushrooms[1].GetComponent<MeshRenderer>().material.color = Color.white;
+        plantmushrooms[2].GetComponent<MeshRenderer>().material.color = Color.white;
+        Invoke("dealdmg", mushroomuptimer);
     }
     private void setspawnpoints()
     {
-        for (int i = 0; i < plantspheres.Length; i++)
+        for (int i = 0; i < plantmushrooms.Length; i++)
         {
             NavMeshHit hit;
             NavMesh.Raycast(enemyposi, spawns[i], out hit, NavMesh.AllAreas);
             spawns[i] = hit.position;
-            plantspheres[i].transform.position = spawns[i] + Vector3.up * 0.5f;
-            plantspheres[i].SetActive(true);
+            plantmushrooms[i].transform.position = spawns[i];
+            plantmushrooms[i].SetActive(true);
         }
     }
     private void dealdmg()
     {
-        foreach (GameObject sphere in plantspheres)
+        foreach (GameObject mushroom in plantmushrooms)
         {
-            if (sphere.activeSelf == true && Statics.infight == true)
+            if (mushroom.activeSelf == true && Statics.infight == true)
             {
                 LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg + Globalplayercalculations.calculateenemyspezialdmg());
             }
-            sphere.GetComponent<Plantsphere>().isactivsphere = false;
-            sphere.SetActive(false);
+            mushroom.GetComponent<Plantmushroom>().isactivmushroom = false;
+            mushroom.SetActive(false);
         }
         gameObject.SetActive(false);
     }

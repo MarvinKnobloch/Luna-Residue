@@ -12,9 +12,12 @@ public class Fishmancontroller : MonoBehaviour
     [SerializeField] private float dodgetime;
     [SerializeField] private float spezialdmg;
 
+    private Enemyspezialsound enemyspezialsound;
+
     private void Awake()
     {
         dmgcollider.GetComponent<Fishmancolliderdmg>().basedmg = spezialdmg;
+        enemyspezialsound = GetComponentInParent<Enemyspezialsound>();
     }
     private void OnEnable()
     {
@@ -36,6 +39,7 @@ public class Fishmancontroller : MonoBehaviour
     }
     private void dealfirstdmg()
     {
+        enemyspezialsound.playfishmanspezialend();
         dmgcollider.SetActive(true);
         Invoke("spezialpart2", 1.3f);
     }
@@ -48,6 +52,7 @@ public class Fishmancontroller : MonoBehaviour
     }
     private void dealseconddmg()
     {
+        enemyspezialsound.playfishmanspezialend();
         dmgcollider.SetActive(true);
         Invoke("fishmanspezialend", 0.1f);
     }

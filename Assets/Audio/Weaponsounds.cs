@@ -38,8 +38,8 @@ public class Weaponsounds : MonoBehaviour
     }
     public void setswordhit(float hit)
     {
-        if (hit == 0) playsound(swordhit1, 0.4f);
-        else playsound(swordhit2, 0.4f);
+        if (hit == 0) playsound(swordhit1, 0.3f);
+        else playsound(swordhit2, 0.3f);
     }
 
     public void playarrowimpact() => playsound(arrowimpact, 0.4f);

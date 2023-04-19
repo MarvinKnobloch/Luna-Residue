@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.InputSystem;
+
 
 public class Werewolfcontroller : MonoBehaviour
 {
@@ -10,7 +9,6 @@ public class Werewolfcontroller : MonoBehaviour
     [SerializeField] private float spheredmg;
     [SerializeField] private int buttonpressesneed;
     [SerializeField] private float timetopressbuttons;
-
 
     private void Awake()
     {
