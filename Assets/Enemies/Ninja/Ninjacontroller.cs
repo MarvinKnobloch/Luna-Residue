@@ -15,8 +15,12 @@ public class Ninjacontroller : MonoBehaviour
 
     private int currentstar;
 
+    private int activestarts;
+    private AudioSource audiosource;
+
     private void Awake()
     {
+        audiosource = GetComponent<AudioSource>();
         foreach (GameObject ninjastar in ninjastars)
         {
             ninjastar.GetComponent<Ninjastar>().basedmg = ninjastardmg;
@@ -25,7 +29,9 @@ public class Ninjacontroller : MonoBehaviour
         }
     }
     private void OnEnable()
-    {      
+    {
+        audiosource.enabled = true;
+        activestarts = 4;
         Ray ray = new Ray(LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 0.3f, Vector3.down);
         Physics.Raycast(ray, out RaycastHit hit, 30);
         Vector3 startpoint = hit.point;
@@ -51,5 +57,13 @@ public class Ninjacontroller : MonoBehaviour
 
         ninjastars[currentstar].transform.position = LoadCharmanager.Overallmainchar.transform.position + LoadCharmanager.Overallmainchar.transform.right * -ninjastarspawnradius + LoadCharmanager.Overallmainchar.transform.up * 2;
         ninjastars[currentstar].SetActive(true);
+    }
+    public void checkforsound()
+    {
+        activestarts--;
+        if (activestarts <= 0)
+        {
+            audiosource.enabled = false;
+        }
     }
 }

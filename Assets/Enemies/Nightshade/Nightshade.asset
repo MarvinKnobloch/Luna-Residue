@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyname: Nightshade
   basehealth: 329
-  enemylvl: 0
+  enemylvl: 1
   movementspeed: 10
   basedmg: 11
   attackspeed: 2.1

@@ -65,7 +65,7 @@ public class Knightcontroller : MonoBehaviour
     {
         getwavenumber();
         waves[secondwave].SetActive(true);
-        Invoke("turnoff", 3f);
+        Invoke("turnoff", 3.5f);                //bei schlechtem timing(z.b 3.6f) knackst der sound am ende
     }
     private void getwavenumber()
     {
@@ -80,4 +80,3 @@ public class Knightcontroller : MonoBehaviour
         gameObject.SetActive(false);
     }
 }
-

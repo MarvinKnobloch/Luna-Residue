@@ -11,12 +11,17 @@ public class Ninjastar : MonoBehaviour
     [NonSerialized] public float basedmg;              //11
     [NonSerialized] public float speedmultiplicator;   //0.028
     [NonSerialized] public float spawnspeed;           //0.4
+    [SerializeField] private Ninjacontroller ninjacontroller;
 
     private void OnEnable()
     {
         timer = 0f;
         CancelInvoke();
         Invoke("turnoff", 6f);
+    }
+    private void OnDisable()
+    {
+        ninjacontroller.checkforsound();
     }
     private void Update()
     {

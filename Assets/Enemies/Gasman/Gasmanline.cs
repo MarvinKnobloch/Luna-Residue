@@ -37,7 +37,7 @@ public class Gasmanline : MonoBehaviour
         line.SetPosition(1, endpointoffset * 3 + startpoint);
 
         RaycastHit hit;
-        if (Physics.Linecast(startpoint, endpointoffset * 3 + startpoint, out hit, layer) == false)
+        if (Physics.Linecast(startpoint, endpointoffset * 4 + startpoint, out hit, layer) == false)
         {
             hitting1 = false;
             hitting2 = false;

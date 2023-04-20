@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Battlemonkspezial : MonoBehaviour
 {
-    [SerializeField] private GameObject battlemonktimer;
+    [SerializeField] private GameObject battlemonkcontroller;
 
     const string spezial2attackstate = "Spezial2";
+
+    private Enemyspezialsound enemyspezialsound;
+    private void Awake()
+    {
+        enemyspezialsound = battlemonkcontroller.GetComponentInParent<Enemyspezialsound>();
+    }
 
     private void battlemonksecondani()
     {
@@ -14,6 +20,7 @@ public class Battlemonkspezial : MonoBehaviour
     }
     private void battlemonkspezial()
     {
-        battlemonktimer.SetActive(true);
+        battlemonkcontroller.SetActive(true);
     }
+    private void battlemonkspezialaudio() => enemyspezialsound.playbattlemonkspezial();
 }

@@ -72,14 +72,14 @@ public class Gasmancontroller : MonoBehaviour
         targetspawn1 = findyposi(targetspawn1);
         NavMeshHit hit3;
         NavMesh.Raycast(mainchar, targetspawn1, out hit3, NavMesh.AllAreas);
-        target1.transform.position = hit3.position + Vector3.up * 0.4f;
+        target1.transform.position = hit3.position + Vector3.up * 1f;
 
         int randomposi = UnityEngine.Random.Range(-3, 3);
         targetspawn2 = mainchar + LoadCharmanager.Overallmainchar.transform.right * randomposi + LoadCharmanager.Overallmainchar.transform.forward * 8 + UnityEngine.Random.insideUnitSphere * 7;
         targetspawn2 = findyposi(targetspawn2);
         NavMeshHit hit4;
         NavMesh.Raycast(mainchar, targetspawn2, out hit4, NavMesh.AllAreas);
-        target2.transform.position = hit4.position + Vector3.up * 0.4f;
+        target2.transform.position = hit4.position + Vector3.up * 1f;
 
         Invoke("turnonline", 1f);
     }

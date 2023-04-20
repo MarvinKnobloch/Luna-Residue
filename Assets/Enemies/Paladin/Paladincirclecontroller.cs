@@ -10,12 +10,15 @@ public class Paladincirclecontroller : MonoBehaviour
 
     [NonSerialized] public float basedmg;
     [NonSerialized] public float dodgetime;
+
+    [SerializeField] private Enemyspezialsound enemyspezialsound;
     private void OnEnable()
     {
         Invoke("dealdmg", dodgetime);
     }
     private void dealdmg()
     {
+        enemyspezialsound.playpaladinspezial();
         dmgposi = transform.position;
         dmgposi.y = LoadCharmanager.Overallmainchar.transform.position.y;
         if(Statics.infight == true)

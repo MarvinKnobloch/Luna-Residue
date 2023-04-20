@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyname: Paladin
   basehealth: 330
-  enemylvl: 0
+  enemylvl: 1
   movementspeed: 10
   basedmg: 9
   attackspeed: 1.7

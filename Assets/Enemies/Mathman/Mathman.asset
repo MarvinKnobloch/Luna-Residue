@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyname: Mathman
   basehealth: 321
-  enemylvl: 0
+  enemylvl: 1
   movementspeed: 10
   basedmg: 8
   attackspeed: 1.7

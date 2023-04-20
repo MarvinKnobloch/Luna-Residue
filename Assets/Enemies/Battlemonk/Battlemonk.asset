@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyname: Battlemonk
   basehealth: 327
-  enemylvl: 0
+  enemylvl: 1
   movementspeed: 10
   basedmg: 10
   attackspeed: 1.9
