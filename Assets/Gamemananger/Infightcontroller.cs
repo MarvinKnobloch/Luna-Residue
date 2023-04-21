@@ -18,6 +18,7 @@ public class Infightcontroller : MonoBehaviour
     [SerializeField] private GameObject gameovercontroller;
 
     [SerializeField] private AudioClip battle1;
+    //public float spezialtimertest;
     private void Awake()
     {
         if (instance == null)
@@ -45,7 +46,7 @@ public class Infightcontroller : MonoBehaviour
 
     private void Start()
     {
-        //checkifinfight();                   //ausgeblendet wegen musik call, weiß auch für was der funktions call ist
+        //checkifinfight();                   //ausgeblendet wegen musik call, weiß auch nicht für was der funktions call ist
         instance.CancelInvoke();
     }
     public void checkifinfight()
@@ -54,6 +55,7 @@ public class Infightcontroller : MonoBehaviour
         {
             Musiccontroller.instance.startfadeout(Musiccontroller.instance.currentzonemusic, Musiccontroller.instance.currentzonemusictime, 2, 3);
             Statics.infight = false;
+            Statics.oneplayerisdead = false;
             Statics.currentenemyspecialcd = Statics.enemyspecialcd;
             instance.StopCoroutine("firstenemyspezialcd");
             instance.StopCoroutine("enemyspezialcd");

@@ -69,7 +69,7 @@ public class EleAbilities : MonoBehaviour
     }
     void Update()
     {
-        if (Statics.otheraction == false && LoadCharmanager.gameispaused == false)
+        if (Statics.otheraction == false && Statics.infight == true)
         {
             if (Manamanager.mana >= basicmanacosts)
             {
@@ -139,7 +139,7 @@ public class EleAbilities : MonoBehaviour
     }
     public void stopignorelayers()
     {
-        Physics.IgnoreLayerCollision(16, 6, false);            //wegen memorypuzzle
+        Physics.IgnoreLayerCollision(19, 6, false);            //wegen memorypuzzle
         Physics.IgnoreLayerCollision(11, 6, false);
         Physics.IgnoreLayerCollision(8, 6, false);
         Physics.IgnoreLayerCollision(15, 6, false);

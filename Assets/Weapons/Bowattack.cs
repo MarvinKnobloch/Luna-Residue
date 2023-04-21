@@ -62,6 +62,8 @@ public class Bowattack : MonoBehaviour
     //weaponswitch
     public LayerMask weaponswitchlayer;
     private float slowmopercentage = 0.3f;
+    private int shootcount;
+    private int maxshootcount = 3;
 
     //audio
     [SerializeField] private Playersounds playersounds;
@@ -525,6 +527,7 @@ public class Bowattack : MonoBehaviour
     private void bowswitchslowmotion()
     {
         if (movementscript.state != Movescript.State.Bowweaponswitch) return;
+        shootcount = 0;
         movementscript.switchtoattackaimstate();
         root = false;
         movementscript.ChangeAnimationState(slowmochargeup);
@@ -544,6 +547,7 @@ public class Bowattack : MonoBehaviour
     }
     private void weaponswitchshootarrow()
     {
+        shootcount++;
         shotairbasicarrow();
         playerarrow.SetActive(false);
         movementscript.ChangeAnimationState(slowmoshoot);
@@ -551,7 +555,8 @@ public class Bowattack : MonoBehaviour
     private void slowmofastercharge()
     {
         if (movementscript.state != Movescript.State.Attackweaponaim) return;
-        movementscript.ChangeAnimationState(slowmofastcharge);
+        if (shootcount >= maxshootcount) bowweaponswitchattackend();
+        else movementscript.ChangeAnimationState(slowmofastcharge);
     }
     private void hookshotstart()
     {

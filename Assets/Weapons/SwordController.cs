@@ -62,25 +62,25 @@ public class SwordController : MonoBehaviour
 
     public void Checkswordbasichitbox()
     {
-        lookfordmgcollision(midofsword.transform.position, 3, overallbasicdmg, 0, basicmanarestore);
+        lookfordmgcollision(midofsword.transform.position, 3, overallbasicdmg, 0, basicmanarestore, 0);
     }
     public void Checksworddownhitbox()
     {
-        lookfordmgcollision(midofsword.transform.position, 3f, overallenddmg, 1, endmanarestore);
+        lookfordmgcollision(midofsword.transform.position, 3f, overallenddmg, 1, endmanarestore, 1);
     }
     public void Checkswordmidhitbox()
     {
-        lookfordmgcollision(midofsword.transform.position, 3f, overallenddmg, 2, endmanarestore);
+        lookfordmgcollision(midofsword.transform.position, 3f, overallenddmg, 2, endmanarestore, 1);
     }
     public void Checksworduphitbox()
     {
-        lookfordmgcollision(midofsword.transform.position, 3f, overallenddmg, 3, endmanarestore);
+        lookfordmgcollision(midofsword.transform.position, 3f, overallenddmg, 3, endmanarestore, 1);
     }
     public void Swordweaponswitchhitbox()
     {
-        lookfordmgcollision(weaponswitchboxposi.transform.position, 3f, basicweaponswitchdmg, 0, endmanarestore);
+        lookfordmgcollision(weaponswitchboxposi.transform.position, 3f, basicweaponswitchdmg, 0, endmanarestore, 1);
     }
-    private void lookfordmgcollision(Vector3 hitposition, float hitrange, float damage, int dmgtype, float manarestore)
+    private void lookfordmgcollision(Vector3 hitposition, float hitrange, float damage, int dmgtype, float manarestore, float sound)
     {
         if(Statics.infight == true)
         {
@@ -106,17 +106,17 @@ public class SwordController : MonoBehaviour
             }
             if (cols.Length > 0)
             {
-                Weaponsounds.instance.setswordhit(dmgtype);
+                Weaponsounds.instance.setswordhit(sound);
                 healandmana(dmgtype, manarestore);
             }
             else
             {
-                Weaponsounds.instance.setswordmiss(dmgtype);
+                Weaponsounds.instance.setswordmiss(sound);
             }
         }
         else
         {
-            Weaponsounds.instance.setswordmiss(dmgtype);
+            Weaponsounds.instance.setswordmiss(sound);
         }
     }
     private void calculatecritchance(EnemyHP enemyscript, float dmg)

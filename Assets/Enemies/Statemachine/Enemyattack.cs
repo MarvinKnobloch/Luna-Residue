@@ -31,10 +31,11 @@ public class Enemyattack
                         return;
                     }
                 }
-                if (Vector3.Distance(esm.transform.position, esm.currenttarget.transform.position + esm.transform.forward * -2) > esm.attackrange)
+                Vector3 targetposi = new Vector3(esm.currenttarget.transform.position.x, esm.transform.position.y, esm.currenttarget.transform.position.z);
+                if (Vector3.Distance(esm.transform.position, targetposi + esm.transform.forward * -2) > esm.attackrange)
                 {
                     esm.ChangeAnimationState(runstate);
-                    esm.Meshagent.SetDestination(esm.currenttarget.transform.position + esm.transform.forward * -2);
+                    esm.Meshagent.SetDestination(targetposi + esm.transform.forward * -2);
                 }
                 else
                 {
@@ -154,6 +155,7 @@ public class Enemyattack
         Ray ray = new Ray(LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 0.3f, Vector3.down);              //ray nach unten um die y vom navmesh zu finden(falls man im sprung ist)
         if (Physics.Raycast(ray, out RaycastHit hit, 5f))
         {
+            Vector3 targetposi = new Vector3(esm.currenttarget.transform.position.x, esm.transform.position.y, esm.currenttarget.transform.position.z);
             esm.Meshagent.CalculatePath(hit.point, esm.path);
             if (esm.path.status != NavMeshPathStatus.PathComplete)                   //wenn die momentan posi nicht erreichbar ist attackiert der gegner
             {
@@ -169,11 +171,11 @@ public class Enemyattack
                 }
             }
 
-            else if (Vector3.Distance(esm.transform.position, esm.currenttarget.transform.position + esm.transform.forward * -2) > esm.attackrange)
+            else if (Vector3.Distance(esm.transform.position, targetposi + esm.transform.forward * -2) > esm.attackrange)
             {
                 ismovingrotation = true;
                 esm.ChangeAnimationState(runstate);
-                esm.Meshagent.SetDestination(esm.currenttarget.transform.position + esm.transform.forward * -2);
+                esm.Meshagent.SetDestination(targetposi + esm.transform.forward * -2);
             }
             else
             {

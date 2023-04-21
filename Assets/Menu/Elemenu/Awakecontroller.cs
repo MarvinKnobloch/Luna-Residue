@@ -35,7 +35,7 @@ public class Awakecontroller : MonoBehaviour
 
     public bool canawake;
 
-    private float awaketime = 0.5f;             //2.5f;
+    private float awaketime = 2.5f;             //2.5f;
     public float awaketimer;
 
     private DateTime startdate;

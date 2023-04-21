@@ -124,7 +124,7 @@ public class Statics
     public static bool supportcanresurrect;
 
     //enemy
-    public static float enemyspecialcd = 13;
+    public static float enemyspecialcd = 14;
     public static float currentenemyspecialcd = 13;                 //wird in enemypatrol gesetzt und in enemyhp(wenn der gegner stirbt) wieder abgezogen
     public static float enemydebufftime = 8;
     public static float enemydmgmultiplier = 1.5f;

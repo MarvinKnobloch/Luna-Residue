@@ -67,35 +67,35 @@ public class Fistcontroller : MonoBehaviour
 
     public void fistrighthandhitbox()
     {
-        lookfordmgcollision(righthand.transform.position, 2, overallbasicdmg, 0, basicmanarestore, 0);
+        lookfordmgcollision(righthand.transform.position, 2.5f, overallbasicdmg, 0, basicmanarestore, 0);
     }
     public void fistlefthandhitbox()
     {
-        lookfordmgcollision(lefthand.transform.position, 2, overallbasicdmg, 0, basicmanarestore, 0);
+        lookfordmgcollision(lefthand.transform.position, 2.5f, overallbasicdmg, 0, basicmanarestore, 0);
     }
     public void fistfeethitbox()
     {
-        lookfordmgcollision(rightfeet.transform.position, 2, overallbasicdmg, 0, basicmanarestore, 1);
+        lookfordmgcollision(rightfeet.transform.position, 2.5f, overallbasicdmg, 0, basicmanarestore, 1);
     }
     public void Checkfistdownfeethitbox()
     {
-        lookfordmgcollision(rightfeet.transform.position, 2, overallenddmg, 1, endmanarestore, 2);
+        lookfordmgcollision(rightfeet.transform.position, 2.5f, overallenddmg, 1, endmanarestore, 2);
     }
     public void Checkfistdownhandhitbox()
     {
-        lookfordmgcollision(lefthand.transform.position, 2, overallenddmg, 1, endmanarestore, 2);
+        lookfordmgcollision(lefthand.transform.position, 2.5f, overallenddmg, 1, endmanarestore, 2);
     }
     public void Checkfistmidfeethitbox()
     {
-        lookfordmgcollision(rightfeet.transform.position, 2, overallenddmg, 2, endmanarestore, 2);
+        lookfordmgcollision(rightfeet.transform.position, 2.5f, overallenddmg, 2, endmanarestore, 2);
     }
     public void Checkfistmidbodyhitbox()
     {
-        lookfordmgcollision(body.transform.position, 2, overallair3middmg, 2, endmanarestore, 2);
+        lookfordmgcollision(body.transform.position, 2.5f, overallair3middmg, 2, endmanarestore, 2);
     }
     public void Checkfistupfeethitbox()
     {
-        lookfordmgcollision(rightfeet.transform.position, 2, overallenddmg, 3, endmanarestore, 2);
+        lookfordmgcollision(rightfeet.transform.position, 2.5f, overallenddmg, 3, endmanarestore, 2);
     }
     public void Fistweaponswitchhitbox()
     {
