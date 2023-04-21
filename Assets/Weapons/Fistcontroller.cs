@@ -67,41 +67,41 @@ public class Fistcontroller : MonoBehaviour
 
     public void fistrighthandhitbox()
     {
-        lookfordmgcollision(righthand.transform.position, 2, overallbasicdmg, 0, basicmanarestore);
+        lookfordmgcollision(righthand.transform.position, 2, overallbasicdmg, 0, basicmanarestore, 0);
     }
     public void fistlefthandhitbox()
     {
-        lookfordmgcollision(lefthand.transform.position, 2, overallbasicdmg, 0, basicmanarestore);
+        lookfordmgcollision(lefthand.transform.position, 2, overallbasicdmg, 0, basicmanarestore, 0);
     }
     public void fistfeethitbox()
     {
-        lookfordmgcollision(rightfeet.transform.position, 2, overallbasicdmg, 0, basicmanarestore);
+        lookfordmgcollision(rightfeet.transform.position, 2, overallbasicdmg, 0, basicmanarestore, 1);
     }
     public void Checkfistdownfeethitbox()
     {
-        lookfordmgcollision(rightfeet.transform.position, 2, overallenddmg, 1, endmanarestore);
+        lookfordmgcollision(rightfeet.transform.position, 2, overallenddmg, 1, endmanarestore, 2);
     }
     public void Checkfistdownhandhitbox()
     {
-        lookfordmgcollision(lefthand.transform.position, 2, overallenddmg, 1, endmanarestore);
+        lookfordmgcollision(lefthand.transform.position, 2, overallenddmg, 1, endmanarestore, 2);
     }
     public void Checkfistmidfeethitbox()
     {
-        lookfordmgcollision(rightfeet.transform.position, 2, overallenddmg, 2, endmanarestore);
+        lookfordmgcollision(rightfeet.transform.position, 2, overallenddmg, 2, endmanarestore, 2);
     }
     public void Checkfistmidbodyhitbox()
     {
-        lookfordmgcollision(body.transform.position, 2, overallair3middmg, 2, endmanarestore);
+        lookfordmgcollision(body.transform.position, 2, overallair3middmg, 2, endmanarestore, 2);
     }
     public void Checkfistupfeethitbox()
     {
-        lookfordmgcollision(rightfeet.transform.position, 2, overallenddmg, 3, endmanarestore);
+        lookfordmgcollision(rightfeet.transform.position, 2, overallenddmg, 3, endmanarestore, 2);
     }
     public void Fistweaponswitchhitbox()
     {
-        lookfordmgcollision(righthand.transform.position, 4, basicweaponswitchdmg, 0, endmanarestore);
+        lookfordmgcollision(righthand.transform.position, 4, basicweaponswitchdmg, 0, endmanarestore, 2);
     }
-    private void lookfordmgcollision(Vector3 hitposition, float hitrange, float damage, int dmgtype, float manarestore)
+    private void lookfordmgcollision(Vector3 hitposition, float hitrange, float damage, int dmgtype, float manarestore, int sound)
     {
         if(Statics.infight == true)
         {
@@ -127,9 +127,18 @@ public class Fistcontroller : MonoBehaviour
             }
             if (cols.Length > 0)
             {
+                Weaponsounds.instance.setfisthit(sound);
                 healandmana(dmgtype, manarestore);
             }
+            else
+            {
+                Weaponsounds.instance.setfistmiss(sound);
+            }
         }
+        else
+        {
+            Weaponsounds.instance.setfistmiss(sound);
+        }   
     }
     private void calculatecritchance(EnemyHP enemyscript, float dmg)
     {

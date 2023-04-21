@@ -145,7 +145,6 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
         else if (Statics.currentequipmentbutton == 9)
         {
-            Debug.Log("ring");
             setstaticsslot(Statics.charcurrentring);
         }
     }

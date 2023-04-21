@@ -181,8 +181,8 @@ public class LoadCharmanager : MonoBehaviour
 
         Cam1.LookAt = Overallmainchar.transform;
         Cam1.Follow = Overallmainchar.transform;
-        Cam1.m_YAxis.m_MaxSpeed = 0.003f * PlayerPrefs.GetFloat("mousesensitivity") / 50;
-        Cam1.m_XAxis.m_MaxSpeed = 0.6f * PlayerPrefs.GetFloat("mousesensitivity") / 50;
+        Cam1.m_YAxis.m_MaxSpeed = Statics.presetcamymaxspeed * PlayerPrefs.GetFloat("mousesensitivity") / 50;
+        Cam1.m_XAxis.m_MaxSpeed = Statics.presetcamxmaxspeed * PlayerPrefs.GetFloat("mousesensitivity") / 50;
         Cam1.m_XAxis.Value = savecamvalueX;
         aimcam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0.2f * PlayerPrefs.GetFloat("rangeweaponaimsensitivity") / 50;
         aimcam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0.2f * PlayerPrefs.GetFloat("rangeweaponaimsensitivity") / 50;

@@ -92,8 +92,8 @@ public class Doozycontroller : MonoBehaviour
         Statics.enemyspezialtimescale = false;
         Time.timeScale = Statics.normalgamespeed;
         Time.fixedDeltaTime = Statics.normaltimedelta;
-        maincam.m_YAxis.m_MaxSpeed = 0.008f;
-        maincam.m_XAxis.m_MaxSpeed = 0.6f;
+        maincam.m_YAxis.m_MaxSpeed = Statics.presetcamymaxspeed * PlayerPrefs.GetFloat("mousesensitivity") / 50;
+        maincam.m_XAxis.m_MaxSpeed = Statics.presetcamxmaxspeed * PlayerPrefs.GetFloat("mousesensitivity") / 50;
         LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
         CancelInvoke();
         secondgrid.SetActive(false);

@@ -11,6 +11,12 @@ public class Weaponsounds : MonoBehaviour
     [SerializeField] private AudioClip swordmiss2;
     [SerializeField] private AudioClip swordhit1;
     [SerializeField] private AudioClip swordhit2;
+    [SerializeField] private AudioClip fistmiss1;
+    [SerializeField] private AudioClip fistmiss2;
+    [SerializeField] private AudioClip fistmiss3;
+    [SerializeField] private AudioClip fisthit1;
+    [SerializeField] private AudioClip fisthit2;
+    [SerializeField] private AudioClip fisthit3;
     [SerializeField] private AudioClip arrowimpact;
     private void Awake()
     {
@@ -40,6 +46,18 @@ public class Weaponsounds : MonoBehaviour
     {
         if (hit == 0) playsound(swordhit1, 0.3f);
         else playsound(swordhit2, 0.3f);
+    }
+    public void setfistmiss(float hit)
+    {
+        if (hit == 0) playsound(fistmiss1, 0.3f);
+        else if (hit == 1) playsound(fistmiss2, 0.3f);
+        else playsound(fistmiss3, 0.3f);
+    }
+    public void setfisthit(float hit)
+    {
+        if (hit == 0) playsound(fisthit1, 0.3f);
+        else if (hit == 1) playsound(fisthit2, 0.3f);
+        else playsound(fisthit3, 0.3f);
     }
 
     public void playarrowimpact() => playsound(arrowimpact, 0.4f);

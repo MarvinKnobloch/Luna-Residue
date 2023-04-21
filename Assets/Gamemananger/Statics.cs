@@ -16,7 +16,10 @@ public class Statics
     public static string gamesavetime;
     public static float currentplayerposix, currentplayerposiy, currentplayerposiz;
     public static float currentplayerrotationx, currentplayerrotationy, currentplayerrotationz, currentplayerrotationw;
+
     public static float savecamvalueX;
+    public static float presetcamymaxspeed = 0.003f;
+    public static float presetcamxmaxspeed = 0.6f;
 
     public static Vector3 gameoverposi;                   //wird in enemyhp gesetzt weil die posi nur gespeichtert werden sollen wenn auch ein kampf gewonnen worden ist
     public static Quaternion gameoverrota;

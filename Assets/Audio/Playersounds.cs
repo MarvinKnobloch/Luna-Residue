@@ -14,10 +14,6 @@ public class Playersounds : MonoBehaviour
     [SerializeField] private AudioClip healingstate;
     [SerializeField] private AudioClip singlehealstart;
 
-    [SerializeField] private AudioClip swordswing1;
-    [SerializeField] private AudioClip swordswing2;
-    [SerializeField] private AudioClip swordswing3;
-
     [SerializeField] private AudioClip bow1;
     [SerializeField] private AudioClip bow2;
     [SerializeField] private AudioClip bow3;
@@ -41,6 +37,8 @@ public class Playersounds : MonoBehaviour
     public void playbow1() => playsound(bow1, 0.4f);
     public void playbow2() => playsound(bow2, 0.4f);
     public void playbow3() => playsound(bow3, 0.4f);
+
+
     public void stopsound()
     {
         audiosource.clip = null;
