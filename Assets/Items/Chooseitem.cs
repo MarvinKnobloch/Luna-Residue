@@ -39,6 +39,10 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     private void statsupdate()
     {
+        if (Statics.charcurrenthealth[selectedchar] > Statics.charmaxhealth[selectedchar]) 
+        {
+            Statics.charcurrenthealth[selectedchar] = Statics.charmaxhealth[selectedchar];
+        }
         statsnumbers.text = string.Empty;
         statsnumbers.color = Color.white;
         statsnumbers.text = Statics.charmaxhealth[selectedchar] + "\n" +

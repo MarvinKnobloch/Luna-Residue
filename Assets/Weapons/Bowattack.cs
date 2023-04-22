@@ -651,4 +651,5 @@ public class Bowattack : MonoBehaviour
     private void playbowsound1() => playersounds.playbow1();
     private void playbowsound2() => playersounds.playbow2();
     private void playbowsound3() => playersounds.playbow3();
+    private void playdrawbowsound() => playersounds.playdrawbow();
 }

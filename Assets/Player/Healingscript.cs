@@ -136,6 +136,7 @@ public class Healingscript : MonoBehaviour
                 {
                     if (controlls.SpielerHeal.Groupheal.WasPerformedThisFrame())
                     {
+                        playersounds.playsinglehealstart();
                         movementscript.ChangeAnimationState(grouphealend);
                     }
                 }
@@ -306,6 +307,8 @@ public class Healingscript : MonoBehaviour
 
     private void castgroupheal()
     {
+        playersounds.stopsound();
+        spellsounds.playgroupheal();
         LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().addhealthwithtext(finalgroupheal);
         if (LoadCharmanager.Overallthirdchar != null)
         {
@@ -362,4 +365,5 @@ public class Healingscript : MonoBehaviour
             yield return null;
         }     
     }
+    private void playresurrect() => spellsounds.playresurrect();
 }

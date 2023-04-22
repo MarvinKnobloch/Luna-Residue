@@ -43,6 +43,8 @@ public class Supportmovement : MonoBehaviour
     public string currentstate;
     const string idlestate = "Idle";
 
+    public Supportsounds supportsounds;
+
     private Supportchoosetarget supportchoosetarget = new Supportchoosetarget();
     private Supportheal supportheal = new Supportheal();
     private Supportmeleeattack supportmeleeattack = new Supportmeleeattack();

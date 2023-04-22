@@ -51,6 +51,7 @@ public class Supportheal
     }
     private void setresurrecttarget()
     {
+
         if (LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == true)
         {
             ssm.resurrecttraget = LoadCharmanager.Overallmainchar;
@@ -78,6 +79,7 @@ public class Supportheal
     }
     public void resurrect()
     {
+        ssm.supportsounds.playresurrect();
         Statics.infightresurrectcd++;
         ssm.resurrecttraget.GetComponent<Playerhp>().playerisresurrected();
 

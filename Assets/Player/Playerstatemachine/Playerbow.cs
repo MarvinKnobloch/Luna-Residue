@@ -42,6 +42,7 @@ public class Playerbow
     {
         if (psm.Cam2.gameObject.activeSelf == true)                 //Wenn man den Input im selben moment los lässt wie der call kommt wird die kamera deakiviert aber man komm trotzdem in die state
         {
+            psm.playersounds.stopsound();
             psm.ChangeAnimationState(aimholdstate);
             psm.state = Movescript.State.Outofcombatbowischarged;
         }

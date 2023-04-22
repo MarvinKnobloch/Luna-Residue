@@ -10,6 +10,7 @@ public class Alliesbottlecontroller : MonoBehaviour
     [NonSerialized] public float potionheal;
     private bool cancollect;
 
+    [SerializeField] private Supportspellsounds supportspellsounds;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -27,6 +28,7 @@ public class Alliesbottlecontroller : MonoBehaviour
     {
         if (other.gameObject == LoadCharmanager.Overallmainchar && cancollect == true)
         {
+            supportspellsounds.playbottleheal();
             LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().addhealth(potionheal);
             if (LoadCharmanager.Overallthirdchar != null)
             {

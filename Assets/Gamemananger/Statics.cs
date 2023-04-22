@@ -95,14 +95,14 @@ public class Statics
     public static float dashcost = 3f;
     public static bool dashcdbool;
 
-    public static float weaponswitchcd = 9;
+    public static float weaponswitchcd = 12;
     public static float weaponswitchmissingtime;
     public static bool weapsonswitchbool; 
 
     public static float weaponswitchbuff = 0;
     public static float weaponswitchbuffmissingtime;
 
-    public static float charswitchcd = 9;
+    public static float charswitchcd = 12;
     public static float charswitchmissingtime;
     public static bool charswitchbool;
 
@@ -170,9 +170,9 @@ public class Statics
     public static float[] charcritchance = { 5, 5, 5, 5, 5 };
     public static float[] charcritdmg = { 150, 150, 150, 150, 150 };
     public static float[] charweaponbuff = { 0, 0, 0, 0, 0 };
-    public static float[] charweaponbuffduration = { 5, 5, 5, 5, 5 };
+    public static float[] charweaponbuffduration = { 7, 7, 7, 7, 7 };
     public static float[] charswitchbuff = { 0, 0, 0, 0, 0 };
-    public static float[] charswitchbuffduration = { 5, 5, 5, 5, 5 };
+    public static float[] charswitchbuffduration = { 7, 7, 7, 7, 7 };
     public static float[] charbasiccritbuff = { 1, 1, 1, 1, 1 };
     public static float[] charbasicdmgbuff = { 0, 0, 0, 0, 0 };
 
