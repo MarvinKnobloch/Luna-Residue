@@ -36,7 +36,7 @@ public class Supportmovement : MonoBehaviour
     [NonSerialized] public float healtimer;
     [NonSerialized] public float additverandomhealtimer;
     [SerializeField] public GameObject healpotion;
-    private int basicpotionheal = 12;
+    private int basicpotionheal = 18;
 
     public GameObject resurrecttraget;
 
@@ -86,7 +86,7 @@ public class Supportmovement : MonoBehaviour
         currenttarget = null;
         attacktimer = attackcd;
         switchtarget();
-        float potionheal = Globalplayercalculations.calculatecasthealing(basicpotionheal, playerhp.maxhealth, GetComponent<Attributecontroller>().stoneclassbonusheal);
+        float potionheal = Globalplayercalculations.calculatecasthealing(basicpotionheal, playerhp.maxhealth / 2, GetComponent<Attributecontroller>().stoneclassbonusheal);
         healpotion.GetComponent<Alliesbottlecontroller>().potionheal = potionheal;
     }
     private void OnDisable()

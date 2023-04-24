@@ -59,7 +59,7 @@ public class Attributecontroller : MonoBehaviour
         else if (ishealerclassroll)
         {
             checkforsupportdmgbuff();
-            stoneclassbonusheal = Statics.groupstonehealbonus / 2;
+            stoneclassbonusheal = Statics.groupstonehealbonus;  //Statics.groupstonehealbonus / 2;
             stoneclassdmgreduction = 0;
         }
         else

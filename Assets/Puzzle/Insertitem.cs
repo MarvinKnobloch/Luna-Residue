@@ -18,6 +18,14 @@ public class Insertitem : MonoBehaviour, Interactioninterface
     {
         areaquestnumber = GetComponent<Areanumber>().areanumber;
     }
+    private void OnEnable()
+    {
+        if (areacontroller.questcomplete[areaquestnumber] == true)
+        {
+            activateobject.SetActive(true);
+            GetComponent<Detectinteractionobject>().enabled = false;
+        }
+    }
     public string Interactiontext => textupdate();
     public string textupdate()
     {

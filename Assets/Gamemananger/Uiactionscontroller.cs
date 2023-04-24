@@ -22,10 +22,17 @@ public class Uiactionscontroller : MonoBehaviour
 
     private SpielerSteu controlls;
 
-    private void Start()
+    private void Awake()
     {
         controlls = Keybindinputmanager.inputActions;
-
+    }
+    public void hotkeysupdate()
+    {
+        StartCoroutine(oneframe());                   //sonst wird nicht richtig geladen
+    }
+    IEnumerator oneframe()
+    {
+        yield return null;
         dashtext.text = controlls.Player.Dash.GetBindingDisplayString();
         healtext.text = controlls.Player.Heal.GetBindingDisplayString();
         charswitchtext.text = controlls.Player.Charchange.GetBindingDisplayString();
@@ -51,22 +58,6 @@ public class Uiactionscontroller : MonoBehaviour
         spell4.transform.GetChild(0).GetComponent<Image>().color = Statics.spellcolors[5];
         spell5.transform.GetChild(0).GetComponent<Image>().color = Statics.spellcolors[6];
         spell6.transform.GetChild(0).GetComponent<Image>().color = Statics.spellcolors[7];
-    }
-    public void setimagecolor()               //wird im LoadCharmanager called
-    {
-        if (Statics.currentactiveplayer == 0)
-        {
-            spell1.transform.GetChild(0).GetComponent<Image>().color = Statics.spellcolors[0];
-            spell2.transform.GetChild(0).GetComponent<Image>().color = Statics.spellcolors[1];
-        }
-        else
-        {
-            spell1.transform.GetChild(0).GetComponent<Image>().color = Statics.spellcolors[2];
-            spell2.transform.GetChild(0).GetComponent<Image>().color = Statics.spellcolors[3];
-        }
-        spell3.transform.GetChild(0).GetComponent<Image>().color = Statics.spellcolors[4];
-        spell4.transform.GetChild(0).GetComponent<Image>().color = Statics.spellcolors[5];
-        spell5.transform.GetChild(0).GetComponent<Image>().color = Statics.spellcolors[6];
-        spell6.transform.GetChild(0).GetComponent<Image>().color = Statics.spellcolors[7];
+
     }
 }

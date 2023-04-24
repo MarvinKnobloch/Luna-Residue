@@ -16,12 +16,12 @@ MonoBehaviour:
   type: 4
   itemid: 4
   itemname: Silverhead
-  inventoryslot: 0
+  inventoryslot: 4
   itemshopcosts: 1090
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
   basestats:
-  - -10
+  - -5
   - 0
   - 1
   - 1
@@ -32,17 +32,17 @@ MonoBehaviour:
   stats:
   - -10
   - 0
-  - 1
-  - 1
   - 2
+  - 2
+  - 4
   - 0
   - 0
   - 0
-  upgradelvl: 0
+  upgradelvl: 1
   maxupgradelvl: 1
   upgrades:
   - newstats:
-    - -20
+    - -10
     - 0
     - 2
     - 2

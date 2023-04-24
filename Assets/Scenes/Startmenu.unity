@@ -8404,7 +8404,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: F
+  m_Text: ^F
 --- !u!222 &596156285
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14466,6 +14466,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 34a6490ab048be74c86ea029fbce8f92, type: 2}
   - {fileID: 11400000, guid: 384467f1252160841903dbf3f2b124e1, type: 2}
   - {fileID: 11400000, guid: b99865f771ade5a4b9a282b027da78d6, type: 2}
+  - {fileID: 11400000, guid: 198fcc70d81361a40b6893276e54c53d, type: 2}
   shoesitems:
   - {fileID: 11400000, guid: 0549e7603c39c0c4c93e57df167980eb, type: 2}
   - {fileID: 11400000, guid: be8f00b23af756d4e9888e3e3d5f86d9, type: 2}
@@ -18737,7 +18738,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ^T
+  m_Text: T
 --- !u!222 &1168719226
 CanvasRenderer:
   m_ObjectHideFlags: 0

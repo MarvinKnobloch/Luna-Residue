@@ -43,10 +43,16 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             Statics.charcurrenthealth[selectedchar] = Statics.charmaxhealth[selectedchar];
         }
+        float healbonus;
+        if (Statics.characterclassroll[selectedchar] == 1)
+        {
+            healbonus = Mathf.Round((Statics.charmaxhealth[selectedchar] - Statics.charcurrentlvl * Statics.guardbonushpeachlvl) * Statics.healhealthbonuspercentage * 0.01f);
+        }
+        else healbonus = Mathf.Round(Statics.charmaxhealth[selectedchar] * Statics.healhealthbonuspercentage * 0.01f);
         statsnumbers.text = string.Empty;
         statsnumbers.color = Color.white;
         statsnumbers.text = Statics.charmaxhealth[selectedchar] + "\n" +
-                            Mathf.Round(Statics.charmaxhealth[selectedchar] * Statics.healhealthbonuspercentage * 0.01f) + "\n" +
+                            healbonus + "\n" +
                             Statics.chardefense[selectedchar] + "\n" +
                             Mathf.Round(Statics.chardefense[selectedchar] * Statics.defenseconvertedtoattack * 0.01f) + "\n" +
                             Statics.charattack[selectedchar] + "\n" +
@@ -338,8 +344,14 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     private void healbonus(Itemcontroller equipeditem, int itemstat, float currentstatvalue)
     {
-        float currentstats = Mathf.Round(currentstatvalue * Statics.healhealthbonuspercentage * 0.01f);
-        float newstats = Mathf.Round((currentstatvalue + itemvalues.stats[itemstat] - equipeditem.stats[itemstat]) * Statics.healhealthbonuspercentage * 0.01f);
+        float health;
+        if (Statics.characterclassroll[selectedchar] == 1)
+        {
+            health = Mathf.Round(currentstatvalue - Statics.charcurrentlvl * Statics.guardbonushpeachlvl);
+        }
+        else health = currentstatvalue;
+        float currentstats = Mathf.Round(health * Statics.healhealthbonuspercentage * 0.01f);
+        float newstats = Mathf.Round((health + itemvalues.stats[itemstat] - equipeditem.stats[itemstat]) * Statics.healhealthbonuspercentage * 0.01f);
         float difference = newstats - currentstats;
         if (newstats > currentstats)
         {
@@ -351,7 +363,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
         else
         {
-            statsnumbers.text += Mathf.Round(Statics.charmaxhealth[selectedchar] * Statics.healhealthbonuspercentage * 0.01f) + "\n";
+            statsnumbers.text += Mathf.Round(health * Statics.healhealthbonuspercentage * 0.01f) + "\n";
         }
     }
     private void defensebonus(Itemcontroller equipeditem, int itemstat, float currentstatvalue)

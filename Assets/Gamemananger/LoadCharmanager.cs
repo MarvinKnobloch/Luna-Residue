@@ -206,7 +206,7 @@ public class LoadCharmanager : MonoBehaviour
         swordcontrollerupdate?.Invoke();
         fistcontrollerupdate?.Invoke();
 
-        uiactionscontroller.setimagecolor();
+        uiactionscontroller.hotkeysupdate();
 
         foreach (GameObject mates in teammates)
         {

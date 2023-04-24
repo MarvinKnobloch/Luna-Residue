@@ -140,7 +140,13 @@ public class Skilltreescript : MonoBehaviour
         charbuttonnumber.text = "" + Statics.charcharswitchskillpoints[currentchar];
         basicbuttonnumber.text = "" + Statics.charbasicskillpoints[currentchar];
         statshealth.text = Mathf.Round(Statics.charcurrenthealth[currentchar]) + "/ " + Mathf.Round(Statics.charmaxhealth[currentchar]);
-        healingbonus.text = Mathf.Round(Statics.charmaxhealth[currentchar] * Statics.healhealthbonuspercentage * 0.01f).ToString();
+        Debug.Log(Statics.characterclassroll[currentchar]);
+        if (Statics.characterclassroll[currentchar] == 1)
+        {
+            healingbonus.text = Mathf.Round((Statics.charmaxhealth[currentchar] - Statics.charcurrentlvl * Statics.guardbonushpeachlvl) * Statics.healhealthbonuspercentage * 0.01f).ToString();
+        }
+        else healingbonus.text = Mathf.Round(Statics.charmaxhealth[currentchar] * Statics.healhealthbonuspercentage * 0.01f).ToString();
+
         statsdefense.text = Mathf.Round(Statics.chardefense[currentchar]).ToString();
         defensetoattack.text = Mathf.Round(Statics.chardefense[currentchar] * Statics.defenseconvertedtoattack * 0.01f).ToString();
         statsattack.text = Mathf.Round(Statics.charattack[currentchar]).ToString();
@@ -204,7 +210,11 @@ public class Skilltreescript : MonoBehaviour
     private void healthtext()
     {
         statshealth.text = Mathf.Round(Statics.charcurrenthealth[currentchar]) + "/ " + Mathf.Round(Statics.charmaxhealth[currentchar]);
-        healingbonus.text = Mathf.Round(Statics.charmaxhealth[currentchar] * Statics.healhealthbonuspercentage * 0.01f).ToString();
+        if (Statics.characterclassroll[currentchar] == 1)
+        {
+            healingbonus.text = Mathf.Round((Statics.charmaxhealth[currentchar] - Statics.charcurrentlvl * Statics.guardbonushpeachlvl) * Statics.healhealthbonuspercentage * 0.01f).ToString();
+        }
+        else healingbonus.text = Mathf.Round(Statics.charmaxhealth[currentchar] * Statics.healhealthbonuspercentage * 0.01f).ToString();
         healthbuttonnumber.text = "" + Statics.charhealthskillpoints[currentchar];
     }
     public void defensenumberplus()

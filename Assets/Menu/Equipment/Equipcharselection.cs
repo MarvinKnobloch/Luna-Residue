@@ -80,10 +80,20 @@ public class Equipcharselection : MonoBehaviour
     }
     private void settextandimage(int currentchar)
     {
+        if (Statics.charcurrenthealth[currentchar] > Statics.charmaxhealth[currentchar])
+        {
+            Statics.charcurrenthealth[currentchar] = Statics.charmaxhealth[currentchar];
+        }
+        float healbonus;
+        if (Statics.characterclassroll[currentchar] == 1)
+        {
+            healbonus = Mathf.Round((Statics.charmaxhealth[currentchar] - Statics.charcurrentlvl * Statics.guardbonushpeachlvl) * Statics.healhealthbonuspercentage * 0.01f);
+        }
+        else healbonus = Mathf.Round(Statics.charmaxhealth[currentchar] * Statics.healhealthbonuspercentage * 0.01f);
         statsnumbers.text = string.Empty;
         statsnumbers.color = Color.white;
         statsnumbers.text = Statics.charmaxhealth[currentchar] + "\n" +
-                            Mathf.Round(Statics.charmaxhealth[currentchar] * Statics.healhealthbonuspercentage * 0.01f) + "\n" +
+                            healbonus + "\n" +
                             Statics.chardefense[currentchar] + "\n" +
                             Mathf.Round(Statics.chardefense[currentchar] * Statics.defenseconvertedtoattack * 0.01f) + "\n" +
                             Statics.charattack[currentchar] + "\n" +

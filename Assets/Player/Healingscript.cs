@@ -8,7 +8,6 @@ using UnityEngine.InputSystem.Utilities;
 public class Healingscript : MonoBehaviour
 {
     private SpielerSteu controlls;
-    private Animator animator;
     private Attributecontroller attributecontroller;
     private Playerhp playerhp;
 
@@ -36,12 +35,12 @@ public class Healingscript : MonoBehaviour
 
     public bool singlehealcast;
     private int singlehealbuttonamount = 2;
-    private float singleheal = 24;
+    private float singleheal = 30;
     private float finalsingleheal;
 
     public bool grouphealcast;
     private int grouphealbuttonamount = 4;
-    private float groupheal = 14;
+    private float groupheal = 18;
     private float finalgroupheal;
 
     public bool resurrectioncast;
@@ -59,7 +58,6 @@ public class Healingscript : MonoBehaviour
     {
         movementscript = GetComponent<Movescript>();
         controlls = Keybindinputmanager.inputActions;
-        animator = GetComponent<Animator>();
         attributecontroller = GetComponent<Attributecontroller>();
         playerhp = GetComponent<Playerhp>();
     }
@@ -90,8 +88,18 @@ public class Healingscript : MonoBehaviour
     IEnumerator healupdate()
     {
         yield return null;
-        finalsingleheal = Globalplayercalculations.calculatecasthealing(singleheal, playerhp.maxhealth, attributecontroller.stoneclassbonusheal);
-        finalgroupheal = Globalplayercalculations.calculatecasthealing(groupheal, playerhp.maxhealth, attributecontroller.stoneclassbonusheal);
+
+        if(attributecontroller.isguardclassroll == true)                      //damit die guardbonushp nicht zum healingbonus beeinflussen
+        {
+            float playerhealth = playerhp.maxhealth - (Statics.charcurrentlvl * Statics.guardbonushpeachlvl);
+            finalsingleheal = Globalplayercalculations.calculatecasthealing(singleheal, playerhealth, attributecontroller.stoneclassbonusheal);
+            finalgroupheal = Globalplayercalculations.calculatecasthealing(groupheal, playerhealth / 2, attributecontroller.stoneclassbonusheal);           //playerhealt / 2 damit der bonusheal halbiert wird
+        }
+        else
+        {
+            finalsingleheal = Globalplayercalculations.calculatecasthealing(singleheal, playerhp.maxhealth, attributecontroller.stoneclassbonusheal);
+            finalgroupheal = Globalplayercalculations.calculatecasthealing(groupheal, playerhp.maxhealth / 2, attributecontroller.stoneclassbonusheal);
+        }
     }
     public void heal()
     {

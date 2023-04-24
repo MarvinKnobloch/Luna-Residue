@@ -138,9 +138,9 @@ public class Startmenucontroller : MonoBehaviour
         Statics.charcritchance = new float[] { 5, 5, 5, 5, 5 };
         Statics.charcritdmg = new float[] { 150, 150, 150, 150, 150 };
         Statics.charweaponbuff = new float[] { 0, 0, 0, 0, 0 };
-        Statics.charweaponbuffduration = new float[] { 7, 7, 7, 7, 7 };
+        Statics.charweaponbuffduration = new float[] { 8, 8, 8, 8, 8 };
         Statics.charswitchbuff = new float[] { 0, 0, 0, 0, 0 };
-        Statics.charswitchbuffduration = new float[] { 7, 7, 7, 7, 7 };
+        Statics.charswitchbuffduration = new float[] { 8, 8, 8, 8, 8 };
         Statics.charbasiccritbuff = new float[] { 1, 1, 1, 1, 1 };
         Statics.charbasicdmgbuff = new float[] { 0, 0, 0, 0, 0 };
 

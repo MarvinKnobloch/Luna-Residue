@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 10
   itemid: 4
   itemname: Silverring
-  inventoryslot: 0
+  inventoryslot: 4
   itemshopcosts: 1070
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
@@ -26,16 +26,16 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 0
-  - 0
-  - 0
+  - 4
+  - 5
+  - 6
   stats:
   - 0
   - 0
   - 0
   - 0
   - 0
-  - 3
+  - 4
   - 5
   - 6
   upgradelvl: 0

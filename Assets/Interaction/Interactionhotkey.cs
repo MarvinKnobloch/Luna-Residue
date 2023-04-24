@@ -16,6 +16,6 @@ public class Interactionhotkey : MonoBehaviour
 
     private void OnEnable()
     {
-        interactionhotkey.text = "(" + controlls.Menusteuerung.Leftclick.GetBindingDisplayString() + ")";
+        interactionhotkey.text = "(" + controlls.Player.Interaction.GetBindingDisplayString() + ")";
     }
 }

@@ -59,9 +59,9 @@ public class Statics
     public static float cleavedamagereduction = 3;
     public static float basicweaponheal = 3;
     public static float weaponbonushealhealthpercentage = 2;
-    public static float healhealthbonuspercentage = 4;
+    public static float healhealthbonuspercentage = 8;
 
-    public static float healthperskillpoint = 20;
+    public static float healthperskillpoint = 10;
     public static float armorperskillpoint = 25;
     public static float defenseconvertedtoattack = 1;
     public static float attackperskillpoint = 1;
@@ -75,7 +75,7 @@ public class Statics
     public static float presetdashcost = 3;
 
     public static int presetresurrectcd = 4;
-    public static int presethealcd = 5;
+    public static int presethealcd = 7;
 
     //gameplaystatics
     public static bool otheraction;
@@ -95,14 +95,14 @@ public class Statics
     public static float dashcost = 3f;
     public static bool dashcdbool;
 
-    public static float weaponswitchcd = 12;
+    public static float weaponswitchcd = 14;
     public static float weaponswitchmissingtime;
     public static bool weapsonswitchbool; 
 
     public static float weaponswitchbuff = 0;
     public static float weaponswitchbuffmissingtime;
 
-    public static float charswitchcd = 12;
+    public static float charswitchcd = 14;
     public static float charswitchmissingtime;
     public static bool charswitchbool;
 
@@ -125,7 +125,7 @@ public class Statics
 
     //enemy
     public static float enemyspecialcd = 14;
-    public static float currentenemyspecialcd = 13;                 //wird in enemypatrol gesetzt und in enemyhp(wenn der gegner stirbt) wieder abgezogen
+    public static float currentenemyspecialcd = 14;                 //wird in enemypatrol gesetzt und in enemyhp(wenn der gegner stirbt) wieder abgezogen
     public static float enemydebufftime = 8;
     public static float enemydmgmultiplier = 1.5f;
 
@@ -170,9 +170,9 @@ public class Statics
     public static float[] charcritchance = { 5, 5, 5, 5, 5 };
     public static float[] charcritdmg = { 150, 150, 150, 150, 150 };
     public static float[] charweaponbuff = { 0, 0, 0, 0, 0 };
-    public static float[] charweaponbuffduration = { 7, 7, 7, 7, 7 };
+    public static float[] charweaponbuffduration = { 8, 8, 8, 8, 8 };
     public static float[] charswitchbuff = { 0, 0, 0, 0, 0 };
-    public static float[] charswitchbuffduration = { 7, 7, 7, 7, 7 };
+    public static float[] charswitchbuffduration = { 8, 8, 8, 8, 8 };
     public static float[] charbasiccritbuff = { 1, 1, 1, 1, 1 };
     public static float[] charbasicdmgbuff = { 0, 0, 0, 0, 0 };
 

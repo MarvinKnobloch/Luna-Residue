@@ -22,7 +22,7 @@ MonoBehaviour:
   description: 
   basestats:
   - 20
-  - 60
+  - 75
   - 0
   - 0
   - 0
@@ -31,7 +31,7 @@ MonoBehaviour:
   - 0
   stats:
   - 20
-  - 60
+  - 75
   - 0
   - 0
   - 0
@@ -42,8 +42,8 @@ MonoBehaviour:
   maxupgradelvl: 1
   upgrades:
   - newstats:
-    - 40
-    - 120
+    - 30
+    - 100
     - 0
     - 0
     - 0
