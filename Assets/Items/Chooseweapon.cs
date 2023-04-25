@@ -86,9 +86,9 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
+        selectedchar = Statics.currentequipmentchar;
         if (itemvalues != null)
         {
-            selectedchar = Statics.currentequipmentchar;
             statsupdate();
             if (Statics.currentequipmentbutton == 0)
             {
@@ -127,6 +127,7 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
     {
+        selectedchar = Statics.currentequipmentchar;
         statsupdate();
     }
 }

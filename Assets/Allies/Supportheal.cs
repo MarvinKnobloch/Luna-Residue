@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Supportheal
 {
     public Supportmovement ssm;
 
+    private Vector3 resposi;
+
     const string runstate = "Run";
     const string healstate = "Alliesheal";
     const string resurrectplayerstate = "Supportresurrect";
     const string supportstandupstate = "Supportstandup";
+
     public void supporthealing()
     {
         if (ssm.ishealer == true)
@@ -43,7 +47,19 @@ public class Supportheal
             if(ssm.resurrecttraget == null) return;
             else
             {
-                ssm.Meshagent.SetDestination(ssm.resurrecttraget.transform.position);
+                NavMeshHit hit;
+                bool blocked;
+                blocked = NavMesh.Raycast(ssm.transform.position, ssm.resurrecttraget.transform.position, out hit, NavMesh.AllAreas);
+                if (blocked == true)
+                {
+                    resposi = hit.position;
+                    ssm.Meshagent.SetDestination(resposi);
+                }
+                else
+                {
+                    resposi = ssm.resurrecttraget.transform.position;
+                    ssm.Meshagent.SetDestination(resposi);
+                }
                 ssm.ChangeAnimationState(runstate);
                 ssm.state = Supportmovement.State.resurrect;
             }
@@ -51,7 +67,6 @@ public class Supportheal
     }
     private void setresurrecttarget()
     {
-
         if (LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == true)
         {
             ssm.resurrecttraget = LoadCharmanager.Overallmainchar;
@@ -70,7 +85,7 @@ public class Supportheal
     }
     public void resurrectplayer()
     {
-        if (Vector3.Distance(ssm.transform.position, ssm.resurrecttraget.transform.position) < 3)
+        if (Vector3.Distance(ssm.transform.position, resposi) < 3)
         {
             ssm.Meshagent.ResetPath();
             ssm.ChangeAnimationState(resurrectplayerstate);

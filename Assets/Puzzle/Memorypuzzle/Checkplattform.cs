@@ -31,9 +31,8 @@ public class Checkplattform : MonoBehaviour
                 if (isportal == true)
                 {
                     Statics.otheraction = true;
-                    LoadCharmanager.Overallmainchar.GetComponent<Movescript>().movetowardsposition = portalend;
+                    LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtomovetowards(portalend, 10);
                     LoadCharmanager.Overallmainchar.GetComponent<Movescript>().ChangeAnimationState(fly);
-                    LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state = Movescript.State.Movetowards;
                 }
                 if(Setplattforms.currentplattformnumber >= Setplattforms.neededplattformnumber)
                 {

@@ -16,13 +16,14 @@ public class Keybindinputmanager : MonoBehaviour
     //public static event Action<InputAction, int> keyrebindstarted;
 
     public static Text keyrebindtext;
-    private void Awake()
+    private void Start()
     {
         if (inputActions == null)
         {
             inputActions = new SpielerSteu();
         }
     }
+
     public static void startrebind(string actionname, int bindingindex, Text textwhilerebind)
     {
         InputAction action = inputActions.asset.FindAction(actionname);

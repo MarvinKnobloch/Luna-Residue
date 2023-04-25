@@ -93,6 +93,10 @@ public class EnemyHP : MonoBehaviour
         }
         resetdebuff();
     }
+    private void OnDisable()
+    {
+        removefromcanvas();                       //bei port wird der baractivate nicht getriggert
+    }
     public void takeplayerdamage(float damage, int dmgtype, bool crit)
     {
         if (enemyisdead == false)
@@ -204,9 +208,12 @@ public class EnemyHP : MonoBehaviour
     }
     public void removefromcanvas()
     {
-        healthbar = null;
-        gothealthbar = false;
-        removehealthbar(this);
+        if(healthbar != null)
+        {
+            healthbar = null;
+            gothealthbar = false;
+            removehealthbar(this);
+        }
     }
     public void enemydebuffstart()
     {

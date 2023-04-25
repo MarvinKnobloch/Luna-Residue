@@ -91,7 +91,7 @@ public class Playerhp : MonoBehaviour
                     Statics.resetvaluesondeathorstun = true;
                     LoadCharmanager.disableattackbuttons = true;
                     gameObject.GetComponent<Movescript>().ChangeAnimationStateInstant(dyingstate);
-                    gameObject.GetComponent<Movescript>().state = Movescript.State.Empty;
+                    gameObject.GetComponent<Movescript>().switchtodead();
                     if (Statics.oneplayerisdead == false)
                     {
                         Statics.oneplayerisdead = true;

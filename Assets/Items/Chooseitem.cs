@@ -235,10 +235,9 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
+        selectedchar = Statics.currentequipmentchar;
         if (itemvalues != null)
         {
-            selectedchar = Statics.currentequipmentchar;
-
             gridvalues.upgradeuitextcontroller.item = itemvalues;
             gridvalues.upgradeuitextcontroller.chooseitem = this;
             gridvalues.upgradeui.SetActive(true);
@@ -387,6 +386,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
     {
         gridvalues.upgradeui.SetActive(false);
+        selectedchar = Statics.currentequipmentchar;
         statsupdate();
     }
 }

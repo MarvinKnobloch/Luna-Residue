@@ -117,6 +117,7 @@ public class Movescript : MonoBehaviour
 
     //puzzle
     [NonSerialized] public Vector3 movetowardsposition;
+    [NonSerialized] public float movetowardsspeed;
 
     public State state;
     public enum State
@@ -129,6 +130,7 @@ public class Movescript : MonoBehaviour
         Swim,
         Heal,
         Stun,
+        Dead,
         Buttonmashstun,
         Outofcombarbowcharge,
         Outofcombatbowischarged,
@@ -248,6 +250,9 @@ public class Movescript : MonoBehaviour
                     break;
                 case State.Stun:
                     playerstun.stun();
+                    break;
+                case State.Dead:
+                    playermovement.deadmovement();
                     break;
                 case State.Buttonmashstun:
                     playerstun.stun();
@@ -383,6 +388,12 @@ public class Movescript : MonoBehaviour
         ChangeAnimationState(idlestate);
         state = State.Empty;
     }
+    public void switchtomovetowards(Vector3 newposi, float speed)
+    {
+        movetowardsposition = newposi;
+        movetowardsspeed = speed;
+        state = State.Movetowards;
+    }
 
     public void slowplayer(float slowmovementspeed)
     {
@@ -398,6 +409,11 @@ public class Movescript : MonoBehaviour
             Statics.dash = true;
             Statics.resetvaluesondeathorstun = true;
         }
+    }
+    public void switchtodead()
+    {
+        state = State.Dead;
+        velocity = new Vector3(0, velocity.y, 0);
     }
     public void resurrected() => playerheal.resurrected();
     private void playerstandup() => playerheal.playerstandup();

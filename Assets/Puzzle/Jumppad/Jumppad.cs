@@ -10,7 +10,10 @@ public class Jumppad : MonoBehaviour
     {
         if (other.gameObject == LoadCharmanager.Overallmainchar.gameObject)
         {
-            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().pushplayerup(jumppadlaunchbasevalue + jumppadlaunchheight);
+            if(Statics.otheraction == false)
+            {
+                LoadCharmanager.Overallmainchar.GetComponent<Movescript>().pushplayerup(jumppadlaunchbasevalue + jumppadlaunchheight);
+            }
         }
     }
 }

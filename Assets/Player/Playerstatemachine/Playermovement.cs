@@ -93,7 +93,7 @@ public class Playermovement
     {
         Physics.IgnoreLayerCollision(19, 6);
         Vector3 distancetomove = psm.movetowardsposition - psm.transform.position;
-        Vector3 move = distancetomove.normalized * 10 * Time.deltaTime;
+        Vector3 move = distancetomove.normalized * psm.movetowardsspeed * Time.deltaTime;
         psm.charactercontroller.Move(move);
         psm.transform.rotation = Quaternion.LookRotation(psm.movetowardsposition - psm.transform.position, Vector3.up);
         if (Vector3.Distance(psm.transform.position, psm.movetowardsposition) < 0.2f)
@@ -102,6 +102,23 @@ public class Playermovement
             Statics.otheraction = false;
             psm.switchtoairstate();
         }
+    }
+    public void deadmovement()
+    {
+        if (psm.charactercontroller.isGrounded == false)
+        {
+            float grav = Physics.gravity.y * psm.gravitation;
+            psm.graviti += grav * Time.deltaTime;
+            if (psm.graviti < psm.maxgravity)
+            {
+                psm.graviti = psm.maxgravity;
+            }
+            psm.velocity.y = psm.graviti;
+            psm.charactercontroller.Move(psm.velocity * Time.deltaTime);
+        }
+        else
+        {
 
+        }
     }
 }
