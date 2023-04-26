@@ -251,6 +251,7 @@ public class Enemyattack
         {
             esm.spezialattack = false;
             esm.ChangeAnimationState(spezialattackstate);
+            Statics.currentenemyspeziallvl = esm.enemyhp.enemylvl;
             esm.state = Enemymovement.State.spezialattack;
         }
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Vampirespezial : MonoBehaviour
 {
-    [SerializeField] private GameObject vampirecontroller;
+    [SerializeField] private Vampirecontroller vampirecontroller;
     private Enemyspezialsound enemyspezialsound;
     private void Awake()
     {
@@ -12,7 +12,7 @@ public class Vampirespezial : MonoBehaviour
     }
     public void castspezialattack()
     {
-        vampirecontroller.SetActive(true);
+        vampirecontroller.gameObject.SetActive(true);
     }
     private void vampirespezialaudio()
     {

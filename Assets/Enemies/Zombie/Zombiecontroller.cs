@@ -9,7 +9,7 @@ public class Zombiecontroller : MonoBehaviour
     [SerializeField] private GameObject[] balls;
     [SerializeField] private LayerMask balllayer;
 
-    [SerializeField] private float balldmg;
+    [SerializeField] private float basedmg;
     [SerializeField] private float collecttime;
 
     public Vector3 enemyposi;
@@ -64,7 +64,7 @@ public class Zombiecontroller : MonoBehaviour
         {
             if(ball.activeSelf == true && Statics.infight == true)
             {
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(balldmg + Globalplayercalculations.calculateenemyspezialdmg());
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1));
                 ball.SetActive(false);
             }
         }

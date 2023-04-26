@@ -33,9 +33,15 @@ public class Globalplayercalculations
         float healing = Mathf.Round(basicheal + healthbonusheal + (Statics.groupstonehealbonus + playerstonebonus) * 0.01f * basicheal);
         return healing;
     }
-    public static float calculateenemyspezialdmg()
+    /*public static float calculateenemyspezialdmg()
     {
         float dmg = Statics.charcurrentlvl;
+        return dmg;
+    }*/
+    public static float calculateenemyspezialdmg(float basedmg, float dmglevel, int amountreduction)
+    {
+        float dmg = dmglevel * Statics.enemyspezialdmgbonus / amountreduction + basedmg;
+        Debug.Log(dmg);
         return dmg;
     }
     public static float calculateenemydmg(float basedmg, int enemylvl)
@@ -45,3 +51,12 @@ public class Globalplayercalculations
         return dmg;
     }
 }
+
+/*public static float calculateenemyspezialdmgtest(float dmglevel)
+{
+    float percentage = Statics.enemyspezialdmgbonus + (dmglevel - Statics.charcurrentlvl);
+    if (percentage < 0) percentage = 0;
+    float finalpercentage = percentage * 0.01f;
+    float dmg = Mathf.Round(LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().maxhealth * finalpercentage);
+    return dmg;
+}*/

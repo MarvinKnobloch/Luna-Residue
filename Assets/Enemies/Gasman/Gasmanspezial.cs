@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class Gasmanspezial : MonoBehaviour
 {
-    [SerializeField] private GameObject gasmancontroller;
+    [SerializeField] private Gasmancontroller spezialcontroller;
     private Enemyspezialsound enemyspezialsound;
     private void Awake()
     {
-        enemyspezialsound = gasmancontroller.GetComponentInParent<Enemyspezialsound>();
+        enemyspezialsound = spezialcontroller.GetComponentInParent<Enemyspezialsound>();
     }
-
     private void gasmanspezial()
     {
-        gasmancontroller.SetActive(true);
+        spezialcontroller.gameObject.SetActive(true);
     }
     private void gasmanspezialaudio() => enemyspezialsound.playgasmanspezial();
 }

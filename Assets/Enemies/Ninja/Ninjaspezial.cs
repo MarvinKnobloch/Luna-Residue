@@ -5,14 +5,12 @@ using UnityEngine.AI;
 
 public class Ninjaspezial : MonoBehaviour
 {
-    [SerializeField] private GameObject ninjacontroller;
-    [SerializeField] private GameObject savezone;
+    [SerializeField] private Ninjacontroller spezialcontroller;
 
     public NavMeshAgent Meshagent;
-
     private void ninjaspezial()
     {
-        ninjacontroller.SetActive(true);
+        spezialcontroller.gameObject.SetActive(true);
 
         /*Vector3 mainchar = LoadCharmanager.Overallmainchar.transform.position;
         mainchar.y = transform.position.y;

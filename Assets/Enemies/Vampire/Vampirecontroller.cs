@@ -50,7 +50,6 @@ public class Vampirecontroller : MonoBehaviour
             spezialendspawn.transform.position = hit.point + Vector3.up * 0.3f;
         }
         else spezialendspawn.transform.position = LoadCharmanager.Overallmainchar.transform.position;
-        //spezialendspawn.transform.rotation = LoadCharmanager.Overallmainchar.transform.rotation;
         spezialendspawn.SetActive(true);
         vampirecube.overlapboxpoint = spezialendspawn.transform.position;
     }

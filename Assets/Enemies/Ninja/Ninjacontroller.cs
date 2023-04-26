@@ -7,7 +7,7 @@ public class Ninjacontroller : MonoBehaviour
 {
     [SerializeField] private GameObject savezone;
 
-    [SerializeField] private GameObject[] ninjastars;
+    [SerializeField] private Ninjastar[] ninjastars;
     [SerializeField] private float ninjastardmg;
     [SerializeField] private float ninjastarspawnspeed;
     [SerializeField] private float ninjastarspeed;
@@ -21,11 +21,11 @@ public class Ninjacontroller : MonoBehaviour
     private void Awake()
     {
         audiosource = GetComponent<AudioSource>();
-        foreach (GameObject ninjastar in ninjastars)
+        foreach (Ninjastar ninjastar in ninjastars)
         {
-            ninjastar.GetComponent<Ninjastar>().basedmg = ninjastardmg;
-            ninjastar.GetComponent<Ninjastar>().spawnspeed = ninjastarspawnspeed;
-            ninjastar.GetComponent<Ninjastar>().speedmultiplicator = ninjastarspeed;
+            ninjastar.basedmg = ninjastardmg;
+            ninjastar.spawnspeed = ninjastarspawnspeed;
+            ninjastar.speedmultiplicator = ninjastarspeed;
         }
     }
     private void OnEnable()
@@ -44,19 +44,19 @@ public class Ninjacontroller : MonoBehaviour
 
         currentstar = 0;
         ninjastars[currentstar].transform.position = LoadCharmanager.Overallmainchar.transform.position + LoadCharmanager.Overallmainchar.transform.forward * ninjastarspawnradius + LoadCharmanager.Overallmainchar.transform.up * 2;
-        ninjastars[currentstar].SetActive(true);
+        ninjastars[currentstar].gameObject.SetActive(true);
         currentstar++;
 
         ninjastars[currentstar].transform.position = LoadCharmanager.Overallmainchar.transform.position + LoadCharmanager.Overallmainchar.transform.forward * -ninjastarspawnradius + LoadCharmanager.Overallmainchar.transform.up * 2;
-        ninjastars[currentstar].SetActive(true);
+        ninjastars[currentstar].gameObject.SetActive(true);
         currentstar++;
 
         ninjastars[currentstar].transform.position = LoadCharmanager.Overallmainchar.transform.position + LoadCharmanager.Overallmainchar.transform.right * ninjastarspawnradius + LoadCharmanager.Overallmainchar.transform.up * 2;
-        ninjastars[currentstar].SetActive(true);
+        ninjastars[currentstar].gameObject.SetActive(true);
         currentstar++;
 
         ninjastars[currentstar].transform.position = LoadCharmanager.Overallmainchar.transform.position + LoadCharmanager.Overallmainchar.transform.right * -ninjastarspawnradius + LoadCharmanager.Overallmainchar.transform.up * 2;
-        ninjastars[currentstar].SetActive(true);
+        ninjastars[currentstar].gameObject.SetActive(true);
     }
     public void checkforsound()
     {

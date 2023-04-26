@@ -38,7 +38,7 @@ public class Battlemonktimer : MonoBehaviour
         {
             if (Statics.dash == false && Statics.bonusiframes == false)
             {
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg + Globalplayercalculations.calculateenemyspezialdmg());
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1));
             }
         }
     }

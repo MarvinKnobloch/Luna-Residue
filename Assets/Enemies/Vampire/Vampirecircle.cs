@@ -27,7 +27,7 @@ public class Vampirecircle : MonoBehaviour
             {
                 if (target.gameObject == LoadCharmanager.Overallmainchar.gameObject)
                 {
-                    target.GetComponent<Playerhp>().TakeDamage(basedmg + (Globalplayercalculations.calculateenemyspezialdmg() / 2));
+                    target.GetComponent<Playerhp>().TakeDamage(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 3));
                     break;
                 }
             }

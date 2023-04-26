@@ -128,6 +128,8 @@ public class Statics
     public static float currentenemyspecialcd = 14;                 //wird in enemypatrol gesetzt und in enemyhp(wenn der gegner stirbt) wieder abgezogen
     public static float enemydebufftime = 8;
     public static float enemydmgmultiplier = 1.5f;
+    public static int enemyspezialdmgbonus = 5;
+    public static float currentenemyspeziallvl;
 
     public static float dazecounter;
     public static float dazekicksneeded;
@@ -162,9 +164,9 @@ public class Statics
     public static float charcurrentexp = 0;
     public static float charrequiredexp = 70;
     public static string[] characternames = { "Maria", "Erika", "Kaja", "Yaku", "Arissa" };
-    public static float[] charbasichealth = { 80, 73, 77, 73, 75 };
-    public static float[] charcurrenthealth = { 80, 73, 77, 73, 75 };
-    public static float[] charmaxhealth = { 80, 73, 77, 73, 75 };
+    public static float[] charbasichealth = { 800, 73, 770, 730, 75 };
+    public static float[] charcurrenthealth = { 800, 73, 770, 730, 75 };
+    public static float[] charmaxhealth = { 800, 73, 770, 730, 75 };
     public static float[] chardefense = { 60, 60, 60, 60, 60 };
     public static float[] charattack = { 0, 0, 0, 0, 0 };
     public static float[] charcritchance = { 5, 5, 5, 5, 5 };

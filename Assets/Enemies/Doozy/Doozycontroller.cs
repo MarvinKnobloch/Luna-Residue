@@ -16,6 +16,7 @@ public class Doozycontroller : MonoBehaviour
     public bool canclick;
     private int activnumber;
     private int choosenumber;
+    public int needednumbers;
 
     [SerializeField] private float basedmg;
     private int dmgcount;
@@ -34,7 +35,7 @@ public class Doozycontroller : MonoBehaviour
             obj.SetActive(false);
         }
         activnumber = 0;
-        while (activnumber < 4)
+        while (activnumber < needednumbers)
         {
             int randomnumber = Random.Range(0, numbers.Length);
             if(numbers[randomnumber].activeSelf == false)
@@ -73,10 +74,10 @@ public class Doozycontroller : MonoBehaviour
     private void dealdmg()
     {       
         LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();
-        dmgcount = 5 - memoryclicknumber;
+        dmgcount = needednumbers + 1 - memoryclicknumber;
         if(Statics.infight == true)
         {
-            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(dmgcount * basedmg + Globalplayercalculations.calculateenemyspezialdmg());
+            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1) / needednumbers * dmgcount);
         }
         turnoff();
     }

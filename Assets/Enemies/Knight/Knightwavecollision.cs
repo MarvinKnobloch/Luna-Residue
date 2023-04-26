@@ -6,10 +6,12 @@ public class Knightwavecollision : MonoBehaviour
 {
     private bool dmgonce;
     private float basedmg;
+    private Knightwavecontroller knightwavecontroller;
 
     private void OnEnable()
     {
-        basedmg = GetComponentInParent<Knightwavecontroller>().basedmg;
+        knightwavecontroller = GetComponentInParent<Knightwavecontroller>();
+        basedmg = knightwavecontroller.basedmg;
         dmgonce = false;
     }
     private void OnTriggerEnter(Collider other)
@@ -19,7 +21,7 @@ public class Knightwavecollision : MonoBehaviour
             if (other.gameObject == LoadCharmanager.Overallmainchar)
             {
                 dmgonce = true;
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg + (Globalplayercalculations.calculateenemyspezialdmg() / 2));
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 3));
             }
         }
     }

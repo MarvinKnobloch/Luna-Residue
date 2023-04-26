@@ -12,10 +12,11 @@ public class Mathcommit : MonoBehaviour
     [SerializeField] private GameObject mathmancontroller;
     [SerializeField] private CinemachineFreeLook maincam;
     private int answer;
+    [SerializeField] private float answertime;
     private float timer;
+    private float timerdmgmultiplier = -0.33f;                 //-0.4f sind 40% dmgreduction nach ablauf des timers (-0.3f wären 30%)
 
     [NonSerialized] public float basedmg;
-    [NonSerialized] public float answertime;
 
     private void Awake()
     {
@@ -29,14 +30,13 @@ public class Mathcommit : MonoBehaviour
         Statics.enemyspezialtimescale = true;
         Time.timeScale = 0.3f;
         Time.fixedDeltaTime = Statics.normaltimedelta * 0.3f;
-
-        timer = answertime;
+        timer = 0;
         StartCoroutine("mathtimer");
         Mouseactivate.enablemouse();
     }
     private void Update()
     {
-        timer -= Time.deltaTime;
+        timer += Time.deltaTime;
     }
     public void commitnumber()
     {
@@ -52,7 +52,10 @@ public class Mathcommit : MonoBehaviour
             {
                 if (Statics.infight == true)
                 {
-                    LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1) + Globalplayercalculations.calculateenemyspezialdmg()));
+                    float test = Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1);
+                    float dmg = (timerdmgmultiplier * (timer / answertime) + 1) * test;
+                    Debug.Log(dmg);
+                    LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(dmg);
                 }
                 solutionUI.color = Color.red;
                 resetvalues();
@@ -64,7 +67,11 @@ public class Mathcommit : MonoBehaviour
         {
             if (Statics.infight == true)
             {
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1) + Globalplayercalculations.calculateenemyspezialdmg()));
+                float test = Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1);
+                float dmg = (timerdmgmultiplier * (timer / answertime) + 1) * test;
+                Debug.Log(dmg);
+                Debug.Log(timer);
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(dmg);
             }
             solutionUI.color = Color.red;
             resetvalues();
@@ -83,10 +90,14 @@ public class Mathcommit : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(answertime);
             if(Statics.infight == true)
             {
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Mathf.Round(basedmg * (timer / 2 + 1) + Globalplayercalculations.calculateenemyspezialdmg()));
+                float test = Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1);
+                float dmg = (timerdmgmultiplier * (timer / answertime) + 1) * test;
+                Debug.Log(dmg);
+                Debug.Log(timer);
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(dmg);
             }
             solution.text = "";
             resetvalues();

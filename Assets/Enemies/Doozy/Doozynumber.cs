@@ -22,7 +22,7 @@ public class Doozynumber : MonoBehaviour
             {
                 doozycontroller.memoryclicknumber++;
                 gameObject.GetComponent<Image>().color = Color.green;
-                if (doozycontroller.memoryclicknumber == 5)
+                if (doozycontroller.memoryclicknumber == doozycontroller.needednumbers)
                 {
                     doozycontroller.success();
                 }
@@ -31,7 +31,7 @@ public class Doozynumber : MonoBehaviour
             {
                 doozycontroller.canclick = false;
                 gameObject.GetComponent<Image>().color = Color.red;
-                doozycontroller.GetComponent<Doozycontroller>().fail();
+                doozycontroller.fail();
             }
         }
     }

@@ -41,7 +41,7 @@ public class Towercontroller : MonoBehaviour
         {
             if (dealdmg == true && Statics.infight == true)
             {
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg + Globalplayercalculations.calculateenemyspezialdmg());
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1));
             }
             towerdisable();
         }
@@ -58,7 +58,8 @@ public class Towercontroller : MonoBehaviour
     {
         if(enemy.activeSelf == true)
         {
-            enemy.GetComponent<EnemyHP>().takeplayerdamage(completiondmg, 0, false);
+            float dmg = Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1);
+            enemy.GetComponent<EnemyHP>().takeplayerdamage(Mathf.Round(dmg), 0, false);
         }
         StartCoroutine("waitfortowerdisable");
     }

@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Goblinspezial : MonoBehaviour
 {
-    [SerializeField] private GameObject goblincontroller;
+    [SerializeField] private Goblincontroller spezialcontroller;
     private Enemyspezialsound enemyspezialsound;
     private void Awake()
     {
-        enemyspezialsound = goblincontroller.GetComponentInParent<Enemyspezialsound>();
+        enemyspezialsound = spezialcontroller.GetComponentInParent<Enemyspezialsound>();
     }
     private void goblinspezial()
     {
-        goblincontroller.SetActive(true);
+        spezialcontroller.gameObject.SetActive(true);
     }
     private void goblinspezialaudio()
     {

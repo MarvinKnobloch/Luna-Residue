@@ -6,7 +6,7 @@ public class Fishmancontroller : MonoBehaviour
 {
     [SerializeField] private GameObject showspezial;
     [SerializeField] private GameObject fishmancircle;
-    [SerializeField] private GameObject dmgcollider;
+    [SerializeField] private Fishmancolliderdmg fishmancolliderdmg;
 
     [SerializeField] private float playermovementspeedslow;
     [SerializeField] private float dodgetime;
@@ -16,7 +16,7 @@ public class Fishmancontroller : MonoBehaviour
 
     private void Awake()
     {
-        dmgcollider.GetComponent<Fishmancolliderdmg>().basedmg = spezialdmg;
+        fishmancolliderdmg.basedmg = spezialdmg;
         enemyspezialsound = GetComponentInParent<Enemyspezialsound>();
     }
     private void OnEnable()
@@ -40,7 +40,7 @@ public class Fishmancontroller : MonoBehaviour
     private void dealfirstdmg()
     {
         enemyspezialsound.playfishmanspezialend();
-        dmgcollider.SetActive(true);
+        fishmancolliderdmg.gameObject.SetActive(true);
         Invoke("spezialpart2", 1.3f);
     }
     private void spezialpart2()
@@ -53,7 +53,7 @@ public class Fishmancontroller : MonoBehaviour
     private void dealseconddmg()
     {
         enemyspezialsound.playfishmanspezialend();
-        dmgcollider.SetActive(true);
+        fishmancolliderdmg.gameObject.SetActive(true);
         Invoke("fishmanspezialend", 0.1f);
     }
     private void fishmanspezialend()

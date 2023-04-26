@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 public class Mathmanspezial : MonoBehaviour
 {
-    [SerializeField] private GameObject mathmancontroller;
+    [SerializeField] private Mathmancontroller spezialcontroller;
     private Enemyspezialsound enemyspezialsound;
     private void Awake()
     {
-        enemyspezialsound = mathmancontroller.GetComponentInParent<Enemyspezialsound>();
+        enemyspezialsound = spezialcontroller.GetComponentInParent<Enemyspezialsound>();
     }
     private void mathspezial()
     {
         if (Statics.dash == false)
         {
             LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtostun();
-            mathmancontroller.SetActive(true);
+            spezialcontroller.gameObject.SetActive(true);
         }
     }
     private void mathmanspezialaudio()

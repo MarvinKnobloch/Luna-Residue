@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Elkspezial : MonoBehaviour
 {
-    [SerializeField] private GameObject elkcontroller;
+    [SerializeField] private Elkcontroller spezialcontroller;
     private GameObject elkcircleobj;
     private GameObject elkconeobj;
     private Elkcircle elkcircle;
@@ -14,22 +14,22 @@ public class Elkspezial : MonoBehaviour
     private Enemyspezialsound enemyspezialsound;
     private void Awake()
     {
-        enemyspezialsound = elkcontroller.GetComponentInParent<Enemyspezialsound>();
-        elkcircleobj = elkcontroller.transform.GetChild(0).gameObject;
-        elkconeobj = elkcontroller.transform.GetChild(1).gameObject;
+        enemyspezialsound = spezialcontroller.GetComponentInParent<Enemyspezialsound>();
+        elkcircleobj = spezialcontroller.transform.GetChild(0).gameObject;
+        elkconeobj = spezialcontroller.transform.GetChild(1).gameObject;
         elkcircle = elkcircleobj.GetComponent<Elkcircle>();
     }
     public void elkspezial()
     {
         elkcircleobj.transform.position = transform.position;
-        elkcontroller.SetActive(true);
+        spezialcontroller.gameObject.SetActive(true);
         elkcircleobj.SetActive(true);
     }
     private void spezialanipart2()
     {
         gameObject.GetComponent<Enemymovement>().ChangeAnimationState(spezialattackstate);
     }
-    private void deakelkcircledmg()
+    private void dealelkcircledmg()
     {
         elkcircle.dealdmg();
         elkcircleobj.SetActive(false);
@@ -41,7 +41,7 @@ public class Elkspezial : MonoBehaviour
         elkconeobj.transform.rotation = transform.rotation * Quaternion.Euler(90, 90, 0);
         elkconeobj.SetActive(true);
     }
-    private void deakelkconedmg() => elkconeobj.transform.GetChild(0).gameObject.SetActive(true);
+    private void dealelkconedmg() => elkconeobj.transform.GetChild(0).gameObject.SetActive(true);
     private void elkspezialstartaudio() => enemyspezialsound.playelkspezialstart();
     private void elkspezialmidaudio() => enemyspezialsound.playelkspezialmid();
     private void elkspezialendaudio() => enemyspezialsound.playelkspezialend();

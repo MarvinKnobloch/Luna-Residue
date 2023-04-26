@@ -40,7 +40,7 @@ public class Healingscript : MonoBehaviour
 
     public bool grouphealcast;
     private int grouphealbuttonamount = 4;
-    private float groupheal = 18;
+    private float grouphealamount = 18;
     private float finalgroupheal;
 
     public bool resurrectioncast;
@@ -93,12 +93,12 @@ public class Healingscript : MonoBehaviour
         {
             float playerhealth = playerhp.maxhealth - (Statics.charcurrentlvl * Statics.guardbonushpeachlvl);
             finalsingleheal = Globalplayercalculations.calculatecasthealing(singleheal, playerhealth, attributecontroller.stoneclassbonusheal);
-            finalgroupheal = Globalplayercalculations.calculatecasthealing(groupheal, playerhealth / 2, attributecontroller.stoneclassbonusheal);           //playerhealt / 2 damit der bonusheal halbiert wird
+            finalgroupheal = Globalplayercalculations.calculatecasthealing(grouphealamount, playerhealth / 2, attributecontroller.stoneclassbonusheal);           //playerhealt / 2 damit der bonusheal halbiert wird
         }
         else
         {
             finalsingleheal = Globalplayercalculations.calculatecasthealing(singleheal, playerhp.maxhealth, attributecontroller.stoneclassbonusheal);
-            finalgroupheal = Globalplayercalculations.calculatecasthealing(groupheal, playerhp.maxhealth / 2, attributecontroller.stoneclassbonusheal);
+            finalgroupheal = Globalplayercalculations.calculatecasthealing(grouphealamount, playerhp.maxhealth / 2, attributecontroller.stoneclassbonusheal);
         }
     }
     public void heal()
@@ -316,6 +316,11 @@ public class Healingscript : MonoBehaviour
     private void castgroupheal()
     {
         playersounds.stopsound();
+        groupheal();                                                      //damit ich groupheal auch auﬂerhalb von dem cast benutzten kann
+        resetvaluesafterheal(0);
+    }
+    public void groupheal()
+    {
         spellsounds.playgroupheal();
         LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().addhealthwithtext(finalgroupheal);
         if (LoadCharmanager.Overallthirdchar != null)
@@ -326,7 +331,6 @@ public class Healingscript : MonoBehaviour
         {
             LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().addhealthwithtext(finalgroupheal);
         }
-        resetvaluesafterheal(0);
     }
     private void castresurrection()
     {

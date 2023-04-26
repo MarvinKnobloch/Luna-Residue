@@ -32,7 +32,7 @@ public class Gasmancontroller : MonoBehaviour
 
     [SerializeField] private GameObject[] linetargets;
 
-    public float toslowdmg;
+    public float basedmg;
     public float timetocomplete;
 
     private void OnEnable()
@@ -98,7 +98,7 @@ public class Gasmancontroller : MonoBehaviour
     }
     private void turnoffeverything()
     {
-        LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(toslowdmg);
+        LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1));
         blueline.SetActive(false);
         redline.SetActive(false);
         gameObject.SetActive(false);

@@ -20,7 +20,7 @@ public class Elkconedmg : MonoBehaviour
             if (other.gameObject == LoadCharmanager.Overallmainchar.gameObject)
             {
                 dmgonce = true;
-                other.GetComponent<Playerhp>().TakeDamage(basedmg + Globalplayercalculations.calculateenemyspezialdmg());
+                other.GetComponent<Playerhp>().TakeDamage(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 2));
             }
         }
     }

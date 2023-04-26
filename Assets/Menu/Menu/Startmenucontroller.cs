@@ -131,7 +131,7 @@ public class Startmenucontroller : MonoBehaviour
         Statics.charrequiredexp = 70;
 
         Statics.charbasichealth = new float[] { 80, 73, 77, 73, 75 };
-        Statics.charcurrenthealth = new float[] { 70, 73, 77, 73, 75 };
+        Statics.charcurrenthealth = new float[] { 80, 73, 77, 73, 75 };
         Statics.charmaxhealth = new float[] { 80, 73, 77, 73, 75 };
         Statics.chardefense = new float[] { 60, 60, 60, 60, 60 };
         Statics.charattack = new float[] { 0, 0, 0, 0, 0 };

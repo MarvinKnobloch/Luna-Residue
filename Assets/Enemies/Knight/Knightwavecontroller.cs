@@ -8,7 +8,9 @@ public class Knightwavecontroller : MonoBehaviour
 {
     public Vector3 endposi;
     [NonSerialized] public float basedmg;
+    [NonSerialized] public float dmglevel;
     [NonSerialized] public float speed;
+
 
     private void Update()
     {

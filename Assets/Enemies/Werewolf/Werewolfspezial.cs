@@ -6,16 +6,16 @@ using UnityEngine.InputSystem;
 
 public class Werewolfspezial : MonoBehaviour
 {
-    public GameObject werewolfcontroller;
+    public GameObject spezialcontroller;
 
     private Enemyspezialsound enemyspezialsound;
     private void Awake()
     {
-        enemyspezialsound = werewolfcontroller.GetComponentInParent<Enemyspezialsound>();
+        enemyspezialsound = spezialcontroller.GetComponentInParent<Enemyspezialsound>();
     }
     private void werewolfspezial()
     {
-        werewolfcontroller.SetActive(true);
+        spezialcontroller.SetActive(true);
     }
     private void werewolfspezialaudio()
     {

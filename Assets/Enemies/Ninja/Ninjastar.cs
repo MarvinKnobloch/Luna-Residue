@@ -17,7 +17,7 @@ public class Ninjastar : MonoBehaviour
     {
         timer = 0f;
         CancelInvoke();
-        Invoke("turnoff", 6f);
+        Invoke("turnoff", 7f);
     }
     private void OnDisable()
     {
@@ -42,7 +42,7 @@ public class Ninjastar : MonoBehaviour
         {
             if (other.gameObject == LoadCharmanager.Overallmainchar)
             {
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg + (Globalplayercalculations.calculateenemyspezialdmg() / 2));
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 3));
                 gameObject.SetActive(false);
             }
         }

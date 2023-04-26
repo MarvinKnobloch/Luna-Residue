@@ -11,6 +11,7 @@ public class Towergoal : MonoBehaviour
         {
             tower.GetComponent<Towercontroller>().dealdmg = false;
             tower.GetComponent<Towercontroller>().dealdmgtoenemyroot();
+            other.GetComponent<Healingscript>().groupheal();
             gameObject.SetActive(false);
         }
     }

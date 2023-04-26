@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Fishmanspezial : MonoBehaviour
 {
-    [SerializeField] private GameObject fishmancontroller;
+    [SerializeField] private Fishmancontroller spezialcontroller;
     private void fishmanspezial()
     {
-        fishmancontroller.SetActive(true);
+        spezialcontroller.gameObject.SetActive(true);
     }
 }

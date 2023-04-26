@@ -23,21 +23,21 @@ public class Paladincirclecontroller : MonoBehaviour
         dmgposi.y = LoadCharmanager.Overallmainchar.transform.position.y;
         if(Statics.infight == true)
         {
-            Collider[] colliders = Physics.OverlapSphere(dmgposi, 7f, playerlayer, QueryTriggerInteraction.Ignore);
+            Collider[] colliders = Physics.OverlapSphere(dmgposi, 7.5f, playerlayer, QueryTriggerInteraction.Ignore);
             foreach (Collider players in colliders)
             {
                 if (players.gameObject == LoadCharmanager.Overallmainchar)
                 {
-                    LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(basedmg + Globalplayercalculations.calculateenemyspezialdmg());
+                    LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 10));
                     break;
                 }
             }
         }
         gameObject.SetActive(false);
     }
-    /*private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, 7f);
-    }*/
+        Gizmos.DrawSphere(transform.position, 7.5f);
+    }
 }

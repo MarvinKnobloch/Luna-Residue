@@ -8,7 +8,6 @@ public class Fishmancolliderdmg : MonoBehaviour
     [SerializeField] private GameObject redline;
 
     private bool dealdmgonce;
-
     [NonSerialized] public float basedmg;
 
     private void OnEnable()
@@ -23,7 +22,7 @@ public class Fishmancolliderdmg : MonoBehaviour
             if (other.gameObject == LoadCharmanager.Overallmainchar && dealdmgonce == false)
             {
                 dealdmgonce = true;
-                other.GetComponent<Playerhp>().TakeDamage(basedmg + Globalplayercalculations.calculateenemyspezialdmg());
+                other.GetComponent<Playerhp>().TakeDamage(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 2));
             }
         }
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Knightspezial : MonoBehaviour
 {
-    [SerializeField] private GameObject knightcontroller;
+    [SerializeField] private Knightcontroller spezialcontroller;
 
     const string spezial2attackstate = "Spezial2";
 
@@ -14,6 +14,6 @@ public class Knightspezial : MonoBehaviour
     }
     private void knightspezial()
     {
-        knightcontroller.SetActive(true);
+        spezialcontroller.gameObject.SetActive(true);
     }
 }

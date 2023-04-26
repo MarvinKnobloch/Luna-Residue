@@ -6,7 +6,7 @@ public class Knightcontroller : MonoBehaviour
 {
     private Vector3 waveposi;
     [SerializeField] private GameObject wavezero;
-    [SerializeField] private GameObject[] waves;
+    [SerializeField] private Knightwavecontroller[] waves;
     private int firstwave;
     private int secondwave;
     [SerializeField] private LayerMask waveraydonwlayer;
@@ -19,17 +19,17 @@ public class Knightcontroller : MonoBehaviour
     {
         wavezero.GetComponent<Knightwavecontroller>().basedmg = wavedmg;
         wavezero.GetComponent<Knightwavecontroller>().speed = wavespeed / 2;
-        foreach (GameObject wave in waves)
+        foreach (Knightwavecontroller wave in waves)
         {
-            wave.GetComponent<Knightwavecontroller>().basedmg = wavedmg;
-            wave.GetComponent<Knightwavecontroller>().speed = wavespeed;
+            wave.basedmg = wavedmg;
+            wave.speed = wavespeed;
         }
     }
     private void OnEnable()
     {
-        foreach (GameObject wave in waves)
+        foreach (Knightwavecontroller wave in waves)
         {
-            wave.SetActive(false);
+            wave.gameObject.SetActive(false);
         }
         waveposi = LoadCharmanager.Overallmainchar.transform.position;
         if (Physics.Raycast(LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 0.5f, Vector3.down, out RaycastHit hit, 20, waveraydonwlayer, QueryTriggerInteraction.Ignore))
@@ -41,13 +41,13 @@ public class Knightcontroller : MonoBehaviour
         wavezero.transform.position = LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 10;
         wavezero.GetComponent<Knightwavecontroller>().endposi = LoadCharmanager.Overallmainchar.transform.position + Vector3.up * -10;
         waves[0].transform.position = waveposi + Vector3.right * 20;
-        waves[0].GetComponent<Knightwavecontroller>().endposi = waveposi + Vector3.right * -20;
+        waves[0].endposi = waveposi + Vector3.right * -20;
         waves[1].transform.position = waveposi + Vector3.forward * 20;
-        waves[1].GetComponent<Knightwavecontroller>().endposi = waveposi + Vector3.forward * -20;
+        waves[1].endposi = waveposi + Vector3.forward * -20;
         waves[2].transform.position = waveposi + Vector3.right * -20;
-        waves[2].GetComponent<Knightwavecontroller>().endposi = waveposi + Vector3.right * 20;
+        waves[2].endposi = waveposi + Vector3.right * 20;
         waves[3].transform.position = waveposi + Vector3.forward * -20;
-        waves[3].GetComponent<Knightwavecontroller>().endposi = waveposi + Vector3.forward * 20;
+        waves[3].endposi = waveposi + Vector3.forward * 20;
         Invoke("wave0", 0.1f);
     }
     private void wave0()
@@ -58,13 +58,13 @@ public class Knightcontroller : MonoBehaviour
     private void wave1()
     {
         firstwave = Random.Range(0, 4);
-        waves[firstwave].SetActive(true);
+        waves[firstwave].gameObject.SetActive(true);
         Invoke("wave2", 1.5f);
     }
     private void wave2()
     {
         getwavenumber();
-        waves[secondwave].SetActive(true);
+        waves[secondwave].gameObject.SetActive(true);
         Invoke("turnoff", 3.5f);                //bei schlechtem timing(z.b 3.6f) knackst der sound am ende
     }
     private void getwavenumber()

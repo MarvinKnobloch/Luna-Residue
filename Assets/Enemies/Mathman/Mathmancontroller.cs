@@ -6,7 +6,7 @@ using System;
 
 public class Mathmancontroller : MonoBehaviour
 {
-    [SerializeField] private GameObject mathcommit;
+    [SerializeField] private GameObject mathcommit;             //answertime ist bei mathmancommit wegen onenable reihenfolge(der wert wird beim erstenmal nicht richtig geladen)
     [SerializeField] private Text mathtasktext;
     [SerializeField] private int lowerfirstnumber;
     [SerializeField] private int upperfirstnumber;
@@ -14,7 +14,6 @@ public class Mathmancontroller : MonoBehaviour
     [SerializeField] private int uppersecondnumber;
 
     [SerializeField] private int spezialdmg;
-    [SerializeField] private float timetoanswer;
 
     private int firstnumber;
     private int secondnumber;
@@ -23,7 +22,6 @@ public class Mathmancontroller : MonoBehaviour
     private void Awake()
     {
         mathcommit.GetComponent<Mathcommit>().basedmg = spezialdmg;
-        mathcommit.GetComponent<Mathcommit>().answertime = timetoanswer;
     }
 
     private void OnEnable()

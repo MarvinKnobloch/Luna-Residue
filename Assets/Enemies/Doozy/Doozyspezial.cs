@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class Doozyspezial : MonoBehaviour
 {
-    [SerializeField] private GameObject doozycontroller;
+    [SerializeField] private Doozycontroller spezialcontroller;
     private Enemyspezialsound enemyspezialsound;
     private void Awake()
     {
-        enemyspezialsound = doozycontroller.GetComponentInParent<Enemyspezialsound>();
+        enemyspezialsound = spezialcontroller.GetComponentInParent<Enemyspezialsound>();
     }
-
     private void doozyspezial()
     {
-        doozycontroller.SetActive(true);
+        spezialcontroller.gameObject.SetActive(true);
     }
     private void doozyspezialaudio() => enemyspezialsound.playdoozyspezial();
 }
