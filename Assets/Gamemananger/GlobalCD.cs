@@ -6,7 +6,7 @@ using TMPro;
 
 public class GlobalCD : MonoBehaviour
 {
-    static MonoBehaviour instance;
+    public static GlobalCD instance;
 
     [SerializeField] private Image dashcdUI;
     [SerializeField] private TextMeshProUGUI dashcdtext;
@@ -34,17 +34,26 @@ public class GlobalCD : MonoBehaviour
 
     private bool dashcounterisrunning;
     private bool charswitchbuffisrunning;
+    private bool supportrezzcdisrunning;
 
     private float currentmissingweaponbufftime;
     private float currentmissingcharbufftime;
 
     void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
         Statics.dashcdbool = false;
         Statics.charswitchbool = false;
         Statics.healcdbool = false;
         Statics.otheraction = false;
-        instance = this;
         healcdtext.text = "";
         dashcdtext.text = "";
         weaponswitchcdtext.text = "";
@@ -86,7 +95,8 @@ public class GlobalCD : MonoBehaviour
     }
     public static void startsupportresurrectioncd()
     {
-        instance.StartCoroutine("supportresurrection");
+        if (instance.supportrezzcdisrunning || Statics.supportcanresurrect == true) return;
+        else instance.StartCoroutine("supportresurrection");
     }
     public static void stopsupportresurrectioncd()
     {
@@ -269,9 +279,11 @@ public class GlobalCD : MonoBehaviour
     }
     IEnumerator supportresurrection()
     {
+        supportrezzcdisrunning = true;
         int randomnumber = Random.Range(1, 3);
         yield return new WaitForSeconds(Statics.infightresurrectcd + randomnumber);
         Statics.supportcanresurrect = true;
+        supportrezzcdisrunning = false;
         StopCoroutine("supportresurrection()");
     }
 }

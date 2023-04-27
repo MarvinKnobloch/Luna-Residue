@@ -38,7 +38,7 @@ public class Healtutorial : MonoBehaviour
     }
     private void Update()
     {
-        if (readinputs == true && controlls.Player.Interaction.WasPressedThisFrame())
+        if (readinputs == true && controlls.Menusteuerung.Leftclick.WasPressedThisFrame())
         {
             if (textindex != 3)
             {
@@ -63,7 +63,6 @@ public class Healtutorial : MonoBehaviour
             tutorialcomplete = true;
             Statics.charcurrenthealth[Statics.currentfirstchar] = 70;
             Statics.charcurrenthealth[Statics.currentthirdchar] = 70;
-            Statics.charcurrenthealth[Statics.currentforthchar] = 70;
             healthuimanager.sethealthbars();
             heal = controlls.Player.Heal.GetBindingDisplayString();
             player1target = controlls.SpielerHeal.Target1.GetBindingDisplayString();

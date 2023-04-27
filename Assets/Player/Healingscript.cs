@@ -299,7 +299,10 @@ public class Healingscript : MonoBehaviour
         healanzeige.SetActive(false);
         Statics.otheraction = false;
         GlobalCD.starthealingcd(resurrectcd);
-        movementscript.state = Movescript.State.Ground;
+        if(movementscript.state == Movescript.State.Heal)
+        {
+            movementscript.state = Movescript.State.Ground;
+        }
     }
 
     private void castsingleheal()

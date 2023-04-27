@@ -20,7 +20,7 @@ public class Enemyspezialtutorial : MonoBehaviour
     }
     private void Update()
     {
-        if (readinputs == true && controlls.Player.Interaction.WasPressedThisFrame())
+        if (readinputs == true && controlls.Menusteuerung.Leftclick.WasPressedThisFrame())
         {
             if (textindex != 1)
             {

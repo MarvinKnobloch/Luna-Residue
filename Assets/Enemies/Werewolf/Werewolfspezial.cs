@@ -19,6 +19,9 @@ public class Werewolfspezial : MonoBehaviour
     }
     private void werewolfspezialaudio()
     {
-        enemyspezialsound.playwerewolfspezial();
+        if(enemyspezialsound != null)                //wegen tutorial
+        {
+            enemyspezialsound.playwerewolfspezial();
+        }
     }
 }

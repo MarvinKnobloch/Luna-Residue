@@ -32,10 +32,10 @@ public class Enemyattack
                     }
                 }
                 Vector3 targetposi = new Vector3(esm.currenttarget.transform.position.x, esm.transform.position.y, esm.currenttarget.transform.position.z);
-                if (Vector3.Distance(esm.transform.position, targetposi + esm.transform.forward * -2) > esm.attackrange)
+                if (Vector3.Distance(esm.transform.position, targetposi) > esm.attackrange)                                  //+esm.transform.forward * -2      enemy bekommt selten einen drehwurm   
                 {
                     esm.ChangeAnimationState(runstate);
-                    esm.Meshagent.SetDestination(targetposi + esm.transform.forward * -2);
+                    esm.Meshagent.SetDestination(targetposi);                                                                //+esm.transform.forward * -2
                 }
                 else
                 {
@@ -171,11 +171,11 @@ public class Enemyattack
                 }
             }
 
-            else if (Vector3.Distance(esm.transform.position, targetposi + esm.transform.forward * -2) > esm.attackrange)
+            else if (Vector3.Distance(esm.transform.position, targetposi) > esm.attackrange)
             {
                 ismovingrotation = true;
                 esm.ChangeAnimationState(runstate);
-                esm.Meshagent.SetDestination(targetposi + esm.transform.forward * -2);
+                esm.Meshagent.SetDestination(targetposi);
             }
             else
             {
@@ -209,11 +209,11 @@ public class Enemyattack
     }
     private void supportistarget()
     {
-        if (Vector3.Distance(esm.transform.position, esm.currenttarget.transform.position + esm.transform.forward * -2) > esm.attackrange)
+        if (Vector3.Distance(esm.transform.position, esm.currenttarget.transform.position) > esm.attackrange)
         {
             ismovingrotation = true;
             esm.ChangeAnimationState(runstate);
-            esm.Meshagent.SetDestination(esm.currenttarget.transform.position + esm.transform.forward * -2);
+            esm.Meshagent.SetDestination(esm.currenttarget.transform.position);
         }
         else
         {

@@ -41,7 +41,6 @@ public class Globalplayercalculations
     public static float calculateenemyspezialdmg(float basedmg, float dmglevel, int amountreduction)
     {
         float dmg = dmglevel * Statics.enemyspezialdmgbonus / amountreduction + basedmg;
-        Debug.Log(dmg);
         return dmg;
     }
     public static float calculateenemydmg(float basedmg, int enemylvl)

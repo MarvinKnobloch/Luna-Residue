@@ -59,7 +59,7 @@ public class Statics
     public static float cleavedamagereduction = 3;
     public static float basicweaponheal = 3;
     public static float weaponbonushealhealthpercentage = 2;
-    public static float healhealthbonuspercentage = 8;
+    public static float healhealthbonuspercentage = 15;
 
     public static float healthperskillpoint = 10;
     public static float armorperskillpoint = 25;
@@ -75,7 +75,7 @@ public class Statics
     public static float presetdashcost = 3;
 
     public static int presetresurrectcd = 4;
-    public static int presethealcd = 7;
+    public static int presethealcd = 8;
 
     //gameplaystatics
     public static bool otheraction;
@@ -164,9 +164,9 @@ public class Statics
     public static float charcurrentexp = 0;
     public static float charrequiredexp = 70;
     public static string[] characternames = { "Maria", "Erika", "Kaja", "Yaku", "Arissa" };
-    public static float[] charbasichealth = { 800, 73, 770, 730, 75 };
-    public static float[] charcurrenthealth = { 800, 73, 770, 730, 75 };
-    public static float[] charmaxhealth = { 800, 73, 770, 730, 75 };
+    public static float[] charbasichealth = { 80, 73, 77, 73, 75 };
+    public static float[] charcurrenthealth = { 80, 73, 77, 73, 75 };
+    public static float[] charmaxhealth = { 80, 73, 77, 73, 75 };
     public static float[] chardefense = { 60, 60, 60, 60, 60 };
     public static float[] charattack = { 0, 0, 0, 0, 0 };
     public static float[] charcritchance = { 5, 5, 5, 5, 5 };

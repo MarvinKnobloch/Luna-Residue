@@ -52,10 +52,9 @@ public class Mathcommit : MonoBehaviour
             {
                 if (Statics.infight == true)
                 {
-                    float test = Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1);
-                    float dmg = (timerdmgmultiplier * (timer / answertime) + 1) * test;
-                    Debug.Log(dmg);
-                    LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(dmg);
+                    float dmg = Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1);
+                    float finaldmg = (timerdmgmultiplier * (timer / answertime) + 1) * dmg;
+                    LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(finaldmg);
                 }
                 solutionUI.color = Color.red;
                 resetvalues();
@@ -67,11 +66,9 @@ public class Mathcommit : MonoBehaviour
         {
             if (Statics.infight == true)
             {
-                float test = Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1);
-                float dmg = (timerdmgmultiplier * (timer / answertime) + 1) * test;
-                Debug.Log(dmg);
-                Debug.Log(timer);
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(dmg);
+                float dmg = Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1);
+                float finaldmg = (timerdmgmultiplier * (timer / answertime) + 1) * dmg;
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(finaldmg);
             }
             solutionUI.color = Color.red;
             resetvalues();
@@ -93,11 +90,9 @@ public class Mathcommit : MonoBehaviour
             yield return new WaitForSeconds(answertime);
             if(Statics.infight == true)
             {
-                float test = Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1);
-                float dmg = (timerdmgmultiplier * (timer / answertime) + 1) * test;
-                Debug.Log(dmg);
-                Debug.Log(timer);
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(dmg);
+                float dmg = Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1);
+                float finaldmg = (timerdmgmultiplier * (timer / answertime) + 1) * dmg;
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(finaldmg);
             }
             solution.text = "";
             resetvalues();
