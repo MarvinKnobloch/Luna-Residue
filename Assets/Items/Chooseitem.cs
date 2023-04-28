@@ -113,14 +113,14 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if (staticsslot != null)
         {
-            Statics.charmaxhealth[selectedchar] += itemvalues.stats[0] - staticsslot.stats[0];
-            Statics.chardefense[selectedchar] += itemvalues.stats[1] - staticsslot.stats[1];
-            Statics.charattack[selectedchar] += itemvalues.stats[2] - staticsslot.stats[2];
-            Statics.charcritchance[selectedchar] += itemvalues.stats[3] - staticsslot.stats[3];
-            Statics.charcritdmg[selectedchar] += itemvalues.stats[4] - staticsslot.stats[4];
-            Statics.charweaponbuff[selectedchar] += itemvalues.stats[5] - staticsslot.stats[5];
-            Statics.charswitchbuff[selectedchar] += itemvalues.stats[6] - staticsslot.stats[6];
-            Statics.charbasicdmgbuff[selectedchar] += itemvalues.stats[7] - staticsslot.stats[7];
+            Statics.charmaxhealth[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[0] - staticsslot.itemlvl[staticsslot.upgradelvl].stats[0];
+            Statics.chardefense[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[1] - staticsslot.itemlvl[staticsslot.upgradelvl].stats[1];
+            Statics.charattack[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[2] - staticsslot.itemlvl[staticsslot.upgradelvl].stats[2];
+            Statics.charcritchance[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[3] - staticsslot.itemlvl[staticsslot.upgradelvl].stats[3];
+            Statics.charcritdmg[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[4] - staticsslot.itemlvl[staticsslot.upgradelvl].stats[4];
+            Statics.charweaponbuff[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[5] - staticsslot.itemlvl[staticsslot.upgradelvl].stats[5];
+            Statics.charswitchbuff[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[6] - staticsslot.itemlvl[staticsslot.upgradelvl].stats[6];
+            Statics.charbasicdmgbuff[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[7] - staticsslot.itemlvl[staticsslot.upgradelvl].stats[7];
         }
         else
         {
@@ -170,14 +170,14 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     private void subtractstatsbeforeupgrade(int currentchar)
     {
-        Statics.charmaxhealth[currentchar] -= itemvalues.stats[0];
-        Statics.chardefense[currentchar] -= itemvalues.stats[1];
-        Statics.charattack[currentchar] -= itemvalues.stats[2];
-        Statics.charcritchance[currentchar] -= itemvalues.stats[3];
-        Statics.charcritdmg[currentchar] -= itemvalues.stats[4];
-        Statics.charweaponbuff[currentchar] -= itemvalues.stats[5];
-        Statics.charswitchbuff[currentchar] -= itemvalues.stats[6];
-        Statics.charbasicdmgbuff[currentchar] -= itemvalues.stats[7];
+        Statics.charmaxhealth[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[0]; //itemvalues.stats[0];
+        Statics.chardefense[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[1];
+        Statics.charattack[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[2];
+        Statics.charcritchance[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[3];
+        Statics.charcritdmg[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[4];
+        Statics.charweaponbuff[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[5];
+        Statics.charswitchbuff[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[6];
+        Statics.charbasicdmgbuff[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[7];
     }
     public void upgradeequipeditems()
     {
@@ -224,14 +224,14 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     private void addstatsafterupgrade(int currentchar)
     {
-        Statics.charmaxhealth[currentchar] += itemvalues.stats[0];
-        Statics.chardefense[currentchar] += itemvalues.stats[1];
-        Statics.charattack[currentchar] += itemvalues.stats[2];
-        Statics.charcritchance[currentchar] += itemvalues.stats[3];
-        Statics.charcritdmg[currentchar] += itemvalues.stats[4];
-        Statics.charweaponbuff[currentchar] += itemvalues.stats[5];
-        Statics.charswitchbuff[currentchar] += itemvalues.stats[6];
-        Statics.charbasicdmgbuff[currentchar] += itemvalues.stats[7];
+        Statics.charmaxhealth[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[0];
+        Statics.chardefense[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[1];
+        Statics.charattack[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[2];
+        Statics.charcritchance[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[3];
+        Statics.charcritdmg[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[4];
+        Statics.charweaponbuff[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[5];
+        Statics.charswitchbuff[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[6];
+        Statics.charbasicdmgbuff[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[7];
     }
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
@@ -301,12 +301,12 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     private void ontriggerflatstats(Itemcontroller equipeditem, int itemstat, float currentstatvalue)
     {
-        float difference = itemvalues.stats[itemstat] - equipeditem.stats[itemstat];
-        if (itemvalues.stats[itemstat] > equipeditem.stats[itemstat])
+        float difference = itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] - equipeditem.itemlvl[itemvalues.upgradelvl].stats[itemstat];
+        if (itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] > equipeditem.itemlvl[itemvalues.upgradelvl].stats[itemstat])
         {
             statsnumbers.text += "<color=green>" + "( +" + difference + " ) " + (difference + currentstatvalue) + "</color>" + "\n";
         }
-        else if (itemvalues.stats[itemstat] < equipeditem.stats[itemstat])
+        else if (itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] < equipeditem.itemlvl[itemvalues.upgradelvl].stats[itemstat])
         {
             statsnumbers.text += "<color=red>" + "( " + difference + " ) " + (difference + currentstatvalue) + "</color>" + "\n";
         }
@@ -317,12 +317,12 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     private void ontriggerpercentage(Itemcontroller equipeditem, int itemstat, float currentstatvalue)
     {
-        float difference = itemvalues.stats[itemstat] - equipeditem.stats[itemstat];
-        if (itemvalues.stats[itemstat] > equipeditem.stats[itemstat])
+        float difference = itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] - equipeditem.itemlvl[itemvalues.upgradelvl].stats[itemstat];
+        if (itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] > equipeditem.itemlvl[itemvalues.upgradelvl].stats[itemstat])
         {
             statsnumbers.text += "<color=green>" + "( +" + difference + " ) " + (difference + currentstatvalue) + "%" + "</color>" + "\n";
         }
-        else if (itemvalues.stats[itemstat] < equipeditem.stats[itemstat])
+        else if (itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] < equipeditem.itemlvl[itemvalues.upgradelvl].stats[itemstat])
         {
             statsnumbers.text += "<color=red>" + "( " + difference + " ) " + (difference + currentstatvalue) + "%" + "</color>" + "\n";
         }
@@ -350,7 +350,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
         else health = currentstatvalue;
         float currentstats = Mathf.Round(health * Statics.healhealthbonuspercentage * 0.01f);
-        float newstats = Mathf.Round((health + itemvalues.stats[itemstat] - equipeditem.stats[itemstat]) * Statics.healhealthbonuspercentage * 0.01f);
+        float newstats = Mathf.Round((health + itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] - equipeditem.itemlvl[itemvalues.upgradelvl].stats[itemstat]) * Statics.healhealthbonuspercentage * 0.01f);
         float difference = newstats - currentstats;
         if (newstats > currentstats)
         {
@@ -368,7 +368,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     private void defensebonus(Itemcontroller equipeditem, int itemstat, float currentstatvalue)
     {
         float currentstats = Mathf.Round(currentstatvalue * Statics.defenseconvertedtoattack * 0.01f);
-        float newstats = Mathf.Round((currentstatvalue + itemvalues.stats[itemstat] - equipeditem.stats[itemstat]) * Statics.defenseconvertedtoattack * 0.01f);
+        float newstats = Mathf.Round((currentstatvalue + itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] - equipeditem.itemlvl[itemvalues.upgradelvl].stats[itemstat]) * Statics.defenseconvertedtoattack * 0.01f);
         float difference = newstats - currentstats;
         if (newstats > currentstats)
         {

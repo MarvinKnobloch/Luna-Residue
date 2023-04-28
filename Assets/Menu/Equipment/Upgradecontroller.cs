@@ -89,13 +89,7 @@ public class Upgradecontroller : MonoBehaviour
     }
     private void upgradeitem()
     {
-        int currentint = 0;
-        chooseitem.subtractequipeditem();
-        foreach (float stat in itemtoupgrade.stats)
-        {
-            itemtoupgrade.stats[currentint] = itemtoupgrade.upgrades[itemtoupgrade.upgradelvl].newstats[currentint];
-            currentint++;
-        }
+        chooseitem.subtractequipeditem();      
         removemats();
         itemtoupgrade.upgradelvl++;
         chooseitem.upgradeequipeditems();
@@ -106,7 +100,7 @@ public class Upgradecontroller : MonoBehaviour
     }
     private void removemats()
     {
-        for (int i = 0; i < itemtoupgrade.upgrades[itemtoupgrade.upgradelvl].Upgrademats.Length; i++)
+        for (int i = 0; i < itemtoupgrade.itemlvl[itemtoupgrade.upgradelvl].Upgrademats.Length; i++)
         {
             matsinventory.Container.Items[craftingmatinventoryposi[i]].amount -= upgrademinusvalue[i];
         }

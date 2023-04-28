@@ -95,11 +95,12 @@ public class GlobalCD : MonoBehaviour
     }
     public static void startsupportresurrectioncd()
     {
-        if (instance.supportrezzcdisrunning || Statics.supportcanresurrect == true) return;
+        if (instance.supportrezzcdisrunning == true || Statics.supportcanresurrect == true) return;
         else instance.StartCoroutine("supportresurrection");
     }
     public static void stopsupportresurrectioncd()
     {
+        instance.supportrezzcdisrunning = false;
         instance.StopCoroutine("supportresurrection");
     }
     IEnumerator healingcd()
@@ -281,7 +282,7 @@ public class GlobalCD : MonoBehaviour
     {
         supportrezzcdisrunning = true;
         int randomnumber = Random.Range(1, 3);
-        yield return new WaitForSeconds(Statics.infightresurrectcd + randomnumber);
+        yield return new WaitForSeconds(Statics.infightresurrectcd * 2 + randomnumber);
         Statics.supportcanresurrect = true;
         supportrezzcdisrunning = false;
         StopCoroutine("supportresurrection()");

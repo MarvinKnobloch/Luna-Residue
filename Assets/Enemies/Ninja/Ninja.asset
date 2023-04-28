@@ -24,4 +24,4 @@ MonoBehaviour:
   expgain: 9
   enemydrops:
   - itemtodrop: {fileID: 6737092273977564704, guid: 00b38d45c459e974caa3db64bf8cef7a, type: 3}
-    itemdropchance: 5
+    itemdropchance: 15

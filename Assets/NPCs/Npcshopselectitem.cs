@@ -26,17 +26,17 @@ public class Npcshopselectitem : MonoBehaviour, ISelectHandler                  
         newstats.text = string.Empty;
         for (int i = 0; i < statstext.Length; i++)
         {
-            if(merchantitem.basestats[i] > 0)
+            if(merchantitem.itemlvl[merchantitem.upgradelvl].stats[i] > 0)
             {
-                newstats.text += statstext[i] + "<pos=75%>" + "<color=green>" + merchantitem.basestats[i].ToString() + "</color>" + "\n";
+                newstats.text += statstext[i] + "<pos=75%>" + "<color=green>" + merchantitem.itemlvl[merchantitem.upgradelvl].stats[i].ToString() + "</color>" + "\n";
             }
-            else if (merchantitem.basestats[i] < 0)
+            else if (merchantitem.itemlvl[merchantitem.upgradelvl].stats[i] < 0)
             {
-                newstats.text += statstext[i] + "<pos=75%>" + "<color=red>" + merchantitem.basestats[i].ToString() + "</color>" + "\n";
+                newstats.text += statstext[i] + "<pos=75%>" + "<color=red>" + merchantitem.itemlvl[merchantitem.upgradelvl].stats[i].ToString() + "</color>" + "\n";
             }
             else
             {
-                newstats.text += statstext[i] + "<pos=75%>" + merchantitem.basestats[i].ToString() + "\n";
+                newstats.text += statstext[i] + "<pos=75%>" + merchantitem.itemlvl[merchantitem.upgradelvl].stats[i].ToString() + "\n";
             }
         }
     }

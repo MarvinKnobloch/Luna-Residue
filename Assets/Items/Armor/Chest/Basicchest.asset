@@ -16,38 +16,30 @@ MonoBehaviour:
   type: 5
   itemid: 2
   itemname: Basichest
-  inventoryslot: 3
+  inventoryslot: 2
   itemshopcosts: 115
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
-  basestats:
-  - 10
-  - 0
-  - 0
-  - 0
-  - 0
-  - 2
-  - 0
-  - 0
-  stats:
-  - 10
-  - 0
-  - 0
-  - 0
-  - 0
-  - 2
-  - 0
-  - 0
   upgradelvl: 0
   maxupgradelvl: 1
-  upgrades:
-  - newstats:
+  itemlvl:
+  - stats:
+    - 10
+    - 0
+    - 0
+    - 0
+    - 0
+    - 2
+    - 0
+    - 0
+    Upgrademats: []
+  - stats:
     - 20
     - 0
     - 0
     - 0
     - 0
-    - 6
+    - 4
     - 0
     - 0
     Upgrademats:

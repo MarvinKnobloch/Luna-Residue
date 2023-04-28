@@ -55,7 +55,7 @@ public class Infightcontroller : MonoBehaviour
         {
             Musiccontroller.instance.startfadeout(Musiccontroller.instance.currentzonemusic, Musiccontroller.instance.currentzonemusictime, 2, 3);
             Statics.infight = false;
-            Statics.oneplayerisdead = false;
+            Statics.supportcanresurrect = false;
             Statics.currentenemyspecialcd = Statics.enemyspecialcd;
             instance.StopCoroutine("firstenemyspezialcd");
             instance.StopCoroutine("enemyspezialcd");
@@ -74,8 +74,8 @@ public class Infightcontroller : MonoBehaviour
             if (Statics.infight == false)
             {
                 Statics.infightresurrectcd = Statics.presetresurrectcd;
+                GlobalCD.stopsupportresurrectioncd();                       //res probleme weil supportrezzcdisrunning nicht resetet wird???? 
                 Statics.supportcanresurrect = false;
-                Statics.oneplayerisdead = false;
                 Statics.infight = true;
                 map.SetActive(false);
                 instance.StopCoroutine("healalliesafterfight");
@@ -179,5 +179,12 @@ public class Infightcontroller : MonoBehaviour
     public void activategameovercontroller()
     {
         gameovercontroller.SetActive(true);
+    }
+    public void savegameoverposi(Vector3 saveposi)
+    {
+        Statics.gameoverposi = saveposi;
+        Statics.gameoverrota = LoadCharmanager.Overallmainchar.transform.rotation;
+        Statics.gameovercam = LoadCharmanager.savecamvalueX;
+        Statics.aftergameovermusic = Statics.currentzonemusicint;
     }
 }

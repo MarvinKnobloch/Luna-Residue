@@ -16,32 +16,36 @@ MonoBehaviour:
   type: 10
   itemid: 1
   itemname: Mysticring
-  inventoryslot: 0
+  inventoryslot: 1
   itemshopcosts: 121
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
-  basestats:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 3
-  stats:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 3
   upgradelvl: 0
   maxupgradelvl: 5
-  upgrades:
-  - newstats:
+  itemlvl:
+  - stats:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 2
+    Upgrademats: []
+  - stats:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 4
+    Upgrademats:
+    - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
+      costs: 1
+  - stats:
     - 0
     - 0
     - 0
@@ -52,8 +56,8 @@ MonoBehaviour:
     - 6
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
-      costs: 1
-  - newstats:
+      costs: 2
+  - stats:
     - 0
     - 0
     - 0
@@ -61,11 +65,25 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 9
+    - 8
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
-      costs: 2
-  - newstats:
+      costs: 3
+  - stats:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 10
+    Upgrademats:
+    - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
+      costs: 1
+    - upgrademat: {fileID: 11400000, guid: 70e46c03fb07eb348bb319316e61c034, type: 2}
+      costs: 1
+  - stats:
     - 0
     - 0
     - 0
@@ -74,32 +92,6 @@ MonoBehaviour:
     - 0
     - 0
     - 12
-    Upgrademats:
-    - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
-      costs: 3
-  - newstats:
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 15
-    Upgrademats:
-    - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
-      costs: 1
-    - upgrademat: {fileID: 11400000, guid: 70e46c03fb07eb348bb319316e61c034, type: 2}
-      costs: 1
-  - newstats:
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 18
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
       costs: 2

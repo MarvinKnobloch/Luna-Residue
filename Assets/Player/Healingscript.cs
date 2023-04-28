@@ -349,6 +349,8 @@ public class Healingscript : MonoBehaviour
     }
     private void resurrect(GameObject character)
     {
+        GlobalCD.stopsupportresurrectioncd();
+        Statics.supportcanresurrect = false;
         if (character.TryGetComponent(out Playerhp playerhp))
         {
             if (playerhp.playerisdead == true)
@@ -360,6 +362,11 @@ public class Healingscript : MonoBehaviour
                 float healamount = Mathf.Round(playerhp.maxhealth * (0.2f + (Statics.groupstonehealbonus * 0.01f)));
                 playerhp.addhealthwithtext(healamount);
             }
+        }
+        if (LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == true || LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().playerisdead == true || LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().playerisdead == true)
+        {
+            Debug.Log("stilloneplayerdead");
+            GlobalCD.startsupportresurrectioncd();
         }
     }
     IEnumerator wrongcd()

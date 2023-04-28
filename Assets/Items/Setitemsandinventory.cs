@@ -58,10 +58,6 @@ public class Setitemsandinventory : MonoBehaviour
         {
             items[i].inventoryslot = 0;
             items[i].upgradelvl = 0;
-            for (int t = 0; t < items[i].stats.Length; t++)
-            {
-                items[i].stats[t] = items[i].basestats[t];
-            }
             //items[i].stats = items[i].basestats;                synrchonisiert die beiden arrays???????(wenn ich stats umändere, werden die basestats auch geändert)
         }
     }
@@ -116,10 +112,6 @@ public class Setitemsandinventory : MonoBehaviour
                         Itemcontroller item = inventory.Container.Items[i].item;
                         item.inventoryslot = inventory.Container.Items[i].inventoryposi;
                         item.upgradelvl = inventory.Container.Items[i].itemlvl;
-                        if (item.upgradelvl != 0)
-                        {
-                            item.stats = item.upgrades[item.upgradelvl - 1].newstats;
-                        }
                         couldfinditem = true;
                         break;
                     }
@@ -168,17 +160,17 @@ public class Setitemsandinventory : MonoBehaviour
     {
         for (int i = 0; i < Statics.characternames.Length; i++)
         {
-            Statics.charswordattack[i] = startingsword.stats[2];
+            Statics.charswordattack[i] = startingsword.itemlvl[startingsword.upgradelvl].stats[2];
             Statics.charcurrentsword[i] = startingsword;
         }
         for (int i = 0; i < Statics.characternames.Length; i++)
         {
-            Statics.charbowattack[i] = startingbow.stats[2];
+            Statics.charbowattack[i] = startingbow.itemlvl[startingbow.upgradelvl].stats[2];
             Statics.charcurrentbow[i] = startingbow;
         }
         for (int i = 0; i < Statics.characternames.Length; i++)
         {
-            Statics.charfistattack[i] = startingfist.stats[2];
+            Statics.charfistattack[i] = startingfist.itemlvl[startingfist.upgradelvl].stats[2];
             Statics.charcurrentfist[i] = startingfist;
         }
         for (int i = 0; i < Statics.characternames.Length; i++)
@@ -232,14 +224,14 @@ public class Setitemsandinventory : MonoBehaviour
     {
         if(item != null)
         {
-            Statics.charmaxhealth[character] += item.stats[0];
-            Statics.chardefense[character] += item.stats[1];
-            Statics.charattack[character] += item.stats[2];
-            Statics.charcritchance[character] += item.stats[3];
-            Statics.charcritdmg[character] += item.stats[4];
-            Statics.charweaponbuff[character] += item.stats[5];
-            Statics.charswitchbuff[character] += item.stats[6];
-            Statics.charbasicdmgbuff[character] += item.stats[7];
+            Statics.charmaxhealth[character] += item.itemlvl[item.upgradelvl].stats[0];       //item.stats[0];
+            Statics.chardefense[character] += item.itemlvl[item.upgradelvl].stats[1];
+            Statics.charattack[character] += item.itemlvl[item.upgradelvl].stats[2];
+            Statics.charcritchance[character] += item.itemlvl[item.upgradelvl].stats[3];
+            Statics.charcritdmg[character] += item.itemlvl[item.upgradelvl].stats[4];
+            Statics.charweaponbuff[character] += item.itemlvl[item.upgradelvl].stats[5];
+            Statics.charswitchbuff[character] += item.itemlvl[item.upgradelvl].stats[6];
+            Statics.charbasicdmgbuff[character] += item.itemlvl[item.upgradelvl].stats[7];
         }
     }
 }

@@ -92,11 +92,7 @@ public class Playerhp : MonoBehaviour
                     LoadCharmanager.disableattackbuttons = true;
                     gameObject.GetComponent<Movescript>().ChangeAnimationStateInstant(dyingstate);
                     gameObject.GetComponent<Movescript>().switchtodead();
-                    if (Statics.oneplayerisdead == false)
-                    {
-                        Statics.oneplayerisdead = true;
-                        GlobalCD.startsupportresurrectioncd();
-                    }
+                    GlobalCD.startsupportresurrectioncd();
                     foreach (GameObject obj in Infightcontroller.infightenemylists)
                     {
                         obj.GetComponent<EnemyHP>().newtargetonplayerdeath(playerhpuislot);
@@ -107,11 +103,7 @@ public class Playerhp : MonoBehaviour
                 {
                     gameObject.GetComponent<Supportmovement>().ChangeAnimationStateInstant(dyingstate);                  //wenn ich die 2 sachen über eine funktion call werden sie manchmal überschrieben und dann wird die empty state überschrieben
                     gameObject.GetComponent<Supportmovement>().state = Supportmovement.State.empty;
-                    if (Statics.oneplayerisdead == false)
-                    {
-                        Statics.oneplayerisdead = true;
-                        GlobalCD.startsupportresurrectioncd();
-                    }
+                    GlobalCD.startsupportresurrectioncd();
                     foreach (GameObject obj in Infightcontroller.infightenemylists)
                     {
                         obj.GetComponent<EnemyHP>().newtargetonplayerdeath(playerhpuislot - 1);

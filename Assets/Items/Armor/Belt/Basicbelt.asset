@@ -20,24 +20,6 @@ MonoBehaviour:
   itemshopcosts: 110
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
-  basestats:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 4
-  - 0
-  - 0
-  - 0
-  stats:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 4
-  - 0
-  - 0
-  - 0
   upgradelvl: 0
   maxupgradelvl: 1
   upgrades:
@@ -47,7 +29,13 @@ MonoBehaviour:
     - 0
     - 0
     - 8
+  - stats:
     - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 8
     - 0
     - 0
     Upgrademats:

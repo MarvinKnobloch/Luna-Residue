@@ -41,21 +41,6 @@ public class Upgradeuitextcontroller : MonoBehaviour
         chooseitem = null;
         upgradecontroller.chooseweapon = null;
     }
-#if UNITY_EDITOR
-    private void Update()
-    {
-        if (Steuerung.Player.Attack3.WasPressedThisFrame())                //stats zurücksetzt, damit ich es nicht von hand machen muss
-        {
-            item.upgradelvl = 0;
-            int currentstat = 0;
-            foreach (float stat in item.stats)
-            {
-                item.stats[currentstat] = item.basestats[currentstat];
-                currentstat++;
-            }
-        }
-    }
-#endif
     public void valuesupdate()
     {
         itemheaderandcheckforupgrade();
@@ -84,23 +69,23 @@ public class Upgradeuitextcontroller : MonoBehaviour
     private void itemstats()
     {
         int currentstat = 0;
-        foreach (int stat in item.stats)
+        foreach (int stat in item.itemlvl[item.upgradelvl].stats)
         {
             if (item.upgradelvl < item.maxupgradelvl)
             {
-                if (stat != 0 || item.upgrades[item.upgradelvl].newstats[currentstat] != 0)               // || damit auch die values angezeigt werden, die von 0 auf +irgendwas gehen
+                if (stat != 0 || item.itemlvl[item.upgradelvl + 1].stats[currentstat] != 0)               // || damit auch die values angezeigt werden, die von 0 auf +irgendwas gehen
                 {
-                    if (item.stats[currentstat] < item.upgrades[item.upgradelvl].newstats[currentstat])
+                    if (item.itemlvl[item.upgradelvl].stats[currentstat] < item.itemlvl[item.upgradelvl + 1].stats[currentstat])
                     {
-                        iteminfotext.text += "\n" + item.stats[currentstat] + " -> " + "<color=green>" + item.upgrades[item.upgradelvl].newstats[currentstat] + "</color>" + " " + statsname[currentstat];
+                        iteminfotext.text += "\n" + item.itemlvl[item.upgradelvl].stats[currentstat] + " -> " + "<color=green>" + item.itemlvl[item.upgradelvl + 1].stats[currentstat] + "</color>" + " " + statsname[currentstat];
                     }
-                    else if (item.stats[currentstat] > item.upgrades[item.upgradelvl].newstats[currentstat])
+                    else if (item.itemlvl[item.upgradelvl].stats[currentstat] > item.itemlvl[item.upgradelvl + 1].stats[currentstat])
                     {
-                        iteminfotext.text += "\n" + item.stats[currentstat] + " -> " + "<color=red>" + item.upgrades[item.upgradelvl].newstats[currentstat] + "</color>" + " " + statsname[currentstat];
+                        iteminfotext.text += "\n" + item.itemlvl[item.upgradelvl].stats[currentstat] + " -> " + "<color=red>" + item.itemlvl[item.upgradelvl + 1].stats[currentstat] + "</color>" + " " + statsname[currentstat];
                     }
                     else
                     {
-                        iteminfotext.text += "\n" + item.stats[currentstat] + " -> " + item.upgrades[item.upgradelvl].newstats[currentstat] + " " + statsname[currentstat];
+                        iteminfotext.text += "\n" + item.itemlvl[item.upgradelvl].stats[currentstat] + " -> " + item.itemlvl[item.upgradelvl].stats[currentstat + 1] + " " + statsname[currentstat];
                     }
                 }
             }
@@ -108,7 +93,7 @@ public class Upgradeuitextcontroller : MonoBehaviour
             {
                 if (stat != 0)
                 {
-                    iteminfotext.text += "\n" + item.stats[currentstat] + " " + statsname[currentstat];
+                    iteminfotext.text += "\n" + item.itemlvl[item.upgradelvl].stats[currentstat] + " " + statsname[currentstat];
                 }
             }
             currentstat++;
@@ -123,7 +108,7 @@ public class Upgradeuitextcontroller : MonoBehaviour
             iteminfotext.text += "\n" + "\n" + "Upradecosts"; //+ "\n";
 
             int currentinventoryposi = 0;
-            foreach (Itemcontroller.Upgradesmats material in item.upgrades[item.upgradelvl].Upgrademats)
+            foreach (Itemcontroller.Upgradesmats material in item.itemlvl[item.upgradelvl + 1].Upgrademats)
             {
                 neededupgrademats++;
                 int upgradematamount = 0;

@@ -21,6 +21,7 @@ public class Saveandloadgame : MonoBehaviour
 
     public void savegamedata()
     {
+        Infightcontroller.instance.savegameoverposi(LoadCharmanager.savemainposi);
         int slot = savemenucontroller.selectedslot ;
         saveinventorys(slot);
         convertstatics.savestaticsinscript();

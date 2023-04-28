@@ -68,17 +68,17 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         if (equipslot == 0)                //sword = number0
         {
-            Statics.charswordattack[selectedchar] = itemvalues.stats[2];
+            Statics.charswordattack[selectedchar] = itemvalues.itemlvl[itemvalues.upgradelvl].stats[2];
             Statics.charcurrentsword[selectedchar] = itemvalues;
         }
         else if (equipslot == 1)         //bow = number1
         {
-            Statics.charbowattack[selectedchar] = itemvalues.stats[2];
+            Statics.charbowattack[selectedchar] = itemvalues.itemlvl[itemvalues.upgradelvl].stats[2];
             Statics.charcurrentbow[selectedchar] = itemvalues;
         }
         else if (equipslot == 2)        //fist = number2
         {
-            Statics.charfistattack[selectedchar] = itemvalues.stats[2];
+            Statics.charfistattack[selectedchar] = itemvalues.itemlvl[itemvalues.upgradelvl].stats[2];
             Statics.charcurrentfist[selectedchar] = itemvalues;
         }
         statsupdate();
@@ -110,18 +110,18 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
     private void ontriggerstats(Itemcontroller equipeditem, TextMeshProUGUI weapondmgtext)
     {
-        float difference = itemvalues.stats[2] - equipeditem.stats[2];
+        float difference = itemvalues.itemlvl[itemvalues.upgradelvl].stats[2] - equipeditem.itemlvl[equipeditem.upgradelvl].stats[2]; ;
         if (difference > 0)
         {
-            weapondmgtext.text = "<color=green>" + "( +" + difference + " ) " + itemvalues.stats[2] + "</color>";
+            weapondmgtext.text = "<color=green>" + "( +" + difference + " ) " + itemvalues.itemlvl[itemvalues.upgradelvl].stats[2] + "</color>";
         }
         else if (difference < 0)
         {
-            weapondmgtext.text = "<color=red>" + "( " + difference + " ) " + itemvalues.stats[2] + "</color>";
+            weapondmgtext.text = "<color=red>" + "( " + difference + " ) " + itemvalues.itemlvl[itemvalues.upgradelvl].stats[2] + "</color>";
         }
         else
         {
-            weapondmgtext.text = itemvalues.stats[2].ToString();
+            weapondmgtext.text = itemvalues.itemlvl[itemvalues.upgradelvl].stats[2].ToString();
         }
     }
 

@@ -17,17 +17,17 @@ public class Npcplayerinventoryslot : MonoBehaviour, IPointerEnterHandler, IPoin
         ownitemstats.text = string.Empty;
         for (int i = 0; i < statstext.Length; i++)
         {
-            if (item.stats[i] > 0)
+            if (item.itemlvl[item.upgradelvl].stats[i] > 0)
             {
-                ownitemstats.text += statstext[i] + "<pos=75%>" + "<color=green>" + item.stats[i].ToString() + "</color>" + "\n";
+                ownitemstats.text += statstext[i] + "<pos=75%>" + "<color=green>" + item.itemlvl[item.upgradelvl].stats[i].ToString() + "</color>" + "\n";
             }
-            else if (item.stats[i] < 0)
+            else if (item.itemlvl[item.upgradelvl].stats[i] < 0)
             {
-                ownitemstats.text += statstext[i] + "<pos=75%>" + "<color=red>" + item.stats[i].ToString() + "</color>" + "\n";
+                ownitemstats.text += statstext[i] + "<pos=75%>" + "<color=red>" + item.itemlvl[item.upgradelvl].stats[i].ToString() + "</color>" + "\n";
             }
             else
             {
-                ownitemstats.text += statstext[i] + "<pos=75%>" + item.stats[i].ToString() + "\n";
+                ownitemstats.text += statstext[i] + "<pos=75%>" + item.itemlvl[item.upgradelvl].stats[i].ToString() + "\n";
             }
         }
     }

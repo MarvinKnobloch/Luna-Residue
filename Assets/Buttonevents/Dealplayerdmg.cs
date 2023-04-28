@@ -13,7 +13,7 @@ public class Dealplayerdmg : Editor
         Playerhp myScript = (Playerhp)target;
         if (GUILayout.Button("Dealdmg"))
         {
-            myScript.TakeDamage(100);
+            myScript.TakeDamage(myScript.maxhealth);
         }
     }
 }

@@ -103,10 +103,6 @@ public class Supportheal
             Debug.Log("stilloneplayerdead");
             GlobalCD.startsupportresurrectioncd();
         }
-        else
-        {
-            Statics.oneplayerisdead = false;
-        }
     }
     public void supportresurrected()
     {

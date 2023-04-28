@@ -29,17 +29,14 @@ public abstract class Itemcontroller : ScriptableObject
     [TextArea(5, 20)]
     public string description;
 
-    public float[] basestats;
-    public float[] stats;
-
     public int upgradelvl;
     public int maxupgradelvl;
-    public Upgrades[] upgrades;
+    public Upgrades[] itemlvl;
 
     [System.Serializable]
     public class Upgrades
     {
-        public float[] newstats;
+        public float[] stats;
         public Upgradesmats[] Upgrademats;
     }
 

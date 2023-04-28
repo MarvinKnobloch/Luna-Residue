@@ -16,32 +16,24 @@ MonoBehaviour:
   type: 4
   itemid: 3
   itemname: Copperhead
-  inventoryslot: 0
+  inventoryslot: 3
   itemshopcosts: 257
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
-  basestats:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 3
-  - 5
-  - 0
-  stats:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 3
-  - 5
-  - 0
   upgradelvl: 0
   maxupgradelvl: 1
-  upgrades:
-  - newstats:
+  itemlvl:
+  - stats:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 4
+    - 6
+    - 0
+    Upgrademats: []
+  - stats:
     - 0
     - 0
     - 0

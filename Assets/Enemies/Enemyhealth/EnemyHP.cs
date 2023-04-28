@@ -143,10 +143,7 @@ public class EnemyHP : MonoBehaviour
                 Statics.currentenemyspecialcd = Statics.enemyspecialcd + (enemycount * 2);
                 if (enemycount == 0)
                 {
-                    Statics.gameoverposi = GetComponent<Enemymovement>().spawnpostion;
-                    Statics.gameoverrota = LoadCharmanager.Overallmainchar.transform.rotation;
-                    Statics.gameovercam = LoadCharmanager.savecamvalueX;
-                    Statics.aftergameovermusic = Statics.currentzonemusicint;
+                    Infightcontroller.instance.savegameoverposi(GetComponent<Enemymovement>().spawnpostion);
                 }
                 if (Movescript.lockontarget != null)
                 {
