@@ -30,7 +30,6 @@ public class Playerhp : MonoBehaviour
             playerisdead = false;
             addhealth(1);
         }
-
     }
     public void TakeDamage(float damage)
     {

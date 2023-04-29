@@ -130,20 +130,6 @@ public class Startmenucontroller : MonoBehaviour
         Statics.charcurrentexp = 0;
         Statics.charrequiredexp = 70;
 
-        Statics.charbasichealth = new float[] { 80, 73, 77, 73, 75 };
-        Statics.charcurrenthealth = new float[] { 80, 73, 77, 73, 75 };
-        Statics.charmaxhealth = new float[] { 80, 73, 77, 73, 75 };
-        Statics.chardefense = new float[] { 60, 60, 60, 60, 60 };
-        Statics.charattack = new float[] { 0, 0, 0, 0, 0 };
-        Statics.charcritchance = new float[] { 5, 5, 5, 5, 5 };
-        Statics.charcritdmg = new float[] { 150, 150, 150, 150, 150 };
-        Statics.charweaponbuff = new float[] { 0, 0, 0, 0, 0 };
-        Statics.charweaponbuffduration = new float[] { 8, 8, 8, 8, 8 };
-        Statics.charswitchbuff = new float[] { 0, 0, 0, 0, 0 };
-        Statics.charswitchbuffduration = new float[] { 8, 8, 8, 8, 8 };
-        Statics.charbasiccritbuff = new float[] { 1, 1, 1, 1, 1 };
-        Statics.charbasicdmgbuff = new float[] { 0, 0, 0, 0, 0 };
-
         //resetgameplaystatics
         Statics.dashcd = Statics.presetdashcd;
         Statics.dashcost = Statics.presetdashcost;
@@ -210,6 +196,7 @@ public class Startmenucontroller : MonoBehaviour
         Statics.necklaceid = new int[5] { 1, 1, 1, 1, 1 };
         Statics.ringid = new int[5] { 1, 1, 1, 1, 1 };
 
+        setitemsandinventory.resetplayerstats();
         setitemsandinventory.resetitems();
         setitemsandinventory.resetinventorys();
         setitemsandinventory.setstartitems();

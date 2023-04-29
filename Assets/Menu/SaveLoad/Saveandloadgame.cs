@@ -85,9 +85,13 @@ public class Saveandloadgame : MonoBehaviour
         }
         StartCoroutine(loadgameloadingscreen());
         loadinventorys(slot);
+        setitemsandinventory.resetplayerstats();
         setitemsandinventory.resetitems();
         setitemsandinventory.updateitemsininventory();
         setitemsandinventory.setequipeditemsafterload();
+        setitemsandinventory.setallitemstats();
+        setitemsandinventory.addskillpoints();
+        setitemsandinventory.addguardhp();
         resetgameplaystatics();
     }
     private void loadstaticdata(int slot)

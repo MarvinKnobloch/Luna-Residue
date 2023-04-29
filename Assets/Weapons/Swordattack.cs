@@ -217,6 +217,8 @@ public class Swordattack : MonoBehaviour
     }
     private void dash()
     {
+        Physics.IgnoreLayerCollision(11, 6);
+        Physics.IgnoreLayerCollision(8, 6);
         movementscript.state = Movescript.State.Empty;
         movementscript.ChangeAnimationStateInstant(dashstate);
     }

@@ -110,6 +110,8 @@ public class Equipcharselection : MonoBehaviour
         bowdmg.text = Statics.charbowattack[currentchar].ToString();
         fistdmg.text = Statics.charfistattack[currentchar].ToString();
 
+
+        slotbuttontext[0].text = Statics.charcurrentsword[currentchar].itemname;
         slotbuttontext[1].text = Statics.charcurrentbow[currentchar].itemname;
         slotbuttontext[2].text = Statics.charcurrentfist[currentchar].itemname;
         slotbuttontext[3].text = Statics.charcurrenthead[currentchar].itemname;

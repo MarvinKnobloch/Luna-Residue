@@ -129,9 +129,9 @@ public class Supportmeleeattack
                 }
                 else
                 {
-                    NavMeshHit closetstpoint;
+                    /*NavMeshHit closetstpoint;
                     NavMesh.SamplePosition(ssm.posiafterattack, out closetstpoint, 20, NavMesh.AllAreas);
-                    ssm.posiafterattack = closetstpoint.position;
+                    ssm.posiafterattack = closetstpoint.position;*/
                     ssm.Meshagent.SetDestination(ssm.posiafterattack);
                     ssm.ChangeAnimationState(runstate);
                     ssm.state = Supportmovement.State.changeposiafterattack;
@@ -150,6 +150,7 @@ public class Supportmeleeattack
         if (ssm.currenttarget != null)
         {
             ssm.supportreset();
+            ssm.posiafterattack.y = ssm.transform.position.y;
             if (Vector3.Distance(ssm.transform.position, ssm.posiafterattack) <= 2)
             {
                 ssm.Meshagent.ResetPath();

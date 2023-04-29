@@ -40,26 +40,16 @@ public class Supportheal
     {
         if (Statics.supportcanresurrect == true && ssm.ishealer == true)
         {
-            Statics.supportcanresurrect = false;
-            ssm.resurrecttraget = null;
             setresurrecttarget();
-
             if(ssm.resurrecttraget == null) return;
             else
             {
                 NavMeshHit hit;
                 bool blocked;
                 blocked = NavMesh.Raycast(ssm.transform.position, ssm.resurrecttraget.transform.position, out hit, NavMesh.AllAreas);
-                if (blocked == true)
-                {
-                    resposi = hit.position;
-                    ssm.Meshagent.SetDestination(resposi);
-                }
-                else
-                {
-                    resposi = ssm.resurrecttraget.transform.position;
-                    ssm.Meshagent.SetDestination(resposi);
-                }
+                if (blocked == true) resposi = hit.position;
+                else resposi = ssm.resurrecttraget.transform.position;
+                ssm.Meshagent.SetDestination(resposi);
                 ssm.ChangeAnimationState(runstate);
                 ssm.state = Supportmovement.State.resurrect;
             }
@@ -70,24 +60,21 @@ public class Supportheal
         if (LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == true)
         {
             ssm.resurrecttraget = LoadCharmanager.Overallmainchar;
-            return;
         }
         else if (LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().playerisdead == true)
         {
             ssm.resurrecttraget = LoadCharmanager.Overallthirdchar;
-            return;
         }
         else if (LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().playerisdead == true)
         {
             ssm.resurrecttraget = LoadCharmanager.Overallforthchar;
-            return;
         }
+        else ssm.resurrecttraget = null;
     }
     public void resurrectplayer()
     {
         if (Vector3.Distance(ssm.transform.position, resposi) < 3)
         {
-            ssm.Meshagent.ResetPath();
             ssm.ChangeAnimationState(resurrectplayerstate);
             ssm.state = Supportmovement.State.empty;
         }
@@ -97,6 +84,7 @@ public class Supportheal
         ssm.supportsounds.playresurrect();
         Statics.infightresurrectcd++;
         ssm.resurrecttraget.GetComponent<Playerhp>().playerisresurrected();
+        Statics.supportcanresurrect = false;
 
         if (LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == true || LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().playerisdead == true || LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().playerisdead == true)
         {

@@ -85,7 +85,7 @@ public class Upgradeuitextcontroller : MonoBehaviour
                     }
                     else
                     {
-                        iteminfotext.text += "\n" + item.itemlvl[item.upgradelvl].stats[currentstat] + " -> " + item.itemlvl[item.upgradelvl].stats[currentstat + 1] + " " + statsname[currentstat];
+                        iteminfotext.text += "\n" + item.itemlvl[item.upgradelvl].stats[currentstat] + " -> " + item.itemlvl[item.upgradelvl + 1].stats[currentstat] + " " + statsname[currentstat];
                     }
                 }
             }

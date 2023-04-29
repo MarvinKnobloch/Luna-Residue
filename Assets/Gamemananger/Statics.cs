@@ -62,14 +62,17 @@ public class Statics
     public static float healhealthbonuspercentage = 15;
 
     public static float healthperskillpoint = 10;
-    public static float armorperskillpoint = 25;
+    public static float defenseperskillpoint = 25;
     public static float defenseconvertedtoattack = 1;
     public static float attackperskillpoint = 1;
     public static float critchanceperskillpoint = 1;
     public static float critdmgperskillpoint = 2;
+    public static float weaonswitchbuffdurationperskillpoint = 0.05f;
     public static float weaponswitchbuffperskillpoint = 2;
+    public static float charswitchbuffdurationperskillpoint = 0.1f;
     public static float charswitchbuffperskillpoint = 3;
-    public static int basicbuffdmgperskillpoint = 2;
+    public static float basiccritbuffperskillpoint = 0.5f;
+    public static int basicdmgbuffperskillpoint = 2;
 
     public static float presetdashcd = 6;
     public static float presetdashcost = 3;
@@ -164,7 +167,7 @@ public class Statics
     public static float charcurrentexp = 0;
     public static float charrequiredexp = 70;
     public static string[] characternames = { "Maria", "Erika", "Kaja", "Yaku", "Arissa" };
-    public static float[] charbasichealth = { 80, 73, 77, 73, 75 };
+    //public static float[] charbasichealth = { 80, 73, 77, 73, 75 };
     public static float[] charcurrenthealth = { 80, 73, 77, 73, 75 };
     public static float[] charmaxhealth = { 80, 73, 77, 73, 75 };
     public static float[] chardefense = { 60, 60, 60, 60, 60 };

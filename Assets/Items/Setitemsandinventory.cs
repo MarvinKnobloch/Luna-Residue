@@ -37,6 +37,22 @@ public class Setitemsandinventory : MonoBehaviour
 #endif*/
     }
 
+    public void resetplayerstats()
+    {
+        //Statics.charbasichealth = new float[] { 80, 73, 77, 73, 75 };
+        //Statics.charcurrenthealth = new float[] { 80, 73, 77, 73, 75 };
+        Statics.charmaxhealth = new float[] { 80, 73, 77, 73, 75 };
+        Statics.chardefense = new float[] { 60, 60, 60, 60, 60 };
+        Statics.charattack = new float[] { 0, 0, 0, 0, 0 };
+        Statics.charcritchance = new float[] { 5, 5, 5, 5, 5 };
+        Statics.charcritdmg = new float[] { 150, 150, 150, 150, 150 };
+        Statics.charweaponbuff = new float[] { 0, 0, 0, 0, 0 };
+        Statics.charweaponbuffduration = new float[] { 8, 8, 8, 8, 8 };
+        Statics.charswitchbuff = new float[] { 0, 0, 0, 0, 0 };
+        Statics.charswitchbuffduration = new float[] { 8, 8, 8, 8, 8 };
+        Statics.charbasiccritbuff = new float[] { 1, 1, 1, 1, 1 };
+        Statics.charbasicdmgbuff = new float[] { 0, 0, 0, 0, 0 };
+    }
     public void resetitems()
     {
         resetitemvalues(sworditems);
@@ -156,58 +172,90 @@ public class Setitemsandinventory : MonoBehaviour
             }
         }
     }
+    public void setallitemstats()
+    {
+        setweaoponstats(Statics.charcurrentsword, Statics.charcurrentbow, Statics.charcurrentfist);
+        setarmorstats(Statics.charcurrenthead);
+        setarmorstats(Statics.charcurrentchest);
+        setarmorstats(Statics.charcurrentbelt);
+        setarmorstats(Statics.charcurrentlegs);
+        setarmorstats(Statics.charcurrentshoes);
+        setarmorstats(Statics.charcurrentring);
+        setarmorstats(Statics.charcurrentnecklace);
+    }
+    public void setweaoponstats(Itemcontroller[] swords, Itemcontroller[] bows, Itemcontroller[] fists)
+    {
+        for (int i = 0; i < Statics.characternames.Length; i++)
+        {
+            Statics.charswordattack[i] = swords[i].itemlvl[swords[i].upgradelvl].stats[2];
+            Statics.charbowattack[i] = bows[i].itemlvl[bows[i].upgradelvl].stats[2];
+            Statics.charfistattack[i] = fists[i].itemlvl[fists[i].upgradelvl].stats[2];
+        }
+    }
+    public void setarmorstats(Itemcontroller[] staticitem)
+    {
+        for (int i = 0; i < Statics.characternames.Length; i++)
+        {
+            setitemandvalues(staticitem[i], i);
+        }
+    }
+    private void setitemandvalues(Itemcontroller item, int character)
+    {
+        if (item != null)
+        {
+            Statics.charmaxhealth[character] += item.itemlvl[item.upgradelvl].stats[0];
+            Statics.chardefense[character] += item.itemlvl[item.upgradelvl].stats[1];
+            Statics.charattack[character] += item.itemlvl[item.upgradelvl].stats[2];
+            Statics.charcritchance[character] += item.itemlvl[item.upgradelvl].stats[3];
+            Statics.charcritdmg[character] += item.itemlvl[item.upgradelvl].stats[4];
+            Statics.charweaponbuff[character] += item.itemlvl[item.upgradelvl].stats[5];
+            Statics.charswitchbuff[character] += item.itemlvl[item.upgradelvl].stats[6];
+            Statics.charbasicdmgbuff[character] += item.itemlvl[item.upgradelvl].stats[7];
+        }
+    }
+    public void addskillpoints()
+    {
+        for (int i = 0; i < Statics.characternames.Length; i++)
+        {
+            Statics.charmaxhealth[i] += Statics.charhealthskillpoints[i] * Statics.healthperskillpoint;
+            Statics.chardefense[i] += Statics.chardefenseskillpoints[i] * Statics.defenseperskillpoint;
+            Statics.charattack[i] += Statics.charattackskillpoints[i] * Statics.attackperskillpoint;
+            Statics.charcritchance[i] += Statics.charcritchanceskillpoints[i] * Statics.critchanceperskillpoint;
+            Statics.charcritdmg[i] += Statics.charcritdmgskillpoints[i] * Statics.critdmgperskillpoint;
+            Statics.charweaponbuffduration[i] += Statics.charweaponskillpoints[i] * Statics.weaonswitchbuffdurationperskillpoint;
+            Statics.charweaponbuff[i] += Statics.charweaponskillpoints[i] * Statics.weaponswitchbuffperskillpoint;
+            Statics.charswitchbuffduration[i] += Statics.charcharswitchskillpoints[i] * Statics.charswitchbuffdurationperskillpoint;
+            Statics.charswitchbuff[i] += Statics.charcharswitchskillpoints[i] * Statics.charswitchbuffperskillpoint;
+            Statics.charbasiccritbuff[i] += Statics.charbasicdmgbuff[i] * Statics.basiccritbuffperskillpoint;
+            Statics.charbasicdmgbuff[i] += Statics.charbasicdmgbuff[i] * Statics.basicdmgbuffperskillpoint;
+        }
+    }
+    public void addguardhp()
+    {
+        for (int i = 0; i < Statics.characternames.Length; i++)
+        {
+            if(Statics.characterclassroll[i] == 1)
+            {
+                Statics.charmaxhealth[i] += Statics.charcurrentlvl * Statics.guardbonushpeachlvl;
+            }
+        }
+    }
     public void setstartitems()
     {
         for (int i = 0; i < Statics.characternames.Length; i++)
         {
-            Statics.charswordattack[i] = startingsword.itemlvl[startingsword.upgradelvl].stats[2];
             Statics.charcurrentsword[i] = startingsword;
-        }
-        for (int i = 0; i < Statics.characternames.Length; i++)
-        {
-            Statics.charbowattack[i] = startingbow.itemlvl[startingbow.upgradelvl].stats[2];
             Statics.charcurrentbow[i] = startingbow;
-        }
-        for (int i = 0; i < Statics.characternames.Length; i++)
-        {
-            Statics.charfistattack[i] = startingfist.itemlvl[startingfist.upgradelvl].stats[2];
             Statics.charcurrentfist[i] = startingfist;
-        }
-        for (int i = 0; i < Statics.characternames.Length; i++)
-        {
-            setitemandvalues(startinghead, i);
             Statics.charcurrenthead[i] = startinghead;
-        }
-        for (int i = 0; i < Statics.characternames.Length; i++)
-        {
-            setitemandvalues(startingchest, i);
             Statics.charcurrentchest[i] = startingchest;
-        }
-        for (int i = 0; i < Statics.characternames.Length; i++)
-        {
-            setitemandvalues(startingbelt, i);
             Statics.charcurrentbelt[i] = startingbelt;
-        }
-        for (int i = 0; i < Statics.characternames.Length; i++)
-        {
-            setitemandvalues(startinglegs, i);
             Statics.charcurrentlegs[i] = startinglegs;
-        }
-        for (int i = 0; i < Statics.characternames.Length; i++)
-        {
-            setitemandvalues(startingshoes, i);
             Statics.charcurrentshoes[i] = startingshoes;
-        }
-        for (int i = 0; i < Statics.characternames.Length; i++)
-        {
-            setitemandvalues(startingneckless, i);
             Statics.charcurrentnecklace[i] = startingneckless;
-        }
-        for (int i = 0; i < Statics.characternames.Length; i++)
-        {
-            setitemandvalues(startingring, i);
             Statics.charcurrentring[i] = startingring;
         }
+        setallitemstats();
         inventorys[0].Additem(gold, 1);
         inventorys[1].addstartequiptment(startingsword);
         inventorys[2].addstartequiptment(startingbow);
@@ -219,20 +267,6 @@ public class Setitemsandinventory : MonoBehaviour
         inventorys[8].addstartequiptment(startingshoes);
         inventorys[9].addstartequiptment(startingneckless);
         inventorys[10].addstartequiptment(startingring);
-    }
-    private void setitemandvalues(Itemcontroller item, int character)
-    {
-        if(item != null)
-        {
-            Statics.charmaxhealth[character] += item.itemlvl[item.upgradelvl].stats[0];       //item.stats[0];
-            Statics.chardefense[character] += item.itemlvl[item.upgradelvl].stats[1];
-            Statics.charattack[character] += item.itemlvl[item.upgradelvl].stats[2];
-            Statics.charcritchance[character] += item.itemlvl[item.upgradelvl].stats[3];
-            Statics.charcritdmg[character] += item.itemlvl[item.upgradelvl].stats[4];
-            Statics.charweaponbuff[character] += item.itemlvl[item.upgradelvl].stats[5];
-            Statics.charswitchbuff[character] += item.itemlvl[item.upgradelvl].stats[6];
-            Statics.charbasicdmgbuff[character] += item.itemlvl[item.upgradelvl].stats[7];
-        }
     }
 }
 

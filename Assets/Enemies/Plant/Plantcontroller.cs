@@ -21,9 +21,9 @@ public class Plantcontroller : MonoBehaviour
     }
     private void OnEnable()
     {
-        spawns[0] = enemyposi + LoadCharmanager.Overallmainchar.transform.forward * 5 + Random.insideUnitSphere * 7;
-        spawns[1] = enemyposi + Random.insideUnitSphere * 12;
-        spawns[2] = enemyposi + LoadCharmanager.Overallmainchar.transform.forward * -5 + Random.insideUnitSphere * 7;
+        spawns[0] = enemyposi + LoadCharmanager.Overallmainchar.transform.forward * 6 + Random.insideUnitSphere * 8;
+        spawns[1] = enemyposi + Random.insideUnitSphere * 13;
+        spawns[2] = enemyposi + LoadCharmanager.Overallmainchar.transform.forward * -6 + Random.insideUnitSphere * 8;
 
         setspawnpoints();
 

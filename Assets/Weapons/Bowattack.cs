@@ -100,7 +100,6 @@ public class Bowattack : MonoBehaviour
         attack1,
         attack2,
         groundattackchain,
-        airattackchain,
         bowairattack,
         groundintoair,                                // eine zusätzliche chain bei ground into air
         weaponswitch,
@@ -123,11 +122,10 @@ public class Bowattack : MonoBehaviour
                     break;
                 case Attackstate.bowairattack:
                     bowairbasicinput();
+                    bowhookshotinput();
                     break;
                 case Attackstate.groundattackchain:
                     groundattackchaininput();
-                    break;
-                case Attackstate.airattackchain:
                     break;
                 case Attackstate.groundintoair:
                     groundintoairinput();
@@ -315,6 +313,10 @@ public class Bowattack : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, Movescript.lockontarget.position) > 2f)
             {
+                if(movementscript.Cam2.gameObject.activeSelf == true)
+                {
+                    movementscript.disableaimcam();
+                }
                 movementscript.state = Movescript.State.Empty;
                 attackestate = Attackstate.waitforattack;
                 movementscript.graviti = 0f;
@@ -356,6 +358,8 @@ public class Bowattack : MonoBehaviour
     }
     private void dash()
     {
+        Physics.IgnoreLayerCollision(11, 6);
+        Physics.IgnoreLayerCollision(8, 6);
         movementscript.state = Movescript.State.Empty;
         movementscript.ChangeAnimationStateInstant(dashstate);
     }
@@ -534,7 +538,7 @@ public class Bowattack : MonoBehaviour
         Time.timeScale = slowmopercentage;
         Time.fixedDeltaTime = Statics.normaltimedelta * slowmopercentage;
         movementscript.graviti = -1.5f;
-        Invoke("bowweaponswitchattackend", 1.5f);
+        Invoke("bowweaponswitchattackend", 1.2f);
     }
     private void bowweaponswitchattackend()
     {

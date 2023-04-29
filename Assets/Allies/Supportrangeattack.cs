@@ -111,9 +111,6 @@ public class Supportrangeattack
                 }
                 else
                 {
-                    NavMeshHit closetstpoint;
-                    NavMesh.SamplePosition(rangenewposi, out closetstpoint, 20, NavMesh.AllAreas);
-                    rangenewposi = closetstpoint.position;
                     ssm.Meshagent.SetDestination(rangenewposi);
                     ssm.ChangeAnimationState(runstate);
                     ssm.state = Supportmovement.State.changeposiafterrangeattack;
@@ -136,6 +133,7 @@ public class Supportrangeattack
         if (ssm.currenttarget != null)
         {
             ssm.supportreset();
+            rangenewposi.y = ssm.transform.position.y;
             ssm.attacktimer += Time.deltaTime;
             if (ssm.attacktimer > ssm.attackcd)
             {

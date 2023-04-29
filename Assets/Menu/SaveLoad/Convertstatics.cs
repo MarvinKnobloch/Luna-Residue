@@ -23,26 +23,9 @@ public class Convertstatics
     public bool elementalmenuisactiv;
 
     public Color[] charactersecondelementcolor;
-    public float[] charbasichealth;
-    public float[] charcurrenthealth;
-    public float[] charmaxhealth;
-    public float[] chardefense;
-    public float[] charattack;
-    public float[] charcritchance;
-    public float[] charcritdmg;
-    public float[] charweaponbuff;
-    public float[] charweaponbuffduration;
-    public float[] charswitchbuff;
-    public float[] charswitchbuffduration;
-    public float[] charbasiccritbuff;
-    public float[] charbasicdmgbuff;
 
     public int[] firstweapon;
     public int[] secondweapon;
-
-    public float[] charswordattack;
-    public float[] charbowattack;
-    public float[] charfistattack;
 
     public int[] swordid = new int[5];
     public int[] bowid = new int[5];
@@ -109,25 +92,6 @@ public class Convertstatics
 
         firstweapon = Statics.firstweapon;
         secondweapon = Statics.secondweapon;
-
-        charbasichealth = Statics.charbasichealth;
-        charcurrenthealth = Statics.charcurrenthealth;
-        charmaxhealth = Statics.charmaxhealth;
-        chardefense = Statics.chardefense;
-        charattack = Statics.charattack;
-        charcritchance = Statics.charcritchance;
-        charcritdmg = Statics.charcritdmg;
-        charweaponbuff = Statics.charweaponbuff;
-        charweaponbuffduration = Statics.charweaponbuffduration;
-        charswitchbuff = Statics.charswitchbuff;
-        charswitchbuffduration = Statics.charswitchbuffduration;
-        charbasiccritbuff = Statics.charbasiccritbuff;
-        charbasicdmgbuff = Statics.charbasicdmgbuff;
-
-
-        charswordattack = Statics.charswordattack;
-        charbowattack = Statics.charbowattack;
-        charfistattack = Statics.charfistattack;
 
         setids(swordid, Statics.charcurrentsword);
         setids(bowid, Statics.charcurrentbow);
@@ -202,23 +166,6 @@ public class Convertstatics
 
         Statics.firstweapon = firstweapon;
         Statics.secondweapon = secondweapon;
-        Statics.charbasichealth = charbasichealth;
-        Statics.charcurrenthealth = charcurrenthealth;
-        Statics.charmaxhealth = charmaxhealth;
-        Statics.chardefense = chardefense;
-        Statics.charattack = charattack;
-        Statics.charcritchance = charcritchance;
-        Statics.charcritdmg = charcritdmg;
-        Statics.charweaponbuff = charweaponbuff;
-        Statics.charweaponbuffduration = charweaponbuffduration;
-        Statics.charswitchbuff = charswitchbuff;
-        Statics.charswitchbuffduration = charswitchbuffduration;
-        Statics.charbasiccritbuff = charbasiccritbuff;
-        Statics.charbasicdmgbuff = charbasicdmgbuff;
-
-        Statics.charswordattack = charswordattack;
-        Statics.charbowattack = charbowattack;
-        Statics.charfistattack = charfistattack;
 
         Statics.swordid = swordid;
         Statics.bowid = bowid;

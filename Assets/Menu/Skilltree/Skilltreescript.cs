@@ -221,7 +221,7 @@ public class Skilltreescript : MonoBehaviour
         if (Statics.charskillpoints[currentchar] > 0)
         {
             Statics.chardefenseskillpoints[currentchar] += 1;
-            Statics.chardefense[currentchar] += Statics.armorperskillpoint;
+            Statics.chardefense[currentchar] += Statics.defenseperskillpoint;
             statsdefense.text = Statics.chardefense[currentchar] + "";
             defensebuttonnumber.text = "" + Statics.chardefenseskillpoints[currentchar];
             defensetext();
@@ -233,7 +233,7 @@ public class Skilltreescript : MonoBehaviour
         if (Statics.chardefenseskillpoints[currentchar] > 0)
         {
             Statics.chardefenseskillpoints[currentchar] -= 1;
-            Statics.chardefense[currentchar] -= Statics.armorperskillpoint;
+            Statics.chardefense[currentchar] -= Statics.defenseperskillpoint;
             defensetext();
             minusbutton();
         }
@@ -325,7 +325,7 @@ public class Skilltreescript : MonoBehaviour
         {
             Statics.charweaponskillpoints[currentchar] += 1;
             Statics.charweaponbuff[currentchar] += Statics.weaponswitchbuffperskillpoint;
-            Statics.charweaponbuffduration[currentchar] += 0.05f;
+            Statics.charweaponbuffduration[currentchar] += Statics.weaonswitchbuffdurationperskillpoint;
             weapontext();
             plusbutton();
         }
@@ -336,7 +336,7 @@ public class Skilltreescript : MonoBehaviour
         {
             Statics.charweaponskillpoints[currentchar] -= 1;
             Statics.charweaponbuff[currentchar] -= Statics.weaponswitchbuffperskillpoint;
-            Statics.charweaponbuffduration[currentchar] -= 0.05f;
+            Statics.charweaponbuffduration[currentchar] -= Statics.weaonswitchbuffdurationperskillpoint;
             weapontext();
             minusbutton();
         }
@@ -353,7 +353,7 @@ public class Skilltreescript : MonoBehaviour
         {
             Statics.charcharswitchskillpoints[currentchar] += 1;
             Statics.charswitchbuff[currentchar] += Statics.charswitchbuffperskillpoint;
-            Statics.charswitchbuffduration[currentchar] += 0.05f;
+            Statics.charswitchbuffduration[currentchar] += Statics.charswitchbuffdurationperskillpoint;
             chartext();
             plusbutton();
         }
@@ -365,7 +365,7 @@ public class Skilltreescript : MonoBehaviour
         {
             Statics.charcharswitchskillpoints[currentchar] -= 1;
             Statics.charswitchbuff[currentchar] -= Statics.charswitchbuffperskillpoint;
-            Statics.charswitchbuffduration[currentchar] -= 0.05f;
+            Statics.charswitchbuffduration[currentchar] -= Statics.charswitchbuffdurationperskillpoint;
             chartext();
             minusbutton();
         }
@@ -381,8 +381,8 @@ public class Skilltreescript : MonoBehaviour
         if (Statics.charskillpoints[currentchar] > 0)
         {
             Statics.charbasicskillpoints[currentchar] += 1;
-            Statics.charbasiccritbuff[currentchar] += 0.5f;
-            Statics.charbasicdmgbuff[currentchar] += Statics.basicbuffdmgperskillpoint;
+            Statics.charbasiccritbuff[currentchar] += Statics.basiccritbuffperskillpoint;
+            Statics.charbasicdmgbuff[currentchar] += Statics.basicdmgbuffperskillpoint;
             basictext();
             plusbutton();
         }
@@ -392,8 +392,8 @@ public class Skilltreescript : MonoBehaviour
         if (Statics.charbasicskillpoints[currentchar] > 0)
         {
             Statics.charbasicskillpoints[currentchar] -= 1;
-            Statics.charbasiccritbuff[currentchar] -= 0.5f;
-            Statics.charbasicdmgbuff[currentchar] -= Statics.basicbuffdmgperskillpoint;
+            Statics.charbasiccritbuff[currentchar] -= Statics.basiccritbuffperskillpoint;
+            Statics.charbasicdmgbuff[currentchar] -= Statics.basicdmgbuffperskillpoint;
             basictext();
             minusbutton();
         }

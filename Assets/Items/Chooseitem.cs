@@ -301,12 +301,12 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     private void ontriggerflatstats(Itemcontroller equipeditem, int itemstat, float currentstatvalue)
     {
-        float difference = itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] - equipeditem.itemlvl[itemvalues.upgradelvl].stats[itemstat];
-        if (itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] > equipeditem.itemlvl[itemvalues.upgradelvl].stats[itemstat])
+        float difference = itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] - equipeditem.itemlvl[equipeditem.upgradelvl].stats[itemstat];
+        if (itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] > equipeditem.itemlvl[equipeditem.upgradelvl].stats[itemstat])
         {
             statsnumbers.text += "<color=green>" + "( +" + difference + " ) " + (difference + currentstatvalue) + "</color>" + "\n";
         }
-        else if (itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] < equipeditem.itemlvl[itemvalues.upgradelvl].stats[itemstat])
+        else if (itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] < equipeditem.itemlvl[equipeditem.upgradelvl].stats[itemstat])
         {
             statsnumbers.text += "<color=red>" + "( " + difference + " ) " + (difference + currentstatvalue) + "</color>" + "\n";
         }
@@ -317,12 +317,12 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     private void ontriggerpercentage(Itemcontroller equipeditem, int itemstat, float currentstatvalue)
     {
-        float difference = itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] - equipeditem.itemlvl[itemvalues.upgradelvl].stats[itemstat];
-        if (itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] > equipeditem.itemlvl[itemvalues.upgradelvl].stats[itemstat])
+        float difference = itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] - equipeditem.itemlvl[equipeditem.upgradelvl].stats[itemstat];
+        if (itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] > equipeditem.itemlvl[equipeditem.upgradelvl].stats[itemstat])
         {
             statsnumbers.text += "<color=green>" + "( +" + difference + " ) " + (difference + currentstatvalue) + "%" + "</color>" + "\n";
         }
-        else if (itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] < equipeditem.itemlvl[itemvalues.upgradelvl].stats[itemstat])
+        else if (itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] < equipeditem.itemlvl[equipeditem.upgradelvl].stats[itemstat])
         {
             statsnumbers.text += "<color=red>" + "( " + difference + " ) " + (difference + currentstatvalue) + "%" + "</color>" + "\n";
         }
@@ -350,7 +350,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
         else health = currentstatvalue;
         float currentstats = Mathf.Round(health * Statics.healhealthbonuspercentage * 0.01f);
-        float newstats = Mathf.Round((health + itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] - equipeditem.itemlvl[itemvalues.upgradelvl].stats[itemstat]) * Statics.healhealthbonuspercentage * 0.01f);
+        float newstats = Mathf.Round((health + itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] - equipeditem.itemlvl[equipeditem.upgradelvl].stats[itemstat]) * Statics.healhealthbonuspercentage * 0.01f);
         float difference = newstats - currentstats;
         if (newstats > currentstats)
         {
@@ -368,7 +368,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     private void defensebonus(Itemcontroller equipeditem, int itemstat, float currentstatvalue)
     {
         float currentstats = Mathf.Round(currentstatvalue * Statics.defenseconvertedtoattack * 0.01f);
-        float newstats = Mathf.Round((currentstatvalue + itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] - equipeditem.itemlvl[itemvalues.upgradelvl].stats[itemstat]) * Statics.defenseconvertedtoattack * 0.01f);
+        float newstats = Mathf.Round((currentstatvalue + itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] - equipeditem.itemlvl[equipeditem.upgradelvl].stats[itemstat]) * Statics.defenseconvertedtoattack * 0.01f);
         float difference = newstats - currentstats;
         if (newstats > currentstats)
         {

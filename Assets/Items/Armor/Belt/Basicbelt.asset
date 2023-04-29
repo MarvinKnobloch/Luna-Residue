@@ -16,26 +16,30 @@ MonoBehaviour:
   type: 6
   itemid: 2
   itemname: Basicbelt
-  inventoryslot: 1
+  inventoryslot: 2
   itemshopcosts: 110
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
   upgradelvl: 0
   maxupgradelvl: 1
-  upgrades:
-  - newstats:
-    - 0
-    - 0
-    - 0
-    - 0
-    - 8
+  itemlvl:
   - stats:
     - 0
     - 0
     - 0
     - 0
+    - 4
+    - 0
+    - 0
+    - 0
+    Upgrademats: []
+  - stats:
+    - 0
+    - 0
+    - 0
     - 0
     - 8
+    - 0
     - 0
     - 0
     Upgrademats:
