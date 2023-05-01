@@ -24,4 +24,8 @@ public class Elkcircle : MonoBehaviour
         }
         gameObject.SetActive(false);
     }
+    /*private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(transform.position, 6f);
+    }*/
 }

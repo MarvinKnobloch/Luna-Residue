@@ -1,4 +1,4 @@
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
 namespace DecalSystem {
     using System.Collections;
     using System.Collections.Generic;
@@ -33,7 +33,7 @@ namespace DecalSystem {
         }
 
 
-        [MenuItem( "GameObject/Decal" )]
+        //[MenuItem( "GameObject/Decal" )]
         internal static void Create() {
             new GameObject( "Decal", typeof( Decal ), typeof( MeshFilter ), typeof( MeshRenderer ) ).isStatic = true;
         }
@@ -65,7 +65,7 @@ namespace DecalSystem {
         }
 
 
-        void OnDrawGizmosSelected() {
+        /*void OnDrawGizmosSelected() {
             Gizmos.matrix = transform.localToWorldMatrix;
             Gizmos.color = Color.green;
             Gizmos.DrawWireCube( Vector3.zero, Vector3.one );
@@ -85,7 +85,7 @@ namespace DecalSystem {
             //        Gizmos.DrawRay( vertices[ i ], normals[ i ] * 0.15f );
             //    }
             //}
-        }
+        }*/
 
 
         public void BuildAndSetDirty() {
@@ -95,4 +95,4 @@ namespace DecalSystem {
         }
     }
 }
-#endif
+//#endif

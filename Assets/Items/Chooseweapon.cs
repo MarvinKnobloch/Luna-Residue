@@ -10,19 +10,21 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 {
     private GameObject slotbuttontext;
     private GameObject slotbutton;
+    private TextMeshProUGUI statsnumbers;
 
     [NonSerialized] public Itemcontroller itemvalues;
     private Gridvalues gridvalues;
 
-    public int selectedchar = 0;
+    [NonSerialized] public int selectedchar = 0;
 
     private void Awake()
     {
         gridvalues = GetComponentInParent<Gridvalues>();
         slotbuttontext = gameObject.GetComponentInParent<Gridvalues>().slottext;
         slotbutton = gameObject.GetComponentInParent<Gridvalues>().slotbutton;
+        statsnumbers = gameObject.GetComponentInParent<Gridvalues>().statsnumbers;
     }
-    private void OnEnable()
+    public void buttonupdate()
     {
         if(itemvalues != null)
         {
@@ -39,13 +41,13 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             setnewitem(Statics.currentequipmentbutton);
             statsupdate();
             EventSystem.current.SetSelectedGameObject(slotbutton);                            //beim onselect call wird die selectfarbe gesetzt + der sound gespielt
-        }     
+        }   
     }
     private void statsupdate()
     {
-        gridvalues.statsnumbers.text = string.Empty;
-        gridvalues.statsnumbers.color = Color.white;
-        gridvalues.statsnumbers.text = Statics.charmaxhealth[selectedchar] + "\n" +
+        statsnumbers.text = string.Empty;
+        statsnumbers.color = Color.white;
+        statsnumbers.text = Statics.charmaxhealth[selectedchar] + "\n" +
                             Mathf.Round(Statics.charmaxhealth[selectedchar] * Statics.healhealthbonuspercentage * 0.01f) + "\n" +
                             Statics.chardefense[selectedchar] + "\n" +
                             Mathf.Round(Statics.chardefense[selectedchar] * Statics.defenseconvertedtoattack * 0.01f) + "\n" +

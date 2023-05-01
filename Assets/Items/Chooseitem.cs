@@ -26,6 +26,14 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         slotbutton = gameObject.GetComponentInParent<Gridvalues>().slotbutton;
         statsnumbers = gameObject.GetComponentInParent<Gridvalues>().statsnumbers;
     }
+    public void buttonupdate()
+    {
+        if (itemvalues != null)
+        {
+            gameObject.GetComponent<Button>().enabled = true;
+        }
+        else gameObject.GetComponent<Button>().enabled = false;
+    }
     public void setitem()
     {
         if (itemvalues != null)

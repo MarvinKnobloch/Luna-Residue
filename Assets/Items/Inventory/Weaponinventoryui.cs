@@ -36,6 +36,7 @@ public class Weaponinventoryui : MonoBehaviour
             {
                 _slot.Key.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "???";
             }
+            _slot.Key.transform.GetComponent<Chooseweapon>().buttonupdate();
         }
     }
 }

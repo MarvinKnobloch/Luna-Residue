@@ -1,10 +1,10 @@
-﻿#if UNITY_EDITOR
+﻿//#if UNITY_EDITOR
 namespace DecalSystem {
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using UnityEditor;
-    using UnityEditor.SceneManagement;
+    using UnityEngine.SceneManagement;
     using UnityEngine;
 
     static class DecalUtils {
@@ -71,11 +71,11 @@ namespace DecalSystem {
 
 
         public static void SetDirty(Decal decal) {
-            if (decal.gameObject.scene.IsValid()) {
+            /*if (decal.gameObject.scene.IsValid()) {
                 if (!EditorApplication.isPlaying) EditorSceneManager.MarkSceneDirty( decal.gameObject.scene );
             } else {
                 EditorUtility.SetDirty( decal.gameObject );
-            }
+            }*/
         }
 
 
@@ -111,4 +111,4 @@ namespace DecalSystem {
 
     }
 }
-#endif
+//#endif

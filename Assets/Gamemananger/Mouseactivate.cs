@@ -14,8 +14,8 @@ public class Mouseactivate
     public static void disablemouse()
     {
 #if !UNITY_EDITOR
-        //Cursor.visible = false;
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
 #endif
     }
 }

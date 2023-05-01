@@ -9,7 +9,7 @@ public class Settingscontroller : MonoBehaviour
     [SerializeField] private GameObject menuobj;
     [SerializeField] private GameObject[] buttons;
     private int currentbutton;
-    private SpielerSteu steuerung;
+    private SpielerSteu controlls;
 
     [SerializeField] private Menusoundcontroller menusoundcontroller;
 
@@ -17,7 +17,7 @@ public class Settingscontroller : MonoBehaviour
     public Color notselectedcolor;
     private void Awake()
     {
-        steuerung = Keybindinputmanager.inputActions;
+        controlls = Keybindinputmanager.inputActions;
     }
     private void OnEnable()
     {
@@ -26,7 +26,7 @@ public class Settingscontroller : MonoBehaviour
             button.GetComponent<Image>().color = notselectedcolor;
             button.GetComponent<Settingsbuttoncontroller>().buttonobjclose();
         }
-        steuerung.Enable();
+        controlls.Enable();
         currentbutton = 0;
         EventSystem.current.SetSelectedGameObject(buttons[currentbutton]);
         buttons[currentbutton].GetComponent<Image>().color = selectedcolor; 
@@ -35,7 +35,7 @@ public class Settingscontroller : MonoBehaviour
 
     private void Update()
     {
-        if (steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame())
+        if (controlls.Menusteuerung.Menuesc.WasPerformedThisFrame())
         {
             menusoundcontroller.playmenubuttonsound();
             buttons[currentbutton].GetComponent<Settingsbuttoncontroller>().buttonobjclose();

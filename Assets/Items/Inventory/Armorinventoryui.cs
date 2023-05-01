@@ -44,6 +44,7 @@ public class Armorinventoryui : MonoBehaviour
                 _slot.Key.transform.GetChild(2).gameObject.SetActive(false);                  // Image und lvl der Waffe
                 _slot.Key.transform.GetChild(3).gameObject.SetActive(false);
             }
+            _slot.Key.transform.GetComponent<Chooseitem>().buttonupdate();
         }
     }
 }
