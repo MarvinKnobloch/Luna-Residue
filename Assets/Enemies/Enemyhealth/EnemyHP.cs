@@ -20,6 +20,7 @@ public class EnemyHP : MonoBehaviour
     [NonSerialized] public float finaldmg;
 
     private CapsuleCollider capsulecollider;
+    private BoxCollider boxcollider;
     [NonSerialized] public float enemyheight;
 
     [NonSerialized] public bool enemyincreasebasicdmg;
@@ -62,6 +63,7 @@ public class EnemyHP : MonoBehaviour
     private void Awake()
     {
         capsulecollider = GetComponent<CapsuleCollider>();
+        boxcollider = GetComponent<BoxCollider>();
         enemymovement = GetComponent<Enemymovement>();
         enemyheight = (capsulecollider.height * transform.localScale.y) + 0.4f;
         enemyname = enemyvalues.enemyname;
@@ -91,6 +93,8 @@ public class EnemyHP : MonoBehaviour
         {
             playerhits[i] = 0;
         }
+        capsulecollider.enabled = true;
+        boxcollider.enabled = true;
         resetdebuff();
     }
     private void OnDisable()
@@ -137,6 +141,8 @@ public class EnemyHP : MonoBehaviour
             {
                 enemyisdead = true;
                 currenthealth = 0;
+                capsulecollider.enabled = false;
+                boxcollider.enabled = false;
                 removefromcanvas();
                 Infightcontroller.infightenemylists.Remove(transform.gameObject);
                 int enemycount = Infightcontroller.infightenemylists.Count;

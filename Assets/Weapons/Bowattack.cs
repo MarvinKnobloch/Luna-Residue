@@ -85,6 +85,7 @@ public class Bowattack : MonoBehaviour
         basicattackcd = 1f;
         bowaircount = 0;
         readattackinput = false;
+        movementscript.state = Movescript.State.Bowweaponswitch;
         attackestate = Attackstate.weaponswitch;
         StartCoroutine(startweaponswitch());
     }
@@ -116,22 +117,28 @@ public class Bowattack : MonoBehaviour
                     break;
                 case Attackstate.attack1:
                     attack1input();
+                    switchtowaitforattack();
                     break;
                 case Attackstate.attack2:
                     attack2input();
+                    switchtowaitforattack();
                     break;
                 case Attackstate.bowairattack:
                     bowairbasicinput();
                     bowhookshotinput();
+                    switchtowaitforattack();
                     break;
                 case Attackstate.groundattackchain:
                     groundattackchaininput();
+                    switchtowaitforattack();
                     break;
                 case Attackstate.groundintoair:
                     groundintoairinput();
+                    switchtowaitforattack();
                     break;
                 case Attackstate.weaponswitch:
                     shotweaponswitcharrow();                                //gleicher input, damit ich nicht noch mehr schreiben muss
+                    switchtowaitforattack();
                     break;
                 default:
                     break;
@@ -163,6 +170,13 @@ public class Bowattack : MonoBehaviour
             Statics.playeriframes = false;
             resetvalues();
             root = false;
+        }
+    }
+    private void switchtowaitforattack()
+    {
+        if (movementscript.state == Movescript.State.Ground)
+        {
+            attackestate = Attackstate.waitforattack;
         }
     }
     private void waitforattackinput()                   //input für attackchainstart
@@ -516,6 +530,8 @@ public class Bowattack : MonoBehaviour
     {
         if (Physics.CheckSphere(transform.position, Statics.weaponswitchattackrange, weaponswitchlayer))
         {
+            Physics.IgnoreLayerCollision(11, 6);
+            Physics.IgnoreLayerCollision(8, 6);
             Statics.otheraction = true;
             movementscript.attackonceair = false;
             movementscript.state = Movescript.State.Bowweaponswitch;
@@ -525,6 +541,7 @@ public class Bowattack : MonoBehaviour
         }
         else
         {
+            movementscript.switchtoairstate();
             attackestate = Attackstate.waitforattack;
         }
     }

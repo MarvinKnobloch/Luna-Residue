@@ -30,7 +30,7 @@ public class Ninjastar : MonoBehaviour
         speed = timer * speedmultiplicator;
         Vector3 traget = LoadCharmanager.Overallmainchar.transform.position;
         traget.y = LoadCharmanager.Overallmainchar.transform.position.y + 1f;
-        transform.position = Vector3.MoveTowards(transform.position, traget, speed + spawnspeed);
+        transform.position = Vector3.MoveTowards(transform.position, traget, (speed + spawnspeed) * Time.deltaTime);
     }
     private void turnoff()
     {

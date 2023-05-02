@@ -5,7 +5,7 @@ using System;
 
 public class Fishmancolliderdmg : MonoBehaviour
 {
-    [SerializeField] private GameObject redline;
+    [SerializeField] private GameObject colliderpreview;
 
     private bool dealdmgonce;
     [NonSerialized] public float basedmg;
@@ -31,6 +31,6 @@ public class Fishmancolliderdmg : MonoBehaviour
         yield return null;
         StopAllCoroutines();
         gameObject.SetActive(false);
-        redline.SetActive(false);
+        colliderpreview.SetActive(false);
     }
 }

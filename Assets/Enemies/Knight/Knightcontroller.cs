@@ -9,7 +9,7 @@ public class Knightcontroller : MonoBehaviour
     [SerializeField] private Knightwavecontroller[] waves;
     private int firstwave;
     private int secondwave;
-    [SerializeField] private LayerMask waveraydonwlayer;
+    [SerializeField] private LayerMask waveraydownlayer;
 
     [SerializeField] private float wavedmg;
     [SerializeField] private float wavespeed;
@@ -32,7 +32,7 @@ public class Knightcontroller : MonoBehaviour
             wave.gameObject.SetActive(false);
         }
         waveposi = LoadCharmanager.Overallmainchar.transform.position;
-        if (Physics.Raycast(LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 0.5f, Vector3.down, out RaycastHit hit, 20, waveraydonwlayer, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 0.5f, Vector3.down, out RaycastHit hit, 20, waveraydownlayer, QueryTriggerInteraction.Ignore))
         {
             waveposi.y = hit.point.y - 0.5f;
         }

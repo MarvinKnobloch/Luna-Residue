@@ -59,11 +59,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowspeed: 50
-  timetodestroy: 5
-  dmgonce: 0
-  basicdmg: 8
-  damagetext: {fileID: 7296486801442962826, guid: 357c41e662532ac4488abf7c935a358c, type: 3}
-  Arrowtarget: {fileID: 0}
+  timetodestroyafterhit: 0.5
+  arrowtarget: {x: 0, y: 0, z: 0}
   Layerhitbox:
     serializedVersion: 2
     m_Bits: 256

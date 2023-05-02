@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Singlearrow : MonoBehaviour
 {
-    public float arrowspeed;
-    public float timetodestroy;
+    [SerializeField] private float arrowspeed;
+    [SerializeField] private float timetodestroyafterhit;
     private bool dmgonce;
-    public Vector3 arrowhitpoint;
-    public GameObject arrowtarget;
+    [NonSerialized] public Vector3 arrowhitpoint;
+    [NonSerialized] public GameObject arrowtarget;
     private int dmgtype;
 
     private float overalldmg;
@@ -18,10 +19,6 @@ public class Singlearrow : MonoBehaviour
 
     private float enemydebuffcrit;
 
-    void Start()
-    {
-        Destroy(gameObject, timetodestroy);   
-    }
     public void setarrowvalues(float dmg, int type)
     {
         dmgtype = type;
@@ -42,8 +39,14 @@ public class Singlearrow : MonoBehaviour
             {
                 Checkhitboxbasic();
                 dmgonce = true;
+                StartCoroutine(destroyarrow());
             }
         }
+    }
+    IEnumerator destroyarrow()
+    {
+        yield return new WaitForSeconds(timetodestroyafterhit);
+        Destroy(gameObject);
     }
     private void Checkhitboxbasic()
     {
@@ -61,7 +64,7 @@ public class Singlearrow : MonoBehaviour
                 {
                     enemydebuffcrit = 0;
                 }
-                if (Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
+                if (UnityEngine.Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
                 {
                     crit = true;
                     enemyscript.takeplayerdamage(overallcritdmg, dmgtype ,crit);

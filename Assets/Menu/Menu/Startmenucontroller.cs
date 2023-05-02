@@ -41,9 +41,9 @@ public class Startmenucontroller : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("audiohasbeenchange") == 0)
         {
-            PlayerPrefs.SetFloat(gamevolume, -16);
+            PlayerPrefs.SetFloat(gamevolume, -10);
             audiomixer.SetFloat(gamevolume, PlayerPrefs.GetFloat(gamevolume));
-            PlayerPrefs.SetFloat(musicvolume, -8);
+            PlayerPrefs.SetFloat(musicvolume, -20);
             audiomixer.SetFloat(musicvolume, PlayerPrefs.GetFloat(musicvolume));
             PlayerPrefs.SetFloat(soundeffecsvolume, 0);
             audiomixer.SetFloat(soundeffecsvolume, PlayerPrefs.GetFloat(soundeffecsvolume));

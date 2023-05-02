@@ -41,6 +41,12 @@ public class Elkspezial : MonoBehaviour
         elkconeobj.transform.rotation = transform.rotation * Quaternion.Euler(90, 90, 0);
         elkconeobj.SetActive(true);
     }
+    private void disablespezialondeath()               //elk hat eine eigene deathani wo die funktion gecalled wird
+    {
+        elkcircleobj.SetActive(false);
+        elkconeobj.SetActive(false);
+        spezialcontroller.gameObject.SetActive(false);
+    }
     private void dealelkconedmg() => elkconeobj.transform.GetChild(0).gameObject.SetActive(true);
     private void elkspezialstartaudio() => enemyspezialsound.playelkspezialstart();
     private void elkspezialmidaudio() => enemyspezialsound.playelkspezialmid();

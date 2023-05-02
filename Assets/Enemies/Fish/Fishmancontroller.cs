@@ -7,6 +7,7 @@ public class Fishmancontroller : MonoBehaviour
     [SerializeField] private GameObject showspezial;
     [SerializeField] private GameObject fishmancircle;
     [SerializeField] private Fishmancolliderdmg fishmancolliderdmg;
+    [SerializeField] private LayerMask raycastlayer;
 
     [SerializeField] private float playermovementspeedslow;
     [SerializeField] private float dodgetime;
@@ -32,8 +33,12 @@ public class Fishmancontroller : MonoBehaviour
     }
     private void spezialpart1()
     {
-        showspezial.transform.rotation = Quaternion.Euler(90, LoadCharmanager.Overallmainchar.transform.eulerAngles.y, 0);
-        showspezial.transform.position = LoadCharmanager.Overallmainchar.transform.position;
+        showspezial.transform.rotation = Quaternion.Euler(0, LoadCharmanager.Overallmainchar.transform.eulerAngles.y, 0);
+        if (Physics.Raycast(LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 0.5f, Vector3.down, out RaycastHit hit, 30, raycastlayer, QueryTriggerInteraction.Ignore))
+        {
+            showspezial.gameObject.transform.position = hit.point;
+        }
+        else showspezial.gameObject.transform.position = LoadCharmanager.Overallmainchar.transform.position;
         showspezial.SetActive(true);
         Invoke("dealfirstdmg", dodgetime);
     }
@@ -45,8 +50,12 @@ public class Fishmancontroller : MonoBehaviour
     }
     private void spezialpart2()
     {
-        showspezial.transform.rotation = Quaternion.Euler(90, LoadCharmanager.Overallmainchar.transform.eulerAngles.y, 0);
-        showspezial.transform.position = LoadCharmanager.Overallmainchar.transform.position;
+        showspezial.transform.rotation = Quaternion.Euler(0, LoadCharmanager.Overallmainchar.transform.eulerAngles.y, 0);
+        if (Physics.Raycast(LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 0.5f, Vector3.down, out RaycastHit hit, 30, raycastlayer, QueryTriggerInteraction.Ignore))
+        {
+            showspezial.gameObject.transform.position = hit.point;
+        }
+        else showspezial.gameObject.transform.position = LoadCharmanager.Overallmainchar.transform.position;
         showspezial.SetActive(true);
         Invoke("dealseconddmg", dodgetime);
     }

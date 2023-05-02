@@ -14,7 +14,7 @@ public class Knightwavecontroller : MonoBehaviour
 
     private void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, endposi, speed);
+        transform.position = Vector3.MoveTowards(transform.position, endposi, speed * Time.deltaTime);
         if (Vector3.Distance(transform.position, endposi) < 2)
         {
             gameObject.SetActive(false);

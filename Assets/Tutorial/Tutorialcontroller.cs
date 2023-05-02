@@ -30,8 +30,8 @@ public class Tutorialcontroller : MonoBehaviour
     }
     public void endtutorial()
     {
-        Cam1.m_YAxis.m_MaxSpeed = 0.008f * PlayerPrefs.GetFloat("mousesensitivity") / 50;
-        Cam1.m_XAxis.m_MaxSpeed = 0.6f * PlayerPrefs.GetFloat("mousesensitivity") / 50;
+        Cam1.m_YAxis.m_MaxSpeed = Statics.presetcamymaxspeed * PlayerPrefs.GetFloat("mousesensitivity") / 50;
+        Cam1.m_XAxis.m_MaxSpeed = Statics.presetcamxmaxspeed * PlayerPrefs.GetFloat("mousesensitivity") / 50;
         Cam2.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.m_MaxSpeed = 0.2f * PlayerPrefs.GetFloat("rangeweaponaimsensitivity") / 50;
         Cam2.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 0.2f * PlayerPrefs.GetFloat("rangeweaponaimsensitivity") / 50;
         Time.timeScale = Statics.normalgamespeed;

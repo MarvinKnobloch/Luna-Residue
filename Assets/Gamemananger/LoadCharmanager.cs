@@ -22,7 +22,7 @@ public class LoadCharmanager : MonoBehaviour
     public GameObject[] teammates;
     public static GameObject Overallthirdchar;
     public static GameObject Overallforthchar;
-    public static Vector3 savemainposi = new Vector3(15,32,687);                    //new Vector3(19, 2, 867); tutorial
+    public static Vector3 savemainposi = new Vector3(15, 32, 687);   //new Vector3(15,32,687);                    //new Vector3(19, 2, 867); tutorial
     public static Quaternion savemainrota;
     public static float savecamvalueX;
 
@@ -109,26 +109,6 @@ public class LoadCharmanager : MonoBehaviour
             }
         }
     }
-    /*public void loadonfastravel()
-    {
-        Time.timeScale = Statics.normalgamespeed;                             // Time scale muss vorher wieder auf normalspeed gesetzt werden sonst wird onexit nicht getriggert
-        Time.fixedDeltaTime = Statics.normaltimedelta;
-        StartCoroutine("portchar");
-    }
-    IEnumerator portchar()
-    {
-        yield return null;
-        Overallmainchar.transform.position = savemainposi;                   // ein frame dealy für timescale
-        Overallmainchar.transform.rotation = savemainrota;
-        Overallmainchar.gameObject.GetComponent<Movescript>().switchtoairstate();
-        StartCoroutine("loadgamevalues");                                    //ein frame dealy sonst wird nicht getriggert 
-    }
-    IEnumerator loadgamevalues()                                            
-    {
-        yield return null;
-        maingamevalues();
-    }*/
-
     public void maingamevalues()
     {
         foreach (GameObject chars in allcharacters)

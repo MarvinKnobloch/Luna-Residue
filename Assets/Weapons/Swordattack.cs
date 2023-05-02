@@ -57,11 +57,12 @@ public class Swordattack : MonoBehaviour
         basicattackcd = 1f;
         swordcontroller.enabled = true;
         readattackinput = false;
+        movementscript.state = Movescript.State.Meleeairattack;
         attackestate = Attackstate.weaponswitch;
         StartCoroutine(startweaponswitch());
     }
 
-    private Attackstate attackestate;
+    [SerializeField] private Attackstate attackestate;
     enum Attackstate
     {
         waitforattack,
@@ -81,14 +82,18 @@ public class Swordattack : MonoBehaviour
                     break;
                 case Attackstate.attack1:
                     attack1input();
+                    switchtowaitforattack();
                     break;
                 case Attackstate.attack2:
                     attack2input();
+                    switchtowaitforattack();
                     break;
                 case Attackstate.attackchain:
                     attackchaininput();
+                    switchtowaitforattack();
                     break;
                 case Attackstate.weaponswitch:
+                    switchtowaitforattack();
                     break;
                 default:
                     break;
@@ -120,7 +125,13 @@ public class Swordattack : MonoBehaviour
             }
         }
     }
-
+    private void switchtowaitforattack()          //schutz gegen attackstate stuck(zb. bei meleeattackgroundcheck -> slidewalls/switchtoair)
+    {
+        if (movementscript.state == Movescript.State.Ground)
+        {
+            attackestate = Attackstate.waitforattack;
+        }
+    }
     private void waitforattackinput()
     {
         basicattackcd += Time.deltaTime;
@@ -389,6 +400,7 @@ public class Swordattack : MonoBehaviour
         }
         else
         {
+            movementscript.switchtoairstate();
             attackestate = Attackstate.waitforattack;
         }
     }

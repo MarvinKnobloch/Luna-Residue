@@ -55,6 +55,7 @@ public class Fistattack : MonoBehaviour
         basicattackcd = 1f;
         fistcontroller.enabled = true;
         readattackinput = false;
+        movementscript.state = Movescript.State.Meleeairattack;
         attackestate = Attackstate.weaponswitch;
         StartCoroutine(startweaponswitch());
     }
@@ -79,14 +80,18 @@ public class Fistattack : MonoBehaviour
                     break;
                 case Attackstate.attack1:
                     attack1input();
+                    switchtowaitforattack();
                     break;
                 case Attackstate.attack2:
                     attack2input();
+                    switchtowaitforattack();
                     break;
                 case Attackstate.attackchain:
                     attackchaininput();
+                    switchtowaitforattack();
                     break;
                 case Attackstate.weaponswitch:
+                    switchtowaitforattack();
                     break;
                 default:
                     break;
@@ -118,7 +123,13 @@ public class Fistattack : MonoBehaviour
             }
         }
     }
-
+    private void switchtowaitforattack()
+    {
+        if (movementscript.state == Movescript.State.Ground)
+        {
+            attackestate = Attackstate.waitforattack;
+        }
+    }
     private void waitforattackinput()
     {
         basicattackcd += Time.deltaTime;
@@ -387,6 +398,7 @@ public class Fistattack : MonoBehaviour
         }
         else
         {
+            movementscript.switchtoairstate();
             attackestate = Attackstate.waitforattack;
         }
     }

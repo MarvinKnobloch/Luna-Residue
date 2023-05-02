@@ -59,9 +59,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowspeed: 130
-  timetodestroy: 4
+  timetodestroy: 3
   boxCollider: {fileID: 508034388553857382}
-  dmgonce: 0
 --- !u!1 &8489754288410044383
 GameObject:
   m_ObjectHideFlags: 0

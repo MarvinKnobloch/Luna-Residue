@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Aoearrow : MonoBehaviour
 {
-    public float arrowspeed;
-    public float timetodestroy;
+    [SerializeField] private float arrowspeed;
+    [SerializeField] private float timetodestroyafterhit;
     private bool dmgonce;
-    public Vector3 arrowtarget;
-    public LayerMask Layerhitbox;
+    [NonSerialized] public Vector3 arrowtarget;
+    [SerializeField] private LayerMask Layerhitbox;
     private float aoeradius;
     private int dmgtype;
-
-    private bool resetcombochain;
 
     private float overalldmg;
     private float overallcritchance;
@@ -20,12 +19,6 @@ public class Aoearrow : MonoBehaviour
     private bool crit;
 
     private float enemydebuffcrit;
-
-    void Start()
-    {
-        Destroy(gameObject, timetodestroy);
-    }
-
     public void setarrowvalues(float dmg, float radius, int type)
     {
         aoeradius = radius;
@@ -47,8 +40,14 @@ public class Aoearrow : MonoBehaviour
             {
                 Checkhitbox();
                 dmgonce = true;
+                StartCoroutine(destroyarrow());
             }
         }
+    }
+    IEnumerator destroyarrow()
+    {
+        yield return new WaitForSeconds(timetodestroyafterhit);
+        Destroy(gameObject);
     }
     private void Checkhitbox()
     {
@@ -69,7 +68,7 @@ public class Aoearrow : MonoBehaviour
                     {
                         enemydebuffcrit = 0;
                     }
-                    if (Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
+                    if (UnityEngine.Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
                     {
                         crit = true;
                         enemyscript.takeplayerdamage(overallcritdmg, dmgtype, crit);
