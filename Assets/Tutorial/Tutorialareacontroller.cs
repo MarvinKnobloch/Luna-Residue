@@ -18,6 +18,7 @@ public class Tutorialareacontroller : MonoBehaviour
     {
         if (areacontroller.tutorialcomplete[tutorialnumber] == false)
         {
+            Infightcontroller.instance.savegameoverposi(LoadCharmanager.Overallmainchar.transform.position);
             areacontroller.tutorialcomplete[tutorialnumber] = true;
             areacontroller.autosave();
             Invoke("areadisable", 3f);                             //weil fehlermeldung kam bei direkt disable???

@@ -30,16 +30,6 @@ public class Expmanager : MonoBehaviour
         controlls.Enable();
         updateexpbar();
     }
-
-#if UNITY_EDITOR
-    void Update()
-    {
-        if (controlls.Player.GButton.WasPerformedThisFrame())
-        {
-            gainexp(50);
-        }
-    }
-#endif
     public void gainexp(float expgained)
     {
         Statics.charcurrentexp += expgained;

@@ -14480,6 +14480,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5a98190f246b4c2429dbdfe77e8fa06c, type: 2}
   - {fileID: 11400000, guid: 0069bc3099ef6384f957e19665f186b7, type: 2}
   - {fileID: 11400000, guid: d91642cc55274544eaa136abbbb3aef6, type: 2}
+  - {fileID: 11400000, guid: 80fc174a2b5c76443a8ebfa1e113cc7d, type: 2}
   bowitems:
   - {fileID: 11400000, guid: 60de7e18acbe2d24b94c921cf9a44c44, type: 2}
   - {fileID: 11400000, guid: 52e86b8165f3335418854a9f12de0d40, type: 2}
@@ -17297,7 +17298,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 4
+  m_Text: ^4
 --- !u!222 &1090655474
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -28906,7 +28907,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 4
+  m_Text: ^4
 --- !u!222 &1716787518
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30604,7 +30605,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 4
+  m_Text: ^4
 --- !u!222 &1839061144
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -32005,7 +32006,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Strg
+  m_Text: Umschalt
 --- !u!222 &1896128235
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -36508,7 +36509,7 @@ MonoBehaviour:
   inputBinding:
     m_Name: 
     m_Id: 4ccaa80b-3796-4abf-901e-3c7f82af4bcf
-    m_Path: <Keyboard>/leftCtrl
+    m_Path: <Keyboard>/leftShift
     m_Interactions: 
     m_Processors: 
     m_Groups: 

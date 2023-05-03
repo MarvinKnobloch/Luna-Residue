@@ -59,9 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowspeed: 50
-  timetodestroyafterhit: 0.5
-  arrowhitpoint: {x: 0, y: 0, z: 0}
-  arrowtarget: {fileID: 0}
+  timetodestroyafterhit: 0.1
 --- !u!1 &8489754288410044383
 GameObject:
   m_ObjectHideFlags: 0

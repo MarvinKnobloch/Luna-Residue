@@ -93,7 +93,7 @@ public class SwordController : MonoBehaviour
                     {
                         enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
                         calculatecritchance(enemyscript, damage);
-                        if (enemyhit.gameObject == Movescript.lockontarget.gameObject)
+                        if (enemyhit.gameObject == Movescript.lockontarget.gameObject)                       //es ist möglich, dass das lockontarget stirbt und das nächste target dann auch den vollen dmg bemommt
                         {
                             enemyscript.takeplayerdamage(dmgdealed, dmgtype, crit);
                         }

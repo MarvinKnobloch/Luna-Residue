@@ -28,7 +28,7 @@ TagManager:
   - Interactiv
   - Enemyobject
   - Puzzleobject
-  - Ignorepuzzleobject
+  - Ignoreobjects
   - Puzzlemirror
   - Puzzleobjectnogroundcheck
   - Portdisablecollider

@@ -64,10 +64,10 @@ public class Healingscript : MonoBehaviour
 
     private void Start()
     {
-        healhotkeys[0] = controlls.SpielerHeal.Randomhotkey1.GetBindingDisplayString();
-        healhotkeys[1] = controlls.SpielerHeal.Randomhotkey2.GetBindingDisplayString();
-        healhotkeys[2] = controlls.SpielerHeal.Randomhotkey3.GetBindingDisplayString();
-        healhotkeys[3] = controlls.SpielerHeal.Randomhotkey4.GetBindingDisplayString();
+        healhotkeys[0] = controlls.Player.Movement.GetBindingDisplayString(1);//controlls.SpielerHeal.Randomhotkey1.GetBindingDisplayString();
+        healhotkeys[1] = controlls.Player.Movement.GetBindingDisplayString(3); //controlls.SpielerHeal.Randomhotkey2.GetBindingDisplayString();
+        healhotkeys[2] = controlls.Player.Movement.GetBindingDisplayString(2); //controlls.SpielerHeal.Randomhotkey3.GetBindingDisplayString();
+        healhotkeys[3] = controlls.Player.Movement.GetBindingDisplayString(4);  //controlls.SpielerHeal.Randomhotkey4.GetBindingDisplayString();
         hotkeys[0] = controlls.SpielerHeal.Randomhotkey1;
         hotkeys[1] = controlls.SpielerHeal.Randomhotkey2;
         hotkeys[2] = controlls.SpielerHeal.Randomhotkey3;

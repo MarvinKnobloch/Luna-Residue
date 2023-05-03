@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Fishman
   m_EditorClassIdentifier: 
   enemyname: Fishman
-  basehealth: 3220
+  basehealth: 322
   enemylvl: 1
   movementspeed: 10
-  basedmg: -80
+  basedmg: 8
   attackspeed: 1.5
   enemysize: 1
   gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}

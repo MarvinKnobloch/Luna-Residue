@@ -177,15 +177,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "G Button",
-                    "type": "Button",
-                    "id": "03ca6bcf-c7a0-4eec-ab75-b5a3f8c828aa",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Interaction",
                     "type": "Button",
                     "id": "a25529c9-8fa0-45b7-a0bd-ff1a5c21a665",
@@ -389,7 +380,7 @@
                 {
                     "name": "",
                     "id": "4ccaa80b-3796-4abf-901e-3c7f82af4bcf",
-                    "path": "<Keyboard>/leftCtrl",
+                    "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -449,17 +440,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Spezial",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "66f6d9ec-e5bb-4a9d-826e-0c45afe48702",
-                    "path": "<Keyboard>/g",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "G Button",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
