@@ -31,14 +31,7 @@ public class Playermovement
         if (Physics.SphereCast(psm.spherecastcollider.bounds.center, psm.spherecastcollider.radius, Vector3.down, out RaycastHit groundhit, 1.2f, psm.groundchecklayer))
         {
             float angle = Vector3.Angle(Vector3.up, groundhit.normal);
-            if(angle > psm.charactercontroller.slopeLimit +6)          // +3 sonst die ganze zeit state wechsel wenn man gegen ein schräge läuft
-            {
-                Statics.otheraction = false;
-                psm.Charrig.enabled = false;
-                psm.disableaimcam();
-                psm.graviti = -2;
-                psm.state = Movescript.State.Slidedownwall;
-            }
+            if (angle > psm.charactercontroller.slopeLimit + 6) switchtoslidewall();                      // +3 sonst die ganze zeit state wechsel wenn man gegen ein schräge läuft
             else
             {
                 psm.velocity = checkgroundangle(psm.velocity);
@@ -46,10 +39,29 @@ public class Playermovement
                 psm.charactercontroller.Move(psm.velocity * Time.deltaTime);
             }
         }
-        else
+        else psm.switchtoairstate();
+    }
+    public void healgroundcheck()
+    {
+        if (Physics.SphereCast(psm.spherecastcollider.bounds.center, psm.spherecastcollider.radius, Vector3.down, out RaycastHit groundhit, 1.2f, psm.groundchecklayer))
         {
-            psm.switchtoairstate();
+            float angle = Vector3.Angle(Vector3.up, groundhit.normal);
+            if (angle > psm.charactercontroller.slopeLimit + 6) switchtoslidewall();                      // +3 sonst die ganze zeit state wechsel wenn man gegen ein schräge läuft
+            else
+            {
+                psm.velocity.y += psm.graviti;
+                psm.charactercontroller.Move(psm.velocity * Time.deltaTime);
+            }
         }
+        else psm.switchtoairstate();
+    }
+    private void switchtoslidewall()
+    {
+        Statics.otheraction = false;
+        psm.Charrig.enabled = false;
+        psm.disableaimcam();
+        psm.graviti = -2;
+        psm.state = Movescript.State.Slidedownwall;
     }
     public void groundanimations()
     {

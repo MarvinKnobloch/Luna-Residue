@@ -14,7 +14,8 @@ public class Playerheal
         {
             if (psm.controlls.Player.Heal.IsPressed() && Statics.otheraction == false)
             {
-                //psm.playersounds.playhealingstate();
+                psm.velocity = new Vector3(0, 0, 0);
+
                 psm.state = Movescript.State.Heal;
                 psm.healingscript.strgpressed();
                 psm.ChangeAnimationStateInstant(healstart);

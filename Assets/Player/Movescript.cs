@@ -242,6 +242,7 @@ public class Movescript : MonoBehaviour
                     break;
                 case State.Heal:
                     healingscript.heal();
+                    playermovement.healgroundcheck();
                     break;
                 case State.Swim:
                     playermovement.movement();
