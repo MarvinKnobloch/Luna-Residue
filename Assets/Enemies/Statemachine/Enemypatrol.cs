@@ -7,12 +7,15 @@ public class Enemypatrol
 {
     public Enemymovement esm;
 
+    private float distance;
+    private float maxenemytriggerdistance = 50;
+
     const string idlestate = "Idle";
     const string patrolstate = "Patrol";
 
     public void triggerenemy()        //ontriggerenter
     {
-        esm.Meshagent.speed = esm.patrolspeed;
+        esm.meshagent.speed = esm.patrolspeed;
         esm.patroltimer = 0f;
         esm.ChangeAnimationState(idlestate);
         esm.state = Enemymovement.State.waitfornextpatrolpoint;
@@ -32,13 +35,13 @@ public class Enemypatrol
             if (blocked == true)
             {
                 esm.patrolposi = hit.position;
-                esm.Meshagent.SetDestination(esm.patrolposi);
+                esm.meshagent.SetDestination(esm.patrolposi);
                 esm.ChangeAnimationState(patrolstate);
                 esm.state = Enemymovement.State.patrol;
             }
             else
             {
-                esm.Meshagent.SetDestination(esm.patrolposi);
+                esm.meshagent.SetDestination(esm.patrolposi);
                 esm.ChangeAnimationState(patrolstate);
                 esm.state = Enemymovement.State.patrol;
             }
@@ -51,13 +54,13 @@ public class Enemypatrol
         {
             esm.patroltimer = 0f;
             esm.ChangeAnimationState(idlestate);
-            esm.Meshagent.ResetPath();
+            esm.meshagent.ResetPath();
             esm.state = Enemymovement.State.waitfornextpatrolpoint;
         }
         else
         {
             esm.patrolposi.y = esm.transform.position.y;
-            esm.Meshagent.SetDestination(esm.patrolposi);
+            esm.meshagent.SetDestination(esm.patrolposi);
         }
     }
     public void checkforplayerinrange()
@@ -68,39 +71,68 @@ public class Enemypatrol
             esm.checkforplayertimer = 0;
             if (Vector3.Distance(esm.transform.position, LoadCharmanager.Overallmainchar.transform.position) < esm.aggrorangecheck)
             {
-                esm.Meshagent.CalculatePath(LoadCharmanager.Overallmainchar.transform.position, esm.path);
-                if (esm.path.status == NavMeshPathStatus.PathComplete)
+                if (Physics.Linecast(esm.transform.position + Vector3.up, LoadCharmanager.Overallmainchar.transform.position + Vector3.up, esm.checkforplayerlayer, QueryTriggerInteraction.Ignore) == false)
                 {
-                    if (Physics.Linecast(esm.transform.position + Vector3.up, LoadCharmanager.Overallmainchar.transform.position + Vector3.up, esm.checkforplayerlayer, QueryTriggerInteraction.Ignore) == false)
-                    {
-                        if (!Infightcontroller.infightenemylists.Contains(esm.transform.gameObject))
+                    esm.meshagent.CalculatePath(LoadCharmanager.Overallmainchar.transform.position, esm.path);
+                    if (esm.path.status == NavMeshPathStatus.PathComplete)
+                    {       
+                        if (checkdistance() == true)
                         {
-                            if(Musiccontroller.instance != null)
-                            {
-                                if (esm.gameObject.GetComponent<Enemyisrewardobject>())
-                                {
-                                    Musiccontroller.instance.spezialbattlemusic();
-                                }
-                                else Musiccontroller.instance.enemynormalbattle();
-                            }
-
-                            Infightcontroller.infightenemylists.Add(esm.transform.gameObject);
-                            int enemycount = Infightcontroller.infightenemylists.Count;
-                            Statics.currentenemyspecialcd = Statics.enemyspecialcd + (enemycount * 2);
-                            if (Infightcontroller.infightenemylists.Count == 1)
-                            {
-                                Infightcontroller.instance.checkifinfight();
-                            }
-                            triggerotherenemiesinrange();
+                            cantriggerenemy();
                         }
-                        esm.currenttarget = LoadCharmanager.Overallmainchar;
-                        esm.Meshagent.speed = esm.normalnavspeed;
-                        esm.normalattacktimer = esm.normalattackcd;
-                        esm.state = Enemymovement.State.gettomeleerange;
                     }
                 }
             }
         }
+    }
+    private bool checkdistance()
+    {
+        distance = 0;
+        Vector3[] corners = esm.path.corners;
+
+        if (corners.Length > 2)
+        {
+            for (int i = 1; i < corners.Length; i++)
+            {
+                Vector2 previous = new Vector2(corners[i - 1].x, corners[i - 1].z);
+                Vector2 current = new Vector2(corners[i].x, corners[i].z);
+
+                distance += Vector2.Distance(previous, current);
+                if (distance > maxenemytriggerdistance) return false;
+            }
+            return true;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    private void cantriggerenemy()
+    {
+        if (!Infightcontroller.infightenemylists.Contains(esm.transform.gameObject))
+        {
+            if (Musiccontroller.instance != null)
+            {
+                if (esm.gameObject.GetComponent<Enemyisrewardobject>())
+                {
+                    Musiccontroller.instance.spezialbattlemusic();
+                }
+                else Musiccontroller.instance.enemynormalbattle();
+            }
+
+            Infightcontroller.infightenemylists.Add(esm.transform.gameObject);
+            int enemycount = Infightcontroller.infightenemylists.Count;
+            Statics.currentenemyspecialcd = Statics.enemyspecialcd + (enemycount * 2);
+            if (Infightcontroller.infightenemylists.Count == 1)
+            {
+                Infightcontroller.instance.checkifinfight();
+            }
+            triggerotherenemiesinrange();
+        }
+        esm.currenttarget = LoadCharmanager.Overallmainchar;
+        esm.meshagent.speed = esm.normalnavspeed;
+        esm.normalattacktimer = esm.normalattackcd;
+        esm.state = Enemymovement.State.gettomeleerange;
     }
     private void triggerotherenemiesinrange()
     {
@@ -127,7 +159,7 @@ public class Enemypatrol
             //triggerotherenemiesinrange();
         }
         esm.currenttarget = LoadCharmanager.Overallmainchar;
-        esm.Meshagent.speed = esm.normalnavspeed;
+        esm.meshagent.speed = esm.normalnavspeed;
         esm.normalattacktimer = esm.normalattackcd;
         esm.state = Enemymovement.State.gettomeleerange;
     }

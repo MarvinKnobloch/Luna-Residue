@@ -42,7 +42,7 @@ public class Ninjastar : MonoBehaviour
         {
             if (other.gameObject == LoadCharmanager.Overallmainchar)
             {
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 3));
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamageignoreiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 3));
                 gameObject.SetActive(false);
             }
         }

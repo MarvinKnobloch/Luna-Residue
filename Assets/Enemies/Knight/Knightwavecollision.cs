@@ -21,7 +21,7 @@ public class Knightwavecollision : MonoBehaviour
             if (other.gameObject == LoadCharmanager.Overallmainchar)
             {
                 dmgonce = true;
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 3));
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamageignoreiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 3));
             }
         }
     }

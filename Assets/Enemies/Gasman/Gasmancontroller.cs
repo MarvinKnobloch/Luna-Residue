@@ -98,7 +98,7 @@ public class Gasmancontroller : MonoBehaviour
     }
     private void turnoffeverything()
     {
-        LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1));
+        LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamageignoreiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1));
         blueline.SetActive(false);
         redline.SetActive(false);
         gameObject.SetActive(false);

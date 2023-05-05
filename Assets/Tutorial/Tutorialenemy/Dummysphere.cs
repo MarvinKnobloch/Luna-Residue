@@ -31,7 +31,7 @@ public class Dummysphere : MonoBehaviour
             {
                 if (target.gameObject == LoadCharmanager.Overallmainchar.gameObject)
                 {
-                    target.GetComponent<Playerhp>().TakeDamage(basedmg);
+                    target.GetComponent<Playerhp>().takedamagecheckiframes(basedmg);
                     break;
                 }
             }

@@ -22,7 +22,7 @@ public class Fishmancolliderdmg : MonoBehaviour
             if (other.gameObject == LoadCharmanager.Overallmainchar && dealdmgonce == false)
             {
                 dealdmgonce = true;
-                other.GetComponent<Playerhp>().TakeDamage(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 2));
+                other.GetComponent<Playerhp>().takedamageignoreiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 2));
             }
         }
     }

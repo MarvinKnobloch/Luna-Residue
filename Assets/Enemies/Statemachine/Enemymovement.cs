@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class Enemymovement : MonoBehaviour
 {
-    public NavMeshAgent Meshagent;
+    public NavMeshAgent meshagent;
     public NavMeshPath path;
     public LayerMask Player;
     private Animator animator;
@@ -73,7 +73,7 @@ public class Enemymovement : MonoBehaviour
     private void Awake()
     {
         enemyhp = GetComponent<EnemyHP>();
-        Meshagent = GetComponent<NavMeshAgent>();
+        meshagent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
         path = new NavMeshPath();
@@ -93,7 +93,7 @@ public class Enemymovement : MonoBehaviour
     {
         currentstate = null;
         state = State.empty;
-        Meshagent.ResetPath();
+        meshagent.ResetPath();
         ChangeAnimationState(idlestate);
         currenttarget = LoadCharmanager.Overallmainchar;
         checkforresettimer = 0;
@@ -154,22 +154,28 @@ public class Enemymovement : MonoBehaviour
     {
         normalattacktimer = 0;
         ChangeAnimationState(attack1state);
-        Meshagent.ResetPath();
+        meshagent.ResetPath();
         state = State.isattacking;
     }
     private void backtowaitforattack()
     {
         if(enemyhp.enemyisdead == false) enemyattack.backtowaitforattack();         //wird mit der animation gecalled
     }
-    private void resetpath() => Meshagent.ResetPath();
+    private void resetpath() => meshagent.ResetPath();
     private void callemptystate() => state = State.empty;                          //wird mit der animation gecalled
-    private void normalattackdmg() => currenttarget.GetComponent<Playerhp>().TakeDamage(basedmg);                    //wird mit der animation gecalled
+    private void normalattackdmg() => currenttarget.GetComponent<Playerhp>().takedamagecheckiframes(basedmg);                    //wird mit der animation gecalled
     public void enemydied() => enemyreset.enemydied();
     public void FaceTraget()
     {
-        Vector3 direction = (currenttarget.transform.position - transform.position).normalized;                    // normalized wegen magnitude
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));               //LookRotation reicht um die rotation zu bestimmmen + extra schritt das sich das objekt nur in x und z dreht
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);              //Slerp wird benutzt damit das Objekt sich in einer bestimmen geschwindikeit dreht (sonst würde sich das objekt instant drehen)
+        Vector3 target = new Vector3(currenttarget.transform.position.x, transform.position.y, currenttarget.transform.position.z);
+        float distance = Vector3.Distance(target, transform.position);
+        if (distance > 0.5f)
+        {
+            Vector3 direction = (currenttarget.transform.position - transform.position).normalized;                    // normalized wegen magnitude                                                                                                                     //Debug.Log(direction);
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));               //LookRotation reicht um die rotation zu bestimmmen + extra schritt das sich das objekt nur in x und z dreht
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);              //Slerp wird benutzt damit das Objekt sich in einer bestimmen geschwindikeit dreht (sonst würde sich das objekt instant drehen)
+        }
+        else Debug.Log(distance);
     }
     private void Facemainchar()
     {

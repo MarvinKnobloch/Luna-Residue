@@ -77,7 +77,7 @@ public class Doozycontroller : MonoBehaviour
         dmgcount = needednumbers + 1 - memoryclicknumber;
         if(Statics.infight == true)
         {
-            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1) / needednumbers * dmgcount);
+            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamagecheckiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1) / needednumbers * dmgcount);
         }
         turnoff();
     }

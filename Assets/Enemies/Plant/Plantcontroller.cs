@@ -52,7 +52,7 @@ public class Plantcontroller : MonoBehaviour
         {
             if (mushroom.activeSelf == true && Statics.infight == true)
             {
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().TakeDamage(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, spawns.Length));
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamageignoreiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, spawns.Length));
             }
             mushroom.GetComponent<Plantmushroom>().isactivmushroom = false;
             mushroom.SetActive(false);

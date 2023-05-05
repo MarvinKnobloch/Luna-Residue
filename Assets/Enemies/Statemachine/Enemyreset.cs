@@ -37,15 +37,15 @@ public class Enemyreset
         esm.healticktimer += Time.deltaTime;
         if (esm.healticktimer > esm.healticksafterreset)
         {
-            esm.Meshagent.SetDestination(esm.spawnpostion);                      //würde schon überschrieben als ich es bei checkforreset gecalled habe
+            esm.meshagent.SetDestination(esm.spawnpostion);                      //würde schon überschrieben als ich es bei checkforreset gecalled habe
             esm.enemyhp.enemyheal(esm.healtickamount);
             esm.healticktimer = 0f;
         }
         if (Vector3.Distance(esm.spawnpostion, esm.transform.position) < 2)
         {
             esm.currenttarget = LoadCharmanager.Overallmainchar;
-            esm.Meshagent.ResetPath();
-            esm.Meshagent.speed = esm.patrolspeed;
+            esm.meshagent.ResetPath();
+            esm.meshagent.speed = esm.patrolspeed;
             esm.healtickamount = esm.enemyhp.maxhealth * 0.05f;
             esm.ChangeAnimationState(idlestate);
             esm.state = Enemymovement.State.idleheal;
