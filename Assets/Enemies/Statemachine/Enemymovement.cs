@@ -34,7 +34,7 @@ public class Enemymovement : MonoBehaviour
     [NonSerialized] public float patroltimer;
     [NonSerialized] public float patrolwaittimer = 5f;
     [NonSerialized] public float patrolspeed = 2f;
-    [NonSerialized] public int enemeytriggerrange = 15;
+    [NonSerialized] public int enemeytriggerrange = 20;
 
     public LayerMask checkforplayerlayer;
     public LayerMask meleehitboxlayer;
@@ -61,8 +61,8 @@ public class Enemymovement : MonoBehaviour
         empty,
         waitfornextpatrolpoint,
         patrol,
-        gettomeleerange,
-        waitforattacks,
+        waitforattackcdthengettoplayer,
+        followplayerthenwaitforattackcd,
         isattacking,
         spezialattack,
         changeposi,
@@ -115,13 +115,13 @@ public class Enemymovement : MonoBehaviour
             case State.patrol:
                 enemypatrol.patrol();
                 break;
-            case State.gettomeleerange:
+            case State.waitforattackcdthengettoplayer:
                 enemyreset.checkforreset();
-                enemyattack.gettomeleerange();
+                enemyattack.waitforattackcd();
                 break;
-            case State.waitforattacks:
+            case State.followplayerthenwaitforattackcd:
                 enemyreset.checkforreset();
-                enemyattack.waitingforattacks();
+                enemyattack.followthenwait();
                 break;
             case State.changeposi:
                 enemyreset.checkforreset();

@@ -89,9 +89,9 @@ public class Upgradecontroller : MonoBehaviour
     }
     private void upgradeitem()
     {
-        chooseitem.subtractequipeditem();      
-        removemats();
+        chooseitem.subtractequipeditem();
         itemtoupgrade.upgradelvl++;
+        removemats();
         chooseitem.upgradeequipeditems();
         itemtextcontroller.valuesupdate();
         resetonpointenterlayer.SetActive(true);

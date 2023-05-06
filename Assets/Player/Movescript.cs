@@ -407,6 +407,7 @@ public class Movescript : MonoBehaviour
         {
             ChangeAnimationStateInstant(dazestate);
             state = State.Stun;
+            Statics.otheraction = true;
             Statics.dash = true;
             Statics.resetvaluesondeathorstun = true;
         }

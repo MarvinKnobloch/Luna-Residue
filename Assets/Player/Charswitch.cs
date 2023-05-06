@@ -37,6 +37,7 @@ public class Charswitch : MonoBehaviour
         {
             if (Steuerung.Player.Charchange.WasPerformedThisFrame() && Statics.otheraction == false && Statics.charswitchbool == false)
             {
+                Statics.otheraction = true;
                 playersounds.playcharswitch();
                 if (Statics.currentactiveplayer == 0)
                 {

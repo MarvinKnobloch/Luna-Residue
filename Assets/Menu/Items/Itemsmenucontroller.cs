@@ -24,12 +24,15 @@ public class Itemsmenucontroller : MonoBehaviour
     {
         for (int i = 0; i < matsinventory.Container.Items.Length; i++)
         {
-            if (matsinventory.Container.Items[i].itemid != 0 && items.Contains(matsinventory.Container.Items[i].item) == false)
+            if (matsinventory.Container.Items[i].itemid != 0)
             {
-                items.Add(matsinventory.Container.Items[i].item);
-                GameObject obj = Instantiate(itemprefab, itemsbackground.transform);
-                obj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = matsinventory.Container.Items[i].itemname;
-                obj.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = matsinventory.Container.Items[i].amount.ToString();
+                if(items.Contains(matsinventory.Container.Items[i].item) == false)
+                {
+                    items.Add(matsinventory.Container.Items[i].item);
+                    GameObject obj = Instantiate(itemprefab, itemsbackground.transform);
+                    obj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = matsinventory.Container.Items[i].itemname;
+                }
+                itemsbackground.transform.GetChild(i).transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = matsinventory.Container.Items[i].amount.ToString();
             }
         }
     }

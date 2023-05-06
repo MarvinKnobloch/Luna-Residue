@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Blockforward : MonoBehaviour, Interactioninterface
 {
-    private LayerMask layer;
+    [SerializeField] private LayerMask layer;
     private GameObject cube;
     
     [SerializeField] private string actiontext = "Push";
@@ -31,10 +31,10 @@ public class Blockforward : MonoBehaviour, Interactioninterface
             Ray ray = new Ray(transform.parent.position, transform.parent.forward);
             if (Physics.Raycast(ray, out hit, 30, layer, QueryTriggerInteraction.Ignore))
             {
-                Vector3 test = hit.point;
-                test.z = test.z - transform.parent.localScale.z /2;
-                transform.parent.position = Vector3.MoveTowards(transform.parent.position, test, 15 * Time.deltaTime);
-                if (transform.parent.position == test)
+                Vector3 endposi = hit.point;
+                endposi.z = endposi.z - transform.parent.localScale.z /2;
+                transform.parent.position = Vector3.MoveTowards(transform.parent.position, endposi, 15 * Time.deltaTime);
+                if (transform.parent.position == endposi)
                 {
                     cube.GetComponent<Boxmovecheck>().moving = false;
                     StopCoroutine("move");

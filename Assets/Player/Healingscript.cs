@@ -123,6 +123,7 @@ public class Healingscript : MonoBehaviour
                 {
                     if (controlls.SpielerHeal.Target1.WasPerformedThisFrame())
                     {
+                        readinputs = false;
                         playersounds.playsinglehealstart();
                         healtarget = 1;
                         movementscript.ChangeAnimationState(singlehealend);
@@ -144,12 +145,14 @@ public class Healingscript : MonoBehaviour
                 {
                     if (controlls.SpielerHeal.Groupheal.WasPerformedThisFrame())
                     {
+                        readinputs = false;
                         playersounds.playsinglehealstart();
                         movementscript.ChangeAnimationState(grouphealend);
                     }
                 }
                 if (resurrectioncast == true)
                 {
+                    readinputs = false;
                     if (controlls.SpielerHeal.Target2.WasPerformedThisFrame() && LoadCharmanager.Overallthirdchar != null)
                     {
                         healtarget = 2;

@@ -13,7 +13,7 @@ public class Enemyattack
     const string idlestate = "Idle";
     const string runstate = "Run";
     const string spezialattackstate = "Spezial";
-    public void gettomeleerange()                              //der enemy wartet bis er attackieren kann, danach geht er erst zum target
+    public void waitforattackcd()                              //der enemy wartet bis er attackieren kann, danach geht er erst zum target
     {
         esm.normalattacktimer += Time.deltaTime;
         if (esm.normalattacktimer > esm.normalattackcd)
@@ -103,9 +103,9 @@ public class Enemyattack
         ismovingrotation = false;
         esm.ChangeAnimationState(idlestate);
         sideposition = Random.Range(-2f, 2f);
-        esm.state = Enemymovement.State.waitforattacks;
+        esm.state = Enemymovement.State.followplayerthenwaitforattackcd;
     }
-    public void waitingforattacks()             //wenn nach dem attacken keine neue posi gesucht wird folgt der enemy dem target
+    public void followthenwait()             //wenn nach dem attacken keine neue posi gesucht wird folgt der enemy dem target
     {    
         esm.normalattacktimer += Time.deltaTime;
         esm.followplayerafterattack += Time.deltaTime;
@@ -241,7 +241,7 @@ public class Enemyattack
             }
             esm.meshagent.ResetPath();
             esm.ChangeAnimationState(idlestate);
-            esm.state = Enemymovement.State.gettomeleerange;
+            esm.state = Enemymovement.State.waitforattackcdthengettoplayer;
         }
         checkforspezialattack();
     }

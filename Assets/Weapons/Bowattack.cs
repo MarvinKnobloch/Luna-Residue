@@ -85,9 +85,7 @@ public class Bowattack : MonoBehaviour
         basicattackcd = 1f;
         bowaircount = 0;
         readattackinput = false;
-        movementscript.state = Movescript.State.Bowweaponswitch;
-        attackestate = Attackstate.weaponswitch;
-        StartCoroutine(startweaponswitch());
+        bowweaponswitch();
     }
     private void OnDisable()
     {
@@ -541,6 +539,7 @@ public class Bowattack : MonoBehaviour
         }
         else
         {
+            Statics.otheraction = false;
             movementscript.switchtoairstate();
             attackestate = Attackstate.waitforattack;
         }

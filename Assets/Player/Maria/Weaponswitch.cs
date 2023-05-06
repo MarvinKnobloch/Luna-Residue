@@ -68,8 +68,6 @@ public class Weaponswitch : MonoBehaviour
         Statics.weaponswitchbuff = Statics.charweaponbuff[charnumber];
         GlobalCD.startweaponswitchcd();
         GlobalCD.startweaponswitchbuff(charnumber);
-        Statics.otheraction = false;
-        movescript.state = Movescript.State.Air;
         weaponimage.sprite = weaponimages[Statics.secondweapon[Statics.currentactiveplayer]];
     }
     private void spawnsecondweapon()
@@ -84,8 +82,6 @@ public class Weaponswitch : MonoBehaviour
         Statics.weaponswitchbuff = Statics.charweaponbuff[charnumber];
         GlobalCD.startweaponswitchcd();
         GlobalCD.startweaponswitchbuff(charnumber); 
-        Statics.otheraction = false;
-        movescript.state = Movescript.State.Air;
         weaponimage.sprite = weaponimages[Statics.firstweapon[Statics.currentactiveplayer]];
     }
 

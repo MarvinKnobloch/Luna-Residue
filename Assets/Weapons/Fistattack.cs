@@ -55,9 +55,7 @@ public class Fistattack : MonoBehaviour
         basicattackcd = 1f;
         fistcontroller.enabled = true;
         readattackinput = false;
-        movementscript.state = Movescript.State.Meleeairattack;
-        attackestate = Attackstate.weaponswitch;
-        StartCoroutine(startweaponswitch());
+        fistweaponswitch();
     }
 
     private Attackstate attackestate;
@@ -393,11 +391,13 @@ public class Fistattack : MonoBehaviour
         {
             Statics.otheraction = true;
             movementscript.graviti = -5;
+            attackestate = Attackstate.weaponswitch;
             movementscript.state = Movescript.State.Meleeairattack;
             movementscript.ChangeAnimationState(swordswitchstate);
         }
         else
         {
+            Statics.otheraction = false;
             movementscript.switchtoairstate();
             attackestate = Attackstate.waitforattack;
         }

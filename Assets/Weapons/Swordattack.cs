@@ -57,9 +57,7 @@ public class Swordattack : MonoBehaviour
         basicattackcd = 1f;
         swordcontroller.enabled = true;
         readattackinput = false;
-        movementscript.state = Movescript.State.Meleeairattack;
-        attackestate = Attackstate.weaponswitch;
-        StartCoroutine(startweaponswitch());
+        swordweaponswitch();
     }
 
     [SerializeField] private Attackstate attackestate;
@@ -384,22 +382,19 @@ public class Swordattack : MonoBehaviour
         }
         else airattackchainend();
     }
-    IEnumerator startweaponswitch()
-    {
-        yield return null;
-        swordweaponswitch();
-    }
     private void swordweaponswitch()
     {
         if (Physics.CheckSphere(transform.position, Statics.weaponswitchattackrange, weaponswitchlayer))
         {
             Statics.otheraction = true;
             movementscript.graviti = 0;
+            attackestate = Attackstate.weaponswitch;
             movementscript.state = Movescript.State.Meleeairattack;
             movementscript.ChangeAnimationState(swordswitchstate);
         }
         else
         {
+            Statics.otheraction = false;
             movementscript.switchtoairstate();
             attackestate = Attackstate.waitforattack;
         }
