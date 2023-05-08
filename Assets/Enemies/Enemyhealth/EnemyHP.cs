@@ -40,6 +40,7 @@ public class EnemyHP : MonoBehaviour
 
     private int golddropamount;
 
+    private Color dmgtextcolor;
     [SerializeField] private int[] playerhits = { 0, 0, 0 };
     private int mosthits;
     private int playerwithmosthits;
@@ -73,7 +74,9 @@ public class EnemyHP : MonoBehaviour
         if(enemymovement != null) enemymovement.basedmg = Globalplayercalculations.calculateenemydmg(enemyvalues.basedmg, enemylvl);
         enemyfocusbargameobject = enemyfocusdebuffbar.transform.parent.gameObject;
 
-        if(LoadCharmanager.Overallmainchar != null)
+        ColorUtility.TryParseHtmlString("#CD5003", out dmgtextcolor);
+
+        if (LoadCharmanager.Overallmainchar != null)
         {
             if (Vector3.Distance(LoadCharmanager.Overallmainchar.transform.position, transform.position) < 20)
             {
@@ -109,7 +112,7 @@ public class EnemyHP : MonoBehaviour
             else if (dmgtype == 1) enemycalculatedmg.downdmg(damage);
             else if (dmgtype == 2) enemycalculatedmg.middmg(damage);
             else if (dmgtype == 3) enemycalculatedmg.updmg(damage);
-            if (crit == true) Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, finaldmg, Color.red);
+            if (crit == true) Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, finaldmg, dmgtextcolor);
             else Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, finaldmg, Color.yellow);
             currenthealth -= finaldmg;
             afterdmgtaken();

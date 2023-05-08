@@ -64,7 +64,7 @@ public class Zombiecontroller : MonoBehaviour
         {
             if(ball.activeSelf == true && Statics.infight == true)
             {
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamageignoreiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1));
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamageignoreiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1), true);
                 ball.SetActive(false);
             }
         }

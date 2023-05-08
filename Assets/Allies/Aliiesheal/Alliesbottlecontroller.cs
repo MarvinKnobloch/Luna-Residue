@@ -29,14 +29,14 @@ public class Alliesbottlecontroller : MonoBehaviour
         if (other.gameObject == LoadCharmanager.Overallmainchar && cancollect == true)
         {
             supportspellsounds.playbottleheal();
-            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().addhealth(potionheal);
+            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().addhealthwithtext(potionheal);
             if (LoadCharmanager.Overallthirdchar != null)
             {
-                LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().addhealth(potionheal);
+                LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().addhealthwithtext(potionheal);
             }
             if (LoadCharmanager.Overallforthchar != null)
             {
-                LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().addhealth(potionheal);
+                LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().addhealthwithtext(potionheal);
             }
             potiondisable();
         }

@@ -14,7 +14,7 @@ public class Dealplayerdmg : Editor
         Playerhp myScript = (Playerhp)target;
         if (GUILayout.Button("Dealdmg"))
         {
-            myScript.takedamagecheckiframes(myScript.maxhealth);
+            myScript.takedamagecheckiframes(myScript.maxhealth, false);
         }
     }
 }

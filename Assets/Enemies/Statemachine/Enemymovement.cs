@@ -163,7 +163,7 @@ public class Enemymovement : MonoBehaviour
     }
     private void resetpath() => meshagent.ResetPath();
     private void callemptystate() => state = State.empty;                          //wird mit der animation gecalled
-    private void normalattackdmg() => currenttarget.GetComponent<Playerhp>().takedamagecheckiframes(basedmg);                    //wird mit der animation gecalled
+    private void normalattackdmg() => currenttarget.GetComponent<Playerhp>().takedamagecheckiframes(basedmg, false);                    //wird mit der animation gecalled
     public void enemydied() => enemyreset.enemydied();
     public void FaceTraget()
     {

@@ -31,7 +31,7 @@ public class Enemyattack
                         return;
                     }
                 }
-                Vector3 targetposi = new Vector3(esm.currenttarget.transform.position.x, esm.transform.position.y, esm.currenttarget.transform.position.z) + esm.transform.forward * -2;
+                Vector3 targetposi = new Vector3(esm.currenttarget.transform.position.x, esm.transform.position.y, esm.currenttarget.transform.position.z) + esm.transform.forward * -1;
                 if (Vector3.Distance(esm.transform.position, targetposi) > esm.attackrange)                                  //+esm.transform.forward * -2      enemy bekommt selten einen drehwurm   
                 {
                     esm.ChangeAnimationState(runstate);
@@ -115,7 +115,7 @@ public class Enemyattack
             {
                 if (esm.currenttarget.gameObject.GetComponent<Supportmovement>().currenttarget != esm.gameObject)
                 {
-                    Vector3 newposi = new Vector3(esm.currenttarget.transform.position.x, esm.transform.position.y, esm.currenttarget.transform.position.z) + esm.transform.forward * -2 + esm.currenttarget.transform.right * sideposition;
+                    Vector3 newposi = new Vector3(esm.currenttarget.transform.position.x, esm.transform.position.y, esm.currenttarget.transform.position.z) + esm.transform.forward * -1 + esm.currenttarget.transform.right * sideposition;
                     if (Vector3.Distance(esm.transform.position, newposi) > esm.attackrange)
                     {
                         ismovingrotation = true;
@@ -155,7 +155,7 @@ public class Enemyattack
         Ray ray = new Ray(LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 0.3f, Vector3.down);              //ray nach unten um die y vom navmesh zu finden(falls man im sprung ist)
         if (Physics.Raycast(ray, out RaycastHit hit, 5f))
         {
-            Vector3 targetposi = new Vector3(esm.currenttarget.transform.position.x, esm.transform.position.y, esm.currenttarget.transform.position.z) + esm.transform.forward * -2;
+            Vector3 targetposi = new Vector3(esm.currenttarget.transform.position.x, esm.transform.position.y, esm.currenttarget.transform.position.z) + esm.transform.forward * -1;
             esm.meshagent.CalculatePath(hit.point, esm.path);
             if (esm.path.status != NavMeshPathStatus.PathComplete)                   //wenn die momentan posi nicht erreichbar ist attackiert der gegner
             {

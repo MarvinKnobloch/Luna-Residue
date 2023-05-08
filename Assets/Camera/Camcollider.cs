@@ -129,6 +129,7 @@ namespace Cinemachine
         /// </summary>
         protected override void OnDestroy()
         {
+            Debug.Log("hallo");
             DestroyCollider();
             base.OnDestroy();
         }

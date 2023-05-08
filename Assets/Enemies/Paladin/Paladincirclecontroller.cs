@@ -28,7 +28,7 @@ public class Paladincirclecontroller : MonoBehaviour
             {
                 if (players.gameObject == LoadCharmanager.Overallmainchar)
                 {
-                    LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamagecheckiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 10));
+                    LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamagecheckiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 10), true);
                     break;
                 }
             }

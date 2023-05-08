@@ -54,7 +54,7 @@ public class Mathcommit : MonoBehaviour
                 {
                     float dmg = Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1);
                     float finaldmg = (timerdmgmultiplier * (timer / answertime) + 1) * dmg;
-                    LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamagecheckiframes(finaldmg);
+                    LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamagecheckiframes(finaldmg, true);
                 }
                 solutionUI.color = Color.red;
                 resetvalues();
@@ -68,7 +68,7 @@ public class Mathcommit : MonoBehaviour
             {
                 float dmg = Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1);
                 float finaldmg = (timerdmgmultiplier * (timer / answertime) + 1) * dmg;
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamagecheckiframes(finaldmg);
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamagecheckiframes(finaldmg, true);
             }
             solutionUI.color = Color.red;
             resetvalues();
@@ -92,7 +92,7 @@ public class Mathcommit : MonoBehaviour
             {
                 float dmg = Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1);
                 float finaldmg = (timerdmgmultiplier * (timer / answertime) + 1) * dmg;
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamagecheckiframes(finaldmg);
+                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamagecheckiframes(finaldmg, true);
             }
             solution.text = "";
             resetvalues();

@@ -31,19 +31,20 @@ public class Playerhp : MonoBehaviour
             addhealth(1);
         }
     }
-    public void takedamagecheckiframes(float damage)
+    public void takedamagecheckiframes(float damage, bool displaydmg)
     {
         if (Statics.playeriframes == true && gameObject == LoadCharmanager.Overallmainchar)
         {
             return;
         }
-        else dealdamage(damage);
+        else dealdamage(damage, displaydmg);
     }
-    public void takedamageignoreiframes(float damage) => dealdamage(damage);
-    private void dealdamage(float damage)
+    public void takedamageignoreiframes(float damage, bool displaydmg) => dealdamage(damage, displaydmg);
+    private void dealdamage(float damage, bool displaydmg)
     {
         float dmgtodeal = Mathf.Round(damage - ((Statics.groupstonedefensebonus + attributecontroller.stoneclassdmgreduction + (attributecontroller.defense / 40)) * 0.01f * damage));
         health -= dmgtodeal;
+        if(displaydmg == true) Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, dmgtodeal, Color.red);
         handlehealth();
     }
     public void addhealthwithtext(float heal)
