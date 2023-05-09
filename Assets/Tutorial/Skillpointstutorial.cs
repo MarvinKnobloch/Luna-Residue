@@ -7,23 +7,17 @@ public class Skillpointstutorial : MonoBehaviour
     private SpielerSteu controlls;
 
     private Tutorialcontroller tutorialcontroller;
-    private Areacontroller areacontroller;
+    private bool tutorialcomplete;
     private int textindex;
 
-    private int tutorialnumber;
 
     private bool readinputs;
     private void Start()
     {
         tutorialcontroller = GetComponentInParent<Tutorialcontroller>();
+        tutorialcomplete = false;
         controlls = Keybindinputmanager.inputActions;
         readinputs = false;
-        areacontroller = tutorialcontroller.areacontroller;
-        tutorialnumber = GetComponent<Areanumber>().areanumber;
-        if (areacontroller.tutorialcomplete[tutorialnumber] == true)
-        {
-            gameObject.SetActive(false);
-        }
     }
     private void Update()
     {
@@ -43,8 +37,9 @@ public class Skillpointstutorial : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == LoadCharmanager.Overallmainchar && areacontroller.tutorialcomplete[tutorialnumber] == false)
+        if (other.gameObject == LoadCharmanager.Overallmainchar && tutorialcomplete == false)
         {
+            tutorialcomplete = true;
             tutorialcontroller.onenter();
             textindex = 0;
             readinputs = true;
@@ -53,7 +48,7 @@ public class Skillpointstutorial : MonoBehaviour
     }
     private void showtext()
     {
-        if (textindex == 0) tutorialcontroller.tutorialtext.text = "Every level up you gain 1 skillpoint. To use these skillpoints, open the menu and click on skilltree.";
+        if (textindex == 0) tutorialcontroller.tutorialtext.text = "Every level up you gain 1 skillpoint. To use these skillpoints, open the menu " + " <color=green> " + "(ESC) " + "</color>" + "and click on skilltree.";
         else if (textindex == 1) tutorialcontroller.tutorialtext.text = "Each Character got his own skilltree and there is no limitation on switching these points.";
         else if (textindex == 2) tutorialcontroller.tutorialtext.text = "Health increase the hitpoints and healing done by this character.";
         else if (textindex == 3) tutorialcontroller.tutorialtext.text = "Defense reduce the damage taken. " + Statics.defenseconvertedtoattack + "% off the defense will converted to attackdamage";
@@ -68,8 +63,6 @@ public class Skillpointstutorial : MonoBehaviour
     {
         readinputs = false;
         tutorialcontroller.endtutorial();
-        areacontroller.tutorialcomplete[tutorialnumber] = true;
-        areacontroller.autosave();
         gameObject.SetActive(false);
     }
 }

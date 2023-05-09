@@ -64,6 +64,7 @@ public class Charswitch : MonoBehaviour
             Statics.currentactiveplayer = 1;
             LoadCharmanager.Overallmainchar.gameObject.GetComponent<Weaponswitch>().imageupdateaftercharswitch();
             charuiimage.sprite = charimages[Statics.currentfirstchar];
+            if (Statics.infight == true) enemytargetupdate(Statics.currentsecondchar);
         }                                                  
     }
 
@@ -81,6 +82,7 @@ public class Charswitch : MonoBehaviour
             Statics.currentactiveplayer = 0;
             LoadCharmanager.Overallmainchar.gameObject.GetComponent<Weaponswitch>().imageupdateaftercharswitch();
             charuiimage.sprite = charimages[Statics.currentsecondchar];
+            if (Statics.infight == true) enemytargetupdate(Statics.currentfirstchar);
         }
     }
     private void switchvalues()
@@ -116,6 +118,16 @@ public class Charswitch : MonoBehaviour
     public void setcharswitchimageafterload()
     {
         charuiimage.sprite = charimages[Statics.currentsecondchar];
+    }
+    private void enemytargetupdate(int currentchar)
+    {
+        foreach (GameObject obj in Infightcontroller.infightenemylists)
+        {
+            if (obj.TryGetComponent(out EnemyHP enemyhp))
+            {
+                if (enemyhp.currentplayerwithmosthits == 0) enemyhp.healthbar.targetupdate(currentchar);
+            }
+        }
     }
 }
 

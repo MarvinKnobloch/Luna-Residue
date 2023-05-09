@@ -11,6 +11,8 @@ public class Enemyhealthbar : MonoBehaviour
     [SerializeField] private float positionoffset;
     [SerializeField] private TextMeshProUGUI enemysizetext;
     [SerializeField] private Camera cam;
+    [SerializeField] private Sprite[] charimages;
+    public Image currenttargetimage;
     public GameObject debuffUI;
     public Image debuffbar;
 
@@ -40,6 +42,7 @@ public class Enemyhealthbar : MonoBehaviour
             enemysizetext.text = "B" + healthbargameobject.enemylvl;
         }
         cam = Camera.main;
+        currenttargetimage.gameObject.SetActive(false);
     }
     private void handlehealthchange(float pct)
     {
@@ -65,6 +68,10 @@ public class Enemyhealthbar : MonoBehaviour
     public void removehealthbar()
     {
         healthbargameobject.removefromcanvas();
+    }
+    public void targetupdate(int target)
+    {
+        currenttargetimage.sprite = charimages[target];
     }
 
     private void LateUpdate()

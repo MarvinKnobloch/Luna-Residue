@@ -129,7 +129,7 @@ public class Enemypatrol
             }
             triggerotherenemiesinrange();
         }
-        esm.currenttarget = LoadCharmanager.Overallmainchar;
+        esm.enemyhp.fightstartsettraget();
         esm.meshagent.speed = esm.normalnavspeed;
         esm.normalattacktimer = esm.normalattackcd / 2;
         esm.state = Enemymovement.State.followplayerthenwaitforattackcd;
@@ -158,7 +158,7 @@ public class Enemypatrol
             }
             //triggerotherenemiesinrange();
         }
-        esm.currenttarget = LoadCharmanager.Overallmainchar;
+        esm.enemyhp.fightstartsettraget();
         esm.meshagent.speed = esm.normalnavspeed;
         esm.normalattacktimer = esm.normalattackcd / 2;
         esm.state = Enemymovement.State.followplayerthenwaitforattackcd;

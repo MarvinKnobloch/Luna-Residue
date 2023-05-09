@@ -44,6 +44,7 @@ public class EnemyHP : MonoBehaviour
     [SerializeField] private int[] playerhits = { 0, 0, 0 };
     private int mosthits;
     private int playerwithmosthits;
+    [NonSerialized] public int currentplayerwithmosthits;
     private int hitstakensincelastaggrocheck;
 
     public static event Action supporttargetdied;
@@ -89,13 +90,6 @@ public class EnemyHP : MonoBehaviour
         enemycalculatedmg.enemyscript = this;
         enemyisdead = false;
         currenthealth = maxhealth;
-        mosthits = 0;
-        playerwithmosthits = 0;
-        hitstakensincelastaggrocheck = 5;
-        for (int i = 0; i < playerhits.Length; i++)
-        {
-            playerhits[i] = 0;
-        }
         capsulecollider.enabled = true;
         boxcollider.enabled = true;
         resetdebuff();
@@ -335,6 +329,7 @@ public class EnemyHP : MonoBehaviour
         else if(player == 4) playerhits[2] += hitamount;
         if(hitstakensincelastaggrocheck >= 5)
         {
+            hitstakensincelastaggrocheck = 0;
             setnewtarget();
         }
     }
@@ -348,10 +343,22 @@ public class EnemyHP : MonoBehaviour
             playerhits[i] = 0;
         }
     }
-
+    public void fightstartsettraget()
+    {
+        mosthits = -1;
+        playerwithmosthits = -1;
+        playerhits[0] = UnityEngine.Random.Range(0, 2);
+        if (LoadCharmanager.Overallthirdchar != null) playerhits[1] = UnityEngine.Random.Range(0, 2);
+        else playerhits[1] = -11;
+        if (LoadCharmanager.Overallforthchar != null) playerhits[2] = UnityEngine.Random.Range(0, 2);
+        else playerhits[2] = -11;
+        hitstakensincelastaggrocheck = 4;
+        healthbar.currenttargetimage.gameObject.SetActive(true);
+        currentplayerwithmosthits = -1;
+        setnewtarget();
+    }
     private void setnewtarget()
     {
-        hitstakensincelastaggrocheck = 0;
         for (int i = 0; i < playerhits.Length; i++)
         {
             if (playerhits[i] > mosthits)
@@ -360,9 +367,27 @@ public class EnemyHP : MonoBehaviour
                 playerwithmosthits = i;
             }
         }
-        if(playerwithmosthits == 0) enemymovement.currenttarget = LoadCharmanager.Overallmainchar;
-        else if (playerwithmosthits == 1) enemymovement.currenttarget = LoadCharmanager.Overallthirdchar;
-        else if (playerwithmosthits == 2) enemymovement.currenttarget = LoadCharmanager.Overallforthchar;
+        if (playerwithmosthits == currentplayerwithmosthits) return;
+        else if (playerwithmosthits == 0)
+        {
+            enemymovement.currenttarget = LoadCharmanager.Overallmainchar;
+            if(Statics.currentactiveplayer == 0) healthbar.targetupdate(Statics.currentfirstchar);
+            else healthbar.targetupdate(Statics.currentsecondchar);
+            currentplayerwithmosthits = playerwithmosthits;
+        }
+        else if (playerwithmosthits == 1)
+        {
+            enemymovement.currenttarget = LoadCharmanager.Overallthirdchar;
+            healthbar.targetupdate(Statics.currentthirdchar);
+            currentplayerwithmosthits = playerwithmosthits;
+        }
+        else if (playerwithmosthits == 2)
+        {
+            enemymovement.currenttarget = LoadCharmanager.Overallforthchar;
+            healthbar.targetupdate(Statics.currentforthchar);
+            currentplayerwithmosthits = playerwithmosthits;
+        }
+        
     }
     public void newtargetonplayerdeath(int player)
     {

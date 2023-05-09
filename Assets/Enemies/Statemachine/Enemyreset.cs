@@ -17,6 +17,7 @@ public class Enemyreset
         {
             if (Vector3.Distance(esm.spawnpostion, esm.transform.position) > esm.enemyresetrange || Vector3.Distance(LoadCharmanager.Overallmainchar.transform.position, esm.transform.position) > esm.enemyresetrange + 10)
             {
+                esm.enemyhp.healthbar.currenttargetimage.gameObject.SetActive(false);
                 esm.healticktimer = 0f;
                 esm.gameObject.GetComponent<EnemyHP>().resetplayerhits();
                 esm.spezialattack = false;
