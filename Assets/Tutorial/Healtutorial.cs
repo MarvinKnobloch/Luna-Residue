@@ -38,9 +38,9 @@ public class Healtutorial : MonoBehaviour
     }
     private void Update()
     {
-        if (readinputs == true && controlls.Menusteuerung.Leftclick.WasPressedThisFrame())
+        if (readinputs == true && controlls.Menusteuerung.F1.WasPressedThisFrame())
         {
-            if (textindex != 3)
+            if (textindex != 4)
             {
                 tutorialcontroller.tutorialtext.text = string.Empty;
                 textindex++;
@@ -80,7 +80,8 @@ public class Healtutorial : MonoBehaviour
         else if (textindex == 1) tutorialcontroller.tutorialtext.text = "While holding \"" + "<color=green>" + heal + "</color>" + "\" press the buttons appearing on the screen in the right order.";
         else if (textindex == 2) tutorialcontroller.tutorialtext.text = "After succesfully hitting the buttons, choose the target you want to heal with \"" + "<color=green>" + player1target + "</color>" + "\", \""
                                                + "<color=green>" + player2target + "</color>" + "\" or \"" + "<color=green>" + player3target + "</color>" + "\".";
-        else if (textindex == 3) tutorialcontroller.tutorialtext.text = "Heal your group to full life, to continue the tutorial";
+        else if (textindex == 3) tutorialcontroller.tutorialtext.text = "The healing cooldown is displayed in the bottom left";
+        else if (textindex == 4) tutorialcontroller.tutorialtext.text = "Heal your group to full life, to continue the tutorial";
     }
     private void endtutorial()
     {

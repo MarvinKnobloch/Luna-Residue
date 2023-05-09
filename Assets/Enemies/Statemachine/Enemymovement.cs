@@ -175,7 +175,6 @@ public class Enemymovement : MonoBehaviour
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));               //LookRotation reicht um die rotation zu bestimmmen + extra schritt das sich das objekt nur in x und z dreht
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);              //Slerp wird benutzt damit das Objekt sich in einer bestimmen geschwindikeit dreht (sonst würde sich das objekt instant drehen)
         }
-        else Debug.Log(distance);
     }
     private void Facemainchar()
     {

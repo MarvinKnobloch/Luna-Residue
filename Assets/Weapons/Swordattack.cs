@@ -387,9 +387,9 @@ public class Swordattack : MonoBehaviour
         if (Physics.CheckSphere(transform.position, Statics.weaponswitchattackrange, weaponswitchlayer))
         {
             Statics.otheraction = true;
-            movementscript.graviti = 0;
             attackestate = Attackstate.weaponswitch;
             movementscript.state = Movescript.State.Meleeairattack;
+            movementscript.graviti = 0;
             movementscript.ChangeAnimationState(swordswitchstate);
         }
         else

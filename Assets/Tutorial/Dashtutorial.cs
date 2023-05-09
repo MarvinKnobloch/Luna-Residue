@@ -22,7 +22,7 @@ public class Dashtutorial : MonoBehaviour
     }
     private void Update()
     {
-        if (readinputs == true && controlls.Menusteuerung.Leftclick.WasPressedThisFrame())
+        if (readinputs == true && controlls.Menusteuerung.F1.WasPressedThisFrame())
         {
             if (textindex != 2)
             {
@@ -50,7 +50,7 @@ public class Dashtutorial : MonoBehaviour
     }
     private void showtext()
     {
-        if (textindex == 0) tutorialcontroller.tutorialtext.text = "Press \"" + "<color=green>" + dash + "</color>" + "\" to perform an dash.";
+        if (textindex == 0) tutorialcontroller.tutorialtext.text = "Press \"" + "<color=green>" + dash + "</color>" + "\" to perform a dash.";
         else if (textindex == 1) tutorialcontroller.tutorialtext.text = "This can be usefull to dodge attacks and cross small gaps";
         else if (textindex == 2) tutorialcontroller.tutorialtext.text = "It also makes the character immune to damage for a small duration";
     }

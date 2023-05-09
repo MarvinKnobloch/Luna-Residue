@@ -208,7 +208,6 @@ public class LoadCharmanager : MonoBehaviour
         else
         {
             disableattackbuttons = false;
-            Statics.donttriggerenemies = false;
         }
         gameispaused = false;
         menu.SetActive(false);
@@ -219,7 +218,6 @@ public class LoadCharmanager : MonoBehaviour
     {
         yield return null;
         disableattackbuttons = false;
-        Statics.donttriggerenemies = false;
     }
     private void classandstatsupdate(int charnumber, GameObject[] playerorsupport, int threatslot)
     {

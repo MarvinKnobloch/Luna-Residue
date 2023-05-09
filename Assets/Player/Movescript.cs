@@ -200,13 +200,19 @@ public class Movescript : MonoBehaviour
     {
         Cam2.gameObject.SetActive(false);
         controlls.Enable();
-        graviti = -0.5f;
         gravitation = normalgravition;
         attackonceair = true;
         Charprefabarrow.SetActive(false);
         currentstate = null;
+        StartCoroutine(triggerenemiesdisable());                              //wird beim charswitch = true
     }
 
+    IEnumerator triggerenemiesdisable()
+    {
+        float waitframes = Time.deltaTime * 5;
+        yield return new WaitForSeconds(waitframes);
+        Statics.donttriggerenemies = false;
+    }
     private void Update()
     {
         if (LoadCharmanager.interaction == false)

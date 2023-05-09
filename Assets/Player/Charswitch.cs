@@ -112,17 +112,10 @@ public class Charswitch : MonoBehaviour
         LoadCharmanager.Overallmainchar.gameObject.GetComponent<Playerhp>().playerhpuislot = 0;
         LoadCharmanager.Overallsecondchar.gameObject.GetComponent<Playerhp>().playerhpuislot = 1;
         manacontroller.Managemana(5);
-        StartCoroutine("triggerenemiesdisable");
     }
     public void setcharswitchimageafterload()
     {
         charuiimage.sprite = charimages[Statics.currentsecondchar];
-    }
-
-    IEnumerator triggerenemiesdisable()
-    {
-        yield return null;
-        Statics.donttriggerenemies = false;
     }
 }
 

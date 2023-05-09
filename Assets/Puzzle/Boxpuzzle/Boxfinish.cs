@@ -30,6 +30,7 @@ public class Boxfinish : MonoBehaviour
             requiredcube.GetComponent<Renderer>().material.color = Color.white;
             if(isfinished == true)
             {
+                isfinished = false;
                 reward.GetComponent<Rewardinterface>().removerewardcount();
             }
         }
