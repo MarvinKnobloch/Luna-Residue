@@ -22,7 +22,7 @@ public class LoadCharmanager : MonoBehaviour
     public GameObject[] teammates;
     public static GameObject Overallthirdchar;
     public static GameObject Overallforthchar;
-    public static Vector3 savemainposi = new Vector3(19, 2, 867);   //new Vector3(31,32,671);                    //new Vector3(19, 2, 867); tutorial
+    public static Vector3 savemainposi = new Vector3(31, 32, 671);   //new Vector3(31,32,671);                    //new Vector3(19, 2, 867); tutorial
     public static Quaternion savemainrota;
     public static float savecamvalueX;
 

@@ -175,7 +175,7 @@ public class Skilltreescript : MonoBehaviour
     public void updateunspendpoint()
     {
         Statics.charskillpoints[currentchar] = Statics.charcurrentlvl * skillpointsperlvl - Statics.charspendedskillpoints[currentchar];
-        skillpointtext.text = "Skillpoints" + Statics.charskillpoints[currentchar];
+        skillpointtext.text = "Skillpoints " + Statics.charskillpoints[currentchar];
     }
 
     public void healthnumberplus()

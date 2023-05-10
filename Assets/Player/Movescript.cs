@@ -370,7 +370,7 @@ public class Movescript : MonoBehaviour
         currentstate = newstate;
     }
     public void autolockon() => playerlockon.autolockon();
-    public void lockonfindclostesttarget() => playerlockon.lockonfindclostesttarget();
+    public void lockonchangeafterdeath() => playerlockon.lockonfindclostesttarget();
     public void endlockon() => playerlockon.endlockon();
     public void switchtogroundstate()
     {

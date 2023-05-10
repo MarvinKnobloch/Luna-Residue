@@ -98,7 +98,10 @@ public class Gasmancontroller : MonoBehaviour
     }
     private void turnoffeverything()
     {
-        LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamageignoreiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1), true);
+        if(Statics.infight == true)
+        {
+            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamageignoreiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1), true);
+        }
         blueline.SetActive(false);
         redline.SetActive(false);
         gameObject.SetActive(false);

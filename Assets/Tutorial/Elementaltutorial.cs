@@ -53,7 +53,7 @@ public class Elementaltutorial : MonoBehaviour
         if (textindex == 0) tutorialcontroller.tutorialtext.text = "<color=green>" + "Elementalmenu " + "</color>" + "unlocked. It can be open up in the menu. " +
                                                                    "The elementalmenu enables " + "<color=green>" + "classes " + "</color>" + "and " + "<color=green>" + "spells" + "</color>" + ".";
         else if (textindex == 1) tutorialcontroller.tutorialtext.text = "Each character is able to choose spells from to different elements.";
-        else if (textindex == 2) tutorialcontroller.tutorialtext.text = "The first element depends on your selected character. However the second one is base on a "
+        else if (textindex == 2) tutorialcontroller.tutorialtext.text = "The first element depends on your selected character. However the second one is based on a "
                                                                         + "<color=green>" + "classstone " + "</color>" +".";
         else if (textindex == 3) tutorialcontroller.tutorialtext.text = "Classstones have to be awaked first. Afer awaken a stone it can be connected to a character, " +
                                                                         "to set the second element and character class.";

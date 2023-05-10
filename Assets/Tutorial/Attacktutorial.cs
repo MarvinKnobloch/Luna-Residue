@@ -57,6 +57,7 @@ public class Attacktutorial : MonoBehaviour
     {
         if(other.gameObject == LoadCharmanager.Overallmainchar && tutorialcomplete == false)
         {
+            tutorialcomplete = true;
             attack1action = controlls.Player.Attack1.GetBindingDisplayString();
             attack2action = controlls.Player.Attack2.GetBindingDisplayString();
             attack3action = controlls.Player.Attack3.GetBindingDisplayString();

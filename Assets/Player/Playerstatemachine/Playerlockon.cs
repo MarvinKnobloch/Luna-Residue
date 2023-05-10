@@ -5,8 +5,8 @@ using UnityEngine;
 public class Playerlockon
 {
     public Movescript psm;
+    public int targetnumber;
 
-    //wenn man aus der range der healthbar läuft wird sie deaktiviert obwohl man noch infight ist, danach ist die focus anzeige + mark/unmark target verbugt
     public void whilelockon()
     {
         if (Statics.infight == true)
@@ -15,15 +15,40 @@ public class Playerlockon
             {
                 if (psm.controlls.Player.Lockonchange.WasPerformedThisFrame()) changetarget();
                 if (psm.controlls.Player.Setalliestarget.WasPerformedThisFrame()) setsupporttargets();
-                if (psm.controlls.Player.Character3target.WasPerformedThisFrame()) setthirdchartartget();
-                if (psm.controlls.Player.Character4target.WasPerformedThisFrame()) setthirdchartartget();
+                if (psm.controlls.Player.Character3target.WasPerformedThisFrame()) setthirdchartarget();
+                if (psm.controlls.Player.Character4target.WasPerformedThisFrame()) setforthchartarget();
             }
         }
     }
     public void autolockon()
     {
-        lockonfindclostesttarget();
+        settarget();
         psm.focustargetui.SetActive(true);
+    }
+    public void settarget()
+    {
+        if (Infightcontroller.infightenemylists.Count != 0)
+        {
+            targetnumber = 0;
+            Movescript.lockontarget = Infightcontroller.infightenemylists[targetnumber].gameObject.transform;
+            Movescript.lockontarget.GetComponent<EnemyHP>().enemyisfocustarget();
+            Movescript.lockontarget.GetComponent<EnemyHP>().marktarget();
+        }
+    }
+    public void changetarget()
+    {
+        if (Infightcontroller.infightenemylists.Count > 1)
+        {
+            Movescript.lockontarget.GetComponent<EnemyHP>().unmarktarget();
+            Movescript.lockontarget.GetComponent<EnemyHP>().enemyisnotfocustarget();
+
+            if (targetnumber >= Infightcontroller.infightenemylists.Count - 1) targetnumber = 0;
+            else targetnumber++;
+            Movescript.lockontarget = Infightcontroller.infightenemylists[targetnumber].gameObject.transform;
+
+            Movescript.lockontarget.GetComponent<EnemyHP>().enemyisfocustarget();
+            Movescript.lockontarget.GetComponent<EnemyHP>().marktarget();
+        }
     }
     public void lockonfindclostesttarget()
     {
@@ -36,6 +61,7 @@ public class Playerlockon
                 if (distancefromtarget < shortestDistance)
                 {
                     Movescript.lockontarget = Infightcontroller.infightenemylists[i].gameObject.transform;
+                    targetnumber = i;
                     shortestDistance = distancefromtarget;
                 }
             }
@@ -44,32 +70,6 @@ public class Playerlockon
         }
     }
 
-    private void changetarget()
-    {
-        if (Infightcontroller.infightenemylists.Count > 1)
-        {
-            psm.targetbeforeswap = Movescript.lockontarget;
-            Movescript.lockontarget.GetComponent<EnemyHP>().unmarktarget();
-            Movescript.lockontarget.GetComponent<EnemyHP>().enemyisnotfocustarget();
-
-            float shortestDistance = 100f;
-            for (int i = 0; i < Infightcontroller.infightenemylists.Count; i++)
-            {
-                float distancefromtarget = Vector3.Distance(psm.transform.position, Infightcontroller.infightenemylists[i].transform.position);
-                if (distancefromtarget < shortestDistance)
-                {
-                    if (psm.targetbeforeswap.gameObject != Infightcontroller.infightenemylists[i])
-                    {
-                        Movescript.lockontarget = Infightcontroller.infightenemylists[i].gameObject.transform;
-                        shortestDistance = distancefromtarget;
-                    }
-                }
-            }
-            Movescript.lockontarget.GetComponent<EnemyHP>().enemyisfocustarget();
-            Movescript.lockontarget.GetComponent<EnemyHP>().marktarget();
-        }
-    }
-    
     public void endlockon()
     {
         if(Movescript.lockontarget != null)
@@ -101,7 +101,7 @@ public class Playerlockon
             LoadCharmanager.Overallforthchar.GetComponent<Supportmovement>().playerfocustarget();
         }      
     }
-    private void setthirdchartartget()
+    private void setthirdchartarget()
     {
         if (LoadCharmanager.Overallthirdchar != null)
         {
@@ -110,9 +110,35 @@ public class Playerlockon
     }
     private void setforthchartarget()
     {
-        if (LoadCharmanager.Overallthirdchar != null)
+        if (LoadCharmanager.Overallforthchar != null)
         {
-            LoadCharmanager.Overallthirdchar.GetComponent<Supportmovement>().playerfocustarget();
+            LoadCharmanager.Overallforthchar.GetComponent<Supportmovement>().playerfocustarget();
         }
     }
 }
+
+/*private void changetarget()
+{
+    if (Infightcontroller.infightenemylists.Count > 1)
+    {
+        psm.targetbeforeswap = Movescript.lockontarget;
+        Movescript.lockontarget.GetComponent<EnemyHP>().unmarktarget();
+        Movescript.lockontarget.GetComponent<EnemyHP>().enemyisnotfocustarget();
+
+        float shortestDistance = 100f;
+        for (int i = 0; i < Infightcontroller.infightenemylists.Count; i++)
+        {
+            float distancefromtarget = Vector3.Distance(psm.transform.position, Infightcontroller.infightenemylists[i].transform.position);
+            if (distancefromtarget < shortestDistance)
+            {
+                if (psm.targetbeforeswap.gameObject != Infightcontroller.infightenemylists[i])
+                {
+                    Movescript.lockontarget = Infightcontroller.infightenemylists[i].gameObject.transform;
+                    shortestDistance = distancefromtarget;
+                }
+            }
+        }
+        Movescript.lockontarget.GetComponent<EnemyHP>().enemyisfocustarget();
+        Movescript.lockontarget.GetComponent<EnemyHP>().marktarget();
+    }
+}*/
