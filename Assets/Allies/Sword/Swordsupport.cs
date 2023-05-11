@@ -34,7 +34,7 @@ public class Swordsupport : MonoBehaviour
         basicdmgtodeal = Globalplayercalculations.calculatesupportdmg(basicsworddmg, attributecontroller.dmgfromallies, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
         enddmgtodeal = Globalplayercalculations.calculatesupportdmg(endsworddmg, attributecontroller.dmgfromallies, attributecontroller.swordattack, attributecontroller.stoneclassbonusdmg);
 
-        weaponhealing = Globalplayercalculations.calculateweaponheal(attributecontroller.maxhealth);
+        weaponhealing = Globalplayercalculations.calculateweaponheal();
     }
 
     private void basicswordswing()

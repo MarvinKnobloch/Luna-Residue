@@ -57,8 +57,7 @@ public class Statics
     public static float bowendmanarestore = 5;
 
     public static float cleavedamagereduction = 3;
-    public static float basicweaponheal = 3;
-    public static float weaponbonushealhealthpercentage = 2;
+    public static float basicweaponheal = 5;
     public static float healhealthbonuspercentage = 15;
 
     public static float healthperskillpoint = 10;

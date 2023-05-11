@@ -6,22 +6,22 @@ using TMPro;
 
 public class Fasttravelmenuopen : MonoBehaviour
 {
-    private SpielerSteu steuerung;
+    private SpielerSteu controlls;
     [SerializeField] private GameObject menuoverview;
     [SerializeField] private GameObject commitfasttravel;
 
     [SerializeField] private Menusoundcontroller menusoundcontroller;
     private void Awake()
     {
-        steuerung = Keybindinputmanager.inputActions;
+        controlls = Keybindinputmanager.inputActions;
     }
     private void OnEnable()
     {
-        steuerung.Enable();
+        controlls.Enable();
     }
     private void Update()
     {
-        if (steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame() && commitfasttravel.activeSelf == false)
+        if (controlls.Menusteuerung.Menuesc.WasPerformedThisFrame() && commitfasttravel.activeSelf == false)
         {
             menuoverview.SetActive(true);
             gameObject.SetActive(false);

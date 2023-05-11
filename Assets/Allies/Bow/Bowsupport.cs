@@ -39,7 +39,7 @@ public class Bowsupport : MonoBehaviour
         basicdmgtodeal = Globalplayercalculations.calculatesupportdmg(basicarrowdmg, attributecontroller.dmgfromallies, attributecontroller.bowattack, attributecontroller.stoneclassbonusdmg);
         enddmgtodeal = Globalplayercalculations.calculatesupportdmg(endarrowdmg, attributecontroller.dmgfromallies, attributecontroller.bowattack, attributecontroller.stoneclassbonusdmg);
 
-        weaponhealing = Globalplayercalculations.calculateweaponheal(attributecontroller.maxhealth);
+        weaponhealing = Globalplayercalculations.calculateweaponheal();
     }
 
     private void shotchainarrow()

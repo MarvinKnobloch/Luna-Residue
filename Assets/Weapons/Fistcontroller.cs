@@ -62,7 +62,7 @@ public class Fistcontroller : MonoBehaviour
 
         overallcritchance = Statics.playerbasiccritchance + attributecontroller.critchance;
 
-        weaponhealing = Globalplayercalculations.calculateweaponheal(attributecontroller.maxhealth);
+        weaponhealing = Globalplayercalculations.calculateweaponheal();
     }
 
     public void fistrighthandhitbox()
@@ -172,7 +172,7 @@ public class Fistcontroller : MonoBehaviour
         }
         else
         {
-            spielerhp.addhealth(weaponhealing);
+            spielerhp.addhealth(weaponhealing);               //weaponhealing wird bei fistdmgupdate berechnet
         }
     }
 

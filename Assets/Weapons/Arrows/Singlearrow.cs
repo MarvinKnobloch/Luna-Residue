@@ -17,9 +17,10 @@ public class Singlearrow : MonoBehaviour
     private float overallcritdmg;
     private bool crit;
 
+    private float healreduction;
     private float enemydebuffcrit;
 
-    public void setarrowvalues(float dmg, int type)
+    public void setarrowvalues(float dmg, int type, float reducehealing)
     {
         dmgtype = type;
         Attributecontroller atb = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>();
@@ -28,6 +29,7 @@ public class Singlearrow : MonoBehaviour
         overalldmg = Mathf.Round(overalldmg + switchbuffdmg);
         overallcritchance = Statics.playerbasiccritchance + LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critchance;
         overallcritdmg = Mathf.Round(overalldmg * (LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critdmg / 100f) + switchbuffdmg);
+        healreduction = reducehealing;
     }
 
     void Update()
@@ -84,7 +86,7 @@ public class Singlearrow : MonoBehaviour
                 Manamanager.manamanager.Managemana(Statics.bowendmanarestore);
                 if (LoadCharmanager.Overallmainchar.gameObject.TryGetComponent(out Playerhp playerhp))
                 {
-                    float healing = Globalplayercalculations.calculateweaponheal(playerhp.maxhealth);
+                    float healing = Globalplayercalculations.calculateweaponheal() * healreduction;
                     playerhp.addhealth(healing);
                 }
             }

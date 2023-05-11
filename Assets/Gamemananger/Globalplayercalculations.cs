@@ -22,9 +22,9 @@ public class Globalplayercalculations
         float enddmg = (Statics.weaponswitchbuff + Statics.characterswitchbuff) / 100 * dmg;
         return enddmg;
     }
-    public static float calculateweaponheal(float health)
+    public static float calculateweaponheal()
     {
-        float healing = Mathf.Round(Statics.basicweaponheal + (health * Statics.weaponbonushealhealthpercentage * 0.01f));
+        float healing = Mathf.Round(Statics.basicweaponheal + (Statics.charcurrentlvl / 3));
         return healing;
     }
     public static float calculatecasthealing(float basicheal, float health, float playerstonebonus)         //player casts und support healingpotion

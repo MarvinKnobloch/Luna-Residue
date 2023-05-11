@@ -91,8 +91,7 @@ public class Aoearrow : MonoBehaviour
                     Manamanager.manamanager.Managemana(Statics.bowendmanarestore);
                     if (LoadCharmanager.Overallmainchar.gameObject.TryGetComponent(out Playerhp playerhp))
                     {
-                        float healing = Globalplayercalculations.calculateweaponheal(playerhp.maxhealth);
-                        playerhp.addhealth(healing);
+                        playerhp.addhealth(Globalplayercalculations.calculateweaponheal());
                     }
                 }
             }
