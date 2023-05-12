@@ -63,10 +63,10 @@ public class Targettutorial : MonoBehaviour
     }
     private void showtext()
     {
-        if (textindex == 0) tutorialcontroller.tutorialtext.text = "The icon, on the right side of the enemy health bar, shows the current target of the enemy.";
-        else if (textindex == 1) tutorialcontroller.tutorialtext.text = "The type and level display, of the players current traget, is red instead of white";
-        else if (textindex == 2) tutorialcontroller.tutorialtext.text = "Press \"" + "<color=green>" + targetswitch + "</color>" + "\" to switch your target" ;
-        else if (textindex == 3) tutorialcontroller.tutorialtext.text = "\"" + "<color=green>" + grouptarget + "</color>" + "\" will force your allies, to attack your current target ";
+        if (textindex == 0) tutorialcontroller.tutorialtext.text = "The icon, on the right side of the enemy health bar shows the current target of the enemy.";
+        else if (textindex == 1) tutorialcontroller.tutorialtext.text = "The enemy type and level display, of the players current traget, is red instead of white.";
+        else if (textindex == 2) tutorialcontroller.tutorialtext.text = "Use \"" + "<color=green>" + targetswitch + "</color>" + "\" to switch your target." ;
+        else if (textindex == 3) tutorialcontroller.tutorialtext.text = "Pressing \"" + "<color=green>" + grouptarget + "</color>" + "\" will force your allies, to attack your current target.";
         else if (textindex == 4) tutorialcontroller.tutorialtext.text = "Use \"" + "<color=green>" + support1target + "</color>" + "\" and \"" + "<color=green>" + support2target + "</color>" + "\"" +
                                                                         " to set the target of your allies separately.";
     }

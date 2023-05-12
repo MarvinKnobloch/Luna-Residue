@@ -47,8 +47,8 @@ public class Enemyspezialtutorial : MonoBehaviour
     }
     private void showtext()
     {
-        if (textindex == 0) tutorialcontroller.tutorialtext.text = "Each enemy has a different spezialattack";
-        else if (textindex == 1) tutorialcontroller.tutorialtext.text = "Avoid the dummies spezialattack to continue the tutorial ";
+        if (textindex == 0) tutorialcontroller.tutorialtext.text = "Each enemy has a different spezialattack.";
+        else if (textindex == 1) tutorialcontroller.tutorialtext.text = "Avoid the dummies spezialattack to continue the tutorial.";
     }
     private void endtutorial()
     {

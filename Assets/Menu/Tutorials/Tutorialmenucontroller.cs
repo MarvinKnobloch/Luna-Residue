@@ -12,7 +12,7 @@ public class Tutorialmenucontroller : MonoBehaviour
     [SerializeField] private GameObject targettutorialbutton;
     [SerializeField] private GameObject elementaltutorialbutton;
 
-    [SerializeField] private Menusoundcontroller menusoundcontroller;
+    [SerializeField] public Menusoundcontroller menusoundcontroller;
     private void Awake()
     {
         controlls = Keybindinputmanager.inputActions;

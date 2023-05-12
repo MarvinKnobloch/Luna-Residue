@@ -54,15 +54,15 @@ public class Elementaltutorial : MonoBehaviour
                                                                    "The elementalmenu enables " + "<color=green>" + "classes " + "</color>" + "and " + "<color=green>" + "spells" + "</color>" + ".";
         else if (textindex == 1) tutorialcontroller.tutorialtext.text = "Each character is able to choose spells from to different elements.";
         else if (textindex == 2) tutorialcontroller.tutorialtext.text = "The first element depends on your selected character. However the second one is based on a "
-                                                                        + "<color=green>" + "classstone " + "</color>" +".";
-        else if (textindex == 3) tutorialcontroller.tutorialtext.text = "Classstones have to be awaked first. Afer awaken a stone it can be connected to a character, " +
-                                                                        "to set the second element and character class.";
-        else if (textindex == 4) tutorialcontroller.tutorialtext.text = "Also awaken a stone will grant some permanent bonus for the group.";
-        else if (textindex == 5) tutorialcontroller.tutorialtext.text = "There are 3 different classes. " + "<color=green>" + "Damagedealer " + "</color>" + ", " + "<color=green>" + "heal " + "</color>" +
-                                                                        "and " + "<color=green>" + "guard " + "</color>" + ".";
-        else if (textindex == 6) tutorialcontroller.tutorialtext.text = "Damagedealer will deal more damage";
-        else if (textindex == 7) tutorialcontroller.tutorialtext.text = "Heal grants an healbonus and will be able to heal the group and ressurect";
-        else if (textindex == 8) tutorialcontroller.tutorialtext.text = "Guard gives some bonus HP and reduce the damage taken. It also increases threat on enemies.";       
+                                                                        + "<color=green>" + "elemental stone" + "</color>" + ".";
+        else if (textindex == 3) tutorialcontroller.tutorialtext.text = "Elemental stones have to be awaken first before you can use them, to set the second element.";
+        else if (textindex == 4) tutorialcontroller.tutorialtext.text = "Awaken a stone also grants a permanent bonus for the group.";
+        else if (textindex == 5) tutorialcontroller.tutorialtext.text = "These stones also define the class of the character.\n" +
+                                                                        "There are 3 different classes. " + "<color=green>" + "Fight" + "</color>" + ", " + "<color=green>" + "Heal " + "</color>" +
+                                                                        "and " + "<color=green>" + "Guard" + "</color>" + ".";
+        else if (textindex == 6) tutorialcontroller.tutorialtext.text = "Fight: The character deals increased damage.";
+        else if (textindex == 7) tutorialcontroller.tutorialtext.text = "Heal: Grants a healbonus and add the ability to cast a group heal and ressurect.";
+        else if (textindex == 8) tutorialcontroller.tutorialtext.text = "Guard: Will add some bonus HP and reduce the damage taken. It also increases threat on enemies.";       
    
     }
     private void endtutorial()
