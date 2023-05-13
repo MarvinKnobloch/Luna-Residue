@@ -17,6 +17,8 @@ public class Startmenucontroller : MonoBehaviour
     private Setitemsandinventory setitemsandinventory;
     private Convertstatics convertstatics = new Convertstatics();
 
+    [SerializeField] private GameObject difficultyui;
+
     public Color selectedcolor;
     public Color notselectedcolor;
 
@@ -114,9 +116,15 @@ public class Startmenucontroller : MonoBehaviour
         Slotvaluesarray.slotdate[slot] = convertstatics.gamesavedate;
         Slotvaluesarray.slottime[slot] = convertstatics.gamesavetime;
     }
-    public void newgame()
+    public void opendifficultyui()
     {
         menusoundcontroller.playmenubuttonsound();
+        difficultyui.SetActive(true);
+    }
+    public void newgame(int difficulty)
+    {
+        menusoundcontroller.playmenubuttonsound();
+        Statics.difficulty = difficulty;
         Statics.currentgameslot = -1;             //damit bei new game nichts geladen wird
         Statics.currentfirstchar = 0;
         Statics.currentsecondchar = 1;

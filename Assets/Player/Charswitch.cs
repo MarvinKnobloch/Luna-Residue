@@ -87,7 +87,6 @@ public class Charswitch : MonoBehaviour
     }
     private void switchvalues()
     {
-        Statics.donttriggerenemies = true;
         Time.timeScale = Statics.normalgamespeed;
         Time.fixedDeltaTime = Statics.normaltimedelta;
         LoadCharmanager.Overallsecondchar.transform.position = LoadCharmanager.Overallmainchar.transform.position;

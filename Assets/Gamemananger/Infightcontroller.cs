@@ -89,6 +89,7 @@ public class Infightcontroller : MonoBehaviour
     }
     IEnumerator firstenemyspezialcd()
     {
+        Debug.Log(Statics.currentenemyspecialcd);
         int firstcd = UnityEngine.Random.Range(3, (int)Statics.currentenemyspecialcd);
         yield return new WaitForSeconds(firstcd);
         instance.StartCoroutine("enemyspezialcd");

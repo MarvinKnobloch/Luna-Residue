@@ -27,7 +27,6 @@ public class Dummyspezialcontroller : MonoBehaviour
     }
     private void OnEnable()
     {
-        Statics.currentenemyspecialcd = 7;
         dummysphere.transform.position = LoadCharmanager.Overallmainchar.transform.position;
         dummysphere.SetActive(true);
         if (Statics.dash == false)

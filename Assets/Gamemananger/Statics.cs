@@ -25,7 +25,6 @@ public class Statics
     public static Quaternion gameoverrota;
     public static float gameovercam;
     public static int aftergameovermusic;
-    public static bool donttriggerenemies;
     public static bool somethingisopen;
 
     public static bool elementalmenuunlocked;
@@ -125,12 +124,16 @@ public class Statics
     public static int infightresurrectcd;                           //wird im infightcontroller zurückgesetzt
     public static bool supportcanresurrect;
 
-    //enemy
-    public static float enemyspecialcd = 14;
-    public static float currentenemyspecialcd = 14;                 //wird in enemypatrol gesetzt und in enemyhp(wenn der gegner stirbt) wieder abgezogen
-    public static float enemydebufftime = 8;
+    //difficultyvalues
+    public static int difficulty;
     public static float enemydmgmultiplier = 1.5f;
+    public static float enemyspecialcd = 14;
     public static int enemyspezialdmgbonus = 5;
+    public static float enemyhealthpercantageadded = 0.1f;
+
+    //enemy
+    public static float currentenemyspecialcd;                 //wird in enemypatrol gesetzt und in enemyhp(wenn der gegner stirbt) wieder abgezogen
+    public static float enemydebufftime = 8;
     public static float currentenemyspeziallvl;
 
     public static float dazecounter;

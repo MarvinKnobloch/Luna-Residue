@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using System;
 
 public class Enemysizetutorial : MonoBehaviour
 {
@@ -19,6 +19,8 @@ public class Enemysizetutorial : MonoBehaviour
     private float movetimer;
 
     private bool readinputs;
+
+    [NonSerialized] public float savetutroialenemyspezialcd;
 
     [SerializeField] private EnemyHP enemyHP;
     private void Start()
@@ -55,6 +57,8 @@ public class Enemysizetutorial : MonoBehaviour
     {
         if (other.gameObject == LoadCharmanager.Overallmainchar && tutorialcomplete == false)
         {
+            savetutroialenemyspezialcd = Statics.enemyspecialcd;
+            Statics.enemyspecialcd = 7;
             tutorialcomplete = true;
             tutorialcontroller.onenter();
             textindex = 0;
@@ -64,22 +68,22 @@ public class Enemysizetutorial : MonoBehaviour
     }
     private void showtext()
     {
-        if (textindex == 0) tutorialcontroller.tutorialtext.text = "On the left, of the enemy health bar, there is a letter and number.";
-        else if (textindex == 1) tutorialcontroller.tutorialtext.text = "The number displays the enemy level, the letter shows the type. " +
+        if (textindex == 0) tutorialcontroller.tutorialtext.text = "On the left of the enemy health bar there is a letter and number.";
+        else if (textindex == 1) tutorialcontroller.tutorialtext.text = "The number displays the enemy level and the letter shows the type of size. " +
                                                                         "<color=green>S</color>(<color=green>small</color>), <color=green>M</color>(<color=green>medium</color>" +
                                                                         ") or <color=green>B</color>(<color=green>Big</color>).";
-        else if (textindex == 2) tutorialcontroller.tutorialtext.text = "Depeding on these types, your " + "<color=green>" + "down" + "</color>" + ", " + "<color=green>" + "mid " + "</color>" +
+        else if (textindex == 2) tutorialcontroller.tutorialtext.text = "Depending on these types, your " + "<color=green>" + "down" + "</color>" + ", " + "<color=green>" + "mid " + "</color>" +
                                                                          "or " + "<color=green>" + "up " + "</color>" + "attack at the end of your " + "<color=green>" + "attackchain" + "</color>" +
                                                                          " will result in different damage.";
-        else if (textindex == 3) tutorialcontroller.tutorialtext.text = "For example: Hitting a " + "<color=green> " + "big " + "</color>" + "enemy with an " + "<color=green>" + "down " + "</color>" +
+        else if (textindex == 3) tutorialcontroller.tutorialtext.text = "For example: Hitting a " + "<color=green>" + "big " + "</color>" + "enemy with an " + "<color=green>" + "down " + "</color>" +
                                                                         "attack will deal " + "<color=green>" + "100% " + "</color>" + "damage.";
         else if (textindex == 4) tutorialcontroller.tutorialtext.text = "Hitting the weak spot with an " + "<color=green>" + "mid " + "</color>" + "attack, will deal " + "<color=green>" + "85% " + "</color>" + "damage. " +
                                                                         "However, this will increase the damage dealt with an " + "<color=green>" + "up " + "</color>" + "attack to " + "<color=green>" + "150% " + "</color>" +
                                                                         "instead of " + "<color=green>" + "50% " + "</color>" + ".";
-        else if (textindex == 5) tutorialcontroller.tutorialtext.text = "A blue bar, beneath the enemy health bar, will show how long the weak spot is exposed.";
-        else if (textindex == 6) tutorialcontroller.tutorialtext.text = "The yellow bar displays, when the weak spot can be triggered again.";
-        else if (textindex == 7) tutorialcontroller.tutorialtext.text = "Also your " + "<color=green>" + "critchance " + "</color>" + "against this enemy is increased meanwhile the weak spot is triggered and aslong as " +
-                                                                        "the weak point trigger refreshs.";
+        else if (textindex == 5) tutorialcontroller.tutorialtext.text = "A blue bar beneath the enemy health bar will show how long the weak spot is exposed.";
+        else if (textindex == 6) tutorialcontroller.tutorialtext.text = "The yellow bar will display whether the weak spot can be triggered again.";
+        else if (textindex == 7) tutorialcontroller.tutorialtext.text = "Also your " + "<color=green>" + "critchance " + "</color>" + "against this enemy is increased while the weak spot is exposed and as long as " +
+                                                                        "the weak point trigger refreshes.";
         else if (textindex == 8) tutorialcontroller.tutorialtext.text = "Try to trigger the weakspot of the dummy to continue the tutorial.";
     }
     private void endtutorial()

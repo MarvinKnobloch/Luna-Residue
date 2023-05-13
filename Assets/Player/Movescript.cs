@@ -204,14 +204,6 @@ public class Movescript : MonoBehaviour
         attackonceair = true;
         Charprefabarrow.SetActive(false);
         currentstate = null;
-        StartCoroutine(triggerenemiesdisable());                              //wird beim charswitch = true
-    }
-
-    IEnumerator triggerenemiesdisable()
-    {
-        float waitframes = Time.deltaTime * 5;
-        yield return new WaitForSeconds(waitframes);
-        Statics.donttriggerenemies = false;
     }
     private void Update()
     {

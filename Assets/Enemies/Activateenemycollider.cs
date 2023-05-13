@@ -6,9 +6,9 @@ public class Activateenemycollider : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == LoadCharmanager.Overallmainchar && Statics.donttriggerenemies == false)
+        if (other.gameObject == LoadCharmanager.triggercollider)
         {
-            foreach(Transform obj in gameObject.transform)
+            foreach (Transform obj in gameObject.transform)
             {
                 obj.gameObject.SetActive(true);
             }
@@ -16,12 +16,19 @@ public class Activateenemycollider : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == LoadCharmanager.Overallmainchar && Statics.donttriggerenemies == false)
+        if (other.gameObject == LoadCharmanager.triggercollider)
         {
             foreach (Transform obj in gameObject.transform)
             {
                 obj.gameObject.SetActive(false);
             }
         }
+        /*if (other.gameObject == LoadCharmanager.Overallmainchar && Statics.donttriggerenemies == false)
+        {
+            foreach (Transform obj in gameObject.transform)
+            {
+                obj.gameObject.SetActive(false);
+            }
+        }*/
     }
 }

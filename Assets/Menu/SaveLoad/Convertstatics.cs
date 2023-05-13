@@ -15,6 +15,8 @@ public class Convertstatics
 
     public int currentzonemusicint;
 
+    public int  difficulty;
+
     public int firstchar;
     public int secondchar;
     public int thirdchar;
@@ -78,6 +80,8 @@ public class Convertstatics
         gamesavetime = System.DateTime.UtcNow.ToString("HH:mm");
 
         currentzonemusicint = Statics.currentzonemusicint;
+       
+        difficulty = Statics.difficulty;
 
         charcurrentlvl = Statics.charcurrentlvl;
         charcurrentexp = Statics.charcurrentexp;
@@ -155,6 +159,8 @@ public class Convertstatics
         charrequiredexp = Statics.charrequiredexp;
 
         Statics.currentzonemusicint = currentzonemusicint;
+
+        Statics.difficulty = difficulty;
 
         Statics.currentactiveplayer = 0;
         Statics.currentfirstchar = firstchar;

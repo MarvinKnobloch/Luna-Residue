@@ -11,14 +11,14 @@ public class Activatebarcollider : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == LoadCharmanager.Overallmainchar.gameObject)
+        if(other.gameObject == LoadCharmanager.triggercollider)
         {
             enemyhpscript.addtocanvas();
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == LoadCharmanager.Overallmainchar.gameObject)
+        if (other.gameObject == LoadCharmanager.triggercollider)
         {
             enemyhpscript.removefromcanvas();
         }

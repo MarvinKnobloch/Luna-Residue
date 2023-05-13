@@ -71,7 +71,7 @@ public class EnemyHP : MonoBehaviour
         enemyname = enemyvalues.enemyname;
         enemylvl = enemyvalues.enemylvl + addenemylvl;
         sizeofenemy = enemyvalues.enemysize;
-        maxhealth = Mathf.Round(enemyvalues.basehealth + (enemyvalues.basehealth / 10 * enemylvl));
+        maxhealth = Mathf.Round(enemyvalues.basehealth + (enemyvalues.basehealth * Statics.enemyhealthpercantageadded * enemylvl));
         if(enemymovement != null) enemymovement.basedmg = Globalplayercalculations.calculateenemydmg(enemyvalues.basedmg, enemylvl);
         enemyfocusbargameobject = enemyfocusdebuffbar.transform.parent.gameObject;
 

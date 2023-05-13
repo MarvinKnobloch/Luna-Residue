@@ -19,6 +19,8 @@ public class LoadCharmanager : MonoBehaviour
     public GameObject[] allcharacters;
     public static GameObject Overallmainchar;
     public static GameObject Overallsecondchar;
+    [SerializeField] private GameObject triggercolliderobj;
+    public static GameObject triggercollider;
     public GameObject[] teammates;
     public static GameObject Overallthirdchar;
     public static GameObject Overallforthchar;
@@ -43,7 +45,9 @@ public class LoadCharmanager : MonoBehaviour
         expmanager = GetComponent<Expmanager>();
         uiactionscontroller = GetComponent<Uiactionscontroller>();
         Steuerung = Keybindinputmanager.inputActions;
+        triggercollider = triggercolliderobj;
         cantsavehere = false;
+        setdifficulty();
     }
 
     private void OnEnable()
@@ -90,7 +94,6 @@ public class LoadCharmanager : MonoBehaviour
                     {
                         mates.gameObject.SetActive(false);
                     }
-                    Statics.donttriggerenemies = true;
                     gameispaused = true;
                     Time.timeScale = 0f;
                     Cam1.gameObject.SetActive(false);
@@ -268,5 +271,33 @@ public class LoadCharmanager : MonoBehaviour
                 }
             }
         }
+    }
+    private void setdifficulty()
+    {
+        if (Statics.difficulty == 0) easydifficulty();
+        else if (Statics.difficulty == 1) normaldifficulty();
+        else harddifficulty();
+    }
+    public void easydifficulty()
+    {
+        Statics.difficulty = 0;
+        Statics.enemydmgmultiplier = 1.3f;
+        Statics.enemyspecialcd = 16;
+        Statics.enemyspezialdmgbonus = 3;
+        Statics.enemyhealthpercantageadded = 0.06f;
+    }
+    public void normaldifficulty()
+    {
+        Statics.enemydmgmultiplier = 1.4f;
+        Statics.enemyspecialcd = 15;
+        Statics.enemyspezialdmgbonus = 4;
+        Statics.enemyhealthpercantageadded = 0.08f;
+    }
+    public void harddifficulty()
+    {
+        Statics.enemydmgmultiplier = 1.5f;
+        Statics.enemyspecialcd = 14;
+        Statics.enemyspezialdmgbonus = 5;
+        Statics.enemyhealthpercantageadded = 0.1f;
     }
 }

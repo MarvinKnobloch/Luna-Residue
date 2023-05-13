@@ -7,14 +7,14 @@ public class Disableobjects : MonoBehaviour
     public GameObject Object;
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == LoadCharmanager.Overallmainchar && Statics.donttriggerenemies == false)
+        if(other.gameObject == LoadCharmanager.triggercollider)
         {
             Object.SetActive(true);
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == LoadCharmanager.Overallmainchar && Statics.donttriggerenemies == false)
+        if (other.gameObject == LoadCharmanager.triggercollider)
         {
             Object.SetActive(false);
         }

@@ -11,11 +11,11 @@ public class Setvsync : MonoBehaviour
     {
         if(PlayerPrefs.GetInt("Vsyncvalue") == 0)
         {
-            vsynctext.text = "Vsync off";
+            vsynctext.text = "V-Sync off";
         }
         else
         {
-            vsynctext.text = "Vsync on";
+            vsynctext.text = "V-Sync on";
         }
         selection.SetActive(false);
     }
@@ -34,14 +34,14 @@ public class Setvsync : MonoBehaviour
     {
         PlayerPrefs.SetInt("Vsyncvalue", 1);
         QualitySettings.vSyncCount = PlayerPrefs.GetInt("Vsyncvalue");
-        vsynctext.text = "Vsync on";
+        vsynctext.text = "V-Sync on";
         selection.SetActive(false);
     }
     public void vsyncoff()
     {
         PlayerPrefs.SetInt("Vsyncvalue", 0);
         QualitySettings.vSyncCount = PlayerPrefs.GetInt("Vsyncvalue");
-        vsynctext.text = "Vsync off";
+        vsynctext.text = "V-Sync off";
         selection.SetActive(false);
     }
 }

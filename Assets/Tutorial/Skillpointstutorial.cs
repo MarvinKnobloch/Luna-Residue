@@ -6,6 +6,7 @@ public class Skillpointstutorial : MonoBehaviour
 {
     private SpielerSteu controlls;
 
+    [SerializeField] private Enemysizetutorial enemysizetutorial;
     private Tutorialcontroller tutorialcontroller;
     private bool tutorialcomplete;
     private int textindex;
@@ -39,6 +40,7 @@ public class Skillpointstutorial : MonoBehaviour
     {
         if (other.gameObject == LoadCharmanager.Overallmainchar && tutorialcomplete == false)
         {
+            Statics.enemyspecialcd = enemysizetutorial.savetutroialenemyspezialcd;
             tutorialcomplete = true;
             tutorialcontroller.onenter();
             textindex = 0;
@@ -48,12 +50,12 @@ public class Skillpointstutorial : MonoBehaviour
     }
     private void showtext()
     {
-        if (textindex == 0) tutorialcontroller.tutorialtext.text = "Each level up you gain 1 skillpoint. To use these skillpoints, open the menu(" + "<color=green>" + "ESC" + "</color>" + ") and click on skilltree.";
+        if (textindex == 0) tutorialcontroller.tutorialtext.text = "Each levelup you gain 1 skillpoint. To use these skillpoints, open the menu(" + "<color=green>" + "ESC" + "</color>" + ") and click on skilltree.";
         else if (textindex == 1) tutorialcontroller.tutorialtext.text = "Each Character got his own skilltree and there is no limitation on switching these points.";
-        else if (textindex == 2) tutorialcontroller.tutorialtext.text = "Health increase the hitpoints and healing done by this character.";
-        else if (textindex == 3) tutorialcontroller.tutorialtext.text = "Defense reduce the damage taken. " + Statics.defenseconvertedtoattack + "% off the characters defense will converted to attackdamage.";
+        else if (textindex == 2) tutorialcontroller.tutorialtext.text = "Health increases the hitpoints and healing done by this character.";
+        else if (textindex == 3) tutorialcontroller.tutorialtext.text = "Defense reduces the damage taken. " + Statics.defenseconvertedtoattack + "% of the characters defense will be converted to Attack Damage.";
         else if (textindex == 4) tutorialcontroller.tutorialtext.text = "Attack increases damage.";
-        else if (textindex == 5) tutorialcontroller.tutorialtext.text = "Critchance and critdmg increases the amount of critical strikes and there damage.";
+        else if (textindex == 5) tutorialcontroller.tutorialtext.text = "Critchance and critdmg increases the amount of critical strikes and their damage.";
         else if (textindex == 6) tutorialcontroller.tutorialtext.text = "Weaponswitch increases the damagebuff and buff duration after switching a weapon.";
         else if (textindex == 7) tutorialcontroller.tutorialtext.text = "Charswitch increases the damagebuff and buff duration after switching the character.";
         else if (textindex == 8) tutorialcontroller.tutorialtext.text = "Basic increases the damage done by the last attack of your attackchain and the critchance granted from hitting the enemy weak spot.";

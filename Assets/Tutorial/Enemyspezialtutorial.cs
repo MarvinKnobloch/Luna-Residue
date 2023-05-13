@@ -11,6 +11,8 @@ public class Enemyspezialtutorial : MonoBehaviour
     private int textindex;
 
     private bool readinputs;
+
+    // Statics.enemyspecialcd wird um sizetutorial schon umgestellt und im skillpointtutorial wieder zurückgesetzt
     private void Start()
     {
         tutorialcontroller = GetComponentInParent<Tutorialcontroller>();
@@ -22,7 +24,7 @@ public class Enemyspezialtutorial : MonoBehaviour
     {
         if (readinputs == true && controlls.Menusteuerung.F1.WasPressedThisFrame())
         {
-            if (textindex != 1)
+            if (textindex != 3)
             {
                 tutorialcontroller.tutorialtext.text = string.Empty;
                 textindex++;
@@ -47,8 +49,10 @@ public class Enemyspezialtutorial : MonoBehaviour
     }
     private void showtext()
     {
-        if (textindex == 0) tutorialcontroller.tutorialtext.text = "Each enemy has a different spezialattack.";
-        else if (textindex == 1) tutorialcontroller.tutorialtext.text = "Avoid the dummies spezialattack to continue the tutorial.";
+        if (textindex == 0) tutorialcontroller.tutorialtext.text = "Each enemy has a different Special Attack.";
+        else if (textindex == 1) tutorialcontroller.tutorialtext.text = "The dummy will stun you and spawn a damagearea on your postion";
+        else if (textindex == 2) tutorialcontroller.tutorialtext.text = "Button mash to get out of the stun and then leave the area";
+        else if (textindex == 3) tutorialcontroller.tutorialtext.text = "Avoid the dummies spezialattack to continue the tutorial.";
     }
     private void endtutorial()
     {

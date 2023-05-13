@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class Loadmenucontroller : MonoBehaviour
 {
-    private SpielerSteu steuerung;
+    private SpielerSteu controlls;
     [SerializeField] private GameObject menuobj;
     [SerializeField] private GameObject commitloadobj;
     [SerializeField] private TextMeshProUGUI[] slotempty;
@@ -18,23 +18,23 @@ public class Loadmenucontroller : MonoBehaviour
 
     private void Awake()
     {
-        steuerung = Keybindinputmanager.inputActions;
+        controlls = Keybindinputmanager.inputActions;
     }
     private void OnEnable()
     {
-        steuerung.Enable();
+        controlls.Enable();
         commitloadobj.SetActive(false);
         setslots();
     }
     private void Update()
     {
-        if (steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame() && commitloadobj.activeSelf == false)
+        if (controlls.Menusteuerung.Menuesc.WasPerformedThisFrame() && commitloadobj.activeSelf == false)
         {
             menusoundcontroller.playmenubuttonsound();
             menuobj.SetActive(true);
             gameObject.SetActive(false);
         }
-        if (steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame() && commitloadobj.activeSelf == true)
+        if (controlls.Menusteuerung.Menuesc.WasPerformedThisFrame() && commitloadobj.activeSelf == true)
         {         
             closecommitload();
         }
