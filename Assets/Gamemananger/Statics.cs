@@ -130,6 +130,7 @@ public class Statics
     public static float enemyspecialcd = 14;
     public static int enemyspezialdmgbonus = 5;
     public static float enemyhealthpercantageadded = 0.1f;
+    public static float enemybasicminusattackdmg = 0;
 
     //enemy
     public static float currentenemyspecialcd;                 //wird in enemypatrol gesetzt und in enemyhp(wenn der gegner stirbt) wieder abgezogen

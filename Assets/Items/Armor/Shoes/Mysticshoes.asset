@@ -15,7 +15,7 @@ MonoBehaviour:
   Uisprite: {fileID: 21300000, guid: e420c5bc93cb2604695a893500c897e3, type: 3}
   type: 8
   itemid: 1
-  itemname: Mysticshoes
+  itemname: Mystic Boots
   inventoryslot: 1
   itemshopcosts: 89
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}

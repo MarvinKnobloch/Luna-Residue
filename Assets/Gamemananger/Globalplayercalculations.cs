@@ -46,7 +46,7 @@ public class Globalplayercalculations
     public static float calculateenemydmg(float basedmg, int enemylvl)
     {
         float dmg;
-        dmg = Mathf.Round(basedmg + (enemylvl * Statics.enemydmgmultiplier));
+        dmg = Mathf.Round(basedmg - Statics.enemybasicminusattackdmg + (enemylvl * Statics.enemydmgmultiplier));
         return dmg;
     }
 }

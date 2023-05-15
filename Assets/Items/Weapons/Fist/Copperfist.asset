@@ -15,7 +15,7 @@ MonoBehaviour:
   Uisprite: {fileID: 21300000, guid: d4f5634edede200468fc1ccf30e6f3a1, type: 3}
   type: 3
   itemid: 3
-  itemname: Cooperfist
+  itemname: Cooper Fists
   inventoryslot: 0
   itemshopcosts: 500
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}

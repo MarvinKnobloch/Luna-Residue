@@ -15,8 +15,8 @@ MonoBehaviour:
   Uisprite: {fileID: 21300000, guid: e420c5bc93cb2604695a893500c897e3, type: 3}
   type: 8
   itemid: 2
-  itemname: Basicshoes
-  inventoryslot: 2
+  itemname: Basic Boots
+  inventoryslot: 0
   itemshopcosts: 130
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 

@@ -15,8 +15,8 @@ MonoBehaviour:
   Uisprite: {fileID: 21300000, guid: 970324311431c794ca338446ea889948, type: 3}
   type: 10
   itemid: 4
-  itemname: Silverring
-  inventoryslot: 4
+  itemname: Silver Ring
+  inventoryslot: 0
   itemshopcosts: 1070
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 

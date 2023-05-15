@@ -15,8 +15,8 @@ MonoBehaviour:
   Uisprite: {fileID: 21300000, guid: fd6e4fc32c78509458fc45ea4a478ba8, type: 3}
   type: 4
   itemid: 3
-  itemname: Copperhead
-  inventoryslot: 3
+  itemname: Coppe Helmet
+  inventoryslot: 0
   itemshopcosts: 257
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 

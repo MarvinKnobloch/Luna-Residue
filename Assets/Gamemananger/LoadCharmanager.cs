@@ -285,6 +285,7 @@ public class LoadCharmanager : MonoBehaviour
         Statics.enemyspecialcd = 16;
         Statics.enemyspezialdmgbonus = 3;
         Statics.enemyhealthpercantageadded = 0.06f;
+        Statics.enemybasicminusattackdmg = 2;
     }
     public void normaldifficulty()
     {
@@ -292,6 +293,7 @@ public class LoadCharmanager : MonoBehaviour
         Statics.enemyspecialcd = 15;
         Statics.enemyspezialdmgbonus = 4;
         Statics.enemyhealthpercantageadded = 0.08f;
+        Statics.enemybasicminusattackdmg = 1;
     }
     public void harddifficulty()
     {
@@ -299,5 +301,6 @@ public class LoadCharmanager : MonoBehaviour
         Statics.enemyspecialcd = 14;
         Statics.enemyspezialdmgbonus = 5;
         Statics.enemyhealthpercantageadded = 0.1f;
+        Statics.enemybasicminusattackdmg = 0;
     }
 }

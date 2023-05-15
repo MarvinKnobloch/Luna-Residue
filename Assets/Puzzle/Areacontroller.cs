@@ -57,7 +57,7 @@ public class Areacontroller : MonoBehaviour
         }
         for (int i = 0; i <  areaobjectcontroller.setenemychests.Length; i++)
         {
-            areaobjectcontroller.setenemychests[i].GetComponent<Chestreward>().areachestnumber = i;
+            areaobjectcontroller.setenemychests[i].GetComponent<Chestinterface>().setareachestnumber(i);
         }
         for (int i = 0; i < areaobjectcontroller.settutorialnumber.Length; i++)
         {

@@ -15,12 +15,12 @@ MonoBehaviour:
   Uisprite: {fileID: 21300000, guid: b8fb302c5768e334ca82005f50e58121, type: 3}
   type: 7
   itemid: 4
-  itemname: Silverlegs
-  inventoryslot: 4
+  itemname: Silver Legs
+  inventoryslot: 0
   itemshopcosts: 1080
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
-  upgradelvl: 1
+  upgradelvl: 0
   maxupgradelvl: 1
   itemlvl:
   - stats:

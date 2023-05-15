@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Chestreward : MonoBehaviour, Rewardinterface, Interactioninterface
+public class Chestreward : MonoBehaviour, Rewardinterface, Interactioninterface, Chestinterface
 {
     [SerializeField] private Areacontroller areacontroller;
     [SerializeField] private GameObject closedchest;
@@ -17,6 +17,7 @@ public class Chestreward : MonoBehaviour, Rewardinterface, Interactioninterface
     private string chestopen = "Open Chest";
     private string cheststatetext;
     public string Interactiontext => cheststatetext;
+
 
     private void OnEnable()
     {
@@ -51,6 +52,10 @@ public class Chestreward : MonoBehaviour, Rewardinterface, Interactioninterface
             cheststatetext = chestlocked;
             openchest.SetActive(false);
         }
+    }
+    public void setareachestnumber(int number)
+    {
+        areachestnumber = number;
     }
     public void addrewardcount()
     {

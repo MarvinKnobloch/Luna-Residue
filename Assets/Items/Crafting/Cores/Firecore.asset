@@ -15,13 +15,11 @@ MonoBehaviour:
   Uisprite: {fileID: 0}
   type: 0
   itemid: 7
-  itemname: Firecore
+  itemname: Fire Core
   inventoryslot: 0
   itemshopcosts: 0
   seconditem: {fileID: 0}
   description: 
-  basestats: []
-  stats: []
   upgradelvl: 0
   maxupgradelvl: 0
-  upgrades: []
+  itemlvl: []

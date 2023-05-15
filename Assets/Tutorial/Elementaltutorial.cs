@@ -10,9 +10,7 @@ public class Elementaltutorial : MonoBehaviour
     private int textindex;
 
     private bool readinputs;
-
-    [SerializeField] private GameObject elementalstonechest;
-    private void Start()
+    private void Awake()
     {
         tutorialcontroller = GetComponentInParent<Tutorialcontroller>();
         controlls = Keybindinputmanager.inputActions;
@@ -38,9 +36,10 @@ public class Elementaltutorial : MonoBehaviour
             }
         }
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnEnable()
     {
-        if (other.gameObject == LoadCharmanager.Overallmainchar && Statics.elementalmenuunlocked == false)
+        controlls.Enable();
+        if (Statics.elementalmenuunlocked == false)
         {
             tutorialcontroller.onenter();
             textindex = 0;
@@ -69,7 +68,6 @@ public class Elementaltutorial : MonoBehaviour
     {
         Statics.elementalmenuunlocked = true;
         readinputs = false;
-        elementalstonechest.GetComponent<Rewardinterface>().addrewardcount();
         tutorialcontroller.endtutorial();
         gameObject.SetActive(false);
     }
