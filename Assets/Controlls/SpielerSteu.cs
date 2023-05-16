@@ -630,6 +630,15 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Fps"",
+                    ""type"": ""Button"",
+                    ""id"": ""5eb870da-7785-45a2-bf99-7fe038904904"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -718,6 +727,17 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""F1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b0adab15-d90b-42b7-9fb5-c68dfb662366"",
+                    ""path"": ""<Keyboard>/f8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fps"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1154,6 +1174,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         m_Menusteuerung_Menucharselectionright = m_Menusteuerung.FindAction("Menucharselectionright", throwIfNotFound: true);
         m_Menusteuerung_Space = m_Menusteuerung.FindAction("Space", throwIfNotFound: true);
         m_Menusteuerung_F1 = m_Menusteuerung.FindAction("F1", throwIfNotFound: true);
+        m_Menusteuerung_Fps = m_Menusteuerung.FindAction("Fps", throwIfNotFound: true);
         // SpielerHeal
         m_SpielerHeal = asset.FindActionMap("SpielerHeal", throwIfNotFound: true);
         m_SpielerHeal_Target1 = m_SpielerHeal.FindAction("Target1", throwIfNotFound: true);
@@ -1464,6 +1485,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
     private readonly InputAction m_Menusteuerung_Menucharselectionright;
     private readonly InputAction m_Menusteuerung_Space;
     private readonly InputAction m_Menusteuerung_F1;
+    private readonly InputAction m_Menusteuerung_Fps;
     public struct MenusteuerungActions
     {
         private @SpielerSteu m_Wrapper;
@@ -1476,6 +1498,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         public InputAction @Menucharselectionright => m_Wrapper.m_Menusteuerung_Menucharselectionright;
         public InputAction @Space => m_Wrapper.m_Menusteuerung_Space;
         public InputAction @F1 => m_Wrapper.m_Menusteuerung_F1;
+        public InputAction @Fps => m_Wrapper.m_Menusteuerung_Fps;
         public InputActionMap Get() { return m_Wrapper.m_Menusteuerung; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1509,6 +1532,9 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @F1.started -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnF1;
                 @F1.performed -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnF1;
                 @F1.canceled -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnF1;
+                @Fps.started -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnFps;
+                @Fps.performed -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnFps;
+                @Fps.canceled -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnFps;
             }
             m_Wrapper.m_MenusteuerungActionsCallbackInterface = instance;
             if (instance != null)
@@ -1537,6 +1563,9 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @F1.started += instance.OnF1;
                 @F1.performed += instance.OnF1;
                 @F1.canceled += instance.OnF1;
+                @Fps.started += instance.OnFps;
+                @Fps.performed += instance.OnFps;
+                @Fps.canceled += instance.OnFps;
             }
         }
     }
@@ -1822,6 +1851,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         void OnMenucharselectionright(InputAction.CallbackContext context);
         void OnSpace(InputAction.CallbackContext context);
         void OnF1(InputAction.CallbackContext context);
+        void OnFps(InputAction.CallbackContext context);
     }
     public interface ISpielerHealActions
     {

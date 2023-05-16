@@ -61,16 +61,35 @@ public class Supportmeleeattack
                 if (ssm.currenttarget.gameObject.GetComponent<Enemymovement>().currenttarget != ssm.gameObject)
                 {
                     Vector3 newposi = ssm.currenttarget.transform.position + ssm.currenttarget.transform.forward * -2 + ssm.currenttarget.transform.right * sideposition;
-                    if (Vector3.Distance(ssm.transform.position, newposi) > ssm.attackrangecheck)
+                    NavMeshHit hit;
+                    bool isblocked = NavMesh.Raycast(ssm.transform.position, newposi, out hit, NavMesh.AllAreas);
+                    if (isblocked == true)
                     {
-                        ismovingrotation = true;
-                        ssm.ChangeAnimationState(runstate);
-                        ssm.Meshagent.SetDestination(newposi);
+                        if (Vector3.Distance(ssm.transform.position, hit.position) > ssm.attackrangecheck)
+                        {
+                            ismovingrotation = true;
+                            ssm.ChangeAnimationState(runstate);
+                            ssm.Meshagent.SetDestination(hit.position);
+                        }
+                        else
+                        {
+                            ismovingrotation = false;
+                            ssm.ChangeAnimationState(idlestate);
+                        }
                     }
-                    else 
+                    else
                     {
-                        ismovingrotation = false;
-                        ssm.ChangeAnimationState(idlestate); 
+                        if (Vector3.Distance(ssm.transform.position, newposi) > ssm.attackrangecheck)
+                        {
+                            ismovingrotation = true;
+                            ssm.ChangeAnimationState(runstate);
+                            ssm.Meshagent.SetDestination(newposi);
+                        }
+                        else
+                        {
+                            ismovingrotation = false;
+                            ssm.ChangeAnimationState(idlestate);
+                        }
                     }
                 }
                 else

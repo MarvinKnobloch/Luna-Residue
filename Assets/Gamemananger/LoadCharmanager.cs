@@ -280,27 +280,26 @@ public class LoadCharmanager : MonoBehaviour
     }
     public void easydifficulty()
     {
-        Statics.difficulty = 0;
-        Statics.enemydmgmultiplier = 1.3f;
-        Statics.enemyspecialcd = 16;
+        Statics.enemydmgmultiplier = 1.1f;
         Statics.enemyspezialdmgbonus = 3;
-        Statics.enemyhealthpercantageadded = 0.06f;
-        Statics.enemybasicminusattackdmg = 2;
+        Statics.enemyhealthpercantageadded = 0.05f;
+        Statics.enemyspecialcd = 18;
+        Statics.enemydifficultyminusdmg = 4;
     }
     public void normaldifficulty()
     {
-        Statics.enemydmgmultiplier = 1.4f;
-        Statics.enemyspecialcd = 15;
+        Statics.enemydmgmultiplier = 1.3f;
         Statics.enemyspezialdmgbonus = 4;
-        Statics.enemyhealthpercantageadded = 0.08f;
-        Statics.enemybasicminusattackdmg = 1;
+        Statics.enemyhealthpercantageadded = 0.075f;
+        Statics.enemyspecialcd = 16;
+        Statics.enemydifficultyminusdmg = 2;
     }
     public void harddifficulty()
     {
         Statics.enemydmgmultiplier = 1.5f;
-        Statics.enemyspecialcd = 14;
         Statics.enemyspezialdmgbonus = 5;
         Statics.enemyhealthpercantageadded = 0.1f;
-        Statics.enemybasicminusattackdmg = 0;
+        Statics.enemyspecialcd = 14;
+        Statics.enemydifficultyminusdmg = 0;
     }
 }

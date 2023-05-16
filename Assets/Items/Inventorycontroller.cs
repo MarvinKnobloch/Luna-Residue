@@ -14,7 +14,7 @@ public class Inventorycontroller : ScriptableObject
         if (item.inventoryslot != 0)
         {
             matsinventory.Container.Items[item.inventoryslot - 1].amount += amount;
-            loottext = "+" + amount + " " + item.name + " (" + matsinventory.Container.Items[item.inventoryslot - 1].amount + ")";
+            loottext = "+" + amount + " " + item.itemname + " (" + matsinventory.Container.Items[item.inventoryslot - 1].amount + ")";
             LoadCharmanager.Overallmainchar.GetComponent<Displayloot>().displayloot(loottext);
         }
         else
@@ -34,12 +34,12 @@ public class Inventorycontroller : ScriptableObject
             if(seconditem.inventoryslot != 0)
             {
                 matsinventory.Container.Items[seconditem.inventoryslot - 1].amount += seconditemamount;
-                loottext = item.name + " convert to +" + seconditemamount + " " + seconditem.name + " (" + matsinventory.Container.Items[seconditem.inventoryslot - 1].amount + ")";
+                loottext = item.itemname + " convert to +" + seconditemamount + " " + seconditem.itemname + " (" + matsinventory.Container.Items[seconditem.inventoryslot - 1].amount + ")";
                 LoadCharmanager.Overallmainchar.GetComponent<Displayloot>().displayloot(loottext);
             }
             else
             {
-                loottext = item.name + " convert to +" + seconditemamount + " " + seconditem.name;
+                loottext = item.itemname + " convert to +" + seconditemamount + " " + seconditem.itemname;
                 LoadCharmanager.Overallmainchar.GetComponent<Displayloot>().displayloot(loottext);
                 setfirstitemifconverted(seconditem, seconditemamount);
             }
@@ -49,7 +49,7 @@ public class Inventorycontroller : ScriptableObject
             setfirstemptyslot(item, 1);
             if(LoadCharmanager.Overallmainchar.TryGetComponent(out Displayloot displayloot))
             {
-                displayloot.displayloot(item.name.ToString());
+                displayloot.displayloot(item.itemname.ToString());
             }
         }
     }

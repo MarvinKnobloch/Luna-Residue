@@ -40,13 +40,13 @@ public class Globalplayercalculations
     }*/
     public static float calculateenemyspezialdmg(float basedmg, float dmglevel, int amountreduction)
     {
-        float dmg = dmglevel * Statics.enemyspezialdmgbonus / amountreduction + basedmg;
+        float dmg = dmglevel * Statics.enemyspezialdmgbonus / amountreduction + (basedmg - Statics.enemydifficultyminusdmg);
         return dmg;
     }
     public static float calculateenemydmg(float basedmg, int enemylvl)
     {
         float dmg;
-        dmg = Mathf.Round(basedmg - Statics.enemybasicminusattackdmg + (enemylvl * Statics.enemydmgmultiplier));
+        dmg = Mathf.Round(basedmg - Statics.enemydifficultyminusdmg + (enemylvl * Statics.enemydmgmultiplier));
         return dmg;
     }
 }

@@ -30,7 +30,7 @@ public class Weaponinventoryui : MonoBehaviour
             {
                 _slot.Key.transform.GetComponent<Chooseweapon>().itemvalues = _slot.Value.item;
                 _slot.Key.transform.GetChild(0).GetComponent<Image>().sprite = _slot.Value.item.Uisprite;
-                _slot.Key.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.itemname;
+                _slot.Key.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.item.itemname;
             }
             else
             {

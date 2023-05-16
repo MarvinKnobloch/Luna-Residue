@@ -20,6 +20,8 @@ public class Npcdialogue : MonoBehaviour
     [SerializeField] private MonoBehaviour interactionscript;
 
     private string interactionhotkeyname;
+    private int currenttextindex;
+    private string tempanimatedtext;
 
     private void Awake()
     {
@@ -48,7 +50,7 @@ public class Npcdialogue : MonoBehaviour
     }
     private void Update()
     {
-        if (controlls.Menusteuerung.Leftclick.WasPressedThisFrame())
+        if (controlls.Player.Interaction.WasPressedThisFrame())
         {
             if(dialogueindex < dialogue.Length - 1)
             {
@@ -78,11 +80,20 @@ public class Npcdialogue : MonoBehaviour
     }
     IEnumerator startdialogue()
     {
-        foreach(char letter in dialogue[dialogueindex].ToCharArray())
+        currenttextindex = 0;
+        while (currenttextindex < dialogue[dialogueindex].Length)
+        {
+            currenttextindex++;
+            dialoguetext.text = dialogue[dialogueindex];
+            tempanimatedtext = dialoguetext.text.Insert(currenttextindex, "<color=#00000000>");
+            dialoguetext.text = tempanimatedtext;
+            yield return new WaitForSeconds(Statics.dialoguetextspeed);
+        }
+        /*foreach (char letter in dialogue[dialogueindex].ToCharArray())
         {
             dialoguetext.text += letter;
             yield return new WaitForSeconds(Statics.dialoguetextspeed);
-        }
+        }*/
         StopCoroutine(startdialogue());
     }
     private void startinteraction()

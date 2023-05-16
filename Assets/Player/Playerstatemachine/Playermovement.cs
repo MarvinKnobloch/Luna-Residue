@@ -39,7 +39,10 @@ public class Playermovement
                 psm.charactercontroller.Move(psm.velocity * Time.deltaTime);
             }
         }
-        else psm.switchtoairstate();
+        else 
+        {
+            psm.switchtoairstate();
+        }
     }
     public void healgroundcheck()
     {

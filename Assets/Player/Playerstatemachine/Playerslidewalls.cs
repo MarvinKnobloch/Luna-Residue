@@ -9,7 +9,7 @@ public class Playerslidewalls
     const string fallstate = "Fall";
     public void slidewalls()
     {
-        if (Physics.SphereCast(psm.spherecastcollider.bounds.center, psm.spherecastcollider.radius, Vector3.down, out RaycastHit groundhit, 1.1f, psm.groundchecklayer))
+        if (Physics.SphereCast(psm.spherecastcollider.bounds.center, psm.spherecastcollider.radius, Vector3.down, out RaycastHit groundhit, 1.2f, psm.groundchecklayer))
         {
             float grav = Physics.gravity.y * psm.gravitation;
             psm.graviti += grav * Time.deltaTime;

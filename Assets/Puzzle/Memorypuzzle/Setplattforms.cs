@@ -42,6 +42,10 @@ namespace setplattforms
             {
                 form.gameObject.GetComponent<Renderer>().material.color = Color.black;
             }
+            foreach (GameObject form in currentplattforms)
+            {
+                form.gameObject.GetComponent<Renderer>().material.color = Color.black;
+            }
             StartCoroutine(showplattforms());
             return true;
         }

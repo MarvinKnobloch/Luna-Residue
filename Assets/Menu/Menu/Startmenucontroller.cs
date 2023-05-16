@@ -16,6 +16,7 @@ public class Startmenucontroller : MonoBehaviour
     private Convertstatics convertstatics = new Convertstatics();
 
     [SerializeField] private GameObject difficultyui;
+    [SerializeField] private GameObject fpscounter;
 
     public Color selectedcolor;
     public Color notselectedcolor;
@@ -53,6 +54,7 @@ public class Startmenucontroller : MonoBehaviour
             setvolume(musicvolume, 0);
             setvolume(soundeffecsvolume, 10);
         }
+        fpscounter.SetActive(true);
     }
     private void setvolume(string volumename, float maxdb)
     {

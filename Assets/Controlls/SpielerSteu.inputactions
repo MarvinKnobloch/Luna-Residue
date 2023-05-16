@@ -608,6 +608,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Fps",
+                    "type": "Button",
+                    "id": "5eb870da-7785-45a2-bf99-7fe038904904",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -696,6 +705,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "F1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b0adab15-d90b-42b7-9fb5-c68dfb662366",
+                    "path": "<Keyboard>/f8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fps",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

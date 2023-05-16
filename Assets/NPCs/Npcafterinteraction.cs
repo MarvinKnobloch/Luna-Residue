@@ -29,7 +29,7 @@ public class Npcafterinteraction : MonoBehaviour
 
     private void Update()
     {
-        if (controlls.Menusteuerung.Leftclick.WasPressedThisFrame())
+        if (controlls.Player.Interaction.WasPressedThisFrame())
         {
             if (dialogueindex < dialogue.Length - 1)
             {

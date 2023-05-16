@@ -15,8 +15,8 @@ MonoBehaviour:
   Uisprite: {fileID: 0}
   type: 0
   itemid: 9
-  itemname: Nature Coree
-  inventoryslot: 3
+  itemname: Nature Core
+  inventoryslot: 8
   itemshopcosts: 0
   seconditem: {fileID: 0}
   description: 

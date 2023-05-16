@@ -31,7 +31,7 @@ public class Armorinventoryui : MonoBehaviour
                 _slot.Key.transform.GetComponent<Chooseitem>().itemvalues = _slot.Value.item;
 
                 _slot.Key.transform.GetChild(0).GetComponent<Image>().sprite = _slot.Value.item.Uisprite;
-                _slot.Key.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.itemname;
+                _slot.Key.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.item.itemname;
                 _slot.Key.transform.GetChild(2).gameObject.SetActive(true);
                 _slot.Key.transform.GetChild(3).gameObject.SetActive(true);
                 _slot.Key.transform.GetChild(3).GetComponentInChildren<Text>().text = _slot.Value.item.upgradelvl.ToString();
