@@ -61,7 +61,7 @@ public class Elementaltutorial : MonoBehaviour
                                                                         "and " + "<color=green>" + "Guard" + "</color>" + ".";
         else if (textindex == 6) tutorialcontroller.tutorialtext.text = "Fight: The character deals increased damage.";
         else if (textindex == 7) tutorialcontroller.tutorialtext.text = "Heal: Grants a healbonus and add the ability to cast a group heal and ressurect.";
-        else if (textindex == 8) tutorialcontroller.tutorialtext.text = "Guard: Will add some bonus HP and reduce the damage taken. It also increases threat on enemies.";       
+        else if (textindex == 8) tutorialcontroller.tutorialtext.text = "Guard: Will add some bonus health and reduce the damage taken. It also increases threat on enemies.";       
    
     }
     private void endtutorial()

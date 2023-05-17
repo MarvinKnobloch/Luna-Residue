@@ -617,6 +617,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Switchmovespeed",
+                    "type": "Button",
+                    "id": "8b823495-77c6-451e-8e5b-ab4e09824ce1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Unlockfasttravel",
+                    "type": "Button",
+                    "id": "ce534e19-bcb1-4f5a-afde-1092e7fa1329",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -716,6 +734,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Fps",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a2c1fef8-69cb-4830-8e98-c76bb462cb0d",
+                    "path": "<Keyboard>/f4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switchmovespeed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "caabb5b9-a8ed-4ad7-bce3-609763072ffb",
+                    "path": "<Keyboard>/f9",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Unlockfasttravel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

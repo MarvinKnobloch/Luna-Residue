@@ -214,6 +214,7 @@ public class Movescript : MonoBehaviour
             {
                 default:
                 case State.Ground:
+                    switchmovespeed();
                     playermovement.movement();
                     playermovement.groundcheck();
                     playermovement.groundanimations();
@@ -410,6 +411,20 @@ public class Movescript : MonoBehaviour
             Statics.resetvaluesondeathorstun = true;
         }
     }
+    public void switchtobuttonmashstun(int buttonmashcount)
+    {
+        if (playerhp.playerisdead == false)
+        {
+            Statics.dash = true;
+            Statics.resetvaluesondeathorstun = true;
+            Statics.dazecounter = 0;
+            Statics.dazekicksneeded = buttonmashcount;
+            ChangeAnimationStateInstant(dazestate);
+            state = State.Buttonmashstun;
+            dazeimage.SetActive(true);
+            dazeimage.GetComponentInChildren<Text>().text = "Mash " + buttonmashhotkey.GetBindingDisplayString();
+        }
+    }
     public void switchtodead()
     {
         state = State.Dead;
@@ -435,6 +450,7 @@ public class Movescript : MonoBehaviour
         playeraim.activateaimcam();
         StartCoroutine(cam2recenteringdisable());
     }
+
     IEnumerator cam2recenteringdisable()                     //damit die cam2 bei aktivierung mit cam1 gleich gesetzt wird. Wenn Recentering aktiviert wird passt sich die 2. Cam sofort der rotation des spielers an.
     {                                                        //die rotation des spielers ist beim wechsel der Kamera die richtung des Kamerabrains(der Char dreht sich richtung Kamera)
         yield return new WaitForSeconds(0.2f);               //wenn Recentering nicht aktviert ist dreht die der Char nach dem wechsel sofort richtung 2. Cam die noch nicht die richtig position hat 
@@ -461,20 +477,7 @@ public class Movescript : MonoBehaviour
     }
     private void bowoutofcombatfullcharged() => playerbow.arrowfullcharge();
     private void bowoutofcombatnextarrow() => playerbow.nextarrow();
-    public void switchtobuttonmashstun(int buttonmashcount)
-    {
-        if(playerhp.playerisdead == false)
-        {
-            Statics.dash = true;
-            Statics.resetvaluesondeathorstun = true;
-            Statics.dazecounter = 0;
-            Statics.dazekicksneeded = buttonmashcount;
-            ChangeAnimationStateInstant(dazestate);
-            state = State.Buttonmashstun;
-            dazeimage.SetActive(true);
-            dazeimage.GetComponentInChildren<Text>().text = "Spam " + buttonmashhotkey.GetBindingDisplayString();
-        }
-    }
+
     public void activatedmgtext(GameObject enemyhit, float dmg)
     {
         var showtext = Instantiate(damagetext, enemyhit.transform.position, Quaternion.identity);
@@ -504,7 +507,15 @@ public class Movescript : MonoBehaviour
     private void playfootstep2() => playersounds.playfootstep2();
     private void playdashsound() => playersounds.playdash();
 
-
+    private void switchmovespeed()
+    {
+        if (controlls.Menusteuerung.Switchmovespeed.WasPerformedThisFrame())
+        {
+            if (movementspeed > 15) movementspeed = 10;
+            else movementspeed = 20;
+        }
+    }
+        
 }
 
 

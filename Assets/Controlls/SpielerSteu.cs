@@ -639,6 +639,24 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Switchmovespeed"",
+                    ""type"": ""Button"",
+                    ""id"": ""8b823495-77c6-451e-8e5b-ab4e09824ce1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Unlockfasttravel"",
+                    ""type"": ""Button"",
+                    ""id"": ""ce534e19-bcb1-4f5a-afde-1092e7fa1329"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -738,6 +756,28 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Fps"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a2c1fef8-69cb-4830-8e98-c76bb462cb0d"",
+                    ""path"": ""<Keyboard>/f4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Switchmovespeed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""caabb5b9-a8ed-4ad7-bce3-609763072ffb"",
+                    ""path"": ""<Keyboard>/f9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Unlockfasttravel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1175,6 +1215,8 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         m_Menusteuerung_Space = m_Menusteuerung.FindAction("Space", throwIfNotFound: true);
         m_Menusteuerung_F1 = m_Menusteuerung.FindAction("F1", throwIfNotFound: true);
         m_Menusteuerung_Fps = m_Menusteuerung.FindAction("Fps", throwIfNotFound: true);
+        m_Menusteuerung_Switchmovespeed = m_Menusteuerung.FindAction("Switchmovespeed", throwIfNotFound: true);
+        m_Menusteuerung_Unlockfasttravel = m_Menusteuerung.FindAction("Unlockfasttravel", throwIfNotFound: true);
         // SpielerHeal
         m_SpielerHeal = asset.FindActionMap("SpielerHeal", throwIfNotFound: true);
         m_SpielerHeal_Target1 = m_SpielerHeal.FindAction("Target1", throwIfNotFound: true);
@@ -1486,6 +1528,8 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
     private readonly InputAction m_Menusteuerung_Space;
     private readonly InputAction m_Menusteuerung_F1;
     private readonly InputAction m_Menusteuerung_Fps;
+    private readonly InputAction m_Menusteuerung_Switchmovespeed;
+    private readonly InputAction m_Menusteuerung_Unlockfasttravel;
     public struct MenusteuerungActions
     {
         private @SpielerSteu m_Wrapper;
@@ -1499,6 +1543,8 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         public InputAction @Space => m_Wrapper.m_Menusteuerung_Space;
         public InputAction @F1 => m_Wrapper.m_Menusteuerung_F1;
         public InputAction @Fps => m_Wrapper.m_Menusteuerung_Fps;
+        public InputAction @Switchmovespeed => m_Wrapper.m_Menusteuerung_Switchmovespeed;
+        public InputAction @Unlockfasttravel => m_Wrapper.m_Menusteuerung_Unlockfasttravel;
         public InputActionMap Get() { return m_Wrapper.m_Menusteuerung; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1535,6 +1581,12 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @Fps.started -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnFps;
                 @Fps.performed -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnFps;
                 @Fps.canceled -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnFps;
+                @Switchmovespeed.started -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnSwitchmovespeed;
+                @Switchmovespeed.performed -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnSwitchmovespeed;
+                @Switchmovespeed.canceled -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnSwitchmovespeed;
+                @Unlockfasttravel.started -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnUnlockfasttravel;
+                @Unlockfasttravel.performed -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnUnlockfasttravel;
+                @Unlockfasttravel.canceled -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnUnlockfasttravel;
             }
             m_Wrapper.m_MenusteuerungActionsCallbackInterface = instance;
             if (instance != null)
@@ -1566,6 +1618,12 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @Fps.started += instance.OnFps;
                 @Fps.performed += instance.OnFps;
                 @Fps.canceled += instance.OnFps;
+                @Switchmovespeed.started += instance.OnSwitchmovespeed;
+                @Switchmovespeed.performed += instance.OnSwitchmovespeed;
+                @Switchmovespeed.canceled += instance.OnSwitchmovespeed;
+                @Unlockfasttravel.started += instance.OnUnlockfasttravel;
+                @Unlockfasttravel.performed += instance.OnUnlockfasttravel;
+                @Unlockfasttravel.canceled += instance.OnUnlockfasttravel;
             }
         }
     }
@@ -1852,6 +1910,8 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         void OnSpace(InputAction.CallbackContext context);
         void OnF1(InputAction.CallbackContext context);
         void OnFps(InputAction.CallbackContext context);
+        void OnSwitchmovespeed(InputAction.CallbackContext context);
+        void OnUnlockfasttravel(InputAction.CallbackContext context);
     }
     public interface ISpielerHealActions
     {

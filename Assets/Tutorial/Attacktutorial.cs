@@ -70,12 +70,12 @@ public class Attacktutorial : MonoBehaviour
     private void showtext()
     {
         if (textindex == 0) tutorialcontroller.tutorialtext.text = "Press \"" + "<color=green>" + attack1action + "</color>" + "\" to attack.";
-        else if (textindex == 1) tutorialcontroller.tutorialtext.text = "During this attack there is a small window to press \"" + "<color=green>" + attack2action + "</color>" + "\" to continue your attackchain.";
+        else if (textindex == 1) tutorialcontroller.tutorialtext.text = "During this attack there is a small window to press \"" + "<color=green>" + attack2action + "</color>" + "\" to continue your attack combo.";
         else if (textindex == 2) tutorialcontroller.tutorialtext.text = "While performing your second attack press \"" + "<color=green>" + attack1action + "</color>" + "\" (downattack), \""
                                                                       + "<color=green>" + attack2action + "</color>" + "\" (midattack) or \"" + "<color=green>"
                                                                       + attack3action + "</color>" + "\" (upattack) to finish the chainattack.";
-        else if (textindex == 3) tutorialcontroller.tutorialtext.text = "It´s possible to perform this attackchain 2 times before you have to reset.";
-        else if (textindex == 4) tutorialcontroller.tutorialtext.text = "Complete a attackchain to continue the tutorial.";
+        else if (textindex == 3) tutorialcontroller.tutorialtext.text = "It´s possible to perform this attack combo 2 times before you have to reset.";
+        else if (textindex == 4) tutorialcontroller.tutorialtext.text = "Complete a attack combo to continue the tutorial.";
     }
     private void endtutorial()
     {

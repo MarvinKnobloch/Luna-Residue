@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
-using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Npcdialogue : MonoBehaviour
@@ -21,7 +19,7 @@ public class Npcdialogue : MonoBehaviour
 
     private string interactionhotkeyname;
     private int currenttextindex;
-    private string tempanimatedtext;
+    private string animatedtext;
 
     private void Awake()
     {
@@ -85,15 +83,10 @@ public class Npcdialogue : MonoBehaviour
         {
             currenttextindex++;
             dialoguetext.text = dialogue[dialogueindex];
-            tempanimatedtext = dialoguetext.text.Insert(currenttextindex, "<color=#00000000>");
-            dialoguetext.text = tempanimatedtext;
-            yield return new WaitForSeconds(Statics.dialoguetextspeed);
+            animatedtext = dialoguetext.text.Insert(currenttextindex, "<color=#00000000>");     //insert: der zweite wert, in der klammer, wird nach dem currentindex hinzugefügt, und danach wird der text normal beendet
+            dialoguetext.text = animatedtext;                                                   //z.b text ist hallo, Insert(2, cya) = hacyallo
+            yield return new WaitForSeconds(Statics.dialoguetextspeed);                         //in diesem fall, wird nach dem index die farbe auf null geändert, also ist der text danach unsichtbar
         }
-        /*foreach (char letter in dialogue[dialogueindex].ToCharArray())
-        {
-            dialoguetext.text += letter;
-            yield return new WaitForSeconds(Statics.dialoguetextspeed);
-        }*/
         StopCoroutine(startdialogue());
     }
     private void startinteraction()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Enemyspezialtutorial : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class Enemyspezialtutorial : MonoBehaviour
     private Tutorialcontroller tutorialcontroller;
     private bool tutorialcomplete;
     private int textindex;
+
+    private string buttonmashhotkey;
 
     private bool readinputs;
 
@@ -40,6 +43,7 @@ public class Enemyspezialtutorial : MonoBehaviour
     {
         if (other.gameObject == LoadCharmanager.Overallmainchar && tutorialcomplete == false)
         {
+            buttonmashhotkey = controlls.Player.Attack3.GetBindingDisplayString();
             tutorialcomplete = true;
             tutorialcontroller.onenter();
             textindex = 0;
@@ -49,10 +53,10 @@ public class Enemyspezialtutorial : MonoBehaviour
     }
     private void showtext()
     {
-        if (textindex == 0) tutorialcontroller.tutorialtext.text = "Each enemy has a different Special Attack.";
-        else if (textindex == 1) tutorialcontroller.tutorialtext.text = "The dummy will stun you and spawn a damagearea on your postion";
-        else if (textindex == 2) tutorialcontroller.tutorialtext.text = "Button mash to get out of the stun and then leave the area";
-        else if (textindex == 3) tutorialcontroller.tutorialtext.text = "Avoid the dummies spezialattack to continue the tutorial.";
+        if (textindex == 0) tutorialcontroller.tutorialtext.text = "Each enemy has a different special attack.";
+        else if (textindex == 1) tutorialcontroller.tutorialtext.text = "The dummy will stun you and spawn a damage area on your postion.";
+        else if (textindex == 2) tutorialcontroller.tutorialtext.text = "Button mash \"<color=green>" + buttonmashhotkey + "</color>\" to get out of the stun and then leave the damage area.";
+        else if (textindex == 3) tutorialcontroller.tutorialtext.text = "Avoid the dummies spezial attack to continue the tutorial.";
     }
     private void endtutorial()
     {

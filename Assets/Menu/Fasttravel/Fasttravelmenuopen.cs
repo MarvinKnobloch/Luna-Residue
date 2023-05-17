@@ -11,6 +11,9 @@ public class Fasttravelmenuopen : MonoBehaviour
     [SerializeField] private GameObject commitfasttravel;
 
     [SerializeField] private Menusoundcontroller menusoundcontroller;
+
+    [SerializeField] private Areacontroller areacontroller;
+    [SerializeField] private Travelpointvalues[] alltravelpoints;
     private void Awake()
     {
         controlls = Keybindinputmanager.inputActions;
@@ -26,6 +29,22 @@ public class Fasttravelmenuopen : MonoBehaviour
             menuoverview.SetActive(true);
             gameObject.SetActive(false);
             menusoundcontroller.playmenubuttonsound();
+        }
+        if (controlls.Menusteuerung.Unlockfasttravel.WasPerformedThisFrame())
+        {
+            unlockfasttravelpoints();
+            menusoundcontroller.playmenubuttonsound();
+        }
+    }
+    private void unlockfasttravelpoints()
+    {
+        for (int i = 0; i < areacontroller.gotfasttravelpoint.Length; i++)
+        {
+            if (Fasttravelpoints.travelpoints.Contains(alltravelpoints[i]) == false)
+            {
+                Fasttravelpoints.travelpoints.Add(alltravelpoints[i]);
+            }
+            areacontroller.gotfasttravelpoint[i] = true;
         }
     }
 }

@@ -33,20 +33,6 @@ public class Tutorialmenucontroller : MonoBehaviour
     }
     private void checkforfinishedtutorials()
     {
-        if (areacontroller.tutorialcomplete[0] == true)
-        {
-            for (int i = 0; i < starttutorialbuttons.Length; i++)
-            {
-                starttutorialbuttons[i].SetActive(true);
-            }
-        }
-        else
-        {
-            for (int i = 0; i < starttutorialbuttons.Length; i++)
-            {
-                starttutorialbuttons[i].SetActive(false);
-            }
-        }
         if (areacontroller.tutorialcomplete[1] == true) targettutorialbutton.SetActive(true);
         else targettutorialbutton.SetActive(false);
         if (Statics.elementalmenuunlocked == true) elementaltutorialbutton.SetActive(true);

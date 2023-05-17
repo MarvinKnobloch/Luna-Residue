@@ -82,7 +82,7 @@ public class Enemysizetutorial : MonoBehaviour
                                                                         "instead of " + "<color=green>" + "50% " + "</color>" + ".";
         else if (textindex == 5) tutorialcontroller.tutorialtext.text = "A blue bar beneath the enemy health bar will show how long the weak spot is exposed.";
         else if (textindex == 6) tutorialcontroller.tutorialtext.text = "The yellow bar will display whether the weak spot can be triggered again.";
-        else if (textindex == 7) tutorialcontroller.tutorialtext.text = "Also your " + "<color=green>" + "critchance " + "</color>" + "against this enemy is increased while the weak spot is exposed and as long as " +
+        else if (textindex == 7) tutorialcontroller.tutorialtext.text = "Also your " + "<color=green>" + "criticalchance " + "</color>" + "against this enemy is increased while the weak spot is exposed and as long as " +
                                                                         "the weak point trigger refreshes.";
         else if (textindex == 8) tutorialcontroller.tutorialtext.text = "Try to trigger the weakspot of the dummy to continue the tutorial.";
     }
