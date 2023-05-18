@@ -8,6 +8,8 @@ public class Settingscontroller : MonoBehaviour
 {
     [SerializeField] private GameObject menuobj;
     [SerializeField] private GameObject[] buttons;
+    [SerializeField] private GameObject[] othermenus;
+    private bool othermenuwasopen;
     private int currentbutton;
     private SpielerSteu controlls;
 
@@ -31,16 +33,32 @@ public class Settingscontroller : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(buttons[currentbutton]);
         buttons[currentbutton].GetComponent<Image>().color = selectedcolor; 
         buttons[currentbutton].GetComponent<Settingsbuttoncontroller>().buttonobjopen();
+        foreach (GameObject menu in othermenus)
+        {             
+            menu.SetActive(false);
+        }
     }
 
     private void Update()
     {
         if (controlls.Menusteuerung.Menuesc.WasPerformedThisFrame())
         {
+            othermenuwasopen = false;
             menusoundcontroller.playmenubuttonsound();
-            buttons[currentbutton].GetComponent<Settingsbuttoncontroller>().buttonobjclose();
-            menuobj.SetActive(true);
-            gameObject.SetActive(false);
+            foreach (GameObject menu in othermenus)
+            {
+                if(menu.activeSelf == true)
+                {
+                    othermenuwasopen = true;
+                    menu.SetActive(false);
+                }
+            }
+            if(othermenuwasopen == false)
+            {
+                buttons[currentbutton].GetComponent<Settingsbuttoncontroller>().buttonobjclose();
+                menuobj.SetActive(true);
+                gameObject.SetActive(false);
+            }
         }
     }
     public void selectsetting(int buttonclicked)

@@ -7,6 +7,8 @@ public class Setvsync : MonoBehaviour
 {
     [SerializeField] private GameObject selection;
     [SerializeField] private TextMeshProUGUI vsynctext;
+
+    [SerializeField] private Menusoundcontroller menusoundcontroller;
     private void OnEnable()
     {
         if(PlayerPrefs.GetInt("Vsyncvalue") == 0)
@@ -36,6 +38,7 @@ public class Setvsync : MonoBehaviour
         QualitySettings.vSyncCount = PlayerPrefs.GetInt("Vsyncvalue");
         vsynctext.text = "V-Sync on";
         selection.SetActive(false);
+        menusoundcontroller.playmenubuttonsound();
     }
     public void vsyncoff()
     {
@@ -43,5 +46,6 @@ public class Setvsync : MonoBehaviour
         QualitySettings.vSyncCount = PlayerPrefs.GetInt("Vsyncvalue");
         vsynctext.text = "V-Sync off";
         selection.SetActive(false);
+        menusoundcontroller.playmenubuttonsound();
     }
 }
