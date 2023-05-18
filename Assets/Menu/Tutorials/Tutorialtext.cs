@@ -18,6 +18,11 @@ public class Tutorialtext : MonoBehaviour
     private string attack2action;
     private string attack3action;
 
+    private string heal;
+    private string player1target;
+    private string player2target;
+    private string player3target;
+
     private string characterswitch;
     private string weaponswitch;
 
@@ -53,6 +58,19 @@ public class Tutorialtext : MonoBehaviour
                             "This can be useful to dodge attacks and cross small gaps. \n" +
                             "\nIt also makes the character immune to damage for a small duration.";
     }
+    public void sethealtext()
+    {
+        settextvalues();
+        heal = controlls.Player.Heal.GetBindingDisplayString();
+        player1target = controlls.SpielerHeal.Target1.GetBindingDisplayString();
+        player2target = controlls.SpielerHeal.Target2.GetBindingDisplayString();
+        player3target = controlls.SpielerHeal.Target3.GetBindingDisplayString();
+        tutorialtext.text = "Press and hold \"" + "<color=green>" + heal + "</color>" + "\" to enter the heal state.\n" +
+                            "While holding \"" + "<color=green>" + heal + "</color>" + "\" press the buttons appearing on the screen in the right order.\n" +
+                            "After succesfully hitting the buttons, choose the target you want to heal with \"" + "<color=green>" + player1target + "</color>" + "\", \"" +
+                            "<color=green>" + player2target + "</color>" + "\" or \"" + "<color=green>" + player3target + "</color>" + "\".\n" +
+                            "The healing cooldown is displayed in the bottom left.";
+    }
     public void setattacktext()
     {
         settextvalues();
@@ -60,11 +78,11 @@ public class Tutorialtext : MonoBehaviour
         attack2action = controlls.Player.Attack2.GetBindingDisplayString();
         attack3action = controlls.Player.Attack3.GetBindingDisplayString();
         tutorialtext.text = "Press \"" + "<color=green>" + attack1action + "</color>" + "\" to attack. " +
-                            "Meanwhile this attack there is a small window to press \"" + "<color=green>" + attack2action + "</color>" + "\" to continue your attack combo. \n" +
-                            "While performing your second attack press \"" + "<color=green>" + attack1action + "</color>" + "\" (downattack), \"" +
-                            "<color=green>" + attack2action + "</color>" + "\" (midattack) or \"" + "<color=green>" +
-                            attack3action + "</color>" + "\" (upattack) to finish the chain attack. \n" +
-                            "\nIts possible to perform this attack combo 2 times before you have to reset.";
+                            "While this attack there is a small window to press \"" + "<color=green>" + attack2action + "</color>" + "\" to continue your attack combo. \n" +
+                            "While performing your second attack press \"" + "<color=green>" + attack1action + "</color>" + "\" (downward attack), \"" +
+                            "<color=green>" + attack2action + "</color>" + "\" (center attack) or \"" + "<color=green>" +
+                            attack3action + "</color>" + "\" (upward attack) to finish the chain attack. \n" +
+                            "\nIts possible to perform this chain attack 2 times before you have to reset.";
     }
     public void setenemysizetext()
     {
@@ -72,37 +90,53 @@ public class Tutorialtext : MonoBehaviour
         tutorialtext.text = "On the left, of the enemy health bar, there is a letter and number. \n" +
                             "The number displays the enemy level, the letter shows the type. " +
                             "<color=green>S</color>(<color=green>small</color>), <color=green>M</color>(<color=green>medium</color>" +
-                            ") or <color=green>B</color>(<color=green>Big</color>). \n" +
-                            "\nDepeding on these types, your " + "<color=green>" + "down" + "</color>" + ", " + "<color=green>" + "mid " + "</color>" +
-                            "or " + "<color=green>" + "up " + "</color>" + "attack at the end of your " + "<color=green>" + "attackchain" + "</color>" + " will result in different damage. \n" +
-                            "\nFor example: Hitting a " + "<color=green>" + "big " + "</color>" + "enemy with an " + "<color=green>" + "down " + "</color>" +
+                            ") or <color=green>B</color>(<color=green>Big</color>).\n" +
+                            "\nDepeding on these types, your " + "<color=green>" + "downward" + "</color>" + ", " + "<color=green>" + "center " + "</color>" +
+                            "or " + "<color=green>" + "upward " + "</color>" + "attacks at the end of your " + "<color=green>" + "chain attack" + "</color>" + " will result in different damage.\n" +
+                            "\nFor example: Hitting a " + "<color=green>" + "big " + "</color>" + "enemy with an " + "<color=green>" + "downward " + "</color>" +
                             "attack will deal " + "<color=green>" + "100% " + "</color>" + "damage.\n" +
-                            "Hitting the weak spot with an " + "<color=green>" + "mid " + "</color>" + "attack, will deal " + "<color=green>" + "85% " + "</color>" + "damage. \n " +
-                            "However, this will increase the damage dealt with an " + "<color=green>" + "up " + "</color>" + "attack to " + "<color=green>" + "150% " + "</color>" +
+                            "Hitting the weak spot with an " + "<color=green>" + "center " + "</color>" + "attack, will deal " + "<color=green>" + "85% " + "</color>" + "damage.\n" +
+                            "However, this will increase the damage dealt with an " + "<color=green>" + "upward " + "</color>" + "attack to " + "<color=green>" + "150% " + "</color>" +
                             "instead of " + "<color=green>" + "50% " + "</color>" + ". \n" +
-                            "\nA blue bar beneath the enemy health bar will show how long the weak spot is exposed. \n" +
-                            "The yellow bar displays when the weak spot can be triggered again. \n" +
-                            "\nAlso your " + "<color=green>" + "criticalchance " + "</color>" + "against this enemy is increased while the weak spot is triggered and as long as " +
+                            "\nA blue bar beneath the enemy health bar will show how long the weak spot is exposed.\n" +
+                            "The yellow bar displays when the weak spot can be triggered again.\n" +
+                            "\nAlso your " + "<color=green>" + "critical chance " + "</color>" + "against this enemy is increased while the weak spot is triggered and as long as " +
                             "the weak point trigger refreshs.";
+    }
+    public void setenemyhitboxtext()
+    {
+        settextvalues();
+        tutorialtext.text = "<color=green>Small</color> enemy:\n" +
+                            "Center attack = 100% damage.\n" +
+                            "Upward attack = 85% damage + trigger weak spot.\n" +
+                            "Downward attack = 50% damage or 150% if weak spot is triggered.\n" +
+                            "\n<color=green>Medium</color> enemy:\n" +
+                            "Upward attack = 100% damage.\n" +
+                            "Downward attack = 85% damage + trigger weak spot.\n" +
+                            "Center attack = 50% damage or 150% if weak spot is triggered.\n" +
+                            "\n<color=green>Big</color> enemy:\n" +
+                            "Downward attack = 100% damage.\n" +
+                            "Center attack = 85% damage + trigger weak spot.\n" +
+                            "Upward attack = 50% damage or 150% if weak spot is triggered.\n";
     }
     public void setattributetext()
     {
         settextvalues();
-        tutorialtext.text = "\"Health\" increase the hitpoints and healing done by this character. \n" +
-                            "\n\"Defense\" reduce the damage taken. " + Statics.defenseconvertedtoattack + "% off the character defense will converted to attackdamage- \n" +
+        tutorialtext.text = "\"Health\" increase the hit points and healing done by this character. \n" +
+                            "\n\"Defense\" reduce the damage taken. " + Statics.defenseconvertedtoattack + "% off the character defense will converted to attack damage. \n" +
                             "\n\"Attack\" increases damage.\n" +
-                            "\n\"Criticalchance\" and \"Criticaldmg\" increases the amount of critical strikes and there damage. \n" +
-                            "\n\"Weaponswitch\" increases the damagebuff and buff duration after switching a weapon. \n" +
-                            "\n\"Charswitch\" increases the damagebuff and buff duration after switching the character. \n" +
-                            "\n\"Basic\" increases the damage done by the last attack of your chain attack and the criticalchance granted from hitting the enemy weak spot.";
+                            "\n\"Critical chance\" and \"Critical damage\" increases the amount of critical strikes and there damage. \n" +
+                            "\n\"Weaponswitch\" increases the damage buff and buff duration after switching a weapon. \n" +
+                            "\n\"Charswitch\" increases the damage buff and buff duration after switching the character. \n" +
+                            "\n\"Basic\" increases the damage done by the last attack of your chain attack and the critical chance granted from hitting the enemy weak spot.";
     }
     public void setattackchaintext()
     {
         settextvalues();
-        tutorialtext.text = "Hitting an enemy with a ground/mid/up attack will heal the character for a small amount. \n" +
+        tutorialtext.text = "Hitting an enemy with a downward/center/upward attack will heal the character for a small amount. \n" +
                             "This heal amount is only effected by the group level. \n" +
                             "\nTriggering the weak spot of an enemy will reset your attack combo counter. \n" +
-                            "Also performing a up attack does not check your attack combo counter.";
+                            "Also performing a upward attack does not check your attack combo counter.";
     }
     public void setswitchtext()
     {
@@ -113,7 +147,7 @@ public class Tutorialtext : MonoBehaviour
                             "Beneath the character slots you can choose which weapon each member of your group should use. \n" +
                             "\nWhile playing, press \"" + "<color=green>" + characterswitch + "</color>" + "\" to switch your character and \"" + "<color=green>" + weaponswitch + "</color>" + "\" " +
                             "to switch the weapon. \n" +
-                            "\nIf you switch your character/weapon next to an enemy a bonus attack will be performed base on the weapontype. \n" +
+                            "\nIf you switch your character/weapon next to an enemy a bonus attack will be performed base on the weapon type. \n" +
                             "\nSwitching the character/weapon will grant a damage buff. The duration of the buff is displayed on the bottem left next to the character/weapon icons.";
     }
     public void setbowgrapplingtext()
