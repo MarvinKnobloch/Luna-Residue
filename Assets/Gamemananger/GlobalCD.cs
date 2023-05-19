@@ -143,12 +143,12 @@ public class GlobalCD : MonoBehaviour
         {
             Statics.dashcdmissingtime += Time.deltaTime;
             dashcdUI.fillAmount = Statics.dashcdmissingtime / Statics.dashcd;
-            dashcdtext.text = Mathf.RoundToInt(Statics.dashcd - Statics.dashcdmissingtime).ToString();
+            //dashcdtext.text = Mathf.RoundToInt(Statics.dashcd - Statics.dashcdmissingtime).ToString();
 
             if (Statics.dashcdmissingtime >= Statics.dashcd)
             {
                 Statics.dashcdbool = false;
-                dashcdtext.text = "";
+                //dashcdtext.text = "";
                 StopCoroutine("dashcd");
                 dashcounterisrunning = false;
             }

@@ -56,7 +56,7 @@ public class Tutorialtext : MonoBehaviour
         dash = controlls.Player.Dash.GetBindingDisplayString();
         tutorialtext.text = "Press \"" + "<color=green>" + dash + "</color>" + "\" to perform a dash. \n" +
                             "This can be useful to dodge attacks and cross small gaps. \n" +
-                            "\nIt also makes the character immune to damage for a small duration.";
+                            "\nThe stamina bar is displayed in the bottom left.";
     }
     public void sethealtext()
     {

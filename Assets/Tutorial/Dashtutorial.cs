@@ -52,7 +52,7 @@ public class Dashtutorial : MonoBehaviour
     {
         if (textindex == 0) tutorialcontroller.tutorialtext.text = "Press \"" + "<color=green>" + dash + "</color>" + "\" to perform a dash.";
         else if (textindex == 1) tutorialcontroller.tutorialtext.text = "This can be useful to dodge attacks and cross small gaps.";
-        else if (textindex == 2) tutorialcontroller.tutorialtext.text = "It also makes the character immune to damage for a small duration.";
+        else if (textindex == 2) tutorialcontroller.tutorialtext.text = "The stamina bar is displayed in the bottom left.";
     }
     private void endtutorial()
     {
