@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 0
   itemid: 7
   itemname: Fire Core
-  inventoryslot: 0
+  inventoryslot: 4
   itemshopcosts: 0
   seconditem: {fileID: 0}
   description: 

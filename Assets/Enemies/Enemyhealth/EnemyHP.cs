@@ -112,6 +112,12 @@ public class EnemyHP : MonoBehaviour
             afterdmgtaken();
         }
     }
+    public void takeelementaldamage(float damage)
+    {
+        Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, damage, Color.blue);
+        currenthealth -= damage;
+        afterdmgtaken();
+    }
     public void takesupportdmg(float dmg)
     {
         currenthealth -= dmg;

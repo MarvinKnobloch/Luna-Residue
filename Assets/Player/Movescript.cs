@@ -340,7 +340,7 @@ public class Movescript : MonoBehaviour
                     playerdark.darkportalending();
                     break;
                 case State.Earthslide:
-                    playerearth.earthslidestart();
+                    playerearth.earthslidemovement();
                     break;
                 case State.Gatheritem:
                     break;
@@ -487,12 +487,17 @@ public class Movescript : MonoBehaviour
 
     public void elefiredashstart() => playerfire.firedashstart();
     public void elefiredashdmg() => playerfire.firedashdmg();
+    public void elefiredashend() => playerfire.firedashend();
     public void elewaterpushbackdmg() => playerwater.waterpushbackdmg();
     public void elewaterintoairdmg() => playerwater.waterintoairdmg();
     public void elestarticelancefly() => playerice.starticelancefly();
     public void eleusedarkportal() => playerdark.usedarkportal();
+    public void eledarkportalend() => playerdark.darkportalend();
     public void eleearthslidestart() => playerearth.earthslidestart();
     public void eleearthslidedmg() => playerearth.earthslidedmg();
+    public void eleearthslideend() => playerearth.earthslideend();
+
+
     public void Abilitiesend()
     {
         Statics.otheraction = false;

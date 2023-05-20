@@ -9,9 +9,16 @@ public class Playerearth
     const string earthslidereleasestate = "Earthsliderelease";
     public void earthslidestart()
     {
+        if (psm.state != Movescript.State.Empty) return;
         if (Movescript.lockontarget != null)
         {
             psm.state = Movescript.State.Earthslide;
+        }
+    }
+    public void earthslidemovement()
+    {
+        if (Movescript.lockontarget != null)
+        {
             if (Vector3.Distance(psm.transform.position, Movescript.lockontarget.position) > 2f)
             {
                 psm.transform.position = Vector3.MoveTowards(psm.transform.position, Movescript.lockontarget.position, psm.earthslidespeed * Time.deltaTime);
@@ -29,6 +36,11 @@ public class Playerearth
     }
     public void earthslidedmg()
     {
-        psm.eleAbilities.overlapssphereeledmg(psm.transform.gameObject, 2f, 15);
+        psm.eleAbilities.overlapssphereeledmg(psm.transform.gameObject, 3, 15);
+    }
+    public void earthslideend()
+    {
+        if (psm.state != Movescript.State.Earthslide) return;
+        psm.Abilitiesend();
     }
 }

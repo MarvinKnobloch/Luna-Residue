@@ -8,6 +8,8 @@ using Cinemachine;
 
 public class EleAbilities : MonoBehaviour
 {
+
+    //animation time = ca. 0.9sec
     [SerializeField] internal Movescript Movementscript;
     private SpielerSteu Steuerung;
 
@@ -151,7 +153,7 @@ public class EleAbilities : MonoBehaviour
         {
             if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
             {
-                enemyscript.takeplayerdamage(dmg, 0, false);
+                enemyscript.takeelementaldamage(dmg);
             }
         }
     }
