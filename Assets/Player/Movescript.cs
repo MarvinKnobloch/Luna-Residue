@@ -105,11 +105,13 @@ public class Movescript : MonoBehaviour
     public GameObject damagetext;
     [NonSerialized] public Vector3 startpos;
     [NonSerialized] public float starttime;
+    [NonSerialized] public float waterpushbacktime;
     [NonSerialized] public float nature1speed = 2;
     [NonSerialized] public float nature1traveltime = 1;
     [NonSerialized] public float icelancespeed = 30;
-    [NonSerialized] public float lightningspeed = 25;
-    [NonSerialized] public Transform currentlightningtraget;
+    [NonSerialized] public float maxlightningspeed = 15;
+    [NonSerialized] public float lightningspeed;
+    [NonSerialized] public Transform currentlightningtarget;
     [NonSerialized] public Transform lightningfirsttarget;
     [NonSerialized] public Transform ligthningsecondtarget;
     [NonSerialized] public Transform lightningthirdtarget;
@@ -145,8 +147,7 @@ public class Movescript : MonoBehaviour
         Firedashstart,
         Firedash,
         Waterpushback,
-        Waterintoair,
-        Waterkickend,
+        Waterkick,
         Naturethendril,
         Naturethendrilgettotarget,
         Icelancestart,
@@ -312,10 +313,7 @@ public class Movescript : MonoBehaviour
                 case State.Waterpushback:
                     playerwater.waterpushback();
                     break;
-                case State.Waterintoair:
-                    playerwater.waterintoair();
-                    break;
-                case State.Waterkickend:
+                case State.Waterkick:
                     playerwater.waterkickend();
                     break;
                 case State.Naturethendril:
@@ -489,8 +487,13 @@ public class Movescript : MonoBehaviour
     public void elefiredashdmg() => playerfire.firedashdmg();
     public void elefiredashend() => playerfire.firedashend();
     public void elewaterpushbackdmg() => playerwater.waterpushbackdmg();
-    public void elewaterintoairdmg() => playerwater.waterintoairdmg();
     public void elestarticelancefly() => playerice.starticelancefly();
+    public void eleicelanceend() => playerice.icelanceend();
+    public void elelightend()
+    {
+        if (state != Movescript.State.Empty) return;
+        Abilitiesend();
+    }
     public void eleusedarkportal() => playerdark.usedarkportal();
     public void eledarkportalend() => playerdark.darkportalend();
     public void eleearthslidestart() => playerearth.earthslidestart();

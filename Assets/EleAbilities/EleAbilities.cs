@@ -8,14 +8,12 @@ using Cinemachine;
 
 public class EleAbilities : MonoBehaviour
 {
-
     //animation time = ca. 0.9sec
     [SerializeField] internal Movescript Movementscript;
     private SpielerSteu Steuerung;
 
     const string firedashstartstate = "Firedashstart";
     const string waterpushbackstate = "Waterpushback";
-    const string waterintoairstate = "Waterintoair";
     const string waterkickstate = "Waterkick";
     const string naturethendrilstate = "Naturethendril";
     const string icelanceidlestate = "Icelance";
@@ -35,7 +33,6 @@ public class EleAbilities : MonoBehaviour
     public GameObject charmanager;
     private Manamanager manacontroller;
     private float basicmanacosts = 3f;
-    private float watermovementmanacost = 2f;
 
     public GameObject icelance1;
     public GameObject icelance2;
@@ -230,11 +227,22 @@ public class EleAbilities : MonoBehaviour
         if (Movescript.lockontarget != null)
         {
             Transform target = Movescript.lockontarget;
-            Ray ray = new Ray(this.transform.position + Vector3.up, Vector3.down);
-            if (Vector3.Distance(transform.position, target.transform.position) < 8f)
+            if(GlobalCD.instance.water1movement == false)
             {
-                manacontroller.Managemana(-watermovementmanacost);
+                GlobalCD.instance.watermovementtimer();
+                manacontroller.Managemana(-basicmanacosts);
+                ColorUtility.TryParseHtmlString("#1A19C5", out spezialbackgroundcolor);
+                spezialbackground.color = spezialbackgroundcolor;
+                checkwaterstate(2);
+            }
+            else
+            {
+                GlobalCD.instance.stopwatermovementtimer();
+            }
+            if (Vector3.Distance(transform.position, target.transform.position) < 7f)
+            {               
                 Statics.otheraction = true;
+                Movementscript.waterpushbacktime = 0;
                 Movementscript.state = Movescript.State.Waterpushback;
                 Movementscript.ChangeAnimationState(waterpushbackstate);
                 Movementscript.graviti = 0f;
@@ -242,22 +250,10 @@ public class EleAbilities : MonoBehaviour
                 lookPos.y = 0;
                 transform.rotation = Quaternion.LookRotation(lookPos);
             }
-            else if (Physics.Raycast(ray, out RaycastHit hit, 4f))
-            {
-                manacontroller.Managemana(-watermovementmanacost);
-                Statics.otheraction = true;
-                Movementscript.state = Movescript.State.Waterintoair;
-                Movementscript.ChangeAnimationState(waterintoairstate);
-                Movementscript.graviti = 0f;
-                Vector3 lookPos = target.transform.position - transform.position;
-                lookPos.y = 0;
-                transform.rotation = Quaternion.LookRotation(lookPos);
-            }
             else
             {
-                manacontroller.Managemana(-watermovementmanacost);
                 Statics.otheraction = true;
-                Movementscript.state = Movescript.State.Waterkickend;
+                Movementscript.state = Movescript.State.Waterkick;
                 Movementscript.ChangeAnimationState(waterkickstate);
                 Movementscript.graviti = 0f;
                 Vector3 lookPos = target.transform.position - transform.position;
@@ -265,9 +261,6 @@ public class EleAbilities : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(lookPos);
             }
             ignorelayers();
-            ColorUtility.TryParseHtmlString("#1A19C5", out spezialbackgroundcolor);
-            spezialbackground.color = spezialbackgroundcolor;
-            checkwaterstate(2);
         }
     }
     private void water2()
@@ -587,7 +580,7 @@ public class EleAbilities : MonoBehaviour
     }
     private void icelancedmg()
     {
-        overlapssphereeledmg(Movescript.lockontarget.gameObject, 2, 10);
+        overlapssphereeledmg(Movescript.lockontarget.gameObject, 2, 7);
     }
     public void icelanceiscanceled()
     {
@@ -666,10 +659,11 @@ public class EleAbilities : MonoBehaviour
     }
     private void lightbackstabend()
     {
+        if (Movementscript.state != Movescript.State.Empty) return;
         Transform target = Movescript.lockontarget;
         if (target != null)
         {
-            transform.position = target.transform.position + (transform.forward * 2);
+            transform.position = target.transform.position + (transform.forward * 2) + Vector3.up;
             //transform.position = new Vector3(transform.position.x, target.transform.position.y, transform.position.z);
             RaycastHit hit;
             if (Physics.Raycast(transform.position, Vector3.down, out hit, 10f))
@@ -688,7 +682,7 @@ public class EleAbilities : MonoBehaviour
     }
     private void ligthbackstabdmg()
     {
-        overlapssphereeledmg(transform.gameObject, 3, 10);    
+        overlapssphereeledmg(transform.gameObject, 3, 18);    
     }
     private void light2()
     {
@@ -745,11 +739,12 @@ public class EleAbilities : MonoBehaviour
         {
             manacontroller.Managemana(-basicmanacosts);
             Statics.otheraction = true;
+            Movementscript.lightningspeed = 10;
             Movementscript.lightningfirsttarget = null;
             Movementscript.ligthningsecondtarget = null;
             Movementscript.lightningthirdtarget = null;
             Movementscript.lightningfirsttarget = target;
-            Movementscript.currentlightningtraget = target;
+            Movementscript.currentlightningtarget = target;
             Movementscript.state = Movescript.State.Stormchainligthning;
             ignorelayers();
             Movementscript.ChangeAnimationState(stormchainlightningstate);

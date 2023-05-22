@@ -32,7 +32,7 @@ public class Playerdark
 
         if (Physics.SphereCast(psm.spherecastcollider.bounds.center, psm.spherecastcollider.radius, Vector3.down, out RaycastHit groundhit, 1.2f))
         {
-            psm.eleAbilities.overlapssphereeledmg(psm.transform.gameObject, 3, 13);
+            psm.eleAbilities.overlapssphereeledmg(psm.transform.gameObject, 3, 18);
             Physics.IgnoreLayerCollision(8, 6, false);
             Physics.IgnoreLayerCollision(11, 6, false);
             psm.state = Movescript.State.Ground;

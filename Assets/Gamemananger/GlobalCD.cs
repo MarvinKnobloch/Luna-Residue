@@ -39,6 +39,10 @@ public class GlobalCD : MonoBehaviour
     private float currentmissingweaponbufftime;
     private float currentmissingcharbufftime;
 
+    [SerializeField] private TextMeshProUGUI watertimer;
+    private int watertimerdisplay;
+    public bool water1movement;
+    private Coroutine test;
     void Awake()
     {
         if (instance == null)
@@ -285,6 +289,32 @@ public class GlobalCD : MonoBehaviour
         yield return new WaitForSeconds(Statics.infightresurrectcd * 2 + randomnumber);
         Statics.supportcanresurrect = true;
         supportrezzcdisrunning = false;
-        StopCoroutine("supportresurrection()");
+        StopCoroutine("supportresurrection");
+    }
+    public void watermovementtimer()
+    {
+        water1movement = true;
+        watertimerdisplay = 4;
+        watertimer.gameObject.SetActive(true);
+        watertimer.text = watertimerdisplay.ToString();
+        test = StartCoroutine(startwatermovementtimer());
+    }
+    IEnumerator startwatermovementtimer()
+    {
+        while(watertimerdisplay > 1)
+        {
+            watertimerdisplay--;
+            watertimer.text = watertimerdisplay.ToString();
+            yield return new WaitForSeconds(1);
+        }
+        Debug.Log("Haööp");
+        watertimer.gameObject.SetActive(false);
+        water1movement = false;
+    }
+    public void stopwatermovementtimer()
+    {
+        StopCoroutine(test);
+        watertimer.gameObject.SetActive(false);
+        water1movement = false;
     }
 }

@@ -14,6 +14,7 @@ public class Playerearth
         {
             psm.state = Movescript.State.Earthslide;
         }
+        else psm.Abilitiesend();
     }
     public void earthslidemovement()
     {
@@ -29,14 +30,11 @@ public class Playerearth
                 psm.ChangeAnimationState(earthslidereleasestate);
             }
         }
-        else
-        {
-            psm.Abilitiesend();
-        }
+        else psm.Abilitiesend();
     }
     public void earthslidedmg()
     {
-        psm.eleAbilities.overlapssphereeledmg(psm.transform.gameObject, 3, 15);
+        psm.eleAbilities.overlapssphereeledmg(psm.transform.gameObject, 4, 17);
     }
     public void earthslideend()
     {

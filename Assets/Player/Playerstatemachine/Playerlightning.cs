@@ -8,63 +8,67 @@ public class Playerlightning
 
     public void stormchainligthning()
     {
-        if (Movescript.lockontarget != null && psm.currentlightningtraget != null) // && Movescript.lockontarget == psm.lightningfirsttarget)
+        if (Movescript.lockontarget != null && psm.currentlightningtarget != null) // && Movescript.lockontarget == psm.lightningfirsttarget)
         {
-            lightningmovement(psm.currentlightningtraget);
-            if (Vector3.Distance(psm.transform.position, psm.currentlightningtraget.position) < 2f)
+            lightningmovement(psm.currentlightningtarget);
+            if (Vector3.Distance(psm.transform.position, psm.currentlightningtarget.position) < 1f)
             {
-                lightningdealdmg();
-                if(psm.lightningthirdtarget == psm.currentlightningtraget)
+                singlestormdamage(psm.currentlightningtarget.gameObject);
+                if(psm.lightningthirdtarget == psm.currentlightningtarget)
                 {
                     psm.state = Movescript.State.Endlightning;
                 }
-                if(Physics.CheckSphere(psm.transform.position, 20f, psm.spellsdmglayer) == true)
+                checkfornewtarget();
+            }
+        }
+        else
+        {
+            psm.Abilitiesend();
+        }
+    }
+    private void checkfornewtarget()
+    {
+        if (Physics.CheckSphere(psm.transform.position, 20f, psm.spellsdmglayer) == true)
+        {
+            Collider[] colliders = Physics.OverlapSphere(psm.transform.position, 10, psm.spellsdmglayer);            //sucht das 2. lightning target
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                if (psm.ligthningsecondtarget == null)
                 {
-                    Collider[] colliders = Physics.OverlapSphere(psm.transform.position, 10, psm.spellsdmglayer);            //sucht das 2. lightning target
-                    for (int i = 0; i < colliders.Length; i++)
+                    if (colliders[i].gameObject != psm.lightningfirsttarget.gameObject)
                     {
-                        if (psm.ligthningsecondtarget == null)
-                        {
-                            if (colliders[i].gameObject != psm.lightningfirsttarget.gameObject)
-                            {
-                                psm.ligthningsecondtarget = colliders[i].gameObject.transform;
-                                psm.currentlightningtraget = colliders[i].gameObject.transform;
-                                return;
-                            }
-                            else
-                            {
-                                continue;
-                            }
-                        }
-                        else if(psm.lightningthirdtarget == null)               //sucht das 3. lightning target
-                        {
-                            if (colliders[i].gameObject == psm.lightningfirsttarget.gameObject || colliders[i].gameObject == psm.ligthningsecondtarget.gameObject)
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                psm.lightningthirdtarget = colliders[i].gameObject.transform;
-                                psm.currentlightningtraget = colliders[i].gameObject.transform;
-                                return;
-                            }
-                        }
+                        psm.ligthningsecondtarget = colliders[i].gameObject.transform;
+                        psm.currentlightningtarget = colliders[i].gameObject.transform;
+                        return;
                     }
-                    if (psm.ligthningsecondtarget == null)
+                    else
                     {
-                        psm.Abilitiesend();
+                        continue;
                     }
-                    if (psm.ligthningsecondtarget != null)
-                    {
-                        if(psm.lightningthirdtarget == null)
-                        {
-                            psm.state = Movescript.State.Endlightning;
-                        }
-                    }
-                } 
-                else
+                }
+                else if (psm.lightningthirdtarget == null)               //sucht das 3. lightning target
                 {
-                    psm.Abilitiesend();
+                    if (colliders[i].gameObject == psm.lightningfirsttarget.gameObject || colliders[i].gameObject == psm.ligthningsecondtarget.gameObject)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        psm.lightningthirdtarget = colliders[i].gameObject.transform;
+                        psm.currentlightningtarget = colliders[i].gameObject.transform;
+                        return;
+                    }
+                }
+            }
+            if (psm.ligthningsecondtarget == null)
+            {
+                psm.Abilitiesend();
+            }
+            else if (psm.ligthningsecondtarget != null)
+            {
+                if (psm.lightningthirdtarget == null)
+                {
+                    psm.state = Movescript.State.Endlightning;
                 }
             }
         }
@@ -80,7 +84,7 @@ public class Playerlightning
             lightningmovement(Movescript.lockontarget);
             if (Vector3.Distance(psm.transform.position, Movescript.lockontarget.position) < 1f)
             {
-                lightningdealdmg();
+                aoestormdamage();
                 psm.Abilitiesend();
             }
         }
@@ -91,14 +95,25 @@ public class Playerlightning
     }
     private void lightningmovement(Transform target)
     {
+        if(psm.lightningspeed < psm.maxlightningspeed)
+        {
+            psm.lightningspeed += Time.deltaTime * 10;
+        }
         Vector3 distancetomove = target.position - psm.transform.position;
         Vector3 move = distancetomove.normalized * psm.lightningspeed * Time.deltaTime;
         psm.charactercontroller.Move(move);
         psm.transform.rotation = Quaternion.LookRotation(target.position - psm.transform.position, Vector3.up);
     }
-    private void lightningdealdmg()
+    private void singlestormdamage(GameObject target)
     {
-        psm.eleAbilities.overlapssphereeledmg(psm.transform.gameObject, 2, 7);
+        if(target.TryGetComponent(out EnemyHP enemyhp))
+        {
+            enemyhp.takeelementaldamage(7);
+        }
+    }
+    private void aoestormdamage()
+    {
+        psm.eleAbilities.overlapssphereeledmg(psm.transform.gameObject, 1, 7);
     }
 }
 

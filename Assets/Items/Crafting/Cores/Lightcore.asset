@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 0
   itemid: 11
   itemname: Light Core
-  inventoryslot: 0
+  inventoryslot: 7
   itemshopcosts: 0
   seconditem: {fileID: 0}
   description: 

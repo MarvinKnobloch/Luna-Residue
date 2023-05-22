@@ -21,6 +21,7 @@ public class Playerice
     }
     public void starticelancefly()
     {
+        if (psm.state != Movescript.State.Icelancestart) return;
         if (Movescript.lockontarget != null)
         {
             psm.state = Movescript.State.Icelancefly;
@@ -34,6 +35,10 @@ public class Playerice
     {
         if (Movescript.lockontarget != null)
         {
+            if (Vector3.Distance(psm.transform.position, Movescript.lockontarget.position) > 5f)         //startet die animation und bewegt den player noch nach vorne
+            {
+                psm.ChangeAnimationState(icelancebackflipstate);
+            }
             if (Vector3.Distance(psm.transform.position, Movescript.lockontarget.position) > 3f)
             {
                 psm.transform.position = Vector3.MoveTowards(psm.transform.position, Movescript.lockontarget.position, psm.icelancespeed * Time.deltaTime);
@@ -43,12 +48,15 @@ public class Playerice
                 psm.ChangeAnimationState(icelancebackflipstate);
                 psm.state = Movescript.State.Empty;
             }
-            if (Vector3.Distance(psm.transform.position, Movescript.lockontarget.position) > 5f)         //startet die animation und bewegt den player noch nach vorne
-            {
-                psm.ChangeAnimationState(icelancebackflipstate);
-            }
         }
         else
+        {
+            psm.Abilitiesend();
+        }
+    }
+    public void icelanceend()
+    {
+        if (psm.state == Movescript.State.Empty || psm.state == Movescript.State.Icelancefly)
         {
             psm.Abilitiesend();
         }
