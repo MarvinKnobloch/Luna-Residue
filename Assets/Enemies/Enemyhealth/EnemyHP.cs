@@ -376,21 +376,24 @@ public class EnemyHP : MonoBehaviour
         if (playerwithmosthits == currentplayerwithmosthits) return;
         else if (playerwithmosthits == 0)
         {
-            enemymovement.currenttarget = LoadCharmanager.Overallmainchar;
-            if(Statics.currentactiveplayer == 0) healthbar.targetupdate(Statics.currentfirstchar);
-            else healthbar.targetupdate(Statics.currentsecondchar);
+            enemymovement.currenttarget = LoadCharmanager.Overallmainchar; 
+            if (healthbar != null)
+            {
+                if (Statics.currentactiveplayer == 0) healthbar.targetupdate(Statics.currentfirstchar);
+                else healthbar.targetupdate(Statics.currentsecondchar);
+            }
             currentplayerwithmosthits = playerwithmosthits;
         }
         else if (playerwithmosthits == 1)
         {
             enemymovement.currenttarget = LoadCharmanager.Overallthirdchar;
-            healthbar.targetupdate(Statics.currentthirdchar);
+            if (healthbar != null) healthbar.targetupdate(Statics.currentthirdchar);
             currentplayerwithmosthits = playerwithmosthits;
         }
         else if (playerwithmosthits == 2)
         {
             enemymovement.currenttarget = LoadCharmanager.Overallforthchar;
-            healthbar.targetupdate(Statics.currentforthchar);
+            if (healthbar != null) healthbar.targetupdate(Statics.currentforthchar);
             currentplayerwithmosthits = playerwithmosthits;
         }
         

@@ -10,7 +10,7 @@ public class Playernature
     {
         if (Movescript.lockontarget != null)
         {
-            Vector3 endposi = Movescript.lockontarget.transform.position + (psm.transform.right * -8 + psm.transform.up * 2);
+            Vector3 endposi = Movescript.lockontarget.transform.position + (psm.transform.right * -4 + psm.transform.up * 1.5f);
             Vector3 test = endposi - psm.transform.position;
             Vector3 move = test.normalized * 15 * Time.deltaTime;
             psm.charactercontroller.Move(move);
@@ -41,13 +41,13 @@ public class Playernature
         psm.transform.position = Vector3.Slerp(startRelcenter, endRelcenter, fracComplete);
         psm.transform.position += center;
 
-        if (Vector3.Distance(psm.transform.position, endposi) < 2)
+        if (Vector3.Distance(psm.transform.position, endposi) < 1f)
         {
             Vector3 lookPos = Movescript.lockontarget.transform.position - psm.transform.position;
             lookPos.y = 0;
             psm.transform.rotation = Quaternion.LookRotation(lookPos);
 
-            psm.eleAbilities.overlapssphereeledmg(Movescript.lockontarget.gameObject, 3, 10);
+            psm.eleAbilities.overlapssphereeledmg(Movescript.lockontarget.gameObject, 3, 18);
             psm.Abilitiesend();
         }
     }

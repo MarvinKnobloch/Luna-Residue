@@ -103,10 +103,12 @@ public class Movescript : MonoBehaviour
     public EleAbilities eleAbilities;
     public LayerMask spellsdmglayer;
     public GameObject damagetext;
+    [NonSerialized] public float spellmaxtime = 2;
+    [NonSerialized] public float spelltimer;
     [NonSerialized] public Vector3 startpos;
     [NonSerialized] public float starttime;
     [NonSerialized] public float waterpushbacktime;
-    [NonSerialized] public float nature1speed = 2;
+    [NonSerialized] public float nature1speed = 1.5f;
     [NonSerialized] public float nature1traveltime = 1;
     [NonSerialized] public float icelancespeed = 30;
     [NonSerialized] public float maxlightningspeed = 15;
@@ -315,30 +317,37 @@ public class Movescript : MonoBehaviour
                     break;
                 case State.Waterkick:
                     playerwater.waterkickend();
+                    playerutility.checkspellmaxtime();
                     break;
                 case State.Naturethendril:
                     playernature.naturethendrilstart();
+                    playerutility.checkspellmaxtime();
                     break;
                 case State.Naturethendrilgettotarget:
                     playernature.naturethendrilgettotarget();
+                    playerutility.checkspellmaxtime();
                     break;
                 case State.Icelancestart:
                     playerice.icelanceplayermovement();
                     break;
                 case State.Icelancefly:
                     playerice.icelanceplayertotarget();
+                    playerutility.checkspellmaxtime();
                     break;
                 case State.Stormchainligthning:
                     playerlightning.stormchainligthning();
+                    playerutility.checkspellmaxtime();
                     break;
                 case State.Endlightning:
                     playerlightning.stormlightningbacktomain();
+                    playerutility.checkspellmaxtime();
                     break;
                 case State.Darkportalend:
                     playerdark.darkportalending();
                     break;
                 case State.Earthslide:
                     playerearth.earthslidemovement();
+                    playerutility.checkspellmaxtime();
                     break;
                 case State.Gatheritem:
                     break;

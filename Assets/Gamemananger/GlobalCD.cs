@@ -291,11 +291,12 @@ public class GlobalCD : MonoBehaviour
         supportrezzcdisrunning = false;
         StopCoroutine("supportresurrection");
     }
-    public void watermovementtimer()
+    public void watermovementtimer(GameObject posi)
     {
         water1movement = true;
         watertimerdisplay = 4;
         watertimer.gameObject.SetActive(true);
+        watertimer.gameObject.transform.position = posi.transform.position + new Vector3(0,-30,0);
         watertimer.text = watertimerdisplay.ToString();
         test = StartCoroutine(startwatermovementtimer());
     }

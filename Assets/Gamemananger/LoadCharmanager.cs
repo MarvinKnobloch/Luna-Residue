@@ -86,6 +86,7 @@ public class LoadCharmanager : MonoBehaviour
             {
                 if(map.activeSelf == false)
                 {
+                    //GlobalCD.instance.stopwatermovementtimer();
                     disableattackbuttons = true;
                     savemainposi = Overallmainchar.transform.position;
                     savemainrota = Overallmainchar.transform.rotation;

@@ -46,4 +46,12 @@ public class Playerutility
             }
         }
     }
+    public void checkspellmaxtime()
+    {
+        psm.spelltimer += Time.deltaTime;
+        if(psm.spelltimer > psm.spellmaxtime)
+        {
+            psm.Abilitiesend();
+        }
+    }
 }
