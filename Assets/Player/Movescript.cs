@@ -105,7 +105,8 @@ public class Movescript : MonoBehaviour
     public GameObject damagetext;
     [NonSerialized] public float spellmaxtime = 2;
     [NonSerialized] public float spelltimer;
-    [NonSerialized] public Vector3 startpos;
+    [NonSerialized] public Vector3 nature1startpos;
+    [NonSerialized] public Vector3 nature1endpos;
     [NonSerialized] public float starttime;
     [NonSerialized] public float waterpushbacktime;
     [NonSerialized] public float nature1speed = 1.5f;
@@ -152,6 +153,7 @@ public class Movescript : MonoBehaviour
         Waterkick,
         Naturethendril,
         Naturethendrilgettotarget,
+        Naturethendrilfinalmovement,
         Icelancestart,
         Icelancefly,
         Stormchainligthning,
@@ -326,6 +328,9 @@ public class Movescript : MonoBehaviour
                 case State.Naturethendrilgettotarget:
                     playernature.naturethendrilgettotarget();
                     playerutility.checkspellmaxtime();
+                    break;
+                case State.Naturethendrilfinalmovement:
+                    playernature.naturethendrilfinalmovement();
                     break;
                 case State.Icelancestart:
                     playerice.icelanceplayermovement();
