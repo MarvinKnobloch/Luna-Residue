@@ -13,12 +13,11 @@ public class Areacontroller : MonoBehaviour
                                                                                        //areacontroller und convertarea data sollten die gleichen Variablen beinhalten, sonst treten vll fehler beim laden auf
     public string areaname;
 
+
     public bool[] tutorialcomplete;                        //die arrays müssen public(nicht Nonserialized) sein, sonst speichert json die daten nicht
 
     public bool[] enemychestcanopen;
     public bool[] enemychestisopen;
-
-    public bool[] questcomplete;
 
     public bool[] puzzlecomplete;
     public bool[] gotpuzzlereward;
@@ -29,18 +28,23 @@ public class Areacontroller : MonoBehaviour
 
     public bool[] gotfasttravelpoint;
 
+    public Quests[] quests;
+    public bool[] questactiv;
+    public bool[] questcomplete;
+
     private void Awake()
     {
         areaobjectcontroller = GetComponent<Areaobjectcontroller>();
         tutorialcomplete = new bool[areaobjectcontroller.settutorialnumber.Length];
         enemychestcanopen = new bool[areaobjectcontroller.setenemychests.Length];
         enemychestisopen = new bool[areaobjectcontroller.setenemychests.Length];
-        questcomplete = new bool[areaobjectcontroller.setquestnumber.Length];
         puzzlecomplete = new bool[areaobjectcontroller.setpuzzlenumber.Length];
         gotpuzzlereward = new bool[areaobjectcontroller.setpuzzlenumber.Length];
         npcdialoguestate = new int[areaobjectcontroller.setdialoguenumber.Length];
         gotgatheritem = new bool[areaobjectcontroller.setgahteringnumber.Length];
         gotfasttravelpoint = new bool[areaobjectcontroller.fasttravelpoints.Length];
+        questactiv = new bool[quests.Length];
+        questcomplete = new bool[quests.Length];
 
         if (Statics.currentgameslot != -1)                             // -1 = new game damit nichts geladen wird
         {
@@ -52,10 +56,10 @@ public class Areacontroller : MonoBehaviour
 
             if (Statics.currentgameslot != 0)                                      // hier werden die geladen forschritten in den autosave slot gespeichert
             {
-                autosave();
+                //autosave();
             }
         }
-        for (int i = 0; i <  areaobjectcontroller.setenemychests.Length; i++)
+        for (int i = 0; i < areaobjectcontroller.setenemychests.Length; i++)
         {
             areaobjectcontroller.setenemychests[i].GetComponent<Chestinterface>().setareachestnumber(i);
         }
@@ -83,6 +87,7 @@ public class Areacontroller : MonoBehaviour
         {
             areaobjectcontroller.fasttravelpoints[i].areanumber = i;
         }
+        loadquestdate();
     }
     private void loaddata(int slot, string filename)                  
     {
@@ -100,6 +105,7 @@ public class Areacontroller : MonoBehaviour
     public void autosave()                                                   // beim abschließen eines gebiets fortschritte, werden die im save slot 0 gespeichtert, dieser(slot0) wird auch beim gameover wieder geladen
     {
         Statics.currentgameslot = 0;
+        savequestdata();
         string savepath = "/" + areaname + Statics.currentgameslot + ".json";
         saveinautosaveslot(savepath, this);
     }
@@ -120,6 +126,22 @@ public class Areacontroller : MonoBehaviour
         {
             Debug.LogError($"error {e.Message} {e.StackTrace}");
             return false;
+        }
+    }
+    public void savequestdata()
+    {
+        for (int i = 0; i < quests.Length; i++)
+        {
+            questactiv[i] = quests[i].questactiv;
+            questcomplete[i] = quests[i].questcomplete;
+        }
+    }
+    private void loadquestdate()
+    {
+        for (int i = 0; i < quests.Length; i++)
+        {
+            quests[i].questactiv = questactiv[i];
+            quests[i].questcomplete = questcomplete[i];
         }
     }
 }

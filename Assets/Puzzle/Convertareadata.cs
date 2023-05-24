@@ -11,8 +11,6 @@ public class Convertareadata
     public bool[] enemychestcanopen;
     public bool[] enemychestisopen;
 
-    public bool[] questcomplete;
-
     public bool[] puzzlecomplete;
     public bool[] gotpuzzlereward;
 
@@ -22,17 +20,21 @@ public class Convertareadata
 
     public bool[] gotfasttravelpoint;
 
+    public bool[] questactiv;
+    public bool[] questcomplete;
+
     public void loadareadata(Areacontroller areacontroller)
     {
         overridedata(tutorialcomplete, areacontroller.tutorialcomplete);
         overridedata(enemychestcanopen, areacontroller.enemychestcanopen);
         overridedata(enemychestisopen, areacontroller.enemychestisopen);
-        overridedata(questcomplete, areacontroller.questcomplete);
         overridedata(puzzlecomplete, areacontroller.puzzlecomplete);
         overridedata(gotpuzzlereward, areacontroller.gotpuzzlereward);
         overridedata(npcdialoguestate, areacontroller.npcdialoguestate);
         overridedata(gotgatheritem, areacontroller.gotgatheritem);
         overridedata(gotfasttravelpoint, areacontroller.gotfasttravelpoint);
+        overridedata(questactiv, areacontroller.questactiv);
+        overridedata(questcomplete, areacontroller.questcomplete);
     }
     private void overridedata<T>(T[] savedataarray, T[] areaarray)
     {
