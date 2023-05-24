@@ -231,16 +231,15 @@ public class EleAbilities : MonoBehaviour
         {
             manacontroller.Managemana(-basicmanacosts);
             Statics.otheraction = true;
-            Movementscript.state = Movescript.State.Naturethendril;
-            Movementscript.ChangeAnimationState(naturethendrilstate);
-            ignorelayers();
-            Movementscript.graviti = 0f;
             Transform target = Movescript.lockontarget;
             Vector3 lookPos = target.transform.position - transform.position;
             lookPos.y = 0;
             transform.rotation = Quaternion.LookRotation(lookPos);
-            int dmgdealed = 10;
-            target.gameObject.GetComponentInChildren<EnemyHP>().takeplayerdamage(dmgdealed, 0, false);
+            Movementscript.nature1endpos = Movescript.lockontarget.transform.position - (Movescript.lockontarget.transform.position + Movementscript.transform.right * 6 + Movementscript.transform.up * -2.5f);
+            Movementscript.state = Movescript.State.Naturethendril;
+            Movementscript.ChangeAnimationState(naturethendrilstate);
+            ignorelayers();
+            Movementscript.graviti = 0f;
             Elespezial.instance.checknaturestate(3);
         }
     }
@@ -450,7 +449,10 @@ public class EleAbilities : MonoBehaviour
     }
     private void icelancedmg()
     {
-        overlapssphereeledmg(Movescript.lockontarget.gameObject, 2, 7);
+        if (Movescript.lockontarget != null)
+        {
+            overlapssphereeledmg(Movescript.lockontarget.gameObject, 2, 7);
+        }
     }
     public void icelanceiscanceled()
     {

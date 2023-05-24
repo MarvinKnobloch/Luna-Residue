@@ -10,7 +10,7 @@ public class Tutorialmenucontroller : MonoBehaviour
 
     [SerializeField] private GameObject[] starttutorialbuttons;
     [SerializeField] private GameObject targettutorialbutton;
-    [SerializeField] private GameObject elementaltutorialbutton;
+    [SerializeField] private GameObject[] elementaltutorialbuttons;
 
     [SerializeField] public Menusoundcontroller menusoundcontroller;
     private void Awake()
@@ -35,7 +35,19 @@ public class Tutorialmenucontroller : MonoBehaviour
     {
         if (areacontroller.tutorialcomplete[1] == true) targettutorialbutton.SetActive(true);
         else targettutorialbutton.SetActive(false);
-        if (Statics.elementalmenuunlocked == true) elementaltutorialbutton.SetActive(true);
-        else elementaltutorialbutton.SetActive(false);
+        if (Statics.elementalmenuunlocked == true)
+        {
+            for (int i = 0; i < elementaltutorialbuttons.Length; i++)
+            {
+                elementaltutorialbuttons[i].SetActive(true);
+            }
+        }
+        else 
+        {
+            for (int i = 0; i < elementaltutorialbuttons.Length; i++)
+            {
+                elementaltutorialbuttons[i].SetActive(false);
+            }
+        }
     }
 }

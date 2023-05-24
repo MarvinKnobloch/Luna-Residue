@@ -35,6 +35,8 @@ public class Tutorialtext : MonoBehaviour
     private string support1target;
     private string support2target;
 
+    private string groupheal;
+
     private void Start()
     {
         tutorialmenucontroller = GetComponentInParent<Tutorialmenucontroller>();
@@ -190,7 +192,20 @@ public class Tutorialtext : MonoBehaviour
                             "\nThese stones also define the class of the character. \n" + 
                             "There are 3 different classes. " + "<color=green>" + "Fight" + "</color>" + ", " + "<color=green>" + "Heal " + "</color>" + "and " + "<color=green>" + "Guard" + "</color>" + ".\n" +
                             "\nFight: The character deals increased damage.\n" +
-                            "Heal: Grants a healbonus and add the ability to cast a group heal and ressurect.\n" +
+                            "Heal: Grants a healbonus and add the ability to cast a group heal and resurrect.\n" +
                             "Guard: Will add some bonus health and reduce the damage taken. It also increases threat on enemies.";
+    }
+    public void setgrouphealrestext()
+    {
+        settextvalues();
+        groupheal = controlls.SpielerHeal.Groupheal.GetBindingDisplayString();
+        tutorialtext.text = "If you choose the heal class with your character, while in heal state, there will be <color=green>seven</color> buttons displayed instead of <color=green>three</color>.\n" +
+                            "After successfully hitting <color=green>five</color> buttons you can press <color=green>" + groupheal + "</color> to heal all active members in your group.\n" +
+                            "Hitting all <color=green>seven</color> buttons will change your heal into a more powerful spell that can resurrect players.\n" +
+                            "However, this spell has a higher cooldown.\n" +
+                            "\nAlly Heal Class: Your ally will spawn heal potions which heals your group on picking it up.\n" +
+                            "Your teammate also can resurrect.\n" +
+                            "\nEverytime someone is resurrected the cooldown of your and your teamates resurrection spell will increase by 1 second for the rest of the combat.\n";
+
     }
 }

@@ -105,11 +105,11 @@ public class Movescript : MonoBehaviour
     public GameObject damagetext;
     [NonSerialized] public float spellmaxtime = 2;
     [NonSerialized] public float spelltimer;
-    [NonSerialized] public Vector3 nature1startpos;
-    [NonSerialized] public Vector3 nature1endpos;
     [NonSerialized] public float starttime;
     [NonSerialized] public float waterpushbacktime;
-    [NonSerialized] public float nature1speed = 1.5f;
+    [NonSerialized] public Vector3 nature1startpos;
+    [NonSerialized] public Vector3 nature1endpos;
+    [NonSerialized] public float nature1speed = 1.9f;
     [NonSerialized] public float nature1traveltime = 1;
     [NonSerialized] public float icelancespeed = 30;
     [NonSerialized] public float maxlightningspeed = 15;

@@ -286,7 +286,7 @@ public class GlobalCD : MonoBehaviour
     {
         supportrezzcdisrunning = true;
         int randomnumber = Random.Range(1, 3);
-        yield return new WaitForSeconds(Statics.infightresurrectcd * 2 + randomnumber);
+        yield return new WaitForSeconds(Statics.infightresurrectcd + Statics.presetresurrectcd + randomnumber);
         Statics.supportcanresurrect = true;
         supportrezzcdisrunning = false;
         StopCoroutine("supportresurrection");

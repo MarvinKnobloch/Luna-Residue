@@ -346,7 +346,6 @@ public class Healingscript : MonoBehaviour
         if(Statics.infight == true)
         {
             resetvaluesafterheal(Statics.infightresurrectcd);
-            Statics.infightresurrectcd++;
         }
         else resetvaluesafterheal(0);
     }
@@ -359,10 +358,11 @@ public class Healingscript : MonoBehaviour
             if (playerhp.playerisdead == true)
             {
                 playerhp.playerisresurrected();
+                Statics.infightresurrectcd++;
             }
             else
             {
-                float healamount = Mathf.Round(playerhp.maxhealth * (0.2f + (Statics.groupstonehealbonus * 0.01f)));
+                float healamount = Mathf.Round(playerhp.maxhealth * (0.25f + (Statics.groupstonehealbonus * 0.01f)));
                 playerhp.addhealthwithtext(healamount);
             }
         }
