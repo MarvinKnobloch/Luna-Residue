@@ -16,4 +16,4 @@ MonoBehaviour:
   questid: 1
   questactiv: 1
   questcomplete: 0
-  mapvalues: {x: -32, y: 128.8, z: 356}
+  mapvalues: {x: -23, y: 127, z: 343}

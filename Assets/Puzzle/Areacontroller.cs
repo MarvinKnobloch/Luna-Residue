@@ -29,10 +29,11 @@ public class Areacontroller : MonoBehaviour
     public bool[] gotfasttravelpoint;
 
     public Quests[] quests;
+    public int[] questids;
     public bool[] questactiv;
     public bool[] questcomplete;
 
-    private void Awake()
+    private void setboollength()
     {
         areaobjectcontroller = GetComponent<Areaobjectcontroller>();
         tutorialcomplete = new bool[areaobjectcontroller.settutorialnumber.Length];
@@ -43,9 +44,13 @@ public class Areacontroller : MonoBehaviour
         npcdialoguestate = new int[areaobjectcontroller.setdialoguenumber.Length];
         gotgatheritem = new bool[areaobjectcontroller.setgahteringnumber.Length];
         gotfasttravelpoint = new bool[areaobjectcontroller.fasttravelpoints.Length];
+        questids = new int[quests.Length];
         questactiv = new bool[quests.Length];
         questcomplete = new bool[quests.Length];
-
+    }
+    private void Awake()
+    {
+        setboollength();
         if (Statics.currentgameslot != -1)                             // -1 = new game damit nichts geladen wird
         {
             loaddata(Statics.currentgameslot, areaname);                         //bei gameload werden hier die fortschritte geladen

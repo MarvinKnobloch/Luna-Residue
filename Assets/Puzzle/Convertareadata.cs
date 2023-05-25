@@ -20,6 +20,7 @@ public class Convertareadata
 
     public bool[] gotfasttravelpoint;
 
+    public int[] questids;
     public bool[] questactiv;
     public bool[] questcomplete;
 
@@ -33,6 +34,7 @@ public class Convertareadata
         overridedata(npcdialoguestate, areacontroller.npcdialoguestate);
         overridedata(gotgatheritem, areacontroller.gotgatheritem);
         overridedata(gotfasttravelpoint, areacontroller.gotfasttravelpoint);
+        overridedata(questids, areacontroller.questids);
         overridedata(questactiv, areacontroller.questactiv);
         overridedata(questcomplete, areacontroller.questcomplete);
     }

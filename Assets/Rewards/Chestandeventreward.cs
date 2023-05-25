@@ -93,6 +93,14 @@ public class Chestandeventreward : MonoBehaviour, Rewardinterface, Interactionin
                     }
                 }
                 chestevent.GetComponent<Eventinterface>().eventstart();
+                if (gameObject.TryGetComponent(out Endquest questend))
+                {
+                    questend.endquest();
+                }
+                if (gameObject.TryGetComponent(out Startquest queststart))
+                {
+                    queststart.startquest();
+                }
                 closedchest.SetActive(false);
                 openchest.SetActive(true);
                 areacontroller.enemychestisopen[areachestnumber] = true;

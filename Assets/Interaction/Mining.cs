@@ -46,6 +46,14 @@ public class Mining : MonoBehaviour, Interactioninterface
         LoadCharmanager.interaction = false;
         if (LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state == Movescript.State.Gatheritem)
         {
+            if (gameObject.TryGetComponent(out Endquest questend))
+            {
+                questend.endquest();
+            }
+            if (gameObject.TryGetComponent(out Startquest queststart))
+            {
+                queststart.startquest();
+            }
             areacontroller.gotgatheritem[gahteringnumber] = true;
             areacontroller.autosave();
             inventory.Additem(item, itemamount);

@@ -12,9 +12,6 @@ public class Npcdialogue : MonoBehaviour
     [TextArea] [SerializeField] public string[] dialogue;
     private int dialogueindex;
 
-    [SerializeField] private Areacontroller areacontroller;
-    [SerializeField] private Quests quest;
-
     public bool interaction;
     [SerializeField] private TextMeshProUGUI npcinteraction;
     public string interactiontext;
@@ -64,6 +61,15 @@ public class Npcdialogue : MonoBehaviour
             else
             {
                 startinteraction();
+                if (gameObject.TryGetComponent(out Endquest questend))
+                {
+                    Debug.Log("test");
+                    questend.endquest();
+                }
+                if (gameObject.TryGetComponent(out Startquest queststart))
+                {
+                    queststart.startquest();
+                }
                 enddialogue();
             }
         }
@@ -111,11 +117,6 @@ public class Npcdialogue : MonoBehaviour
     }
     public void enddialogue()
     {
-        if(quest != null)
-        {
-            quest.questactiv = true;
-            areacontroller.autosave();
-        }
         StopAllCoroutines();
         npcdialogueui.SetActive(false);
         enabled = false;

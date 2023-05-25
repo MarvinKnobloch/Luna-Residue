@@ -100,7 +100,6 @@ public class Setitemsandinventory : MonoBehaviour
             inventorys[i].matsinventory = inventorys[0];
         }
 
-        //nicht schön, aber erfüllt erstmal den zweck
         updateitems(craftingitems, inventorys[0]);
         updateitems(sworditems, inventorys[1]);
         updateitems(bowitems, inventorys[2]);
