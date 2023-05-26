@@ -92,14 +92,9 @@ public class Chestreward : MonoBehaviour, Rewardinterface, Interactioninterface,
                         iteminchest.inventory.Additem(iteminchest.item, iteminchest.amount);
                     }
                 }
-                if (gameObject.TryGetComponent(out Endquest questend))
-                {
-                    questend.endquest();
-                }
-                if (gameObject.TryGetComponent(out Startquest queststart))
-                {
-                    queststart.startquest();
-                }
+                if (gameObject.TryGetComponent(out Endactivquest questactivend)) questactivend.endquest();
+                if (gameObject.TryGetComponent(out Endinactivquest questinactivend)) questinactivend.endquest();
+                if (gameObject.TryGetComponent(out Startquest queststart)) queststart.startquest();
                 closedchest.SetActive(false);
                 openchest.SetActive(true);
                 areacontroller.enemychestisopen[areachestnumber] = true;

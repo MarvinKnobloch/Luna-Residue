@@ -48,9 +48,18 @@ public class Areacontroller : MonoBehaviour
         questactiv = new bool[quests.Length];
         questcomplete = new bool[quests.Length];
     }
+    private void resetquestvalues()
+    {
+        for (int i = 0; i < quests.Length; i++)
+        {
+            quests[i].questactiv = false;
+            quests[i].questcomplete = false;
+        }
+    }
     private void Awake()
     {
         setboollength();
+        resetquestvalues();
         if (Statics.currentgameslot != -1)                             // -1 = new game damit nichts geladen wird
         {
             loaddata(Statics.currentgameslot, areaname);                         //bei gameload werden hier die fortschritte geladen
@@ -61,7 +70,7 @@ public class Areacontroller : MonoBehaviour
 
             if (Statics.currentgameslot != 0)                                      // hier werden die geladen forschritten in den autosave slot gespeichert
             {
-                //autosave();
+                autosave();
             }
         }
         for (int i = 0; i < areaobjectcontroller.setenemychests.Length; i++)
@@ -71,10 +80,6 @@ public class Areacontroller : MonoBehaviour
         for (int i = 0; i < areaobjectcontroller.settutorialnumber.Length; i++)
         {
             areaobjectcontroller.settutorialnumber[i].areanumber = i;
-        }
-        for (int i = 0; i < areaobjectcontroller.setquestnumber.Length; i++)
-        {
-            areaobjectcontroller.setquestnumber[i].areanumber = i;
         }
         for (int i = 0; i < areaobjectcontroller.setpuzzlenumber.Length; i++)
         {
@@ -92,7 +97,6 @@ public class Areacontroller : MonoBehaviour
         {
             areaobjectcontroller.fasttravelpoints[i].areanumber = i;
         }
-        loadquestdate();
     }
     private void loaddata(int slot, string filename)                  
     {
@@ -110,7 +114,7 @@ public class Areacontroller : MonoBehaviour
     public void autosave()                                                   // beim abschließen eines gebiets fortschritte, werden die im save slot 0 gespeichtert, dieser(slot0) wird auch beim gameover wieder geladen
     {
         Statics.currentgameslot = 0;
-        savequestdata();
+        convertquestdata();
         string savepath = "/" + areaname + Statics.currentgameslot + ".json";
         saveinautosaveslot(savepath, this);
     }
@@ -133,20 +137,13 @@ public class Areacontroller : MonoBehaviour
             return false;
         }
     }
-    public void savequestdata()
+    public void convertquestdata()
     {
         for (int i = 0; i < quests.Length; i++)
         {
+            questids[i] = quests[i].questid;
             questactiv[i] = quests[i].questactiv;
             questcomplete[i] = quests[i].questcomplete;
-        }
-    }
-    private void loadquestdate()
-    {
-        for (int i = 0; i < quests.Length; i++)
-        {
-            quests[i].questactiv = questactiv[i];
-            quests[i].questcomplete = questcomplete[i];
         }
     }
 }

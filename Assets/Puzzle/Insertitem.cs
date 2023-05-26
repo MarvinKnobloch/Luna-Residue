@@ -5,7 +5,7 @@ using UnityEngine;
 public class Insertitem : MonoBehaviour, Interactioninterface
 {
     [SerializeField] private Areacontroller areacontroller;
-    public int areaquestnumber;
+    [SerializeField] private Quests quest;
 
     [SerializeField] private GameObject activateobject;
 
@@ -14,22 +14,21 @@ public class Insertitem : MonoBehaviour, Interactioninterface
     [SerializeField] private Itemcontroller neededitem;
     [SerializeField] private int neededitemamount;
 
-    private void Start()
-    {
-        areaquestnumber = GetComponent<Areanumber>().areanumber;
-    }
     private void OnEnable()
     {
-        if (areacontroller.questcomplete[areaquestnumber] == true)
+        if(quest != null)
         {
-            activateobject.SetActive(true);
-            GetComponent<Detectinteractionobject>().enabled = false;
+            if(quest.questcomplete == true)
+            {
+                activateobject.SetActive(true);
+                GetComponent<Detectinteractionobject>().enabled = false;
+            }
         }
     }
     public string Interactiontext => textupdate();
     public string textupdate()
     {
-        if (areacontroller.questcomplete[areaquestnumber] == false)
+        if (quest.questcomplete == false)
         {
             string text;
             if (neededitem.inventoryslot == 0)
@@ -62,14 +61,15 @@ public class Insertitem : MonoBehaviour, Interactioninterface
         }
         else
         {
-            if (areacontroller.questcomplete[areaquestnumber] == false)
+            if (quest.questcomplete == false)
             {
                 if (inventory.Container.Items[neededitem.inventoryslot -1 ].amount >= neededitemamount)
                 {
                     inventory.Container.Items[neededitem.inventoryslot -1 ].amount -= neededitemamount;
                     activateobject.SetActive(true);
-                    areacontroller.questcomplete[areaquestnumber] = true;
-                    areacontroller.autosave();
+                    if (gameObject.TryGetComponent(out Endactivquest questactivend)) questactivend.endquest();
+                    if (gameObject.TryGetComponent(out Endinactivquest questinactivend)) questinactivend.endquest();
+                    if (gameObject.TryGetComponent(out Startquest queststart)) queststart.startquest();
                 }
             }
             return true;

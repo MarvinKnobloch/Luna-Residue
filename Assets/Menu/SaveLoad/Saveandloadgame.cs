@@ -28,7 +28,7 @@ public class Saveandloadgame : MonoBehaviour
         savestatics(slot);
         if (areacontroller != null)
         {
-            areacontroller.savequestdata();
+            areacontroller.convertquestdata();
             savemonobehaviour(slot, "/" + areacontroller.areaname, areacontroller);
         }
     }

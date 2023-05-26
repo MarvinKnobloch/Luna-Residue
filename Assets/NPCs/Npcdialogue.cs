@@ -61,15 +61,9 @@ public class Npcdialogue : MonoBehaviour
             else
             {
                 startinteraction();
-                if (gameObject.TryGetComponent(out Endquest questend))
-                {
-                    Debug.Log("test");
-                    questend.endquest();
-                }
-                if (gameObject.TryGetComponent(out Startquest queststart))
-                {
-                    queststart.startquest();
-                }
+                if (gameObject.TryGetComponent(out Endactivquest questactivend)) questactivend.endquest();
+                if (gameObject.TryGetComponent(out Endinactivquest questinactivend)) questinactivend.endquest();
+                if (gameObject.TryGetComponent(out Startquest queststart)) queststart.startquest();
                 enddialogue();
             }
         }

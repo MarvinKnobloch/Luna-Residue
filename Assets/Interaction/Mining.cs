@@ -46,7 +46,7 @@ public class Mining : MonoBehaviour, Interactioninterface
         LoadCharmanager.interaction = false;
         if (LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state == Movescript.State.Gatheritem)
         {
-            if (gameObject.TryGetComponent(out Endquest questend))
+            if (gameObject.TryGetComponent(out Endactivquest questend))
             {
                 questend.endquest();
             }
