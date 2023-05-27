@@ -366,7 +366,7 @@ public class Bowattack : MonoBehaviour
         CancelInvoke();
         healingscript.resethealvalues();
         eleAbilities.stopignorelayers();
-        eleAbilities.icelanceiscanceled();
+        eleAbilities.resetelevalues();
     }
     private void dash()
     {

@@ -530,6 +530,12 @@ public class Movescript : MonoBehaviour
             lookPos.y = 0;
             transform.rotation = Quaternion.LookRotation(lookPos);
         }
+        else
+        {
+            Vector3 lookPos = transform.position;
+            lookPos.y = 0;
+            transform.rotation = Quaternion.LookRotation(lookPos);
+        }
         Statics.otheraction = false;
         Physics.IgnoreLayerCollision(15, 6, false);
         switchtoairstate();

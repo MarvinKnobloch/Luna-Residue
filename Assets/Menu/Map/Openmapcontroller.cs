@@ -18,17 +18,12 @@ public class Openmapcontroller : MonoBehaviour
     }
     private void Update()
     {
-        if(controlls.Player.Map.WasPerformedThisFrame() && Statics.infight == false && LoadCharmanager.disableattackbuttons == false)
+        if(controlls.Player.Map.WasPerformedThisFrame() && Statics.infight == false && LoadCharmanager.gameispaused == false)
         {
             if (mapimage.activeSelf == false)
             {
                 mapimage.SetActive(true);
-            }
-            else 
-            {
-                mapimage.SetActive(false);
-            }
-            
+            }           
         }
     }
 }

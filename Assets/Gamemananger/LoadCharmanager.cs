@@ -86,7 +86,6 @@ public class LoadCharmanager : MonoBehaviour
             {
                 if(map.activeSelf == false)
                 {
-                    //GlobalCD.instance.stopwatermovementtimer();
                     disableattackbuttons = true;
                     savemainposi = Overallmainchar.transform.position;
                     savemainrota = Overallmainchar.transform.rotation;
@@ -208,11 +207,12 @@ public class LoadCharmanager : MonoBehaviour
         }
         Time.timeScale = Statics.normalgamespeed;
         Time.fixedDeltaTime = Statics.normaltimedelta;
-        if(menu.activeSelf == true) StartCoroutine("waitbecausecollision");
+        disableattackbuttons = false;                            //wegen enterwater wieder ohne delay, weiﬂ auch nich genau wieso der delay drin war
+        /*if (menu.activeSelf == true) StartCoroutine("waitbecausecollision");
         else
         {
             disableattackbuttons = false;
-        }
+        }*/
         gameispaused = false;
         menu.SetActive(false);
         Cam1.gameObject.SetActive(true);

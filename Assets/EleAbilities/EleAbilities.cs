@@ -455,8 +455,10 @@ public class EleAbilities : MonoBehaviour
             overlapssphereeledmg(Movescript.lockontarget.gameObject, 2, 7);
         }
     }
-    public void icelanceiscanceled()
+    public void resetelevalues()
     {
+        Movementscript.Cam1.Follow = transform;
+        Movementscript.Cam1.LookAt = transform;
         icelance1.SetActive(false);
         icelance2.SetActive(false);
         icelance3.SetActive(false);

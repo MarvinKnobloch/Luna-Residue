@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class Playerstorm
 {
@@ -41,8 +42,16 @@ public class Playerstorm
     {
         if (Physics.CheckSphere(psm.transform.position, 20f, psm.spellsdmglayer) == true)
         {
-            psm.Cam1.Follow = null;
-            psm.Cam1.LookAt = null;
+            psm.Cam1.Follow = psm.lightningfirsttarget.gameObject.transform;
+            psm.Cam1.LookAt = psm.lightningfirsttarget.gameObject.transform;
+            /*psm.Cam1.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_HorizontalDamping = 10;
+            psm.Cam1.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_HorizontalDamping = 10;
+            psm.Cam1.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_HorizontalDamping = 10;
+            psm.Cam1.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_VerticalDamping = 10;
+            psm.Cam1.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_VerticalDamping = 10;
+            psm.Cam1.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_VerticalDamping = 10;*/
+            //psm.Cam1.Follow = null;
+            //psm.Cam1.LookAt = null;
             Collider[] colliders = Physics.OverlapSphere(psm.transform.position, 10, psm.spellsdmglayer);            //sucht das 2. lightning target
             for (int i = 0; i < colliders.Length; i++)
             {
@@ -130,8 +139,14 @@ public class Playerstorm
     }
     private void stormendability()
     {
-        psm.Cam1.LookAt = LoadCharmanager.Overallmainchar.gameObject.transform;
-        psm.Cam1.Follow = LoadCharmanager.Overallmainchar.gameObject.transform;
+        psm.Cam1.Follow = psm.transform;
+        psm.Cam1.LookAt = psm.transform;
+        /*psm.Cam1.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_HorizontalDamping = 0;
+        psm.Cam1.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_HorizontalDamping = 0;
+        psm.Cam1.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_HorizontalDamping = 0;
+        psm.Cam1.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_VerticalDamping = 0;
+        psm.Cam1.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_VerticalDamping = 0;
+        psm.Cam1.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_VerticalDamping = 0;*/
         psm.Abilitiesend();
     }
 }

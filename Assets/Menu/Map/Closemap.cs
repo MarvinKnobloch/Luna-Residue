@@ -12,6 +12,7 @@ public class Closemap : MonoBehaviour
     }
     private void OnEnable()
     {
+        controlls.Enable();
         float xposi = LoadCharmanager.Overallmainchar.transform.position.x * 1.41f;
         float zposi = (LoadCharmanager.Overallmainchar.transform.position.z - 350) * 1.16f;
         playerposi.anchoredPosition = new Vector2(xposi, zposi);
@@ -19,7 +20,7 @@ public class Closemap : MonoBehaviour
     }
     private void Update()
     {
-        if (controlls.Menusteuerung.Menuesc.WasPerformedThisFrame()) gameObject.SetActive(false);  //+ wir im infightcontroller deaktiviert
+        if (controlls.Menusteuerung.Menuesc.WasPerformedThisFrame() || controlls.Player.Map.WasPerformedThisFrame()) gameObject.SetActive(false);  //+ wird im infightcontroller deaktiviert
     }
 
 }
