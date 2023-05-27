@@ -18,69 +18,69 @@ MonoBehaviour:
     Items:
     - item: {fileID: 11400000, guid: aca73481126d62d418b60468c6629c06, type: 2}
       itemid: 1
-      amount: 16
+      amount: 261
       itemname: Gold
       inventoryposi: 1
       itemlvl: 0
-    - item: {fileID: 11400000, guid: 867ad472d96907c44b05073ab90369ee, type: 2}
-      itemid: 6
-      amount: 95
-      itemname: Elementalstone
+    - item: {fileID: 11400000, guid: 853f0ce448216094c9a1be91aa072b19, type: 2}
+      itemid: 13
+      amount: 3
+      itemname: Darkcore
       inventoryposi: 2
+      itemlvl: 0
+    - item: {fileID: 11400000, guid: 73c80dfb09adfee499cd17b195fcdd02, type: 2}
+      itemid: 9
+      amount: 3
+      itemname: Naturecore
+      inventoryposi: 3
       itemlvl: 0
     - item: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
       itemid: 2
-      amount: 95
+      amount: 32
       itemname: Copperore
-      inventoryposi: 3
+      inventoryposi: 4
+      itemlvl: 0
+    - item: {fileID: 11400000, guid: 867ad472d96907c44b05073ab90369ee, type: 2}
+      itemid: 6
+      amount: 2
+      itemname: Elementalstone
+      inventoryposi: 5
+      itemlvl: 0
+    - item: {fileID: 11400000, guid: 0960a2238d03d57408bfdd8ee4cca568, type: 2}
+      itemid: 8
+      amount: 3
+      itemname: Watercore
+      inventoryposi: 6
+      itemlvl: 0
+    - item: {fileID: 11400000, guid: 087674ad92d75f24e92db8515b55e3e3, type: 2}
+      itemid: 10
+      amount: 3
+      itemname: Ice Core
+      inventoryposi: 7
       itemlvl: 0
     - item: {fileID: 11400000, guid: 2c5d719e8a0ad9c45b36bd0837b32e08, type: 2}
       itemid: 7
-      amount: 2
+      amount: 3
       itemname: Fire Core
-      inventoryposi: 4
-      itemlvl: 0
-    - item: {fileID: 11400000, guid: e29c162be54667745b27f24731e95fe9, type: 2}
-      itemid: 14
-      amount: 5
-      itemname: Earth Core
-      inventoryposi: 5
-      itemlvl: 0
-    - item: {fileID: 11400000, guid: 86d6d0ec3403b124f9a553e397d70f34, type: 2}
-      itemid: 12
-      amount: 4
-      itemname: Storm Core
-      inventoryposi: 6
+      inventoryposi: 8
       itemlvl: 0
     - item: {fileID: 11400000, guid: 7f503194a85088b4ea9653ceab96c95b, type: 2}
       itemid: 11
       amount: 3
       itemname: Light Core
-      inventoryposi: 7
+      inventoryposi: 9
       itemlvl: 0
-    - item: {fileID: 11400000, guid: 73c80dfb09adfee499cd17b195fcdd02, type: 2}
-      itemid: 9
+    - item: {fileID: 11400000, guid: 86d6d0ec3403b124f9a553e397d70f34, type: 2}
+      itemid: 12
       amount: 3
-      itemname: Nature Core
-      inventoryposi: 8
+      itemname: Storm Core
+      inventoryposi: 10
       itemlvl: 0
-    - item: {fileID: 0}
-      itemid: 0
-      amount: 0
-      itemname: 
-      inventoryposi: 0
-      itemlvl: 0
-    - item: {fileID: 0}
-      itemid: 0
-      amount: 0
-      itemname: 
-      inventoryposi: 0
-      itemlvl: 0
-    - item: {fileID: 0}
-      itemid: 0
-      amount: 0
-      itemname: 
-      inventoryposi: 0
+    - item: {fileID: 11400000, guid: e29c162be54667745b27f24731e95fe9, type: 2}
+      itemid: 14
+      amount: 3
+      itemname: Earth Core
+      inventoryposi: 11
       itemlvl: 0
     - item: {fileID: 0}
       itemid: 0

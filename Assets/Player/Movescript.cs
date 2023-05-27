@@ -80,7 +80,7 @@ public class Movescript : MonoBehaviour
     private Playerwater playerwater = new Playerwater();
     private Playernature playernature = new Playernature();
     private Playerice playerice = new Playerice();
-    private Playerlightning playerlightning = new Playerlightning();
+    private Playerstorm playerstorm = new Playerstorm();
     private Playerdark playerdark = new Playerdark();
     private Playerearth playerearth = new Playerearth();
     private Playerutility playerutility = new Playerutility();
@@ -111,13 +111,15 @@ public class Movescript : MonoBehaviour
     [NonSerialized] public Vector3 nature1endpos;
     [NonSerialized] public float nature1speed = 1.9f;
     [NonSerialized] public float nature1traveltime = 1;
-    [NonSerialized] public float icelancespeed = 30;
-    [NonSerialized] public float maxlightningspeed = 15;
+    [NonSerialized] public float icelancespeed = 25;
+    [NonSerialized] public float maxlightningspeed = 30;
     [NonSerialized] public float lightningspeed;
     [NonSerialized] public Transform currentlightningtarget;
     [NonSerialized] public Transform lightningfirsttarget;
     [NonSerialized] public Transform ligthningsecondtarget;
     [NonSerialized] public Transform lightningthirdtarget;
+    [NonSerialized] public float darkspeedmultipler;
+    [NonSerialized] public float darkportalspeed = 15;
     [NonSerialized] public float earthslidespeed = 20;
 
     //puzzle
@@ -160,6 +162,7 @@ public class Movescript : MonoBehaviour
         Secondlightning,
         Thirdlightning,
         Endlightning,
+        Darkportalstart,
         Darkportalend,
         Earthslide,
         Gatheritem,
@@ -194,7 +197,7 @@ public class Movescript : MonoBehaviour
         playerwater.psm = this;
         playernature.psm = this;
         playerice.psm = this;
-        playerlightning.psm = this;
+        playerstorm.psm = this;
         playerdark.psm = this;
         playerearth.psm = this;
         playeraim.psm = this;
@@ -340,12 +343,15 @@ public class Movescript : MonoBehaviour
                     playerutility.checkspellmaxtime();
                     break;
                 case State.Stormchainligthning:
-                    playerlightning.stormchainligthning();
+                    playerstorm.stormchainlightning();
                     playerutility.checkspellmaxtime();
                     break;
                 case State.Endlightning:
-                    playerlightning.stormlightningbacktomain();
+                    playerstorm.stormlightningbacktomain();
                     playerutility.checkspellmaxtime();
+                    break;
+                case State.Darkportalstart:
+                    playerdark.darkportalstart();
                     break;
                 case State.Darkportalend:
                     playerdark.darkportalending();
@@ -508,6 +514,7 @@ public class Movescript : MonoBehaviour
         if (state != Movescript.State.Empty) return;
         Abilitiesend();
     }
+    public void elestartstormchainlightning() => playerstorm.startstormchainlightning();
     public void eleusedarkportal() => playerdark.usedarkportal();
     public void eledarkportalend() => playerdark.darkportalend();
     public void eleearthslidestart() => playerearth.earthslidestart();
@@ -517,6 +524,12 @@ public class Movescript : MonoBehaviour
 
     public void Abilitiesend()
     {
+        if(lockontarget != null)
+        {
+            Vector3 lookPos = lockontarget.transform.position - transform.position;
+            lookPos.y = 0;
+            transform.rotation = Quaternion.LookRotation(lookPos);
+        }
         Statics.otheraction = false;
         Physics.IgnoreLayerCollision(15, 6, false);
         switchtoairstate();

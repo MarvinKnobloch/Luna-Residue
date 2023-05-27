@@ -27,12 +27,10 @@ public class Selectcharcontroller : MonoBehaviour
     private void OnEnable()
     {
         Steuerung.Enable();
-    }
-    void Start()
-    {
-        foreach (GameObject Chars in firstcharicons)
+        for (int i = 0; i < firstcharicons.Length; i++)
         {
-            Chars.SetActive(false);
+            firstcharicons[i].SetActive(false);
+            secondcharicons[i].SetActive(false);
         }
         firstchar = Statics.currentfirstchar;
         firstcharicons[firstchar].SetActive(true);

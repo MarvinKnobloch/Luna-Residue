@@ -164,7 +164,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Lightbackstabend
-  m_Speed: 1.6
+  m_Speed: 1.3
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -205,7 +205,7 @@ AnimatorStateMachine:
     m_Position: {x: 170, y: 320, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3677069208699505217}
-    m_Position: {x: 850, y: 590, z: 0}
+    m_Position: {x: 860, y: 660, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5252987614975292385}
     m_Position: {x: -30, y: -70, z: 0}
@@ -259,10 +259,10 @@ AnimatorStateMachine:
     m_Position: {x: 260, y: 500, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4095799198323935037}
-    m_Position: {x: 890, y: 450, z: 0}
+    m_Position: {x: 890, y: 500, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3386368310637799106}
-    m_Position: {x: 890, y: 500, z: 0}
+    m_Position: {x: 890, y: 550, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3241493575671792599}
     m_Position: {x: 470, y: 450, z: 0}
@@ -271,7 +271,7 @@ AnimatorStateMachine:
     m_Position: {x: 470, y: 500, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1087294285624534983}
-    m_Position: {x: 680, y: 450, z: 0}
+    m_Position: {x: 680, y: 500, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8689152967874858679}
     m_Position: {x: -160, y: 450, z: 0}
@@ -289,7 +289,7 @@ AnimatorStateMachine:
     m_Position: {x: 1100, y: 500, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1281249109497532352}
-    m_Position: {x: 70, y: 450, z: 0}
+    m_Position: {x: 50, y: 450, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5270965289060822508}
     m_Position: {x: -370, y: 450, z: 0}
@@ -323,6 +323,12 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 4263768130413911417}
     m_Position: {x: 1070, y: 310, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 5182124625676808934}
+    m_Position: {x: 890, y: 450, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 7199183850208036136}
+    m_Position: {x: 680, y: 450, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -548,8 +554,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Darkportalstart
-  m_Speed: 1.3
+  m_Name: Darkportalcharge
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -627,7 +633,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Lightbackstabstart
-  m_Speed: 1.8
+  m_Speed: 1.7
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -1117,6 +1123,32 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1102 &5182124625676808934
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Darkportalstart
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: dac553b604fe0f846a5e559ed499069f, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &5352257780593239377
 AnimatorState:
   serializedVersion: 6
@@ -1190,6 +1222,32 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 9dc3a345b2345dc478e105fb86bbf62d, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &7199183850208036136
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Stormchainstart
+  m_Speed: 2.5
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: a8e1bc502506aa84098d7124b2075716, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

@@ -19,8 +19,9 @@ public class EleAbilities : MonoBehaviour
     const string icelanceidlestate = "Icelance";
     const string lightbackstabstartstate = "Lightbackstabstart";
     const string lightbackstabendstate = "Lightbackstabend";
+    const string stormchainstartstate = "Stormchainstart";
     const string stormchainlightningstate = "Stormchainlightning";
-    const string darkportalstate = "Darkportalstart";
+    const string darkportalstartstate = "Darkportalstart";
     const string earthslidechargestate = "Earthslidecharge";
 
     public GameObject charmanager;
@@ -514,7 +515,7 @@ public class EleAbilities : MonoBehaviour
     }
     private void ligthbackstabdmg()
     {
-        overlapssphereeledmg(transform.gameObject, 3, 18);
+        overlapssphereeledmg(transform.gameObject, 4, 18);
     }
     private void light2()
     {
@@ -539,9 +540,9 @@ public class EleAbilities : MonoBehaviour
             Movementscript.lightningthirdtarget = null;
             Movementscript.lightningfirsttarget = target;
             Movementscript.currentlightningtarget = target;
-            Movementscript.state = Movescript.State.Stormchainligthning;
+            Movementscript.state = Movescript.State.Empty;
             ignorelayers();
-            Movementscript.ChangeAnimationState(stormchainlightningstate);
+            Movementscript.ChangeAnimationState(stormchainstartstate);
             Movementscript.graviti = 0;
             transform.rotation = Quaternion.LookRotation(Movescript.lockontarget.transform.position - transform.position, Vector3.up);
             Elespezial.instance.checkstormstate(6);
@@ -562,13 +563,15 @@ public class EleAbilities : MonoBehaviour
         Transform target = Movescript.lockontarget;
         if (target != null)
         {
+            Movementscript.darkspeedmultipler = Vector3.Distance(transform.position, Movescript.lockontarget.transform.position) / 4;
+            if (Movementscript.darkspeedmultipler < 1.2f) Movementscript.darkspeedmultipler = 1.2f;
+            else if (Movementscript.darkspeedmultipler > 3) Movementscript.darkspeedmultipler = 3;
+            Movementscript.state = Movescript.State.Darkportalstart;
+            Movementscript.ChangeAnimationState(darkportalstartstate);
             manacontroller.Managemana(-basicmanacosts);
             Statics.otheraction = true;
-            Movementscript.state = Movescript.State.Empty;
-            Movementscript.ChangeAnimationState(darkportalstate);
             ignorelayers();
             Movementscript.graviti = 0;
-            transform.rotation = Quaternion.LookRotation(Movescript.lockontarget.transform.position - transform.position, Vector3.up);
             Elespezial.instance.checkdarkstate(7);
         }
     }
