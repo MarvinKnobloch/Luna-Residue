@@ -60,7 +60,7 @@ public class Loadmenucontroller : MonoBehaviour
     }
     public void opencommitload(int slot)
     {
-        if (Slotvaluesarray.slotisnotempty[slot -1] == true)
+        if (Slotvaluesarray.slotisnotempty[slot] == true)
         {
             commitloadobj.SetActive(true);
             commitloadobj.GetComponentInChildren<TextMeshProUGUI>().text = "Load Game? (Slot " + slot + ")";

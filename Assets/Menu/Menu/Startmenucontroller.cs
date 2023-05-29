@@ -89,18 +89,18 @@ public class Startmenucontroller : MonoBehaviour
     {
         for (int i = 0; i < Slotvaluesarray.slotisnotempty.Length; i++)
         {
-            int slot = i + 1;
+            int slot = i;
             string loadpath = Application.persistentDataPath + "/Statics" + slot + ".json";
             if (File.Exists(loadpath))
             {
                 string loaded_data = File.ReadAllText(loadpath);
                 convertstatics = JsonUtility.FromJson<Convertstatics>(loaded_data);
-                Debug.Log("Data Slot" + slot + " exists");
+                //Debug.Log("Data Slot" + slot + " exists");
                 saveslotvalues(i);
             }
             else
             {
-                Debug.Log("Data Slot" + slot + " doesn't exist");
+                //Debug.Log("Data Slot" + slot + " doesn't exist");
             }
         }
     }

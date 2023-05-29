@@ -22,7 +22,9 @@ public class Saveandloadgame : MonoBehaviour
     public void savegamedata()
     {
         Infightcontroller.instance.savegameoverposi(LoadCharmanager.savemainposi);
-        int slot = savemenucontroller.selectedslot ;
+        int slot;
+        if (savemenucontroller == null) slot = 0;                //für autosave
+        else slot = savemenucontroller.selectedslot ;
         saveinventorys(slot);
         convertstatics.savestaticsinscript();
         savestatics(slot);
@@ -37,10 +39,10 @@ public class Saveandloadgame : MonoBehaviour
         string savepath = "/Statics" + slot + ".json";
         if (loadsaveinterface.savedata(savepath, convertstatics))
         {
-            Slotvaluesarray.slotisnotempty[slot - 1] = true;
-            Slotvaluesarray.slotlvl[slot - 1] = convertstatics.charcurrentlvl;
-            Slotvaluesarray.slotdate[slot - 1] = convertstatics.gamesavedate;
-            Slotvaluesarray.slottime[slot - 1] = convertstatics.gamesavetime;
+            Slotvaluesarray.slotisnotempty[slot] = true;
+            Slotvaluesarray.slotlvl[slot] = convertstatics.charcurrentlvl;
+            Slotvaluesarray.slotdate[slot] = convertstatics.gamesavedate;
+            Slotvaluesarray.slottime[slot] = convertstatics.gamesavetime;
         }
         else
         {

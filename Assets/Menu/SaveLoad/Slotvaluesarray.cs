@@ -4,9 +4,9 @@ using UnityEngine;
 
 public static class Slotvaluesarray
 {
-    public static bool[] slotisnotempty = new bool[3];
-    public static int[] slotlvl = new int[3];
-    public static string[] slotdate = new string[3];
-    public static string[] slottime = new string[3];
+    public static bool[] slotisnotempty = new bool[11];
+    public static int[] slotlvl = new int[11];
+    public static string[] slotdate = new string[11];
+    public static string[] slottime = new string[11];
 }
 

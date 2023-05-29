@@ -113,10 +113,12 @@ public class Areacontroller : MonoBehaviour
 
     public void autosave()                                                   // beim abschlieﬂen eines gebiets fortschritte, werden die im save slot 0 gespeichtert, dieser(slot0) wird auch beim gameover wieder geladen
     {
+        Debug.Log("save game");
         Statics.currentgameslot = 0;
-        convertquestdata();
-        string savepath = "/" + areaname + Statics.currentgameslot + ".json";
-        saveinautosaveslot(savepath, this);
+        GetComponent<Saveandloadgame>().savegamedata();
+        //convertquestdata();
+        //string savepath = "/" + areaname + Statics.currentgameslot + ".json";
+        //saveinautosaveslot(savepath, this);
     }
     private bool saveinautosaveslot<T>(string dataname, T data)
     {
