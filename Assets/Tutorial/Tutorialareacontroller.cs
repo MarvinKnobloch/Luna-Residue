@@ -20,7 +20,7 @@ public class Tutorialareacontroller : MonoBehaviour
         {
             Infightcontroller.instance.savegameoverposi(LoadCharmanager.Overallmainchar.transform.position);
             areacontroller.tutorialcomplete[tutorialnumber] = true;
-            areacontroller.autosave();
+            LoadCharmanager.autosave();
             Invoke("areadisable", 3f);                             //weil fehlermeldung kam bei direkt disable???
         }
     }

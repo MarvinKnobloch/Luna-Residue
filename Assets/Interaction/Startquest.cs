@@ -14,7 +14,7 @@ public class Startquest : MonoBehaviour
             if (quest[i].questactiv == false)
             {
                 quest[i].questactiv = true;
-                areacontroller.autosave();
+                LoadCharmanager.autosave();
             }
         }
     }

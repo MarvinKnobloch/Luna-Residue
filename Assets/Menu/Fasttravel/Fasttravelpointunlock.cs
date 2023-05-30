@@ -34,7 +34,7 @@ public class Fasttravelpointunlock : MonoBehaviour
         {
             areacontroller.gotfasttravelpoint[fasttravelnumber] = true;
             gameObject.transform.GetChild(0).gameObject.SetActive(true);
-            areacontroller.autosave();
+            LoadCharmanager.autosave();
             if(ingamemessage.activeSelf == true) ingamemessage.GetComponent<Ingamemessagecontroller>().cancelfadeout();
             else ingamemessage.SetActive(true);
             ingamemessage.GetComponentInChildren<TextMeshProUGUI>().text = "New fasttravelpoint unlocked: " + "\n" + "(" + travelpointvalue.travelpointname + ")";

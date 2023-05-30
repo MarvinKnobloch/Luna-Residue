@@ -15,6 +15,7 @@ public class LoadCharmanager : MonoBehaviour
     [SerializeField] private GameObject menu;
     [SerializeField] private GameObject menuoverview;
     public static Expmanager expmanager;
+    public static Saveandloadgame saveandloadgame;
 
     public GameObject[] allcharacters;
     public static GameObject Overallmainchar;
@@ -24,7 +25,7 @@ public class LoadCharmanager : MonoBehaviour
     public GameObject[] teammates;
     public static GameObject Overallthirdchar;
     public static GameObject Overallforthchar;
-    public static Vector3 savemainposi = new Vector3(31, 31, 671);   //new Vector3(31,31,671);                    //new Vector3(19, 2, 867); tutorial
+    public static Vector3 savemainposi = new Vector3(19, 2, 867);   //new Vector3(31,31,671);                    //new Vector3(19, 2, 867); tutorial
     public static Quaternion savemainrota;
     public static float savecamvalueX;
 
@@ -43,6 +44,7 @@ public class LoadCharmanager : MonoBehaviour
     private void Awake()
     {
         expmanager = GetComponent<Expmanager>();
+        saveandloadgame = GetComponent<Saveandloadgame>();
         uiactionscontroller = GetComponent<Uiactionscontroller>();
         Steuerung = Keybindinputmanager.inputActions;
         triggercollider = triggercolliderobj;
@@ -302,5 +304,22 @@ public class LoadCharmanager : MonoBehaviour
         Statics.enemyhealthpercantageadded = 0.1f;
         Statics.enemyspecialcd = 14;
         Statics.enemydifficultyminusdmg = 0;
+    }
+    public static void autosave()
+    {
+        Debug.Log("autosave");
+        savemainposi = Overallmainchar.transform.position;
+        savemainrota = Overallmainchar.transform.rotation;
+        savecamvalueX = Camera.main.transform.rotation.y;
+        Statics.currentgameslot = 0;
+        saveandloadgame.savegamedata();
+    }
+    public static void gameoverautosave()
+    {
+        savemainposi = Statics.gameoverposi;
+        savemainrota = Statics.gameoverrota;
+        savecamvalueX = Statics.savecamvalueX;
+        Statics.currentgameslot = 0;
+        saveandloadgame.savegamedata();
     }
 }

@@ -43,7 +43,7 @@ public class Moveobjectafterfinish : MonoBehaviour, Rewardinterface
             {
                 StartCoroutine("openthegate");
                 areacontroller.puzzlecomplete[puzzlenumber] = true;
-                areacontroller.autosave();
+                LoadCharmanager.autosave();
             }
         }
     }

@@ -43,7 +43,7 @@ public class Chestandeventreward : MonoBehaviour, Rewardinterface, Interactionin
         {
             cheststatetext = chestopen;
             areacontroller.enemychestcanopen[areachestnumber] = true;
-            areacontroller.autosave();
+            LoadCharmanager.autosave();
         }
         else
         {
@@ -66,7 +66,7 @@ public class Chestandeventreward : MonoBehaviour, Rewardinterface, Interactionin
             {
                 cheststatetext = chestopen;
                 areacontroller.enemychestcanopen[areachestnumber] = true;
-                areacontroller.autosave();
+                LoadCharmanager.autosave();
             }
         }
     }
@@ -99,7 +99,7 @@ public class Chestandeventreward : MonoBehaviour, Rewardinterface, Interactionin
                 closedchest.SetActive(false);
                 openchest.SetActive(true);
                 areacontroller.enemychestisopen[areachestnumber] = true;
-                areacontroller.autosave();
+                LoadCharmanager.autosave();
                 GetComponent<Detectinteractionobject>().enabled = false;
                 enabled = false;
             }

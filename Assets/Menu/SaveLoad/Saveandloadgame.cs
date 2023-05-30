@@ -21,10 +21,17 @@ public class Saveandloadgame : MonoBehaviour
 
     public void savegamedata()
     {
-        Infightcontroller.instance.savegameoverposi(LoadCharmanager.savemainposi);
+        
         int slot;
-        if (savemenucontroller == null) slot = 0;                //für autosave
-        else slot = savemenucontroller.selectedslot ;
+        if (savemenucontroller == null)
+        {
+            slot = 0;                //für autosave
+        }
+        else 
+        {
+            Infightcontroller.instance.savegameoverposi(LoadCharmanager.savemainposi);               //damit ich da spawn wo ich speicher
+            slot = savemenucontroller.selectedslot;
+        }
         saveinventorys(slot);
         convertstatics.savestaticsinscript();
         savestatics(slot);

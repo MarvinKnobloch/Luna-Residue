@@ -67,11 +67,6 @@ public class Areacontroller : MonoBehaviour
             {
                 convertareadata.loadareadata(this);
             }
-
-            if (Statics.currentgameslot != 0)                                      // hier werden die geladen forschritten in den autosave slot gespeichert
-            {
-                autosave();
-            }
         }
         for (int i = 0; i < areaobjectcontroller.setenemychests.Length; i++)
         {
@@ -98,6 +93,13 @@ public class Areacontroller : MonoBehaviour
             areaobjectcontroller.fasttravelpoints[i].areanumber = i;
         }
     }
+    /*private void Start()
+    {
+        if (Statics.currentgameslot != 0 && Statics.currentgameslot != -1)                                      // hier werden die geladen forschritten in den autosave slot gespeichert (werden erst bei start geladen weil sonst fehlermeldung)
+        {
+            autosave();
+        }
+    }*/
     private void loaddata(int slot, string filename)                  
     {
         string loadpath = "/" + filename + slot + ".json";
@@ -111,15 +113,18 @@ public class Areacontroller : MonoBehaviour
         }
     }
 
-    public void autosave()                                                   // beim abschließen eines gebiets fortschritte, werden die im save slot 0 gespeichtert, dieser(slot0) wird auch beim gameover wieder geladen
+    /*public void autosave()                                                   // beim abschließen eines gebiets fortschritte, werden die im save slot 0 gespeichtert, dieser(slot0) wird auch beim gameover wieder geladen
     {
         Debug.Log("save game");
+        LoadCharmanager.savemainposi = LoadCharmanager.Overallmainchar.transform.position;
+        LoadCharmanager.savemainrota = LoadCharmanager.Overallmainchar.transform.rotation;
+        LoadCharmanager.savecamvalueX = Camera.main.transform.rotation.y;
         Statics.currentgameslot = 0;
         GetComponent<Saveandloadgame>().savegamedata();
         //convertquestdata();
         //string savepath = "/" + areaname + Statics.currentgameslot + ".json";
         //saveinautosaveslot(savepath, this);
-    }
+    }*/
     private bool saveinautosaveslot<T>(string dataname, T data)
     {
         string path = Application.persistentDataPath + dataname;

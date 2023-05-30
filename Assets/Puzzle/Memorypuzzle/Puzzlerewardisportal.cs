@@ -32,7 +32,7 @@ public class Puzzlerewardisportal : MonoBehaviour, Rewardinterface
     public void addrewardcount()
     {
         areacontroller.puzzlecomplete[puzzlenumber] = true;
-        areacontroller.autosave();
+        LoadCharmanager.autosave();
         portal.SetActive(true);
     }
 

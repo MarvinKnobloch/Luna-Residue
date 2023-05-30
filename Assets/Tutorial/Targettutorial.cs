@@ -75,7 +75,7 @@ public class Targettutorial : MonoBehaviour
         readinputs = false;
         tutorialcontroller.endtutorial();
         areacontroller.tutorialcomplete[tutorialnumber] = true;
-        areacontroller.autosave();
+        LoadCharmanager.autosave();
         gameObject.SetActive(false);
     }
 }

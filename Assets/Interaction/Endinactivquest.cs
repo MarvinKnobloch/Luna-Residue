@@ -14,7 +14,7 @@ public class Endinactivquest : MonoBehaviour
             {
                 quest[i].questactiv = true;
                 quest[i].questcomplete = true;
-                areacontroller.autosave();
+                LoadCharmanager.autosave();
             }
         }
     }

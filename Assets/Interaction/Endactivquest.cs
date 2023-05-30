@@ -13,7 +13,7 @@ public class Endactivquest : MonoBehaviour
             if (quest[i].questactiv == true && quest[i].questcomplete == false)
             {
                 quest[i].questcomplete = true;
-                areacontroller.autosave();
+                LoadCharmanager.autosave();
             }
         }
     }

@@ -29,6 +29,7 @@ public class Gameovercontroller : MonoBehaviour
             yield return null;
         }
         StopCoroutine("gameoverfade");
+        LoadCharmanager.gameoverautosave();
         LoadCharmanager.savemainposi = Statics.gameoverposi;
         LoadCharmanager.savemainrota = Statics.gameoverrota;
         LoadCharmanager.savecamvalueX = Statics.savecamvalueX;

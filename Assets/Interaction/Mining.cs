@@ -55,7 +55,7 @@ public class Mining : MonoBehaviour, Interactioninterface
                 queststart.startquest();
             }
             areacontroller.gotgatheritem[gahteringnumber] = true;
-            areacontroller.autosave();
+            LoadCharmanager.autosave();
             inventory.Additem(item, itemamount);
             gameObject.SetActive(false);
         }

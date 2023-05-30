@@ -120,7 +120,7 @@ public class Npcbuysingleitem : MonoBehaviour
     private void endbuyitem()
     {
         areacontroller.npcdialoguestate[dialoguenumber]++;
-        areacontroller.autosave();
+        LoadCharmanager.autosave();
         buysingleitemwindow.SetActive(false);
         GetComponent<Npcupdatedialogue>().enabled = true;
         if(TryGetComponent(out Npcafterinteraction npcafterinteraction))
