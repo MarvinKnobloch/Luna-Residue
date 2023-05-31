@@ -187,9 +187,7 @@ public class LoadCharmanager : MonoBehaviour
         GetComponent<Healthuimanager>().sethealthbars();
 
         setweapons?.Invoke();
-
-        swordcontrollerupdate?.Invoke();
-        fistcontrollerupdate?.Invoke();
+        weaponscriptupdate();
 
         uiactionscontroller.hotkeysupdate();
 
@@ -224,6 +222,11 @@ public class LoadCharmanager : MonoBehaviour
     {
         yield return null;
         disableattackbuttons = false;
+    }
+    public void weaponscriptupdate()
+    {
+        swordcontrollerupdate?.Invoke();
+        fistcontrollerupdate?.Invoke();
     }
     private void classandstatsupdate(int charnumber, GameObject[] playerorsupport, int threatslot)
     {
@@ -285,7 +288,7 @@ public class LoadCharmanager : MonoBehaviour
     {
         Statics.enemydmgmultiplier = 1.1f;
         Statics.enemyspezialdmgbonus = 3;
-        Statics.enemyhealthpercantageadded = 0.05f;
+        Statics.enemyhealthpercantageadded = 0.06f; //0.05f;
         Statics.enemyspecialcd = 18;
         Statics.enemydifficultyminusdmg = 4;
     }
@@ -293,7 +296,7 @@ public class LoadCharmanager : MonoBehaviour
     {
         Statics.enemydmgmultiplier = 1.3f;
         Statics.enemyspezialdmgbonus = 4;
-        Statics.enemyhealthpercantageadded = 0.075f;
+        Statics.enemyhealthpercantageadded = 0.085f;    //0.075f;
         Statics.enemyspecialcd = 16;
         Statics.enemydifficultyminusdmg = 2;
     }
@@ -301,20 +304,19 @@ public class LoadCharmanager : MonoBehaviour
     {
         Statics.enemydmgmultiplier = 1.5f;
         Statics.enemyspezialdmgbonus = 5;
-        Statics.enemyhealthpercantageadded = 0.1f;
+        Statics.enemyhealthpercantageadded = 0.11f; //0.1f;
         Statics.enemyspecialcd = 14;
         Statics.enemydifficultyminusdmg = 0;
     }
     public static void autosave()
     {
-        Debug.Log("autosave");
         savemainposi = Overallmainchar.transform.position;
         savemainrota = Overallmainchar.transform.rotation;
         savecamvalueX = Camera.main.transform.rotation.y;
         Statics.currentgameslot = 0;
         saveandloadgame.savegamedata();
     }
-    public static void gameoverautosave()
+    public static void gameoverautosave()             //wegen Infightcontroller.instance.savegameoverposi(LoadCharmanager.savemainposi); in savegamedata
     {
         savemainposi = Statics.gameoverposi;
         savemainrota = Statics.gameoverrota;

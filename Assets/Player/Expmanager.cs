@@ -6,7 +6,6 @@ using TMPro;
 
 public class Expmanager : MonoBehaviour
 {
-    private SpielerSteu controlls;
     private Healthuimanager healthUImanager;
 
     [SerializeField] private Image expbar;
@@ -22,12 +21,10 @@ public class Expmanager : MonoBehaviour
 
     void Awake()
     {
-        controlls = new SpielerSteu();
         healthUImanager = GetComponent<Healthuimanager>();
     }
     private void OnEnable()
     {
-        controlls.Enable();
         updateexpbar();
     }
     public void gainexp(float expgained)
@@ -60,6 +57,7 @@ public class Expmanager : MonoBehaviour
     private void levelup()
     {
         Statics.charcurrentlvl++;
+        lvlupattackdmgupdate();
         if (Statics.currentactiveplayer == 0)
         {
             checkforguard(Statics.currentfirstchar, 0);
@@ -76,6 +74,21 @@ public class Expmanager : MonoBehaviour
         expbar.fillAmount = 0f;
         Statics.charcurrentexp = Mathf.RoundToInt(Statics.charcurrentexp - Statics.charrequiredexp);
         Statics.charrequiredexp = calculaterequiredexp();
+    }
+    private void lvlupattackdmgupdate()
+    {
+        for (int i = 0; i < Statics.charattack.Length; i++)
+        {
+            Statics.charattack[i]++;
+        }
+        LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().updateattributes();
+        if (LoadCharmanager.Overallsecondchar != null) LoadCharmanager.Overallsecondchar.GetComponent<Attributecontroller>().updateattributes();
+        if (LoadCharmanager.Overallthirdchar != null) LoadCharmanager.Overallthirdchar.GetComponent<Attributecontroller>().updateattributes();
+        if (LoadCharmanager.Overallforthchar != null) LoadCharmanager.Overallforthchar.GetComponent<Attributecontroller>().updateattributes();
+        if (TryGetComponent(out LoadCharmanager loadCharmanager))
+        {
+            loadCharmanager.weaponscriptupdate();
+        }
     }
     private void checkforguard(int charnumber, int charposi)
     {

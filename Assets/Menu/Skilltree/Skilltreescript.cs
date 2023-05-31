@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class Skilltreescript : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class Skilltreescript : MonoBehaviour
     [SerializeField] private Image[] charselectionimage;
     [SerializeField] private int currentchar;
     
-    public Text skillpointtext;
+    public TextMeshProUGUI skillpointtext;
     public Text nametext;
     public Text healthbuttonnumber;
     public Text defensebuttonnumber;
@@ -40,6 +41,14 @@ public class Skilltreescript : MonoBehaviour
     [SerializeField] private TextMeshProUGUI statsbasicbuffdmg;
     [SerializeField] private TextMeshProUGUI statsbasiccrit;
 
+    [SerializeField] private Image resetimage;
+    private float resettime = 1f;
+    public float resettimer;
+
+    private DateTime startdate;
+    private DateTime currentdate;
+    private float seconds;
+
     [SerializeField] private Menusoundcontroller menusoundcontroller;
 
     private void Awake()
@@ -61,12 +70,23 @@ public class Skilltreescript : MonoBehaviour
         }
         if (Steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame())
         {
+            stopskillpointreset();
             closeskilltree();
             menusoundcontroller.playmenubuttonsound();
+        }
+        if (Steuerung.Menusteuerung.Space.WasPerformedThisFrame())
+        {
+            Debug.Log("start");
+            StartCoroutine("startresetskillpoints");
+        }
+        if (Steuerung.Menusteuerung.Space.WasReleasedThisFrame())
+        {
+            stopskillpointreset();
         }
     }
     private void OnEnable()
     {
+        stopskillpointreset();
         Steuerung.Enable();
         foreach (Image chars in charselectionimage)
         {
@@ -83,6 +103,7 @@ public class Skilltreescript : MonoBehaviour
     }
     public void choosechar(int currentchar)
     {
+        stopskillpointreset();
         this.currentchar = currentchar;           // falls man mit click den char auswählt
         nametext.text = Statics.characternames[this.currentchar] + " LvL" + Statics.charcurrentlvl;
         settextandpoints();
@@ -159,6 +180,60 @@ public class Skilltreescript : MonoBehaviour
         statsbasicbuffdmg.text = Mathf.Round(Statics.charbasicdmgbuff[currentchar]) + "%";
     }
 
+    IEnumerator startresetskillpoints()
+    {
+        startdate = DateTime.Now;
+        resetimage.fillAmount = 0;
+        resettimer = 0f;
+        while (resettimer < resettime)
+        {
+            currentdate = DateTime.Now;
+            seconds = currentdate.Ticks - startdate.Ticks;
+            resettimer = seconds * 0.0000001f;
+            resetimage.fillAmount = resettimer / resettime;
+            yield return null;
+        }
+        resetimage.fillAmount = 0;
+        resetskillpoints();
+    }
+    private void resetskillpoints()
+    {
+        Statics.charmaxhealth[currentchar] -= Statics.charhealthskillpoints[currentchar] * Statics.healthperskillpoint;
+        Statics.charcurrenthealth[currentchar] = Statics.charmaxhealth[currentchar];
+        Statics.charhealthskillpoints[currentchar] = 0;
+
+        Statics.chardefense[currentchar] -= Statics.chardefenseskillpoints[currentchar] * Statics.defenseperskillpoint;
+        Statics.chardefenseskillpoints[currentchar] = 0;
+
+        Statics.charcritchance[currentchar] -= Statics.charcritchanceskillpoints[currentchar] * Statics.critchanceperskillpoint;
+        Statics.charcritchanceskillpoints[currentchar] = 0;
+
+        Statics.charcritdmg[currentchar] -= Statics.charcritdmgskillpoints[currentchar] * Statics.critdmgperskillpoint;
+        Statics.charcritdmgskillpoints[currentchar] = 0;
+
+        Statics.charweaponbuffduration[currentchar] -= Statics.charweaponskillpoints[currentchar] * Statics.weaonswitchbuffdurationperskillpoint;
+        Statics.charweaponbuff[currentchar] -= Statics.charweaponskillpoints[currentchar] * Statics.weaponswitchbuffperskillpoint;
+        Statics.charweaponskillpoints[currentchar] = 0;
+
+        Statics.charswitchbuffduration[currentchar] -= Statics.charcharswitchskillpoints[currentchar] * Statics.charswitchbuffdurationperskillpoint;
+        Statics.charswitchbuff[currentchar] -= Statics.charcharswitchskillpoints[currentchar] * Statics.charswitchbuffperskillpoint;
+        Statics.charcharswitchskillpoints[currentchar] = 0;
+
+        Statics.charbasiccritbuff[currentchar] -= Statics.charbasicskillpoints[currentchar] * Statics.basiccritbuffperskillpoint;
+        Statics.charbasicdmgbuff[currentchar] -= Statics.charbasicskillpoints[currentchar] * Statics.basicdmgbuffperskillpoint;
+        Statics.charbasicskillpoints[currentchar] = 0;
+
+        Statics.charskillpoints[currentchar] = Statics.charcurrentlvl;
+        Statics.charspendedskillpoints[currentchar] = 0;
+        skillpointtext.text = "Skillpoints " + Statics.charskillpoints[currentchar];
+
+        settextandpoints();
+    }
+    private void stopskillpointreset()
+    {
+        resetimage.fillAmount = 0;
+        StopCoroutine("startresetskillpoints");
+    }
     public void plusbutton()
     {
         Statics.charspendedskillpoints[currentchar] += 1;

@@ -218,7 +218,8 @@ public class Setitemsandinventory : MonoBehaviour
         {
             Statics.charmaxhealth[i] += Statics.charhealthskillpoints[i] * Statics.healthperskillpoint;
             Statics.chardefense[i] += Statics.chardefenseskillpoints[i] * Statics.defenseperskillpoint;
-            Statics.charattack[i] += Statics.charattackskillpoints[i] * Statics.attackperskillpoint;
+            //Statics.charattack[i] += Statics.charattackskillpoints[i] * Statics.attackperskillpoint;
+            Statics.charattack[i] += Statics.charcurrentlvl;
             Statics.charcritchance[i] += Statics.charcritchanceskillpoints[i] * Statics.critchanceperskillpoint;
             Statics.charcritdmg[i] += Statics.charcritdmgskillpoints[i] * Statics.critdmgperskillpoint;
             Statics.charweaponbuffduration[i] += Statics.charweaponskillpoints[i] * Statics.weaonswitchbuffdurationperskillpoint;

@@ -99,10 +99,10 @@ public class Equipcharselection : MonoBehaviour
                             Statics.charattack[currentchar] + "\n" +
                             Statics.charcritchance[currentchar] + "%" + "\n" +
                             Statics.charcritdmg[currentchar] + "%" + "\n" +
-                            (Statics.charweaponbuff[currentchar]) + "%" + "\n" +
-                            Statics.charweaponbuffduration[currentchar] + "sec" + "\n" +
-                            (Statics.charswitchbuff[currentchar]) + "%" + "\n" +
-                            Statics.charswitchbuffduration[currentchar] + "sec" + "\n" +
+                            Statics.charweaponbuff[currentchar] + "%" + "\n" +
+                            string.Format("{0:#.0}", Statics.charweaponbuffduration[currentchar]) + "sec" + "\n" +
+                            Statics.charswitchbuff[currentchar] + "%" + "\n" +
+                            string.Format("{0:#.0}", Statics.charswitchbuffduration[currentchar]) + "sec" + "\n" +
                             Statics.charbasiccritbuff[currentchar] + "%" + "\n" +
                             Statics.charbasicdmgbuff[currentchar] + "%";
 

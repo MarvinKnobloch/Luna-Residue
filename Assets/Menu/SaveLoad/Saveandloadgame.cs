@@ -20,8 +20,7 @@ public class Saveandloadgame : MonoBehaviour
     [SerializeField] private Areacontroller areacontroller;
 
     public void savegamedata()
-    {
-        
+    {       
         int slot;
         if (savemenucontroller == null)
         {

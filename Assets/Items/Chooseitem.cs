@@ -66,10 +66,10 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                             Statics.charattack[selectedchar] + "\n" +
                             Statics.charcritchance[selectedchar] + "%" + "\n" +
                             Statics.charcritdmg[selectedchar] + "%" + "\n" +
-                            (Statics.charweaponbuff[selectedchar]) + "%" + "\n" +
-                            Statics.charweaponbuffduration[selectedchar] + "sec" + "\n" +
-                            (Statics.charswitchbuff[selectedchar]) + "%" + "\n" +
-                            Statics.charswitchbuffduration[selectedchar] + "sec" + "\n" +
+                            Statics.charweaponbuff[selectedchar] + "%" + "\n" +
+                            string.Format("{0:#.0}", Statics.charweaponbuffduration[selectedchar]) + "sec" + "\n" +
+                            Statics.charswitchbuff[selectedchar] + "%" + "\n" +
+                            string.Format("{0:#.0}", Statics.charswitchbuffduration[selectedchar]) + "sec" + "\n" +
                             Statics.charbasiccritbuff[selectedchar] + "%" + "\n" +
                             Statics.charbasicdmgbuff[selectedchar] + "%";
 
