@@ -73,6 +73,7 @@ public class Infightcontroller : MonoBehaviour
         {
             if (Statics.infight == false)
             {
+                Statics.nextattackdealbonusdmg = false;
                 Statics.infightresurrectcd = Statics.presetresurrectcd;
                 GlobalCD.stopsupportresurrectioncd();                       //res probleme weil supportrezzcdisrunning nicht resetet wird???? 
                 Statics.supportcanresurrect = false;

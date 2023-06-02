@@ -18,11 +18,13 @@ public class Charswitch : MonoBehaviour
 
     public GameObject charmanager;
     private Manamanager manacontroller;
+    private LoadCharmanager loadcharmanager;
 
     [SerializeField] private Playersounds playersounds;
     void Awake()
     {
         manacontroller = charmanager.GetComponent<Manamanager>();
+        loadcharmanager = GetComponent<LoadCharmanager>();
         Steuerung = Keybindinputmanager.inputActions;
     }
 
@@ -64,7 +66,13 @@ public class Charswitch : MonoBehaviour
             Statics.currentactiveplayer = 1;
             LoadCharmanager.Overallmainchar.gameObject.GetComponent<Weaponswitch>().imageupdateaftercharswitch();
             charuiimage.sprite = charimages[Statics.currentfirstchar];
-            if (Statics.infight == true) enemytargetupdate(Statics.currentsecondchar);
+
+            loadcharmanager.checkforattributebonus(Statics.currentsecondchar);
+            if (Statics.infight == true)
+            {
+                enemytargetupdate(Statics.currentsecondchar);
+                charswitchexplosion(Statics.currentsecondchar);
+            }            
         }                                                  
     }
 
@@ -82,7 +90,13 @@ public class Charswitch : MonoBehaviour
             Statics.currentactiveplayer = 0;
             LoadCharmanager.Overallmainchar.gameObject.GetComponent<Weaponswitch>().imageupdateaftercharswitch();
             charuiimage.sprite = charimages[Statics.currentsecondchar];
-            if (Statics.infight == true) enemytargetupdate(Statics.currentfirstchar);
+
+            loadcharmanager.checkforattributebonus(Statics.currentfirstchar);
+            if (Statics.infight == true)
+            {
+                enemytargetupdate(Statics.currentfirstchar);
+                charswitchexplosion(Statics.currentfirstchar);
+            }
         }
     }
     private void switchvalues()
@@ -125,6 +139,32 @@ public class Charswitch : MonoBehaviour
             if (obj.TryGetComponent(out EnemyHP enemyhp))
             {
                 if (enemyhp.currentplayerwithmosthits == 0) enemyhp.healthbar.targetupdate(currentchar);
+            }
+        }
+    }
+    private void charswitchexplosion(int charnumber)
+    {
+        if(Statics.bonuscharexplosion == true)
+        {
+            float explosiondmg = 30 + Statics.charweaponbuff[charnumber] + Statics.charswitchbuff[charnumber];
+            float finalexplosiondmg = Mathf.Round(explosiondmg + ((Statics.charweaponbuff[charnumber] + Statics.charswitchbuff[charnumber]) * 0.01f * explosiondmg));
+            float healamount = finalexplosiondmg * 0.5f;
+
+            Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallmainchar, healamount, false);
+            Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallsecondchar, healamount, false);
+            Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallthirdchar, healamount, false);
+            Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallforthchar, healamount, false);
+
+            if(Infightcontroller.infightenemylists.Count > 0)
+            {
+                finalexplosiondmg = finalexplosiondmg / Infightcontroller.infightenemylists.Count;
+                for (int i = 0; i < Infightcontroller.infightenemylists.Count; i++)
+                {
+                    if (Infightcontroller.infightenemylists[i].TryGetComponent(out EnemyHP enemyhp))
+                    {
+                        enemyhp.takeplayerdamage(finalexplosiondmg, 0, false);
+                    }
+                }
             }
         }
     }

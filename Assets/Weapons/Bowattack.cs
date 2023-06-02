@@ -568,7 +568,7 @@ public class Bowattack : MonoBehaviour
     private void weaponswitchshootarrow()
     {
         shootcount++;
-        shotairbasicarrow();
+        shotarrowweaponswitch();
         playerarrow.SetActive(false);
         movementscript.ChangeAnimationState(slowmoshoot);
     }
@@ -637,6 +637,12 @@ public class Bowattack : MonoBehaviour
     }
     private void shotairbasicarrow() => shotsinglearrowwhileaim(basicarrowdmg, 0, 1);
     private void shotairmidarrow() => shotsinglearrowwhileaim(singleendarrowdmg, 2, 1);
+    private void shotarrowweaponswitch() 
+    {
+        float dmg = basicarrowdmg * 0.8f;
+        if (Statics.bonusdmgweaponswitch == true) shotsinglearrowwhileaim(dmg * Statics.bonusdmgweaponswitchmultipler, 0, 1);
+        else shotsinglearrowwhileaim(dmg, 0, 1);
+    }
 
     private void shotaoearrowwhileaim(float dmg, float radius, int type)
     {

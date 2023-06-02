@@ -226,8 +226,8 @@ public class Setitemsandinventory : MonoBehaviour
             Statics.charweaponbuff[i] += Statics.charweaponskillpoints[i] * Statics.weaponswitchbuffperskillpoint;
             Statics.charswitchbuffduration[i] += Statics.charcharswitchskillpoints[i] * Statics.charswitchbuffdurationperskillpoint;
             Statics.charswitchbuff[i] += Statics.charcharswitchskillpoints[i] * Statics.charswitchbuffperskillpoint;
-            Statics.charbasiccritbuff[i] += Statics.charbasicdmgbuff[i] * Statics.basiccritbuffperskillpoint;
-            Statics.charbasicdmgbuff[i] += Statics.charbasicdmgbuff[i] * Statics.basicdmgbuffperskillpoint;
+            Statics.charbasiccritbuff[i] += Statics.charbasicskillpoints[i] * Statics.basiccritbuffperskillpoint;
+            Statics.charbasicdmgbuff[i] += Statics.charbasicskillpoints[i] * Statics.basicdmgbuffperskillpoint;
         }
     }
     public void addguardhp()

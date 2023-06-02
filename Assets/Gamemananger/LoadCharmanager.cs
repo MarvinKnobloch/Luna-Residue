@@ -189,6 +189,8 @@ public class LoadCharmanager : MonoBehaviour
         setweapons?.Invoke();
         weaponscriptupdate();
 
+        checkforattributebonus(Statics.currentfirstchar);
+
         uiactionscontroller.hotkeysupdate();
 
         foreach (GameObject mates in teammates)
@@ -276,6 +278,36 @@ public class LoadCharmanager : MonoBehaviour
                     atbcontroller.classrollupdate();
                 }
             }
+        }
+    }
+    public void checkforattributebonus(int charnumber)
+    {
+        int survivalpoints = Statics.charhealthskillpoints[charnumber] + Statics.chardefenseskillpoints[charnumber];
+        checkpoints(survivalpoints, out Statics.bonusdmgafterheal, out Statics.bonusdefense);
+
+        int critpoints = Statics.charcritchanceskillpoints[charnumber] + Statics.charcritdmgskillpoints[charnumber];
+        checkpoints(critpoints, out Statics.bonuscritstacks, out Statics.bonuscritdmg);
+
+        int switchpoints = Statics.charweaponskillpoints[charnumber] + Statics.charcharswitchskillpoints[charnumber];
+        checkpoints(switchpoints, out Statics.bonuscharexplosion, out Statics.bonusdmgweaponswitch);
+
+        checkpoints(Statics.charbasicskillpoints[charnumber], out Statics.bonusbasicdurationincrease, out Statics.bonusneutraldmgincrease);
+    }
+    private void checkpoints(int points, out bool bonus1, out bool bonus2)
+    {
+        if (points >= Statics.firstbonuspointsneeded)
+        {
+            bonus1 = true;
+            if (points >= Statics.secondbonuspointsneeded)
+            {
+                bonus2 = true;
+            }
+            else bonus2 = false;
+        }
+        else
+        {
+            bonus1 = false;
+            bonus2 = false;
         }
     }
     private void setdifficulty()

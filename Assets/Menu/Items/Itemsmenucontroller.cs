@@ -30,7 +30,7 @@ public class Itemsmenucontroller : MonoBehaviour
                 {
                     items.Add(matsinventory.Container.Items[i].item);
                     GameObject obj = Instantiate(itemprefab, itemsbackground.transform);
-                    obj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = matsinventory.Container.Items[i].itemname;
+                    obj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = matsinventory.Container.Items[i].item.itemname;
                 }
                 itemsbackground.transform.GetChild(i).transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = matsinventory.Container.Items[i].amount.ToString();
             }

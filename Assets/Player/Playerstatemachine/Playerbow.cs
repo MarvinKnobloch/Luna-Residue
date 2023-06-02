@@ -86,6 +86,9 @@ public class Playerbow
             psm.transform.rotation = Quaternion.LookRotation(Movescript.lockontarget.transform.position - psm.transform.position, Vector3.up);
             if (Vector3.Distance(psm.transform.position, Movescript.lockontarget.position) < 2f)
             {
+                Vector3 lookposi = Movescript.lockontarget.transform.position - psm.transform.position;
+                lookposi.y = 0;
+                psm.transform.rotation = Quaternion.LookRotation(lookposi);
                 psm.switchtoairstate();
                 Statics.otheraction = false;
             }

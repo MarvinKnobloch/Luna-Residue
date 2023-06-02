@@ -77,7 +77,7 @@ public class Singlearrow : MonoBehaviour
                     enemyscript.takeplayerdamage(overalldmg, dmgtype , crit);
                 }
             }
-            if(dmgtype == 0)
+            if (dmgtype == 0)
             {
                 Manamanager.manamanager.Managemana(Statics.bowbasicmanarestore);
             }

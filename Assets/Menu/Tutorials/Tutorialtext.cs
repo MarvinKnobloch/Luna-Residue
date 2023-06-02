@@ -126,7 +126,6 @@ public class Tutorialtext : MonoBehaviour
         settextvalues();
         tutorialtext.text = "\"Health\" increase the hit points and healing done by this character. \n" +
                             "\n\"Defense\" reduce the damage taken. " + Statics.defenseconvertedtoattack + "% off the character defense will converted to attack damage. \n" +
-                            "\n\"Attack\" increases damage.\n" +
                             "\n\"Critical chance\" and \"Critical damage\" increases the amount of critical strikes and there damage. \n" +
                             "\n\"Weaponswitch\" increases the damage buff and buff duration after switching a weapon. \n" +
                             "\n\"Charswitch\" increases the damage buff and buff duration after switching the character. \n" +

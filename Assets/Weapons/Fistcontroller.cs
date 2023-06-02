@@ -99,7 +99,8 @@ public class Fistcontroller : MonoBehaviour
     }
     public void Fistweaponswitchhitbox()
     {
-        lookfordmgcollision(righthand.transform.position, 4, basicweaponswitchdmg, 0, endmanarestore, 2);
+        if (Statics.bonusdmgweaponswitch == true) lookfordmgcollision(righthand.transform.position, 4, basicweaponswitchdmg * Statics.bonusdmgweaponswitchmultipler, 0, endmanarestore, 2);
+        else lookfordmgcollision(righthand.transform.position, 4, basicweaponswitchdmg, 0, endmanarestore, 2);
     }
     private void lookfordmgcollision(Vector3 hitposition, float hitrange, float damage, int dmgtype, float manarestore, int sound)
     {

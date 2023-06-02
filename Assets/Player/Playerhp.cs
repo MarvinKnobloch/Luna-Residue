@@ -49,8 +49,9 @@ public class Playerhp : MonoBehaviour
     }
     public void addhealthwithtext(float heal)
     {
-        health += Mathf.Round(heal);
-        Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, heal, Color.green);
+        float endheal = Mathf.Round(heal);
+        health += endheal;
+        Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, endheal, Color.green);
         handlehealth();
     }
 

@@ -78,7 +78,8 @@ public class SwordController : MonoBehaviour
     }
     public void Swordweaponswitchhitbox()
     {
-        lookfordmgcollision(weaponswitchboxposi.transform.position, 3f, basicweaponswitchdmg, 0, endmanarestore, 1);
+        if (Statics.bonusdmgweaponswitch == true) lookfordmgcollision(weaponswitchboxposi.transform.position, 3f, basicweaponswitchdmg * Statics.bonusdmgweaponswitchmultipler, 0, endmanarestore, 1);
+        else lookfordmgcollision(weaponswitchboxposi.transform.position, 3f, basicweaponswitchdmg, 0, endmanarestore, 1);
     }
     private void lookfordmgcollision(Vector3 hitposition, float hitrange, float damage, int dmgtype, float manarestore, float sound)
     {

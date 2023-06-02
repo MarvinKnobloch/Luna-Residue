@@ -106,6 +106,16 @@ public class EnemyHP : MonoBehaviour
             else if (dmgtype == 1) enemycalculatedmg.downdmg(damage);
             else if (dmgtype == 2) enemycalculatedmg.middmg(damage);
             else if (dmgtype == 3) enemycalculatedmg.updmg(damage);
+            if (Statics.nextattackdealbonusdmg == true)
+            {
+                if(gameObject == Movescript.lockontarget.gameObject)
+                {
+                    finaldmg += Statics.nextattackbonusdmgamount;
+                    Statics.nextattackdealbonusdmg = false;
+                    Statics.nextattackbonusdmgamount = 0;
+                }
+            }
+            finaldmg = Mathf.Round(finaldmg);
             if (crit == true) Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, finaldmg, dmgtextcolor);
             else Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, finaldmg, Color.yellow);
             currenthealth -= finaldmg;

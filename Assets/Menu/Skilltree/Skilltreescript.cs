@@ -76,7 +76,6 @@ public class Skilltreescript : MonoBehaviour
         }
         if (Steuerung.Menusteuerung.Space.WasPerformedThisFrame())
         {
-            Debug.Log("start");
             StartCoroutine("startresetskillpoints");
         }
         if (Steuerung.Menusteuerung.Space.WasReleasedThisFrame())
@@ -150,7 +149,7 @@ public class Skilltreescript : MonoBehaviour
 
         charselectionimage[currentchar].color = Color.green;
         Statics.charskillpoints[currentchar] = Statics.charcurrentlvl * skillpointsperlvl - Statics.charspendedskillpoints[currentchar];
-        skillpointtext.text = "Skillpoints " + Statics.charskillpoints[currentchar];
+        skillpointtext.text = "Skill Points " + Statics.charskillpoints[currentchar];
 
         healthbuttonnumber.text = "" + Statics.charhealthskillpoints[currentchar];
         defensebuttonnumber.text = "" + Statics.chardefenseskillpoints[currentchar];
@@ -225,7 +224,7 @@ public class Skilltreescript : MonoBehaviour
 
         Statics.charskillpoints[currentchar] = Statics.charcurrentlvl;
         Statics.charspendedskillpoints[currentchar] = 0;
-        skillpointtext.text = "Skillpoints " + Statics.charskillpoints[currentchar];
+        skillpointtext.text = "Skill Points " + Statics.charskillpoints[currentchar];
 
         settextandpoints();
     }
@@ -250,7 +249,7 @@ public class Skilltreescript : MonoBehaviour
     public void updateunspendpoint()
     {
         Statics.charskillpoints[currentchar] = Statics.charcurrentlvl * skillpointsperlvl - Statics.charspendedskillpoints[currentchar];
-        skillpointtext.text = "Skillpoints " + Statics.charskillpoints[currentchar];
+        skillpointtext.text = "Skill Points " + Statics.charskillpoints[currentchar];
     }
 
     public void healthnumberplus()

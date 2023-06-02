@@ -122,6 +122,8 @@ public class Statics
     public static int[] tookdmgfromamount = { 1, 1, 1, 1 };
     public static int infightresurrectcd;                           //wird im infightcontroller zurückgesetzt
     public static bool supportcanresurrect;
+    public static bool nextattackdealbonusdmg;
+    public static float nextattackbonusdmgamount;                   //jeder bonus ist momentan noch stackbar(wenn 2 heal gecastet werden ohne anzugreifen macht man 2mal den dmg)
 
     //difficultyvalues
     public static int difficulty;
@@ -225,4 +227,25 @@ public class Statics
     public static int[] charweaponskillpoints = new int[5];
     public static int[] charcharswitchskillpoints = new int[5];
     public static int[] charbasicskillpoints = new int[5];
+
+    //attributebonus
+    public static int firstbonuspointsneeded = 4;
+    public static int secondbonuspointsneeded = 8;
+    //health/defense
+    public static bool bonusdmgafterheal;                  //healingscript
+    public static bool dmgafterhealamount;
+    public static bool bonusdefense;
+
+    //crit
+    public static bool bonuscritstacks;
+    public static bool bonuscritdmg;
+
+    //weapon/charswitch
+    public static bool bonuscharexplosion;                 //charswitch
+    public static bool bonusdmgweaponswitch;
+    public static float bonusdmgweaponswitchmultipler = 1.5f;
+
+    //basic
+    public static bool bonusbasicdurationincrease;
+    public static bool bonusneutraldmgincrease;
 }

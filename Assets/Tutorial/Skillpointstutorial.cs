@@ -24,7 +24,7 @@ public class Skillpointstutorial : MonoBehaviour
     {
         if (readinputs == true && controlls.Menusteuerung.F1.WasPressedThisFrame())
         {
-            if (textindex != 9)
+            if (textindex != 8)
             {
                 tutorialcontroller.tutorialtext.text = string.Empty;
                 textindex++;
@@ -54,12 +54,11 @@ public class Skillpointstutorial : MonoBehaviour
         else if (textindex == 1) tutorialcontroller.tutorialtext.text = "Each Character got his own skill tree and there is no limitation on switching these points.";
         else if (textindex == 2) tutorialcontroller.tutorialtext.text = "\"Health\" increases the hit points and healing done by this character.";
         else if (textindex == 3) tutorialcontroller.tutorialtext.text = "\"Defense\" reduces the damage taken. " + Statics.defenseconvertedtoattack + "% of the characters defense will be converted to attack damage.";
-        else if (textindex == 4) tutorialcontroller.tutorialtext.text = "\"Attack\" increases damage.";
-        else if (textindex == 5) tutorialcontroller.tutorialtext.text = "\"Critical chance\" and \"Critical damage\" increases the amount of critical strikes and their damage.";
-        else if (textindex == 6) tutorialcontroller.tutorialtext.text = "\"Weaponswitch\" increases the damage buff and buff duration after switching a weapon.";
-        else if (textindex == 7) tutorialcontroller.tutorialtext.text = "\"Charswitch\" increases the damage buff and buff duration after switching the character.";
-        else if (textindex == 8) tutorialcontroller.tutorialtext.text = "\"Basic\" increases the damage done by the last attack of your chain attack and the critical chance granted from hitting the enemy weak spot.";
-        else if (textindex == 9) tutorialcontroller.tutorialtext.text = "For more turotials click on \"<color=green>Tutorial</color>\" in the menu overview.";
+        else if (textindex == 4) tutorialcontroller.tutorialtext.text = "\"Critical chance\" and \"Critical damage\" increases the amount of critical strikes and their damage.";
+        else if (textindex == 5) tutorialcontroller.tutorialtext.text = "\"Weaponswitch\" increases the damage buff and buff duration after switching a weapon.";
+        else if (textindex == 6) tutorialcontroller.tutorialtext.text = "\"Charswitch\" increases the damage buff and buff duration after switching the character.";
+        else if (textindex == 7) tutorialcontroller.tutorialtext.text = "\"Basic\" increases the damage done by the last attack of your chain attack and the critical chance granted from hitting the enemy weak spot.";
+        else if (textindex == 8) tutorialcontroller.tutorialtext.text = "For more turotials click on \"<color=green>Tutorial</color>\" in the menu overview.";
 
     }
     private void endtutorial()

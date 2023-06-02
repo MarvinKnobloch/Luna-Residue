@@ -12,7 +12,7 @@ public class Playerattack
         {
             Vector3 endposi = Movescript.lockontarget.transform.position + psm.transform.forward * -1.5f;
             Vector3 distancetomove = endposi - psm.transform.position;
-            Vector3 movement = distancetomove.normalized * 30 * Time.deltaTime;
+            Vector3 movement = distancetomove.normalized * 0.5f;
             psm.velocity = movement;
         }
         else

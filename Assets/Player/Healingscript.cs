@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Utilities;
 
 public class Healingscript : MonoBehaviour
 {
@@ -53,6 +52,7 @@ public class Healingscript : MonoBehaviour
 
     [SerializeField] private Playersounds playersounds;
     [SerializeField] private Spellsounds spellsounds;
+
 
     private void Awake()
     {
@@ -302,6 +302,13 @@ public class Healingscript : MonoBehaviour
         healanzeige.SetActive(false);
         Statics.otheraction = false;
         GlobalCD.starthealingcd(resurrectcd);
+
+        if (Statics.bonusdmgafterheal == true)
+        {
+            Statics.nextattackdealbonusdmg = true;         //wird resetet wenn man infight geht
+            Statics.nextattackbonusdmgamount += finalsingleheal * 0.5f;
+        }
+
         if(movementscript.state == Movescript.State.Heal)
         {
             movementscript.state = Movescript.State.Ground;
