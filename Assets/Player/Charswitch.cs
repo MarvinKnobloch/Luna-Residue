@@ -19,12 +19,14 @@ public class Charswitch : MonoBehaviour
     public GameObject charmanager;
     private Manamanager manacontroller;
     private LoadCharmanager loadcharmanager;
+    private Bonushealscript bonushealscript;
 
     [SerializeField] private Playersounds playersounds;
     void Awake()
     {
         manacontroller = charmanager.GetComponent<Manamanager>();
         loadcharmanager = GetComponent<LoadCharmanager>();
+        bonushealscript = GetComponent<Bonushealscript>();
         Steuerung = Keybindinputmanager.inputActions;
     }
 
@@ -72,6 +74,8 @@ public class Charswitch : MonoBehaviour
             {
                 enemytargetupdate(Statics.currentsecondchar);
                 charswitchexplosion(Statics.currentsecondchar);
+                if (Statics.bonushealovertimebool == true) bonushealscript.enabled = true;
+                else bonushealscript.enabled = false;
             }            
         }                                                  
     }
@@ -96,6 +100,8 @@ public class Charswitch : MonoBehaviour
             {
                 enemytargetupdate(Statics.currentfirstchar);
                 charswitchexplosion(Statics.currentfirstchar);
+                if (Statics.bonushealovertimebool == true) bonushealscript.enabled = true;
+                else bonushealscript.enabled = false;
             }
         }
     }
@@ -150,7 +156,7 @@ public class Charswitch : MonoBehaviour
             float finalexplosiondmg = Mathf.Round(explosiondmg + ((Statics.charweaponbuff[charnumber] + Statics.charswitchbuff[charnumber]) * 0.01f * explosiondmg));
             float healamount = finalexplosiondmg * 0.5f;
 
-            Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallmainchar, healamount, false);
+            Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallmainchar, healamount, true);
             Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallsecondchar, healamount, false);
             Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallthirdchar, healamount, false);
             Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallforthchar, healamount, false);

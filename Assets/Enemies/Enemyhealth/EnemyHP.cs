@@ -58,6 +58,7 @@ public class EnemyHP : MonoBehaviour
     public event Action<float> healthpctchanged;
     public event Action<float, float> focustargetuihptext;
 
+    public static event Action addbonuscritstacks;
 
     public event Action markcurrenttarget;
     public event Action unmarkcurrenttarget;
@@ -116,7 +117,15 @@ public class EnemyHP : MonoBehaviour
                 }
             }
             finaldmg = Mathf.Round(finaldmg);
-            if (crit == true) Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, finaldmg, dmgtextcolor);
+            if (crit == true)
+            { 
+                Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, finaldmg, dmgtextcolor);
+                if(Statics.bonuscritstacksbool == true && gameObject == Movescript.lockontarget.gameObject)
+                {
+                    Statics.bonuscritstacks++;
+                    addbonuscritstacks?.Invoke();
+                }
+            }
             else Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, finaldmg, Color.yellow);
             currenthealth -= finaldmg;
             afterdmgtaken();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using System;
+using TMPro;
 
 //elemenu spells beim charwechsel reseten?
 
@@ -36,6 +37,8 @@ public class LoadCharmanager : MonoBehaviour
 
     [SerializeField] private GameObject map;
     [SerializeField] private LayerMask meleehitbox;
+
+    [SerializeField] private GameObject bonusdashimage;
 
     public static event Action setweapons;
     public static event Action swordcontrollerupdate;
@@ -189,7 +192,17 @@ public class LoadCharmanager : MonoBehaviour
         setweapons?.Invoke();
         weaponscriptupdate();
 
+        resetbonusattributesvalues();
         checkforattributebonus(Statics.currentfirstchar);
+        if(Statics.charcritchanceskillpoints[Statics.currentfirstchar] + Statics.charcritdmgskillpoints[Statics.currentfirstchar] >= Statics.firstbonuspointsneeded ||
+           Statics.charcritchanceskillpoints[Statics.currentsecondchar] + Statics.charcritdmgskillpoints[Statics.currentsecondchar] >= Statics.firstbonuspointsneeded)
+        {
+            Overallmainchar.GetComponent<Movescript>().bonuscalculatedashdmg();
+            Overallsecondchar.GetComponent<Movescript>().bonuscalculatedashdmg();
+            bonusdashimage.SetActive(true);
+            bonusdashimage.GetComponentInChildren<TextMeshProUGUI>().text = Statics.bonuscritstacks.ToString();
+        }
+        else bonusdashimage.SetActive(false);
 
         uiactionscontroller.hotkeysupdate();
 
@@ -280,13 +293,18 @@ public class LoadCharmanager : MonoBehaviour
             }
         }
     }
+    private void resetbonusattributesvalues()
+    {
+        Statics.bonuscritstacks = 0;
+        Statics.bonusdashcantrigger = false;
+    }
     public void checkforattributebonus(int charnumber)
     {
         int survivalpoints = Statics.charhealthskillpoints[charnumber] + Statics.chardefenseskillpoints[charnumber];
-        checkpoints(survivalpoints, out Statics.bonusdmgafterheal, out Statics.bonusdefense);
+        checkpoints(survivalpoints, out Statics.bonusdmgafterheal, out Statics.bonushealovertimebool);
 
         int critpoints = Statics.charcritchanceskillpoints[charnumber] + Statics.charcritdmgskillpoints[charnumber];
-        checkpoints(critpoints, out Statics.bonuscritstacks, out Statics.bonuscritdmg);
+        checkpoints(critpoints, out Statics.bonuscritstacksbool, out Statics.bonuscritdmg);
 
         int switchpoints = Statics.charweaponskillpoints[charnumber] + Statics.charcharswitchskillpoints[charnumber];
         checkpoints(switchpoints, out Statics.bonuscharexplosion, out Statics.bonusdmgweaponswitch);

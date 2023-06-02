@@ -233,16 +233,20 @@ public class Statics
     public static int secondbonuspointsneeded = 8;
     //health/defense
     public static bool bonusdmgafterheal;                  //healingscript
-    public static bool dmgafterhealamount;
-    public static bool bonusdefense;
+    public static bool bonushealovertimebool;              //bonushealscript + Infightcontroller
+    public static float bonushealtimer = 5;
+    public static float bonushealpercentage = 10;
 
     //crit
-    public static bool bonuscritstacks;
+    public static bool bonuscritstacksbool;               //Enemyhp.takedmg + Bonuscritstacksscript
+    public static int bonuscritstacks;
+    public static int bonuscritstacksneeded = 3;
+    public static bool bonusdashcantrigger;
     public static bool bonuscritdmg;
 
     //weapon/charswitch
     public static bool bonuscharexplosion;                 //charswitch
-    public static bool bonusdmgweaponswitch;
+    public static bool bonusdmgweaponswitch;               //sword/fistcontroller + bowattack
     public static float bonusdmgweaponswitchmultipler = 1.5f;
 
     //basic

@@ -17,8 +17,9 @@ public class Infightcontroller : MonoBehaviour
     [SerializeField] private GameObject playergameover;
     [SerializeField] private GameObject gameovercontroller;
 
+    private Bonushealscript bonushealscript;
+
     [SerializeField] private AudioClip battle1;
-    //public float spezialtimertest;
     private void Awake()
     {
         if (instance == null)
@@ -30,6 +31,7 @@ public class Infightcontroller : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        bonushealscript = GetComponent<Bonushealscript>();
     }
     private void OnEnable()
     {
@@ -59,6 +61,7 @@ public class Infightcontroller : MonoBehaviour
             Statics.currentenemyspecialcd = Statics.enemyspecialcd;
             instance.StopCoroutine("firstenemyspezialcd");
             instance.StopCoroutine("enemyspezialcd");
+            bonushealscript.enabled = false;
             infightimage.SetActive(false);
             instance.Invoke("disablechars", teammatesdespawntime);
             LoadCharmanager.Overallmainchar.GetComponent<Movescript>().endlockon();
@@ -73,6 +76,8 @@ public class Infightcontroller : MonoBehaviour
         {
             if (Statics.infight == false)
             {
+                infightimage.SetActive(true);
+                instance.CancelInvoke();                        //unterbricht den Allie despawn wenn man wieder infight kommmt
                 Statics.nextattackdealbonusdmg = false;
                 Statics.infightresurrectcd = Statics.presetresurrectcd;
                 GlobalCD.stopsupportresurrectioncd();                       //res probleme weil supportrezzcdisrunning nicht resetet wird???? 
@@ -81,11 +86,14 @@ public class Infightcontroller : MonoBehaviour
                 map.SetActive(false);
                 instance.StopCoroutine("healalliesafterfight");
                 instance.StartCoroutine("firstenemyspezialcd");
+                if (Statics.bonushealovertimebool == true)
+                {
+                    bonushealscript.healovertimeremainingtime = Statics.bonushealtimer;
+                    bonushealscript.enabled = true;
+                }
                 LoadCharmanager.Overallmainchar.GetComponent<Movescript>().autolockon();
                 LoadCharmanager.Overallmainchar.GetComponent<Movescript>().spawnallies();
             }
-            infightimage.SetActive(true);
-            instance.CancelInvoke();                        //unterbricht den Allie despawn wenn man wieder infight kommmt
         }
     }
     IEnumerator firstenemyspezialcd()

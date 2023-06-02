@@ -6,6 +6,7 @@ public class Playerutility
 {
     public Movescript psm;
 
+    private float finaldashdmg;
     const string gatherstate = "Gatherobject";
 
     public void gatheritem(GameObject gatherobject)
@@ -53,5 +54,31 @@ public class Playerutility
         {
             psm.Abilitiesend();
         }
+    }
+    public void bonusdashexplosiondmg()
+    {
+        if(Statics.bonusdashcantrigger == true)
+        {
+            Statics.bonusdashcantrigger = false;
+            Statics.bonuscritstacks = 0;
+            psm.bonuscritstackstext.text = Statics.bonuscritstacks.ToString();
+            Collider[] cols = Physics.OverlapSphere(psm.transform.position, 10, psm.spellsdmglayer);
+            foreach (Collider enemyhit in cols)
+            {
+                if (enemyhit.isTrigger)               //damit nur die meleehitbox getriggered wird
+                {
+                    if (enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
+                    {
+                        enemyscript.takeplayerdamage(finaldashdmg, 0, false);
+                    }
+                }
+            }
+        }
+    }
+    public void calculatedashdmg()
+    {
+        float critdmgvalue = (psm.attributecontroller.critdmg - 150) * 0.5f;
+        float dmg = (psm.attributecontroller.critchance + critdmgvalue) * 1f;
+        finaldashdmg = Mathf.Round(dmg + ((psm.attributecontroller.critchance + critdmgvalue) * 0.01f * dmg));
     }
 }

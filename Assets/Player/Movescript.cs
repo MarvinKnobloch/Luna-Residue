@@ -21,6 +21,7 @@ public class Movescript : MonoBehaviour
 
     [NonSerialized] public Animator animator;
     [NonSerialized] public Playerhp playerhp;
+    [NonSerialized] public Attributecontroller attributecontroller;
 
     public Transform CamTransform;
     public CinemachineFreeLook Cam1;
@@ -61,6 +62,9 @@ public class Movescript : MonoBehaviour
     [NonSerialized] public float xrotation = 0f;
     [NonSerialized] public float aimrotationspeed = 10;
     public GameObject mousetarget;
+
+    //attributebonus
+    public TextMeshProUGUI bonuscritstackstext;
 
     //Characterrig
     public MonoBehaviour Charrig;
@@ -180,6 +184,7 @@ public class Movescript : MonoBehaviour
         healingscript = GetComponent<Healingscript>();
         playerhp = GetComponent<Playerhp>();
         eleAbilities = GetComponent<EleAbilities>();
+        attributecontroller = GetComponent<Attributecontroller>();
         state = State.Air;
         starttime = Time.time;
         Statics.normalgamespeed = 1;
@@ -502,6 +507,8 @@ public class Movescript : MonoBehaviour
         showtext.GetComponent<TextMeshPro>().text = dmg.ToString();
         showtext.GetComponent<TextMeshPro>().color = Color.red;
     }
+    public void bonusdashexplosion() => playerutility.bonusdashexplosiondmg();                      //wird mit der dashani getriggert
+    public void bonuscalculatedashdmg() => playerutility.calculatedashdmg();
 
     public void elefiredashstart() => playerfire.firedashstart();
     public void elefiredashdmg() => playerfire.firedashdmg();
