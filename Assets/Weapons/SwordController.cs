@@ -133,8 +133,24 @@ public class SwordController : MonoBehaviour
         if (Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
         {
             crit = true;
-            float switchbuffdmg = Globalplayercalculations.calculateweaponcharbuff(dmg);
-            dmgdealed = Mathf.Round(dmg * (attributecontroller.critdmg / 100f) + switchbuffdmg);
+            if (Statics.bonuscritdmg == true)
+            {
+                if (Random.Range(0, 100) < (100 - overallcritchance) * 0.5f)
+                {
+                    float switchbuffdmg = Globalplayercalculations.calculateweaponcharbuff(dmg);
+                    dmgdealed = Mathf.Round(dmg * ((attributecontroller.critdmg + attributecontroller.critdmg - 150) / 100f) + switchbuffdmg);
+                }
+                else
+                {
+                    float switchbuffdmg = Globalplayercalculations.calculateweaponcharbuff(dmg);
+                    dmgdealed = Mathf.Round(dmg * (attributecontroller.critdmg / 100f) + switchbuffdmg);
+                }
+            }
+            else
+            {
+                float switchbuffdmg = Globalplayercalculations.calculateweaponcharbuff(dmg);
+                dmgdealed = Mathf.Round(dmg * (attributecontroller.critdmg / 100f) + switchbuffdmg);
+            }
         }
         else
         {

@@ -25,6 +25,7 @@ public class EnemyHP : MonoBehaviour
 
     [NonSerialized] public bool enemyincreasebasicdmg;
     [NonSerialized] public bool enemydebuffcd;
+    [NonSerialized] public float debufftime;
     [NonSerialized] public float debufftimer;
     [NonSerialized] public float debuffcdtimer;
     [NonSerialized] public float debufffillamount;
@@ -249,7 +250,8 @@ public class EnemyHP : MonoBehaviour
     }
     IEnumerator enemydebuff()
     {
-        float debufftime = (float)Math.Round(UnityEngine.Random.Range(0.1f, 2.0f) + Statics.enemydebufftime, 1);
+        if (Statics.bonusbasicdurationbool == true) debufftime = (float)Math.Round(UnityEngine.Random.Range(0.1f, 2.0f) + Statics.enemydebufftime + Statics.bonusbasicdurationincrease, 1);
+        else debufftime = (float)Math.Round(UnityEngine.Random.Range(0.1f, 2.0f) + Statics.enemydebufftime, 1);
         debufftimer = debufftime;
         if(gothealthbar == true)
         {

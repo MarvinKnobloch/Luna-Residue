@@ -114,7 +114,7 @@ public class Convertstatics
         chardefenseskillpoints = Statics.chardefenseskillpoints;
         charattackskillpoints = Statics.charattackskillpoints;
         charcritchanceskillpoints = Statics.charcritchanceskillpoints;
-        charcritdmgskillpoints = Statics.charcritchanceskillpoints;
+        charcritdmgskillpoints = Statics.charcritdmgskillpoints;
         charweaponskillpoints = Statics.charweaponskillpoints;
         charcharswitchskillpoints = Statics.charcharswitchskillpoints;
         charbasicskillpoints = Statics.charbasicskillpoints;
@@ -190,7 +190,7 @@ public class Convertstatics
         Statics.chardefenseskillpoints = chardefenseskillpoints;
         Statics.charattackskillpoints = charattackskillpoints;
         Statics.charcritchanceskillpoints = charcritchanceskillpoints;
-        Statics.charcritchanceskillpoints = charcritdmgskillpoints;
+        Statics.charcritdmgskillpoints = charcritdmgskillpoints;
         Statics.charweaponskillpoints = charweaponskillpoints;
         Statics.charcharswitchskillpoints = charcharswitchskillpoints;
         Statics.charbasicskillpoints = charbasicskillpoints;

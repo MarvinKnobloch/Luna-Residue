@@ -309,7 +309,7 @@ public class LoadCharmanager : MonoBehaviour
         int switchpoints = Statics.charweaponskillpoints[charnumber] + Statics.charcharswitchskillpoints[charnumber];
         checkpoints(switchpoints, out Statics.bonuscharexplosion, out Statics.bonusdmgweaponswitch);
 
-        checkpoints(Statics.charbasicskillpoints[charnumber], out Statics.bonusbasicdurationincrease, out Statics.bonusneutraldmgincrease);
+        checkpoints(Statics.charbasicskillpoints[charnumber], out Statics.bonusbasicdurationbool, out Statics.bonusneutraldmgincrease);
     }
     private void checkpoints(int points, out bool bonus1, out bool bonus2)
     {

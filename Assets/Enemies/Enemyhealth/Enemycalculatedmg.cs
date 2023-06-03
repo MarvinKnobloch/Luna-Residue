@@ -17,14 +17,14 @@ public class Enemycalculatedmg
         }
         else if (enemyscript.sizeofenemy == 2)
         {
-            nodmgcalculation(dmg);
+            neutraldmgcalculation(dmg);
         }
     }
     public void middmg(float dmg)
     {
         if (enemyscript.sizeofenemy == 0)
         {
-            nodmgcalculation(dmg);
+            neutraldmgcalculation(dmg);
         }
         else if (enemyscript.sizeofenemy == 1)
         {
@@ -43,16 +43,24 @@ public class Enemycalculatedmg
         }
         else if (enemyscript.sizeofenemy == 1)
         {
-            nodmgcalculation(dmg);
+            neutraldmgcalculation(dmg);
         }
         else if (enemyscript.sizeofenemy == 2)
         {
             weakpointcalculation(dmg);
         }
     }
-    private void nodmgcalculation(float dmg)
+    private void neutraldmgcalculation(float dmg)
     {
-        enemyscript.finaldmg = Mathf.Round(dmg);
+        if(Statics.bonusneutraldmgincrease == true)
+        {
+            if(enemyscript.enemyincreasebasicdmg == false && enemyscript.enemydebuffcd == true)
+            {
+                enemyscript.finaldmg = Mathf.Round(dmg * ((150 + LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basicattributedmgbuff) / 100));
+            }
+            else enemyscript.finaldmg = Mathf.Round(dmg);
+        }
+        else enemyscript.finaldmg = Mathf.Round(dmg);
     }
     private void armorbreakcalculation(float dmg)
     {

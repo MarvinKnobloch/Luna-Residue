@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Elk
   m_EditorClassIdentifier: 
   enemyname: Elk
-  basehealth: 333
+  basehealth: 3330
   enemylvl: 1
   movementspeed: 10
   basedmg: 10

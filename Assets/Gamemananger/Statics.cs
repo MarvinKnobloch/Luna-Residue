@@ -242,7 +242,7 @@ public class Statics
     public static int bonuscritstacks;
     public static int bonuscritstacksneeded = 3;
     public static bool bonusdashcantrigger;
-    public static bool bonuscritdmg;
+    public static bool bonuscritdmg;                       //sword/fistcontroller + bowattack (crit berechnung)
 
     //weapon/charswitch
     public static bool bonuscharexplosion;                 //charswitch
@@ -250,6 +250,7 @@ public class Statics
     public static float bonusdmgweaponswitchmultipler = 1.5f;
 
     //basic
-    public static bool bonusbasicdurationincrease;
-    public static bool bonusneutraldmgincrease;
+    public static bool bonusbasicdurationbool;             //enemyhp
+    public static float bonusbasicdurationincrease = 3;
+    public static bool bonusneutraldmgincrease;            //enemycalculatedmg
 }

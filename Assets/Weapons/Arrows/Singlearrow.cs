@@ -14,8 +14,10 @@ public class Singlearrow : MonoBehaviour
 
     private float overalldmg;
     private float overallcritchance;
-    private float overallcritdmg;
+    private float critdmg;
     private bool crit;
+
+    private float switchbuffdmg;
 
     private float healreduction;
     private float enemydebuffcrit;
@@ -25,10 +27,9 @@ public class Singlearrow : MonoBehaviour
         dmgtype = type;
         Attributecontroller atb = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>();
         overalldmg = Globalplayercalculations.calculateplayerdmgdone(dmg, atb.attack, atb.bowattack, atb.stoneclassbonusdmg);
-        float switchbuffdmg = Globalplayercalculations.calculateweaponcharbuff(dmg);
-        overalldmg = Mathf.Round(overalldmg + switchbuffdmg);
+        switchbuffdmg = Globalplayercalculations.calculateweaponcharbuff(dmg);
         overallcritchance = Statics.playerbasiccritchance + LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critchance;
-        overallcritdmg = Mathf.Round(overalldmg * (LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critdmg / 100f) + switchbuffdmg);
+
         healreduction = reducehealing;
     }
 
@@ -69,12 +70,27 @@ public class Singlearrow : MonoBehaviour
                 if (UnityEngine.Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
                 {
                     crit = true;
-                    enemyscript.takeplayerdamage(overallcritdmg, dmgtype ,crit);
+                    critdmg = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critdmg;
+                    if (Statics.bonuscritdmg == true)
+                    {
+                        if (UnityEngine.Random.Range(0, 100) < (100 - overallcritchance) * 0.5f)
+                        {
+                            enemyscript.takeplayerdamage(overalldmg * ((critdmg + critdmg - 150) / 100f) + switchbuffdmg, dmgtype, crit);
+                        }
+                        else
+                        {
+                            enemyscript.takeplayerdamage(overalldmg * (critdmg / 100f) + switchbuffdmg, dmgtype, crit);
+                        }
+                    }
+                    else
+                    {
+                        enemyscript.takeplayerdamage(overalldmg * (critdmg / 100f) + switchbuffdmg, dmgtype, crit);
+                    }
                 }
                 else
                 {
                     crit = false;
-                    enemyscript.takeplayerdamage(overalldmg, dmgtype , crit);
+                    enemyscript.takeplayerdamage(overalldmg + switchbuffdmg, dmgtype , crit);
                 }
             }
             if (dmgtype == 0)
