@@ -10,6 +10,7 @@ public class Skilltreescript : MonoBehaviour
     private SpielerSteu Steuerung;
     [SerializeField] private GameObject overview;
     [SerializeField] private GameObject skilltree;
+    private Skilltreebonus skilltreebonus;
 
     private int skillpointsperlvl = 1;
 
@@ -41,6 +42,7 @@ public class Skilltreescript : MonoBehaviour
     [SerializeField] private TextMeshProUGUI statsbasicbuffdmg;
     [SerializeField] private TextMeshProUGUI statsbasiccrit;
 
+    [SerializeField] private GameObject bonusinfoimage;
     [SerializeField] private Image resetimage;
     private float resettime = 1f;
     public float resettimer;
@@ -54,6 +56,7 @@ public class Skilltreescript : MonoBehaviour
     private void Awake()
     {
         Steuerung = Keybindinputmanager.inputActions;
+        skilltreebonus = GetComponent<Skilltreebonus>();
     }
 
     private void Update()
@@ -94,6 +97,7 @@ public class Skilltreescript : MonoBehaviour
         currentchar = PlayerPrefs.GetInt("Maincharindex");
         charselectionimage[currentchar].color = Color.green;
         choosechar(currentchar);
+        skilltreebonus.bonusupdate(currentchar);
     }
     private void closeskilltree()
     {
@@ -102,11 +106,13 @@ public class Skilltreescript : MonoBehaviour
     }
     public void choosechar(int currentchar)
     {
+        bonusinfoimage.SetActive(false);
         stopskillpointreset();
         this.currentchar = currentchar;           // falls man mit click den char auswählt
         nametext.text = Statics.characternames[this.currentchar] + " LvL" + Statics.charcurrentlvl;
         settextandpoints();
         menusoundcontroller.playmenubuttonsound();
+        skilltreebonus.bonusupdate(currentchar);
     }
 
     private void selectionforward() 
@@ -289,6 +295,7 @@ public class Skilltreescript : MonoBehaviour
         }
         else healingbonus.text = Mathf.Round(Statics.charmaxhealth[currentchar] * Statics.healhealthbonuspercentage * 0.01f).ToString();
         healthbuttonnumber.text = "" + Statics.charhealthskillpoints[currentchar];
+        skilltreebonus.healthbonus(currentchar);
     }
     public void defensenumberplus()
     {
@@ -317,6 +324,7 @@ public class Skilltreescript : MonoBehaviour
         statsdefense.text = Statics.chardefense[currentchar] + "";
         defensetoattack.text = Mathf.Round(Statics.chardefense[currentchar] * Statics.defenseconvertedtoattack * 0.01f).ToString();
         defensebuttonnumber.text = Statics.chardefenseskillpoints[currentchar].ToString();
+        skilltreebonus.healthbonus(currentchar);
     }
     public void attacknumberplus()
     {
@@ -367,6 +375,7 @@ public class Skilltreescript : MonoBehaviour
     {
         statscritchance.text = Mathf.Round(Statics.charcritchance[currentchar]) + "%";
         critchancebuttonnumber.text = Statics.charcritchanceskillpoints[currentchar].ToString();
+        skilltreebonus.critbonus(currentchar);
     }
     public void critdmgnumberplus()
     {
@@ -392,6 +401,7 @@ public class Skilltreescript : MonoBehaviour
     {
         statscritdmg.text = Mathf.Round(Statics.charcritdmg[currentchar]) + "%";
         critdmgbuttonnumber.text = Statics.charcritdmgskillpoints[currentchar].ToString();
+        skilltreebonus.critbonus(currentchar);
     }
     public void weaponnumberplus()
     {
@@ -420,6 +430,7 @@ public class Skilltreescript : MonoBehaviour
         statsweaponbuff.text = Mathf.Round(Statics.charweaponbuff[currentchar]) + "%";
         statsweaponbuffduration.text = string.Format("{0:#.0}", Statics.charweaponbuffduration[currentchar]) + "sec";
         weaponbuttonnumber.text = Statics.charweaponskillpoints[currentchar].ToString();
+        skilltreebonus.switchbonus(currentchar);
     }
     public void charnumberplus()
     {
@@ -449,6 +460,7 @@ public class Skilltreescript : MonoBehaviour
         statscharbuff.text = Mathf.Round(Statics.charswitchbuff[currentchar]) + "%";
         statscharbuffduration.text = string.Format("{0:#.0}", Statics.charswitchbuffduration[currentchar]) + "sec";
         charbuttonnumber.text = Statics.charcharswitchskillpoints[currentchar].ToString();
+        skilltreebonus.switchbonus(currentchar);
     }
     public void basicnumberplus()
     {
@@ -477,5 +489,6 @@ public class Skilltreescript : MonoBehaviour
         statsbasiccrit.text = string.Format("{0:#.0}", Statics.charbasiccritbuff[currentchar]) + "%";
         statsbasicbuffdmg.text = Mathf.Round(Statics.charbasicdmgbuff[currentchar]) + "%";
         basicbuttonnumber.text = Statics.charbasicskillpoints[currentchar].ToString();
+        skilltreebonus.basicbonus(currentchar);
     }
 }
