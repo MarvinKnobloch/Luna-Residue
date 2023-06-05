@@ -97,7 +97,6 @@ public class Skilltreescript : MonoBehaviour
         currentchar = PlayerPrefs.GetInt("Maincharindex");
         charselectionimage[currentchar].color = Color.green;
         choosechar(currentchar);
-        skilltreebonus.bonusupdate(currentchar);
     }
     private void closeskilltree()
     {
@@ -106,7 +105,6 @@ public class Skilltreescript : MonoBehaviour
     }
     public void choosechar(int currentchar)
     {
-        bonusinfoimage.SetActive(false);
         stopskillpointreset();
         this.currentchar = currentchar;           // falls man mit click den char auswählt
         nametext.text = Statics.characternames[this.currentchar] + " LvL" + Statics.charcurrentlvl;
@@ -200,6 +198,7 @@ public class Skilltreescript : MonoBehaviour
         }
         resetimage.fillAmount = 0;
         resetskillpoints();
+        skilltreebonus.bonusupdate(currentchar);
     }
     private void resetskillpoints()
     {

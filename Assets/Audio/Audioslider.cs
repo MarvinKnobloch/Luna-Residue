@@ -97,7 +97,6 @@ public class Audioslider : MonoBehaviour
                 }
             }
             mutecheck.gameObject.SetActive(true);
-        }
-            
+        }          
     }
 }

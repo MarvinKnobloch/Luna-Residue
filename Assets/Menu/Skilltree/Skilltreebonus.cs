@@ -5,6 +5,8 @@ using TMPro;
 
 public class Skilltreebonus : MonoBehaviour
 {
+    private SpielerSteu controlls;
+
     [SerializeField] private TextMeshProUGUI bonusdmgafterhealtext;
     [SerializeField] private TextMeshProUGUI bonusovertimetext;
     [SerializeField] private TextMeshProUGUI bonuscritstackstext;
@@ -14,6 +16,31 @@ public class Skilltreebonus : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bonusbasicdurationtext;
     [SerializeField] private TextMeshProUGUI bonusneutraldmgtext;
 
+    [SerializeField] private GameObject bonusinfoimage;
+    [SerializeField] private GameObject toggleskilltreeinfo;
+    public TextMeshProUGUI attributeinfotext;
+
+    [SerializeField] private GameObject resetlayer;
+
+    private void Awake()
+    {
+        controlls = Keybindinputmanager.inputActions;
+    }
+    private void OnEnable()
+    {
+        if (PlayerPrefs.GetFloat("Skilltreeinfo") == 0) toggleskilltreeinfo.gameObject.SetActive(true);
+        else toggleskilltreeinfo.gameObject.SetActive(false);
+        attributeinfotext.text = "Attribute Bonus";
+        bonusinfoimage.SetActive(false);
+    }
+    private void Update()
+    {
+        if (controlls.Menusteuerung.F1.WasPerformedThisFrame())
+        {
+            changeskilltreeinfostate();
+            resetlayer.SetActive(true);
+        }
+    }
     public void bonusupdate(int currentchar)
     {
         healthbonus(currentchar);
@@ -60,6 +87,21 @@ public class Skilltreebonus : MonoBehaviour
 
         if (skillpoints >= Statics.secondbonuspointsneeded) bonusneutraldmgtext.gameObject.SetActive(true);
         else bonusneutraldmgtext.gameObject.SetActive(false);
+    }
+
+    public void changeskilltreeinfostate()
+    {
+        if (PlayerPrefs.GetFloat("Skilltreeinfo") == 0)
+        {
+            PlayerPrefs.SetFloat("Skilltreeinfo", 1);
+            toggleskilltreeinfo.gameObject.SetActive(false);
+        }
+
+        else
+        {
+            PlayerPrefs.SetFloat("Skilltreeinfo", 0);
+            toggleskilltreeinfo.gameObject.SetActive(true);
+        }
     }
 
 }
