@@ -56,6 +56,8 @@ public class Statics
     public static float bowendmanarestore = 5;
 
     public static float cleavedamagereduction = 3;
+
+    public static float basesingleheal = 30;
     public static float basicweaponheal = 5;
     public static float healhealthbonuspercentage = 15;
 
@@ -157,7 +159,7 @@ public class Statics
     public static Color[] charactersecondelementcolor = { new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255) };
     public static int[] charactersecondelement = { -1, -1, -1, -1, -1 };
     public static string[] characterclassrolltext = new string[5];
-    public static int[] characterclassroll = { -1, -1, -1, -1, -1 };
+    public static int[] characterclassroll = { -1, -1, -1, -1, -1 };        //0 = fight, 1 = guard, 2 = heal
     public static float groupstonehealbonus = 0;
     public static float groupstonedefensebonus = 0;
     public static float groupstonedmgbonus = 0;
@@ -233,19 +235,22 @@ public class Statics
     public static int secondbonuspointsneeded = 8;
     //health/defense
     public static bool bonusdmgafterheal;                  //healingscript
+    public static float bonusdmgafterhealreduction = 0.7f;
     public static bool bonushealovertimebool;              //bonushealscript + Infightcontroller
     public static float bonushealtimer = 5;
     public static float bonushealpercentage = 10;
 
     //crit
-    public static bool bonuscritstacksbool;               //Enemyhp.takedmg + Bonuscritstacksscript
+    public static bool bonuscritstacksbool;               //Enemyhp.takedmg + Bonuscritstacksscript + player utility
     public static int bonuscritstacks;
     public static int bonuscritstacksneeded = 3;
     public static bool bonusdashcantrigger;
     public static bool bonuscritdmg;                       //sword/fistcontroller + bowattack (crit berechnung)
+    public static float bonuscritchancemultipler = 0.5f;
 
     //weapon/charswitch
     public static bool bonuscharexplosion;                 //charswitch
+    public static float bonuscharexplosionhealmultipler = 0.5f;
     public static bool bonusdmgweaponswitch;               //sword/fistcontroller + bowattack
     public static float bonusdmgweaponswitchmultipler = 1.5f;
 

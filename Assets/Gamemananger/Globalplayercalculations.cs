@@ -17,6 +17,20 @@ public class Globalplayercalculations
         dmg = Mathf.Round(dmg * 0.25f);      //durch 3 teilen sonst zu viel dmg
         return dmg;
     }
+    public static float calculatecritdmg(float dmg, float critchance, float critdmg, float switchbuffdmg)
+    {
+        float finaldmg;
+        if (Statics.bonuscritdmg == true)
+        {
+            if (Random.Range(0, 100) < (100 - critchance) * Statics.bonuscritchancemultipler)
+            { 
+                finaldmg = Mathf.Round(dmg * ((critdmg + critdmg - 150) / 100f) + switchbuffdmg); 
+            }
+            else finaldmg = Mathf.Round(dmg * (critdmg / 100f) + switchbuffdmg);
+        }
+        else finaldmg = Mathf.Round(dmg * (critdmg / 100f) + switchbuffdmg);
+        return finaldmg;
+    }
     public static float calculateweaponcharbuff(float dmg)
     {
         float enddmg = (Statics.weaponswitchbuff + Statics.characterswitchbuff) / 100 * dmg;
@@ -32,6 +46,18 @@ public class Globalplayercalculations
         float healthbonusheal = health * Statics.healhealthbonuspercentage * 0.01f;
         float healing = Mathf.Round(basicheal + healthbonusheal + (Statics.groupstonehealbonus + playerstonebonus) * 0.01f * basicheal);
         return healing;
+    }
+
+    public static float dashexplosion(float critdmg, float critchance)
+    {
+        float critdmgvalue = (critdmg - 150) * 0.5f;
+        float dmg = (critchance + critdmgvalue) * 0.8f;
+        return Mathf.Round(dmg + ((critchance + critdmgvalue) * 0.01f * dmg));
+    }
+    public static float charexplison(int charnumber)
+    {
+        float explosiondmg = 30 + Statics.charweaponbuff[charnumber] + Statics.charswitchbuff[charnumber];
+        return Mathf.Round(explosiondmg + ((Statics.charweaponbuff[charnumber] + Statics.charswitchbuff[charnumber]) * 0.01f * explosiondmg));
     }
     public static float calculateenemyspezialdmg(float basedmg, float dmglevel, int amountreduction)
     {

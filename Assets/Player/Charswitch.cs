@@ -152,9 +152,8 @@ public class Charswitch : MonoBehaviour
     {
         if(Statics.bonuscharexplosion == true)
         {
-            float explosiondmg = 30 + Statics.charweaponbuff[charnumber] + Statics.charswitchbuff[charnumber];
-            float finalexplosiondmg = Mathf.Round(explosiondmg + ((Statics.charweaponbuff[charnumber] + Statics.charswitchbuff[charnumber]) * 0.01f * explosiondmg));
-            float healamount = finalexplosiondmg * 0.5f;
+            float finalexplosiondmg = Globalplayercalculations.charexplison(charnumber);
+            float healamount = finalexplosiondmg * Statics.bonuscharexplosionhealmultipler;
 
             Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallmainchar, healamount, true);
             Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallsecondchar, healamount, false);

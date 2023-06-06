@@ -77,8 +77,6 @@ public class Playerutility
     }
     public void calculatedashdmg()
     {
-        float critdmgvalue = (psm.attributecontroller.critdmg - 150) * 0.5f;
-        float dmg = (psm.attributecontroller.critchance + critdmgvalue) * 1f;
-        finaldashdmg = Mathf.Round(dmg + ((psm.attributecontroller.critchance + critdmgvalue) * 0.01f * dmg));
+        finaldashdmg = Globalplayercalculations.dashexplosion(psm.attributecontroller.critdmg, psm.attributecontroller.critchance);
     }
 }

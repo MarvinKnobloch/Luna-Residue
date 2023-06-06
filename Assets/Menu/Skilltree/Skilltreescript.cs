@@ -15,7 +15,7 @@ public class Skilltreescript : MonoBehaviour
     private int skillpointsperlvl = 1;
 
     [SerializeField] private Image[] charselectionimage;
-    [SerializeField] private int currentchar;
+    public int currentchar;
     
     public TextMeshProUGUI skillpointtext;
     public Text nametext;

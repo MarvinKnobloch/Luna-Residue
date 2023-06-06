@@ -72,21 +72,8 @@ public class Aoearrow : MonoBehaviour
                     {
                         crit = true;
                         critdmg = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critdmg;
-                        if (Statics.bonuscritdmg == true)
-                        {
-                            if (UnityEngine.Random.Range(0, 100) < (100 - overallcritchance) * 0.5f)
-                            {
-                                enemyscript.takeplayerdamage(overalldmg * ((critdmg + critdmg - 150) / 100f) + switchbuffdmg, dmgtype, crit);
-                            }
-                            else
-                            {
-                                enemyscript.takeplayerdamage(overalldmg * (critdmg / 100f) + switchbuffdmg, dmgtype ,crit);
-                            }
-                        }
-                        else
-                        {
-                            enemyscript.takeplayerdamage(overalldmg * (critdmg / 100f) + switchbuffdmg, dmgtype, crit);
-                        }
+                        overalldmg = Globalplayercalculations.calculatecritdmg(overalldmg, overallcritchance, critdmg, switchbuffdmg);
+                        enemyscript.takeplayerdamage(overalldmg, dmgtype, crit);
                     }
                     else
                     {

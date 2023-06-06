@@ -34,7 +34,6 @@ public class Healingscript : MonoBehaviour
 
     public bool singlehealcast;
     private int singlehealbuttonamount = 2;
-    private float singleheal = 30;
     private float finalsingleheal;
 
     public bool grouphealcast;
@@ -92,12 +91,12 @@ public class Healingscript : MonoBehaviour
         if(attributecontroller.isguardclassroll == true)                      //damit die guardbonushp nicht zum healingbonus beeinflussen
         {
             float playerhealth = playerhp.maxhealth - (Statics.charcurrentlvl * Statics.guardbonushpeachlvl);
-            finalsingleheal = Globalplayercalculations.calculatecasthealing(singleheal, playerhealth, attributecontroller.stoneclassbonusheal);
-            finalgroupheal = Globalplayercalculations.calculatecasthealing(grouphealamount, playerhealth / 2, attributecontroller.stoneclassbonusheal);           //playerhealt / 2 damit der bonusheal halbiert wird
+            finalsingleheal = Globalplayercalculations.calculatecasthealing(Statics.basesingleheal, playerhealth, attributecontroller.stoneclassbonusheal);
+            finalgroupheal = Globalplayercalculations.calculatecasthealing(grouphealamount, playerhealth / 2, attributecontroller.stoneclassbonusheal);           //playerhealth / 2 damit der bonusheal halbiert wird
         }
         else
         {
-            finalsingleheal = Globalplayercalculations.calculatecasthealing(singleheal, playerhp.maxhealth, attributecontroller.stoneclassbonusheal);
+            finalsingleheal = Globalplayercalculations.calculatecasthealing(Statics.basesingleheal, playerhp.maxhealth, attributecontroller.stoneclassbonusheal);
             finalgroupheal = Globalplayercalculations.calculatecasthealing(grouphealamount, playerhp.maxhealth / 2, attributecontroller.stoneclassbonusheal);
         }
     }
@@ -306,7 +305,7 @@ public class Healingscript : MonoBehaviour
         if (Statics.bonusdmgafterheal == true)
         {
             Statics.nextattackdealbonusdmg = true;         //wird resetet wenn man infight geht
-            Statics.nextattackbonusdmgamount += finalsingleheal * 0.5f;
+            Statics.nextattackbonusdmgamount += finalsingleheal * Statics.bonusdmgafterhealreduction;
         }
 
         if(movementscript.state == Movescript.State.Heal)
