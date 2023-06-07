@@ -42,6 +42,7 @@ public class Skilltreescript : MonoBehaviour
     [SerializeField] private TextMeshProUGUI statsbasicbuffdmg;
     [SerializeField] private TextMeshProUGUI statsbasiccrit;
 
+    [NonSerialized] public Skilltreebonustigger skilltreebonustigger;
     [SerializeField] private GameObject bonusinfoimage;
     [SerializeField] private Image resetimage;
     private float resettime = 1f;
@@ -111,6 +112,10 @@ public class Skilltreescript : MonoBehaviour
         settextandpoints();
         menusoundcontroller.playmenubuttonsound();
         skilltreebonus.bonusupdate(currentchar);
+        if(bonusinfoimage.activeSelf == true && skilltreebonustigger != null)
+        {
+            skilltreebonustigger.textupdate();
+        }
     }
 
     private void selectionforward() 
@@ -232,6 +237,10 @@ public class Skilltreescript : MonoBehaviour
         skillpointtext.text = "Skill Points " + Statics.charskillpoints[currentchar];
 
         settextandpoints();
+        if (bonusinfoimage.activeSelf == true && skilltreebonustigger != null)
+        {
+            skilltreebonustigger.textupdate();
+        }
     }
     private void stopskillpointreset()
     {

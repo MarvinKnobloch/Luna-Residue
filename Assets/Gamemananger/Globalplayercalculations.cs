@@ -56,7 +56,7 @@ public class Globalplayercalculations
     }
     public static float charexplison(int charnumber)
     {
-        float explosiondmg = 30 + Statics.charweaponbuff[charnumber] + Statics.charswitchbuff[charnumber];
+        float explosiondmg = 20 + Statics.charweaponbuff[charnumber] + Statics.charswitchbuff[charnumber];
         return Mathf.Round(explosiondmg + ((Statics.charweaponbuff[charnumber] + Statics.charswitchbuff[charnumber]) * 0.01f * explosiondmg));
     }
     public static float calculateenemyspezialdmg(float basedmg, float dmglevel, int amountreduction)

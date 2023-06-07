@@ -632,6 +632,15 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""F2"",
+                    ""type"": ""Button"",
+                    ""id"": ""e761fa16-d13f-4f10-86b1-ef5b042ba037"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Fps"",
                     ""type"": ""Button"",
                     ""id"": ""5eb870da-7785-45a2-bf99-7fe038904904"",
@@ -778,6 +787,17 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Unlockfasttravel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c1bb48d7-ba77-4c1b-969b-ba4ef42be8c4"",
+                    ""path"": ""<Keyboard>/f2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""F2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1214,6 +1234,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         m_Menusteuerung_Menucharselectionright = m_Menusteuerung.FindAction("Menucharselectionright", throwIfNotFound: true);
         m_Menusteuerung_Space = m_Menusteuerung.FindAction("Space", throwIfNotFound: true);
         m_Menusteuerung_F1 = m_Menusteuerung.FindAction("F1", throwIfNotFound: true);
+        m_Menusteuerung_F2 = m_Menusteuerung.FindAction("F2", throwIfNotFound: true);
         m_Menusteuerung_Fps = m_Menusteuerung.FindAction("Fps", throwIfNotFound: true);
         m_Menusteuerung_Switchmovespeed = m_Menusteuerung.FindAction("Switchmovespeed", throwIfNotFound: true);
         m_Menusteuerung_Unlockfasttravel = m_Menusteuerung.FindAction("Unlockfasttravel", throwIfNotFound: true);
@@ -1527,6 +1548,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
     private readonly InputAction m_Menusteuerung_Menucharselectionright;
     private readonly InputAction m_Menusteuerung_Space;
     private readonly InputAction m_Menusteuerung_F1;
+    private readonly InputAction m_Menusteuerung_F2;
     private readonly InputAction m_Menusteuerung_Fps;
     private readonly InputAction m_Menusteuerung_Switchmovespeed;
     private readonly InputAction m_Menusteuerung_Unlockfasttravel;
@@ -1542,6 +1564,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         public InputAction @Menucharselectionright => m_Wrapper.m_Menusteuerung_Menucharselectionright;
         public InputAction @Space => m_Wrapper.m_Menusteuerung_Space;
         public InputAction @F1 => m_Wrapper.m_Menusteuerung_F1;
+        public InputAction @F2 => m_Wrapper.m_Menusteuerung_F2;
         public InputAction @Fps => m_Wrapper.m_Menusteuerung_Fps;
         public InputAction @Switchmovespeed => m_Wrapper.m_Menusteuerung_Switchmovespeed;
         public InputAction @Unlockfasttravel => m_Wrapper.m_Menusteuerung_Unlockfasttravel;
@@ -1578,6 +1601,9 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @F1.started -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnF1;
                 @F1.performed -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnF1;
                 @F1.canceled -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnF1;
+                @F2.started -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnF2;
+                @F2.performed -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnF2;
+                @F2.canceled -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnF2;
                 @Fps.started -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnFps;
                 @Fps.performed -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnFps;
                 @Fps.canceled -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnFps;
@@ -1615,6 +1641,9 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @F1.started += instance.OnF1;
                 @F1.performed += instance.OnF1;
                 @F1.canceled += instance.OnF1;
+                @F2.started += instance.OnF2;
+                @F2.performed += instance.OnF2;
+                @F2.canceled += instance.OnF2;
                 @Fps.started += instance.OnFps;
                 @Fps.performed += instance.OnFps;
                 @Fps.canceled += instance.OnFps;
@@ -1909,6 +1938,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         void OnMenucharselectionright(InputAction.CallbackContext context);
         void OnSpace(InputAction.CallbackContext context);
         void OnF1(InputAction.CallbackContext context);
+        void OnF2(InputAction.CallbackContext context);
         void OnFps(InputAction.CallbackContext context);
         void OnSwitchmovespeed(InputAction.CallbackContext context);
         void OnUnlockfasttravel(InputAction.CallbackContext context);

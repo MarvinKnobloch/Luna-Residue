@@ -30,6 +30,7 @@ public class Skilltreebonustigger : MonoBehaviour , IPointerEnterHandler , IPoin
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
+        GetComponentInParent<Skilltreescript>().skilltreebonustigger = this;
         textupdate();
     }
     public void OnPointerExit(PointerEventData eventData)
@@ -111,14 +112,14 @@ public class Skilltreebonustigger : MonoBehaviour , IPointerEnterHandler , IPoin
 
         bonusinfotext.text = "<u>Improved character switch</u>\n<size=70%><color=yellow>(" + skillpoints + "/" + Statics.firstbonuspointsneeded + ") Points Weapon/Character Switch</color><size=100%>\n" +
                              "Switching your character will cause an explosion that damages enemies(<color=green>" + charexplosiondmg + "</color>) and heals your group(<color=green>" + heal + "</color>).\n" +
-                             "\n<u>Improved weapon switch</u>\n<size=70%><color=yellow>(" + skillpoints + "/" + Statics.firstbonuspointsneeded + ") Points Weapon/Character Switch</color><size=100%>\n" +
+                             "\n<u>Improved weapon switch</u>\n<size=70%><color=yellow>(" + skillpoints + "/" + Statics.secondbonuspointsneeded + ") Points Weapon/Character Switch</color><size=100%>\n" +
                              "Your weapon switch attack deals more damage(<color=green>" + bonusweaponswitchdmg + "</color>%).";
     }
     private void setbasictext()
     {
-        bonusinfotext.text = "<color=green>" + Statics.firstbonuspointsneeded + "</color> Points Basic\nImproved weak spot expose:\n" +
-                             "Enemy weak spot expose +3 seconds.\n" +
-                             "\n<color=green>" + Statics.secondbonuspointsneeded + "</color> Points Basic\nImproved neutral attack:\n" +
+        bonusinfotext.text = "<u>Improved weak spot expose</u>\n<size=70%><color=yellow>(" + Statics.charbasicskillpoints[currentchar] + "/" + Statics.firstbonuspointsneeded + ") Points Basic</color><size=100%>\n" +
+                             "Enemy weak spot expose <color=green>+3</color> seconds.\n" +
+                             "\n<u>Improved neutral attack</u>\n<size=70%><color=yellow>(" + Statics.charbasicskillpoints[currentchar] + "/" + Statics.secondbonuspointsneeded + ") Points Basic</color><size=100%>\n" +
                              "While the weak spot expose of the enemy refreshes your neutral attack (<color=green>100</color>% dmg attack of your chain attack) will deal <color=green>150</color>% damage.";
 
     }

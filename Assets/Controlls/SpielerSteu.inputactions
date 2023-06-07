@@ -610,6 +610,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "F2",
+                    "type": "Button",
+                    "id": "e761fa16-d13f-4f10-86b1-ef5b042ba037",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Fps",
                     "type": "Button",
                     "id": "5eb870da-7785-45a2-bf99-7fe038904904",
@@ -756,6 +765,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Unlockfasttravel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c1bb48d7-ba77-4c1b-969b-ba4ef42be8c4",
+                    "path": "<Keyboard>/f2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "F2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
