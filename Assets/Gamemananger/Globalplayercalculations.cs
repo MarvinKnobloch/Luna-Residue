@@ -38,7 +38,7 @@ public class Globalplayercalculations
     }
     public static float calculateweaponheal()
     {
-        float healing = Mathf.Round(Statics.basicweaponheal + (Statics.charcurrentlvl / 3));
+        float healing = 0;//Mathf.Round(Statics.basicweaponheal + (Statics.charcurrentlvl / 3));
         return healing;
     }
     public static float calculatecasthealing(float basicheal, float health, float playerstonebonus)         //player casts und support healingpotion

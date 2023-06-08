@@ -102,15 +102,26 @@ public class Weaponswitch : MonoBehaviour
         allweapons[firstweapon].SetActive(true);
         animator.runtimeAnimatorController = weaponanimation[firstweapon];
         weaponscripts[firstweapon].enabled = true;
-        weaponimage.sprite = weaponimages[Statics.secondweapon[Statics.currentactiveplayer]];
+        setsecondweaponimage();
     }
-    public void resetmainweaponactiv()
-    {
-        mainweaponactiv = true;
-    }
+
     public void imageupdateaftercharswitch()
     {
-        if (mainweaponactiv == true) weaponimage.sprite = weaponimages[Statics.secondweapon[Statics.currentactiveplayer]];
-        else weaponimage.sprite = weaponimages[Statics.firstweapon[Statics.currentactiveplayer]];
+        if (mainweaponactiv == true) setsecondweaponimage();
+        else
+        {
+            if (Statics.currentactiveplayer == 0) weaponimage.sprite = weaponimages[Statics.firstweapon[Statics.currentfirstchar]];
+            else weaponimage.sprite = weaponimages[Statics.firstweapon[Statics.currentsecondchar]];
+        }
+    }
+    private void setsecondweaponimage()
+    {
+        if (Statics.currentactiveplayer == 0) weaponimage.sprite = weaponimages[Statics.secondweapon[Statics.currentfirstchar]];
+        else weaponimage.sprite = weaponimages[Statics.secondweapon[Statics.currentsecondchar]];
     }
 }
+
+/*public void resetmainweaponactiv()
+{
+    mainweaponactiv = true;
+}*/

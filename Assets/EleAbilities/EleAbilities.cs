@@ -26,7 +26,7 @@ public class EleAbilities : MonoBehaviour
 
     public GameObject charmanager;
     private Manamanager manacontroller;
-    private float basicmanacosts = 3f;
+    private float basicmanacosts = 30f;
 
     [SerializeField] private GameObject[] spellposis;
     private GameObject water1posi;

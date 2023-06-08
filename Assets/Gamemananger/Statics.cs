@@ -58,7 +58,7 @@ public class Statics
     public static float cleavedamagereduction = 3;
 
     public static float basesingleheal = 30;
-    public static float basicweaponheal = 5;
+    //public static float basicweaponheal = 5;
     public static float healhealthbonuspercentage = 15;
 
     public static float healthperskillpoint = 10;
@@ -250,7 +250,7 @@ public class Statics
 
     //weapon/charswitch
     public static bool bonuscharexplosion;                 //charswitch
-    public static float bonuscharexplosionhealmultipler = 0.5f;
+    public static float bonuscharexplosionhealmultipler = 0.2f;
     public static bool bonusdmgweaponswitch;               //sword/fistcontroller + bowattack
     public static float bonusdmgweaponswitchmultipler = 1.5f;
 

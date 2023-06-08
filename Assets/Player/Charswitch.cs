@@ -109,6 +109,11 @@ public class Charswitch : MonoBehaviour
     {
         Time.timeScale = Statics.normalgamespeed;
         Time.fixedDeltaTime = Statics.normaltimedelta;
+        if (aimcam.gameObject.activeSelf == true)
+        {
+            LoadCharmanager.Overallmainchar.gameObject.GetComponent<Movescript>().disableaimcam();
+        }
+
         LoadCharmanager.Overallsecondchar.transform.position = LoadCharmanager.Overallmainchar.transform.position;
         LoadCharmanager.Overallsecondchar.transform.rotation = LoadCharmanager.Overallmainchar.transform.rotation;
         LoadCharmanager.Overallmainchar.SetActive(false);

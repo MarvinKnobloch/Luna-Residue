@@ -462,6 +462,7 @@ public class Bowattack : MonoBehaviour
             movementscript.switchtoattackaimstate();
             attackestate = Attackstate.bowairattack;
             movementscript.ChangeAnimationState(bowairchargestate);
+            Statics.otheraction = false;
         }
     }
     private void airattackchainend()

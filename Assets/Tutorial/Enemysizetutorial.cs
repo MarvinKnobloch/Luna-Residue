@@ -121,6 +121,6 @@ public class Enemysizetutorial : MonoBehaviour
     IEnumerator killenemy()
     {
         yield return new WaitForSeconds(2);
-        enemyHP.takesupportdmg(12000);
+        enemyHP.takesupportdmg(15000);
     }
 }

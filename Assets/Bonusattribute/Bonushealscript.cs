@@ -46,12 +46,15 @@ public class Bonushealscript : MonoBehaviour
     {
         if(target != null)
         {
-            if(Statics.charcurrenthealth[charnumber] < Statics.charmaxhealth[charnumber])
+            if(target.GetComponent<Playerhp>().playerisdead == false)
             {
-                if (Statics.charcurrenthealth[charnumber] < lowesthealth)
+                if (Statics.charcurrenthealth[charnumber] < Statics.charmaxhealth[charnumber])
                 {
-                    lowesthealth = Statics.charcurrenthealth[charnumber];
-                    currenttarget = target.gameObject;
+                    if (Statics.charcurrenthealth[charnumber] < lowesthealth)
+                    {
+                        lowesthealth = Statics.charcurrenthealth[charnumber];
+                        currenttarget = target.gameObject;
+                    }
                 }
             }
         }

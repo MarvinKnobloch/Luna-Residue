@@ -151,14 +151,15 @@ public class Healingscript : MonoBehaviour
                 }
                 if (resurrectioncast == true)
                 {
-                    readinputs = false;
                     if (controlls.SpielerHeal.Target2.WasPerformedThisFrame() && LoadCharmanager.Overallthirdchar != null)
                     {
+                        readinputs = false;
                         healtarget = 2;
                         movementscript.ChangeAnimationState(resurrectstate);
                     }
                     if (controlls.SpielerHeal.Target3.WasPerformedThisFrame() && LoadCharmanager.Overallforthchar != null)
                     {
+                        readinputs = false;
                         healtarget = 3;
                         movementscript.ChangeAnimationState(resurrectstate);
                     }

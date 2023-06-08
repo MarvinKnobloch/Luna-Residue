@@ -177,10 +177,6 @@ public class LoadCharmanager : MonoBehaviour
         aimcam.LookAt = Overallmainchar.transform;
         aimcam.Follow = Overallmainchar.transform;
 
-        GetComponent<Charswitch>().setcharswitchimageafterload();
-        Overallsecondchar.GetComponent<Weaponswitch>().resetmainweaponactiv();
-
-
         classandstatsupdate(Statics.currentfirstchar, allcharacters, 0);                   // bonus hp von guard wird im elemenu beim auswählen des stones gesetzt
         classandstatsupdate(Statics.currentsecondchar, allcharacters, 1);
         classandstatsupdate(Statics.currentthirdchar, teammates, 2);
@@ -189,6 +185,8 @@ public class LoadCharmanager : MonoBehaviour
 
         GetComponent<Healthuimanager>().sethealthbars();
 
+        GetComponent<Charswitch>().setcharswitchimageafterload();
+        //Overallsecondchar.GetComponent<Weaponswitch>().resetmainweaponactiv();
         setweapons?.Invoke();
         weaponscriptupdate();
 
@@ -336,25 +334,25 @@ public class LoadCharmanager : MonoBehaviour
     }
     public void easydifficulty()
     {
-        Statics.enemydmgmultiplier = 1.1f;
+        Statics.enemydmgmultiplier = 1.2f;
         Statics.enemyspezialdmgbonus = 3;
-        Statics.enemyhealthpercantageadded = 0.06f; //0.05f;
+        Statics.enemyhealthpercantageadded = 0.11f; //0.05f;
         Statics.enemyspecialcd = 18;
         Statics.enemydifficultyminusdmg = 4;
     }
     public void normaldifficulty()
     {
-        Statics.enemydmgmultiplier = 1.3f;
+        Statics.enemydmgmultiplier = 1.4f;
         Statics.enemyspezialdmgbonus = 4;
-        Statics.enemyhealthpercantageadded = 0.085f;    //0.075f;
+        Statics.enemyhealthpercantageadded = 0.13f;    //0.075f;
         Statics.enemyspecialcd = 16;
         Statics.enemydifficultyminusdmg = 2;
     }
     public void harddifficulty()
     {
-        Statics.enemydmgmultiplier = 1.5f;
+        Statics.enemydmgmultiplier = 1.8f;  //1.6f
         Statics.enemyspezialdmgbonus = 5;
-        Statics.enemyhealthpercantageadded = 0.11f; //0.1f;
+        Statics.enemyhealthpercantageadded = 0.22f; //0.17f          //0.1f;
         Statics.enemyspecialcd = 14;
         Statics.enemydifficultyminusdmg = 0;
     }

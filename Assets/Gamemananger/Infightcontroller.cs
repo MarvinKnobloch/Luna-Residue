@@ -79,6 +79,7 @@ public class Infightcontroller : MonoBehaviour
                 infightimage.SetActive(true);
                 instance.CancelInvoke();                        //unterbricht den Allie despawn wenn man wieder infight kommmt
                 Statics.nextattackdealbonusdmg = false;
+                Statics.nextattackbonusdmgamount = 0;
                 Statics.infightresurrectcd = Statics.presetresurrectcd;
                 GlobalCD.stopsupportresurrectioncd();                       //res probleme weil supportrezzcdisrunning nicht resetet wird???? 
                 Statics.supportcanresurrect = false;

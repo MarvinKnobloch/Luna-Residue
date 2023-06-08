@@ -27,7 +27,7 @@ public class Aoearrow : MonoBehaviour
         dmgtype = type;
         Attributecontroller atb = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>();
         overalldmg = Globalplayercalculations.calculateplayerdmgdone(dmg, atb.attack, atb.bowattack, atb.stoneclassbonusdmg);
-        switchbuffdmg = Globalplayercalculations.calculateweaponcharbuff(dmg);
+        switchbuffdmg = Globalplayercalculations.calculateweaponcharbuff(overalldmg);
         overallcritchance = Statics.playerbasiccritchance + LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critchance;
     }
 
