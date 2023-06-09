@@ -40,7 +40,6 @@ public class LoadCharmanager : MonoBehaviour
 
     [SerializeField] private GameObject bonusdashimage;
 
-    public static event Action setweapons;
     public static event Action swordcontrollerupdate;
     public static event Action fistcontrollerupdate;
 
@@ -184,10 +183,14 @@ public class LoadCharmanager : MonoBehaviour
         Statics.playertookdmgfromamount = Statics.tookdmgfromamount[0];
 
         GetComponent<Healthuimanager>().sethealthbars();
+        Overallmainchar.GetComponent<Weaponswitch>().setweapons();
+        Overallsecondchar.GetComponent<Weaponswitch>().setweapons();
+        Overallmainchar.gameObject.GetComponent<Weaponswitch>().weaponimageupdate();
+        if (Overallthirdchar != null) Overallthirdchar.gameObject.GetComponent<Supportsetweapon>().setweapon();
+        if (Overallforthchar != null) Overallforthchar.gameObject.GetComponent<Supportsetweapon>().setweapon();
 
         GetComponent<Charswitch>().setcharswitchimageafterload();
-        //Overallsecondchar.GetComponent<Weaponswitch>().resetmainweaponactiv();
-        setweapons?.Invoke();
+        
         weaponscriptupdate();
 
         resetbonusattributesvalues();

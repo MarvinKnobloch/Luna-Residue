@@ -17,8 +17,15 @@ public class Globalplayercalculations
         dmg = Mathf.Round(dmg * 0.25f);      //durch 3 teilen sonst zu viel dmg
         return dmg;
     }
-    public static float calculatecritdmg(float dmg, float critchance, float critdmg, float switchbuffdmg)
+    public static float calculatenoncritdmg(float dmg, float switchbuffdmg, bool maintarget)
     {
+        if(Statics.bonuscritdmg == true && maintarget == true) Statics.bonusnoncrit += Statics.bonuscritfromnoncrit;
+        return Mathf.Round(dmg + switchbuffdmg);
+    }
+
+    public static float calculatecritdmg(float dmg, float critchance, float critdmg, float switchbuffdmg, bool maintarget)
+    {
+        if(maintarget == true) Statics.bonusnoncrit = 0;
         float finaldmg;
         if (Statics.bonuscritdmg == true)
         {

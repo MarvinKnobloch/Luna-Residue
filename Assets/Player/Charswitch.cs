@@ -66,7 +66,7 @@ public class Charswitch : MonoBehaviour
             ability2.color = Statics.spellcolors[3];
             Statics.playertookdmgfromamount = Statics.tookdmgfromamount[1];
             Statics.currentactiveplayer = 1;
-            LoadCharmanager.Overallmainchar.gameObject.GetComponent<Weaponswitch>().imageupdateaftercharswitch();
+            LoadCharmanager.Overallmainchar.gameObject.GetComponent<Weaponswitch>().weaponimageupdate();
             charuiimage.sprite = charimages[Statics.currentfirstchar];
 
             loadcharmanager.checkforattributebonus(Statics.currentsecondchar);
@@ -75,7 +75,7 @@ public class Charswitch : MonoBehaviour
                 enemytargetupdate(Statics.currentsecondchar);
                 charswitchexplosion(Statics.currentsecondchar);
                 if (Statics.bonushealovertimebool == true) bonushealscript.enabled = true;
-                else bonushealscript.enabled = false;
+                else bonushealscript.stopheal();
             }            
         }                                                  
     }
@@ -92,7 +92,7 @@ public class Charswitch : MonoBehaviour
             ability2.color = Statics.spellcolors[1];
             Statics.playertookdmgfromamount = Statics.tookdmgfromamount[0];
             Statics.currentactiveplayer = 0;
-            LoadCharmanager.Overallmainchar.gameObject.GetComponent<Weaponswitch>().imageupdateaftercharswitch();
+            LoadCharmanager.Overallmainchar.gameObject.GetComponent<Weaponswitch>().weaponimageupdate();
             charuiimage.sprite = charimages[Statics.currentsecondchar];
 
             loadcharmanager.checkforattributebonus(Statics.currentfirstchar);
@@ -101,7 +101,7 @@ public class Charswitch : MonoBehaviour
                 enemytargetupdate(Statics.currentfirstchar);
                 charswitchexplosion(Statics.currentfirstchar);
                 if (Statics.bonushealovertimebool == true) bonushealscript.enabled = true;
-                else bonushealscript.enabled = false;
+                else bonushealscript.stopheal();
             }
         }
     }

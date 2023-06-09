@@ -16,15 +16,7 @@ public class Supportsetweapon : MonoBehaviour
     {
         animator = GetComponent<Animator>();
     }
-    private void OnEnable()
-    {
-        LoadCharmanager.setweapons += setweapon;
-    }
-    private void OnDisable()
-    {
-        LoadCharmanager.setweapons -= setweapon;
-    }
-    private void setweapon()
+    public void setweapon()
     {
         if (Statics.firstweapon[charnumber] == 1)                      // bis jetzt nur 1 weil noch keine andere rangewaffe vorhanden ist
         {

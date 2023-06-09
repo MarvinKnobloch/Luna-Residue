@@ -60,7 +60,7 @@ public class Fistcontroller : MonoBehaviour
         overallair3middmg = Globalplayercalculations.calculateplayerdmgdone(air3middmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
         basicweaponswitchdmg = Globalplayercalculations.calculateplayerdmgdone(weaponswitchdmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
 
-        overallcritchance = Statics.playerbasiccritchance + attributecontroller.critchance;
+        overallcritchance = attributecontroller.critchance;
 
         weaponhealing = Globalplayercalculations.calculateweaponheal();
     }
@@ -114,13 +114,14 @@ public class Fistcontroller : MonoBehaviour
                     if (enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
                     {
                         enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
-                        calculatecritchance(enemyscript, damage);
                         if (enemyhit.gameObject == Movescript.lockontarget.gameObject)
                         {
+                            calculatecritchance(enemyscript, damage, true);
                             enemyscript.takeplayerdamage(dmgdealed, dmgtype, crit);
                         }
                         else
                         {
+                            calculatecritchance(enemyscript, damage, false);
                             enemyscript.takeplayerdamage(Mathf.Round(dmgdealed / Statics.cleavedamagereduction), dmgtype, crit);
                         }
                     }
@@ -141,26 +142,25 @@ public class Fistcontroller : MonoBehaviour
             Weaponsounds.instance.setfistmiss(sound);
         }   
     }
-    private void calculatecritchance(EnemyHP enemyscript, float dmg)
+    private void calculatecritchance(EnemyHP enemyscript, float dmg, bool maintarget)
     {
-        if (enemyscript.enemydebuffcd == true)
-        {
-            enemydebuffcrit = attributecontroller.basicattributecritbuff;
-        }
-        else
-        {
-            enemydebuffcrit = 0;
-        }
+        if (enemyscript.enemydebuffcd == true) enemydebuffcrit = attributecontroller.basicattributecritbuff;
+        else enemydebuffcrit = 0;
+
         float switchbuffdmg = Globalplayercalculations.calculateweaponcharbuff(dmg);
-        if (Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
+        float finalcritchance;
+        if (maintarget == true) finalcritchance = overallcritchance + enemydebuffcrit + Statics.bonusnoncrit;
+        else finalcritchance = overallcritchance + enemydebuffcrit;
+
+        if (Random.Range(0, 100) < finalcritchance)
         {
             crit = true;
-            dmgdealed = Globalplayercalculations.calculatecritdmg(dmg, overallcritchance, attributecontroller.critdmg, switchbuffdmg);
+            dmgdealed = Globalplayercalculations.calculatecritdmg(dmg, overallcritchance, attributecontroller.critdmg, switchbuffdmg, maintarget);
         }
         else
         {
             crit = false;
-            dmgdealed = Mathf.Round(dmg + switchbuffdmg);
+            dmgdealed = Globalplayercalculations.calculatenoncritdmg(dmg, switchbuffdmg, maintarget);
         }
     }
     private void healandmana(int type, float manarestore)

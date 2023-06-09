@@ -55,9 +55,11 @@ public class GlobalCD : MonoBehaviour
             return;
         }
         Statics.dashcdbool = false;
+        Statics.weaponswitchbool = false;
         Statics.charswitchbool = false;
         Statics.healcdbool = false;
         Statics.otheraction = false;
+        Statics.bonusiframes = false;
         healcdtext.text = "";
         dashcdtext.text = "";
         weaponswitchcdtext.text = "";
@@ -183,7 +185,7 @@ public class GlobalCD : MonoBehaviour
     }
     IEnumerator weaponcd()
     {
-        Statics.weapsonswitchbool = true;
+        Statics.weaponswitchbool = true;
         weaponswitchcdimage.fillAmount = 0;
         Statics.weaponswitchmissingtime = 0;
 
@@ -195,7 +197,7 @@ public class GlobalCD : MonoBehaviour
 
             if (Statics.weaponswitchmissingtime >= Statics.weaponswitchcd)
             {
-                Statics.weapsonswitchbool = false;
+                Statics.weaponswitchbool = false;
                 weaponswitchcdtext.text = "";
                 StopCoroutine("weaponcd");
             }
@@ -226,7 +228,7 @@ public class GlobalCD : MonoBehaviour
 
     IEnumerator charswitchcd()         // wird im Main/Secondcharwechsel gecalled
     {
-        Statics.weapsonswitchbool = false;
+        Statics.weaponswitchbool = false;
         weaponswitchcdimage.fillAmount = 1;
         weaponswitchcdtext.text = "";
 
@@ -308,7 +310,6 @@ public class GlobalCD : MonoBehaviour
             watertimer.text = watertimerdisplay.ToString();
             yield return new WaitForSeconds(1);
         }
-        Debug.Log("Haööp");
         watertimer.gameObject.SetActive(false);
         water1movement = false;
     }

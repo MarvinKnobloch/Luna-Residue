@@ -54,7 +54,7 @@ public class Difficultyuicontroller : MonoBehaviour
         Statics.healcd = Statics.presethealcd;
         Statics.healcdbool = false;
         Statics.dashcdbool = false;
-        Statics.weapsonswitchbool = false;
+        Statics.weaponswitchbool = false;
         Statics.charswitchbool = false;
         Statics.characterswitchbuff = 0;
         Statics.weaponswitchbuff = 0;

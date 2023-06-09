@@ -13,8 +13,11 @@ public class Aoearrow : MonoBehaviour
     private float aoeradius;
     private int dmgtype;
 
+    private bool maintarget;
+
     private float overalldmg;
     private float overallcritchance;
+    private float finalcritchance;
     private float critdmg;
     private bool crit;
 
@@ -28,7 +31,7 @@ public class Aoearrow : MonoBehaviour
         Attributecontroller atb = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>();
         overalldmg = Globalplayercalculations.calculateplayerdmgdone(dmg, atb.attack, atb.bowattack, atb.stoneclassbonusdmg);
         switchbuffdmg = Globalplayercalculations.calculateweaponcharbuff(overalldmg);
-        overallcritchance = Statics.playerbasiccritchance + LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critchance;
+        overallcritchance = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critchance;
     }
 
     void Update()
@@ -60,25 +63,32 @@ public class Aoearrow : MonoBehaviour
                 if (Enemyhit.gameObject.TryGetComponent(out EnemyHP enemyscript))
                 {
                     enemyscript.tookdmgfrom(1, Statics.playertookdmgfromamount);
-                    if (enemyscript.enemydebuffcd == true)
+                    if (enemyscript.enemydebuffcd == true) enemydebuffcrit = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basicattributecritbuff;
+                    else enemydebuffcrit = 0;
+
+                    if (enemyscript.gameObject == Movescript.lockontarget.gameObject)
                     {
-                        enemydebuffcrit = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().basicattributecritbuff;
+                        finalcritchance = overallcritchance + enemydebuffcrit + Statics.bonusnoncrit;
+                        maintarget = true;
                     }
                     else
                     {
-                        enemydebuffcrit = 0;
+                        finalcritchance = overallcritchance + enemydebuffcrit;
+                        maintarget = false;
                     }
-                    if (UnityEngine.Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
+
+                    if (UnityEngine.Random.Range(0, 100) < finalcritchance)
                     {
                         crit = true;
                         critdmg = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critdmg;
-                        overalldmg = Globalplayercalculations.calculatecritdmg(overalldmg, overallcritchance, critdmg, switchbuffdmg);
+                        overalldmg = Globalplayercalculations.calculatecritdmg(overalldmg, overallcritchance, critdmg, switchbuffdmg, maintarget);
                         enemyscript.takeplayerdamage(overalldmg, dmgtype, crit);
                     }
                     else
                     {
                         crit = false;
-                        enemyscript.takeplayerdamage(overalldmg + switchbuffdmg, dmgtype, crit);
+                        overalldmg = Globalplayercalculations.calculatenoncritdmg(overalldmg, switchbuffdmg, maintarget);
+                        enemyscript.takeplayerdamage(overalldmg, dmgtype, crit);
                     }
                 }
             }

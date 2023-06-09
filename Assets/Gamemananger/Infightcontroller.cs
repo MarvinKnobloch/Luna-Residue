@@ -61,7 +61,7 @@ public class Infightcontroller : MonoBehaviour
             Statics.currentenemyspecialcd = Statics.enemyspecialcd;
             instance.StopCoroutine("firstenemyspezialcd");
             instance.StopCoroutine("enemyspezialcd");
-            bonushealscript.enabled = false;
+            bonushealscript.stopheal();
             infightimage.SetActive(false);
             instance.Invoke("disablechars", teammatesdespawntime);
             LoadCharmanager.Overallmainchar.GetComponent<Movescript>().endlockon();
@@ -80,6 +80,7 @@ public class Infightcontroller : MonoBehaviour
                 instance.CancelInvoke();                        //unterbricht den Allie despawn wenn man wieder infight kommmt
                 Statics.nextattackdealbonusdmg = false;
                 Statics.nextattackbonusdmgamount = 0;
+                Statics.bonusnoncrit = 0;
                 Statics.infightresurrectcd = Statics.presetresurrectcd;
                 GlobalCD.stopsupportresurrectioncd();                       //res probleme weil supportrezzcdisrunning nicht resetet wird???? 
                 Statics.supportcanresurrect = false;

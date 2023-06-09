@@ -30,17 +30,12 @@ public class Weaponswitch : MonoBehaviour
     private void OnEnable()
     {
         controlls.Enable();
-        LoadCharmanager.setweapons += setweapons;
-    }
-    private void OnDisable()
-    {
-        LoadCharmanager.setweapons -= setweapons;
     }
     void Update()
     {
         if (LoadCharmanager.disableattackbuttons == false)
         {
-            if (controlls.Player.Weaponchange.WasPerformedThisFrame() && Statics.otheraction == false && Statics.weapsonswitchbool == false)
+            if (controlls.Player.Weaponchange.WasPerformedThisFrame() && Statics.otheraction == false && Statics.weaponswitchbool == false)
             {
                 movescript.checkforcamstate();
                 Statics.otheraction = true;
@@ -68,7 +63,7 @@ public class Weaponswitch : MonoBehaviour
         Statics.weaponswitchbuff = Statics.charweaponbuff[charnumber];
         GlobalCD.startweaponswitchcd();
         GlobalCD.startweaponswitchbuff(charnumber);
-        weaponimage.sprite = weaponimages[Statics.secondweapon[Statics.currentactiveplayer]];
+        weaponimageupdate();
     }
     private void spawnsecondweapon()
     {
@@ -81,12 +76,11 @@ public class Weaponswitch : MonoBehaviour
 
         Statics.weaponswitchbuff = Statics.charweaponbuff[charnumber];
         GlobalCD.startweaponswitchcd();
-        GlobalCD.startweaponswitchbuff(charnumber); 
-        weaponimage.sprite = weaponimages[Statics.firstweapon[Statics.currentactiveplayer]];
+        GlobalCD.startweaponswitchbuff(charnumber);
+        weaponimageupdate();
     }
 
-
-    private void setweapons()
+    public void setweapons()
     {
         firstweapon = Statics.firstweapon[charnumber];
         secondweapon = Statics.secondweapon[charnumber];
@@ -102,22 +96,20 @@ public class Weaponswitch : MonoBehaviour
         allweapons[firstweapon].SetActive(true);
         animator.runtimeAnimatorController = weaponanimation[firstweapon];
         weaponscripts[firstweapon].enabled = true;
-        setsecondweaponimage();
     }
 
-    public void imageupdateaftercharswitch()
+    public void weaponimageupdate()
     {
-        if (mainweaponactiv == true) setsecondweaponimage();
+        if (Statics.currentactiveplayer == 0)
+        {
+            if (mainweaponactiv == true) weaponimage.sprite = weaponimages[Statics.secondweapon[Statics.currentfirstchar]];
+            else weaponimage.sprite = weaponimages[Statics.firstweapon[Statics.currentfirstchar]];
+        }
         else
         {
-            if (Statics.currentactiveplayer == 0) weaponimage.sprite = weaponimages[Statics.firstweapon[Statics.currentfirstchar]];
+            if (mainweaponactiv == true) weaponimage.sprite = weaponimages[Statics.secondweapon[Statics.currentsecondchar]];
             else weaponimage.sprite = weaponimages[Statics.firstweapon[Statics.currentsecondchar]];
         }
-    }
-    private void setsecondweaponimage()
-    {
-        if (Statics.currentactiveplayer == 0) weaponimage.sprite = weaponimages[Statics.secondweapon[Statics.currentfirstchar]];
-        else weaponimage.sprite = weaponimages[Statics.secondweapon[Statics.currentsecondchar]];
     }
 }
 

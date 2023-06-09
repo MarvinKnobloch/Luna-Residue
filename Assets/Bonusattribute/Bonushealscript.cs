@@ -15,11 +15,13 @@ public class Bonushealscript : MonoBehaviour
     private void OnEnable()
     {
         StopCoroutine("healovertime");
+        if (healovertimeremainingtime < 0.5f) healovertimeremainingtime = 0.5f;
         StartCoroutine("healovertime");
     }
-    private void OnDisable()
+    public void stopheal()
     {
         StopCoroutine("healovertime");
+        enabled = false;
     }
     private void Update()
     {

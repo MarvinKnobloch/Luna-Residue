@@ -88,8 +88,8 @@ public class Skilltreebonustigger : MonoBehaviour , IPointerEnterHandler , IPoin
     private void critstatsupdate()
     {
         dashexplosiondmg = Globalplayercalculations.dashexplosion(Statics.charcritdmg[currentchar], Statics.charcritchance[currentchar]);
-        bonuscritchance = Mathf.Round((100 - (Statics.playerbasiccritchance + Statics.charcritchance[currentchar] + 0.2f)) * Statics.bonuscritchancemultipler); 
-        bonuscritdmg = Mathf.Round(Statics.charcritdmg[currentchar] - 150);                                    // +0.2f damit gescheit gerundet wird,sonst ändert sich der wert 2 mal und dann 3mal nicht
+        bonuscritchance = Mathf.Round((100 - (Statics.charcritchance[currentchar] + 0.2f)) * Statics.bonuscritchancemultipler);  // +0.2f damit gescheit gerundet wird,sonst ändert sich der wert 2 mal und dann 3mal nicht
+        bonuscritdmg = Mathf.Round(Statics.charcritdmg[currentchar] - 150);       
     }
     private void setcrittext()
     {

@@ -28,7 +28,7 @@ public class Singlearrow : MonoBehaviour
         Attributecontroller atb = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>();
         overalldmg = Globalplayercalculations.calculateplayerdmgdone(dmg, atb.attack, atb.bowattack, atb.stoneclassbonusdmg);
         switchbuffdmg = Globalplayercalculations.calculateweaponcharbuff(overalldmg);
-        overallcritchance = Statics.playerbasiccritchance + LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critchance;
+        overallcritchance = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critchance;
 
         healreduction = reducehealing;
     }
@@ -67,17 +67,18 @@ public class Singlearrow : MonoBehaviour
                 {
                     enemydebuffcrit = 0;
                 }
-                if (UnityEngine.Random.Range(0, 100) < overallcritchance + enemydebuffcrit)
+                if (UnityEngine.Random.Range(0, 100) < overallcritchance + enemydebuffcrit + Statics.bonusnoncrit)
                 {
                     crit = true;
                     critdmg = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critdmg;
-                    overalldmg = Globalplayercalculations.calculatecritdmg(overalldmg, overallcritchance, critdmg, switchbuffdmg);
+                    overalldmg = Globalplayercalculations.calculatecritdmg(overalldmg, overallcritchance, critdmg, switchbuffdmg, true);
                     enemyscript.takeplayerdamage(overalldmg, dmgtype, crit);
                 }
                 else
                 {
                     crit = false;
-                    enemyscript.takeplayerdamage(overalldmg + switchbuffdmg, dmgtype , crit);
+                    overalldmg = Globalplayercalculations.calculatenoncritdmg(overalldmg, switchbuffdmg, true);
+                    enemyscript.takeplayerdamage(overalldmg, dmgtype , crit);
                 }
             }
             if (dmgtype == 0)

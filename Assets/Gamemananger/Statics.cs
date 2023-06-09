@@ -51,7 +51,6 @@ public class Statics
     public static float playerroationspeed = 700;
     public static float playerjumpheight = 13;
     public static float playergravity = 3.5f;
-    public static float playerbasiccritchance = 5;
     public static float bowbasicmanarestore = 2;
     public static float bowendmanarestore = 5;
 
@@ -100,7 +99,7 @@ public class Statics
 
     public static float weaponswitchcd = 14;
     public static float weaponswitchmissingtime;
-    public static bool weapsonswitchbool; 
+    public static bool weaponswitchbool; 
 
     public static float weaponswitchbuff = 0;
     public static float weaponswitchbuffmissingtime;
@@ -123,7 +122,7 @@ public class Statics
     public static int playertookdmgfromamount = 1;                  // wird im charmanangergesetzt/wird beim charchange geändert
     public static int[] tookdmgfromamount = { 1, 1, 1, 1 };
     public static int infightresurrectcd;                           //wird im infightcontroller zurückgesetzt
-    public static bool supportcanresurrect;
+    public static bool supportcanresurrect;                         //wird im infightcontroller zurückgesetzt/ bzw. sobald der fight los geht
     public static bool nextattackdealbonusdmg;
     public static float nextattackbonusdmgamount;                   //jeder bonus ist momentan noch stackbar(wenn 2 heal gecastet werden ohne anzugreifen macht man 2mal den dmg)
 
@@ -173,7 +172,6 @@ public class Statics
     public static float charcurrentexp = 0;
     public static float charrequiredexp = 70;
     public static string[] characternames = { "Maria", "Erika", "Kaja", "Yaku", "Arissa" };
-    //public static float[] charbasichealth = { 80, 73, 77, 73, 75 };
     public static float[] charcurrenthealth = { 80, 73, 77, 73, 75 };
     public static float[] charmaxhealth = { 80, 73, 77, 73, 75 };
     public static float[] chardefense = { 60, 60, 60, 60, 60 };
@@ -233,19 +231,22 @@ public class Statics
     //attributebonus
     public static int firstbonuspointsneeded = 4;
     public static int secondbonuspointsneeded = 8;
+
     //health/defense
     public static bool bonusdmgafterheal;                  //healingscript
     public static float bonusdmgafterhealreduction = 0.7f;
     public static bool bonushealovertimebool;              //bonushealscript + Infightcontroller
     public static float bonushealtimer = 5;
-    public static float bonushealpercentage = 10;
+    public static float bonushealpercentage = 8;
 
     //crit
     public static bool bonuscritstacksbool;               //Enemyhp.takedmg + Bonuscritstacksscript + player utility
     public static int bonuscritstacks;
-    public static int bonuscritstacksneeded = 3;
+    public static int bonuscritstacksneeded = 2;
     public static bool bonusdashcantrigger;
     public static bool bonuscritdmg;                       //sword/fistcontroller + bowattack (crit berechnung)
+    public static float bonuscritfromnoncrit = 3;
+    public static float bonusnoncrit;
     public static float bonuscritchancemultipler = 0.5f;
 
     //weapon/charswitch
