@@ -5,7 +5,7 @@ using UnityEngine;
 public class Playerlockon
 {
     public Movescript psm;
-    public int targetnumber;
+    //private int targetnumber;
 
     public void whilelockon()
     {
@@ -29,8 +29,8 @@ public class Playerlockon
     {
         if (Infightcontroller.infightenemylists.Count != 0)
         {
-            targetnumber = 0;
-            Movescript.lockontarget = Infightcontroller.infightenemylists[targetnumber].gameObject.transform;
+            Infightcontroller.instance.currenttargetnumber = 0;
+            Movescript.lockontarget = Infightcontroller.infightenemylists[Infightcontroller.instance.currenttargetnumber].gameObject.transform;
             Movescript.lockontarget.GetComponent<EnemyHP>().enemyisfocustarget();
             Movescript.lockontarget.GetComponent<EnemyHP>().marktarget();
         }
@@ -42,9 +42,9 @@ public class Playerlockon
             Movescript.lockontarget.GetComponent<EnemyHP>().unmarktarget();
             Movescript.lockontarget.GetComponent<EnemyHP>().enemyisnotfocustarget();
 
-            if (targetnumber >= Infightcontroller.infightenemylists.Count - 1) targetnumber = 0;
-            else targetnumber++;
-            Movescript.lockontarget = Infightcontroller.infightenemylists[targetnumber].gameObject.transform;
+            if (Infightcontroller.instance.currenttargetnumber >= Infightcontroller.infightenemylists.Count - 1) Infightcontroller.instance.currenttargetnumber = 0;
+            else Infightcontroller.instance.currenttargetnumber++;
+            Movescript.lockontarget = Infightcontroller.infightenemylists[Infightcontroller.instance.currenttargetnumber].gameObject.transform;
 
             Movescript.lockontarget.GetComponent<EnemyHP>().enemyisfocustarget();
             Movescript.lockontarget.GetComponent<EnemyHP>().marktarget();
@@ -60,8 +60,8 @@ public class Playerlockon
                 float distancefromtarget = Vector3.Distance(psm.transform.position, Infightcontroller.infightenemylists[i].transform.position);
                 if (distancefromtarget < shortestDistance)
                 {
-                    Movescript.lockontarget = Infightcontroller.infightenemylists[i].gameObject.transform;
-                    targetnumber = i;
+                    Infightcontroller.instance.currenttargetnumber = i;
+                    Movescript.lockontarget = Infightcontroller.infightenemylists[Infightcontroller.instance.currenttargetnumber].gameObject.transform;
                     shortestDistance = distancefromtarget;
                 }
             }

@@ -6,6 +6,7 @@ public class Playerutility
 {
     public Movescript psm;
 
+    private float dashdmg;
     private float finaldashdmg;
     const string gatherstate = "Gatherobject";
 
@@ -57,12 +58,12 @@ public class Playerutility
     }
     public void bonusdashexplosiondmg()
     {
-        if(Statics.bonusdashcantrigger == true)
+        if(Statics.bonuscritstacksbool == true)
         {
-            Statics.bonusdashcantrigger = false;
+            finaldashdmg = dashdmg * Statics.bonuscritstacks;
             Statics.bonuscritstacks = 0;
             psm.bonuscritstackstext.text = Statics.bonuscritstacks.ToString();
-            Collider[] cols = Physics.OverlapSphere(psm.transform.position, 10, psm.spellsdmglayer);
+            Collider[] cols = Physics.OverlapSphere(psm.transform.position, 15, psm.spellsdmglayer);
             foreach (Collider enemyhit in cols)
             {
                 if (enemyhit.isTrigger)               //damit nur die meleehitbox getriggered wird
@@ -77,6 +78,6 @@ public class Playerutility
     }
     public void calculatedashdmg()
     {
-        finaldashdmg = Globalplayercalculations.dashexplosion(psm.attributecontroller.critdmg, psm.attributecontroller.critchance);
+        dashdmg = Globalplayercalculations.dashexplosion(psm.attributecontroller.critdmg, psm.attributecontroller.critchance);
     }
 }

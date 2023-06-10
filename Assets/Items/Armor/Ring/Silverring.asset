@@ -29,9 +29,9 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 4
-    - 3
-    - 4
+    - 2
+    - 1
+    - 2
     Upgrademats: []
   - stats:
     - 0
@@ -39,9 +39,9 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 6
-    - 6
-    - 6
+    - 3
+    - 2
+    - 3
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
       costs: 2

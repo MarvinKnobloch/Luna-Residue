@@ -68,35 +68,44 @@ public class Upgradeuitextcontroller : MonoBehaviour
     }
     private void itemstats()
     {
-        int currentstat = 0;
-        foreach (int stat in item.itemlvl[item.upgradelvl].stats)
+        displaystats(0, Statics.healthperskillpoint);
+        displaystats(1, Statics.defenseperskillpoint);
+        displaystats(2, Statics.attackperskillpoint);
+        displaystats(3, Statics.critchanceperskillpoint);
+        displaystats(4, Statics.critdmgperskillpoint);
+        displaystats(5, Statics.weaponswitchbuffperskillpoint);
+        displaystats(6, Statics.charswitchbuffperskillpoint);
+        displaystats(7, Statics.basicdmgbuffperskillpoint);
+    }
+    private void displaystats(int currentstat, float skillpointmultipler)
+    {
+        if (item.upgradelvl < item.maxupgradelvl)
         {
-            if (item.upgradelvl < item.maxupgradelvl)
+            if (item.itemlvl[item.upgradelvl].stats[currentstat] != 0 || item.itemlvl[item.upgradelvl + 1].stats[currentstat] != 0)                  // || damit auch die values angezeigt werden, die von 0 auf +irgendwas gehen
             {
-                if (stat != 0 || item.itemlvl[item.upgradelvl + 1].stats[currentstat] != 0)               // || damit auch die values angezeigt werden, die von 0 auf +irgendwas gehen
+                if (item.itemlvl[item.upgradelvl].stats[currentstat] < item.itemlvl[item.upgradelvl + 1].stats[currentstat])
                 {
-                    if (item.itemlvl[item.upgradelvl].stats[currentstat] < item.itemlvl[item.upgradelvl + 1].stats[currentstat])
-                    {
-                        iteminfotext.text += "\n" + item.itemlvl[item.upgradelvl].stats[currentstat] + " -> " + "<color=green>" + item.itemlvl[item.upgradelvl + 1].stats[currentstat] + "</color>" + " " + statsname[currentstat];
-                    }
-                    else if (item.itemlvl[item.upgradelvl].stats[currentstat] > item.itemlvl[item.upgradelvl + 1].stats[currentstat])
-                    {
-                        iteminfotext.text += "\n" + item.itemlvl[item.upgradelvl].stats[currentstat] + " -> " + "<color=red>" + item.itemlvl[item.upgradelvl + 1].stats[currentstat] + "</color>" + " " + statsname[currentstat];
-                    }
-                    else
-                    {
-                        iteminfotext.text += "\n" + item.itemlvl[item.upgradelvl].stats[currentstat] + " -> " + item.itemlvl[item.upgradelvl + 1].stats[currentstat] + " " + statsname[currentstat];
-                    }
+                    iteminfotext.text += "\n" + item.itemlvl[item.upgradelvl].stats[currentstat] * skillpointmultipler +
+                    " -> " + "<color=green>" + item.itemlvl[item.upgradelvl + 1].stats[currentstat] * skillpointmultipler + "</color>" + " " + statsname[currentstat];
+                }
+                else if (item.itemlvl[item.upgradelvl].stats[currentstat] > item.itemlvl[item.upgradelvl + 1].stats[currentstat])
+                {
+                    iteminfotext.text += "\n" + item.itemlvl[item.upgradelvl].stats[currentstat] * skillpointmultipler +
+                    " -> " + "<color=red>" + item.itemlvl[item.upgradelvl + 1].stats[currentstat] * skillpointmultipler + "</color>" + " " + statsname[currentstat];
+                }
+                else
+                {
+                    iteminfotext.text += "\n" + item.itemlvl[item.upgradelvl].stats[currentstat] * skillpointmultipler +
+                    " -> " + item.itemlvl[item.upgradelvl + 1].stats[currentstat] * skillpointmultipler + " " + statsname[currentstat];
                 }
             }
-            else
+        }
+        else
+        {
+            if (item.itemlvl[item.upgradelvl].stats[currentstat] != 0)
             {
-                if (stat != 0)
-                {
-                    iteminfotext.text += "\n" + item.itemlvl[item.upgradelvl].stats[currentstat] + " " + statsname[currentstat];
-                }
+                iteminfotext.text += "\n" + item.itemlvl[item.upgradelvl].stats[currentstat] * skillpointmultipler + " " + statsname[currentstat];
             }
-            currentstat++;
         }
     }
     private void upgradedetails()

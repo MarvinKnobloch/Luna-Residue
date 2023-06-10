@@ -82,7 +82,7 @@ public class Skilltreebonustigger : MonoBehaviour , IPointerEnterHandler , IPoin
                              "Casting a heal increases the damage of your next attack(<color=green>+" + bonusdmgafterheal + "</color>).\n" +
                              "\n<u>Heal over time</u>\n<size=70%><color=yellow>(" + skillpoints + "/" + Statics.secondbonuspointsneeded + ") Points Health/Defense</color><size=100%>\n" +
                              "While in combat every<color=green> " + Statics.bonushealtimer + "</color> seconds the character with lowest HP regenerates <color=green>" + 
-                             Statics.bonushealpercentage + "</color>% of there max HP.";
+                             Statics.bonushealpercentage * 100 + "</color>% of there max HP.";
     }
 
     private void critstatsupdate()
@@ -96,9 +96,12 @@ public class Skilltreebonustigger : MonoBehaviour , IPointerEnterHandler , IPoin
         int skillpoints = Statics.charcritchanceskillpoints[currentchar] + Statics.charcritdmgskillpoints[currentchar];
 
         bonusinfotext.text = "<u>Dash Explosion</u>\n<size=70%><color=yellow>(" + skillpoints + "/" + Statics.firstbonuspointsneeded + ") Points Critical Chance/Damage</color><size=100%>\n" +
-                             "Each critcal hit gains 1 stack. At " + Statics.bonuscritstacksneeded + " stacks your next dash will cause an explosion that deals damage(<color=green>" + dashexplosiondmg + "</color>).\n" +
+                             "Your dash will cause an explosion that deals damage. The damage is base on stacks you gain for each critcal hit(max <color=green>" + Statics.bonuscritmaxstacks + "</color> stacks)." +
+                             "For each stack you will deal<color=green> " + dashexplosiondmg + "</color> damage.\n" +
                              "\n<u>Critcal damage bonus</u>\n<size=70%><color=yellow>(" + skillpoints + "/" + Statics.secondbonuspointsneeded + ") Points Critical Chance/Damage</color><size=100%>\n" +
-                             "Your critcal hits have a chance(<color=green>" + bonuscritchance + "</color>%) to deal more damage(<color=green>" + bonuscritdmg + "</color>%).";
+                             "Your critcal hits have a chance(<color=green>" + bonuscritchance + "</color>%) to deal more damage(<color=green>" + bonuscritdmg + "</color>%)." +
+                             "\nAlso your critcal chance will increase by<color=green> " + Statics.bonuscritfromnoncrit + "</color>% for each non critcal hit you cause with your weapon." +
+                             " A critcal hit will reset the bonus chance.";
     }
     private void switchstatsupdate()
     {
@@ -111,7 +114,7 @@ public class Skilltreebonustigger : MonoBehaviour , IPointerEnterHandler , IPoin
         float heal = Mathf.Round(charexplosiondmg * Statics.bonuscharexplosionhealmultipler);
 
         bonusinfotext.text = "<u>Improved character switch</u>\n<size=70%><color=yellow>(" + skillpoints + "/" + Statics.firstbonuspointsneeded + ") Points Weapon/Character Switch</color><size=100%>\n" +
-                             "Switching your character will cause an explosion that damages enemies(<color=green>" + charexplosiondmg + "</color>) and heals your group(<color=green>" + heal + "</color>).\n" +
+                             "Switching your character will cause an explosion that damages enemies(<color=green>" + charexplosiondmg + "</color>).\n" +
                              "\n<u>Improved weapon switch</u>\n<size=70%><color=yellow>(" + skillpoints + "/" + Statics.secondbonuspointsneeded + ") Points Weapon/Character Switch</color><size=100%>\n" +
                              "Your weapon switch attack deals more damage(<color=green>" + bonusweaponswitchdmg + "</color>%).";
     }

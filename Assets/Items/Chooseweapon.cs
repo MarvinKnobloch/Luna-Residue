@@ -45,21 +45,27 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
     private void statsupdate()
     {
+        float healbonus;
+        if (Statics.characterclassroll[selectedchar] == 1)
+        {
+            healbonus = Mathf.Round((Statics.charmaxhealth[selectedchar] - Statics.charcurrentlvl * Statics.guardbonushpeachlvl) * Statics.healhealthbonuspercentage * 0.01f);
+        }
+        else healbonus = Mathf.Round(Statics.charmaxhealth[selectedchar] * Statics.healhealthbonuspercentage * 0.01f);
         statsnumbers.text = string.Empty;
         statsnumbers.color = Color.white;
         statsnumbers.text = Statics.charmaxhealth[selectedchar] + "\n" +
-                            Mathf.Round(Statics.charmaxhealth[selectedchar] * Statics.healhealthbonuspercentage * 0.01f) + "\n" +
+                            healbonus + "\n" +
                             Statics.chardefense[selectedchar] + "\n" +
                             Mathf.Round(Statics.chardefense[selectedchar] * Statics.defenseconvertedtoattack * 0.01f) + "\n" +
                             Statics.charattack[selectedchar] + "\n" +
-                            Statics.charcritchance[selectedchar] + "%" + "\n" +
-                            Statics.charcritdmg[selectedchar] + "%" + "\n" +
-                            Statics.charweaponbuff[selectedchar] + "%" + "\n" +
-                            string.Format("{0:#.0}", Statics.charweaponbuffduration[selectedchar]) + "sec" + "\n" +
-                            Statics.charswitchbuff[selectedchar] + "%" + "\n" +
+                            string.Format("{0:0.0}", Statics.charcritchance[selectedchar]) + "%" + "\n" +
+                            string.Format("{0:0.0}", Statics.charcritdmg[selectedchar]) + "%" + "\n" +
+                            string.Format("{0:0.0}", Statics.charweaponbuff[selectedchar]) + "%" + "\n" +
+                            string.Format("{0:0.0}", Statics.charweaponbuffduration[selectedchar]) + "sec" + "\n" +
+                            string.Format("{0:0.0}", Statics.charswitchbuff[selectedchar]) + "%" + "\n" +
                             string.Format("{0:#.0}", Statics.charswitchbuffduration[selectedchar]) + "sec" + "\n" +
-                            Statics.charbasiccritbuff[selectedchar] + "%" + "\n" +
-                            Statics.charbasicdmgbuff[selectedchar] + "%";
+                            string.Format("{0:0.0}", Statics.charbasiccritbuff[selectedchar]) + "%" + "\n" +
+                            string.Format("{0:0.0}", Statics.charbasicdmgbuff[selectedchar]) + "%";
 
         gridvalues.sworddmg.text = Statics.charswordattack[selectedchar].ToString();
         gridvalues.bowdmg.text = Statics.charbowattack[selectedchar].ToString();

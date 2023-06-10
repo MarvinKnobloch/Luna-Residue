@@ -130,7 +130,6 @@ public class SwordController : MonoBehaviour
         float finalcritchance;
         if (maintarget == true) finalcritchance = overallcritchance + enemydebuffcrit + Statics.bonusnoncrit;
         else finalcritchance = overallcritchance + enemydebuffcrit;
-
         if (Random.Range(0, 100) < finalcritchance)
         {
             crit = true;

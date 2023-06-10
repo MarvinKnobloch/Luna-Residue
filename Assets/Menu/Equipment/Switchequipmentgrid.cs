@@ -8,13 +8,14 @@ public class Switchequipmentgrid : MonoBehaviour, ISelectHandler
 {
     [SerializeField] private GameObject grid;
     [SerializeField] Equipmentmenucontroller equipmentcontroller;
+    [SerializeField] Equipcharselection equipcharselection;
     [SerializeField] private int buttonnumber;
 
     public void OnSelect(BaseEventData eventData)
     {
         equipmentcontroller.switchgrid(grid);
         Statics.currentequipmentbutton = buttonnumber;
-        Equipcharselection.currentbuttonslot = gameObject;
+        equipcharselection.currentbuttonslot = gameObject;
     } 
 }
 

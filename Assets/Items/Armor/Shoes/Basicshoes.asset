@@ -16,11 +16,11 @@ MonoBehaviour:
   type: 8
   itemid: 2
   itemname: Basic Boots
-  inventoryslot: 0
+  inventoryslot: 2
   itemshopcosts: 130
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
-  upgradelvl: 0
+  upgradelvl: 1
   maxupgradelvl: 1
   itemlvl:
   - stats:
@@ -29,9 +29,9 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 2
+    - 1
     - 0
-    - 2
+    - 1
     Upgrademats: []
   - stats:
     - 0
@@ -39,9 +39,9 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 2
+    - 1
     - 0
-    - 6
+    - 3
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
       costs: 2

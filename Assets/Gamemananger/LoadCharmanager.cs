@@ -297,7 +297,6 @@ public class LoadCharmanager : MonoBehaviour
     private void resetbonusattributesvalues()
     {
         Statics.bonuscritstacks = 0;
-        Statics.bonusdashcantrigger = false;
     }
     public void checkforattributebonus(int charnumber)
     {
@@ -337,23 +336,23 @@ public class LoadCharmanager : MonoBehaviour
     }
     public void easydifficulty()
     {
-        Statics.enemydmgmultiplier = 1.2f;
+        Statics.enemydmgmultiplier = 1.3f;
         Statics.enemyspezialdmgbonus = 3;
-        Statics.enemyhealthpercantageadded = 0.11f; //0.05f;
+        Statics.enemyhealthpercantageadded = 0.16f; //0.05f;
         Statics.enemyspecialcd = 18;
         Statics.enemydifficultyminusdmg = 4;
     }
     public void normaldifficulty()
     {
-        Statics.enemydmgmultiplier = 1.4f;
+        Statics.enemydmgmultiplier = 1.5f;
         Statics.enemyspezialdmgbonus = 4;
-        Statics.enemyhealthpercantageadded = 0.13f;    //0.075f;
+        Statics.enemyhealthpercantageadded = 0.19f;    //0.075f;
         Statics.enemyspecialcd = 16;
         Statics.enemydifficultyminusdmg = 2;
     }
     public void harddifficulty()
     {
-        Statics.enemydmgmultiplier = 1.8f;  //1.6f
+        Statics.enemydmgmultiplier = 1.7f;  //1.6f
         Statics.enemyspezialdmgbonus = 5;
         Statics.enemyhealthpercantageadded = 0.22f; //0.17f          //0.1f;
         Statics.enemyspecialcd = 14;

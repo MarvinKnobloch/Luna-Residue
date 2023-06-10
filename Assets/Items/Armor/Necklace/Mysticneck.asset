@@ -20,7 +20,7 @@ MonoBehaviour:
   itemshopcosts: 111
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
-  upgradelvl: 0
+  upgradelvl: 3
   maxupgradelvl: 6
   itemlvl:
   - stats:
@@ -30,7 +30,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 3
+    - 1
     - 0
     Upgrademats: []
   - stats:
@@ -40,7 +40,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 6
+    - 2
     - 0
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
@@ -52,7 +52,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 9
+    - 3
     - 0
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
@@ -64,7 +64,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 12
+    - 4
     - 0
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
@@ -76,7 +76,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 15
+    - 5
     - 0
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
@@ -88,7 +88,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 18
+    - 6
     - 0
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
@@ -102,7 +102,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 21
+    - 7
     - 0
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}

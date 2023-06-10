@@ -86,7 +86,7 @@ public class Supportmovement : MonoBehaviour
         currenttarget = null;
         attacktimer = attackcd;
         switchtarget();
-        float potionheal = Globalplayercalculations.calculatecasthealing(basicpotionheal, playerhp.maxhealth / 2, GetComponent<Attributecontroller>().stoneclassbonusheal);
+        float potionheal = Globalplayercalculations.calculatecasthealing(basicpotionheal, playerhp.maxhealth * 0.4f, GetComponent<Attributecontroller>().stoneclassbonusheal);
         healpotion.GetComponent<Alliesbottlecontroller>().potionheal = potionheal;
     }
     private void OnDisable()

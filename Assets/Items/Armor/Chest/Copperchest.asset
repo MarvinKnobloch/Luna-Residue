@@ -16,16 +16,16 @@ MonoBehaviour:
   type: 5
   itemid: 3
   itemname: Copper Chest
-  inventoryslot: 0
+  inventoryslot: 3
   itemshopcosts: 270
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
-  upgradelvl: 0
+  upgradelvl: 1
   maxupgradelvl: 1
   itemlvl:
   - stats:
     - 0
-    - 50
+    - 2
     - 1
     - 0
     - 0
@@ -35,7 +35,7 @@ MonoBehaviour:
     Upgrademats: []
   - stats:
     - 0
-    - 75
+    - 3
     - 1
     - 1
     - 0

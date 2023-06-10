@@ -12,6 +12,7 @@ public class Infightcontroller : MonoBehaviour
 
     public static float teammatesdespawntime = 5;
     public float spezialtimer;
+    public int currenttargetnumber;
 
     [SerializeField] private GameObject map;
     [SerializeField] private GameObject playergameover;

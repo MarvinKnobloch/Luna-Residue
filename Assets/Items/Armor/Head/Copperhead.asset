@@ -20,7 +20,7 @@ MonoBehaviour:
   itemshopcosts: 257
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
-  upgradelvl: 1
+  upgradelvl: 0
   maxupgradelvl: 1
   itemlvl:
   - stats:
@@ -29,8 +29,8 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 4
-    - 6
+    - 2
+    - 2
     - 0
     Upgrademats: []
   - stats:
@@ -39,8 +39,8 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 6
-    - 9
+    - 3
+    - 3
     - 0
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}

@@ -520,11 +520,6 @@ public class Bowattack : MonoBehaviour
         }
         else groundattackchainend();
     }
-    IEnumerator startweaponswitch()
-    {
-        yield return null;
-        bowweaponswitch();
-    }
     private void bowweaponswitch()
     {
         if (Physics.CheckSphere(transform.position, Statics.weaponswitchattackrange, weaponswitchlayer))

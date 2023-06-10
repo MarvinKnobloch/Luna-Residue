@@ -69,7 +69,7 @@ public class Statics
     public static float weaonswitchbuffdurationperskillpoint = 0.05f;
     public static float weaponswitchbuffperskillpoint = 2;
     public static float charswitchbuffdurationperskillpoint = 0.1f;
-    public static float charswitchbuffperskillpoint = 3;
+    public static float charswitchbuffperskillpoint = 2.5f;
     public static float basiccritbuffperskillpoint = 0.5f;
     public static int basicdmgbuffperskillpoint = 2;
 
@@ -234,18 +234,17 @@ public class Statics
 
     //health/defense
     public static bool bonusdmgafterheal;                  //healingscript
-    public static float bonusdmgafterhealreduction = 0.7f;
+    public static float bonusdmgafterhealreduction = 0.6f;
     public static bool bonushealovertimebool;              //bonushealscript + Infightcontroller
     public static float bonushealtimer = 5;
-    public static float bonushealpercentage = 8;
+    public static float bonushealpercentage = 0.07f;       // 0.08 = 8%
 
     //crit
     public static bool bonuscritstacksbool;               //Enemyhp.takedmg + Bonuscritstacksscript + player utility
     public static int bonuscritstacks;
-    public static int bonuscritstacksneeded = 2;
-    public static bool bonusdashcantrigger;
+    public static int bonuscritmaxstacks = 5;
     public static bool bonuscritdmg;                       //sword/fistcontroller + bowattack (crit berechnung)
-    public static float bonuscritfromnoncrit = 3;
+    public static float bonuscritfromnoncrit = 4;
     public static float bonusnoncrit;
     public static float bonuscritchancemultipler = 0.5f;
 

@@ -202,14 +202,14 @@ public class Setitemsandinventory : MonoBehaviour
     {
         if (item != null)
         {
-            Statics.charmaxhealth[character] += item.itemlvl[item.upgradelvl].stats[0];
-            Statics.chardefense[character] += item.itemlvl[item.upgradelvl].stats[1];
+            Statics.charmaxhealth[character] += item.itemlvl[item.upgradelvl].stats[0] * Statics.healthperskillpoint;
+            Statics.chardefense[character] += item.itemlvl[item.upgradelvl].stats[1] * Statics.defenseperskillpoint;
             Statics.charattack[character] += item.itemlvl[item.upgradelvl].stats[2];
-            Statics.charcritchance[character] += item.itemlvl[item.upgradelvl].stats[3];
-            Statics.charcritdmg[character] += item.itemlvl[item.upgradelvl].stats[4];
-            Statics.charweaponbuff[character] += item.itemlvl[item.upgradelvl].stats[5];
-            Statics.charswitchbuff[character] += item.itemlvl[item.upgradelvl].stats[6];
-            Statics.charbasicdmgbuff[character] += item.itemlvl[item.upgradelvl].stats[7];
+            Statics.charcritchance[character] += item.itemlvl[item.upgradelvl].stats[3] * Statics.critchanceperskillpoint;
+            Statics.charcritdmg[character] += item.itemlvl[item.upgradelvl].stats[4] * Statics.critdmgperskillpoint;
+            Statics.charweaponbuff[character] += item.itemlvl[item.upgradelvl].stats[5] * Statics.weaponswitchbuffperskillpoint;
+            Statics.charswitchbuff[character] += item.itemlvl[item.upgradelvl].stats[6] * Statics.charswitchbuffperskillpoint;
+            Statics.charbasicdmgbuff[character] += item.itemlvl[item.upgradelvl].stats[7] * Statics.basicdmgbuffperskillpoint;
         }
     }
     public void addskillpoints()

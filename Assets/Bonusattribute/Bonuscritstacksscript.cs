@@ -20,10 +20,6 @@ public class Bonuscritstacksscript : MonoBehaviour
     }
     private void checkstacks()
     {
-        if(Statics.bonuscritstacks <= Statics.bonuscritstacksneeded)
-        {
-            if(Statics.bonuscritstacks == Statics.bonuscritstacksneeded) Statics.bonusdashcantrigger = true;
-            stacktext.text = Statics.bonuscritstacks.ToString();
-        }
+        stacktext.text = Statics.bonuscritstacks.ToString();
     }
 }

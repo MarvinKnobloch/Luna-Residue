@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6142873550582406964}
   - component: {fileID: 6539704331282766400}
   - component: {fileID: 8040443739287469022}
-  m_Layer: 15
+  m_Layer: 16
   m_Name: Jumppad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,4 +123,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumppadlaunchbasevalue: 10
-  jumppadlaunchheight: 20
+  jumppadlaunchheight: 18

@@ -20,7 +20,7 @@ MonoBehaviour:
   itemshopcosts: 83
   seconditem: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   description: 
-  upgradelvl: 0
+  upgradelvl: 2
   maxupgradelvl: 6
   itemlvl:
   - stats:
@@ -28,7 +28,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 2
+    - 1
     - 0
     - 0
     - 0
@@ -38,7 +38,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 4
+    - 2
     - 0
     - 0
     - 0
@@ -50,7 +50,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 6
+    - 3
     - 0
     - 0
     - 0
@@ -62,7 +62,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 8
+    - 4
     - 0
     - 0
     - 0
@@ -74,7 +74,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 10
+    - 5
     - 0
     - 0
     - 0
@@ -86,7 +86,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 12
+    - 6
     - 0
     - 0
     - 0
@@ -100,7 +100,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 14
+    - 7
     - 0
     - 0
     - 0

@@ -6,6 +6,6 @@ public class Limitfps : MonoBehaviour
 {
     private void Start()
     {
-        Application.targetFrameRate = 200;
+        Application.targetFrameRate = 166;
     }
 }

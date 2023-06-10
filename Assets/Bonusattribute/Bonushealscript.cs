@@ -40,7 +40,7 @@ public class Bonushealscript : MonoBehaviour
             checkforlowesthealth(LoadCharmanager.Overallforthchar, Statics.currentforthchar);
             if (currenttarget.TryGetComponent(out Playerhp playerhp))
             {
-                playerhp.addhealthwithtext(playerhp.maxhealth / Statics.bonushealpercentage);
+                playerhp.addhealthwithtext(playerhp.maxhealth * Statics.bonushealpercentage);
             }
         }
     }

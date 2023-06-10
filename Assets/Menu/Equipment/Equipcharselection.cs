@@ -11,7 +11,7 @@ public class Equipcharselection : MonoBehaviour
     public Text nametext;
 
     private SpielerSteu Steuerung;
-    public static GameObject currentbuttonslot;
+    public GameObject currentbuttonslot;
 
     [SerializeField] private TextMeshProUGUI statsnumbers;
 
@@ -19,6 +19,7 @@ public class Equipcharselection : MonoBehaviour
     public TextMeshProUGUI bowdmg;
     public TextMeshProUGUI fistdmg;
 
+    [SerializeField] private GameObject swordbutton;
     [SerializeField] private TextMeshProUGUI[] slotbuttontext;
     [SerializeField] private GameObject[] charbuttons;
 
@@ -26,6 +27,7 @@ public class Equipcharselection : MonoBehaviour
     private void Awake()
     {
         Steuerung = Keybindinputmanager.inputActions;
+        currentbuttonslot = swordbutton;
     }
     private void OnEnable()
     {
@@ -97,14 +99,14 @@ public class Equipcharselection : MonoBehaviour
                             Statics.chardefense[currentchar] + "\n" +
                             Mathf.Round(Statics.chardefense[currentchar] * Statics.defenseconvertedtoattack * 0.01f) + "\n" +
                             Statics.charattack[currentchar] + "\n" +
-                            Statics.charcritchance[currentchar] + "%" + "\n" +
-                            Statics.charcritdmg[currentchar] + "%" + "\n" +
-                            Statics.charweaponbuff[currentchar] + "%" + "\n" +
-                            string.Format("{0:#.0}", Statics.charweaponbuffduration[currentchar]) + "sec" + "\n" +
-                            Statics.charswitchbuff[currentchar] + "%" + "\n" +
-                            string.Format("{0:#.0}", Statics.charswitchbuffduration[currentchar]) + "sec" + "\n" +
-                            Statics.charbasiccritbuff[currentchar] + "%" + "\n" +
-                            Statics.charbasicdmgbuff[currentchar] + "%";
+                            string.Format("{0:0.0}", Statics.charcritchance[currentchar]) + "%" + "\n" +
+                            string.Format("{0:0.0}", Statics.charcritdmg[currentchar]) + "%" + "\n" +
+                            string.Format("{0:0.0}", Statics.charweaponbuff[currentchar]) + "%" + "\n" +
+                            string.Format("{0:0.0}", Statics.charweaponbuffduration[currentchar]) + "sec" + "\n" +
+                            string.Format("{0:0.0}", Statics.charswitchbuff[currentchar]) + "%" + "\n" +
+                            string.Format("{0:0.0}", Statics.charswitchbuffduration[currentchar]) + "sec" + "\n" +
+                            string.Format("{0:0.0}", Statics.charbasiccritbuff[currentchar]) + "%" + "\n" +
+                            string.Format("{0:0.0}", Statics.charbasicdmgbuff[currentchar]) + "%";
 
         sworddmg.text = Statics.charswordattack[currentchar].ToString();
         bowdmg.text = Statics.charbowattack[currentchar].ToString();
@@ -134,7 +136,7 @@ public class Equipcharselection : MonoBehaviour
         if(currentbuttonslot != null)
         {
             EventSystem.current.SetSelectedGameObject(currentbuttonslot);
-            if(Statics.currentequipmentbutton < 3)
+            if (Statics.currentequipmentbutton < 3)
             {
                 currentbuttonslot.gameObject.GetComponent<Setcolorcurrentweapon>().triggerbutton();
             }

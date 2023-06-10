@@ -123,8 +123,11 @@ public class EnemyHP : MonoBehaviour
                 Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, finaldmg, dmgtextcolor);
                 if(Statics.bonuscritstacksbool == true && gameObject == Movescript.lockontarget.gameObject)
                 {
-                    Statics.bonuscritstacks++;
-                    addbonuscritstacks?.Invoke();
+                    if (Statics.bonuscritstacks < Statics.bonuscritmaxstacks)
+                    {
+                        Statics.bonuscritstacks++;
+                        addbonuscritstacks?.Invoke();
+                    }
                 }
             }
             else Floatingnumberscontroller.floatingnumberscontroller.activatenumbers(this.gameObject, finaldmg, Color.yellow);

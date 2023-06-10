@@ -31,7 +31,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 2
+    - 1
     Upgrademats: []
   - stats:
     - 0
@@ -41,7 +41,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 4
+    - 2
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
       costs: 1
@@ -53,7 +53,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 6
+    - 3
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
       costs: 2
@@ -65,7 +65,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 8
+    - 4
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
       costs: 3
@@ -77,7 +77,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 10
+    - 5
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
       costs: 4
@@ -89,7 +89,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 12
+    - 6
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
       costs: 1
@@ -103,7 +103,7 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-    - 14
+    - 7
     Upgrademats:
     - upgrademat: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
       costs: 2

@@ -16,6 +16,8 @@ public class Charswitch : MonoBehaviour
     public Image ability1;
     public Image ability2;
 
+    private float charswitchheal = 0.08f;
+
     public GameObject charmanager;
     private Manamanager manacontroller;
     private LoadCharmanager loadcharmanager;
@@ -107,6 +109,18 @@ public class Charswitch : MonoBehaviour
     }
     private void switchvalues()
     {
+        if (Statics.currentactiveplayer == 0)
+        {
+            Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallmainchar, Statics.charmaxhealth[Statics.currentfirstchar] * charswitchheal, true);
+            Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallsecondchar, Statics.charmaxhealth[Statics.currentsecondchar] * charswitchheal, false);
+        }
+        else
+        {
+            Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallmainchar, Statics.charmaxhealth[Statics.currentsecondchar] * charswitchheal, true);
+            Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallsecondchar, Statics.charmaxhealth[Statics.currentfirstchar] * charswitchheal, false);
+        }
+        Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallthirdchar, Statics.charmaxhealth[Statics.currentthirdchar] * charswitchheal, false);
+        Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallforthchar, Statics.charmaxhealth[Statics.currentforthchar] * charswitchheal, false);
         Time.timeScale = Statics.normalgamespeed;
         Time.fixedDeltaTime = Statics.normaltimedelta;
         if (aimcam.gameObject.activeSelf == true)
@@ -158,13 +172,6 @@ public class Charswitch : MonoBehaviour
         if(Statics.bonuscharexplosion == true)
         {
             float finalexplosiondmg = Globalplayercalculations.charexplison(charnumber);
-            float healamount = finalexplosiondmg * Statics.bonuscharexplosionhealmultipler;
-
-            Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallmainchar, healamount, true);
-            Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallsecondchar, healamount, false);
-            Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallthirdchar, healamount, false);
-            Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallforthchar, healamount, false);
-
             if(Infightcontroller.infightenemylists.Count > 0)
             {
                 finalexplosiondmg = finalexplosiondmg / Infightcontroller.infightenemylists.Count;

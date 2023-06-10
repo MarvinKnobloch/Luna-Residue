@@ -64,14 +64,14 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                             Statics.chardefense[selectedchar] + "\n" +
                             Mathf.Round(Statics.chardefense[selectedchar] * Statics.defenseconvertedtoattack * 0.01f) + "\n" +
                             Statics.charattack[selectedchar] + "\n" +
-                            Statics.charcritchance[selectedchar] + "%" + "\n" +
-                            Statics.charcritdmg[selectedchar] + "%" + "\n" +
-                            Statics.charweaponbuff[selectedchar] + "%" + "\n" +
-                            string.Format("{0:#.0}", Statics.charweaponbuffduration[selectedchar]) + "sec" + "\n" +
-                            Statics.charswitchbuff[selectedchar] + "%" + "\n" +
-                            string.Format("{0:#.0}", Statics.charswitchbuffduration[selectedchar]) + "sec" + "\n" +
-                            Statics.charbasiccritbuff[selectedchar] + "%" + "\n" +
-                            Statics.charbasicdmgbuff[selectedchar] + "%";
+                            string.Format("{0:0.0}", Statics.charcritchance[selectedchar]) + "%" + "\n" +
+                            string.Format("{0:0.0}", Statics.charcritdmg[selectedchar]) + "%" + "\n" +
+                            string.Format("{0:0.0}", Statics.charweaponbuff[selectedchar]) + "%" + "\n" +
+                            string.Format("{0:0.0}", Statics.charweaponbuffduration[selectedchar]) + "sec" + "\n" +
+                            string.Format("{0:0.0}", Statics.charswitchbuff[selectedchar]) + "%" + "\n" +
+                            string.Format("{0:0.0}", Statics.charswitchbuffduration[selectedchar]) + "sec" + "\n" +
+                            string.Format("{0:0.0}", Statics.charbasiccritbuff[selectedchar]) + "%" + "\n" +
+                            string.Format("{0:0.0}", Statics.charbasicdmgbuff[selectedchar]) + "%";
 
         gridvalues.sworddmg.text = Statics.charswordattack[selectedchar].ToString();
         gridvalues.bowdmg.text = Statics.charbowattack[selectedchar].ToString();
@@ -121,14 +121,14 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if (staticsslot != null)
         {
-            Statics.charmaxhealth[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[0] - staticsslot.itemlvl[staticsslot.upgradelvl].stats[0];
-            Statics.chardefense[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[1] - staticsslot.itemlvl[staticsslot.upgradelvl].stats[1];
+            Statics.charmaxhealth[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[0] * Statics.healthperskillpoint - staticsslot.itemlvl[staticsslot.upgradelvl].stats[0] * Statics.healthperskillpoint;
+            Statics.chardefense[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[1] * Statics.defenseperskillpoint - staticsslot.itemlvl[staticsslot.upgradelvl].stats[1] * Statics.defenseperskillpoint;
             Statics.charattack[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[2] - staticsslot.itemlvl[staticsslot.upgradelvl].stats[2];
-            Statics.charcritchance[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[3] - staticsslot.itemlvl[staticsslot.upgradelvl].stats[3];
-            Statics.charcritdmg[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[4] - staticsslot.itemlvl[staticsslot.upgradelvl].stats[4];
-            Statics.charweaponbuff[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[5] - staticsslot.itemlvl[staticsslot.upgradelvl].stats[5];
-            Statics.charswitchbuff[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[6] - staticsslot.itemlvl[staticsslot.upgradelvl].stats[6];
-            Statics.charbasicdmgbuff[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[7] - staticsslot.itemlvl[staticsslot.upgradelvl].stats[7];
+            Statics.charcritchance[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[3] * Statics.critchanceperskillpoint - staticsslot.itemlvl[staticsslot.upgradelvl].stats[3] * Statics.critchanceperskillpoint;
+            Statics.charcritdmg[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[4] * Statics.critdmgperskillpoint - staticsslot.itemlvl[staticsslot.upgradelvl].stats[4] * Statics.critdmgperskillpoint;
+            Statics.charweaponbuff[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[5] * Statics.weaponswitchbuffperskillpoint - staticsslot.itemlvl[staticsslot.upgradelvl].stats[5] * Statics.weaponswitchbuffperskillpoint;
+            Statics.charswitchbuff[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[6] * Statics.charswitchbuffperskillpoint - staticsslot.itemlvl[staticsslot.upgradelvl].stats[6] * Statics.charswitchbuffperskillpoint;
+            Statics.charbasicdmgbuff[selectedchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[7] * Statics.basicdmgbuffperskillpoint - staticsslot.itemlvl[staticsslot.upgradelvl].stats[7] * Statics.basicdmgbuffperskillpoint;
         }
         else
         {
@@ -178,14 +178,14 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     private void subtractstatsbeforeupgrade(int currentchar)
     {
-        Statics.charmaxhealth[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[0]; //itemvalues.stats[0];
-        Statics.chardefense[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[1];
+        Statics.charmaxhealth[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[0] * Statics.healthperskillpoint;
+        Statics.chardefense[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[1] * Statics.defenseperskillpoint;
         Statics.charattack[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[2];
-        Statics.charcritchance[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[3];
-        Statics.charcritdmg[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[4];
-        Statics.charweaponbuff[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[5];
-        Statics.charswitchbuff[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[6];
-        Statics.charbasicdmgbuff[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[7];
+        Statics.charcritchance[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[3] * Statics.critchanceperskillpoint;
+        Statics.charcritdmg[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[4] * Statics.critdmgperskillpoint;
+        Statics.charweaponbuff[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[5] * Statics.weaponswitchbuffperskillpoint;
+        Statics.charswitchbuff[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[6] * Statics.charswitchbuffperskillpoint;
+        Statics.charbasicdmgbuff[currentchar] -= itemvalues.itemlvl[itemvalues.upgradelvl].stats[7] * Statics.basicdmgbuffperskillpoint;
     }
     public void upgradeequipeditems()
     {
@@ -232,14 +232,14 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     private void addstatsafterupgrade(int currentchar)
     {
-        Statics.charmaxhealth[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[0];
-        Statics.chardefense[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[1];
+        Statics.charmaxhealth[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[0] * Statics.healthperskillpoint;
+        Statics.chardefense[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[1] * Statics.defenseperskillpoint;
         Statics.charattack[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[2];
-        Statics.charcritchance[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[3];
-        Statics.charcritdmg[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[4];
-        Statics.charweaponbuff[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[5];
-        Statics.charswitchbuff[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[6];
-        Statics.charbasicdmgbuff[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[7];
+        Statics.charcritchance[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[3] * Statics.critchanceperskillpoint;
+        Statics.charcritdmg[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[4] * Statics.critdmgperskillpoint;
+        Statics.charweaponbuff[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[5] * Statics.weaponswitchbuffperskillpoint;
+        Statics.charswitchbuff[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[6] * Statics.charswitchbuffperskillpoint;
+        Statics.charbasicdmgbuff[currentchar] += itemvalues.itemlvl[itemvalues.upgradelvl].stats[7] * Statics.basicdmgbuffperskillpoint;
     }
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
@@ -293,23 +293,23 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     private void mouseenter(Itemcontroller slot)
     {
-        ontriggerflatstats(slot, 0, Statics.charmaxhealth[selectedchar]);
+        ontriggerflatstats(slot, 0, Statics.charmaxhealth[selectedchar], Statics.healthperskillpoint);
         healbonus(slot, 0, Statics.charmaxhealth[selectedchar]);
-        ontriggerflatstats(slot, 1, Statics.chardefense[selectedchar]);
+        ontriggerflatstats(slot, 1, Statics.chardefense[selectedchar], Statics.defenseperskillpoint);
         defensebonus(slot, 1, Statics.chardefense[selectedchar]);
-        ontriggerflatstats(slot, 2, Statics.charattack[selectedchar]);
-        ontriggerpercentage(slot, 3, Statics.charcritchance[selectedchar]);
-        ontriggerpercentage(slot, 4, Statics.charcritdmg[selectedchar]);
-        ontriggerpercentage(slot, 5, Statics.charweaponbuff[selectedchar]);
+        ontriggerflatstats(slot, 2, Statics.charattack[selectedchar], Statics.attackperskillpoint);
+        ontriggerpercentage(slot, 3, Statics.charcritchance[selectedchar] , Statics.critchanceperskillpoint);
+        ontriggerpercentage(slot, 4, Statics.charcritdmg[selectedchar], Statics.critdmgperskillpoint);
+        ontriggerpercentage(slot, 5, Statics.charweaponbuff[selectedchar], Statics.weaponswitchbuffperskillpoint);
         ontriggerduration(Statics.charweaponbuffduration[selectedchar]);
-        ontriggerpercentage(slot, 6, Statics.charswitchbuff[selectedchar]);
+        ontriggerpercentage(slot, 6, Statics.charswitchbuff[selectedchar], Statics.charswitchbuffperskillpoint);
         ontriggerduration(Statics.charswitchbuffduration[selectedchar]);
         ontriggerbasiccritpercentage(Statics.charbasiccritbuff[selectedchar]);
-        ontriggerpercentage(slot, 7, Statics.charbasicdmgbuff[selectedchar]);
+        ontriggerpercentage(slot, 7, Statics.charbasicdmgbuff[selectedchar], Statics.basicdmgbuffperskillpoint);
     }
-    private void ontriggerflatstats(Itemcontroller equipeditem, int itemstat, float currentstatvalue)
+    private void ontriggerflatstats(Itemcontroller equipeditem, int itemstat, float currentstatvalue, float skillpointmultipler)
     {
-        float difference = itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] - equipeditem.itemlvl[equipeditem.upgradelvl].stats[itemstat];
+        float difference = (itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] - equipeditem.itemlvl[equipeditem.upgradelvl].stats[itemstat]) * skillpointmultipler;
         if (itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] > equipeditem.itemlvl[equipeditem.upgradelvl].stats[itemstat])
         {
             statsnumbers.text += "<color=green>" + "( +" + difference + " ) " + (difference + currentstatvalue) + "</color>" + "\n";
@@ -323,30 +323,30 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             statsnumbers.text += currentstatvalue + "\n";
         }
     }
-    private void ontriggerpercentage(Itemcontroller equipeditem, int itemstat, float currentstatvalue)
+    private void ontriggerpercentage(Itemcontroller equipeditem, int itemstat, float currentstatvalue, float skillpointmultipler)
     {
-        float difference = itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] - equipeditem.itemlvl[equipeditem.upgradelvl].stats[itemstat];
+        float difference = (itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] - equipeditem.itemlvl[equipeditem.upgradelvl].stats[itemstat]) * skillpointmultipler;
         if (itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] > equipeditem.itemlvl[equipeditem.upgradelvl].stats[itemstat])
         {
-            statsnumbers.text += "<color=green>" + "( +" + difference + " ) " + (difference + currentstatvalue) + "%" + "</color>" + "\n";
+            statsnumbers.text += "<color=green>" + "( +" + string.Format("{0:0.0}", difference) + " ) " + string.Format("{0:0.0}", difference + currentstatvalue) + "%" + "</color>" + "\n";
         }
         else if (itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] < equipeditem.itemlvl[equipeditem.upgradelvl].stats[itemstat])
         {
-            statsnumbers.text += "<color=red>" + "( " + difference + " ) " + (difference + currentstatvalue) + "%" + "</color>" + "\n";
+            statsnumbers.text += "<color=red>" + "( " + string.Format("{0:0.0}", difference) + " ) " + string.Format("{0:0.0}", difference + currentstatvalue) + "%" + "</color>" + "\n";
         }
         else
         {
-            statsnumbers.text += currentstatvalue + "%" + "\n";
+            statsnumbers.text += string.Format("{0:0.0}", currentstatvalue) + "%" + "\n";
         }
     }
     private void ontriggerbasiccritpercentage(float currentstatvalue)
     {
-        statsnumbers.text += currentstatvalue + "%" + "\n";
+        statsnumbers.text += string.Format("{0:0.0}", currentstatvalue) + "%" + "\n";
     }
     private void ontriggerduration(float currentstatvalue)
     {
         {
-            statsnumbers.text += currentstatvalue + "sec" + "\n";
+            statsnumbers.text += string.Format("{0:0.0}", currentstatvalue) + "sec" + "\n";
         }
     }
     private void healbonus(Itemcontroller equipeditem, int itemstat, float currentstatvalue)

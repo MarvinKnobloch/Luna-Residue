@@ -25,7 +25,7 @@ MonoBehaviour:
   itemlvl:
   - stats:
     - 0
-    - 25
+    - 1
     - 0
     - 1
     - 0
@@ -35,7 +35,7 @@ MonoBehaviour:
     Upgrademats: []
   - stats:
     - 0
-    - 50
+    - 2
     - 0
     - 2
     - 0

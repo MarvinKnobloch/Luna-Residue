@@ -92,12 +92,12 @@ public class Healingscript : MonoBehaviour
         {
             float playerhealth = playerhp.maxhealth - (Statics.charcurrentlvl * Statics.guardbonushpeachlvl);
             finalsingleheal = Globalplayercalculations.calculatecasthealing(Statics.basesingleheal, playerhealth, attributecontroller.stoneclassbonusheal);
-            finalgroupheal = Globalplayercalculations.calculatecasthealing(grouphealamount, playerhealth / 2, attributecontroller.stoneclassbonusheal);           //playerhealth / 2 damit der bonusheal halbiert wird
+            finalgroupheal = Globalplayercalculations.calculatecasthealing(grouphealamount, playerhealth * 0.4f, attributecontroller.stoneclassbonusheal);           //playerhealth / 2 damit der bonusheal halbiert wird
         }
         else
         {
             finalsingleheal = Globalplayercalculations.calculatecasthealing(Statics.basesingleheal, playerhp.maxhealth, attributecontroller.stoneclassbonusheal);
-            finalgroupheal = Globalplayercalculations.calculatecasthealing(grouphealamount, playerhp.maxhealth / 2, attributecontroller.stoneclassbonusheal);
+            finalgroupheal = Globalplayercalculations.calculatecasthealing(grouphealamount, playerhp.maxhealth * 0.4f, attributecontroller.stoneclassbonusheal);
         }
     }
     public void heal()

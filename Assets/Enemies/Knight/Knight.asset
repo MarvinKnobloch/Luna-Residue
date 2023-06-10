@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Knight
   m_EditorClassIdentifier: 
   enemyname: Knight
-  basehealth: 329
+  basehealth: 3290
   enemylvl: 1
   movementspeed: 10
-  basedmg: 11
+  basedmg: -110
   attackspeed: 2.2
   enemysize: 2
   gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}
