@@ -19,10 +19,13 @@ public class Gasmanline : MonoBehaviour
     private Vector3 startpoint;
     private Vector3 endpoint;
 
-    [SerializeField] private Color greencolor;
+    private Color whitecolor = Color.white;
+    private Color greencolor = Color.green;
 
     private void Start()
     {
+        whitecolor.a = 0.6f;
+        greencolor.a = 0.6f;
         line.positionCount = 2;
     }
     private void OnEnable()
@@ -50,7 +53,7 @@ public class Gasmanline : MonoBehaviour
                     if (gasmancontroller.target1complete == true)
                     {
                         gasmancontroller.target1complete = false;
-                        target1.GetComponent<Renderer>().material.color = Color.white;
+                        target1.GetComponent<Renderer>().material.color = whitecolor;
                     }
                 }
             }
@@ -64,7 +67,7 @@ public class Gasmanline : MonoBehaviour
                     if (gasmancontroller.target2complete == true)
                     {
                         gasmancontroller.target2complete = false;
-                        target2.GetComponent<Renderer>().material.color = Color.white;
+                        target2.GetComponent<Renderer>().material.color = whitecolor;
                     }
                 }
             }
@@ -100,13 +103,13 @@ public class Gasmanline : MonoBehaviour
     private void activatetarget1()
     {
         gasmancontroller.target1complete = true;
-        target1.GetComponent<Renderer>().material.color = Color.green;
+        target1.GetComponent<Renderer>().material.color = greencolor;
         gasmancontroller.checkforcomplete();
     }
     private void activatetarget2()
     {
         gasmancontroller.target2complete = true;
-        target2.GetComponent<Renderer>().material.color = Color.green;
+        target2.GetComponent<Renderer>().material.color = greencolor;
         gasmancontroller.checkforcomplete();
     }
 }

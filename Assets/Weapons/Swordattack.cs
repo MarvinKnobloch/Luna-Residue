@@ -57,6 +57,7 @@ public class Swordattack : MonoBehaviour
         basicattackcd = 1f;
         swordcontroller.enabled = true;
         readattackinput = false;
+        eleAbilities.stopignorelayers();
         swordweaponswitch();
     }
 

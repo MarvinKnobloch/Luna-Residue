@@ -513,6 +513,7 @@ public class Bowattack : MonoBehaviour
         root = false;
         if (readattackinput == false && movementscript.attackcombochain < 2)
         {
+            //eleAbilities.stopignorelayers();
             attackestate = Attackstate.attack1;
             movementscript.graviti = -0.5f;
             movementscript.state = Movescript.State.Rangegroundattack;
@@ -543,6 +544,7 @@ public class Bowattack : MonoBehaviour
     private void bowswitchslowmotion()
     {
         if (movementscript.state != Movescript.State.Bowweaponswitch) return;
+        eleAbilities.stopignorelayers();
         shootcount = 0;
         movementscript.switchtoattackaimstate();
         root = false;

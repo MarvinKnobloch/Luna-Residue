@@ -32,17 +32,23 @@ public class Gasmancontroller : MonoBehaviour
 
     [SerializeField] private GameObject[] linetargets;
 
+    private Color whitecolor = Color.white;
+
     public float basedmg;
     public float timetocomplete;
 
+    private void Awake()
+    {
+        whitecolor.a = 0.6f;
+    }
     private void OnEnable()
     {
         target1activate = false;
         target2activate = false;
         target1complete = false;
         target2complete = false;
-        target1.GetComponent<Renderer>().material.color = Color.white;
-        target2.GetComponent<Renderer>().material.color = Color.white;
+        target1.GetComponent<Renderer>().material.color = whitecolor;
+        target2.GetComponent<Renderer>().material.color = whitecolor;
         placepillars();   
     }
     private void placepillars()

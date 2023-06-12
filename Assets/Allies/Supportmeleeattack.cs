@@ -136,7 +136,10 @@ public class Supportmeleeattack
             if (newposi < ssm.chancetochangeposi)
             {
                 ssm.posiafterattack = ssm.currenttarget.transform.position + Random.insideUnitSphere * 5;
-                ssm.posiafterattack.y = ssm.transform.position.y;
+                NavMeshHit closetstpoint;
+                NavMesh.SamplePosition(ssm.posiafterattack, out closetstpoint, 20, NavMesh.AllAreas);
+                ssm.posiafterattack = closetstpoint.position;
+                //ssm.posiafterattack.y = ssm.transform.position.y;                       //support steckt in changeposiafter attack fest
                 NavMeshHit hit;
                 bool isblocked = NavMesh.Raycast(ssm.transform.position, ssm.posiafterattack, out hit, NavMesh.AllAreas);
                 if (isblocked == true)
@@ -148,9 +151,6 @@ public class Supportmeleeattack
                 }
                 else
                 {
-                    /*NavMeshHit closetstpoint;
-                    NavMesh.SamplePosition(ssm.posiafterattack, out closetstpoint, 20, NavMesh.AllAreas);
-                    ssm.posiafterattack = closetstpoint.position;*/
                     ssm.Meshagent.SetDestination(ssm.posiafterattack);
                     ssm.ChangeAnimationState(runstate);
                     ssm.state = Supportmovement.State.changeposiafterattack;
@@ -170,7 +170,7 @@ public class Supportmeleeattack
         {
             ssm.supportreset();
             ssm.posiafterattack.y = ssm.transform.position.y;
-            if (Vector3.Distance(ssm.transform.position, ssm.posiafterattack) <= 2)
+            if (Vector3.Distance(ssm.transform.position, ssm.posiafterattack) < 2)
             {
                 ssm.Meshagent.ResetPath();
                 ssm.ChangeAnimationState(idlestate);

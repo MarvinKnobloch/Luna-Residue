@@ -55,6 +55,7 @@ public class Fistattack : MonoBehaviour
         basicattackcd = 1f;
         fistcontroller.enabled = true;
         readattackinput = false;
+        eleAbilities.stopignorelayers();
         fistweaponswitch();
     }
 

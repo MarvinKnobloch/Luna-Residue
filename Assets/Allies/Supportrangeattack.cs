@@ -99,7 +99,10 @@ public class Supportrangeattack
             if (ssm.gameObject != ssm.currenttarget.GetComponentInParent<Enemymovement>().currenttarget)                          //wenn der rangesupport das target vom target ist, bewegt er sich nicht
             {
                 rangenewposi = ssm.currenttarget.transform.position + ssm.currenttarget.transform.forward * -10;
-                rangenewposi.y = ssm.transform.position.y;
+                NavMeshHit closetstpoint;
+                NavMesh.SamplePosition(ssm.posiafterattack, out closetstpoint, 20, NavMesh.AllAreas);
+                ssm.posiafterattack = closetstpoint.position;
+                //rangenewposi.y = ssm.transform.position.y;                      
                 NavMeshHit hit;
                 bool isblocked = NavMesh.Raycast(ssm.transform.position, rangenewposi, out hit, NavMesh.AllAreas);
                 if (isblocked == true)

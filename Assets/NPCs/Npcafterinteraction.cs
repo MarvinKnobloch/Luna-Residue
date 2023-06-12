@@ -12,6 +12,9 @@ public class Npcafterinteraction : MonoBehaviour
     [TextArea] [SerializeField] public string[] dialogue;
     private int dialogueindex;
 
+    private int currenttextindex;
+    private string animatedtext;
+
     [SerializeField] private TextMeshProUGUI npcinteraction;
 
     private void Awake()
@@ -53,10 +56,14 @@ public class Npcafterinteraction : MonoBehaviour
     }
     IEnumerator startdialogue()
     {
-        foreach (char letter in dialogue[dialogueindex].ToCharArray())
+        currenttextindex = 0;
+        while (currenttextindex < dialogue[dialogueindex].Length)
         {
-            dialoguetext.text += letter;
-            yield return new WaitForSeconds(Statics.dialoguetextspeed);
+            currenttextindex++;
+            dialoguetext.text = dialogue[dialogueindex];
+            animatedtext = dialoguetext.text.Insert(currenttextindex, "<color=#00000000>");     //insert: der zweite wert, in der klammer, wird nach dem currentindex hinzugefügt, und danach wird der text normal beendet
+            dialoguetext.text = animatedtext;                                                   //z.b text ist hallo, Insert(2, cya) = hacyallo
+            yield return new WaitForSeconds(Statics.dialoguetextspeed);                         //in diesem fall, wird nach dem index die farbe auf null geändert, also ist der text danach unsichtbar
         }
         StopCoroutine(startdialogue());
     }

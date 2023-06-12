@@ -35,7 +35,7 @@ public class Playerbow
         {
             psm.disableaimcam();
             Statics.otheraction = false;
-            psm.state = Movescript.State.Ground;
+            psm.switchtogroundstate();
         }
     }
     public void arrowfullcharge()
@@ -50,7 +50,7 @@ public class Playerbow
         {
             psm.disableaimcam();
             Statics.otheraction = false;
-            psm.state = Movescript.State.Ground;
+            psm.switchtogroundstate();
         }
 
     }
@@ -75,7 +75,7 @@ public class Playerbow
         {
             psm.disableaimcam();
             Statics.otheraction = false;
-            psm.state = Movescript.State.Ground;
+            psm.switchtogroundstate();
         }
     }
     public void bowhookshot()

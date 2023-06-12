@@ -311,7 +311,7 @@ public class Healingscript : MonoBehaviour
 
         if(movementscript.state == Movescript.State.Heal)
         {
-            movementscript.state = Movescript.State.Ground;
+            movementscript.switchtogroundstate();
         }
     }
 

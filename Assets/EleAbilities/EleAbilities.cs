@@ -129,14 +129,12 @@ public class EleAbilities : MonoBehaviour
     {
         Physics.IgnoreLayerCollision(11, 6);
         Physics.IgnoreLayerCollision(8, 6);
-        Physics.IgnoreLayerCollision(15, 6);
     }
     public void stopignorelayers()
     {
         Physics.IgnoreLayerCollision(19, 6, false);            //wegen memorypuzzle
         Physics.IgnoreLayerCollision(11, 6, false);
         Physics.IgnoreLayerCollision(8, 6, false);
-        Physics.IgnoreLayerCollision(15, 6, false);
     }
     public void overlapssphereeledmg(GameObject dmgposi, float radius, float dmg)
     {

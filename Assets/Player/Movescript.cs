@@ -392,8 +392,7 @@ public class Movescript : MonoBehaviour
     {
         if(playerhp.playerisdead == false)
         {
-            Physics.IgnoreLayerCollision(11, 6, false);
-            Physics.IgnoreLayerCollision(8, 6, false);
+            eleAbilities.stopignorelayers();
             ChangeAnimationState(idlestate);
             attackonceair = true;
             graviti = -0.5f;
@@ -544,7 +543,6 @@ public class Movescript : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(lookPos);
         }
         Statics.otheraction = false;
-        Physics.IgnoreLayerCollision(15, 6, false);
         switchtoairstate();
     }
     public void pushplayerup(float amount) => playerair.pushplayerupwards(amount);
