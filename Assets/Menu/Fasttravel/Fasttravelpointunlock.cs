@@ -37,7 +37,7 @@ public class Fasttravelpointunlock : MonoBehaviour
             LoadCharmanager.autosave();
             if(ingamemessage.activeSelf == true) ingamemessage.GetComponent<Ingamemessagecontroller>().cancelfadeout();
             else ingamemessage.SetActive(true);
-            ingamemessage.GetComponentInChildren<TextMeshProUGUI>().text = "New fasttravelpoint unlocked: " + "\n" + "(" + travelpointvalue.travelpointname + ")";
+            ingamemessage.GetComponentInChildren<TextMeshProUGUI>().text = "New Fast Travel Point unlocked: " + "\n" + "(" + travelpointvalue.travelpointname + ")";
             addtravelpoint();
         }
     }

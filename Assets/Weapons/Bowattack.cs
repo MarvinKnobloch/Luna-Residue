@@ -170,11 +170,15 @@ public class Bowattack : MonoBehaviour
             root = false;
         }
     }
-    private void switchtowaitforattack()
+    private void switchtowaitforattack()          //schutz gegen attackstate stuck(zb. bei meleeattackgroundcheck -> slidewalls/switchtoair)
     {
         if (movementscript.state == Movescript.State.Ground)
         {
+            readattackinput = false;
             attackestate = Attackstate.waitforattack;
+            Statics.otheraction = false;
+            movementscript.attackcombochain = 0;
+            basicattackcd = 0;
         }
     }
     private void waitforattackinput()                   //input für attackchainstart
@@ -556,6 +560,7 @@ public class Bowattack : MonoBehaviour
     }
     private void bowweaponswitchattackend()
     {
+        if (movementscript.state != Movescript.State.Attackweaponaim) return;
         Statics.otheraction = false;
         movementscript.disableaimcam();
         Time.timeScale = Statics.normalgamespeed;

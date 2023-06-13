@@ -31,7 +31,7 @@ public class Fistattack : MonoBehaviour
     const string airdownstate = "Fistair3down";
     const string airmidstate = "Fistair3mid";
     const string airupstate = "Fistair3up";
-    const string swordswitchstate = "Fistweaponswitch";
+    const string fistweaponswitchstate = "Fistweaponswitch";
     const string dashstate = "Fistdash";
 
     //weaponswitch
@@ -124,9 +124,13 @@ public class Fistattack : MonoBehaviour
     }
     private void switchtowaitforattack()
     {
-        if (movementscript.state == Movescript.State.Ground)
+        if (movementscript.state == Movescript.State.Ground)                //schutz gegen attackstate stuck(zb. bei meleeattackgroundcheck -> slidewalls/switchtoair)
         {
+            readattackinput = false;
             attackestate = Attackstate.waitforattack;
+            Statics.otheraction = false;
+            movementscript.attackcombochain = 0;
+            basicattackcd = 0;
         }
     }
     private void waitforattackinput()
@@ -381,11 +385,6 @@ public class Fistattack : MonoBehaviour
         }
         else fistairattackchainend();
     }
-    IEnumerator startweaponswitch()
-    {
-        yield return null;
-        fistweaponswitch();
-    }
     private void fistweaponswitch()
     {
         if (Physics.CheckSphere(transform.position, Statics.weaponswitchattackrange, weaponswitchlayer))
@@ -394,7 +393,7 @@ public class Fistattack : MonoBehaviour
             movementscript.graviti = -5;
             attackestate = Attackstate.weaponswitch;
             movementscript.state = Movescript.State.Meleeairattack;
-            movementscript.ChangeAnimationState(swordswitchstate);
+            movementscript.ChangeAnimationState(fistweaponswitchstate);
         }
         else
         {
@@ -406,8 +405,8 @@ public class Fistattack : MonoBehaviour
     private void fistweaponswitchend()
     {
         if (movementscript.state != Movescript.State.Meleeairattack) return;
-        attackestate = Attackstate.waitforattack;
-        movementscript.switchtogroundstate();
         Statics.otheraction = false;
+        movementscript.switchtoairstate();
+        attackestate = Attackstate.waitforattack;
     }
 }

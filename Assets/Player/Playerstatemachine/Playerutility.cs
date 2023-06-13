@@ -58,7 +58,7 @@ public class Playerutility
     }
     public void bonusdashexplosiondmg()
     {
-        if(Statics.bonuscritstacksbool == true)
+        if(Statics.bonuscritstacksbool == true && Statics.bonuscritstacks > 0)
         {
             finaldashdmg = dashdmg * Statics.bonuscritstacks;
             Statics.bonuscritstacks = 0;

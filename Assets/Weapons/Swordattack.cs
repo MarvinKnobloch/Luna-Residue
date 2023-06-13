@@ -128,7 +128,11 @@ public class Swordattack : MonoBehaviour
     {
         if (movementscript.state == Movescript.State.Ground)
         {
+            readattackinput = false;
             attackestate = Attackstate.waitforattack;
+            Statics.otheraction = false;
+            movementscript.attackcombochain = 0;
+            basicattackcd = 0;
         }
     }
     private void waitforattackinput()
@@ -403,8 +407,8 @@ public class Swordattack : MonoBehaviour
     private void swordweaponswitchend()
     {
         if (movementscript.state != Movescript.State.Meleeairattack) return;
-        attackestate = Attackstate.waitforattack;
-        movementscript.switchtogroundstate();
         Statics.otheraction = false;
+        movementscript.switchtoairstate();
+        attackestate = Attackstate.waitforattack;
     }
 }

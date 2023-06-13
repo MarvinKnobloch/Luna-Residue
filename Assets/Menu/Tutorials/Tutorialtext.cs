@@ -148,8 +148,9 @@ public class Tutorialtext : MonoBehaviour
                             "Beneath the character slots you can choose which weapon each member of your group should use. \n" +
                             "\nWhile playing, press \"" + "<color=green>" + characterswitch + "</color>" + "\" to switch your character and \"" + "<color=green>" + weaponswitch + "</color>" + "\" " +
                             "to switch the weapon. \n" +
-                            "\nIf you switch your character/weapon next to an enemy a bonus attack will be performed base on the weapon type. \n" +
-                            "\nSwitching the character/weapon will grant a damage buff. The duration of the buff is displayed on the bottem left next to the character/weapon icons.";
+                            "\nIf you switch your character/weapon next to an enemy a bonus attack will be performed base on the weapon type.\n" +
+                            "\nSwitching the character/weapon will grant a damage buff. The duration of the buff is displayed on the bottem left next to the character/weapon icons.\n" +
+                            "Switching your character will also heal each member in your group for <color=green>8</color>% off there max HP.";
     }
     public void setbowgrapplingtext()
     {

@@ -30,7 +30,6 @@ public class Plantcontroller : MonoBehaviour
 
         setspawnpoints();
 
-        plantmushrooms[0].GetComponent<Plantmushroom>().isactivmushroom = true;
         plantmushrooms[1].GetComponent<MeshRenderer>().material.color = Color.white;
         plantmushrooms[2].GetComponent<MeshRenderer>().material.color = Color.white;
         Invoke("dealdmg", mushroomuptimer);
@@ -54,7 +53,6 @@ public class Plantcontroller : MonoBehaviour
             {
                 LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamageignoreiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, spawns.Length), true);
             }
-            mushroom.GetComponent<Plantmushroom>().isactivmushroom = false;
             mushroom.SetActive(false);
         }
         gameObject.SetActive(false);
