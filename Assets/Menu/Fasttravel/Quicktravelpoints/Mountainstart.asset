@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6404cf29dbd750346b49ee407b4ceb64, type: 3}
   m_Name: Mountainstart
   m_EditorClassIdentifier: 
-  travelpointname: Mountainstart
+  travelpointname: Mountain Start
   travelcordinates: {x: 158, y: 5.7, z: 570}
-  fasttravelmapcordinates: {x: 225, y: 290}

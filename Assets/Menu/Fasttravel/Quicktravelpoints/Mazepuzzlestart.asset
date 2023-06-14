@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6404cf29dbd750346b49ee407b4ceb64, type: 3}
   m_Name: Mazepuzzlestart
   m_EditorClassIdentifier: 
-  travelpointname: Mazepuzzlestart
+  travelpointname: Maze Start
   travelcordinates: {x: -340, y: 22, z: 496}

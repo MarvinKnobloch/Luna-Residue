@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6404cf29dbd750346b49ee407b4ceb64, type: 3}
   m_Name: Memorypuzzle
   m_EditorClassIdentifier: 
-  travelpointname: Memorypuzzle
+  travelpointname: Memory Puzzle
   travelcordinates: {x: 6, y: 30, z: 535}
-  fasttravelmapcordinates: {x: 5, y: 255}

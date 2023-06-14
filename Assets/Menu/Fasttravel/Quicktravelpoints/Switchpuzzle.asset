@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6404cf29dbd750346b49ee407b4ceb64, type: 3}
   m_Name: Switchpuzzle
   m_EditorClassIdentifier: 
-  travelpointname: Switchpuzzle
+  travelpointname: Switch Puzzle
   travelcordinates: {x: 295, y: 4.8, z: 193}
-  fasttravelmapcordinates: {x: 415, y: -140}

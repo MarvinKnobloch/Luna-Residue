@@ -58,7 +58,7 @@ public class Globalplayercalculations
     public static float dashexplosion(float critdmg, float critchance)
     {
         float critdmgvalue = (critdmg - 150) * 0.5f;
-        float dmg = (critchance + critdmgvalue) * 0.3f;
+        float dmg = (critchance + critdmgvalue) * 0.25f;
         return Mathf.Round(dmg + ((critchance + critdmgvalue) * 0.01f * dmg));
     }
     public static float charexplison(int charnumber)

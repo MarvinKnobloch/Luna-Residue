@@ -27,9 +27,7 @@ public class Menucharcontroller : MonoBehaviour
         weaponslot2.gameObject.GetComponent<Image>().sprite = images[secondweapon];
         charstats.text = string.Empty;
         charstats.text = "Class: " + Statics.characterclassrolltext[charnumber] + "\n" +
-                         "HP " + Statics.charcurrenthealth[charnumber] + "/" + Statics.charmaxhealth[charnumber] + "\n" +
-                         "Level " + Statics.charcurrentlvl + "\n" +
-                         "EXP " + Statics.charcurrentexp + "/" + Statics.charrequiredexp;
+                         "HP " + Statics.charcurrenthealth[charnumber] + "/" + Statics.charmaxhealth[charnumber];
     }
     public void openweapongrid(GameObject grid)
     {

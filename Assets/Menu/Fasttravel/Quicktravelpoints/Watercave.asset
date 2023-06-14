@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6404cf29dbd750346b49ee407b4ceb64, type: 3}
   m_Name: Watercave
   m_EditorClassIdentifier: 
-  travelpointname: Watercave
+  travelpointname: Water Cave
   travelcordinates: {x: -363, y: 13.7, z: -41}
-  fasttravelmapcordinates: {x: -535, y: -405}

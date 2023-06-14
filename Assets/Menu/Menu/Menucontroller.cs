@@ -18,6 +18,11 @@ public class Menucontroller : MonoBehaviour
     public Color selectedcolor;
     public Color notselectedcolor;
 
+    [SerializeField] private TextMeshProUGUI grouplvl;
+    [SerializeField] private TextMeshProUGUI groupexp;
+    [SerializeField] private Image expbarimage;
+
+
     [SerializeField] private GameObject uimessage;
     public Menusoundcontroller menusoundcontroller;
 
@@ -38,6 +43,9 @@ public class Menucontroller : MonoBehaviour
         fasttravelmenu.SetActive(false);                                                         //weil das Ui beim fasttravel commit nicht mehr geschlossen wird
         if (Statics.elementalmenuunlocked == false) elementalelmenutext.color = Color.gray;
         else elementalelmenutext.color = Color.white;
+        grouplvl.text = "Group Level " + Statics.charcurrentlvl;
+        groupexp.text = "EXP " + Statics.charcurrentexp + "/" + Statics.charrequiredexp;
+        expbarimage.fillAmount = Statics.charcurrentexp / Statics.charrequiredexp;
     }
 
     private void Update()

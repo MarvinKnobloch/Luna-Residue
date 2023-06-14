@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6404cf29dbd750346b49ee407b4ceb64, type: 3}
   m_Name: Laserpuzzle
   m_EditorClassIdentifier: 
-  travelpointname: Laserpuzzle
+  travelpointname: Laser Puzzle
   travelcordinates: {x: 294, y: 51, z: 92}

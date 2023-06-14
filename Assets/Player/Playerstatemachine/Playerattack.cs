@@ -22,21 +22,25 @@ public class Playerattack
     }
     public void inputattackmovement()
     {
-        float h = psm.move.x;                                                                         // Move Script
-        float v = psm.move.y;
-
-        psm.moveDirection = new Vector3(h, 0, v);
-        float magnitude = Mathf.Clamp01(psm.moveDirection.magnitude) * psm.attackmovementspeed;
-        psm.moveDirection.Normalize();
-
-        psm.moveDirection = Quaternion.AngleAxis(psm.CamTransform.rotation.eulerAngles.y, Vector3.up) * psm.moveDirection;                     //Kamera dreht sich mit dem Char
-
-        if (psm.moveDirection != Vector3.zero)
+        if (Statics.infight == true)
         {
-            Quaternion toRotation = Quaternion.LookRotation(psm.moveDirection, Vector3.up);
-            psm.transform.rotation = Quaternion.RotateTowards(psm.transform.rotation, toRotation, psm.attackrotationspeed * Time.deltaTime);
+            float h = psm.move.x;
+            float v = psm.move.y;
+
+            psm.moveDirection = new Vector3(h, 0, v);
+            float magnitude = Mathf.Clamp01(psm.moveDirection.magnitude) * psm.attackmovementspeed;
+            psm.moveDirection.Normalize();
+
+            psm.moveDirection = Quaternion.AngleAxis(psm.CamTransform.rotation.eulerAngles.y, Vector3.up) * psm.moveDirection;                     //Kamera dreht sich mit dem Char
+
+            if (psm.moveDirection != Vector3.zero)
+            {
+                Quaternion toRotation = Quaternion.LookRotation(psm.moveDirection, Vector3.up);
+                psm.transform.rotation = Quaternion.RotateTowards(psm.transform.rotation, toRotation, psm.attackrotationspeed * Time.deltaTime);
+            }
+            psm.velocity = psm.moveDirection * magnitude;
         }
-        psm.velocity = psm.moveDirection * magnitude;
+        else psm.velocity = Vector3.zero;
     }
     public void finalairmovement()
     {

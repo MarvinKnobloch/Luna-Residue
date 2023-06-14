@@ -38,8 +38,8 @@ public class Npcshopcontroller : MonoBehaviour
 
     [SerializeField] private GameObject mouseresetlayer;
 
-    //Upgrade
-    private float buyitemtime = 1.5f;
+    //Buy
+    private float buyitemtime = 1f;
     private float buyitemtimer;
     private DateTime startdate;
     private DateTime currentdate;
@@ -142,7 +142,7 @@ public class Npcshopcontroller : MonoBehaviour
         for (int i = 0; i < npcshopitems.Count; i++)
         {
             var obj = Instantiate(shopitemprefab, merchantitemslots.transform.position, Quaternion.identity, merchantitemslots.transform);
-            obj.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = npcshopitems[i].itemname + " (" + npcshopitems[i].maxupgradelvl + ")";
+            obj.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = npcshopitems[i].itemname;
             obj.GetComponent<Npcshopselectitem>().buyitembar.gameObject.SetActive(false);
             if(npcshopitems[i].inventoryslot == 0)
             {
@@ -326,7 +326,8 @@ public class Npcshopcontroller : MonoBehaviour
         ownitemstats.text = string.Empty;
         for (int i = 0; i<statstext.Length; i++)
         {
-            ownitemstats.text += statstext[i] + "<pos=75%>" + 0 + "\n";
+            if (i < 3) ownitemstats.text += 0 + "\n";
+            else ownitemstats.text += "0,0%\n";
         }
     }
 

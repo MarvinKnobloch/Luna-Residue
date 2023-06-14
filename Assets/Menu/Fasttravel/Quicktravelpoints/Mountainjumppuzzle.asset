@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6404cf29dbd750346b49ee407b4ceb64, type: 3}
   m_Name: Mountainjumppuzzle
   m_EditorClassIdentifier: 
-  travelpointname: Mountainjumppuzzle
+  travelpointname: Mountain Jump
   travelcordinates: {x: -268, y: 23.8, z: 153}
-  fasttravelmapcordinates: {x: -385, y: -185}

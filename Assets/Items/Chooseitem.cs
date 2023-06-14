@@ -296,7 +296,7 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         ontriggerflatstats(slot, 0, Statics.charmaxhealth[selectedchar], Statics.healthperskillpoint);
         healbonus(slot, 0, Statics.charmaxhealth[selectedchar]);
         ontriggerflatstats(slot, 1, Statics.chardefense[selectedchar], Statics.defenseperskillpoint);
-        defensebonus(slot, 1, Statics.chardefense[selectedchar]);
+        defensebonus(slot, 1, Statics.chardefense[selectedchar], Statics.defenseperskillpoint);
         ontriggerflatstats(slot, 2, Statics.charattack[selectedchar], Statics.attackperskillpoint);
         ontriggerpercentage(slot, 3, Statics.charcritchance[selectedchar] , Statics.critchanceperskillpoint);
         ontriggerpercentage(slot, 4, Statics.charcritdmg[selectedchar], Statics.critdmgperskillpoint);
@@ -373,10 +373,10 @@ public class Chooseitem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             statsnumbers.text += Mathf.Round(health * Statics.healhealthbonuspercentage * 0.01f) + "\n";
         }
     }
-    private void defensebonus(Itemcontroller equipeditem, int itemstat, float currentstatvalue)
+    private void defensebonus(Itemcontroller equipeditem, int itemstat, float currentstatvalue, float skillpointmultipler)
     {
         float currentstats = Mathf.Round(currentstatvalue * Statics.defenseconvertedtoattack * 0.01f);
-        float newstats = Mathf.Round((currentstatvalue + itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] - equipeditem.itemlvl[equipeditem.upgradelvl].stats[itemstat]) * Statics.defenseconvertedtoattack * 0.01f);
+        float newstats = Mathf.Round((currentstatvalue + (itemvalues.itemlvl[itemvalues.upgradelvl].stats[itemstat] - equipeditem.itemlvl[equipeditem.upgradelvl].stats[itemstat]) * skillpointmultipler) * Statics.defenseconvertedtoattack * 0.01f);
         float difference = newstats - currentstats;
         if (newstats > currentstats)
         {

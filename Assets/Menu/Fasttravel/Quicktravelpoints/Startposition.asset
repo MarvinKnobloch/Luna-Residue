@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6404cf29dbd750346b49ee407b4ceb64, type: 3}
   m_Name: Startposition
   m_EditorClassIdentifier: 
-  travelpointname: Startposition
+  travelpointname: Start Position
   travelcordinates: {x: 15, y: 34, z: 687}

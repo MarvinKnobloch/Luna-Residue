@@ -8,8 +8,13 @@ public class Expmanager : MonoBehaviour
 {
     private Healthuimanager healthUImanager;
 
+    [SerializeField] private TextMeshProUGUI grouplvltext;
     [SerializeField] private Image expbar;
-    [SerializeField] private TextMeshProUGUI exptext;
+    [SerializeField] private Image finalexpbar;
+    [SerializeField] private TextMeshProUGUI groupexp;
+
+    private float currentpercentage;
+    private int finalbarlvl;
 
     [Range(1f, 300f)]
     public float flatexpnumber = 220;                                     // erhöht die benötigte exp für jedes lvl gleich, um so niederiger die zahl um so weniger exp braucht man zum lvln
@@ -18,6 +23,7 @@ public class Expmanager : MonoBehaviour
     [Range(7f, 14f)]
     public float expdivision = 14;                                        // je höher die zahl um so flacher die kurve
 
+    [SerializeField] private GameObject lvlupeffect;
 
     void Awake()
     {
@@ -25,6 +31,11 @@ public class Expmanager : MonoBehaviour
     }
     private void OnEnable()
     {
+        finalbarlvl = Statics.charcurrentlvl;
+        StopCoroutine("fillbar");
+        currentpercentage = Statics.charcurrentexp / Statics.charrequiredexp;
+        expbar.fillAmount = currentpercentage;
+        finalexpbar.fillAmount = currentpercentage;
         updateexpbar();
     }
     public void gainexp(float expgained)
@@ -41,18 +52,40 @@ public class Expmanager : MonoBehaviour
         }
         else
         {
-            float levelpercentage = Statics.charcurrentexp / Statics.charrequiredexp;
-            float currentexp = expbar.fillAmount;
-            if (currentexp < levelpercentage)
-            {
-                expbar.fillAmount = levelpercentage;
-            }
-            if (currentexp > levelpercentage)
-            {
-                expbar.fillAmount = levelpercentage;
-            }
-            exptext.text = "Group Level " + Statics.charcurrentlvl;
+            StopCoroutine("fillbar");
+            StartCoroutine("fillbar");
+            grouplvltext.text = "Group Level " + Statics.charcurrentlvl;
+            groupexp.text = Statics.charcurrentexp + "/" + Statics.charrequiredexp;
         }      
+    }
+    IEnumerator fillbar()
+    {
+        if (finalbarlvl < Statics.charcurrentlvl) expbar.fillAmount = 1;
+        currentpercentage = Statics.charcurrentexp / Statics.charrequiredexp;
+        while (true)
+        {
+            if (finalexpbar.fillAmount < 1)
+            {
+                finalexpbar.fillAmount += 0.005f;
+            }
+
+            else 
+            {
+                finalbarlvl++;
+                finalexpbar.fillAmount = 0; 
+            }
+            if (finalbarlvl >= Statics.charcurrentlvl)
+            {
+                expbar.fillAmount = currentpercentage;
+                if (finalexpbar.fillAmount >= currentpercentage)
+                {
+                    finalexpbar.fillAmount = currentpercentage;
+                    StopCoroutine("fillbar");
+                }
+            }
+            yield return new WaitForSeconds(0.03f);
+        }
+
     }
     private void levelup()
     {
@@ -74,6 +107,7 @@ public class Expmanager : MonoBehaviour
         expbar.fillAmount = 0f;
         Statics.charcurrentexp = Mathf.RoundToInt(Statics.charcurrentexp - Statics.charrequiredexp);
         Statics.charrequiredexp = calculaterequiredexp();
+        lvlupeffect.SetActive(true);
     }
     private void lvlupattackdmgupdate()
     {

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6404cf29dbd750346b49ee407b4ceb64, type: 3}
   m_Name: Statuepuzzle
   m_EditorClassIdentifier: 
-  travelpointname: Statuepuzzle
+  travelpointname: Statue Puzzle
   travelcordinates: {x: -200, y: 4, z: 340}
