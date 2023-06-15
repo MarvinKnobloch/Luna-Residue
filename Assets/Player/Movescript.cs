@@ -50,7 +50,7 @@ public class Movescript : MonoBehaviour
     [NonSerialized] public float lockonrotationspeed = 10;
     public int attackcombochain;
     [NonSerialized] public bool airattackminheight;
-    [NonSerialized] public bool attackonceair;
+    public bool attackonceair;
     [NonSerialized] public bool hook;
     [NonSerialized] public bool fullcharge;
 
@@ -214,7 +214,6 @@ public class Movescript : MonoBehaviour
         Cam2.gameObject.SetActive(false);
         controlls.Enable();
         gravitation = normalgravition;
-        attackonceair = true;
         Charprefabarrow.SetActive(false);
         currentstate = null;
     }

@@ -97,14 +97,14 @@ public class Statics
     public static float dashcost = 3f;
     public static bool dashcdbool;
 
-    public static float weaponswitchcd = 14;
+    public static float weaponswitchcd = 3; //14;
     public static float weaponswitchmissingtime;
     public static bool weaponswitchbool; 
 
     public static float weaponswitchbuff = 0;
     public static float weaponswitchbuffmissingtime;
 
-    public static float charswitchcd = 14;
+    public static float charswitchcd = 3; //14;
     public static float charswitchmissingtime;
     public static bool charswitchbool;
 

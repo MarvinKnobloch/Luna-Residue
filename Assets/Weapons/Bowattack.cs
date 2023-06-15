@@ -578,7 +578,11 @@ public class Bowattack : MonoBehaviour
     private void slowmofastercharge()
     {
         if (movementscript.state != Movescript.State.Attackweaponaim) return;
-        if (shootcount >= maxshootcount) bowweaponswitchattackend();
+        if (shootcount >= maxshootcount)
+        {
+            CancelInvoke("bowweaponswitchattackend");
+            bowweaponswitchattackend();
+        }
         else movementscript.ChangeAnimationState(slowmofastcharge);
     }
     private void hookshotstart()

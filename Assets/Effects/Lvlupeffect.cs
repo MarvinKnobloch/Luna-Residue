@@ -12,12 +12,12 @@ public class Lvlupeffect : MonoBehaviour
     }
     IEnumerator disable()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         StopCoroutine("disable");
         gameObject.SetActive(false);
     }
     private void Update()
     {
-        transform.position = LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 0.3f;
+        transform.position = LoadCharmanager.Overallmainchar.transform.position;
     }
 }

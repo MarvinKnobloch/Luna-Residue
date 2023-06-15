@@ -391,6 +391,7 @@ public class Fistattack : MonoBehaviour
         {
             Statics.otheraction = true;
             movementscript.graviti = -5;
+            movementscript.attackonceair = true;
             attackestate = Attackstate.weaponswitch;
             movementscript.state = Movescript.State.Meleeairattack;
             movementscript.ChangeAnimationState(fistweaponswitchstate);

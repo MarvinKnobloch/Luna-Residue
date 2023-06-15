@@ -15,6 +15,7 @@ public class Expmanager : MonoBehaviour
 
     private float currentpercentage;
     private int finalbarlvl;
+    private float fillspeed;
 
     [Range(1f, 300f)]
     public float flatexpnumber = 220;                                     // erhöht die benötigte exp für jedes lvl gleich, um so niederiger die zahl um so weniger exp braucht man zum lvln
@@ -55,18 +56,20 @@ public class Expmanager : MonoBehaviour
             StopCoroutine("fillbar");
             StartCoroutine("fillbar");
             grouplvltext.text = "Group Level " + Statics.charcurrentlvl;
-            groupexp.text = Statics.charcurrentexp + "/" + Statics.charrequiredexp;
+            groupexp.text = "EXP " + Statics.charcurrentexp + "/" + Statics.charrequiredexp;
         }      
     }
     IEnumerator fillbar()
     {
         if (finalbarlvl < Statics.charcurrentlvl) expbar.fillAmount = 1;
         currentpercentage = Statics.charcurrentexp / Statics.charrequiredexp;
+        fillspeed = 0;
         while (true)
         {
+            if (fillspeed < 0.005f) fillspeed += 0.0001f;
             if (finalexpbar.fillAmount < 1)
             {
-                finalexpbar.fillAmount += 0.005f;
+                finalexpbar.fillAmount += fillspeed;
             }
 
             else 
