@@ -71,7 +71,7 @@ public class Statics
     public static float charswitchbuffdurationperskillpoint = 0.1f;
     public static float charswitchbuffperskillpoint = 2.5f;
     public static float basiccritbuffperskillpoint = 0.5f;
-    public static float basicdmgbuffperskillpoint = 2.5f;
+    public static float basicdmgbuffperskillpoint = 3f;
 
     public static float presetdashcd = 6;
     public static float presetdashcost = 3;
@@ -97,14 +97,14 @@ public class Statics
     public static float dashcost = 3f;
     public static bool dashcdbool;
 
-    public static float weaponswitchcd = 3; //14;
+    public static float weaponswitchcd = 14;
     public static float weaponswitchmissingtime;
     public static bool weaponswitchbool; 
 
     public static float weaponswitchbuff = 0;
     public static float weaponswitchbuffmissingtime;
 
-    public static float charswitchcd = 3; //14;
+    public static float charswitchcd = 14;
     public static float charswitchmissingtime;
     public static bool charswitchbool;
 

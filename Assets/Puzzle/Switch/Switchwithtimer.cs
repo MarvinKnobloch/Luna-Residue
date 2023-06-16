@@ -17,9 +17,9 @@ public class Switchwithtimer : MonoBehaviour
     private float remainingtime;
     public float switchtimer;
 
-    public int maxstore = 2;
+    public int maxstore;
     public bool maxreached;
-    private int currentstore;
+    public int currentstore;
 
     private Color redcolor;
     private Color bluecolor;
@@ -39,7 +39,6 @@ public class Switchwithtimer : MonoBehaviour
         {
             if (currentstore < maxstore)
             {
-
                 if (Normalswitch.timeswitch == false)
                 {
                     if(Timerui.activeSelf == false)
@@ -62,7 +61,6 @@ public class Switchwithtimer : MonoBehaviour
                     {
                         Normalswitch.timeswitch = false;
                         currentstore += 1;
-                        Invoke("changetored", switchtimer);
                         gameObject.GetComponent<Renderer>().material.color = redcolor;
                         if (currentstore >= maxstore)
                         {
@@ -80,7 +78,7 @@ public class Switchwithtimer : MonoBehaviour
     {
         timetext.color = Color.green;
         remainingtime = switchtimer;
-        while (true)
+        while (remainingtime > 0)
         {
             remainingtime -= Time.deltaTime;
             float seconds = Mathf.FloorToInt(remainingtime % 60);
@@ -90,20 +88,17 @@ public class Switchwithtimer : MonoBehaviour
             {
                 timetext.color = Color.red;
             }
-            if (remainingtime <= 0)
-            {
-                changetoblue();
-                Timerui.SetActive(false);
-                StopCoroutine("bluestart");
-            }
             yield return null;
         }
+        StopCoroutine("bluestart");
+        changetoblue();
+        Timerui.SetActive(false);
     }
     IEnumerator redstart()
     {
         timetext.color = Color.green;
         remainingtime = switchtimer;
-        while (true)
+        while (remainingtime > 0)
         {
             remainingtime -= Time.deltaTime;
             float seconds = Mathf.FloorToInt(remainingtime % 60);
@@ -113,14 +108,11 @@ public class Switchwithtimer : MonoBehaviour
             {
                 timetext.color = Color.red;
             }
-            if (remainingtime <= 0)
-            {
-                changetored();
-                Timerui.SetActive(false);
-                StopCoroutine("redstart");
-            }
             yield return null;
         }
+        StopCoroutine("redstart");
+        changetored();
+        Timerui.SetActive(false);
     }
     private void changetoblue()
     {
@@ -195,6 +187,10 @@ public class Switchwithtimer : MonoBehaviour
     }
     public void resettimer()
     {
+        StopCoroutine("bluestart");
+        StopCoroutine("redstart");
+        if (Normalswitch.switchcolor == true) gameObject.GetComponent<Renderer>().material.color = bluecolor;
+        else gameObject.GetComponent<Renderer>().material.color = redcolor;
         currentstore = 0;
         maxreached = false;
         remainingtime = 0;

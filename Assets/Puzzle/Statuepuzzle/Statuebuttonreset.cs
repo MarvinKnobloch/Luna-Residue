@@ -14,7 +14,7 @@ public class Statuebuttonreset : MonoBehaviour, Interactioninterface
         {
             foreach(GameObject obj in Statues)
             {
-                obj.gameObject.GetComponent<Statuecontroller>().resetstatues();
+                obj.gameObject.GetComponent<Statuecontroller>().backtostart();
             }
         }
         return true;

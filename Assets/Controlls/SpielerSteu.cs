@@ -358,7 +358,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1c7ee5e6-4fb4-4a3b-a206-1d897d469b99"",
-                    ""path"": ""<Keyboard>/backquote"",
+                    ""path"": ""<Keyboard>/OEM1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -391,7 +391,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a07ed982-f1d5-4794-a9f3-12bfb370068a"",
-                    ""path"": ""<Keyboard>/OEM1"",
+                    ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -468,7 +468,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""17622f0e-c7fc-4468-9982-da02812d5bbd"",
-                    ""path"": ""<Keyboard>/tab"",
+                    ""path"": ""<Keyboard>/z"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

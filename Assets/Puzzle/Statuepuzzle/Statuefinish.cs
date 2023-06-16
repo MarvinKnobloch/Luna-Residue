@@ -16,16 +16,9 @@ public class Statuefinish : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Statue"))
         {
+            other.gameObject.GetComponent<Statuecontroller>().isfinished = true;
             other.gameObject.GetComponent<Renderer>().material.color = greencolor;
             Reward.GetComponent<Rewardinterface>().addrewardcount();
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Statue"))
-        {
-            other.gameObject.GetComponent<Renderer>().material.color = Color.white;
-            Reward.GetComponent<Rewardinterface>().removerewardcount();
         }
     }
 }

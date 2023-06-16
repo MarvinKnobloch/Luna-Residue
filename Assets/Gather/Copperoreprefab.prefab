@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43cf8e4af0eb5f4aa608bcdf506bc94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: Gather Copperore
+  text: Gather Copper Ore
   inventory: {fileID: 11400000, guid: 2ca52730c693b224db957e8268c41db8, type: 2}
   item: {fileID: 11400000, guid: deead9564ec81e144ac48ea46ead9ee9, type: 2}
   itemamount: 1
