@@ -13,6 +13,10 @@ public class Aoearrow : MonoBehaviour
     private float aoeradius;
     private int dmgtype;
 
+    private bool effectisactive;
+    private float starteffectrange = 4;
+    private float disableeffectrange = 2;
+
     private bool maintarget;
 
     private float overalldmg;
@@ -24,6 +28,7 @@ public class Aoearrow : MonoBehaviour
     private float switchbuffdmg;
 
     private float enemydebuffcrit;
+
     public void setarrowvalues(float dmg, float radius, int type)
     {
         aoeradius = radius;
@@ -33,17 +38,36 @@ public class Aoearrow : MonoBehaviour
         switchbuffdmg = Globalplayercalculations.calculateweaponcharbuff(overalldmg);
         overallcritchance = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critchance;
     }
-
+    private void Start()
+    {
+        if (Vector3.Distance(transform.position, arrowtarget) > starteffectrange)
+        {
+            effectisactive = true;
+            transform.GetChild(1).gameObject.SetActive(true);
+        }
+        else effectisactive = false;
+    }
     void Update()
     {
         if (arrowtarget != null)
         {
             transform.position = Vector3.MoveTowards(transform.position, arrowtarget, arrowspeed * Time.deltaTime);
-            if (dmgonce == false && Vector3.Distance(transform.position, arrowtarget) < 0.1f)
+            if (effectisactive == true)
             {
-                Checkhitbox();
-                dmgonce = true;
-                StartCoroutine(destroyarrow());
+                if (Vector3.Distance(transform.position, arrowtarget) < disableeffectrange)
+                {
+                    effectisactive = false;
+                    transform.GetChild(1).gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                if (dmgonce == false && Vector3.Distance(transform.position, arrowtarget) < 0.1f)
+                {
+                    Checkhitbox();
+                    dmgonce = true;
+                    StartCoroutine(destroyarrow());
+                }
             }
         }
     }

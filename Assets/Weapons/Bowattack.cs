@@ -232,7 +232,8 @@ public class Bowattack : MonoBehaviour
                 if (controlls.Player.Attack1.WasPressedThisFrame())
                 {
                     bowaircount++;
-                    shotairbasicarrow();
+                    if (Statics.infight == true) shotairbasicarrow();
+                    else shotpuzzlearrow();
                     movementscript.ChangeAnimationStateInstant(bowairreleasestate);
                     readattackinput = false;
                     Statics.otheraction = true;
@@ -251,7 +252,8 @@ public class Bowattack : MonoBehaviour
                 {
                     movementscript.attackcombochain++;
                     bowaircount = 0;
-                    shotairmidarrow();
+                    if (Statics.infight == true) shotairmidarrow();
+                    else shotpuzzlearrow();
                     movementscript.ChangeAnimationState(airmidstate);
                     readattackinput = false;
                     Statics.otheraction = true;
@@ -260,7 +262,8 @@ public class Bowattack : MonoBehaviour
                 {
                     movementscript.attackcombochain++;
                     bowaircount = 0;
-                    shotairuparrow();
+                    if (Statics.infight == true) shotairuparrow();
+                    else shotpuzzlearrow();
                     movementscript.ChangeAnimationState(airupstate);
                     readattackinput = false;
                     Statics.otheraction = true;
@@ -600,7 +603,8 @@ public class Bowattack : MonoBehaviour
             Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
             GameObject Arrow = Instantiate(singlearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
             Singlearrow arrowcontroller = Arrow.GetComponent<Singlearrow>();
-            arrowcontroller.arrowhitpoint = Movescript.lockontarget.gameObject.transform.position;
+            float height = Movescript.lockontarget.gameObject.GetComponent<CapsuleCollider>().height;
+            arrowcontroller.arrowhitpoint = Movescript.lockontarget.gameObject.transform.position + Vector3.up * height;
             arrowcontroller.arrowtarget = Movescript.lockontarget.gameObject;
             arrowcontroller.setarrowvalues(dmg, type, healreduction);
             arrowfalse();
@@ -619,7 +623,8 @@ public class Bowattack : MonoBehaviour
             Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
             GameObject Arrow = Instantiate(aoearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
             Aoearrow arrowcontroller = Arrow.GetComponent<Aoearrow>();
-            arrowcontroller.arrowtarget = Movescript.lockontarget.gameObject.transform.position;
+            float height = Movescript.lockontarget.gameObject.GetComponent<CapsuleCollider>().height;
+            arrowcontroller.arrowtarget = Movescript.lockontarget.gameObject.transform.position + Vector3.up * height;
             arrowcontroller.setarrowvalues(dmg, radius, type);
             arrowfalse();
         }
@@ -643,7 +648,8 @@ public class Bowattack : MonoBehaviour
         }
     }
     private void shotairbasicarrow() => shotsinglearrowwhileaim(basicarrowdmg, 0, 1);
-    private void shotairmidarrow() => shotsinglearrowwhileaim(singleendarrowdmg, 2, 1);
+    private void shotairmidarrow() => shotaoearrowwhileaim(aoearrowdmg, 2, 3);
+    private void shotairuparrow() => shotsinglearrowwhileaim(singleendarrowdmg, 3, 1);
     private void shotarrowweaponswitch() 
     {
         float dmg = basicarrowdmg * 0.8f;
@@ -651,7 +657,7 @@ public class Bowattack : MonoBehaviour
         else shotsinglearrowwhileaim(dmg, 0, 1);
     }
 
-    private void shotaoearrowwhileaim(float dmg, float radius, int type)
+    private void shotaoearrowwhileaim(float dmg, int type, float radius)
     {
         RaycastHit hit;
         if (Physics.Raycast(Camtransform.position, Camtransform.forward, out hit, Mathf.Infinity, Arrowraycastlayer, QueryTriggerInteraction.Ignore))
@@ -667,7 +673,6 @@ public class Bowattack : MonoBehaviour
             Debug.Log("arrow does not hit");
         }
     }
-    private void shotairuparrow() => shotaoearrowwhileaim(aoearrowdmg, 3 , 3);
 
     private void shotpuzzlearrow()
     {

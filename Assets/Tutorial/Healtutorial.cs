@@ -61,8 +61,9 @@ public class Healtutorial : MonoBehaviour
         if (other.gameObject == LoadCharmanager.Overallmainchar && tutorialcomplete == false)
         {
             tutorialcomplete = true;
-            Statics.charcurrenthealth[Statics.currentfirstchar] = 70;
-            Statics.charcurrenthealth[Statics.currentthirdchar] = 70;
+            Statics.charswitchbool = true;
+            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamageignoreiframes(20, false);
+            LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().takedamageignoreiframes(20, false);
             healthuimanager.sethealthbars();
             heal = controlls.Player.Heal.GetBindingDisplayString();
             player1target = controlls.SpielerHeal.Target1.GetBindingDisplayString();
@@ -95,6 +96,7 @@ public class Healtutorial : MonoBehaviour
             Statics.charcurrenthealth[Statics.currentthirdchar] >= Statics.charmaxhealth[Statics.currentthirdchar] && 
             Statics.charcurrenthealth[Statics.currentforthchar] >= Statics.charmaxhealth[Statics.currentforthchar])
         {
+            Statics.charswitchbool = false;
             tutorialstarted = false;
             StartCoroutine(opengate());
         }

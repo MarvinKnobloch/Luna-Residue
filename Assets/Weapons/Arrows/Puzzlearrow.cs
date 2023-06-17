@@ -10,10 +10,6 @@ public class Puzzlearrow : MonoBehaviour
     public Vector3 arrowtarget { get; set; }
     public bool hit { get; set; }
 
-    void Awake()
-    {
-        Destroy(gameObject, timetodestroy);
-    }
 
     void Update()
     {
@@ -23,11 +19,17 @@ public class Puzzlearrow : MonoBehaviour
             hit = false;
             Weaponsounds.instance.playarrowimpact();
             StartCoroutine(disablecollider());
+            StartCoroutine(destroy());
         }
     }
     IEnumerator disablecollider()
     {
         yield return new WaitForSeconds(0.1f);
         boxCollider.enabled = false;
+    }
+    IEnumerator destroy()
+    {
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
     }
 }

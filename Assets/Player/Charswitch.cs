@@ -121,6 +121,7 @@ public class Charswitch : MonoBehaviour
         }
         Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallthirdchar, Statics.charmaxhealth[Statics.currentthirdchar] * charswitchheal, false);
         Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallforthchar, Statics.charmaxhealth[Statics.currentforthchar] * charswitchheal, false);
+
         Time.timeScale = Statics.normalgamespeed;
         Time.fixedDeltaTime = Statics.normaltimedelta;
         if (aimcam.gameObject.activeSelf == true)
@@ -137,9 +138,9 @@ public class Charswitch : MonoBehaviour
         LoadCharmanager.Overallsecondchar = Savechar;
         foreach (GameObject enemy in Infightcontroller.infightenemylists)
         {
-            if(enemy.TryGetComponent(out Enemymovement enemymovement))
+            if (enemy.TryGetComponent(out Enemymovement enemymovement))
             {
-                if(enemymovement.currenttarget == LoadCharmanager.Overallsecondchar)
+                if (enemymovement.currenttarget == LoadCharmanager.Overallsecondchar)
                 {
                     enemymovement.currenttarget = LoadCharmanager.Overallmainchar;
                 }

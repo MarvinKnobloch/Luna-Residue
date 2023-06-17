@@ -12,6 +12,10 @@ public class Singlearrow : MonoBehaviour
     [NonSerialized] public GameObject arrowtarget;
     private int dmgtype;
 
+    private bool effectisactive;
+    private float starteffectrange = 4;
+    private float disableeffectrange = 2;
+
     private float overalldmg;
     private float overallcritchance;
     private float critdmg;
@@ -33,16 +37,36 @@ public class Singlearrow : MonoBehaviour
         healreduction = reducehealing;
     }
 
+    private void Start()
+    {
+        if (Vector3.Distance(transform.position, arrowhitpoint) > starteffectrange)
+        {
+            effectisactive = true;
+            transform.GetChild(1).gameObject.SetActive(true);
+        }
+        else effectisactive = false;
+    }
     void Update()
     {
         if (arrowtarget != null)
         {
             transform.position = Vector3.MoveTowards(transform.position, arrowhitpoint, arrowspeed * Time.deltaTime);
-            if (dmgonce == false && Vector3.Distance(transform.position, arrowhitpoint) < 0.1f)
+            if(effectisactive == true)
             {
-                Checkhitboxbasic();
-                dmgonce = true;
-                StartCoroutine(destroyarrow());
+                if (Vector3.Distance(transform.position, arrowhitpoint) < disableeffectrange)
+                {
+                    effectisactive = false;
+                    transform.GetChild(1).gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                if (dmgonce == false && Vector3.Distance(transform.position, arrowhitpoint) < 0.1f)
+                {
+                    Checkhitboxbasic();
+                    dmgonce = true;
+                    StartCoroutine(destroyarrow());
+                }
             }
         }
     }

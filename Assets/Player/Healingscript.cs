@@ -151,6 +151,12 @@ public class Healingscript : MonoBehaviour
                 }
                 if (resurrectioncast == true)
                 {
+                    if (controlls.SpielerHeal.Target1.WasPerformedThisFrame() && LoadCharmanager.Overallthirdchar != null)
+                    {
+                        readinputs = false;
+                        healtarget = 1;
+                        movementscript.ChangeAnimationState(resurrectstate);
+                    }
                     if (controlls.SpielerHeal.Target2.WasPerformedThisFrame() && LoadCharmanager.Overallthirdchar != null)
                     {
                         readinputs = false;
@@ -347,8 +353,9 @@ public class Healingscript : MonoBehaviour
     }
     private void castresurrection()
     {
-        if (healtarget == 2) resurrect(LoadCharmanager.Overallthirdchar.gameObject);
-        else if(healtarget == 3) resurrect(LoadCharmanager.Overallforthchar.gameObject);
+        if (healtarget == 1) resurrect(LoadCharmanager.Overallmainchar.gameObject);
+        else if (healtarget == 2) resurrect(LoadCharmanager.Overallthirdchar.gameObject);
+        else if (healtarget == 3) resurrect(LoadCharmanager.Overallforthchar.gameObject);
         healtarget = 0;
         if(Statics.infight == true)
         {
@@ -358,25 +365,25 @@ public class Healingscript : MonoBehaviour
     }
     private void resurrect(GameObject character)
     {
-        GlobalCD.stopsupportresurrectioncd();
-        Statics.supportcanresurrect = false;
         if (character.TryGetComponent(out Playerhp playerhp))
         {
             if (playerhp.playerisdead == true)
             {
+                GlobalCD.stopsupportresurrectioncd();
+                Statics.supportcanresurrect = false;
                 playerhp.playerisresurrected();
                 Statics.infightresurrectcd++;
+                if (LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == true || LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().playerisdead == true || LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().playerisdead == true)
+                {
+                    Debug.Log("stilloneplayerdead");
+                    GlobalCD.startsupportresurrectioncd();
+                }
             }
             else
             {
-                float healamount = Mathf.Round(playerhp.maxhealth * (0.25f + (Statics.groupstonehealbonus * 0.01f)));
+                float healamount = Mathf.Round(playerhp.maxhealth * (0.35f + (Statics.groupstonehealbonus * 0.01f)));
                 playerhp.addhealthwithtext(healamount);
             }
-        }
-        if (LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == true || LoadCharmanager.Overallthirdchar.GetComponent<Playerhp>().playerisdead == true || LoadCharmanager.Overallforthchar.GetComponent<Playerhp>().playerisdead == true)
-        {
-            Debug.Log("stilloneplayerdead");
-            GlobalCD.startsupportresurrectioncd();
         }
     }
     IEnumerator wrongcd()

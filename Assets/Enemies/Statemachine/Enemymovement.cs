@@ -91,6 +91,7 @@ public class Enemymovement : MonoBehaviour
     }
     private void OnEnable()
     {
+        transform.position = spawnpostion;
         currentstate = null;
         state = State.empty;
         meshagent.ResetPath();

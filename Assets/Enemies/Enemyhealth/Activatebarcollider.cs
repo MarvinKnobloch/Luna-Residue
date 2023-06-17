@@ -14,6 +14,19 @@ public class Activatebarcollider : MonoBehaviour
         if(other.gameObject == LoadCharmanager.triggercollider)
         {
             enemyhpscript.addtocanvas();
+            GameObject mainobj = transform.parent.gameObject;
+            if (Infightcontroller.infightenemylists.Contains(mainobj))
+            {
+                if(mainobj.TryGetComponent(out EnemyHP enemyHP))
+                {
+                    enemyHP.healthbar.currenttargetimage.gameObject.SetActive(true);
+                    enemyHP.setnewtarget(true);
+                    if (Movescript.lockontarget.gameObject == mainobj)
+                    {
+                        enemyHP.marktarget();
+                    }
+                }
+            }
         }
     }
     private void OnTriggerExit(Collider other)

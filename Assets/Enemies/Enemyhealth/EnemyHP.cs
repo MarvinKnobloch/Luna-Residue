@@ -361,7 +361,7 @@ public class EnemyHP : MonoBehaviour
         if(hitstakensincelastaggrocheck >= 5)
         {
             hitstakensincelastaggrocheck = 0;
-            setnewtarget();
+            setnewtarget(false);
         }
     }
     public void resetplayerhits()
@@ -386,9 +386,9 @@ public class EnemyHP : MonoBehaviour
         hitstakensincelastaggrocheck = 4;
         healthbar.currenttargetimage.gameObject.SetActive(true);
         currentplayerwithmosthits = -1;
-        setnewtarget();
+        setnewtarget(false);
     }
-    private void setnewtarget()
+    public void setnewtarget(bool updateafterhealthbarreset)
     {
         for (int i = 0; i < playerhits.Length; i++)
         {
@@ -398,8 +398,11 @@ public class EnemyHP : MonoBehaviour
                 playerwithmosthits = i;
             }
         }
-        if (playerwithmosthits == currentplayerwithmosthits) return;
-        else if (playerwithmosthits == 0)
+        if (updateafterhealthbarreset == false) 
+        { 
+            if (playerwithmosthits == currentplayerwithmosthits) return;
+        }
+        if (playerwithmosthits == 0)
         {
             enemymovement.currenttarget = LoadCharmanager.Overallmainchar; 
             if (healthbar != null)
@@ -427,7 +430,7 @@ public class EnemyHP : MonoBehaviour
     {
         mosthits = -1;
         playerhits[player] = -10;
-        setnewtarget();
+        setnewtarget(false);
     }
     public void playerisresurrected(int player)
     {
