@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Goblin
   m_EditorClassIdentifier: 
   enemyname: Goblin
-  basehealth: 320
+  basehealth: 3200
   enemylvl: 1
   movementspeed: 10
-  basedmg: 11
+  basedmg: -11
   attackspeed: 2
   enemysize: 0
   gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}

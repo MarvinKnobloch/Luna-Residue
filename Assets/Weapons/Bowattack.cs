@@ -600,11 +600,12 @@ public class Bowattack : MonoBehaviour
     {
         if (Movescript.lockontarget != null)
         {
-            Vector3 arrowrotation = (Movescript.lockontarget.transform.position - Arrowlaunchposi.position).normalized;
+            float height = Movescript.lockontarget.gameObject.GetComponent<CapsuleCollider>().height - 0.2f;
+            Vector3 hitpoint = Movescript.lockontarget.gameObject.transform.position + Vector3.up * height;
+            Vector3 arrowrotation = (hitpoint - Arrowlaunchposi.position).normalized;
             GameObject Arrow = Instantiate(singlearrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
             Singlearrow arrowcontroller = Arrow.GetComponent<Singlearrow>();
-            float height = Movescript.lockontarget.gameObject.GetComponent<CapsuleCollider>().height;
-            arrowcontroller.arrowhitpoint = Movescript.lockontarget.gameObject.transform.position + Vector3.up * height;
+            arrowcontroller.arrowhitpoint = hitpoint;
             arrowcontroller.arrowtarget = Movescript.lockontarget.gameObject;
             arrowcontroller.setarrowvalues(dmg, type, healreduction);
             arrowfalse();

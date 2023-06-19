@@ -28,7 +28,7 @@ public class Playermovement
     }
     public void groundcheck()
     {
-        if (Physics.SphereCast(psm.spherecastcollider.bounds.center, psm.spherecastcollider.radius, Vector3.down, out RaycastHit groundhit, 1.2f, psm.groundchecklayer))
+        if (Physics.SphereCast(psm.spherecastcollider.bounds.center, psm.spherecastcollider.radius, Vector3.down, out RaycastHit groundhit, 1.3f, psm.groundchecklayer))
         {
             float angle = Vector3.Angle(Vector3.up, groundhit.normal);
             if (angle > psm.charactercontroller.slopeLimit + 6) switchtoslidewall();                      // +3 sonst die ganze zeit state wechsel wenn man gegen ein schräge läuft
@@ -46,7 +46,7 @@ public class Playermovement
     }
     public void healgroundcheck()
     {
-        if (Physics.SphereCast(psm.spherecastcollider.bounds.center, psm.spherecastcollider.radius, Vector3.down, out RaycastHit groundhit, 1.2f, psm.groundchecklayer))
+        if (Physics.SphereCast(psm.spherecastcollider.bounds.center, psm.spherecastcollider.radius, Vector3.down, out RaycastHit groundhit, 1.3f, psm.groundchecklayer))
         {
             float angle = Vector3.Angle(Vector3.up, groundhit.normal);
             if (angle > psm.charactercontroller.slopeLimit + 6) switchtoslidewall();                      // +3 sonst die ganze zeit state wechsel wenn man gegen ein schräge läuft
