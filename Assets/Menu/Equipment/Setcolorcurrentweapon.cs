@@ -10,6 +10,7 @@ public class Setcolorcurrentweapon : MonoBehaviour, ISelectHandler
     [SerializeField] private GameObject resetonpointerenterlayer;
     [SerializeField] private GameObject upgradeui;
 
+    [SerializeField] private Color greencolor;
     public void OnSelect(BaseEventData eventData)
     {
         triggerbutton();
@@ -47,7 +48,7 @@ public class Setcolorcurrentweapon : MonoBehaviour, ISelectHandler
         {
             if (obj.GetComponent<Chooseweapon>().itemvalues == itemslot)
             {
-                obj.GetComponent<Image>().color = Color.green;
+                obj.GetComponent<Image>().color = greencolor;
             }
             else obj.GetComponent<Image>().color = Color.white;
         }

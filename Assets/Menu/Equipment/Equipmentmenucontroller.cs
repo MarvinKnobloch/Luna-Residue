@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using TMPro;
+using UnityEngine.InputSystem;
 
 public class Equipmentmenucontroller : MonoBehaviour
 {
@@ -13,7 +15,11 @@ public class Equipmentmenucontroller : MonoBehaviour
     [SerializeField] private GameObject swordgrid;
     [SerializeField] private GameObject swordbutton;
 
+    [SerializeField] private TextMeshProUGUI switchchartext;
     [SerializeField] private Menusoundcontroller menusoundcontroller;
+
+    private string switchleft;
+    private string switchright;
 
     private void Awake()
     {
@@ -29,6 +35,9 @@ public class Equipmentmenucontroller : MonoBehaviour
         swordgrid.SetActive(true);
         EventSystem.current.SetSelectedGameObject(swordbutton);
         swordbutton.gameObject.GetComponent<Setcolorcurrentweapon>().triggerbutton();
+        switchleft = controlls.Equipmentmenu.Switchcharleft.GetBindingDisplayString();
+        switchright = controlls.Equipmentmenu.Switchcharright.GetBindingDisplayString();
+        switchchartext.text = "Switch Character (" + switchleft + "/" + switchright +")";
     }
     private void Update()
     {

@@ -8,9 +8,9 @@ using System;
 
 public class Equipcharselection : MonoBehaviour
 {
-    public Text nametext;
+    public TextMeshProUGUI charnametext;
 
-    private SpielerSteu Steuerung;
+    private SpielerSteu controlls;
     public GameObject currentbuttonslot;
 
     [SerializeField] private TextMeshProUGUI statsnumbers;
@@ -23,25 +23,27 @@ public class Equipcharselection : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] slotbuttontext;
     [SerializeField] private GameObject[] charbuttons;
 
+    private Color greencolor;
     [SerializeField] private Menusoundcontroller menusoundcontroller;
     private void Awake()
     {
-        Steuerung = Keybindinputmanager.inputActions;
+        controlls = Keybindinputmanager.inputActions;
         currentbuttonslot = swordbutton;
+        ColorUtility.TryParseHtmlString("#36D611", out greencolor);
     }
     private void OnEnable()
     {
         Statics.currentequipmentchar = 0;           //PlayerPrefs.GetInt("Maincharindex");
-        nametext.text = Statics.characternames[Statics.currentequipmentchar] + " LvL" + Statics.charcurrentlvl;
+        charnametext.text = Statics.characternames[Statics.currentequipmentchar];
         settextandimage(Statics.currentequipmentchar);
     }
     private void Update()
     {
-        if (Steuerung.Menusteuerung.Menucharselectionleft.WasPerformedThisFrame())
+        if (controlls.Equipmentmenu.Switchcharleft.WasPerformedThisFrame())
         {
             selectionbackward();
         }
-        if (Steuerung.Menusteuerung.Menucharselectionright.WasPerformedThisFrame())
+        if (controlls.Equipmentmenu.Switchcharright.WasPerformedThisFrame())
         {
             selectionforward();
         }
@@ -75,7 +77,7 @@ public class Equipcharselection : MonoBehaviour
     public void choosechar(int currentchar)
     {
         Statics.currentequipmentchar = currentchar;
-        nametext.text = Statics.characternames[Statics.currentequipmentchar] + " LvL" + Statics.charcurrentlvl;
+        charnametext.text = Statics.characternames[Statics.currentequipmentchar];
         settextandimage(Statics.currentequipmentchar);
         setselectedbutton();
         menusoundcontroller.playmenubuttonsound();
@@ -128,7 +130,7 @@ public class Equipcharselection : MonoBehaviour
         {
             obj.GetComponent<Image>().color = Color.white;
         }
-        charbuttons[Statics.currentequipmentchar].GetComponent<Image>().color = Color.green;
+        charbuttons[Statics.currentequipmentchar].GetComponent<Image>().color = greencolor;
     }
     
     private void setselectedbutton()

@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 public class Upgradecontroller : MonoBehaviour
 {
-    private SpielerSteu Steuerung;
+    private SpielerSteu controlls;
     private InputAction upgradehotkey;
     [SerializeField] private GameObject resetonpointenterlayer;
     [NonSerialized] public Chooseitem chooseitem;
@@ -37,8 +37,8 @@ public class Upgradecontroller : MonoBehaviour
     [SerializeField] private Menusoundcontroller menusoundcontroller;
     private void Awake()
     {
-        Steuerung = Keybindinputmanager.inputActions;
-        upgradehotkey = Steuerung.Equipmentmenu.Upgradeitem;
+        controlls = Keybindinputmanager.inputActions;
+        upgradehotkey = controlls.Equipmentmenu.Upgradeitem;
         upgradeimage = GetComponent<Image>();
         upgradeimage.fillAmount = 0;
         upgradetext = GetComponentInChildren<TextMeshProUGUI>();
@@ -46,7 +46,7 @@ public class Upgradecontroller : MonoBehaviour
     private void OnEnable()
     {
         StopAllCoroutines();
-        upgradetext.text = "hold " + upgradehotkey.GetBindingDisplayString() + " to Upgrade";
+        upgradetext.text = "Upgrade Item (hold Space)";//"hold \"<color=green>Space</color>\" to upgrade";
         upgradeimage.fillAmount = 0;
         starttimer = false;
     }
@@ -54,12 +54,12 @@ public class Upgradecontroller : MonoBehaviour
     {
         if(canupgrade == true)
         {
-            if (Steuerung.Equipmentmenu.Upgradeitem.WasPressedThisFrame() && starttimer == false)
+            if (controlls.Menusteuerung.Space.WasPressedThisFrame() && starttimer == false)
             {
                 starttimer = true;
                 StartCoroutine(upgradeitemstart());
             }
-            if (Steuerung.Equipmentmenu.Upgradeitem.WasReleasedThisFrame())
+            if (controlls.Equipmentmenu.Upgradeitem.WasReleasedThisFrame())
             {
                 upgradeimage.fillAmount = 0;
                 starttimer = false;

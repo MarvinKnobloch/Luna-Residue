@@ -10,7 +10,7 @@ using System.Linq;
 public class Awakecontroller : MonoBehaviour
 {
     [NonSerialized] public Stonecontroller stonecontroller;
-    private SpielerSteu Steuerung;
+    private SpielerSteu controlls;
 
     [SerializeField] private Inventorycontroller matsinventory;
     [SerializeField] private Craftingobject elementalstone;
@@ -50,9 +50,9 @@ public class Awakecontroller : MonoBehaviour
 
     private void Awake()
     {
-        Steuerung = Keybindinputmanager.inputActions;
-        awakehotkey = Steuerung.Elementalmenu.Awakestone;
-        GetComponentInChildren<TextMeshProUGUI>().text = "Hold " + awakehotkey.GetBindingDisplayString() + " to awake Stone";
+        controlls = Keybindinputmanager.inputActions;
+        awakehotkey = controlls.Elementalmenu.Awakestone;
+        GetComponentInChildren<TextMeshProUGUI>().text = "hold \"<color=green>Space</color>\" to awake stone";
     }
     private void OnEnable()
     {
@@ -68,12 +68,12 @@ public class Awakecontroller : MonoBehaviour
         {
             if(canawake == true)
             {
-                if (Steuerung.Elementalmenu.Awakestone.WasPressedThisFrame() && starttimer == false)
+                if (controlls.Elementalmenu.Awakestone.WasPressedThisFrame() && starttimer == false)
                 {
                     starttimer = true;
                     StartCoroutine(awakestone());
                 }
-                if (Steuerung.Elementalmenu.Awakestone.WasReleasedThisFrame())
+                if (controlls.Elementalmenu.Awakestone.WasReleasedThisFrame())
                 {
                     awakeimage.fillAmount = 0;
                     starttimer = false;

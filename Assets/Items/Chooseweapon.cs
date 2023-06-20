@@ -40,7 +40,7 @@ public class Chooseweapon : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             slotbuttontext.gameObject.GetComponent<TextMeshProUGUI>().text = GetComponentInChildren<TextMeshProUGUI>().text;
             setnewitem(Statics.currentequipmentbutton);
             statsupdate();
-            EventSystem.current.SetSelectedGameObject(slotbutton);                            //beim onselect call wird die selectfarbe gesetzt + der sound gespielt
+            EventSystem.current.SetSelectedGameObject(slotbutton);                            //beim onselect call wird die selectfarbe gesetzt + der sound gespielt(Setcolorcurrentweapon)
         }   
     }
     private void statsupdate()

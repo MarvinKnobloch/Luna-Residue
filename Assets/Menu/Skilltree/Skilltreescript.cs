@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using UnityEngine.InputSystem;
 
 public class Skilltreescript : MonoBehaviour
 {
-    private SpielerSteu Steuerung;
+    private SpielerSteu controlls;
     [SerializeField] private GameObject overview;
     [SerializeField] private GameObject skilltree;
     private Skilltreebonus skilltreebonus;
@@ -52,37 +53,42 @@ public class Skilltreescript : MonoBehaviour
     private DateTime currentdate;
     private float seconds;
 
+    private Color greencolor;
+    private string switchleft;
+    private string switchright;
+    [SerializeField] private TextMeshProUGUI switchchartext;
     [SerializeField] private Menusoundcontroller menusoundcontroller;
 
     private void Awake()
     {
-        Steuerung = Keybindinputmanager.inputActions;
+        controlls = Keybindinputmanager.inputActions;
         skilltreebonus = GetComponent<Skilltreebonus>();
+        ColorUtility.TryParseHtmlString("#36D611", out greencolor);
     }
 
     private void Update()
     {
-        if (Steuerung.Menusteuerung.Menucharselectionleft.WasPerformedThisFrame())
+        if (controlls.Equipmentmenu.Switchcharleft.WasPerformedThisFrame())
         {
             selectionbackward();
             menusoundcontroller.playmenubuttonsound();
         }
-        if (Steuerung.Menusteuerung.Menucharselectionright.WasPerformedThisFrame())
+        if (controlls.Equipmentmenu.Switchcharright.WasPerformedThisFrame())
         {
             selectionforward();
             menusoundcontroller.playmenubuttonsound();
         }
-        if (Steuerung.Menusteuerung.Menuesc.WasPerformedThisFrame())
+        if (controlls.Menusteuerung.Menuesc.WasPerformedThisFrame())
         {
             stopskillpointreset();
             closeskilltree();
             menusoundcontroller.playmenubuttonsound();
         }
-        if (Steuerung.Menusteuerung.Space.WasPerformedThisFrame())
+        if (controlls.Menusteuerung.Space.WasPerformedThisFrame())
         {
             StartCoroutine("startresetskillpoints");
         }
-        if (Steuerung.Menusteuerung.Space.WasReleasedThisFrame())
+        if (controlls.Menusteuerung.Space.WasReleasedThisFrame())
         {
             stopskillpointreset();
         }
@@ -90,14 +96,18 @@ public class Skilltreescript : MonoBehaviour
     private void OnEnable()
     {
         stopskillpointreset();
-        Steuerung.Enable();
+        controlls.Enable();
         foreach (Image chars in charselectionimage)
         {
             chars.color = Color.white;
         }
         currentchar = PlayerPrefs.GetInt("Maincharindex");
-        charselectionimage[currentchar].color = Color.green;
+        charselectionimage[currentchar].color = greencolor;
         choosechar(currentchar);
+
+        switchleft = controlls.Equipmentmenu.Switchcharleft.GetBindingDisplayString();
+        switchright = controlls.Equipmentmenu.Switchcharright.GetBindingDisplayString();
+        switchchartext.text = "Switch Character (" + switchleft + "/" + switchright + ")";
     }
     private void closeskilltree()
     {
@@ -108,7 +118,7 @@ public class Skilltreescript : MonoBehaviour
     {
         stopskillpointreset();
         this.currentchar = currentchar;           // falls man mit click den char auswählt
-        nametext.text = Statics.characternames[this.currentchar] + " LvL" + Statics.charcurrentlvl;
+        nametext.text = Statics.characternames[this.currentchar] + " LvL " + Statics.charcurrentlvl;
         settextandpoints();
         menusoundcontroller.playmenubuttonsound();
         skilltreebonus.bonusupdate(currentchar);
@@ -156,7 +166,7 @@ public class Skilltreescript : MonoBehaviour
     {
         imagewhite();
 
-        charselectionimage[currentchar].color = Color.green;
+        charselectionimage[currentchar].color = greencolor;
         Statics.charskillpoints[currentchar] = Statics.charcurrentlvl * skillpointsperlvl - Statics.charspendedskillpoints[currentchar];
         skillpointtext.text = "Skill Points " + Statics.charskillpoints[currentchar];
 
