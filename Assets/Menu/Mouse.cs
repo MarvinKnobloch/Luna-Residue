@@ -8,6 +8,6 @@ public class Mouse : MonoBehaviour
 
     void Start()
     {
-        Cursor.SetCursor(cursor, new Vector2(0.5f, 0.5f), CursorMode.ForceSoftware);
+        //Cursor.SetCursor(cursor, new Vector2(0.5f, 0.5f), CursorMode.ForceSoftware);
     }
 }
