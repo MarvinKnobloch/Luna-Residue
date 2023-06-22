@@ -5,8 +5,10 @@ using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
-public class Tutorialtext : MonoBehaviour
+public class Tutorialtext : MonoBehaviour, ISelectHandler
 {
     private SpielerSteu controlls;
     private Tutorialmenucontroller tutorialmenucontroller;
@@ -16,6 +18,7 @@ public class Tutorialtext : MonoBehaviour
     [SerializeField] private Scrollbar scrollbar;
 
     [SerializeField] private VideoClip videoclip;
+    [SerializeField] private UnityEvent function;
 
     private string dash;
     private string attack1action;
@@ -50,11 +53,15 @@ public class Tutorialtext : MonoBehaviour
     private void OnEnable()
     {
         tutorialtext.text = string.Empty;
+        scrollbar.value = 1;
     }
 
+    public void OnSelect(BaseEventData eventData)
+    {
+        function.Invoke();
+    }
     private void settextvalues()
     {
-        scrollbar.value = 1;
         tutorialmenucontroller.menusoundcontroller.playmenubuttonsound();
         videocontroller.newvideo(videoclip);
     }
@@ -213,5 +220,25 @@ public class Tutorialtext : MonoBehaviour
                             "Your teammate also can resurrect.\n" +
                             "\nEverytime someone is resurrected the cooldown of your and your teamates resurrection spell will increase by 1 second for the rest of the combat.\n";
 
+    }
+
+    public void EnsureVisibility(ScrollRect scrollRect, RectTransform child, float padding = 0)
+    {
+        float viewportHeight = scrollRect.viewport.rect.height;
+        Vector2 scrollPosition = scrollRect.content.anchoredPosition;
+
+        float elementTop = child.anchoredPosition.y;
+        float elementBottom = elementTop - child.rect.height;
+
+        float visibleContentTop = -scrollPosition.y - padding;
+        float visibleContentBottom = -scrollPosition.y - viewportHeight + padding;
+
+        float scrollDelta =
+            elementTop > visibleContentTop ? visibleContentTop - elementTop :
+            elementBottom < visibleContentBottom ? visibleContentBottom - elementBottom :
+            0f;
+
+        scrollPosition.y += scrollDelta;
+        scrollRect.content.anchoredPosition = scrollPosition;
     }
 }

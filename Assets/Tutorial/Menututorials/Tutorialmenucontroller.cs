@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Tutorialmenucontroller : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Tutorialmenucontroller : MonoBehaviour
     [SerializeField] private GameObject targettutorialbutton;
     [SerializeField] private GameObject[] elementaltutorialbuttons;
 
+    [SerializeField] private GameObject dashbutton;
     [SerializeField] public Menusoundcontroller menusoundcontroller;
     private void Awake()
     {
@@ -21,6 +23,7 @@ public class Tutorialmenucontroller : MonoBehaviour
     {
         controlls.Enable();
         checkforfinishedtutorials();
+        EventSystem.current.SetSelectedGameObject(dashbutton);
     }
     private void Update()
     {

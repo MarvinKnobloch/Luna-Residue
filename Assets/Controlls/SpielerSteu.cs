@@ -666,6 +666,15 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Wheel"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""0b51341b-daf0-4553-9bf2-421f4fe349d9"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -798,6 +807,17 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""F2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""48cb39e3-f262-4d24-8954-c79449870655"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Wheel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1238,6 +1258,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         m_Menusteuerung_Fps = m_Menusteuerung.FindAction("Fps", throwIfNotFound: true);
         m_Menusteuerung_Switchmovespeed = m_Menusteuerung.FindAction("Switchmovespeed", throwIfNotFound: true);
         m_Menusteuerung_Unlockfasttravel = m_Menusteuerung.FindAction("Unlockfasttravel", throwIfNotFound: true);
+        m_Menusteuerung_Wheel = m_Menusteuerung.FindAction("Wheel", throwIfNotFound: true);
         // SpielerHeal
         m_SpielerHeal = asset.FindActionMap("SpielerHeal", throwIfNotFound: true);
         m_SpielerHeal_Target1 = m_SpielerHeal.FindAction("Target1", throwIfNotFound: true);
@@ -1552,6 +1573,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
     private readonly InputAction m_Menusteuerung_Fps;
     private readonly InputAction m_Menusteuerung_Switchmovespeed;
     private readonly InputAction m_Menusteuerung_Unlockfasttravel;
+    private readonly InputAction m_Menusteuerung_Wheel;
     public struct MenusteuerungActions
     {
         private @SpielerSteu m_Wrapper;
@@ -1568,6 +1590,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         public InputAction @Fps => m_Wrapper.m_Menusteuerung_Fps;
         public InputAction @Switchmovespeed => m_Wrapper.m_Menusteuerung_Switchmovespeed;
         public InputAction @Unlockfasttravel => m_Wrapper.m_Menusteuerung_Unlockfasttravel;
+        public InputAction @Wheel => m_Wrapper.m_Menusteuerung_Wheel;
         public InputActionMap Get() { return m_Wrapper.m_Menusteuerung; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1613,6 +1636,9 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @Unlockfasttravel.started -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnUnlockfasttravel;
                 @Unlockfasttravel.performed -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnUnlockfasttravel;
                 @Unlockfasttravel.canceled -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnUnlockfasttravel;
+                @Wheel.started -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnWheel;
+                @Wheel.performed -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnWheel;
+                @Wheel.canceled -= m_Wrapper.m_MenusteuerungActionsCallbackInterface.OnWheel;
             }
             m_Wrapper.m_MenusteuerungActionsCallbackInterface = instance;
             if (instance != null)
@@ -1653,6 +1679,9 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
                 @Unlockfasttravel.started += instance.OnUnlockfasttravel;
                 @Unlockfasttravel.performed += instance.OnUnlockfasttravel;
                 @Unlockfasttravel.canceled += instance.OnUnlockfasttravel;
+                @Wheel.started += instance.OnWheel;
+                @Wheel.performed += instance.OnWheel;
+                @Wheel.canceled += instance.OnWheel;
             }
         }
     }
@@ -1942,6 +1971,7 @@ public partial class @SpielerSteu : IInputActionCollection2, IDisposable
         void OnFps(InputAction.CallbackContext context);
         void OnSwitchmovespeed(InputAction.CallbackContext context);
         void OnUnlockfasttravel(InputAction.CallbackContext context);
+        void OnWheel(InputAction.CallbackContext context);
     }
     public interface ISpielerHealActions
     {

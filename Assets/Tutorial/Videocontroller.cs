@@ -6,8 +6,10 @@ using UnityEngine.Video;
 public class Videocontroller : MonoBehaviour
 {
     private SpielerSteu controlls;
-    [SerializeField] private VideoPlayer videoplayer;
-    private bool isplaying;
+    public VideoPlayer videoplayer;
+    public bool isplaying;
+
+    [SerializeField] private Videosurface videosurface;
 
     private void Awake()
     {
@@ -16,39 +18,35 @@ public class Videocontroller : MonoBehaviour
     private void OnEnable()
     {
         controlls.Enable();
-        isplaying = false;
+        isplaying = true;
         videoplayer.Pause();
-
+        videoplayer.targetTexture.Release();
     }
 
     private void Update()
     {
         if (controlls.Menusteuerung.Space.WasPerformedThisFrame())
         {
-            if(isplaying == false)
-            {
-                isplaying = true;
-                playvideo();
-            }
-            else
-            {
-                isplaying = false;
-                pausevideo();
-            }
+            switchplaystate();
         }
         if (controlls.Menusteuerung.F1.WasPerformedThisFrame())
         {
             restartvideo();
         }
     }
-
-    public void playvideo()
+    public void switchplaystate()
     {
-        videoplayer.Play();
-    }
-    public void pausevideo()
-    {
-        videoplayer.Pause();
+        if (isplaying == false)
+        {
+            isplaying = true;
+            videoplayer.Play();
+        }
+        else
+        {
+            isplaying = false;
+            videoplayer.Pause();
+        }
+        videosurface.switchicon();
     }
     public void restartvideo()
     {
@@ -56,11 +54,12 @@ public class Videocontroller : MonoBehaviour
         {
             StopCoroutine("restartnewvideo");
             //StopCoroutine("restartwhilepause");
-            playvideo();
+            videoplayer.Play();
             videoplayer.frame = 0;
             //if (isplaying == false) StartCoroutine("restartwhilepause");
             //else (isplaying == true);
             isplaying = true;
+            videosurface.switchicon();
         }
     }
     IEnumerator restartnewvideo()
@@ -83,17 +82,22 @@ public class Videocontroller : MonoBehaviour
     public void newvideo(VideoClip newvideo)
     {
         videoplayer.clip = newvideo;
-        if (videoplayer.clip == null) videoplayer.targetTexture.Release();
+        if (videoplayer.clip == null)
+        {
+            videoplayer.targetTexture.Release();
+            videosurface.playimage.SetActive(false);
+        }
         else
         {
             if (isplaying == false)
             {
+                videosurface.playimage.SetActive(true);
                 StopCoroutine("restartnewvideo");
                 //StopCoroutine("restartwhilepause");
-                playvideo();
+                videoplayer.Play();
                 videoplayer.frame = 0;
                 StartCoroutine("restartnewvideo");
-            } 
+            }
             else restartvideo();
         }
     }
