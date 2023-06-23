@@ -16,6 +16,9 @@ public class Tutorialtext : MonoBehaviour, ISelectHandler
 
     [SerializeField] private TextMeshProUGUI tutorialtext;
     [SerializeField] private Scrollbar scrollbar;
+    [SerializeField] private ScrollRect scrollrect;
+    [SerializeField] private RectTransform scrollrecttransform;
+    private RectTransform recttransfrom;
 
     [SerializeField] private VideoClip videoclip;
     [SerializeField] private UnityEvent function;
@@ -46,6 +49,7 @@ public class Tutorialtext : MonoBehaviour, ISelectHandler
 
     private void Awake()
     {
+        recttransfrom = GetComponent<RectTransform>();
         tutorialmenucontroller = GetComponentInParent<Tutorialmenucontroller>();
         videocontroller = GetComponentInParent<Videocontroller>();
         controlls = Keybindinputmanager.inputActions;
@@ -53,7 +57,12 @@ public class Tutorialtext : MonoBehaviour, ISelectHandler
     private void OnEnable()
     {
         tutorialtext.text = string.Empty;
-        scrollbar.value = 1;
+        StartCoroutine("waitoneframe");
+    }
+    IEnumerator waitoneframe()
+    {
+        yield return null;
+        tutorialmenucontroller.checkforhighstrec(transform, recttransfrom.rect.height);
     }
 
     public void OnSelect(BaseEventData eventData)
@@ -62,8 +71,30 @@ public class Tutorialtext : MonoBehaviour, ISelectHandler
     }
     private void settextvalues()
     {
+        checkforposi();
         tutorialmenucontroller.menusoundcontroller.playmenubuttonsound();
         videocontroller.newvideo(videoclip);
+    }
+    private void checkforposi()           //passt noch nicht 100%. Was ich eingentlich machen müsste ist currenthighestposi/lowestposi mit scrollrect.normalizedPosition + transform.localPosition.y bestimmen
+    {
+        if (transform.localPosition.y > tutorialmenucontroller.currenthighestposi)
+        {
+            float pullupamount = transform.localPosition.y - tutorialmenucontroller.currenthighestposi;
+            float pullpct = pullupamount / tutorialmenucontroller.scrollsize;
+            float newposi = scrollrect.normalizedPosition.y + pullpct;
+            if (newposi > 1) newposi = 1;
+            scrollrect.normalizedPosition = new Vector2(0, newposi);
+            tutorialmenucontroller.upperrectupdate(transform.localPosition.y);
+        }
+        else if (transform.localPosition.y - recttransfrom.rect.height < tutorialmenucontroller.currentlowestposi)
+        {
+            float pulldownamount = (transform.localPosition.y - recttransfrom.rect.height - tutorialmenucontroller.currentlowestposi) * -1;
+            float pullpct = pulldownamount / tutorialmenucontroller.scrollsize;
+            float newposi = scrollrect.normalizedPosition.y - pullpct;
+            if (newposi < 0) newposi = 0;
+            scrollrect.normalizedPosition = new Vector2(0, newposi);
+            tutorialmenucontroller.lowerrectupdate(transform.localPosition.y, recttransfrom.rect.height);
+        }
     }
     public void setdashtext()
     {
@@ -221,24 +252,12 @@ public class Tutorialtext : MonoBehaviour, ISelectHandler
                             "\nEverytime someone is resurrected the cooldown of your and your teamates resurrection spell will increase by 1 second for the rest of the combat.\n";
 
     }
-
-    public void EnsureVisibility(ScrollRect scrollRect, RectTransform child, float padding = 0)
-    {
-        float viewportHeight = scrollRect.viewport.rect.height;
-        Vector2 scrollPosition = scrollRect.content.anchoredPosition;
-
-        float elementTop = child.anchoredPosition.y;
-        float elementBottom = elementTop - child.rect.height;
-
-        float visibleContentTop = -scrollPosition.y - padding;
-        float visibleContentBottom = -scrollPosition.y - viewportHeight + padding;
-
-        float scrollDelta =
-            elementTop > visibleContentTop ? visibleContentTop - elementTop :
-            elementBottom < visibleContentBottom ? visibleContentBottom - elementBottom :
-            0f;
-
-        scrollPosition.y += scrollDelta;
-        scrollRect.content.anchoredPosition = scrollPosition;
-    }
+    /*float pos = 1 - ((1 - transform.localPosition.y) / tutorialmenucontroller.highestrect);
+    //Debug.Log("pos " + pos);
+    float difference;
+        if (scrollrect.verticalNormalizedPosition > pos) difference = scrollbar.value - pos;
+        else difference = pos - scrollrect.verticalNormalizedPosition;
+        //Debug.Log("diff" + difference);
+        if (difference > 0.3f) scrollrect.normalizedPosition = new Vector2(0, pos);
+    //Debug.Log("srollbar" + scrollrect.verticalNormalizedPosition);*/
 }

@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: Testfirma
   productName: First 3D Prototyp
-  defaultCursor: {fileID: 2800000, guid: 3947b5ff0fea76d48805a10756cf35cc, type: 3}
+  defaultCursor: {fileID: 2800000, guid: bf2c890560784f74b907ea5100011213, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
