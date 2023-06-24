@@ -119,8 +119,8 @@ public class Charswitch : MonoBehaviour
             Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallmainchar, Statics.charmaxhealth[Statics.currentsecondchar] * charswitchheal, true);
             Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallsecondchar, Statics.charmaxhealth[Statics.currentfirstchar] * charswitchheal, false);
         }
-        Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallthirdchar, Statics.charmaxhealth[Statics.currentthirdchar] * charswitchheal, false);
-        Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallforthchar, Statics.charmaxhealth[Statics.currentforthchar] * charswitchheal, false);
+        if(LoadCharmanager.Overallthirdchar != null) Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallthirdchar, Statics.charmaxhealth[Statics.currentthirdchar] * charswitchheal, false);
+        if (LoadCharmanager.Overallforthchar != null) Globalplayercalculations.addplayerhealth(LoadCharmanager.Overallforthchar, Statics.charmaxhealth[Statics.currentforthchar] * charswitchheal, false);
 
         Time.timeScale = Statics.normalgamespeed;
         Time.fixedDeltaTime = Statics.normaltimedelta;

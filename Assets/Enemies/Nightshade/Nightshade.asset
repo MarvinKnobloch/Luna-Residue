@@ -16,7 +16,7 @@ MonoBehaviour:
   basehealth: 329
   enemylvl: 1
   movementspeed: 10
-  basedmg: 11
+  basedmg: 10.5
   attackspeed: 2.1
   enemysize: 2
   gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}
