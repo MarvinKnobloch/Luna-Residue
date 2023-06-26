@@ -12,7 +12,7 @@ public class Tutorialtext : MonoBehaviour, ISelectHandler
 {
     private SpielerSteu controlls;
     private Tutorialmenucontroller tutorialmenucontroller;
-    private Videocontroller videocontroller;
+    private Videomenucontroller videocontroller;
 
     [SerializeField] private TextMeshProUGUI tutorialtext;
     [SerializeField] private Scrollbar scrollbar;
@@ -51,7 +51,7 @@ public class Tutorialtext : MonoBehaviour, ISelectHandler
     {
         recttransfrom = GetComponent<RectTransform>();
         tutorialmenucontroller = GetComponentInParent<Tutorialmenucontroller>();
-        videocontroller = GetComponentInParent<Videocontroller>();
+        videocontroller = GetComponentInParent<Videomenucontroller>();
         controlls = Keybindinputmanager.inputActions;
     }
     private void OnEnable()

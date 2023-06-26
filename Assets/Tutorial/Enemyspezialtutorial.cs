@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Video;
 
 public class Enemyspezialtutorial : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class Enemyspezialtutorial : MonoBehaviour
 
     private bool readinputs;
 
+    [SerializeField] private VideoClip videoclip;
+    [SerializeField] private Videocontroller videocontroller;
     // Statics.enemyspecialcd wird um sizetutorial schon umgestellt und im skillpointtutorial wieder zurückgesetzt
     private void Start()
     {
@@ -49,6 +52,8 @@ public class Enemyspezialtutorial : MonoBehaviour
             textindex = 0;
             readinputs = true;
             showtext();
+            videocontroller.gameObject.SetActive(true);
+            videocontroller.setnewvideo(videoclip);
         }
     }
     private void showtext()
@@ -60,6 +65,7 @@ public class Enemyspezialtutorial : MonoBehaviour
     }
     private void endtutorial()
     {
+        videocontroller.gameObject.SetActive(false);
         readinputs = false;
         tutorialcontroller.endtutorial();
         gameObject.SetActive(false);

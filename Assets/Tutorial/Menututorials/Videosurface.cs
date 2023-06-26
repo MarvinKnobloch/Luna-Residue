@@ -10,7 +10,7 @@ public class Videosurface : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public GameObject playimage;
     [SerializeField] private Sprite playsprite;
     [SerializeField] private Sprite pausesprite;
-    [SerializeField] private Videocontroller videocontroller;
+    [SerializeField] private Videomenucontroller videocontroller;
 
     private bool overplayer;
 

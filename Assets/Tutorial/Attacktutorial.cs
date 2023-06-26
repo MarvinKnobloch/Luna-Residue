@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Cinemachine;
+using UnityEngine.Video;
 
 public class Attacktutorial : MonoBehaviour
 {
@@ -23,6 +23,9 @@ public class Attacktutorial : MonoBehaviour
     private float movetimer;
 
     private bool readinputs;
+
+    [SerializeField] private VideoClip videoclip;
+    [SerializeField] private Videocontroller videocontroller;
     private void Start()
     {
         tutorialcomplete = false;
@@ -65,6 +68,8 @@ public class Attacktutorial : MonoBehaviour
             textindex = 0;
             readinputs = true;
             showtext();
+            videocontroller.gameObject.SetActive(true);
+            videocontroller.setnewvideo(videoclip);
         }
     }
     private void showtext()
@@ -79,6 +84,7 @@ public class Attacktutorial : MonoBehaviour
     }
     private void endtutorial()
     {
+        videocontroller.gameObject.SetActive(false);
         tutorialstarted = true;
         readinputs = false;
         tutorialcontroller.endtutorial();

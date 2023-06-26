@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Video;
 
 public class Dashtutorial : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class Dashtutorial : MonoBehaviour
     private string dash;
 
     private bool readinputs;
+
+    [SerializeField] private VideoClip videoclip;
+    [SerializeField] private Videocontroller videocontroller;
     private void Start()
     {
         tutorialcontroller = GetComponentInParent<Tutorialcontroller>();
@@ -46,6 +50,8 @@ public class Dashtutorial : MonoBehaviour
             textindex = 0;
             readinputs = true;
             showtext();
+            videocontroller.gameObject.SetActive(true);
+            videocontroller.setnewvideo(videoclip);
         }
     }
     private void showtext()
@@ -56,6 +62,7 @@ public class Dashtutorial : MonoBehaviour
     }
     private void endtutorial()
     {
+        videocontroller.gameObject.SetActive(false);
         readinputs = false;
         tutorialcontroller.endtutorial();
         gameObject.SetActive(false);

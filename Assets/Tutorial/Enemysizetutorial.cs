@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Video;
 
 public class Enemysizetutorial : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class Enemysizetutorial : MonoBehaviour
     [NonSerialized] public float savetutroialenemyspezialcd;
 
     [SerializeField] private EnemyHP enemyHP;
+
+    [SerializeField] private VideoClip videoclip;
+    [SerializeField] private Videocontroller videocontroller;
     private void Start()
     {
         tutorialcomplete = false;
@@ -64,6 +68,8 @@ public class Enemysizetutorial : MonoBehaviour
             textindex = 0;
             readinputs = true;
             showtext();
+            videocontroller.gameObject.SetActive(true);
+            videocontroller.setnewvideo(videoclip);
         }
     }
     private void showtext()
@@ -88,6 +94,7 @@ public class Enemysizetutorial : MonoBehaviour
     }
     private void endtutorial()
     {
+        videocontroller.gameObject.SetActive(false);
         tutorialstarted = true;
         readinputs = false;
         tutorialcontroller.endtutorial();
