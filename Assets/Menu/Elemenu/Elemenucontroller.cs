@@ -35,6 +35,10 @@ public class Elemenucontroller : MonoBehaviour
     [NonSerialized] public Color stonecolor;
     [NonSerialized] public string stonetext;
 
+    [SerializeField] private TextMeshProUGUI switchchartext;
+    private string switchleft;
+    private string switchright;
+
     [SerializeField] private Menusoundcontroller menusoundcontroller;
     void Awake()
     {
@@ -96,6 +100,10 @@ public class Elemenucontroller : MonoBehaviour
         checkforactivchar(1, secondchar);
         checkforactivchar(2, thirdchar);
         checkforactivchar(3, forthchar);
+
+        switchleft = controlls.Equipmentmenu.Switchcharleft.GetBindingDisplayString();
+        switchright = controlls.Equipmentmenu.Switchcharright.GetBindingDisplayString();
+        switchchartext.text = "(" + switchleft + "/" + switchright + ") or click on char name)";
     }
     private void checkforactivchar(int charslot, int charstaticint)
     {
@@ -126,21 +134,17 @@ public class Elemenucontroller : MonoBehaviour
     }
     private void Update()
     {
-        if (controlls.Elementalmenu._1.WasPerformedThisFrame())
+        if (controlls.Equipmentmenu.Switchcharleft.WasPerformedThisFrame())
         {
-            choosefirstandsecondchar(0, firstchar);
+            if (currentelemenuchar > 0) currentelemenuchar--;
+            else currentelemenuchar = 3;
+            choosecharbuttonpress(currentelemenuchar);
         }
-        if (controlls.Elementalmenu._2.WasPerformedThisFrame())
+        if (controlls.Equipmentmenu.Switchcharright.WasPerformedThisFrame())
         {
-            choosefirstandsecondchar(1, secondchar);
-        }
-        if (controlls.Elementalmenu._3.WasPerformedThisFrame())
-        {
-            choosethirdandforthchar(2, thirdchar, forthchar);
-        }
-        if (controlls.Elementalmenu._4.WasPerformedThisFrame())
-        {
-            choosethirdandforthchar(3, forthchar, thirdchar);
+            if (currentelemenuchar < 3) currentelemenuchar++;
+            else currentelemenuchar = 0;
+            choosecharbuttonpress(currentelemenuchar);
         }
         if (controlls.Menusteuerung.Menuesc.WasPerformedThisFrame())
         {
@@ -151,12 +155,13 @@ public class Elemenucontroller : MonoBehaviour
     }
     public void choosecharbuttonpress(int slot)
     {
-        if(slot == 0) choosefirstandsecondchar(0, firstchar);
-        else if(slot == 1) choosefirstandsecondchar(1, secondchar);
-        else if(slot == 2) choosethirdandforthchar(2, thirdchar, forthchar);
-        else if(slot == 3) choosethirdandforthchar(3, forthchar, thirdchar);
+        currentelemenuchar = slot;
+        if(currentelemenuchar == 0) choosefirstandsecondchar(firstchar);
+        else if(currentelemenuchar == 1) choosefirstandsecondchar(secondchar);
+        else if(currentelemenuchar == 2) choosethirdandforthchar(thirdchar, forthchar);
+        else if(currentelemenuchar == 3) choosethirdandforthchar(forthchar, thirdchar);
     }
-    public void choosefirstandsecondchar(int charslot, int charstaticint)
+    public void choosefirstandsecondchar(int charstaticint)
     {
         if (charstaticint == -1)
         {
@@ -178,12 +183,11 @@ public class Elemenucontroller : MonoBehaviour
             {
                 image.SetActive(false);
             }
-            charselectionimage[charslot].SetActive(true);
-            currentelemenuchar = charslot;
+            charselectionimage[currentelemenuchar].SetActive(true);
             menusoundcontroller.playmenubuttonsound();
         }
     }
-    public void choosethirdandforthchar(int charslot, int charstaticint, int othercharstaticint)
+    public void choosethirdandforthchar(int charstaticint, int othercharstaticint)
     {
         if (charstaticint == -1)
         {
@@ -213,8 +217,7 @@ public class Elemenucontroller : MonoBehaviour
             {
                 image.SetActive(false);
             }
-            charselectionimage[charslot].SetActive(true);
-            currentelemenuchar = charslot;
+            charselectionimage[currentelemenuchar].SetActive(true);
             menusoundcontroller.playmenubuttonsound();
         }
     }

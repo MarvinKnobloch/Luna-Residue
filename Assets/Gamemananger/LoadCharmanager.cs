@@ -26,7 +26,7 @@ public class LoadCharmanager : MonoBehaviour
     public GameObject[] teammates;
     public static GameObject Overallthirdchar;
     public static GameObject Overallforthchar;
-    public static Vector3 savemainposi = new Vector3(-100, 5, 900);   //new Vector3(31,31,671);                    //new Vector3(19, 2, 867); tutorial      //new Vector3(-100,5,900); videospawn
+    public static Vector3 savemainposi = new Vector3(-110, 5, 900);   //new Vector3(31,31,671);                    //new Vector3(19, 2, 867); tutorial      //new Vector3(-110,5,900); videospawn
     public static Quaternion savemainrota;
     public static float savecamvalueX;
 

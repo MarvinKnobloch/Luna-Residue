@@ -44,7 +44,7 @@ public class Setitemsandinventory : MonoBehaviour
         Statics.charmaxhealth = new float[] { 80, 73, 77, 73, 75 };
         Statics.chardefense = new float[] { 60, 60, 60, 60, 60 };
         Statics.charattack = new float[] { 0, 0, 0, 0, 0 };
-        Statics.charcritchance = new float[] { 0, 0, 0, 0, 0}; //{ 5, 5, 5, 5, 5 };
+        Statics.charcritchance = new float[] { 5, 5, 5, 5, 5 };
         Statics.charcritdmg = new float[] { 150, 150, 150, 150, 150 };
         Statics.charweaponbuff = new float[] { 0, 0, 0, 0, 0 };
         Statics.charweaponbuffduration = new float[] { 8, 8, 8, 8, 8 };

@@ -944,7 +944,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: E
+  m_Text: RMB
 --- !u!222 &30318928
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5229,7 +5229,7 @@ MonoBehaviour:
   inputBinding:
     m_Name: 
     m_Id: a8c04a86-9a5b-4d1a-b043-748679c03c71
-    m_Path: <Keyboard>/e
+    m_Path: <Mouse>/rightButton
     m_Interactions: 
     m_Processors: 
     m_Groups: 
@@ -9091,7 +9091,7 @@ MonoBehaviour:
   inputBinding:
     m_Name: 
     m_Id: c8ed27ff-333a-40ad-82f1-5dbd1105e7c7
-    m_Path: <Keyboard>/r
+    m_Path: <Keyboard>/e
     m_Interactions: 
     m_Processors: 
     m_Groups: 
@@ -10890,7 +10890,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: F
+  m_Text: R
 --- !u!222 &596156285
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11524,7 +11524,7 @@ MonoBehaviour:
   inputBinding:
     m_Name: 
     m_Id: 3128292d-a406-4463-91cb-a3bb8817b7ea
-    m_Path: <Mouse>/leftButton
+    m_Path: <Keyboard>/f
     m_Interactions: 
     m_Processors: 
     m_Groups: 
@@ -11909,7 +11909,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: RMB
+  m_Text: LMB
 --- !u!222 &645230639
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12234,7 +12234,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: R
+  m_Text: E
 --- !u!222 &661517607
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12900,7 +12900,7 @@ MonoBehaviour:
   inputBinding:
     m_Name: 
     m_Id: 30965e1a-1bdb-4d53-92e5-218c0d0af8ae
-    m_Path: <Keyboard>/f
+    m_Path: <Keyboard>/r
     m_Interactions: 
     m_Processors: 
     m_Groups: 
@@ -18655,7 +18655,7 @@ MonoBehaviour:
   inputBinding:
     m_Name: 
     m_Id: c8ed27ff-333a-40ad-82f1-5dbd1105e7c7
-    m_Path: <Keyboard>/r
+    m_Path: <Keyboard>/e
     m_Interactions: 
     m_Processors: 
     m_Groups: 
@@ -21541,7 +21541,7 @@ MonoBehaviour:
   inputBinding:
     m_Name: 
     m_Id: 3128292d-a406-4463-91cb-a3bb8817b7ea
-    m_Path: <Mouse>/leftButton
+    m_Path: <Keyboard>/f
     m_Interactions: 
     m_Processors: 
     m_Groups: 
@@ -24084,7 +24084,7 @@ MonoBehaviour:
   inputBinding:
     m_Name: 
     m_Id: a8c04a86-9a5b-4d1a-b043-748679c03c71
-    m_Path: <Keyboard>/e
+    m_Path: <Mouse>/rightButton
     m_Interactions: 
     m_Processors: 
     m_Groups: 
@@ -28788,7 +28788,7 @@ MonoBehaviour:
   inputBinding:
     m_Name: 
     m_Id: 30965e1a-1bdb-4d53-92e5-218c0d0af8ae
-    m_Path: <Keyboard>/f
+    m_Path: <Keyboard>/r
     m_Interactions: 
     m_Processors: 
     m_Groups: 
@@ -29018,7 +29018,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: LMB
+  m_Text: F
 --- !u!222 &1372839582
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -34543,7 +34543,7 @@ MonoBehaviour:
   inputBinding:
     m_Name: 
     m_Id: ac6f1467-09d9-48ac-9672-e614f6138d4b
-    m_Path: <Mouse>/rightButton
+    m_Path: <Mouse>/leftButton
     m_Interactions: 
     m_Processors: 
     m_Groups: 
@@ -42539,7 +42539,7 @@ MonoBehaviour:
   inputBinding:
     m_Name: 
     m_Id: ac6f1467-09d9-48ac-9672-e614f6138d4b
-    m_Path: <Mouse>/rightButton
+    m_Path: <Mouse>/leftButton
     m_Interactions: 
     m_Processors: 
     m_Groups: 
@@ -44465,7 +44465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 980d78ccf8ee034489fa709df82d19c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursor: {fileID: 2800000, guid: 3947b5ff0fea76d48805a10756cf35cc, type: 3}
+  cursor: {fileID: 2800000, guid: bf2c890560784f74b907ea5100011213, type: 3}
 --- !u!4 &1983378346
 Transform:
   m_ObjectHideFlags: 0

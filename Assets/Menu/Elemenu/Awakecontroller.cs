@@ -35,7 +35,7 @@ public class Awakecontroller : MonoBehaviour
 
     public bool canawake;
 
-    private float awaketime = 2.5f;             //2.5f;
+    private float awaketime = 2f;             //2.5f;
     public float awaketimer;
 
     private DateTime startdate;
@@ -52,7 +52,6 @@ public class Awakecontroller : MonoBehaviour
     {
         controlls = Keybindinputmanager.inputActions;
         awakehotkey = controlls.Elementalmenu.Awakestone;
-        GetComponentInChildren<TextMeshProUGUI>().text = "hold \"<color=green>Space</color>\" to awake stone";
     }
     private void OnEnable()
     {

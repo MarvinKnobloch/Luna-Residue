@@ -178,10 +178,8 @@ public class Tutorialtext : MonoBehaviour, ISelectHandler
     public void setattackchaintext()
     {
         settextvalues();
-        tutorialtext.text = "Hitting an enemy with a downward/center/upward attack will heal the character for a small amount. \n" +
-                            "This heal amount is only effected by the group level. \n" +
-                            "\nTriggering the weak spot of an enemy will reset your attack combo counter. \n" +
-                            "Also performing a upward attack does not check your attack combo counter.";
+        tutorialtext.text = "Triggering the weak spot of an enemy will reset your attack combo counter. \n" +
+                            "Also switching from ground chain attack into air chain attack does not check your attack combo counter.";
     }
     public void setswitchtext()
     {

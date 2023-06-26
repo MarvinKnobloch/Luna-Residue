@@ -5,13 +5,14 @@ using System;
 
 public class Werewolfsphere : MonoBehaviour
 {
-    [SerializeField] private GameObject werewolfcontroller;
     [SerializeField] private GameObject dazeimage;
     [NonSerialized] public float basedmg;
     [NonSerialized] public float dmglevel;
     [NonSerialized] public float explodetime;
+    [SerializeField] private GameObject explosioneffect;
 
     [SerializeField] private LayerMask targets;
+
 
     private void OnEnable()
     {
@@ -42,7 +43,8 @@ public class Werewolfsphere : MonoBehaviour
             Statics.otheraction = false;
         }
         dazeimage.SetActive(false);
-        werewolfcontroller.SetActive(false);
+        explosioneffect.transform.position = transform.position;
+        explosioneffect.SetActive(true);
         gameObject.SetActive(false);
     }
 }
