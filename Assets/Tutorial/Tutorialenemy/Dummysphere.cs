@@ -9,6 +9,8 @@ public class Dummysphere : MonoBehaviour
     [SerializeField] private GameObject dazeimage;
     [NonSerialized] public float basedmg;
     [NonSerialized] public float explodetime;
+    [SerializeField] private GameObject explosioneffect;
+    [SerializeField] private GameObject successexplosion;
 
     [SerializeField] private LayerMask targets;
 
@@ -38,14 +40,25 @@ public class Dummysphere : MonoBehaviour
             if(colliders.Length == 0)
             {
                 dummycontroller.tutorialsuccess();
+                successexplosion.transform.position = transform.position;
+                successexplosion.SetActive(true);
+                dazeimage.SetActive(false);
+                gameObject.SetActive(false);
             }
-            else dummycontroller.gameObject.SetActive(false);
+            else
+            {
+                dazeimage.SetActive(false);
+                explosioneffect.transform.position = transform.position;
+                explosioneffect.SetActive(true);
+                gameObject.SetActive(false);
+            }
         }
         else
         {
-            dummycontroller.gameObject.SetActive(false);
+            dazeimage.SetActive(false);
+            explosioneffect.transform.position = transform.position;
+            explosioneffect.SetActive(true);
+            gameObject.SetActive(false);
         }
-        dazeimage.SetActive(false);
-        gameObject.SetActive(false);
     }
 }
