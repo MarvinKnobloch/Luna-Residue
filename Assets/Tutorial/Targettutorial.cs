@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Video;
 
 public class Targettutorial : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class Targettutorial : MonoBehaviour
     private int tutorialnumber;
 
     private bool readinputs;
+
+    [SerializeField] private VideoClip videoclip;
+    [SerializeField] private Videocontroller videocontroller;
     private void Start()
     {
         tutorialcontroller = GetComponentInParent<Tutorialcontroller>();
@@ -59,6 +63,8 @@ public class Targettutorial : MonoBehaviour
             textindex = 0;
             readinputs = true;
             showtext();
+            videocontroller.gameObject.SetActive(true);
+            videocontroller.setnewvideo(videoclip);
         }
     }
     private void showtext()
@@ -72,6 +78,7 @@ public class Targettutorial : MonoBehaviour
     }
     private void endtutorial()
     {
+        videocontroller.gameObject.SetActive(false);
         readinputs = false;
         tutorialcontroller.endtutorial();
         areacontroller.tutorialcomplete[tutorialnumber] = true;

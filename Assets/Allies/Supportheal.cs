@@ -49,7 +49,7 @@ public class Supportheal
                 blocked = NavMesh.Raycast(ssm.transform.position, ssm.resurrecttraget.transform.position, out hit, NavMesh.AllAreas);
                 if (blocked == true) resposi = hit.position;
                 else resposi = ssm.resurrecttraget.transform.position;
-                ssm.Meshagent.SetDestination(resposi);
+                ssm.meshagent.SetDestination(resposi);
                 ssm.ChangeAnimationState(runstate);
                 ssm.state = Supportmovement.State.resurrect;
             }

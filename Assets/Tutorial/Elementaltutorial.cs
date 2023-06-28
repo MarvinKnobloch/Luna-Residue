@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class Elementaltutorial : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class Elementaltutorial : MonoBehaviour
     private int textindex;
 
     private bool readinputs;
+
+    [SerializeField] private VideoClip videoclip;
+    [SerializeField] private Videocontroller videocontroller;
     private void Awake()
     {
         tutorialcontroller = GetComponentInParent<Tutorialcontroller>();
@@ -24,7 +28,7 @@ public class Elementaltutorial : MonoBehaviour
     {
         if (readinputs == true && controlls.Menusteuerung.F1.WasPressedThisFrame())
         {
-            if (textindex != 8)
+            if (textindex != 10)
             {
                 tutorialcontroller.tutorialtext.text = string.Empty;
                 textindex++;
@@ -44,7 +48,9 @@ public class Elementaltutorial : MonoBehaviour
             tutorialcontroller.onenter();
             textindex = 0;
             readinputs = true;
-            showtext();
+            showtext(); 
+            videocontroller.gameObject.SetActive(true);
+            videocontroller.setnewvideo(videoclip);
         }
     }
     private void showtext()
@@ -61,11 +67,12 @@ public class Elementaltutorial : MonoBehaviour
                                                                         "and " + "<color=green>" + "Guard" + "</color>" + ".";
         else if (textindex == 7) tutorialcontroller.tutorialtext.text = "Fight: The character deals increased damage.";
         else if (textindex == 8) tutorialcontroller.tutorialtext.text = "Heal: Grants a heal bonus and add the ability to cast a group heal and resurrect (Check out <color=green>Tutorials</color> in the menu for more information).";
-        else if (textindex == 9) tutorialcontroller.tutorialtext.text = "Guard: Will add some bonus health and reduce the damage taken. It also increases threat on enemies.";       
-   
+        else if (textindex == 9) tutorialcontroller.tutorialtext.text = "Guard: Will add some bonus health and reduce the damage taken. It also increases threat on enemies.";
+        else if (textindex == 10) tutorialcontroller.tutorialtext.text = "Development Note: The spell system is in a really early state in may cause bugs";
     }
     private void endtutorial()
     {
+        videocontroller.gameObject.SetActive(false);
         Statics.elementalmenuunlocked = true;
         readinputs = false;
         tutorialcontroller.endtutorial();

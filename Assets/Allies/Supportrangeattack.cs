@@ -26,13 +26,13 @@ public class Supportrangeattack
                 if (Vector3.Distance(ssm.transform.position, ssm.currenttarget.transform.position) > ssm.attackrangecheck + ssm.addedrangeattackrange)
                 {
                     ssm.ChangeAnimationState(runstate);
-                    ssm.Meshagent.SetDestination(ssm.currenttarget.transform.position);
+                    ssm.meshagent.SetDestination(ssm.currenttarget.transform.position);
                 }
                 else
                 {
                     ssm.state = Supportmovement.State.attackstate;
                     ssm.ChangeAnimationState(attack1state);
-                    ssm.Meshagent.ResetPath();
+                    ssm.meshagent.ResetPath();
                 }
             }
             else
@@ -74,13 +74,13 @@ public class Supportrangeattack
                 if (blocked == true)
                 {
                     ssm.posiafterattack = hit.position;
-                    ssm.Meshagent.SetDestination(ssm.posiafterattack);
+                    ssm.meshagent.SetDestination(ssm.posiafterattack);
                     ssm.ChangeAnimationState(runstate);
                     ssm.state = Supportmovement.State.changeposiafterattack;                       //wenn nach dem attacken eine neue posi gesucht wird bleibt der char an der posi stehen bis er attacken kann
                 }
                 else
                 {
-                    ssm.Meshagent.SetDestination(ssm.posiafterattack);
+                    ssm.meshagent.SetDestination(ssm.posiafterattack);
                     ssm.ChangeAnimationState(runstate);
                     ssm.state = Supportmovement.State.changeposiafterattack;
                 }
@@ -108,20 +108,20 @@ public class Supportrangeattack
                 if (isblocked == true)
                 {
                     rangenewposi = hit.position;
-                    ssm.Meshagent.SetDestination(rangenewposi);
+                    ssm.meshagent.SetDestination(rangenewposi);
                     ssm.ChangeAnimationState(runstate);
                     ssm.state = Supportmovement.State.changeposiafterrangeattack;                       //wenn nach dem attacken eine neue posi gesucht wird bleibt der char an der posi stehen bis er attacken kann
                 }
                 else
                 {
-                    ssm.Meshagent.SetDestination(rangenewposi);
+                    ssm.meshagent.SetDestination(rangenewposi);
                     ssm.ChangeAnimationState(runstate);
                     ssm.state = Supportmovement.State.changeposiafterrangeattack;
                 }
             } 
         else
         {
-            ssm.Meshagent.ResetPath();
+            ssm.meshagent.ResetPath();
             ssm.ChangeAnimationState(idlestate);
             ssm.state = Supportmovement.State.waitforrangeattackcd;
         }
@@ -142,11 +142,11 @@ public class Supportrangeattack
             {
                 ssm.state = Supportmovement.State.attackstate;
                 ssm.ChangeAnimationState(attack1state);
-                ssm.Meshagent.ResetPath();
+                ssm.meshagent.ResetPath();
             }
             else if (Vector3.Distance(ssm.transform.position, rangenewposi) < 4)
             {
-                ssm.Meshagent.ResetPath();
+                ssm.meshagent.ResetPath();
                 ssm.ChangeAnimationState(idlestate);
                 ssm.state = Supportmovement.State.waitforrangeattackcd;
             }

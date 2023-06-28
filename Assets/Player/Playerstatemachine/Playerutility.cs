@@ -21,31 +21,29 @@ public class Playerutility
     }
     public void spawnallies()
     {
-        if (LoadCharmanager.Overallthirdchar != null && LoadCharmanager.Overallthirdchar.activeSelf == false)
+        if (LoadCharmanager.Overallthirdchar != null)
         {
-            if(Physics.Raycast(psm.transform.position, psm.transform.forward * -1 + psm.transform.right * -1, out RaycastHit hit, 1, psm.groundchecklayer, QueryTriggerInteraction.Ignore))
-            {
-                LoadCharmanager.Overallthirdchar.transform.position = hit.point;
-                LoadCharmanager.Overallthirdchar.SetActive(true);
-            }
-            else
-            {
-                LoadCharmanager.Overallthirdchar.transform.position = psm.transform.position + psm.transform.forward * -1 + psm.transform.right * -1;
-                LoadCharmanager.Overallthirdchar.SetActive(true);
-            }
+            if (LoadCharmanager.Overallthirdchar.activeSelf == false) spawnteammates(LoadCharmanager.Overallthirdchar);
+            else LoadCharmanager.Overallthirdchar.GetComponent<Supportmovement>().checkforpath();
         }
-        if (LoadCharmanager.Overallforthchar != null && LoadCharmanager.Overallforthchar.activeSelf == false)
+        if (LoadCharmanager.Overallforthchar != null)
         {
-            if (Physics.Raycast(psm.transform.position, psm.transform.forward * -1 + psm.transform.right * 1, out RaycastHit hit, 1, psm.groundchecklayer, QueryTriggerInteraction.Ignore))
-            {
-                LoadCharmanager.Overallforthchar.transform.position = hit.point;
-                LoadCharmanager.Overallforthchar.SetActive(true);
-            }
-            else
-            {
-                LoadCharmanager.Overallforthchar.transform.position = psm.transform.position + psm.transform.forward * -1 + psm.transform.right * 1;
-                LoadCharmanager.Overallforthchar.SetActive(true);
-            }
+            if (LoadCharmanager.Overallforthchar.activeSelf == false) spawnteammates(LoadCharmanager.Overallforthchar);
+            else LoadCharmanager.Overallforthchar.GetComponent<Supportmovement>().checkforpath();
+        }
+    }
+    public void spawnteammates(GameObject teammate)
+    {
+        teammate.SetActive(false);                   //checkforpath()
+        if (Physics.Raycast(psm.transform.position, psm.transform.forward * -1 + psm.transform.right * 1, out RaycastHit hit, 1, psm.groundchecklayer, QueryTriggerInteraction.Ignore))
+        {
+            teammate.transform.position = hit.point;
+            teammate.SetActive(true);
+        }
+        else
+        {
+            teammate.transform.position = psm.transform.position + psm.transform.forward * -1 + psm.transform.right * 1;
+            teammate.SetActive(true);
         }
     }
     public void checkspellmaxtime()

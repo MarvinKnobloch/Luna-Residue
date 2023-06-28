@@ -21,6 +21,11 @@ public class Activateenemycollider : MonoBehaviour
             foreach (Transform obj in gameObject.transform)
             {
                 obj.gameObject.SetActive(false);
+                if (Infightcontroller.infightenemylists.Contains(obj.gameObject))
+                {
+                    Infightcontroller.infightenemylists.Remove(obj.transform.gameObject);
+                    Infightcontroller.instance.checkifinfight();
+                }
             }
         }
         /*if (other.gameObject == LoadCharmanager.Overallmainchar && Statics.donttriggerenemies == false)

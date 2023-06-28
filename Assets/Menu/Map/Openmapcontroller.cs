@@ -7,6 +7,7 @@ public class Openmapcontroller : MonoBehaviour
     private SpielerSteu controlls;
     [SerializeField] private GameObject mapimage;
     [SerializeField] private GameObject minimap;
+    [SerializeField] private GameObject cardinalpoints;
 
     private void Awake()
     {
@@ -15,6 +16,7 @@ public class Openmapcontroller : MonoBehaviour
     private void Start()
     {
         minimap.SetActive(true);                 //minimap wir erst geladen nachdem alles andere geladen ist
+        cardinalpoints.SetActive(true);
     }
     private void Update()
     {

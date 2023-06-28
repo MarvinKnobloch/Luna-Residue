@@ -15,14 +15,14 @@ public class Enemyreset
         esm.checkforresettimer += Time.deltaTime;
         if (esm.checkforresettimer > 0.5f)
         {
-            if (Vector3.Distance(esm.spawnpostion, esm.transform.position) > esm.enemyresetrange || Vector3.Distance(LoadCharmanager.Overallmainchar.transform.position, esm.transform.position) > esm.enemyresetrange + 10)
+            if (Vector3.Distance(esm.spawnpostion, esm.transform.position) > esm.enemyresetrange || Vector3.Distance(LoadCharmanager.Overallmainchar.transform.position, esm.spawnpostion) > esm.enemyresetrange + 10)
             {
                 if(esm.enemyhp.healthbar != null) esm.enemyhp.healthbar.currenttargetimage.gameObject.SetActive(false);
                 esm.healticktimer = 0f;
                 esm.gameObject.GetComponent<EnemyHP>().resetplayerhits();
                 esm.spezialattack = false;
                 esm.ChangeAnimationState(runstate);
-                esm.healtickamount = esm.enemyhp.maxhealth * 0.02f;
+                esm.healtickamount = Mathf.Round(esm.enemyhp.maxhealth * 0.02f);
                 esm.state = Enemymovement.State.resetheal;
                 if (Infightcontroller.infightenemylists.Contains(esm.transform.gameObject))
                 {
@@ -47,7 +47,7 @@ public class Enemyreset
             esm.currenttarget = LoadCharmanager.Overallmainchar;
             esm.meshagent.ResetPath();
             esm.meshagent.speed = esm.patrolspeed;
-            esm.healtickamount = esm.enemyhp.maxhealth * 0.05f;
+            esm.healtickamount = Mathf.Round(esm.enemyhp.maxhealth * 0.05f);
             esm.ChangeAnimationState(idlestate);
             esm.state = Enemymovement.State.idleheal;
         }

@@ -26,13 +26,13 @@ public class Supportmeleeattack
                 if (Vector3.Distance(ssm.transform.position, ssm.currenttarget.transform.position) > ssm.attackrangecheck)
                 {
                     ssm.ChangeAnimationState(runstate);
-                    ssm.Meshagent.SetDestination(ssm.currenttarget.transform.position);
+                    ssm.meshagent.SetDestination(ssm.currenttarget.transform.position);
                 }
                 else
                 {
                     ssm.state = Supportmovement.State.attackstate;
                     ssm.ChangeAnimationState(attack1state);
-                    ssm.Meshagent.ResetPath();
+                    ssm.meshagent.ResetPath();
                 }
             }
             else ssm.FaceTraget();
@@ -52,7 +52,7 @@ public class Supportmeleeattack
             {
                 ssm.state = Supportmovement.State.attackstate;
                 ssm.ChangeAnimationState(attack1state);
-                ssm.Meshagent.ResetPath();
+                ssm.meshagent.ResetPath();
                 return;
             }
             ssm.followenemytimer += Time.deltaTime;
@@ -69,7 +69,7 @@ public class Supportmeleeattack
                         {
                             ismovingrotation = true;
                             ssm.ChangeAnimationState(runstate);
-                            ssm.Meshagent.SetDestination(hit.position);
+                            ssm.meshagent.SetDestination(hit.position);
                         }
                         else
                         {
@@ -83,7 +83,7 @@ public class Supportmeleeattack
                         {
                             ismovingrotation = true;
                             ssm.ChangeAnimationState(runstate);
-                            ssm.Meshagent.SetDestination(newposi);
+                            ssm.meshagent.SetDestination(newposi);
                         }
                         else
                         {
@@ -98,7 +98,7 @@ public class Supportmeleeattack
                     {
                         ismovingrotation = true;
                         ssm.ChangeAnimationState(runstate);
-                        ssm.Meshagent.SetDestination(ssm.currenttarget.transform.position + ssm.transform.forward * -2);
+                        ssm.meshagent.SetDestination(ssm.currenttarget.transform.position + ssm.transform.forward * -2);
                     }
                     else
                     {
@@ -145,13 +145,13 @@ public class Supportmeleeattack
                 if (isblocked == true)
                 {
                     ssm.posiafterattack = hit.position;
-                    ssm.Meshagent.SetDestination(ssm.posiafterattack);
+                    ssm.meshagent.SetDestination(ssm.posiafterattack);
                     ssm.ChangeAnimationState(runstate);
                     ssm.state = Supportmovement.State.changeposiafterattack;                       //wenn nach dem attacken eine neue posi gesucht wird bleibt der char an der posi stehen bis er attacken kann
                 }
                 else
                 {
-                    ssm.Meshagent.SetDestination(ssm.posiafterattack);
+                    ssm.meshagent.SetDestination(ssm.posiafterattack);
                     ssm.ChangeAnimationState(runstate);
                     ssm.state = Supportmovement.State.changeposiafterattack;
                 }
@@ -172,7 +172,7 @@ public class Supportmeleeattack
             ssm.posiafterattack.y = ssm.transform.position.y;
             if (Vector3.Distance(ssm.transform.position, ssm.posiafterattack) < 2)
             {
-                ssm.Meshagent.ResetPath();
+                ssm.meshagent.ResetPath();
                 ssm.ChangeAnimationState(idlestate);
                 ssm.switchtoweaponstate();
             }

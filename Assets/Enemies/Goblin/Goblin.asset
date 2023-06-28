@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Goblin
   m_EditorClassIdentifier: 
   enemyname: Goblin
-  basehealth: 3200
+  basehealth: 320
   enemylvl: 1
   movementspeed: 10
   basedmg: 11

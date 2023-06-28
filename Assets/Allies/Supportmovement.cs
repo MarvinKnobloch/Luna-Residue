@@ -6,7 +6,8 @@ using System;
 
 public class Supportmovement : MonoBehaviour
 {
-    public NavMeshAgent Meshagent;
+    public NavMeshAgent meshagent;
+    public NavMeshPath path;
     private Animator animator;
     [NonSerialized] public LayerMask hitbox;
     [NonSerialized] public Playerhp playerhp;
@@ -69,9 +70,11 @@ public class Supportmovement : MonoBehaviour
     private void Awake()
     {
         hitbox = LayerMask.GetMask("Meleehitbox");
-        Meshagent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         playerhp = GetComponent<Playerhp>();
+
+        meshagent = GetComponent<NavMeshAgent>();
+        path = new NavMeshPath();
 
         supportchoosetarget.ssm = this;
         supportheal.ssm = this;
@@ -159,6 +162,7 @@ public class Supportmovement : MonoBehaviour
         else state = State.waitforrangeattackcd;
     }
     public void supportreset() => supportutilityfunctions.supportreset();
+    public void checkforpath() => supportutilityfunctions.checkforpath();
     public void supportresurrected() => supportheal.supportresurrected();
     private void resurrect() => supportheal.resurrect();
     public void matecastheal() => supportheal.matecastheal();

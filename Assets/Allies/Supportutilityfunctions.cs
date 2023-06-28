@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Supportutilityfunctions
 {
     public Supportmovement ssm;
+
+    private float distance;
+    private float maxtriggerdistance = 50;
 
     const string idlestate = "Idle";
     const string runstate = "Run";
@@ -54,15 +58,51 @@ public class Supportutilityfunctions
                     return;
                 }
                 ssm.ChangeAnimationState(idlestate);
-                ssm.Meshagent.ResetPath();
+                ssm.meshagent.ResetPath();
                 ssm.resetcombattimer = 0;
             }
             else
             {
-                ssm.Meshagent.SetDestination(LoadCharmanager.Overallmainchar.transform.position);
+                ssm.meshagent.SetDestination(LoadCharmanager.Overallmainchar.transform.position);
                 ssm.ChangeAnimationState(runstate);
             }
             ssm.resetcombattimer = 0;
+        }
+    }
+    public void checkforpath()
+    {
+        ssm.meshagent.CalculatePath(LoadCharmanager.Overallmainchar.transform.position, ssm.path);
+        if (ssm.path.status == NavMeshPathStatus.PathComplete)
+        {
+            Debug.Log("gotpath");
+            if (checkdistance() == false) LoadCharmanager.Overallmainchar.GetComponent<Movescript>().spawnteammates(ssm.gameObject);
+        }
+        else
+        {
+            Debug.Log("gotnopath");
+            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().spawnteammates(ssm.gameObject);
+        } 
+    }
+    private bool checkdistance()
+    {
+        distance = 0;
+        Vector3[] corners = ssm.path.corners;
+
+        if (corners.Length > 2)
+        {
+            for (int i = 1; i < corners.Length; i++)
+            {
+                Vector2 previous = new Vector2(corners[i - 1].x, corners[i - 1].z);
+                Vector2 current = new Vector2(corners[i].x, corners[i].z);
+
+                distance += Vector2.Distance(previous, current);
+                if (distance > maxtriggerdistance) return false;
+            }
+            return true;
+        }
+        else
+        {
+            return true;
         }
     }
 }

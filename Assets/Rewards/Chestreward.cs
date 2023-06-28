@@ -21,7 +21,12 @@ public class Chestreward : MonoBehaviour, Rewardinterface, Interactioninterface,
 
     private void OnEnable()
     {
+        Infightcontroller.resetrewards += afterenemyreset;
         StartCoroutine("currentcheststate");                          //ein frame delay damit die settings für die area vorher geladen werden
+    }
+    private void OnDisable()
+    {
+        Infightcontroller.resetrewards -= afterenemyreset;
     }
     IEnumerator currentcheststate()
     {
@@ -50,7 +55,7 @@ public class Chestreward : MonoBehaviour, Rewardinterface, Interactioninterface,
             rewardcount = 0;
             closedchest.SetActive(true);
             cheststatetext = chestlocked;
-            openchest.SetActive(false);
+            openchest.SetActive(false);       
         }
     }
     public void setareachestnumber(int number)
@@ -109,6 +114,10 @@ public class Chestreward : MonoBehaviour, Rewardinterface, Interactioninterface,
     public void resetrewardcount()
     {
         rewardcount = 0;
+    }
+    private void afterenemyreset()
+    {
+
     }
 }
 

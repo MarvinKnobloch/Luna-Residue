@@ -21,6 +21,8 @@ public class Infightcontroller : MonoBehaviour
     private Bonushealscript bonushealscript;
 
     [SerializeField] private AudioClip battle1;
+
+    public static event Action resetrewards;
     private void Awake()
     {
         if (instance == null)
@@ -72,6 +74,7 @@ public class Infightcontroller : MonoBehaviour
                 LoadCharmanager.Overallmainchar.GetComponent<Movescript>().resurrected();
             }
             GlobalCD.stopsupportresurrectioncd();
+            resetrewards?.Invoke();
         }
         else
         {

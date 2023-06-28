@@ -379,9 +379,9 @@ public class EnemyHP : MonoBehaviour
         mosthits = -1;
         playerwithmosthits = -1;
         playerhits[0] = UnityEngine.Random.Range(0, 2);
-        if (LoadCharmanager.Overallthirdchar != null) playerhits[1] = UnityEngine.Random.Range(0, 2);
+        if (LoadCharmanager.Overallthirdchar != null) playerhits[1] = UnityEngine.Random.Range(1, 4);
         else playerhits[1] = -11;
-        if (LoadCharmanager.Overallforthchar != null) playerhits[2] = UnityEngine.Random.Range(0, 2);
+        if (LoadCharmanager.Overallforthchar != null) playerhits[2] = UnityEngine.Random.Range(1, 4);
         else playerhits[2] = -11;
         hitstakensincelastaggrocheck = 4;
         healthbar.currenttargetimage.gameObject.SetActive(true);
