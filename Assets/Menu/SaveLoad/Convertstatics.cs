@@ -76,8 +76,8 @@ public class Convertstatics
         playerposition = LoadCharmanager.savemainposi;
         playerrotation = LoadCharmanager.savemainrota;
         camvalueX = LoadCharmanager.savecamvalueX;
-        gamesavedate = System.DateTime.UtcNow.ToString("dd MMMM, yyyy");
-        gamesavetime = System.DateTime.UtcNow.ToString("HH:mm");
+        gamesavedate = System.DateTime.Now.ToString("dd MMMM, yyyy");
+        gamesavetime = System.DateTime.Now.ToString("HH:mm");
 
         currentzonemusicint = Statics.currentzonemusicint;
        

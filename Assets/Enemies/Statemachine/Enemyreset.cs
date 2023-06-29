@@ -15,7 +15,7 @@ public class Enemyreset
         esm.checkforresettimer += Time.deltaTime;
         if (esm.checkforresettimer > 0.5f)
         {
-            if (Vector3.Distance(esm.spawnpostion, esm.transform.position) > esm.enemyresetrange || Vector3.Distance(LoadCharmanager.Overallmainchar.transform.position, esm.spawnpostion) > esm.enemyresetrange + 10)
+            if (Vector3.Distance(esm.spawnpostion, esm.transform.position) > esm.enemyresetrange || Vector3.Distance(LoadCharmanager.Overallmainchar.transform.position, esm.spawnpostion) > esm.enemyresetrange + 15)
             {
                 if(esm.enemyhp.healthbar != null) esm.enemyhp.healthbar.currenttargetimage.gameObject.SetActive(false);
                 esm.healticktimer = 0f;

@@ -11,6 +11,7 @@ public class Chestandeventreward : MonoBehaviour, Rewardinterface, Interactionin
 
     public int rewardcount;
     [SerializeField] private int rewardcountneeded;
+    [SerializeField] private GameObject[] rewardenemies;
     [SerializeField] Itemsinchest[] rewards;
     [SerializeField] GameObject chestevent;
 
@@ -19,9 +20,24 @@ public class Chestandeventreward : MonoBehaviour, Rewardinterface, Interactionin
     private string cheststatetext;
     public string Interactiontext => cheststatetext;
 
+    private void Start()
+    {
+        if(rewardenemies.Length != 0)
+        {
+            for (int i = 0; i < rewardenemies.Length; i++)
+            {
+                if (rewardenemies[i].TryGetComponent(out EnemyHP enemyhp)) enemyhp.rewardobject = this.gameObject;
+            }
+        }
+    }
     private void OnEnable()
     {
+        Infightcontroller.resetrewards += afterenemyreset;
         StartCoroutine("currentcheststate");                          //ein frame delay damit die settings für die area vorher geladen werden
+    }
+    private void OnDisable()
+    {
+        Infightcontroller.resetrewards -= afterenemyreset;
     }
     IEnumerator currentcheststate()
     {
@@ -111,4 +127,19 @@ public class Chestandeventreward : MonoBehaviour, Rewardinterface, Interactionin
     {
         rewardcount = 0;
     }
+    private void afterenemyreset()
+    {
+        if (rewardenemies.Length != 0)
+        {
+            if (rewardcount != rewardcountneeded)
+            {
+                rewardcount = 0;
+            }
+            for (int i = 0; i < rewardenemies.Length; i++)
+            {
+                rewardenemies[i].SetActive(true);
+            }
+        }
+    }
 }
+

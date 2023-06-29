@@ -11,6 +11,7 @@ public class Chestreward : MonoBehaviour, Rewardinterface, Interactioninterface,
 
     public int rewardcount;
     [SerializeField] private int rewardcountneeded;
+    [SerializeField] private GameObject[] rewardenemies;
     [SerializeField] Itemsinchest[] rewards;
 
     private string chestlocked = "Locked";
@@ -18,7 +19,16 @@ public class Chestreward : MonoBehaviour, Rewardinterface, Interactioninterface,
     private string cheststatetext;
     public string Interactiontext => cheststatetext;
 
-
+    private void Start()
+    {
+        if (rewardenemies.Length != 0)
+        {
+            for (int i = 0; i < rewardenemies.Length; i++)
+            {
+                if (rewardenemies[i].TryGetComponent(out EnemyHP enemyhp)) enemyhp.rewardobject = this.gameObject;
+            }
+        }
+    }
     private void OnEnable()
     {
         Infightcontroller.resetrewards += afterenemyreset;
@@ -117,7 +127,17 @@ public class Chestreward : MonoBehaviour, Rewardinterface, Interactioninterface,
     }
     private void afterenemyreset()
     {
-
+        if(rewardenemies.Length != 0)
+        {
+            if (rewardcount != rewardcountneeded)
+            {
+                rewardcount = 0;
+            }
+            for (int i = 0; i < rewardenemies.Length; i++)
+            {
+                rewardenemies[i].SetActive(true);
+            }
+        }
     }
 }
 

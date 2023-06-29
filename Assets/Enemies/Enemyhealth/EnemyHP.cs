@@ -40,6 +40,7 @@ public class EnemyHP : MonoBehaviour
     [NonSerialized] public bool enemyisdead;
 
     private int golddropamount;
+    public GameObject rewardobject;
 
     private Color dmgtextcolor;
     [SerializeField] private int[] playerhits = { 0, 0, 0 };
@@ -184,14 +185,11 @@ public class EnemyHP : MonoBehaviour
                     enemyisnotfocustarget();
                     LoadCharmanager.Overallmainchar.GetComponent<Movescript>().lockonchangeafterdeath();
                 }
+                if (rewardobject != null) rewardobject.GetComponent<Rewardinterface>().addrewardcount();             //muss vor outofcombat gecalled werden sonst wird der rewardcount zurück gesetzt
                 Infightcontroller.instance.checkifinfight();
                 supporttargetdied?.Invoke();
                 LoadCharmanager.expmanager.gainexp(Mathf.Round(enemyvalues.expgain + (enemylvl * enemyvalues.expgain * 0.5f)));
                 enemymovement.enemydied();
-                if (gameObject.TryGetComponent(out Enemyisrewardobject enemyisrewardobject))
-                {
-                    enemyisrewardobject.checkforrewardcondition();
-                }
                 Invoke("enemydied", 3);
             }
         }

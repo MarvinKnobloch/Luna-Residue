@@ -113,7 +113,7 @@ public class Enemypatrol
         {
             if (Musiccontroller.instance != null)
             {
-                if (esm.gameObject.GetComponent<Enemyisrewardobject>())
+                if (esm.enemyhp.rewardobject != null)
                 {
                     Musiccontroller.instance.spezialbattlemusic();
                 }
