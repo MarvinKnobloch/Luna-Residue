@@ -132,10 +132,10 @@ public class Chestreward : MonoBehaviour, Rewardinterface, Interactioninterface,
             if (rewardcount != rewardcountneeded)
             {
                 rewardcount = 0;
-            }
-            for (int i = 0; i < rewardenemies.Length; i++)
-            {
-                rewardenemies[i].SetActive(true);
+                for (int i = 0; i < rewardenemies.Length; i++)
+                {
+                    rewardenemies[i].SetActive(true);
+                }
             }
         }
     }
