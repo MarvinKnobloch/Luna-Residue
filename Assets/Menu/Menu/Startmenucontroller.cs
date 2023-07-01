@@ -13,6 +13,7 @@ public class Startmenucontroller : MonoBehaviour
     [SerializeField] private GameObject[] buttons;
     [SerializeField] private GameObject loadgameobj;
     [SerializeField] private GameObject settingsobj;
+    [SerializeField] private GameObject creditsobj;
     private Convertstatics convertstatics = new Convertstatics();
 
     [SerializeField] private GameObject difficultyui;
@@ -130,6 +131,12 @@ public class Startmenucontroller : MonoBehaviour
     public void settings()
     {
         settingsobj.SetActive(true);
+        gameObject.SetActive(false);
+    }
+    public void credits()
+    {
+        menusoundcontroller.playmenubuttonsound();
+        creditsobj.SetActive(true);
         gameObject.SetActive(false);
     }
     public void endgame()

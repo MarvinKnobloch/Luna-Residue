@@ -11,12 +11,10 @@ public class Playersounds : MonoBehaviour
     [SerializeField] private AudioClip dash;
     [SerializeField] private AudioClip charswitch;
 
-    [SerializeField] private AudioClip healingstate;
     [SerializeField] private AudioClip singlehealstart;
 
     [SerializeField] private AudioClip bow1;
     [SerializeField] private AudioClip bow2;
-    [SerializeField] private AudioClip bow3;
     [SerializeField] private AudioClip drawbow;
 
     private void Awake()
@@ -36,8 +34,7 @@ public class Playersounds : MonoBehaviour
     public void playcharswitch() => playsound(charswitch, 0.4f);
     public void playsinglehealstart() => playsound(singlehealstart, 0.4f);
     public void playbow1() => playsound(bow1, 0.4f);
-    public void playbow2() => playsound(bow2, 0.4f);
-    public void playbow3() => playsound(bow3, 0.4f);
+    public void playbow2() => playsound(bow2, 0.4f);                //momentan gleicher sound
     public void playdrawbow() => playsound(drawbow, 0.3f);
 
 
