@@ -83,7 +83,9 @@ public class Enemymovement : MonoBehaviour
 
         spawnpostion = transform.position;
 
-        normalnavspeed = enemyvalues.movementspeed;
+        if (enemyvalues.enemysize == 0) normalnavspeed = 12;
+        else if (enemyvalues.enemysize == 1) normalnavspeed = 11;
+        else normalnavspeed = 10;
         normalattackcd = enemyvalues.attackspeed;
 
         checkforplayerlayer =  1 << 9 | 1 << 13;

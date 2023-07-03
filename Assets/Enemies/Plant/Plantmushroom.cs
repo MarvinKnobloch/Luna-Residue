@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Plantmushroom : MonoBehaviour
 {
+    [SerializeField] private GameObject planttimer;
     [SerializeField] private GameObject nextmushroom;
 
     [SerializeField] private bool isfirstmushroom;
     [SerializeField] private SphereCollider spherecollider;
-    private Color greencolor;
+    private Color poisoncolor;
 
     private Vector3 endscale = new Vector3(5, 5, 5);
     private float growduration = 2.5f;
@@ -16,7 +17,7 @@ public class Plantmushroom : MonoBehaviour
 
     private void Awake()
     {
-        ColorUtility.TryParseHtmlString("#2BFF00", out greencolor);
+        ColorUtility.TryParseHtmlString("#982AE3", out poisoncolor);
         //greencolor.a = 0.74f;
     }
     private void OnEnable()
@@ -44,11 +45,13 @@ public class Plantmushroom : MonoBehaviour
     {
         if (other.gameObject == LoadCharmanager.Overallmainchar)
         {
-            if(nextmushroom != null)
+            if (nextmushroom != null)
             {
+                planttimer.transform.position = nextmushroom.transform.position + Vector3.up * 1.5f;
                 nextmushroom.GetComponent<Plantmushroom>().activatecollider();
-                nextmushroom.GetComponent<MeshRenderer>().material.color = greencolor;
+                nextmushroom.GetComponent<MeshRenderer>().material.color = poisoncolor;
             }
+            else planttimer.gameObject.SetActive(false);
             gameObject.SetActive(false);
         }
     }

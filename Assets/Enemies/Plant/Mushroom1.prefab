@@ -96,8 +96,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextmushroom: {fileID: 0}
-  isactivmushroom: 0
-  growtimer: 0
+  isfirstmushroom: 1
+  spherecollider: {fileID: 2129006393572437591}
 --- !u!135 &2129006393572437591
 SphereCollider:
   m_ObjectHideFlags: 0

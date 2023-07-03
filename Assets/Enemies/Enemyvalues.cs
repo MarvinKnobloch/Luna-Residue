@@ -9,7 +9,7 @@ public class Enemyvalues : ScriptableObject
     public string enemyname;
     public float basehealth;
     public int enemylvl;
-    public float movementspeed;
+    public float movementspeed;                  //movementspeed wird gerade in enemymovement durch die enemysize bestimmt
     public float basedmg;
     public float attackspeed;
     public int enemysize;
