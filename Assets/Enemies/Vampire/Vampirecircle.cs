@@ -10,6 +10,8 @@ public class Vampirecircle : MonoBehaviour
     [NonSerialized] public float explodetime;
     [NonSerialized] public Vector3 overlapspherepoint;
 
+    [SerializeField] private GameObject sphereeffect;
+
     private void OnEnable()
     {
         Invoke("dealdmg", explodetime);
@@ -32,6 +34,8 @@ public class Vampirecircle : MonoBehaviour
                 }
             }
         }
+        sphereeffect.transform.position = transform.position;
+        sphereeffect.SetActive(true);      
         gameObject.SetActive(false);
     }
 }

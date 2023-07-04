@@ -10,6 +10,8 @@ public class Vampirecube : MonoBehaviour
     [NonSerialized] public float basedmg;
     [NonSerialized] public float explodetime;
     [NonSerialized] public Vector3 overlapboxpoint;
+
+    [SerializeField] private GameObject cubeeffect;
     private void OnEnable()
     {
         Invoke("dealdmg", explodetime);
@@ -33,7 +35,9 @@ public class Vampirecube : MonoBehaviour
                 }
             }
         }
-        vampirecontroller.SetActive(false);
+        cubeeffect.transform.position = transform.position;
+        cubeeffect.SetActive(true);
+        vampirecontroller.GetComponent<Vampirecontroller>().controllerdisablestart();
         gameObject.SetActive(false);
     }
 }

@@ -13,6 +13,9 @@ public class Vampirecontroller : MonoBehaviour
     [SerializeField] private float circledodgetime;
     [SerializeField] private float cubedmg;
     [SerializeField] private float cubedodgetime;
+
+    [SerializeField] private GameObject sphereeffect;
+    [SerializeField] private GameObject cubeeffect;
     private void Awake()
     {
         vampiresphere.basedmg = circledmg;
@@ -22,7 +25,8 @@ public class Vampirecontroller : MonoBehaviour
     }
     private void OnEnable()
     {
-        if(Physics.Raycast(LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 0.5f, Vector3.down, out RaycastHit hit, 30, raycastlayer, QueryTriggerInteraction.Ignore))
+        StopCoroutine("controllerdisable");
+        if (Physics.Raycast(LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 0.5f, Vector3.down, out RaycastHit hit, 30, raycastlayer, QueryTriggerInteraction.Ignore))
         {
             vampiresphere.gameObject.transform.position = hit.point;
         }
@@ -51,5 +55,17 @@ public class Vampirecontroller : MonoBehaviour
         else spezialendspawn.transform.position = LoadCharmanager.Overallmainchar.transform.position;
         spezialendspawn.SetActive(true);
         vampirecube.overlapboxpoint = spezialendspawn.transform.position;
+    }
+
+    public void controllerdisablestart()
+    {
+        StartCoroutine("controllerdisable");
+    }
+    IEnumerator controllerdisable()
+    {
+        yield return new WaitForSeconds(0.5f);
+        sphereeffect.SetActive(false);
+        cubeeffect.SetActive(false);
+        gameObject.SetActive(false);
     }
 }

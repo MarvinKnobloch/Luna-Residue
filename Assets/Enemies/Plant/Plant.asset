@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Plant
   m_EditorClassIdentifier: 
   enemyname: Plant
-  basehealth: 3270
+  basehealth: 327
   enemylvl: 1
   movementspeed: 10
-  basedmg: -8.5
+  basedmg: 8.5
   attackspeed: 1.7
   enemysize: 0
   gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}

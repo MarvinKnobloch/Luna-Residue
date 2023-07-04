@@ -13,6 +13,8 @@ public class Fishmancontroller : MonoBehaviour
     [SerializeField] private float dodgetime;
     [SerializeField] private float spezialdmg;
 
+    [SerializeField] private GameObject fishwalleffect;
+
     private Enemyspezialsound enemyspezialsound;
 
     private void Awake()
@@ -44,12 +46,16 @@ public class Fishmancontroller : MonoBehaviour
     }
     private void dealfirstdmg()
     {
+        fishwalleffect.transform.position = showspezial.gameObject.transform.position + Vector3.up * -4;
+        fishwalleffect.transform.rotation = showspezial.transform.rotation;
+        fishwalleffect.SetActive(true);
         enemyspezialsound.playfishmanspezialend();
         fishmancolliderdmg.gameObject.SetActive(true);
         Invoke("spezialpart2", 1.3f);
     }
     private void spezialpart2()
     {
+        fishwalleffect.SetActive(false);
         showspezial.transform.rotation = Quaternion.Euler(0, LoadCharmanager.Overallmainchar.transform.eulerAngles.y, 0);
         if (Physics.Raycast(LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 0.5f, Vector3.down, out RaycastHit hit, 30, raycastlayer, QueryTriggerInteraction.Ignore))
         {
@@ -61,6 +67,9 @@ public class Fishmancontroller : MonoBehaviour
     }
     private void dealseconddmg()
     {
+        fishwalleffect.transform.position = showspezial.gameObject.transform.position + Vector3.up * -4;
+        fishwalleffect.transform.rotation = showspezial.transform.rotation;
+        fishwalleffect.SetActive(true);
         enemyspezialsound.playfishmanspezialend();
         fishmancolliderdmg.gameObject.SetActive(true);
         Invoke("fishmanspezialend", 0.1f);
@@ -70,6 +79,11 @@ public class Fishmancontroller : MonoBehaviour
         LoadCharmanager.Overallmainchar.GetComponent<Movescript>().movementspeed = Statics.playermovementspeed;
         LoadCharmanager.Overallsecondchar.GetComponent<Movescript>().movementspeed = Statics.playermovementspeed;
         fishmancircle.SetActive(false);
+        Invoke("disablecontroller", 1f);
+    }
+    private void disablecontroller()
+    {
+        fishwalleffect.SetActive(false);
         gameObject.SetActive(false);
     }
 }
