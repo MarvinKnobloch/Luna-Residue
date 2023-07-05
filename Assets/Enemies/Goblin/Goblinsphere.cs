@@ -5,10 +5,11 @@ using System;
 
 public class Goblinsphere : MonoBehaviour
 {
-    [NonSerialized] public float basedmg;
+    public float basedmg;
     [NonSerialized] public float timetoexplode;
 
     [SerializeField] private LayerMask targets;
+    [SerializeField] private GameObject explosioneffect;
     private void OnEnable()
     {
         Invoke("dealdmg", timetoexplode);
@@ -31,6 +32,8 @@ public class Goblinsphere : MonoBehaviour
                 }
             }
         }
+        explosioneffect.transform.position = transform.position;
+        explosioneffect.SetActive(true);
         gameObject.SetActive(false);
     }
 }

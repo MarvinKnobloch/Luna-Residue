@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Paladincontroller : MonoBehaviour
 {
     [SerializeField] private GameObject[] showspezial;
 
-    private Vector3 spawnposi1;
+    private Vector3 spawnposi;
+    private Vector3 playerposi;
     private int currentspezial;
 
     [SerializeField] private float spezialdmg;
@@ -22,17 +24,26 @@ public class Paladincontroller : MonoBehaviour
             spezial.GetComponent<Paladincirclecontroller>().dodgetime = timetododge;
         }
     }
-
+    private Vector3 spawnlocation(Vector3 spawn)
+    {
+        NavMeshHit hit;
+        NavMesh.SamplePosition(spawn, out hit, 20, NavMesh.AllAreas);
+        spawn = hit.position;
+        return spawn;
+    }
     private void OnEnable()
     {
+        StopCoroutine("controllerdisable");
         currentspezial = 0;
-        spawnposi1 = LoadCharmanager.Overallmainchar.transform.position + Random.insideUnitSphere * spawnradius;
-        spawnposi1.y = LoadCharmanager.Overallmainchar.transform.position.y;
-        showspezial[currentspezial].transform.position = spawnposi1;
+        spawnposi = LoadCharmanager.Overallmainchar.transform.position + Random.insideUnitSphere * spawnradius;
+        spawnposi = spawnlocation(spawnposi);
+        showspezial[currentspezial].transform.position = spawnposi;
         showspezial[currentspezial].SetActive(true);
 
         currentspezial++;
-        showspezial[currentspezial].transform.position = LoadCharmanager.Overallmainchar.transform.position;                 //2. spawnt auf dem spieler
+        playerposi = spawnlocation(LoadCharmanager.Overallmainchar.transform.position);
+        showspezial[currentspezial].transform.position = playerposi;                 //2. spawnt auf dem spieler
+
         Invoke("secondspawn", spawntimer);
     }
     private void secondspawn()
@@ -40,9 +51,9 @@ public class Paladincontroller : MonoBehaviour
         showspezial[currentspezial].SetActive(true);
         currentspezial++;
 
-        spawnposi1 = LoadCharmanager.Overallmainchar.transform.position + Random.insideUnitSphere * spawnradius;
-        spawnposi1.y = LoadCharmanager.Overallmainchar.transform.position.y;
-        showspezial[currentspezial].transform.position = spawnposi1;
+        spawnposi = LoadCharmanager.Overallmainchar.transform.position + Random.insideUnitSphere * spawnradius;
+        spawnposi = spawnlocation(spawnposi);
+        showspezial[currentspezial].transform.position = spawnposi;
 
         Invoke("thirdspawn", spawntimer);
     }
@@ -51,107 +62,36 @@ public class Paladincontroller : MonoBehaviour
         showspezial[currentspezial].SetActive(true);
         currentspezial++;
 
-        spawnposi1 = LoadCharmanager.Overallmainchar.transform.position + LoadCharmanager.Overallmainchar.transform.forward * 15;    //4. spawnt vor dem Spieler
-        showspezial[currentspezial].transform.position = spawnposi1;
+        spawnposi = LoadCharmanager.Overallmainchar.transform.position + LoadCharmanager.Overallmainchar.transform.forward * 15;    //4. spawnt vor dem Spieler
+        spawnposi = spawnlocation(spawnposi);
+        showspezial[currentspezial].transform.position = spawnposi;
 
-        Invoke("forthspawn", spawntimer);
+        InvokeRepeating("spawns", spawntimer, spawntimer);
     }
-    private void forthspawn()
+    private void spawns()
     {
         showspezial[currentspezial].SetActive(true);
         currentspezial++;
 
-        spawnposi1 = LoadCharmanager.Overallmainchar.transform.position + Random.insideUnitSphere * spawnradius;
-        spawnposi1.y = LoadCharmanager.Overallmainchar.transform.position.y;
-        showspezial[currentspezial].transform.position = spawnposi1;
+        spawnposi = LoadCharmanager.Overallmainchar.transform.position + Random.insideUnitSphere * spawnradius;
+        spawnposi = spawnlocation(spawnposi);
+        showspezial[currentspezial].transform.position = spawnposi;
 
-        Invoke("fifthspawn", spawntimer);
+        if (currentspezial >= showspezial.Length - 1)
+        {
+            CancelInvoke();
+            Invoke("finalspawn", spawntimer);
+        }
     }
-    private void fifthspawn()
+    private void finalspawn()
     {
         showspezial[currentspezial].SetActive(true);
-        currentspezial++;
-
-        spawnposi1 = LoadCharmanager.Overallmainchar.transform.position + Random.insideUnitSphere * spawnradius;
-        spawnposi1.y = LoadCharmanager.Overallmainchar.transform.position.y;
-        showspezial[currentspezial].transform.position = spawnposi1;
-
-        Invoke("spawnsix", spawntimer);
-    }
-    private void spawnsix()
-    {
-        showspezial[currentspezial].SetActive(true);
-        currentspezial++;
-
-        spawnposi1 = LoadCharmanager.Overallmainchar.transform.position + Random.insideUnitSphere * spawnradius;
-        spawnposi1.y = LoadCharmanager.Overallmainchar.transform.position.y;
-        showspezial[currentspezial].transform.position = spawnposi1;
-
-        Invoke("spawnseven", spawntimer);
-    }
-    private void spawnseven()
-    {
-        showspezial[currentspezial].SetActive(true);
-        currentspezial++;
-
-        spawnposi1 = LoadCharmanager.Overallmainchar.transform.position + Random.insideUnitSphere * spawnradius;
-        spawnposi1.y = LoadCharmanager.Overallmainchar.transform.position.y;
-        showspezial[currentspezial].transform.position = spawnposi1;
-
-        Invoke("spawneight", spawntimer);
-    }
-    private void spawneight()
-    {
-        showspezial[currentspezial].SetActive(true);
-        currentspezial++;
-
-        spawnposi1 = LoadCharmanager.Overallmainchar.transform.position + Random.insideUnitSphere * spawnradius;
-        spawnposi1.y = LoadCharmanager.Overallmainchar.transform.position.y;
-        showspezial[currentspezial].transform.position = spawnposi1;
-
-        Invoke("spawnnine", spawntimer);
-    }
-    private void spawnnine()
-    {
-        showspezial[currentspezial].SetActive(true);
-        currentspezial++;
-
-        spawnposi1 = LoadCharmanager.Overallmainchar.transform.position + Random.insideUnitSphere * spawnradius;
-        spawnposi1.y = LoadCharmanager.Overallmainchar.transform.position.y;
-        showspezial[currentspezial].transform.position = spawnposi1;
-
-        Invoke("spawnten", spawntimer);
-    }
-    private void spawnten()
-    {
-        showspezial[currentspezial].SetActive(true);
-        currentspezial++;
-
-        spawnposi1 = LoadCharmanager.Overallmainchar.transform.position + Random.insideUnitSphere * spawnradius;
-        spawnposi1.y = LoadCharmanager.Overallmainchar.transform.position.y;
-        showspezial[currentspezial].transform.position = spawnposi1;
-
-        Invoke("spawneleven", spawntimer);
-    }
-    private void spawneleven()
-    {
-        showspezial[currentspezial].SetActive(true);
-        currentspezial++;
-
-        spawnposi1 = LoadCharmanager.Overallmainchar.transform.position + Random.insideUnitSphere * spawnradius;
-        spawnposi1.y = LoadCharmanager.Overallmainchar.transform.position.y;
-        showspezial[currentspezial].transform.position = spawnposi1;
-
-        Invoke("spawntwelve", spawntimer);
-    }
-    private void spawntwelve()
-    {
-        showspezial[currentspezial].SetActive(true);
-        Invoke("turnoff", 1.1f);
+        StartCoroutine("controllerdisable");
     }
 
-    private void turnoff()
+    IEnumerator controllerdisable()
     {
+        yield return new WaitForSeconds(1 + timetododge);
         gameObject.SetActive(false);
     }
 }

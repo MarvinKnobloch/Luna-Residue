@@ -23,6 +23,7 @@ public class Goblincontroller : MonoBehaviour
     }
     private void OnEnable()
     {
+        StopCoroutine("controllerdisable");
         spherenumber = 0;
         castnumber = 0;
         spheres[spherenumber].transform.position = LoadCharmanager.Overallmainchar.transform.position;
@@ -41,7 +42,12 @@ public class Goblincontroller : MonoBehaviour
         if(castnumber >= castsphereamount)
         {
             CancelInvoke();
-            gameObject.SetActive(false);
+            StartCoroutine("controllerdisable");
         }
+    }
+    IEnumerator controllerdisable()
+    {
+        yield return new WaitForSeconds(0.6f + explodetimer);
+        gameObject.SetActive(false);
     }
 }

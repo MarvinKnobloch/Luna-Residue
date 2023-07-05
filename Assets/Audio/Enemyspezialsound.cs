@@ -46,7 +46,7 @@ public class Enemyspezialsound : MonoBehaviour
     public void playgasmanspezial() => playsound(gasmanspezialsound, 0.4f);
     public void playnightshadespezial() => playsound(nightshadespezialsound, 0.5f);
     public void playmathmanspezial() => playsound(mathmanspezialsound, 0.4f);
-    public void playpaladinspezial() => playsound(paladinspezialsound, 0.2f);
+    public void playpaladinspezial() => playsound(paladinspezialsound, 0.3f);
     public void playbattlemonkspezial() => playsound(battlemonkspezialsound, 0.4f);
     public void playzombiespezial() => playsound(zombiespezialsound, 0.4f);
     

@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Zombiecontroller : MonoBehaviour
 {
     [SerializeField] private GameObject[] jumppad;
-    [SerializeField] private GameObject[] balls;
+    [SerializeField] private GameObject bomb;
     [SerializeField] private LayerMask balllayer;
 
     [SerializeField] private float basedmg;
@@ -18,8 +18,12 @@ public class Zombiecontroller : MonoBehaviour
     private Vector3 spawn2;
     private Vector3 ballspawn;
 
+    [SerializeField] private ParticleSystem particlesystem;
+    [SerializeField] private GameObject explosioneffect;
+
     private void OnEnable()
     {
+        StopCoroutine("controllerdisable");
         spawn1 = enemyposi + LoadCharmanager.Overallmainchar.transform.forward * 5 + Random.insideUnitSphere * 7;
         spawn2 = enemyposi + LoadCharmanager.Overallmainchar.transform.forward * -5 + Random.insideUnitSphere * 7;
 
@@ -39,35 +43,39 @@ public class Zombiecontroller : MonoBehaviour
         }
 
         ballspawn = enemyposi + Vector3.up * 11;
-        foreach (GameObject ball in balls)
+        Vector3 spawn = ballspawn;
+        spawn.x += Random.Range(-8, 8);
+        spawn.z += Random.Range(-8, 8);
+        spawn.y += Random.Range(-3, 3);
+        if (Physics.Linecast(ballspawn, spawn, out RaycastHit hit, balllayer, QueryTriggerInteraction.Ignore))
         {
-            Vector3 spawn = ballspawn;
-            spawn.x += Random.Range(-8, 8);
-            spawn.z += Random.Range(-8, 8);
-            spawn.y += Random.Range(-3, 3);
-            if(Physics.Linecast(ballspawn, spawn, out RaycastHit hit, balllayer, QueryTriggerInteraction.Ignore))
-            {
-                ball.transform.position = hit.point;
-            }
-            else
-            {
-                ball.transform.position = spawn;
-            }
-            ball.SetActive(true);
+            bomb.transform.position = hit.point;
         }
-
+        else
+        {
+            bomb.transform.position = spawn;
+        }
+        bomb.SetActive(true);
         Invoke("turnoff", collecttime);
     }
     private void turnoff()
     {
-        foreach (GameObject ball in balls)
+        if (bomb.activeSelf == true && Statics.infight == true)
         {
-            if(ball.activeSelf == true && Statics.infight == true)
-            {
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamageignoreiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1), true);
-                ball.SetActive(false);
-            }
+            LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamageignoreiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1), true);
+            bomb.SetActive(false);
+         
+
+            explosioneffect.transform.position = bomb.transform.position;
+            explosioneffect.SetActive(true);
+            particlesystem.Play();
         }
+        StartCoroutine("controllerdisable");
+    }
+    IEnumerator controllerdisable()
+    {
+        yield return new WaitForSeconds(1.4f);
+        explosioneffect.SetActive(false);
         gameObject.SetActive(false);
     }
 }

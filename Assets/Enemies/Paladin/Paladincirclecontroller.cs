@@ -11,10 +11,18 @@ public class Paladincirclecontroller : MonoBehaviour
     [NonSerialized] public float basedmg;
     [NonSerialized] public float dodgetime;
 
+    private float specialactivatetimer = 0.72f;
+    [SerializeField] private GameObject specialeffect;
     [SerializeField] private Enemyspezialsound enemyspezialsound;
     private void OnEnable()
     {
-        Invoke("dealdmg", dodgetime);
+        Invoke("effectactivate", specialactivatetimer);
+    }
+    private void effectactivate()
+    {
+        specialeffect.transform.position = transform.position;
+        specialeffect.SetActive(true);
+        Invoke("dealdmg", dodgetime - specialactivatetimer);
     }
     private void dealdmg()
     {

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Paladin
   m_EditorClassIdentifier: 
   enemyname: Paladin
-  basehealth: 330
+  basehealth: 3300
   enemylvl: 1
   movementspeed: 10
-  basedmg: 9
+  basedmg: -9
   attackspeed: 1.8
   enemysize: 1
   gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}
