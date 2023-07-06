@@ -8,6 +8,8 @@ public class Elkconedmg : MonoBehaviour
     [SerializeField] private Elkcontroller elkcontroller;
     [NonSerialized] public float basedmg;
     private bool dmgonce;
+
+    [SerializeField] private GameObject hiteffect;
     private void OnEnable()
     {
         StartCoroutine(oneframe());
@@ -21,6 +23,7 @@ public class Elkconedmg : MonoBehaviour
             {
                 dmgonce = true;
                 other.GetComponent<Playerhp>().takedamageignoreiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 2), true);
+                hiteffect.SetActive(true);
             }
         }
     }

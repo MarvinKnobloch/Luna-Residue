@@ -7,6 +7,7 @@ public class Elkcircle : MonoBehaviour
 {
     [SerializeField] private LayerMask targets;
     [NonSerialized] public float basedmg;
+    [SerializeField] private GameObject hiteffect;
 
     public void dealdmg()
     {
@@ -18,6 +19,7 @@ public class Elkcircle : MonoBehaviour
                 if (target.gameObject == LoadCharmanager.Overallmainchar.gameObject)
                 {
                     target.GetComponent<Playerhp>().takedamageignoreiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 2), true);
+                    hiteffect.SetActive(true);
                     break;
                 }
             }

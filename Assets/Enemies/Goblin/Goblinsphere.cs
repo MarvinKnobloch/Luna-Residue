@@ -10,19 +10,26 @@ public class Goblinsphere : MonoBehaviour
 
     [SerializeField] private LayerMask targets;
     [SerializeField] private GameObject explosioneffect;
+
+    private Enemyspezialsound enemyspezialsound;
+
+    private void Awake()
+    {
+        enemyspezialsound = GetComponentInParent<Enemyspezialsound>();
+    }
     private void OnEnable()
     {
         Invoke("dealdmg", timetoexplode);
     }
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
-        Gizmos.DrawSphere(transform.position, 1.25f);
-    }
+        Gizmos.DrawSphere(transform.position, 1.5f);
+    }*/
     private void dealdmg()
     {
         if (Statics.infight == true)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, 1.25f, targets, QueryTriggerInteraction.Ignore);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 1.5f, targets, QueryTriggerInteraction.Ignore);
             foreach (Collider target in colliders)
             {
                 if (target.gameObject == LoadCharmanager.Overallmainchar.gameObject)
@@ -32,6 +39,8 @@ public class Goblinsphere : MonoBehaviour
                 }
             }
         }
+        enemyspezialsound.playgoblinexplosionspezial();
+        explosioneffect.transform.rotation = Quaternion.Euler(UnityEngine.Random.Range(0,360),0,0);
         explosioneffect.transform.position = transform.position;
         explosioneffect.SetActive(true);
         gameObject.SetActive(false);

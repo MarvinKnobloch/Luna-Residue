@@ -10,7 +10,7 @@ public class Disableeffect : MonoBehaviour
     }
     IEnumerator disableobj()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.8f);
         gameObject.SetActive(false);
     }
 }

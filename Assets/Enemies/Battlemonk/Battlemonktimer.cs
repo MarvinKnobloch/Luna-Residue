@@ -9,6 +9,13 @@ public class Battlemonktimer : MonoBehaviour
     private float timer;
     [SerializeField] private float basedmg;
 
+    [SerializeField] private GameObject hiteffect;
+    private Enemyspezialsound enemyspezialsound;
+
+    private void Awake()
+    {
+        enemyspezialsound = GetComponentInParent<Enemyspezialsound>();
+    }
     private void OnEnable()
     {
         timertext.color = Color.red;
@@ -39,6 +46,9 @@ public class Battlemonktimer : MonoBehaviour
             if (Statics.dash == false && Statics.bonusiframes == false)
             {
                 LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamagecheckiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1), true);
+
+                hiteffect.SetActive(true);
+                enemyspezialsound.playbattlemonkhitspezial();
             }
         }
     }

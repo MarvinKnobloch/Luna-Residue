@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Mathman
   m_EditorClassIdentifier: 
   enemyname: Mathman
-  basehealth: 321
+  basehealth: 3210
   enemylvl: 1
   movementspeed: 10
-  basedmg: 8
+  basedmg: -8
   attackspeed: 1.6
   enemysize: 1
   gold: {fileID: 4469075776475930800, guid: 77a706b95aedd9b49a317396ddc2f301, type: 3}

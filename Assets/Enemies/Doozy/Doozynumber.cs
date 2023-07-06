@@ -7,7 +7,12 @@ public class Doozynumber : MonoBehaviour
 {
     [SerializeField] private Doozycontroller doozycontroller;
     public int setnumber;
+    //private Color graycolor;
 
+    /*private void Awake()
+    {
+        ColorUtility.TryParseHtmlString("#A4A4A4", out graycolor);
+    }*/
     private void OnDisable()
     {
         CancelInvoke();

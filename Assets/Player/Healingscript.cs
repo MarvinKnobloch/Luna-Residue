@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class Healingscript : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class Healingscript : MonoBehaviour
 
     private bool readinputs;
     public InputAction[] hotkeys;
-    public Text[] buttons;
+    public TextMeshProUGUI[] buttons;
     private string[] healhotkeys = new string[4];
     public Image[] buttonimage;
     public int[] randomkeys;

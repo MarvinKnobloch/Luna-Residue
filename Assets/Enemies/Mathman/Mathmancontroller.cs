@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using TMPro;
 
 public class Mathmancontroller : MonoBehaviour
 {
     [SerializeField] private GameObject mathcommit;             //answertime ist bei mathmancommit wegen onenable reihenfolge(der wert wird beim erstenmal nicht richtig geladen)
-    [SerializeField] private Text mathtasktext;
+    [SerializeField] private TextMeshProUGUI mathtasktext;
     [SerializeField] private int lowerfirstnumber;
     [SerializeField] private int upperfirstnumber;
     [SerializeField] private int lowersecondnumber;

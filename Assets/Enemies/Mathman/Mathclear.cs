@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class Mathclear : MonoBehaviour
 {
-    [SerializeField] private Text solution;
+    [SerializeField] private TextMeshProUGUI solution;
     public void clearsolution()
     {
         solution.text = "";

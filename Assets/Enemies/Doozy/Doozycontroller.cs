@@ -28,7 +28,6 @@ public class Doozycontroller : MonoBehaviour
         canclick = true;
         memoryclicknumber = 1;
         choosenumber = 1;
-        Invoke("turnofffirstgrid", 3f);
         foreach (GameObject obj in numbers)
         {
             obj.transform.SetAsLastSibling();
@@ -48,6 +47,7 @@ public class Doozycontroller : MonoBehaviour
             }
         }
         firstgrid.SetActive(true);
+        Invoke("turnofffirstgrid", 3f);
     }
     private void turnofffirstgrid()
     {
@@ -56,15 +56,23 @@ public class Doozycontroller : MonoBehaviour
     }
     private void turnonsecondgrid()
     {
-        Mouseactivate.enablemouse();
-        Statics.enemyspezialtimescale = true;
-        LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtostun();
-        Time.timeScale = 0.3f;
-        Time.fixedDeltaTime = Statics.normaltimedelta * 0.3f;
-        maincam.m_YAxis.m_MaxSpeed = 0;
-        maincam.m_XAxis.m_MaxSpeed = 0;
-        secondgrid.SetActive(true);
-        Invoke("dealdmg", 2f);
+        if (Statics.infight == true)
+        {
+            Mouseactivate.enablemouse();
+            Statics.enemyspezialtimescale = true;
+            LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtostun();
+            Time.timeScale = 0.3f;
+            Time.fixedDeltaTime = Statics.normaltimedelta * 0.3f;
+            maincam.m_YAxis.m_MaxSpeed = 0;
+            maincam.m_XAxis.m_MaxSpeed = 0;
+            secondgrid.SetActive(true);
+            Invoke("dealdmg", 2f);
+        }
+        else 
+        {
+            CancelInvoke();
+            gameObject.SetActive(false); 
+        }
     }
     public void fail()
     {

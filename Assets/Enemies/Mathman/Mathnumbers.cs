@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class Mathnumbers : MonoBehaviour
 {
-    [SerializeField] private Text solution;
-    [SerializeField] private Text number;
+    [SerializeField] private TextMeshProUGUI solution;
+    [SerializeField] private TextMeshProUGUI number;
 
     public void setnumber()
     {

@@ -18,7 +18,7 @@ public class Knightcontroller : MonoBehaviour
     private void Awake()
     {
         wavezero.GetComponent<Knightwavecontroller>().basedmg = wavedmg;
-        wavezero.GetComponent<Knightwavecontroller>().speed = wavespeed / 2;
+        wavezero.GetComponent<Knightwavecontroller>().speed = wavespeed * 0.5f;
         foreach (Knightwavecontroller wave in waves)
         {
             wave.basedmg = wavedmg;
@@ -53,7 +53,7 @@ public class Knightcontroller : MonoBehaviour
     private void wave0()
     {
         wavezero.SetActive(true);
-        Invoke("wave1", 1.5f);
+        Invoke("wave1", 1.7f);
     }
     private void wave1()
     {

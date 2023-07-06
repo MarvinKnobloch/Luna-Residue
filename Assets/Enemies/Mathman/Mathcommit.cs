@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
 using System;
+using TMPro;
 
 public class Mathcommit : MonoBehaviour
 {
-    [SerializeField] private Text solution;
+    [SerializeField] private TextMeshProUGUI solution;
     [SerializeField] private Image solutionUI;
-    [SerializeField] private GameObject mathmancontroller;
+    private Mathmancontroller mathmancontroller;
     [SerializeField] private CinemachineFreeLook maincam;
     private int answer;
     [SerializeField] private float answertime;
@@ -21,6 +22,7 @@ public class Mathcommit : MonoBehaviour
     private void Awake()
     {
         maincam.GetComponent<CinemachineFreeLook>();
+        mathmancontroller = GetComponentInParent<Mathmancontroller>();
     }
     private void OnEnable()
     {
@@ -43,7 +45,7 @@ public class Mathcommit : MonoBehaviour
         if (solution.text != "")
         {
             answer = int.Parse(solution.text);
-            if (answer == mathmancontroller.GetComponent<Mathmancontroller>().rightanswer)
+            if (answer == mathmancontroller.rightanswer)
             {
                 solutionUI.color = Color.green;
                 resetvalues();
@@ -56,10 +58,11 @@ public class Mathcommit : MonoBehaviour
                     float finaldmg = (timerdmgmultiplier * (timer / answertime) + 1) * dmg;
                     LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamagecheckiframes(finaldmg, true);
                 }
+                solution.text = answer + " (<color=green>" + mathmancontroller.rightanswer + "</color>)";
                 solutionUI.color = Color.red;
                 resetvalues();
             }
-            Invoke("turnoffUI", 0.3f);
+            Invoke("turnoffUI", 0.5f);
             StopAllCoroutines();
         }
         else
@@ -70,9 +73,10 @@ public class Mathcommit : MonoBehaviour
                 float finaldmg = (timerdmgmultiplier * (timer / answertime) + 1) * dmg;
                 LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamagecheckiframes(finaldmg, true);
             }
+            solution.text = " (<color=green>" + mathmancontroller.rightanswer + "</color>)";
             solutionUI.color = Color.red;
             resetvalues();
-            Invoke("turnoffUI", 0.3f);
+            Invoke("turnoffUI", 0.5f);
             StopAllCoroutines();
         }
     }
@@ -80,7 +84,7 @@ public class Mathcommit : MonoBehaviour
     {
         solutionUI.color = Color.white;
         solution.text = "";
-        mathmancontroller.SetActive(false);
+        mathmancontroller.gameObject.SetActive(false);
         Mouseactivate.disablemouse();
     }
     IEnumerator mathtimer()
@@ -96,7 +100,7 @@ public class Mathcommit : MonoBehaviour
             }
             solution.text = "";
             resetvalues();
-            mathmancontroller.SetActive(false);
+            mathmancontroller.gameObject.SetActive(false);
         }
     }
     private void resetvalues()

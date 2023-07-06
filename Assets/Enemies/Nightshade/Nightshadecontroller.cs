@@ -35,6 +35,5 @@ public class Nightshadecontroller : MonoBehaviour
         int choosetower = UnityEngine.Random.Range(0, 5);
         towers[choosetower].transform.position = towerspawn + new Vector3(0, 4f, 0);
         towers[choosetower].SetActive(true);
-        towers[choosetower].GetComponent<Towercontroller>().setenemy(enemy);
     }
 }

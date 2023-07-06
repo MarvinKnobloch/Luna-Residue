@@ -10,7 +10,7 @@ public class Towergoal : MonoBehaviour
         if (other.gameObject == LoadCharmanager.Overallmainchar)
         {
             tower.GetComponent<Towercontroller>().dealdmg = false;
-            tower.GetComponent<Towercontroller>().dealdmgtoenemyroot();
+            tower.GetComponent<Towercontroller>().bonusdmgandtowerdisable();
             other.GetComponent<Healingscript>().groupheal();
             gameObject.SetActive(false);
         }

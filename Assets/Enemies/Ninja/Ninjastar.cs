@@ -46,5 +46,6 @@ public class Ninjastar : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
+        else gameObject.SetActive(false);
     }
 }

@@ -20,7 +20,12 @@ public class Zombiecontroller : MonoBehaviour
 
     [SerializeField] private ParticleSystem particlesystem;
     [SerializeField] private GameObject explosioneffect;
+    private Enemyspezialsound enemyspezialsound;
 
+    private void Awake()
+    {
+        enemyspezialsound = GetComponentInParent<Enemyspezialsound>();
+    }
     private void OnEnable()
     {
         StopCoroutine("controllerdisable");
@@ -65,16 +70,17 @@ public class Zombiecontroller : MonoBehaviour
             LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamageignoreiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1), true);
             bomb.SetActive(false);
          
-
             explosioneffect.transform.position = bomb.transform.position;
             explosioneffect.SetActive(true);
             particlesystem.Play();
+
+            enemyspezialsound.playzombiebombspezial();
         }
         StartCoroutine("controllerdisable");
     }
     IEnumerator controllerdisable()
     {
-        yield return new WaitForSeconds(1.4f);
+        yield return new WaitForSeconds(1);
         explosioneffect.SetActive(false);
         gameObject.SetActive(false);
     }

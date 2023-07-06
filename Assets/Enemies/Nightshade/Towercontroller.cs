@@ -8,7 +8,6 @@ public class Towercontroller : MonoBehaviour
 {
     private Nightshadecontroller nightshadecontroller;
 
-    private GameObject enemy;
     [SerializeField] private GameObject goal;
     [SerializeField] private GameObject timerUI;
     [SerializeField] private Text timertext;
@@ -54,22 +53,15 @@ public class Towercontroller : MonoBehaviour
         nightshadecontroller.gameObject.SetActive(false);
     }
 
-    public void dealdmgtoenemyroot()
+    public void bonusdmgandtowerdisable()
     {
-        if(enemy.activeSelf == true)
-        {
-            float dmg = Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, 1);
-            enemy.GetComponent<EnemyHP>().takeplayerdamage(Mathf.Round(dmg), 0, false);
-        }
+        Statics.nextattackdealbonusdmg = true;
+        Statics.nextattackbonusdmgamount += Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl * 1.5f, 1);
         StartCoroutine("waitfortowerdisable");
     }
     IEnumerator waitfortowerdisable()
     {
         yield return new WaitForSeconds(0.5f);
         towerdisable();
-    }
-    public void setenemy(GameObject nigthshade)
-    {
-        enemy = nigthshade;
     }
 }
