@@ -16,11 +16,13 @@ public class Plantcontroller : MonoBehaviour
     public float remainingtime;
 
     private Color posioncolor;
+    private Enemyspezialsound enemyspezialsound;
 
     private void Awake()
     {
         ColorUtility.TryParseHtmlString("#982AE3", out posioncolor);
         plantmushrooms[0].GetComponent<MeshRenderer>().material.color = posioncolor;
+        enemyspezialsound = GetComponentInParent<Enemyspezialsound>();
     }
     private void OnEnable()
     {
@@ -55,16 +57,21 @@ public class Plantcontroller : MonoBehaviour
     }
     private void dealdmg()
     {
-        for (int i = 0; i < plantmushrooms.Length; i++)
+        if(Statics.infight == true)
         {
-            if (plantmushrooms[i].activeSelf == true && Statics.infight == true)
+            for (int i = 0; i < plantmushrooms.Length; i++)
             {
-                LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamageignoreiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, spawns.Length), true);
-                plantexplosions[i].transform.position = plantmushrooms[i].transform.position + Vector3.up;
-                plantexplosions[i].SetActive(true);
+                if (plantmushrooms[i].activeSelf == true)
+                {
+                    LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().takedamageignoreiframes(Globalplayercalculations.calculateenemyspezialdmg(basedmg, Statics.currentenemyspeziallvl, spawns.Length), true);
+                    plantexplosions[i].transform.position = plantmushrooms[i].transform.position + Vector3.up;
+                    plantexplosions[i].SetActive(true);
+                    enemyspezialsound.playplantmushroomexplosionspezial();
+                }
             }
-            plantmushrooms[i].SetActive(false);
         }
+        for (int i = 0; i < plantmushrooms.Length; i++) plantmushrooms[i].SetActive(false);
+        planttimer.SetActive(false);
         StartCoroutine("controllerdisable");
     }
     IEnumerator controllerdisable()

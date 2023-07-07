@@ -129,7 +129,7 @@ public class Statics
     //difficultyvalues
     public static int difficulty;
     public static float enemydmgmultiplier = 1.5f;
-    public static float enemyspecialcd = 6;//14;
+    public static float enemyspecialcd;           //wird bei der difficulty gesetzt
     public static int enemyspezialdmgbonus = 5;
     public static float enemyhealthpercantageadded = 0.1f;
     public static float enemydifficultyminusdmg = 0;

@@ -26,6 +26,7 @@ public class Fishmancontroller : MonoBehaviour
     {
         LoadCharmanager.Overallmainchar.GetComponent<Movescript>().movementspeed = playermovementspeedslow;
         LoadCharmanager.Overallsecondchar.GetComponent<Movescript>().movementspeed = playermovementspeedslow;
+        fishmancircle.transform.position = LoadCharmanager.Overallmainchar.transform.position;
         fishmancircle.SetActive(true);
         Invoke("spezialpart1", 1.5f);
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Vampirecontroller : MonoBehaviour
 {
     [SerializeField] private GameObject spezialendspawn;
-    [SerializeField] private Vampirecircle vampiresphere;
+    [SerializeField] private Vampiresphere vampiresphere;
     [SerializeField] private Vampirecube vampirecube;
     [SerializeField] private LayerMask raycastlayer;
 
@@ -63,7 +63,7 @@ public class Vampirecontroller : MonoBehaviour
     }
     IEnumerator controllerdisable()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.6f);
         sphereeffect.SetActive(false);
         cubeeffect.SetActive(false);
         gameObject.SetActive(false);

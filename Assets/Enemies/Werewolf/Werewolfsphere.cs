@@ -13,6 +13,12 @@ public class Werewolfsphere : MonoBehaviour
 
     [SerializeField] private LayerMask targets;
 
+    private Enemyspezialsound enemyspezialsound;
+
+    private void Awake()
+    {
+        enemyspezialsound = GetComponentInParent<Enemyspezialsound>();
+    }
 
     private void OnEnable()
     {
@@ -35,6 +41,7 @@ public class Werewolfsphere : MonoBehaviour
                     break;
                 }
             }
+            enemyspezialsound.playwerewolfexplosionspezial();
         }
         if(LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state == Movescript.State.Buttonmashstun)
         {

@@ -12,6 +12,13 @@ public class Vampirecube : MonoBehaviour
     [NonSerialized] public Vector3 overlapboxpoint;
 
     [SerializeField] private GameObject cubeeffect;
+
+    private Enemyspezialsound enemyspezialsound;
+
+    private void Awake()
+    {
+        enemyspezialsound = GetComponentInParent<Enemyspezialsound>();
+    }
     private void OnEnable()
     {
         Invoke("dealdmg", explodetime);
@@ -35,6 +42,7 @@ public class Vampirecube : MonoBehaviour
                 }
             }
         }
+        enemyspezialsound.playvampireendspezial();
         cubeeffect.transform.position = transform.position;
         cubeeffect.SetActive(true);
         vampirecontroller.GetComponent<Vampirecontroller>().controllerdisablestart();

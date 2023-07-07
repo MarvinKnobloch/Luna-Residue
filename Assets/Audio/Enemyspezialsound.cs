@@ -7,8 +7,12 @@ public class Enemyspezialsound : MonoBehaviour
     private AudioSource audiosource;
 
     [SerializeField] private AudioClip werewolfspezialsound;
+    [SerializeField] private AudioClip werewolfexplosionspezialsound;
     [SerializeField] private AudioClip plantspezialsound;
-    [SerializeField] private AudioClip vampirespezialsound;             
+    [SerializeField] private AudioClip plantmushroomexplosionsound;
+    [SerializeField] private AudioClip vampirespezialsound;
+    [SerializeField] private AudioClip vampirespherespezialsound;
+    [SerializeField] private AudioClip vampireendspezialsound;
     [SerializeField] private AudioClip fishmanspezialendsound;          //fishman start hat seine eigene audiosource bei fishmancircle
     [SerializeField] private AudioClip goblinspezialsound;
     [SerializeField] private AudioClip goblinexplosionspezialsound;
@@ -37,9 +41,13 @@ public class Enemyspezialsound : MonoBehaviour
         audiosource.Play();
     }
 
-    public void playwerewolfspezial() => playsound(werewolfspezialsound, 0.4f);
+    public void playwerewolfspezial() => playsound(werewolfspezialsound, 0.5f);
+    public void playwerewolfexplosionspezial() => playsound(werewolfexplosionspezialsound, 0.3f);
     public void playplantspezial() => playsound(plantspezialsound, 0.4f);
+    public void playplantmushroomexplosionspezial() => playsound(plantmushroomexplosionsound, 0.3f);
     public void playvampirespezial() => playsound(vampirespezialsound, 0.3f);
+    public void playvampirespherespezial() => playsound(vampirespherespezialsound, 0.2f);
+    public void playvampireendspezial() => playsound(vampireendspezialsound, 0.2f);
     public void playfishmanspezialend() => playsound(fishmanspezialendsound, 0.4f);
     public void playgoblinspezial() => playsound(goblinspezialsound, 0.4f);
     public void playgoblinexplosionspezial() => playsound(goblinexplosionspezialsound, 0.3f);
