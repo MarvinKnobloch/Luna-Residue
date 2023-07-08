@@ -14,12 +14,18 @@ public class Dummysphere : MonoBehaviour
 
     [SerializeField] private LayerMask targets;
 
+    private Enemyspezialsound enemyspezialsound;
+    private void Awake()
+    {
+        enemyspezialsound = GetComponentInParent<Enemyspezialsound>();
+    }
     private void OnEnable()
     {
         Invoke("dealdmg", explodetime);
     }
     private void dealdmg()
     {
+        enemyspezialsound.playwerewolfexplosionspezial();
         if (LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state == Movescript.State.Buttonmashstun)
         {
             LoadCharmanager.Overallmainchar.GetComponent<Movescript>().switchtogroundstate();

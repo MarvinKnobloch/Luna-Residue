@@ -17,6 +17,7 @@ public class Videocontroller : MonoBehaviour
     }
     private void OnEnable()
     {
+        videoplayer.frame = 0;
         videoplayer.targetTexture.Release();
         controlls.Enable();      
     }

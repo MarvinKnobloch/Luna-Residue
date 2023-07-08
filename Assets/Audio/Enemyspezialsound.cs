@@ -42,7 +42,7 @@ public class Enemyspezialsound : MonoBehaviour
     }
 
     public void playwerewolfspezial() => playsound(werewolfspezialsound, 0.5f);
-    public void playwerewolfexplosionspezial() => playsound(werewolfexplosionspezialsound, 0.3f);
+    public void playwerewolfexplosionspezial() => playsound(werewolfexplosionspezialsound, 0.2f);
     public void playplantspezial() => playsound(plantspezialsound, 0.4f);
     public void playplantmushroomexplosionspezial() => playsound(plantmushroomexplosionsound, 0.3f);
     public void playvampirespezial() => playsound(vampirespezialsound, 0.3f);
@@ -62,6 +62,6 @@ public class Enemyspezialsound : MonoBehaviour
     public void playbattlemonkspezial() => playsound(battlemonkspezialsound, 0.4f);
     public void playbattlemonkhitspezial() => playsound(battlemonkspezialhitsound, 0.4f);
     public void playzombiespezial() => playsound(zombiespezialsound, 0.4f);
-    public void playzombiebombspezial() => playsound(zombiespezialbombsound, 0.3f);
+    public void playzombiebombspezial() => playsound(zombiespezialbombsound, 0.2f);
 
 }

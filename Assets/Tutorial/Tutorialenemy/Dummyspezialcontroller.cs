@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Dummyspezialcontroller : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class Dummyspezialcontroller : MonoBehaviour
     public float movetimer;
 
     [SerializeField] private EnemyHP enemyHP;
+    [SerializeField] private TextMeshProUGUI requierementtext;
 
     private void Awake()
     {
@@ -37,6 +39,7 @@ public class Dummyspezialcontroller : MonoBehaviour
 
     public void tutorialsuccess()
     {
+        requierementtext.text = string.Empty;
         StartCoroutine(killenemy());
         StartCoroutine(opengate());
     }

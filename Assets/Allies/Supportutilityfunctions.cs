@@ -74,12 +74,10 @@ public class Supportutilityfunctions
         ssm.meshagent.CalculatePath(LoadCharmanager.Overallmainchar.transform.position, ssm.path);
         if (ssm.path.status == NavMeshPathStatus.PathComplete)
         {
-            Debug.Log("gotpath");
             if (checkdistance() == false) LoadCharmanager.Overallmainchar.GetComponent<Movescript>().spawnteammates(ssm.gameObject);
         }
         else
         {
-            Debug.Log("gotnopath");
             LoadCharmanager.Overallmainchar.GetComponent<Movescript>().spawnteammates(ssm.gameObject);
         } 
     }

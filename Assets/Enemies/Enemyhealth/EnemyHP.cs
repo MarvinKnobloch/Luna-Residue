@@ -176,7 +176,7 @@ public class EnemyHP : MonoBehaviour
                 Statics.currentenemyspecialcd = Statics.enemyspecialcd + (enemycount * 2);
                 if (enemycount == 0)
                 {
-                    LoadCharmanager.autosave();
+                    if(LoadCharmanager.cantsavehere == false) LoadCharmanager.autosave();                                            //damit im tutorial nicht gespeichert wird
                     Infightcontroller.instance.savegameoverposi(GetComponent<Enemymovement>().spawnpostion);
                 }
                 if (Movescript.lockontarget != null)

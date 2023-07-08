@@ -104,7 +104,7 @@ public class Infightcontroller : MonoBehaviour
     }
     IEnumerator firstenemyspezialcd()
     {
-        int firstcd = 3;//UnityEngine.Random.Range(3, (int)Statics.currentenemyspecialcd);
+        int firstcd = UnityEngine.Random.Range(3, (int)Statics.currentenemyspecialcd);
         yield return new WaitForSeconds(firstcd);
         instance.StartCoroutine("enemyspezialcd");
         if (LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == false)

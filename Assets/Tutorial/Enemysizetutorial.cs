@@ -3,107 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Video;
+using TMPro;
 
 public class Enemysizetutorial : MonoBehaviour
 {
-    private SpielerSteu controlls;
-
-    private Tutorialcontroller tutorialcontroller;
-    private bool tutorialcomplete;
-    private int textindex;
-
-    private bool tutorialstarted;
     [SerializeField] private GameObject gate;
     private Vector3 gatestartposi;
     private Vector3 gateendposi;
     private float movetime = 6f;
     private float movetimer;
 
-    private bool readinputs;
-
-    [NonSerialized] public float savetutroialenemyspezialcd;
+    private bool tutorialfinished;
 
     [SerializeField] private EnemyHP enemyHP;
+    [SerializeField] private TextMeshProUGUI requierementtext;
 
-    [SerializeField] private VideoClip videoclip;
-    [SerializeField] private Videocontroller videocontroller;
     private void Start()
     {
-        tutorialcomplete = false;
-        tutorialstarted = false;
         gatestartposi = gate.transform.position;
         gateendposi = gatestartposi + new Vector3(0, -10, 0);
-        tutorialcontroller = GetComponentInParent<Tutorialcontroller>();
-        controlls = Keybindinputmanager.inputActions;
-        readinputs = false;
     }
     private void Update()
     {
-        if (readinputs == true && controlls.Menusteuerung.F1.WasPressedThisFrame())
-        {
-            if (textindex != 8)
-            {
-                tutorialcontroller.tutorialtext.text = string.Empty;
-                textindex++;
-                showtext();
-            }
-            else
-            {
-                endtutorial();
-            }
-        }
-        if (tutorialstarted == true)
-        {
-            checkgate();
-        }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == LoadCharmanager.Overallmainchar && tutorialcomplete == false)
-        {
-            savetutroialenemyspezialcd = Statics.enemyspecialcd;
-            Statics.enemyspecialcd = 7;
-            tutorialcomplete = true;
-            tutorialcontroller.onenter();
-            textindex = 0;
-            readinputs = true;
-            showtext();
-            videocontroller.gameObject.SetActive(true);
-            videocontroller.setnewvideo(videoclip);
-        }
-    }
-    private void showtext()
-    {
-        if (textindex == 0) tutorialcontroller.tutorialtext.text = "On the left of the enemy health bar there is a letter and number.";
-        else if (textindex == 1) tutorialcontroller.tutorialtext.text = "The number displays the enemy level and the letter shows the type of size. " +
-                                                                        "<color=green>S</color>(<color=green>small</color>), <color=green>M</color>(<color=green>medium</color>" +
-                                                                        ") or <color=green>B</color>(<color=green>Big</color>).";
-        else if (textindex == 2) tutorialcontroller.tutorialtext.text = "Depending on these types, your " + "<color=green>" + "downward" + "</color>" + ", " + "<color=green>" + "center " + "</color>" +
-                                                                         "or " + "<color=green>" + "upward " + "</color>" + "attacks at the end of your " + "<color=green>" + "chain attack" + "</color>" +
-                                                                         " will result in different damage.";
-        else if (textindex == 3) tutorialcontroller.tutorialtext.text = "For example: Hitting a " + "<color=green>" + "big " + "</color>" + "enemy with an " + "<color=green>" + "downward " + "</color>" +
-                                                                        "attack will deal " + "<color=green>" + "100% " + "</color>" + "damage.";
-        else if (textindex == 4) tutorialcontroller.tutorialtext.text = "Hitting the weak spot with an " + "<color=green>" + "center " + "</color>" + "attack, will deal " + "<color=green>" + "85% " + "</color>" + "damage. " +
-                                                                        "However, this will increase the damage dealt with an " + "<color=green>" + "upward " + "</color>" + "attack to " + "<color=green>" + "150% " + "</color>" +
-                                                                        "instead of " + "<color=green>" + "50% " + "</color>" + ".";
-        else if (textindex == 5) tutorialcontroller.tutorialtext.text = "A blue bar beneath the enemy health bar will show how long the weak spot is exposed.";
-        else if (textindex == 6) tutorialcontroller.tutorialtext.text = "The yellow bar will display whether the weak spot can be triggered again.";
-        else if (textindex == 7) tutorialcontroller.tutorialtext.text = "Also your " + "<color=green>" + "critical chance " + "</color>" + "against this enemy is increased while the weak spot is exposed and as long as " +
-                                                                        "the weak point trigger refreshes.";
-        else if (textindex == 8) tutorialcontroller.tutorialtext.text = "Try to trigger the weak spot of the dummy to continue the tutorial.";
-    }
-    private void endtutorial()
-    {
-        videocontroller.gameObject.SetActive(false);
-        tutorialstarted = true;
-        readinputs = false;
-        tutorialcontroller.endtutorial();
+        if (tutorialfinished == false) checkgate();
     }
     private void checkgate()
     {
         if (enemyHP.enemyincreasebasicdmg == true)
         {
-            tutorialstarted = false;
+            tutorialfinished = true;
+            requierementtext.text = string.Empty;
             StartCoroutine(killenemy());
             StartCoroutine(opengate());
         }

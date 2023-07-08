@@ -5,6 +5,7 @@ using UnityEngine;
 public class Tutorialareacontroller : MonoBehaviour
 {
     [SerializeField] private Areacontroller areacontroller;
+    [SerializeField] private GameObject currenttutorial;
     private int tutorialnumber;
     void Start()
     {
@@ -13,6 +14,7 @@ public class Tutorialareacontroller : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+        else currenttutorial.SetActive(true);
     }
     public void tutorialfinish()
     {

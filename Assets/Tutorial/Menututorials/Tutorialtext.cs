@@ -115,7 +115,7 @@ public class Tutorialtext : MonoBehaviour, ISelectHandler
                             "While holding \"" + "<color=green>" + heal + "</color>" + "\" press the buttons appearing on the screen in the right order.\n" +
                             "After succesfully hitting the buttons, choose the target you want to heal with \"" + "<color=green>" + player1target + "</color>" + "\", \"" +
                             "<color=green>" + player2target + "</color>" + "\" or \"" + "<color=green>" + player3target + "</color>" + "\".\n" +
-                            "The healing cooldown is displayed in the bottom left.";
+                            "\nThe healing cooldown is displayed in the bottom left.";
     }
     public void setattacktext()
     {

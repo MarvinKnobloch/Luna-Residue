@@ -2,80 +2,55 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
+using TMPro;
 
 public class Elementaltutorial : MonoBehaviour
 {
     private SpielerSteu controlls;
 
-    private Tutorialcontroller tutorialcontroller;
-    private int textindex;
-
-    private bool readinputs;
-
+    [SerializeField] private GameObject tutorialisactiv;
+    [SerializeField] GameObject tutorialtextbox;
+    [SerializeField] private TextMeshProUGUI tutorialtext;
     [SerializeField] private VideoClip videoclip;
     [SerializeField] private Videocontroller videocontroller;
+
     private void Awake()
     {
-        tutorialcontroller = GetComponentInParent<Tutorialcontroller>();
         controlls = Keybindinputmanager.inputActions;
-        readinputs = false;
         if (Statics.elementalmenuunlocked == true)
         {
             gameObject.SetActive(false);
         }
     }
-    private void Update()
-    {
-        if (readinputs == true && controlls.Menusteuerung.F1.WasPressedThisFrame())
-        {
-            if (textindex != 10)
-            {
-                tutorialcontroller.tutorialtext.text = string.Empty;
-                textindex++;
-                showtext();
-            }
-            else
-            {
-                endtutorial();
-            }
-        }
-    }
     private void OnEnable()
     {
-        controlls.Enable();
         if (Statics.elementalmenuunlocked == false)
         {
-            tutorialcontroller.onenter();
-            textindex = 0;
-            readinputs = true;
-            showtext(); 
+            Statics.elementalmenuunlocked = true;
+            settext();
+            tutorialtextbox.SetActive(true);
             videocontroller.gameObject.SetActive(true);
             videocontroller.setnewvideo(videoclip);
+
+            LoadCharmanager.autosave();
+            tutorialisactiv.SetActive(true);
+            gameObject.SetActive(false);
         }
     }
-    private void showtext()
+    private void settext()
     {
-        if (textindex == 0) tutorialcontroller.tutorialtext.text = "<color=green>" + "Elemental Menu " + "</color>" + "unlocked. It now can be selected in the menu.";
-        else if (textindex == 1) tutorialcontroller.tutorialtext.text = "The Elemental Menu enables " + "<color=green>" + "spells " + "</color>" + "and " + "<color=green>" + "classes" + "</color>" + ".";
-        else if (textindex == 2) tutorialcontroller.tutorialtext.text = "Each character is able to choose spells from two different elements.";
-        else if (textindex == 3) tutorialcontroller.tutorialtext.text = "The first element depends on your selected character. However the second one is based on a "
-                                                                        + "<color=green>" + "elemental stone" + "</color>" + ".";
-        else if (textindex == 4) tutorialcontroller.tutorialtext.text = "Elemental stones have to be awaken first before you can use them.";
-        else if (textindex == 5) tutorialcontroller.tutorialtext.text = "Awaken a stone also grants a permanent bonus for the group.";
-        else if (textindex == 6) tutorialcontroller.tutorialtext.text = "These stones also define the class of the character.\n" +
-                                                                        "There are 3 different classes. " + "<color=green>" + "Fight" + "</color>" + ", " + "<color=green>" + "Heal " + "</color>" +
-                                                                        "and " + "<color=green>" + "Guard" + "</color>" + ".";
-        else if (textindex == 7) tutorialcontroller.tutorialtext.text = "Fight: The character deals increased damage.";
-        else if (textindex == 8) tutorialcontroller.tutorialtext.text = "Heal: Grants a heal bonus and add the ability to cast a group heal and resurrect (Check out <color=green>Tutorials</color> in the menu for more information).";
-        else if (textindex == 9) tutorialcontroller.tutorialtext.text = "Guard: Will add some bonus health and reduce the damage taken. It also increases threat on enemies.";
-        else if (textindex == 10) tutorialcontroller.tutorialtext.text = "Development Note: The spell system is in a really early state in may cause bugs";
-    }
-    private void endtutorial()
-    {
-        videocontroller.gameObject.SetActive(false);
-        Statics.elementalmenuunlocked = true;
-        readinputs = false;
-        tutorialcontroller.endtutorial();
-        gameObject.SetActive(false);
+        tutorialtext.text = "<color=green>" + "Elemental Menu " + "</color>" + "unlocked. It now can be selected in the menu.\n" +
+                            "The Elemental Menu enables " + "<color=green>" + "spells " + "</color>" + "and " + "<color=green>" + "classes" + "</color>" + "." +
+                            "Each character is able to choose spells from to different elements.\n" +
+                            "\nThe first element depends on your selected character. However the second one is based on a " + "<color=green>" + "elemental stone" + "</color>" + ".\n" +
+                            "\nElemental stones have to be awaken first before you can use them to set the second element.\n" +
+                            "Awaken a stone also grants a permanent bonus for the group. \n" +
+                            "\nThese stones also define the class of the character. \n" +
+                            "There are 3 different classes. " + "<color=green>" + "Fight" + "</color>" + ", " + "<color=green>" + "Heal " + "</color>" + "and " + "<color=green>" + "Guard" + "</color>" + ".\n" +
+                            "\nFight: The character deals increased damage.\n" +
+                            "Heal: Grants a healbonus and add the ability to cast a group heal and resurrect.\n" +
+                            "Guard: Will add some bonus health and reduce the damage taken. It also increases threat on enemies.\n" +
+                            "\nDevelopment Note: The spell system is in a really early state in may cause bugs";
     }
 }
+

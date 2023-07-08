@@ -41,7 +41,6 @@ public class Werewolfsphere : MonoBehaviour
                     break;
                 }
             }
-            enemyspezialsound.playwerewolfexplosionspezial();
         }
         if(LoadCharmanager.Overallmainchar.GetComponent<Movescript>().state == Movescript.State.Buttonmashstun)
         {
@@ -49,6 +48,7 @@ public class Werewolfsphere : MonoBehaviour
             Statics.dash = false;
             Statics.otheraction = false;
         }
+        enemyspezialsound.playwerewolfexplosionspezial();
         dazeimage.SetActive(false);
         explosioneffect.transform.position = transform.position;
         explosioneffect.SetActive(true);

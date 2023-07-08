@@ -22,7 +22,7 @@ public class Inventorycontroller : ScriptableObject
             setfirstemptyslot(item, amount);
             if(LoadCharmanager.Overallmainchar != null)
             {
-                LoadCharmanager.Overallmainchar.GetComponent<Displayloot>().displayloot(item.name.ToString());
+                LoadCharmanager.Overallmainchar.GetComponent<Displayloot>().displayloot(item.itemname.ToString());
             }
         }
     }

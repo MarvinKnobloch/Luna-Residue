@@ -141,7 +141,7 @@ public class Bowattack : MonoBehaviour
                 default:
                     break;
             }
-            if (controlls.Player.Dash.WasPerformedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false)
+            if (controlls.Player.Dash.WasPressedThisFrame() && Statics.dashcdmissingtime > Statics.dashcost && Statics.dash == false)
             {
                 movementscript.state = Movescript.State.Beforedash;                  //damit man beim angreifen noch die Richtung bestimmen kann
                 Statics.dash = true;

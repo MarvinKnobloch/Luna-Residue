@@ -226,7 +226,7 @@ public class Movescript : MonoBehaviour
             {
                 default:
                 case State.Ground:
-                    switchmovespeed();
+                    //switchmovespeed();
                     playermovement.movement();
                     playermovement.groundcheck();
                     playermovement.groundanimations();
