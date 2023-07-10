@@ -49,6 +49,8 @@ public class Bowsupport : MonoBehaviour
             Vector3 arrowrotation = (supportmovescript.currenttarget.transform.position - Arrowlaunchposi.position).normalized;
             GameObject Arrow = GameObject.Instantiate(basicarrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
             Npcbasicarrow arrowcontroller = Arrow.GetComponent<Npcbasicarrow>();
+            float height = supportmovescript.currenttarget.GetComponent<CapsuleCollider>().height - 0.2f;
+            arrowcontroller.hitposi = supportmovescript.currenttarget.transform.position + Vector3.up * height;
             arrowcontroller.Arrowtarget = supportmovescript.currenttarget.transform;
             arrowcontroller.basicdmgtodeal = basicdmgtodeal;
 
@@ -70,8 +72,10 @@ public class Bowsupport : MonoBehaviour
             Vector3 arrowrotation = (supportmovescript.currenttarget.transform.position - Arrowlaunchposi.position).normalized;
             GameObject Arrow = GameObject.Instantiate(endarrow, Arrowlaunchposi.position, Quaternion.LookRotation(arrowrotation, Vector3.up));
             Npcendarrow arrowcontroller = Arrow.GetComponent<Npcendarrow>();
+            float height = supportmovescript.currenttarget.GetComponent<CapsuleCollider>().height - 0.2f;
+            arrowcontroller.hitposi = supportmovescript.currenttarget.transform.position + Vector3.up * height;
             arrowcontroller.Arrowtarget = supportmovescript.currenttarget.transform;
-            arrowcontroller.basicdmgtodeal = enddmgtodeal;
+            arrowcontroller.basicdmgtodeal = Mathf.Round(enddmgtodeal * 0.5f);
 
             if(preventdoublehealandthreat == true)
             {

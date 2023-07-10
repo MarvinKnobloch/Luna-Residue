@@ -87,7 +87,8 @@ public class Supportmovement : MonoBehaviour
         EnemyHP.supporttargetdied += enemyhasdied;
         currentstate = null;
         currenttarget = null;
-        attacktimer = attackcd;
+        if (rangeweaponequiped == false) attacktimer = attackcd;
+        else attacktimer = attackcd * 0.5f;
         switchtarget();
         float potionheal = Globalplayercalculations.calculatecasthealing(basicpotionheal, playerhp.maxhealth * 0.4f, GetComponent<Attributecontroller>().stoneclassbonusheal);
         healpotion.GetComponent<Alliesbottlecontroller>().potionheal = potionheal;

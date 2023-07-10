@@ -226,7 +226,7 @@ public class GlobalCD : MonoBehaviour
         }
     }
 
-    IEnumerator charswitchcd()         // wird im Main/Secondcharwechsel gecalled
+    IEnumerator charswitchcd()
     {
         Statics.weaponswitchbool = false;
         weaponswitchcdimage.fillAmount = 1;
@@ -236,7 +236,6 @@ public class GlobalCD : MonoBehaviour
         charswitchcdimage.fillAmount = 0;
         Statics.charswitchmissingtime = 0;
 
-        Statics.characterswitchbuff = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().charswitchbuff;
         charbuffdurationimage.fillAmount = 0;
         while (true)
         {
@@ -255,6 +254,7 @@ public class GlobalCD : MonoBehaviour
     }
     IEnumerator charswitchbuff()
     {
+        Statics.characterswitchbuff = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().charswitchbuff;
         charswitchbuffimage.SetActive(true);
         if (charswitchbuffisrunning == true)
         {

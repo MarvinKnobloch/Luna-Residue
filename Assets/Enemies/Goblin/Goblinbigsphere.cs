@@ -25,7 +25,7 @@ public class Goblinbigsphere : MonoBehaviour
     {
         if (Statics.infight == true)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, 6.5f, targets, QueryTriggerInteraction.Ignore);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 6, targets, QueryTriggerInteraction.Ignore);
             foreach (Collider target in colliders)
             {
                 if (target.gameObject == LoadCharmanager.Overallmainchar.gameObject)

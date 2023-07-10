@@ -176,6 +176,8 @@ public class LoadCharmanager : MonoBehaviour
         aimcam.LookAt = Overallmainchar.transform;
         aimcam.Follow = Overallmainchar.transform;
 
+        Statics.weaponswitchbuff = 0;
+        Statics.characterswitchbuff = 0;
         classandstatsupdate(Statics.currentfirstchar, allcharacters, 0);                   // bonus hp von guard wird im elemenu beim auswählen des stones gesetzt
         classandstatsupdate(Statics.currentsecondchar, allcharacters, 1);
         classandstatsupdate(Statics.currentthirdchar, teammates, 2);

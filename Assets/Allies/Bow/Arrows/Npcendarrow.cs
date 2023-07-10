@@ -6,27 +6,24 @@ public class Npcendarrow : MonoBehaviour
 {
     //ist noch gleich wie der basicarrow, hab 2 versionen falls ich AOE adden will
 
-    public float arrowspeed;                                 
-    public float timetodestroy;
+    public float arrowspeed;
+    private float timetodestroyafterhit = 0.2f;
     public bool dmgonce;
+    public Vector3 hitposi;
     public Transform Arrowtarget;
 
     public float basicdmgtodeal;
-
-    void Start()
-    {
-        Destroy(gameObject, timetodestroy);
-    }
 
     void Update()
     {
         if (Arrowtarget != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Arrowtarget.position, arrowspeed * Time.deltaTime);
-            if (dmgonce == false && Vector3.Distance(transform.position, Arrowtarget.position) < 0.1f)
+            transform.position = Vector3.MoveTowards(transform.position, hitposi, arrowspeed * Time.deltaTime);
+            if (dmgonce == false && Vector3.Distance(transform.position, hitposi) < 0.1f)
             {
                 Checkhitboxbasic();
                 dmgonce = true;
+                StartCoroutine(destroyarrow());
             }
         }
     }
@@ -39,5 +36,10 @@ public class Npcendarrow : MonoBehaviour
                 enemyhp.takesupportdmg(basicdmgtodeal);
             }
         }
+    }
+    IEnumerator destroyarrow()
+    {
+        yield return new WaitForSeconds(timetodestroyafterhit);
+        Destroy(gameObject);
     }
 }

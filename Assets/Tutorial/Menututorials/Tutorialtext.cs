@@ -229,7 +229,7 @@ public class Tutorialtext : MonoBehaviour, ISelectHandler
         settextvalues();
         tutorialtext.text = "Each character is able to choose spells from to different elements.\n" +
                             "The first element depends on your selected character. However the second one is based on a " + "<color=green>" + "elemental stone" + "</color>" + ".\n" +
-                            "\nElemental stones have to be awaken first before you can use them to set the second element.\n" +
+                            "\nElemental stones have to be awaken first before you can use them.\n" +
                             "Awaken a stone also grants a permanent bonus for the group. \n" +
                             "\nThese stones also define the class of the character. \n" + 
                             "There are 3 different classes. " + "<color=green>" + "Fight" + "</color>" + ", " + "<color=green>" + "Heal " + "</color>" + "and " + "<color=green>" + "Guard" + "</color>" + ".\n" +
