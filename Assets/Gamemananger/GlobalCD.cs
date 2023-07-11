@@ -287,7 +287,7 @@ public class GlobalCD : MonoBehaviour
     IEnumerator supportresurrection()
     {
         supportrezzcdisrunning = true;
-        int randomnumber = Random.Range(1, 3);
+        int randomnumber = Random.Range(3, 5);
         yield return new WaitForSeconds(Statics.infightresurrectcd + Statics.presetresurrectcd + randomnumber);
         Statics.supportcanresurrect = true;
         supportrezzcdisrunning = false;

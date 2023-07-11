@@ -101,8 +101,7 @@ public class Supportrangeattack
                 rangenewposi = ssm.currenttarget.transform.position + ssm.currenttarget.transform.forward * -10;
                 NavMeshHit closetstpoint;
                 NavMesh.SamplePosition(ssm.posiafterattack, out closetstpoint, 20, NavMesh.AllAreas);
-                ssm.posiafterattack = closetstpoint.position;
-                //rangenewposi.y = ssm.transform.position.y;                      
+                ssm.posiafterattack = closetstpoint.position;                  
                 NavMeshHit hit;
                 bool isblocked = NavMesh.Raycast(ssm.transform.position, rangenewposi, out hit, NavMesh.AllAreas);
                 if (isblocked == true)
@@ -136,7 +135,6 @@ public class Supportrangeattack
         if (ssm.currenttarget != null)
         {
             ssm.supportreset();
-            rangenewposi.y = ssm.transform.position.y;
             ssm.attacktimer += Time.deltaTime;
             if (ssm.attacktimer > ssm.attackcd)
             {

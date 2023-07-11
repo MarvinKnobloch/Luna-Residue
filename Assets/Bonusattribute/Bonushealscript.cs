@@ -33,14 +33,16 @@ public class Bonushealscript : MonoBehaviour
         {
             yield return new WaitForSeconds(healovertimeremainingtime);
             healovertimeremainingtime = Statics.bonushealtimer;
-            lowesthealth = Statics.charcurrenthealth[Statics.currentfirstchar];
+            lowesthealth = Mathf.Infinity;
             currenttarget = LoadCharmanager.Overallmainchar.gameObject;
+            checkforlowesthealth(LoadCharmanager.Overallmainchar, Statics.currentfirstchar);
             checkforlowesthealth(LoadCharmanager.Overallsecondchar, Statics.currentsecondchar);
             checkforlowesthealth(LoadCharmanager.Overallthirdchar, Statics.currentthirdchar);
             checkforlowesthealth(LoadCharmanager.Overallforthchar, Statics.currentforthchar);
             if (currenttarget.TryGetComponent(out Playerhp playerhp))
             {
-                playerhp.addhealthwithtext(playerhp.maxhealth * Statics.bonushealpercentage);
+                if (currenttarget == LoadCharmanager.Overallsecondchar) playerhp.addhealth(playerhp.maxhealth * Statics.bonushealpercentage);
+                else playerhp.addhealthwithtext(playerhp.maxhealth * Statics.bonushealpercentage);
             }
         }
     }

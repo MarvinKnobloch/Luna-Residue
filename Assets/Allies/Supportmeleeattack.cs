@@ -139,7 +139,6 @@ public class Supportmeleeattack
                 NavMeshHit closetstpoint;
                 NavMesh.SamplePosition(ssm.posiafterattack, out closetstpoint, 20, NavMesh.AllAreas);
                 ssm.posiafterattack = closetstpoint.position;
-                //ssm.posiafterattack.y = ssm.transform.position.y;                       //support steckt in changeposiafter attack fest
                 NavMeshHit hit;
                 bool isblocked = NavMesh.Raycast(ssm.transform.position, ssm.posiafterattack, out hit, NavMesh.AllAreas);
                 if (isblocked == true)
@@ -169,7 +168,6 @@ public class Supportmeleeattack
         if (ssm.currenttarget != null)
         {
             ssm.supportreset();
-            ssm.posiafterattack.y = ssm.transform.position.y;
             if (Vector3.Distance(ssm.transform.position, ssm.posiafterattack) < 2)
             {
                 ssm.meshagent.ResetPath();

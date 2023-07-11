@@ -26,7 +26,7 @@ public class Vampirecube : MonoBehaviour
 
     /*private void OnDrawGizmos()
     {
-        Gizmos.DrawCube(transform.position, new Vector3(10f, 0.8f, 10f));
+        Gizmos.DrawCube(transform.position, new Vector3(8f, 0.8f, 8f));
     }*/
     private void dealdmg()
     {

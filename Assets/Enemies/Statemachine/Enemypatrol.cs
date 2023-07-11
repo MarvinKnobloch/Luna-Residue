@@ -28,7 +28,9 @@ public class Enemypatrol
         {
             esm.patroltimer = 0f;
             esm.patrolposi = esm.spawnpostion + Random.insideUnitSphere * 10;
-            esm.patrolposi.y = esm.transform.position.y;
+            NavMeshHit closetstpoint;
+            NavMesh.SamplePosition(esm.patrolposi, out closetstpoint, 20, NavMesh.AllAreas);
+            esm.patrolposi = closetstpoint.position;
             NavMeshHit hit;
             bool blocked;
             blocked = NavMesh.Raycast(esm.transform.position, esm.patrolposi, out hit, NavMesh.AllAreas);

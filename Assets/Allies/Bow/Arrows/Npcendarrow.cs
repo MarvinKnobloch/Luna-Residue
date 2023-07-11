@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Npcendarrow : MonoBehaviour
 {
@@ -8,9 +9,9 @@ public class Npcendarrow : MonoBehaviour
 
     public float arrowspeed;
     private float timetodestroyafterhit = 0.2f;
-    public bool dmgonce;
-    public Vector3 hitposi;
-    public Transform Arrowtarget;
+    [NonSerialized] public bool dmgonce;
+    [NonSerialized] public Vector3 hitposi;
+    [NonSerialized] public Transform Arrowtarget;
 
     public float basicdmgtodeal;
 

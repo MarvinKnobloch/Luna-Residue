@@ -8,7 +8,6 @@ public class Vampiresphere : MonoBehaviour
     [SerializeField] private LayerMask player;
     [NonSerialized] public float basedmg;
     [NonSerialized] public float explodetime;
-    [NonSerialized] public Vector3 overlapspherepoint;
 
     [SerializeField] private GameObject sphereeffect;
 
@@ -30,7 +29,7 @@ public class Vampiresphere : MonoBehaviour
     {
         if (Statics.infight == true)
         {
-            Collider[] colliders = Physics.OverlapSphere(overlapspherepoint, 3f, player, QueryTriggerInteraction.Ignore);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 3f, player, QueryTriggerInteraction.Ignore);
             foreach (Collider target in colliders)
             {
                 if (target.gameObject == LoadCharmanager.Overallmainchar.gameObject)

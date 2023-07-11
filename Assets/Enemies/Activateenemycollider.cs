@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Activateenemycollider : MonoBehaviour
 {
+    private void Awake()
+    {
+        foreach (Transform obj in gameObject.transform)
+        {
+            obj.gameObject.SetActive(false);
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == LoadCharmanager.triggercollider)

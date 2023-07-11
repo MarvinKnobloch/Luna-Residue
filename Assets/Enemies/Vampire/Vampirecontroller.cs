@@ -26,24 +26,14 @@ public class Vampirecontroller : MonoBehaviour
     private void OnEnable()
     {
         StopCoroutine("controllerdisable");
-        if (Physics.Raycast(LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 0.5f, Vector3.down, out RaycastHit hit, 30, raycastlayer, QueryTriggerInteraction.Ignore))
-        {
-            vampiresphere.gameObject.transform.position = hit.point;
-        }
-        else vampiresphere.gameObject.transform.position = LoadCharmanager.Overallmainchar.transform.position;
+        vampiresphere.gameObject.transform.position = LoadCharmanager.Overallmainchar.transform.position;
         vampiresphere.gameObject.SetActive(true);
-        vampiresphere.overlapspherepoint = vampiresphere.gameObject.transform.position;
         Invoke("spezialpart2", 1f);
     }
     private void spezialpart2()
     {
-        if (Physics.Raycast(LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 0.5f, Vector3.down, out RaycastHit hit, 30, raycastlayer, QueryTriggerInteraction.Ignore))
-        {
-            vampiresphere.gameObject.transform.position = hit.point;
-        }
-        else vampiresphere.gameObject.transform.position = LoadCharmanager.Overallmainchar.transform.position;
+        vampiresphere.gameObject.transform.position = LoadCharmanager.Overallmainchar.transform.position;
         vampiresphere.gameObject.SetActive(true);
-        vampiresphere.overlapspherepoint = vampiresphere.gameObject.transform.position;
         Invoke("spezialpart3", 1f);
     }
     private void spezialpart3()
