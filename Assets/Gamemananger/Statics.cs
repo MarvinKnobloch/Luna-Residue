@@ -164,8 +164,8 @@ public class Statics
     public static float groupstonedmgbonus = 0;
 
     public static float guardbonushpeachlvl = 8;
-    public static float alliegrouphealspawntime = 9;
-    public static float alliegrouphealdespawntime = 5;
+    public static float alliegrouphealspawntime = 11;
+    public static float alliegrouphealdespawntime = 6;
 
     //playerstats
     public static int charcurrentlvl = 1;

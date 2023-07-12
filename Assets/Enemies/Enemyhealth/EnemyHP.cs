@@ -80,6 +80,9 @@ public class EnemyHP : MonoBehaviour
 
         ColorUtility.TryParseHtmlString("#CD5003", out dmgtextcolor);
 
+    }
+    private void Start()
+    {
         if (LoadCharmanager.Overallmainchar != null)
         {
             if (Vector3.Distance(LoadCharmanager.Overallmainchar.transform.position, transform.position) < 20)

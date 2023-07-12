@@ -58,7 +58,7 @@ public class Swordattack : MonoBehaviour
         swordcontroller.enabled = true;
         readattackinput = false;
         eleAbilities.stopignorelayers();
-        swordweaponswitch();
+        if (movementscript.loadcharmanager.triggerweaponswitch == true) swordweaponswitch();
     }
 
     [SerializeField] private Attackstate attackestate;

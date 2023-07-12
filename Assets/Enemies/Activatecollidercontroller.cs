@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Activateenemycollider : MonoBehaviour
+public class Activatecollidercontroller : MonoBehaviour
 {
     private void Awake()
     {
-        foreach (Transform obj in gameObject.transform)
+        foreach (Transform obj in gameObject.transform)                     //disable bei load wenn mainchar in der nähe ist, ist in enemyhp. triggerweaponswitch in Loadcharmanager verhindert den weaponswitch
         {
             obj.gameObject.SetActive(false);
         }

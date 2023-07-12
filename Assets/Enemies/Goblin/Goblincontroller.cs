@@ -14,7 +14,7 @@ public class Goblincontroller : MonoBehaviour
     private int castnumber;
     [SerializeField] private int castsphereamount;
 
-    private int randombigsphere;
+    //private int randombigsphere;
 
     private void Awake()
     {
@@ -31,7 +31,7 @@ public class Goblincontroller : MonoBehaviour
         StopCoroutine("controllerdisable");
         spherenumber = 0;
         castnumber = 0;
-        randombigsphere = Random.Range(2, castsphereamount);
+        //randombigsphere = Random.Range(2, castsphereamount);
         spheres[spherenumber].transform.position = LoadCharmanager.Overallmainchar.transform.position;
         spheres[spherenumber].SetActive(true);
         spherenumber++;
@@ -40,16 +40,14 @@ public class Goblincontroller : MonoBehaviour
     }
     private void spezial()
     {
-        if (randombigsphere == castnumber)
+        /*if (randombigsphere == castnumber)
         {
             bigsphere.transform.position = LoadCharmanager.Overallmainchar.transform.position;
             bigsphere.SetActive(true);
         }
-        else
-        {
-            spheres[spherenumber].transform.position = LoadCharmanager.Overallmainchar.transform.position;
-            spheres[spherenumber].SetActive(true);
-        }
+        else*/
+        spheres[spherenumber].transform.position = LoadCharmanager.Overallmainchar.transform.position;
+        spheres[spherenumber].SetActive(true);
         if (spherenumber >= 2) spherenumber = 0;
         else spherenumber++;
         castnumber++;

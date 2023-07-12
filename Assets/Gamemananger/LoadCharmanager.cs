@@ -26,7 +26,7 @@ public class LoadCharmanager : MonoBehaviour
     public GameObject[] teammates;
     public static GameObject Overallthirdchar;
     public static GameObject Overallforthchar;
-    public static Vector3 savemainposi = new Vector3(31, 31, 671);   //new Vector3(31,31,671);                    //new Vector3(18, 1, 865); tutorial
+    public static Vector3 savemainposi = new Vector3(18, 1, 865);   //new Vector3(31,31,671);                    //new Vector3(18, 1, 865); tutorial
     public static Quaternion savemainrota;
     public static float savecamvalueX;
 
@@ -35,6 +35,8 @@ public class LoadCharmanager : MonoBehaviour
     public static bool interaction;
     public static bool cantsavehere;
 
+    [NonSerialized] public bool triggerweaponswitch;                            //weil bei awake die mobs noch da sind und dann der weaponswitch gecalled wird wenn man in der nähe spawnt
+
     [SerializeField] private GameObject map;
     [SerializeField] private LayerMask meleehitbox;
 
@@ -42,7 +44,6 @@ public class LoadCharmanager : MonoBehaviour
 
     public static event Action swordcontrollerupdate;
     public static event Action fistcontrollerupdate;
-
     private void Awake()
     {
         expmanager = GetComponent<Expmanager>();
@@ -65,6 +66,7 @@ public class LoadCharmanager : MonoBehaviour
     }
     private void Start()
     {
+        triggerweaponswitch = true;
         resetvalues();                                                   //falls der kampf vorbei ist bei noch spezialattacks getriggert werden und man dann ins menu geht(menu open sollte nicht möglich sein aber zur sicherheit)
         Statics.gameoverposi = savemainposi;
         Statics.gameoverrota = savemainrota;

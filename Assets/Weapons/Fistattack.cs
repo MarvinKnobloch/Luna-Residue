@@ -56,7 +56,7 @@ public class Fistattack : MonoBehaviour
         fistcontroller.enabled = true;
         readattackinput = false;
         eleAbilities.stopignorelayers();
-        fistweaponswitch();
+        if (movementscript.loadcharmanager.triggerweaponswitch == true) fistweaponswitch();
     }
 
     private Attackstate attackestate;

@@ -22,6 +22,7 @@ public class Movescript : MonoBehaviour
     [NonSerialized] public Animator animator;
     [NonSerialized] public Playerhp playerhp;
     [NonSerialized] public Attributecontroller attributecontroller;
+    [SerializeField] public LoadCharmanager loadcharmanager;
 
     public Transform CamTransform;
     public CinemachineFreeLook Cam1;

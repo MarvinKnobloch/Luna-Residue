@@ -26,7 +26,7 @@ public class Alliesbottlecontroller : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == LoadCharmanager.Overallmainchar && cancollect == true)
+        if (other.gameObject == LoadCharmanager.Overallmainchar && cancollect == true && LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().playerisdead == false)
         {
             supportspellsounds.playbottleheal();
             LoadCharmanager.Overallmainchar.GetComponent<Playerhp>().addhealthwithtext(potionheal);

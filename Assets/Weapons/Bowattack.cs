@@ -85,7 +85,7 @@ public class Bowattack : MonoBehaviour
         basicattackcd = 1f;
         bowaircount = 0;
         readattackinput = false;
-        bowweaponswitch();
+        if (movementscript.loadcharmanager.triggerweaponswitch == true) bowweaponswitch();
     }
     private void OnDisable()
     {
