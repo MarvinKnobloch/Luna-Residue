@@ -37,10 +37,10 @@ public class Gasmanline : MonoBehaviour
         endpoint = LoadCharmanager.Overallmainchar.transform.position + Vector3.up * 1.5f;
         Vector3 endpointoffset = endpoint - startpoint;
         line.SetPosition(0, startpoint);
-        line.SetPosition(1, endpointoffset * 3 + startpoint);
+        line.SetPosition(1, endpointoffset * 4 + startpoint);
 
         RaycastHit hit;
-        if (Physics.Linecast(startpoint, endpointoffset * 4 + startpoint, out hit, layer) == false)
+        if (Physics.Linecast(startpoint, endpointoffset * 5 + startpoint, out hit, layer) == false)
         {
             hitting1 = false;
             hitting2 = false;

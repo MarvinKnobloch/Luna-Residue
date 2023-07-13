@@ -12,6 +12,7 @@ public class Gasmanspezial : MonoBehaviour
     }
     private void gasmanspezial()
     {
+        spezialcontroller.setenemy(gameObject.transform.position);
         spezialcontroller.gameObject.SetActive(true);
     }
     private void gasmanspezialaudio() => enemyspezialsound.playgasmanspezial();

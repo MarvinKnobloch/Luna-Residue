@@ -11,9 +11,9 @@ public class Gasmancontroller : MonoBehaviour
     [SerializeField] private GameObject target1;
     [SerializeField] private GameObject target2;
 
-    private Vector3 mainchar;
-    private Vector3 maincharleft;
-    private Vector3 maincharright;
+    private Vector3 enemyposi;
+    private Vector3 leftspawn;
+    private Vector3 rightspawn;
 
     private Vector3 pillarspawn1;
     private Vector3 pillarspawn2;
@@ -53,38 +53,36 @@ public class Gasmancontroller : MonoBehaviour
     }
     private void placepillars()
     {
-        mainchar = LoadCharmanager.Overallmainchar.transform.position;
-        mainchar = findyposi(mainchar);
+        leftspawn = enemyposi + LoadCharmanager.Overallmainchar.transform.forward * -4 + LoadCharmanager.Overallmainchar.transform.right * 7;
+        leftspawn = findyposi(leftspawn);
 
-        maincharleft = mainchar + LoadCharmanager.Overallmainchar.transform.forward * -4 + LoadCharmanager.Overallmainchar.transform.right * 7;
-        maincharleft = findyposi(maincharleft);
+        rightspawn = enemyposi + LoadCharmanager.Overallmainchar.transform.forward * -4 + LoadCharmanager.Overallmainchar.transform.right * -7;
+        rightspawn = findyposi(rightspawn);
 
-        maincharright = mainchar + LoadCharmanager.Overallmainchar.transform.forward * -4 + LoadCharmanager.Overallmainchar.transform.right * -7;
-        maincharright = findyposi(maincharright);
-
-        pillarspawn1 = maincharleft + UnityEngine.Random.insideUnitSphere * 5;
+        pillarspawn1 = leftspawn + UnityEngine.Random.insideUnitSphere * 5;
         pillarspawn1 = findyposi(pillarspawn1);
         NavMeshHit hit1;
-        NavMesh.Raycast(maincharleft, pillarspawn1, out hit1, NavMesh.AllAreas);
+        NavMesh.Raycast(enemyposi, pillarspawn1, out hit1, NavMesh.AllAreas);
         pillar1.transform.position = hit1.position + Vector3.up * 0.4f;
 
-        pillarspawn2 = maincharright + UnityEngine.Random.insideUnitSphere * 5;
+        pillarspawn2 = rightspawn + UnityEngine.Random.insideUnitSphere * 5;
         pillarspawn2 = findyposi(pillarspawn2);
         NavMeshHit hit2;
-        NavMesh.Raycast(maincharright, pillarspawn2, out hit2, NavMesh.AllAreas);
+        NavMesh.Raycast(enemyposi, pillarspawn2, out hit2, NavMesh.AllAreas);
         pillar2.transform.position = hit2.position + Vector3.up * 0.4f;
-
-        targetspawn1 = mainchar + LoadCharmanager.Overallmainchar.transform.forward * 10 + UnityEngine.Random.insideUnitSphere * 9;
+        
+        int randomposi1 = UnityEngine.Random.Range(-7, 1);
+        targetspawn1 = enemyposi + LoadCharmanager.Overallmainchar.transform.right * randomposi1 + LoadCharmanager.Overallmainchar.transform.forward * 12 + UnityEngine.Random.insideUnitSphere * 6;
         targetspawn1 = findyposi(targetspawn1);
         NavMeshHit hit3;
-        NavMesh.Raycast(mainchar, targetspawn1, out hit3, NavMesh.AllAreas);
+        NavMesh.Raycast(enemyposi, targetspawn1, out hit3, NavMesh.AllAreas);
         target1.transform.position = hit3.position + Vector3.up * 1f;
 
-        int randomposi = UnityEngine.Random.Range(-3, 3);
-        targetspawn2 = mainchar + LoadCharmanager.Overallmainchar.transform.right * randomposi + LoadCharmanager.Overallmainchar.transform.forward * 8 + UnityEngine.Random.insideUnitSphere * 7;
+        int randomposi2 = UnityEngine.Random.Range(-1, 7);
+        targetspawn2 = enemyposi + LoadCharmanager.Overallmainchar.transform.right * randomposi2 + LoadCharmanager.Overallmainchar.transform.forward * 8 + UnityEngine.Random.insideUnitSphere * 6;
         targetspawn2 = findyposi(targetspawn2);
         NavMeshHit hit4;
-        NavMesh.Raycast(mainchar, targetspawn2, out hit4, NavMesh.AllAreas);
+        NavMesh.Raycast(enemyposi, targetspawn2, out hit4, NavMesh.AllAreas);
         target2.transform.position = hit4.position + Vector3.up * 1f;
 
         Invoke("turnonline", 1f);
@@ -127,4 +125,8 @@ public class Gasmancontroller : MonoBehaviour
         CancelInvoke();
         gameObject.SetActive(false);
     }
+    public void setenemy(Vector3 enemy)
+    {
+        enemyposi = enemy;
+    } 
 }

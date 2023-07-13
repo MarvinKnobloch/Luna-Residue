@@ -39,7 +39,8 @@ public class Elementaltutorial : MonoBehaviour
     }
     private void settext()
     {
-        tutorialtext.text = "<color=green>" + "Elemental Menu " + "</color>" + "unlocked. It now can be selected in the menu.\n" +
+        tutorialtext.text = "\nDevelopment Note: The spell system is in a really early state so its unfinished and may cause bugs\n" +
+                            "\n<color=green>" + "Elemental Menu " + "</color>" + "unlocked. It now can be selected in the menu.\n" +
                             "The Elemental Menu enables " + "<color=green>" + "spells " + "</color>" + "and " + "<color=green>" + "classes" + "</color>" + ". " +
                             "Each character is able to choose spells from to different elements.\n" +
                             "\nThe first element depends on your selected character. However the second one is based on a " + "<color=green>" + "elemental stone" + "</color>" + ".\n" +
@@ -49,8 +50,7 @@ public class Elementaltutorial : MonoBehaviour
                             "There are 3 different classes. " + "<color=green>" + "Fight" + "</color>" + ", " + "<color=green>" + "Heal " + "</color>" + "and " + "<color=green>" + "Guard" + "</color>" + ".\n" +
                             "\nFight: The character deals increased damage.\n" +
                             "Heal: Grants a healbonus and add the ability to cast a group heal and resurrect.\n" +
-                            "Guard: Will add some bonus health and reduce the damage taken. It also increases threat on enemies.\n" +
-                            "\nDevelopment Note: The spell system is in a really early state so its unfinished and may cause bugs";
+                            "Guard: Will add some bonus health and reduce the damage taken. It also increases threat on enemies.";
     }
 }
 
