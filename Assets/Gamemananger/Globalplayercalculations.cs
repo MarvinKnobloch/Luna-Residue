@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Globalplayercalculations
 {
-    public static float calculateplayerdmgdone(float basicdmg, float attackdmg, float weapondmg, float stoneclassbonus)
+    public static float calculateplayerdmgdone(float basicdmg, float attackdmg, float weapondmg,float flatstoneclassbonusdmg, float stoneclassbonus)
     {
-        float dmg = Mathf.Round(basicdmg + attackdmg + weapondmg);
+        float dmg = Mathf.Round(basicdmg + attackdmg + weapondmg + flatstoneclassbonusdmg);
         dmg += Mathf.Round((Statics.groupstonedmgbonus + stoneclassbonus) * 0.01f * dmg);
         return dmg;
     }
-    public static float calculatesupportdmg(float basicdmg, float attackdmg, float weapondmg, float stoneclassbonus)
+    public static float calculatesupportdmg(float basicdmg, float attackdmg, float weapondmg)
     {
         float dmg = Mathf.Round(basicdmg + attackdmg + weapondmg);
-        dmg += Mathf.Round((Statics.groupstonedmgbonus + stoneclassbonus) * 0.01f * dmg);
-        dmg = Mathf.Round(dmg * 0.25f);      //durch 3 teilen sonst zu viel dmg
+        dmg += Mathf.Round((Statics.groupstonedmgbonus) * 0.01f * dmg);
+        dmg = Mathf.Round(dmg * 0.25f);      //durch 4 teilen sonst zu viel dmg
         return dmg;
     }
     public static float calculatenoncritdmg(float dmg, float switchbuffdmg, bool maintarget)

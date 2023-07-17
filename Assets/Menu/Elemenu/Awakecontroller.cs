@@ -24,12 +24,11 @@ public class Awakecontroller : MonoBehaviour
     private int currentawakematerial;
     [SerializeField] private Craftingobject[] craftingmats;          //eine Awake kann maximal 3 verschiedene items kosten
 
-    private InputAction awakehotkey;
     [SerializeField] private Image awakeimage;
     private bool starttimer;
 
     public int neededawakemats;                            //wieviel verschiedene mats zum craften benötigt sind
-    public int currentawakemats;                           //wieviel verschiedene mats vorhanden sind
+    public int requiredmatsamountavailable;                    //wieviel verschiedene mats vorhanden sind
     public bool neededawakematsandstone;                   //wenn alle mats vorhanden sind
     public bool neededawakecore;                          //wenn der core vorhanden ist
 
@@ -46,12 +45,12 @@ public class Awakecontroller : MonoBehaviour
     public int maxawakening;
     public Awakestone[] awake;
 
+    [SerializeField] private GameObject Uimessage;
     [SerializeField] private Menusoundcontroller menusoundcontroller;
 
     private void Awake()
     {
         controlls = Keybindinputmanager.inputActions;
-        awakehotkey = controlls.Elementalmenu.Awakestone;
     }
     private void OnEnable()
     {
@@ -70,13 +69,46 @@ public class Awakecontroller : MonoBehaviour
                 if (controlls.Elementalmenu.Awakestone.WasPressedThisFrame() && starttimer == false)
                 {
                     starttimer = true;
-                    StartCoroutine(awakestone());
+                    checkforfirstawakes();
                 }
                 if (controlls.Elementalmenu.Awakestone.WasReleasedThisFrame())
                 {
                     awakeimage.fillAmount = 0;
                     starttimer = false;
                     StopAllCoroutines();
+                }
+            }
+        }
+    }
+    private void checkforfirstawakes()
+    {
+        if(Statics.groupstonedefensebonus != 0 && Statics.groupstonehealbonus != 0) StartCoroutine(awakestone());
+        else
+        {
+            if(stonecontroller.stoneclassroll == 1) StartCoroutine(awakestone());
+            else
+            {
+                if (stonecontroller.stoneclassroll == 2)
+                {
+                    if (Statics.groupstonedefensebonus != 0) StartCoroutine(awakestone());
+                    else
+                    {
+                        Uimessage.SetActive(true);
+                        Uimessage.GetComponentInChildren<TextMeshProUGUI>().text = "Awake one Guard stone first";
+                    }
+                }
+                else if(stonecontroller.stoneclassroll == 0)
+                {
+                    if(Statics.groupstonedefensebonus == 0)
+                    {
+                        Uimessage.SetActive(true);
+                        Uimessage.GetComponentInChildren<TextMeshProUGUI>().text = "Awake one Guard stone first";
+                    }
+                    else if (Statics.groupstonehealbonus == 0)
+                    {
+                        Uimessage.SetActive(true);
+                        Uimessage.GetComponentInChildren<TextMeshProUGUI>().text = "Awake one Heal stone first";
+                    }
                 }
             }
         }
@@ -127,13 +159,13 @@ public class Awakecontroller : MonoBehaviour
         else
         {
             neededawakemats = 1;
-            currentawakemats = 0;
+            requiredmatsamountavailable = 0;
             if (elementalstone.inventoryslot != 0)
             {
                 elementalstoneamount = matsinventory.Container.Items[elementalstone.inventoryslot - 1].amount;
                 if (awake[awakelvl].awakemats[1].costs <= elementalstoneamount)
                 {
-                    currentawakemats++;
+                    requiredmatsamountavailable++;
                     elemenatlstonecosttext.text = "(" + "<color=green>" + elementalstoneamount + "</color>" + "/" + awake[awakelvl].awakemats[1].costs + ")" + elementalstone.itemname;
                 }
                 else
@@ -161,7 +193,7 @@ public class Awakecontroller : MonoBehaviour
                         int amount = matsinventory.Container.Items[craftingmats[currentposi].inventoryslot - 1].amount;                          //findet das item in inventroy durch die inventoryslot nummer
                         if (awake[awakelvl].awakemats[currentawakematerial].costs <= amount)
                         {
-                            currentawakemats++;
+                            requiredmatsamountavailable++;
                             materialcosttext.text +=  "(" + "<color=green>" + amount + "</color>" + "/" + awake[awakelvl].awakemats[currentawakematerial].costs + ")" + craftingmats[currentposi].itemname + "\n";
                         }
                         else
@@ -181,7 +213,7 @@ public class Awakecontroller : MonoBehaviour
                     break;
                 }
             }
-            if (currentawakemats == neededawakemats)
+            if (requiredmatsamountavailable == neededawakemats)
             {
                 neededawakematsandstone = true;
             }

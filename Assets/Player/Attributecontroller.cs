@@ -24,6 +24,7 @@ public class Attributecontroller : MonoBehaviour
     [NonSerialized] public float fistattack;
 
     [NonSerialized] public bool isdmgclassroll;
+    [NonSerialized] public float flatstoneclassbonusdmg;
     [NonSerialized] public float stoneclassbonusdmg;
 
     [NonSerialized] public bool isguardclassroll;
@@ -41,30 +42,34 @@ public class Attributecontroller : MonoBehaviour
         {
             if (Statics.characterclassroll[Statics.currentthirdchar] == 0 || Statics.characterclassroll[Statics.currentforthchar] == 0)
             {
-                stoneclassbonusdmg = Statics.groupstonedmgbonus;
+                stoneclassbonusdmg = Statics.groupstonedmgbonus * 1.2f;
             }
             else
             {
-                stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.5f;
+                stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.8f;
             }
+            flatstoneclassbonusdmg = Statics.charcurrentlvl * 0.2f;
             stoneclassbonusheal = 0;
             stoneclassdmgreduction = 0;
         }
         else if (isguardclassroll)
         {
             checkforsupportdmgbuff();
+            flatstoneclassbonusdmg = 0;
             stoneclassbonusheal = 0;
-            stoneclassdmgreduction = Statics.groupstonedefensebonus / 2;
+            stoneclassdmgreduction = Statics.groupstonedefensebonus;
         }
         else if (ishealerclassroll)
         {
             checkforsupportdmgbuff();
+            flatstoneclassbonusdmg = 0;
             stoneclassbonusheal = Statics.groupstonehealbonus;  //Statics.groupstonehealbonus / 2;
             stoneclassdmgreduction = 0;
         }
         else
         {
             checkforsupportdmgbuff();
+            flatstoneclassbonusdmg = 0;
             stoneclassbonusheal = 0;
             stoneclassdmgreduction = 0;
         }
@@ -76,7 +81,7 @@ public class Attributecontroller : MonoBehaviour
         {
             if(Statics.characterclassroll[Statics.currentthirdchar] == 0)
             {
-                stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.5f;
+                stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.4f;
                 return;
             }
         }
@@ -84,7 +89,7 @@ public class Attributecontroller : MonoBehaviour
         {
             if (Statics.characterclassroll[Statics.currentforthchar] == 0)
             {
-                stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.5f;
+                stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.4f;
                 return;
             }
             else

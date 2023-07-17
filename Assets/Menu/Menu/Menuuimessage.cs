@@ -11,7 +11,7 @@ public class Menuuimessage : MonoBehaviour
     {
         Vector2 mouseposi = Input.mousePosition;
         mouseposi.x += 200;
-        mouseposi.y += -25;
+        mouseposi.y += 25;
         transform.position = mouseposi;
         resettimer();
     }
@@ -20,7 +20,7 @@ public class Menuuimessage : MonoBehaviour
     {
         Vector2 mouseposi = Input.mousePosition;
         mouseposi.x += 200;
-        mouseposi.y += -25;
+        mouseposi.y += 25;
         transform.position = mouseposi;
     }
     public void resettimer()
@@ -30,7 +30,7 @@ public class Menuuimessage : MonoBehaviour
     }
     IEnumerator disableobject()
     {
-        yield return new WaitForSecondsRealtime(0.7f);
+        yield return new WaitForSecondsRealtime(0.9f);
         gameObject.SetActive(false);
     }
 }

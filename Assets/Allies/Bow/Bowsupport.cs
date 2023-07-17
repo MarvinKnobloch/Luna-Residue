@@ -36,8 +36,8 @@ public class Bowsupport : MonoBehaviour
 
     private void bowdmgupdate()
     {
-        basicdmgtodeal = Globalplayercalculations.calculatesupportdmg(basicarrowdmg, attributecontroller.dmgfromallies, attributecontroller.bowattack, attributecontroller.stoneclassbonusdmg);
-        enddmgtodeal = Globalplayercalculations.calculatesupportdmg(endarrowdmg, attributecontroller.dmgfromallies, attributecontroller.bowattack, attributecontroller.stoneclassbonusdmg);
+        basicdmgtodeal = Globalplayercalculations.calculatesupportdmg(basicarrowdmg, attributecontroller.dmgfromallies, attributecontroller.bowattack);
+        enddmgtodeal = Globalplayercalculations.calculatesupportdmg(endarrowdmg, attributecontroller.dmgfromallies, attributecontroller.bowattack);
 
         weaponhealing = Globalplayercalculations.calculateweaponheal();
     }

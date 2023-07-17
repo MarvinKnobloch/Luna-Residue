@@ -30,7 +30,7 @@ public class Singlearrow : MonoBehaviour
     {
         dmgtype = type;
         Attributecontroller atb = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>();
-        overalldmg = Globalplayercalculations.calculateplayerdmgdone(dmg, atb.attack, atb.bowattack, atb.stoneclassbonusdmg);
+        overalldmg = Globalplayercalculations.calculateplayerdmgdone(dmg, atb.attack, atb.bowattack, atb.flatstoneclassbonusdmg, atb.stoneclassbonusdmg);
         switchbuffdmg = Globalplayercalculations.calculateweaponcharbuff(overalldmg);
         overallcritchance = LoadCharmanager.Overallmainchar.GetComponent<Attributecontroller>().critchance;
 

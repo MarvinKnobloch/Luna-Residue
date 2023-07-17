@@ -71,7 +71,8 @@ public class Openworldtutorials : MonoBehaviour
         movement = controlls.Player.Movement.GetBindingDisplayString();
         jump = controlls.Player.Jump.GetBindingDisplayString();
         tutorialtext.text = "Press \"" + "<color=green>" + movement + "</color>" + "\" to move your character.\n" +
-                            "\nUse \"" + "<color=green>" + jump + "</color>" + "\" to jump.";
+                            "\nUse \"" + "<color=green>" + jump + "</color>" + "\" to jump.\n" +
+                            "\nTo change key bindings open menu (<color=green>ESC</color>) -> Settings";
     }
     public void dashtutorial()
     {

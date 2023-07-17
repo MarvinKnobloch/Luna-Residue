@@ -39,6 +39,7 @@ public class Elemenucontroller : MonoBehaviour
     private string switchleft;
     private string switchright;
 
+    [SerializeField] private GameObject Uimessage;
     [SerializeField] private Menusoundcontroller menusoundcontroller;
     void Awake()
     {
@@ -67,6 +68,7 @@ public class Elemenucontroller : MonoBehaviour
     {
         controlls.Enable();
 
+        Uimessage.SetActive(false);
         currentelemenuchar = 0;
         firstchar = Statics.currentfirstchar;
         secondchar = Statics.currentsecondchar;

@@ -55,10 +55,10 @@ public class Fistcontroller : MonoBehaviour
     }
     public void fistdmgupdate()
     {
-        overallbasicdmg = Globalplayercalculations.calculateplayerdmgdone(chainbasicdmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
-        overallenddmg = Globalplayercalculations.calculateplayerdmgdone(chainenddmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
-        overallair3middmg = Globalplayercalculations.calculateplayerdmgdone(air3middmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
-        basicweaponswitchdmg = Globalplayercalculations.calculateplayerdmgdone(weaponswitchdmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.stoneclassbonusdmg);
+        overallbasicdmg = Globalplayercalculations.calculateplayerdmgdone(chainbasicdmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.flatstoneclassbonusdmg, attributecontroller.stoneclassbonusdmg);
+        overallenddmg = Globalplayercalculations.calculateplayerdmgdone(chainenddmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.flatstoneclassbonusdmg, attributecontroller.stoneclassbonusdmg);
+        overallair3middmg = Globalplayercalculations.calculateplayerdmgdone(air3middmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.flatstoneclassbonusdmg, attributecontroller.stoneclassbonusdmg);
+        basicweaponswitchdmg = Globalplayercalculations.calculateplayerdmgdone(weaponswitchdmg, attributecontroller.attack, attributecontroller.fistattack, attributecontroller.flatstoneclassbonusdmg, attributecontroller.stoneclassbonusdmg);
 
         overallcritchance = attributecontroller.critchance;
 
