@@ -56,9 +56,9 @@ public class Awakecontroller : MonoBehaviour
     {
         awakecancel();
         elementalstonetextupdate();
-        bonusdmg.text = "Bonusdmg (" + Statics.groupstonedmgbonus + "%)";
-        bonusdmgreduction.text = "Dmgreduction (" + Statics.groupstonedefensebonus + "%)";
-        bonusheal.text = "Bonusheal (" + Statics.groupstonehealbonus + "%)";
+        bonusdmg.text = "Damage increase (" + Statics.groupstonedmgbonus + "%)";
+        bonusdmgreduction.text = "Damage reduction (" + Statics.groupstonedefensebonus + "%)";
+        bonusheal.text = "Heal increase (" + Statics.groupstonehealbonus + "%)";
     }
     private void Update()
     {

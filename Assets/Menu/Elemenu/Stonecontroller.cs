@@ -82,17 +82,17 @@ public class Stonecontroller : MonoBehaviour, IPointerEnterHandler, IPointerExit
             if(stoneclassroll == 0)
             {
                 float newvalue = Statics.groupstonedmgbonus + 1;
-                bonustext.text = "Bonusdmg (" + "<color=green>" + newvalue + "</color>" + "%)";
+                bonustext.text = "Damage increase (" + "<color=green>" + newvalue + "</color>" + "%)";
             }
             if (stoneclassroll == 1)
             {
                 float newvalue = Statics.groupstonedefensebonus + 2;
-                bonustext.text = "Dmgreduction (" + "<color=green>" + newvalue + "</color>" + "%)";
+                bonustext.text = "Damage reduction (" + "<color=green>" + newvalue + "</color>" + "%)";
             }
             if (stoneclassroll == 2)
             {
                 float newvalue = Statics.groupstonehealbonus + 3;
-                bonustext.text = "Healbonus (" + "<color=green>" + newvalue + "</color>" + "%)";
+                bonustext.text = "Heal increase (" + "<color=green>" + newvalue + "</color>" + "%)";
             }
             awakecontroller.checkforawake();
         }
@@ -104,41 +104,41 @@ public class Stonecontroller : MonoBehaviour, IPointerEnterHandler, IPointerExit
         {
             awakemessageobj.GetComponent<Awakecontroller>().stonecontroller = null;
             awakecontroller.awakecancel();
-            elementalcorecosttext.text = "Elementalcore";
+            elementalcorecosttext.text = "Elemental Core";
             awakecontroller.awake[awakecontroller.awakelvl].awakemats[0].awakemat = null;
             if (stoneclassroll == 0)
             {
-                bonustext.text = "Bonusdmg (" + Statics.groupstonedmgbonus + "%)";
+                bonustext.text = "Damage increase (" + Statics.groupstonedmgbonus + "%)";
             }
             if (stoneclassroll == 1)
             {
 
-                bonustext.text = "Dmgreduction (" + Statics.groupstonedefensebonus + "%)";
+                bonustext.text = "Damage reduction (" + Statics.groupstonedefensebonus + "%)";
             }
             if (stoneclassroll == 2)
             {
-                bonustext.text = "Bonusheal (" + Statics.groupstonehealbonus + "%)";
+                bonustext.text = "Heal increase (" + Statics.groupstonehealbonus + "%)";
             }
         }
     }
     public void stonecontrollerupdate()
     {
         matsinventory.Container.Items[elementalcore.inventoryslot - 1].amount -= awakecontroller.awake[awakecontroller.awakelvl].awakemats[0].costs;
-        elementalcorecosttext.text = "Elementalcore";
+        elementalcorecosttext.text = "Elemental Core";
         if (stoneclassroll == 0)
         {
             Statics.groupstonedmgbonus += 1;
-            bonustext.text = "Bonusdmg (" + Statics.groupstonedmgbonus + "%)";
+            bonustext.text = "Damage increase (" + Statics.groupstonedmgbonus + "%)";
         }
         if (stoneclassroll == 1)
         {
             Statics.groupstonedefensebonus += 2;
-            bonustext.text = "Dmgreduction (" + Statics.groupstonedefensebonus + "%)";
+            bonustext.text = "Damage reduction (" + Statics.groupstonedefensebonus + "%)";
         }
         if (stoneclassroll == 2)
         {
             Statics.groupstonehealbonus += 3;
-            bonustext.text = "Bonusheal (" + Statics.groupstonehealbonus + "%)";
+            bonustext.text = "Heal increase (" + Statics.groupstonehealbonus + "%)";
         }
     }
 }

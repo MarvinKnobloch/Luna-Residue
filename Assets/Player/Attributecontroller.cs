@@ -48,7 +48,7 @@ public class Attributecontroller : MonoBehaviour
             {
                 stoneclassbonusdmg = Statics.groupstonedmgbonus * 0.8f;
             }
-            flatstoneclassbonusdmg = Statics.charcurrentlvl * 0.2f;
+            flatstoneclassbonusdmg = Statics.charcurrentlvl * 0.25f;
             stoneclassbonusheal = 0;
             stoneclassdmgreduction = 0;
         }
