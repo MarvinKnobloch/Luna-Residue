@@ -20,7 +20,7 @@ public class Openfasttravelcommit : MonoBehaviour, IPointerEnterHandler, IPointe
     {
         commitfasttravelobj.SetActive(true);
         commitfasttravelobj.GetComponent<Commitfasttravel>().fasttravelpoint = travelpoint.travelcordinates;
-        commitfasttravelobj.GetComponentInChildren<TextMeshProUGUI>().text = "Fastravel to " + travelpoint.name + "?";
+        commitfasttravelobj.GetComponentInChildren<TextMeshProUGUI>().text = "Fastravel to " + travelpoint.travelpointname + "?";
         travelpointnametext.SetActive(false);
     }
 
@@ -28,7 +28,7 @@ public class Openfasttravelcommit : MonoBehaviour, IPointerEnterHandler, IPointe
     {
         travelpointnametext.gameObject.transform.position = transform.position + new Vector3(0, 35 , 0);
         travelpointnametext.SetActive(true);
-        travelpointnametext.GetComponentInChildren<TextMeshProUGUI>().text = travelpoint.name;
+        travelpointnametext.GetComponentInChildren<TextMeshProUGUI>().text = travelpoint.travelpointname;
     }
 
     public void OnPointerExit(PointerEventData eventData)
