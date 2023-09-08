@@ -196,7 +196,7 @@ public class Openworldtutorials : MonoBehaviour
                             "\n\"Weaponswitch\" increases the damage buff and buff duration after switching a weapon.\n" +
                             "\n\"Charswitch\" increases the damage buff and buff duration after switching the character.\n" +
                             "\n\"Basic\" increases the damage done by the last attack of your chain attack and the critical chance granted from hitting the enemy weak spot.\n" +
-                            "\nFor more turotials click on \"<color=green>Tutorial</color>\" in the menu overview.";
+                            "\nFor more tutortials click on \"<color=green>Tutorial</color>\" in the menu overview.";
     }
 }
 
